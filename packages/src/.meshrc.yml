@@ -1,0 +1,8 @@
+merger: stitching
+sources:
+  - name: Magento
+    handler:
+      graphql:
+        endpoint: https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/graphql
+
+serve: !include ./meshrc/serve-config.yml

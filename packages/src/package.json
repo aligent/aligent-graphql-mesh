@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev:start": "yarn mesh start"
+  },
+  "devDependencies": {
+    "@graphql-mesh/cli": "0.82.35"
+  },
+  "dependencies": {
+    "@envelop/core": "4.0.0",
+    "@envelop/sentry": "6.0.0",
+    "@graphql-mesh/cache-localforage": "0.94.1",
+    "@graphql-mesh/graphql": "0.94.2",
+    "@graphql-mesh/merger-stitching": "0.94.1",
+    "@graphql-mesh/runtime": "0.94.1",
+    "graphql": "16.7.1"
+  },
+  "peerDependencies": {
+    "graphql-tag": "2.12.6",
+    "react-native": "latest"
+  }
+}
