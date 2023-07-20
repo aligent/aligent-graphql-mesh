@@ -1,0 +1,31 @@
+.idea
+.vscode
+coverage
+node_modules
+storybook-dist
+test-results
+dist
+.DS_Store
+.env
+build-stats.json
+npm-debug.log
+lastCachedGraphQLSchema.json
+test-report.xml
+test-results.json
+yarn-error.log
+dist-storybook
+# Files generated for the purposes of typescript
+graphql.d.ts
+graphql.schema.json
+packages/base/codegen.yml
+generated/
+.tsc
+*.scss.d.ts
+# Cert files
+*.crt
+*.key
+# Generated mesh files
+**/.mesh
+
+# cdk
+cdk.out
