@@ -1,0 +1,5 @@
+merger: stitching
+sources:
+  - !include ../sources/bigcommerce/src/api.yml
+
+serve: !include serve-config.yml

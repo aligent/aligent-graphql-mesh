@@ -4,7 +4,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev:start": "yarn mesh start"
+    "start:dev": "mesh dev --dir ./src/meshrc",
+    "start": "mesh start --dir ./src/meshrc",
+    "build": "mesh build --dir ./src/meshrc"
   },
   "devDependencies": {
     "@graphql-mesh/cli": "0.82.35"
