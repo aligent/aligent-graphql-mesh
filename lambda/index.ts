@@ -1,4 +1,4 @@
-import { createBuiltMeshHTTPHandler } from './.mesh';
+import { createBuiltMeshHTTPHandler } from '../src/meshrc/.mesh';
 import express from 'express';
 
 const app = express();
