@@ -12,4 +12,6 @@ port: 4000
 #hostname: mesh.local.pwadev # uncomment this for dev, and comment the next line, DO NOT COMMIT
 hostname: 0.0.0.0
 browser: false
-playground: true # DISABLE WHEN DEPLOYING LIVE SITE
+playground: false # DISABLE WHEN DEPLOYING LIVE SITE
+
+# TODO: get playground and hostname from env
