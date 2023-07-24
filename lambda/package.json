@@ -4,9 +4,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "esbuild index.ts --minify --bundle --sourcemap --platform=node --target=es2020 --outdir=dist",
-    "postbuild": "cd dist && zip -r index.zip ./"
+    "prebundle": "rm -rf dist",
+    "bundle": "node bundle.mjs",
+    "postbundle": "cd dist && ln -s ../../src/ src && zip -r index.zip ./"
   },
   "dependencies": {
     "@aws-cdk/aws-lambda": "^1.204.0"
