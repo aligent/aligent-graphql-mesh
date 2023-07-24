@@ -4,6 +4,21 @@ Mesh is a framework that helps shape and build an executable GraphQL schema from
 
 https://the-guild.dev/graphql/mesh
 
+## Development Notes
+
+The skeleton of the code is in the `.meshrc.yml` file. The meshrc file can get very large and hard to maintain. To help with readability, it has been split into multiple files and then referenced using the `!include` syntax which is supported by graphql-mesh. This is not native yaml, so IDE syntax errors have to be ignored.
+
+Each new platform that has been developed should be in it's own directory. E.g. BigCommerce integrations go in `src/bigcommerce`.
+
+### Schemas
+
+The Schemas dir contains all the request and response Json Schema or Json Sample files. These files are used to validate and shape the response that the API sends back.
+
+### Resolvers
+
+The resolvers are mostly used to intercept a request to an endpoint and then do something before continuing.
+
+Each new handler should be nested under the relevant platform directory in a `handlers` directory. E.g. `src/bigcommerce/handlers`.
 ## Local Dev Setup
 
 1. Clone the repository
