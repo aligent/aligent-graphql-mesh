@@ -1,4 +1,25 @@
-## GraphQL Mesh Server Setup
+# GraphQL Mesh
+
+Mesh is a framework that helps shape and build an executable GraphQL schema from multiple data sources.
+
+https://the-guild.dev/graphql/mesh
+
+## Development Notes
+
+The skeleton of the code is in the `.meshrc.yml` file. The meshrc file can get very large and hard to maintain. To help with readability, it has been split into multiple files and then referenced using the `!include` syntax which is supported by graphql-mesh. This is not native yaml, so IDE syntax errors have to be ignored.
+
+Each new platform that has been developed should be in it's own directory. E.g. BigCommerce integrations go in `src/bigcommerce`.
+
+### Schemas
+
+The Schemas dir contains all the request and response Json Schema or Json Sample files. These files are used to validate and shape the response that the API sends back.
+
+### Resolvers
+
+The resolvers are mostly used to intercept a request to an endpoint and then do something before continuing.
+
+Each new handler should be nested under the relevant platform directory in a `handlers` directory. E.g. `src/bigcommerce/handlers`.
+## Local Dev Setup
 
 1. Clone the repository
 
@@ -9,7 +30,7 @@ $ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
 2. Duplicate the `.env.template` file as `.env` and fill in the values (see below)
 
 ```shell
-$ cp .env.template graphql/src/.env
+$ cp .env.template src//meshrc/.env
 ```
 
 3. Add environment configuration to .env file (see section below: Environment configuration)
@@ -33,25 +54,14 @@ Adding the entry:
 Please don't commit this change. Unfortunately we need to do this in order to support production builds, while the
 environment variable approach isn't working
 
-8. Build and start the mesh server from project root (see section below: Using the Mesh)
+8. Start the mesh server from project root (see section below: Using the Mesh)
 
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
-The `.env` file needs to know a little bit about the OroCommerce instance it's talking to.
-The `ORO_URL` value should be the URL endpoint of the OroCommerce store: `https://{SOME_DOMAIN}`.
-For the `ORO_CLIENT_ID` and the `ORO_CLIENT_SECRET` you must creat a Customer User OAuth Application in the OroCommerce Back-Office (Admin), see here: https://doc.oroinc.com/user/back-office/customers/customer-user-oauth-app/#customer-user-oauth-app
-
-### Creating OAuth Oro App
-
-1. Visit https://{SOME_DOMAIN}/admin/oauth2/frontend
-2. Click on Create OAuth Application
-3. Name the new application following the pattern: `GraphQLMesh-{FirstName}{LastNameInitial}`
-4. Select `Password` as the `Grant Type`
-5. Click Save and Close
-6. Copy the ID and Secret displayed into your local `.env` file
+#### TODO (NO ENV REQUIRED YET)
 
 ## Generating an SSL Certificate
 
@@ -66,7 +76,7 @@ _Please note: `openssl` is intended to be used from a global scope_
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.crt
 ```
 
-then follow the terminal prompts
+Then follow the terminal prompts (accepting all defaults is fine).
 
 ## Using the Mesh
 

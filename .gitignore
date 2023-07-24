@@ -26,6 +26,3 @@ generated/
 *.key
 # Generated mesh files
 **/.mesh
-
-# cdk
-cdk.out
