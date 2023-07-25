@@ -30,7 +30,7 @@ const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
         products: productsResolver,
-        route: routeResolver,
+        // route: routeResolver,
         cmsPage: cmsPageResolver,
         cmsBlocks: cmsBlocksResolver,
         countries: countriesResolver,
