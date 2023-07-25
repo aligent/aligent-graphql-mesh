@@ -16,7 +16,7 @@ const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: st
         if (axios.isAxiosError(error)) {
             throwAndLogAxiosError(error, bcGraphQlRequest.name);
         } else {
-            logAndThrowUnknownError(bcGraphQlRequest.name);
+            logAndThrowUnknownError(error, bcGraphQlRequest.name);
         }
     }
 };

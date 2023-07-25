@@ -15,11 +15,18 @@ const generateJwt = (bcToken: string, entityId: number): string => {
 
 export const generateCustomerTokenResolver = {
     resolve: async (_root, args, _context, _info) => {
+        let corsUrl: string | string[] = process.env.GRAPHQL_TOKEN_CORS_URL!
         const dateCreated = Math.round(new Date().getTime() / 1000);
         const dateEndAt = dateCreated + 86400; // Adding 1 day
 
+        if(corsUrl === 'no-cors'){
+            corsUrl = []
+        } else {
+            corsUrl = corsUrl.split(',') 
+        }
+
         const data = {
-            allowed_cors_origins: [],
+            allowed_cors_origins: corsUrl,
             channel_id: 1,
             expires_at: dateEndAt,
         };

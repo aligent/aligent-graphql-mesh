@@ -15,12 +15,7 @@ export const throwAndLogAxiosError = (
     if (data.title) {
         logAndThrowErrorsFromBCRESTApiResponse(response, functionName);
     } else if (data.data?.errMsg) {
-        logAndThrowErrorsFromRESTApiResponse(
-            response,
-            functionName,
-            path,
-            extraInfo
-        );
+        logAndThrowErrorsFromRESTApiResponse(response, functionName, path, extraInfo);
     } else if (data.errors) {
         logAndThrowErrorsFromGraphQlResponse(response, functionName);
     } else if (data) {
@@ -29,34 +24,27 @@ export const throwAndLogAxiosError = (
                 response.statusText
             }, function name: ${functionName} at path: ${path}`
         );
-        throw new Error(
-            `Response data: ${JSON.stringify(data)} from: ${functionName}`
-        );
+        throw new Error(`Response data: ${JSON.stringify(data)} from: ${functionName}`);
     } else {
         logAndThrowUnknownError(functionName);
     }
 };
 
-const logErrorAndFunctionName = (
-    code: number,
-    functionName: string,
-    message: string
-) => {
+const logErrorAndFunctionName = (code: number, functionName: string, message: string) => {
     console.log(`Code: ${code}`);
     console.log(`Function name: ${functionName}`);
     console.log(`Error message: ${message}`);
 };
 
 export const logAndThrowUnknownError = (
+    error: unknown,
     functionName: string,
     path?: string
 ): void => {
     console.log(
-        `There was an unknown error in the ${functionName} function, path: ${path}`
+        `There was an unknown error in the ${functionName} function, path: ${path}, Error: ${error}`
     );
-    throw new Error(
-        `There was an unknown error in the ${functionName} function`
-    );
+    throw new Error(`There was an unknown error in the ${functionName} function`);
 };
 
 export const logAndThrowErrorsFromGraphQlResponse = (
@@ -68,18 +56,10 @@ export const logAndThrowErrorsFromGraphQlResponse = (
     if (Array.isArray(response.data.errors)) {
         errorResponse = response.data.errors[0];
 
-        logErrorAndFunctionName(
-            response.status,
-            functionName,
-            errorResponse.message
-        );
+        logErrorAndFunctionName(response.status, functionName, errorResponse.message);
         throw new Error(errorResponse.message);
     } else if (typeof errorResponse === 'object') {
-        logErrorAndFunctionName(
-            response.status,
-            functionName,
-            errorResponse.message
-        );
+        logErrorAndFunctionName(response.status, functionName, errorResponse.message);
         console.log(`Whole Error: ${JSON.stringify(errorResponse)}`);
 
         throw new Error(JSON.stringify(errorResponse));
@@ -100,18 +80,13 @@ export const logAndThrowErrorsFromRESTApiResponse = (
     const errorResponse = response.data.data.errMsg;
 
     if (errorResponse) {
-        logErrorAndFunctionName(
-            response.data.code,
-            functionName,
-            errorResponse
-        );
+        logErrorAndFunctionName(response.data.code, functionName, errorResponse);
         console.log(`Whole Error: ${JSON.stringify(response.data)}`);
         throw new Error(errorResponse);
     }
 
     logAndThrowUnknownError(functionName);
 };
-
 
 const logAndThrowErrorsFromBCRESTApiResponse = (
     response: AxiosResponse,
@@ -120,11 +95,7 @@ const logAndThrowErrorsFromBCRESTApiResponse = (
     const errorResponse = response.data.title;
 
     if (errorResponse) {
-        logErrorAndFunctionName(
-            response.data.status,
-            functionName,
-            errorResponse
-        );
+        logErrorAndFunctionName(response.data.status, functionName, errorResponse);
         console.log(`Whole Error: ${JSON.stringify(response.data)}`);
         throw new Error(errorResponse);
     }

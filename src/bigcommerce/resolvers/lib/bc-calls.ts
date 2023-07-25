@@ -19,7 +19,7 @@ const bcPost = async (path: string, data?: unknown) => {
         if (axios.isAxiosError(error)) {
             throwAndLogAxiosError(error, bcPost.name, path);
         } else {
-            logAndThrowUnknownError(bcPost.name, path);
+            logAndThrowUnknownError(error, bcPost.name, path);
         }
     }
 };
