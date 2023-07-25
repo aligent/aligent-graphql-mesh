@@ -79,22 +79,3 @@ interface Money {
     value: number;
     currencyCode: string;
 }
-
-export interface Category {
-    __typename: 'Category';
-    entityId: number;
-    name: string;
-    path: string;
-    id: string;
-    description: string;
-    seo: {
-        metaDescription: string;
-        metaKeywords: string;
-        pageTitle: string;
-    };
-    products: {
-        collectionInfo: {
-            totalItems: number;
-        };
-    };
-}
