@@ -1,46 +1,7 @@
-import { getRoutes } from '../lib/rest';
-import { productsMock } from '../mocks/products';
 import { mockRoute } from '../mocks/route';
-
-const getPageType = (resourceType: string) => {
-    if (resourceType === 'master_catalog_category_product_collection') {
-        return 'CATEGORY';
-    }
-
-    if (resourceType === 'product') {
-        return 'PRODUCT';
-    }
-
-    if (resourceType === 'landing_page') {
-        return 'CMS_PAGE';
-    }
-
-    /* home page, about, quick order, account order */
-    if (resourceType === 'system_page') {
-        return 'SYSTEM_PAGE';
-    }
-
-    return 'UNKNOWN';
-};
 
 export const routeResolver = {
     resolve: () => {
-        // ORO specific response
-        // const headers = context.headers;
-        // const urlParam = args.url.replace(/\//g, ":");
-        // const data = await getRoutes(urlParam, headers);
-        // const { url, redirectStatusCode, resourceType } = data;
-        // const type = getPageType(resourceType);
-
-        // return {
-        //     ...mockRoute,
-        //     redirect_code: !redirectStatusCode ? 0 : redirectStatusCode,
-        //     relative_url: url.replace(/^\//, ""),
-        //     type,
-        //     __typename: "ConfigurableProduct",
-        // };
-
-        // generic TF
         return {
             type: 'CMS_PAGE',
             relative_url: 'home',
