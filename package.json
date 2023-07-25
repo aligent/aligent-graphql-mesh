@@ -19,6 +19,7 @@
     "@graphql-mesh/graphql": "0.94.2",
     "@graphql-mesh/merger-stitching": "0.94.1",
     "@graphql-mesh/runtime": "0.94.1",
+    "axios": "^1.4.0",
     "graphql": "16.7.1"
   }
 }
