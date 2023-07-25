@@ -2,4 +2,7 @@ merger: stitching
 sources:
   - !include ../bigcommerce/api.yml
 
+additionalResolvers:
+  - '../bigcommerce/resolvers/resolver-definitions'
+
 serve: !include serve-config.yml
