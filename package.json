@@ -10,7 +10,8 @@
     "build": "mesh build --dir ./src/meshrc"
   },
   "devDependencies": {
-    "@graphql-mesh/cli": "0.82.35"
+    "@graphql-mesh/cli": "0.82.35",
+    "@types/jsonwebtoken": "^9.0.2"
   },
   "dependencies": {
     "@envelop/core": "4.0.0",
@@ -20,6 +21,7 @@
     "@graphql-mesh/merger-stitching": "0.94.1",
     "@graphql-mesh/runtime": "0.94.1",
     "axios": "^1.4.0",
-    "graphql": "16.7.1"
+    "graphql": "16.7.1",
+    "jsonwebtoken": "^9.0.1"
   }
 }

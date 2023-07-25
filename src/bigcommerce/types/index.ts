@@ -3,3 +3,7 @@ export interface BcGraphqlTokenData {
     channel_id: number;
     expires_at: number;
 }
+
+export interface GraphQlQuery {
+    query: string;
+}
