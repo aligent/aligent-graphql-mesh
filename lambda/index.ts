@@ -1,19 +1,18 @@
 import { createBuiltMeshHTTPHandler } from '../src/meshrc/.mesh';
-import { APIGatewayEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
-import type { Handler } from '@aws-cdk/aws-lambda';
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Context } from 'aws-lambda';
 
 interface ServerContext {
-    event: APIGatewayEvent;
+    event: APIGatewayProxyEventV2;
     lambdaContext: Context;
 }
 
 const meshHTTP = createBuiltMeshHTTPHandler<ServerContext>();
 
 export async function handler(
-    event: APIGatewayEvent,
+    event: APIGatewayProxyEventV2,
     lambdaContext: Context
-): Promise<APIGatewayProxyResult> {
-    const url = new URL(event.path, 'http://localhost');
+): Promise<APIGatewayProxyResultV2> {
+    const url = new URL(event.rawPath, 'http://localhost');
     if (event.queryStringParameters != null) {
         for (const name in event.queryStringParameters) {
             const value = event.queryStringParameters[name];
@@ -26,7 +25,7 @@ export async function handler(
     const response = await meshHTTP.fetch(
         url,
         {
-            method: event.requestContext.httpMethod,
+            method: event.requestContext.http.method,
             headers: event.headers as HeadersInit,
             body: event.body
                 ? Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'utf8')
