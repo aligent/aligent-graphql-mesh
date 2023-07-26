@@ -10,15 +10,18 @@
     "build": "mesh build --dir ./src/meshrc"
   },
   "devDependencies": {
-    "@graphql-mesh/cli": "0.82.35"
+    "@graphql-mesh/cli": "0.82.x",
+    "@types/jsonwebtoken": "9.0.x"
   },
   "dependencies": {
-    "@envelop/core": "4.0.0",
-    "@envelop/sentry": "6.0.0",
-    "@graphql-mesh/cache-localforage": "0.94.1",
-    "@graphql-mesh/graphql": "0.94.2",
-    "@graphql-mesh/merger-stitching": "0.94.1",
-    "@graphql-mesh/runtime": "0.94.1",
-    "graphql": "16.7.1"
+    "@envelop/core": "4.0.x",
+    "@envelop/sentry": "6.0.x",
+    "@graphql-mesh/cache-localforage": "0.94.x",
+    "@graphql-mesh/graphql": "0.94.x",
+    "@graphql-mesh/merger-stitching": "0.94.x",
+    "@graphql-mesh/runtime": "0.94.x",
+    "axios": "1.4.x",
+    "graphql": "16.7.x",
+    "jsonwebtoken": "9.0.x"
   }
 }
