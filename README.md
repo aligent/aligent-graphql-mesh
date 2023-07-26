@@ -30,7 +30,7 @@ $ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
 2. Duplicate the `.env.template` file as `.env` and fill in the values (see below)
 
 ```shell
-$ cp .env.template src//meshrc/.env
+$ cp .env.template src/meshrc/.env
 ```
 
 3. Add environment configuration to .env file (see section below: Environment configuration)

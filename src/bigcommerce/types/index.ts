@@ -79,3 +79,24 @@ interface Money {
     value: number;
     currencyCode: string;
 }
+
+export interface BcStoreConfigMetafields {
+    channel: {
+        entityId: number,
+        metafields: {
+            edges: [
+                node: {
+                    id: string,
+                    key: string,
+                    value: string
+                }
+            ]
+        }
+    };
+}
+
+export interface AcStoreConfig {
+    category_url_suffix: string;
+    grid_per_page: number;
+    //more see mocks/store-config.ts
+}

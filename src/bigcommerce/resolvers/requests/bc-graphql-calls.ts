@@ -5,8 +5,9 @@ import {
     logAndThrowUnknownError,
     throwAndLogAxiosError,
 } from '../error-handling';
-import { BcProduct, GraphQlQuery } from '../../types';
+import { BcProduct, GraphQlQuery, BcStoreConfigMetafields } from '../../types';
 import { getProductBySkuQuery } from './graphql/get-product-by-sku';
+import { storeConfigByNamespaceQuery} from './graphql/store-config-by-namespace-query';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -68,4 +69,20 @@ export const getBcProductGraphql = async (sku: string): Promise<BcProduct> => {
     }
 
     return response.data.site.product;
+};
+
+//FIXME: replace any with BcStoreConfig
+export const getStoreConfig = async (namespace: string): Promise<BcStoreConfigMetafields> => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+    const query = storeConfigByNamespaceQuery(namespace);
+
+    const response = await bcGraphQlRequest(query, headers);
+
+    if (response.data.errors) {
+        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductGraphql.name);
+    }
+
+    return response.data.channel.metafields.edges
 };
