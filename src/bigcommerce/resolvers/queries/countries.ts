@@ -11,17 +11,17 @@ export const countriesResolver = {
 
 export const transformCountries = async (countries: Countries[]) => {
     return countries.map(async (country) => {
-        const states = await createCountriesStates(country.states);
+        const transformedCountryStates = await transformCountriesStates(country.states);
         return {
             id: country.id,
             two_letter_abbreviation: country.country_iso2,
             full_name_english: country.country,
-            available_regions: states,
+            available_regions: transformedCountryStates,
         };
     });
 };
 
-const createCountriesStates = async (countriesStates: Countries['states']) => {
+const transformCountriesStates = async (countriesStates: Countries['states']) => {
     const states = await getCountriesStates(countriesStates.resource);
     if (states.length > 0) {
         return states.map((state) => {
