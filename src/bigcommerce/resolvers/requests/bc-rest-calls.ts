@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logAndThrowUnknownError, throwAndLogAxiosError } from './error-handling';
+import { logAndThrowUnknownError, throwAndLogAxiosError } from '../error-handling';
 import { BcGraphqlTokenData } from '../../types';
 
 const BC_REST_API = process.env.BC_REST_API as string;

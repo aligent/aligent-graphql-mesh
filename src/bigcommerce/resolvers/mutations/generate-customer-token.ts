@@ -1,5 +1,5 @@
-import { getBcGraphqlToken } from '../lib/bc-calls';
-import { bcLogin } from '../lib/bc-graphql-calls';
+import { getBcGraphqlToken } from '../requests/bc-rest-calls';
+import { bcLogin } from '../requests/bc-graphql-calls';
 import { sign } from 'jsonwebtoken';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
