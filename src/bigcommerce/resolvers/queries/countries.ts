@@ -1,37 +1,37 @@
-import { mockCountries } from '../mocks/countries';
-import { getCountries } from '../requests/bc-rest-calls';
+import { Countries } from '../../types';
+import { getCountries, getCountriesStates } from '../requests/bc-rest-calls';
 
 export const countriesResolver = {
-    resolve: async (_root, args, _context, _info) => {
+    resolve: async () => {
         const countries = await getCountries();
 
-        return countries.map((country) => {
+        return await transformCountries(countries);
+    },
+};
+
+export const transformCountries = async (countries: Countries[]) => {
+    return countries.map(async (country) => {
+        const states = await createCountriesStates(country.states);
+        return {
+            id: country.id,
+            two_letter_abbreviation: country.country_iso2,
+            full_name_english: country.country,
+            available_regions: states,
+        };
+    });
+};
+
+const createCountriesStates = async (countriesStates: Countries['states']) => {
+    const states = await getCountriesStates(countriesStates.resource);
+    if (states.length > 0) {
+        return states.map((state) => {
             return {
-                two_letter_abbreviation: country.country_iso2,
-                full_name_english: country.country,
+                code: state.state_abbreviation,
+                name: state.state,
+                id: state.id,
             };
         });
-
-        // [
-        //     {
-        //         two_letter_abbreviation: 'AI',
-        //         full_name_english: 'Anguilla',
-        //         available_regions: null,
-        //         __typename: 'Country',
-        //     },
-        //     {
-        //         two_letter_abbreviation: 'AL',
-        //         full_name_english: 'Albania',
-        //         available_regions: [
-        //             {
-        //                 code: 'AL-01',
-        //                 name: 'Berat',
-        //                 id: 840,
-        //                 __typename: 'Region',
-        //             },
-        //         ],
-        //         __typename: 'Country',
-        //     },
-        // ];
-    },
+    } else {
+        return null;
+    }
 };

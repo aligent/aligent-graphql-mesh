@@ -90,3 +90,10 @@ export interface Countries {
         resource: string;
     };
 }
+
+export interface CountriesStates {
+    id: number;
+    state: string;
+    state_abbreviation: string;
+    country_id: number;
+}
