@@ -1,10 +1,11 @@
+import { DocumentNode } from 'graphql';
 import { gql } from 'graphql-tag';
 import { breadcrumbs } from './breadcrumbs';
 import { image } from './image';
 import { productOptions } from './productOptions';
 import { prices } from './prices';
 
-export const ProductsDetails = gql`
+export const ProductsDetails: DocumentNode = gql`
     ${breadcrumbs}
     ${image}
     ${productOptions}
