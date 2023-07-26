@@ -1,8 +1,8 @@
 # Shouldn't be needed as we can serve securely through cloudfront
 # Enable in local development environment if needed to serve via ssl
 # sslCredentials:
-#   key: "cert.key"
-#   cert: "cert.crt"
+#   key: 'cert.key'
+#   cert: 'cert.crt'
 cors:
   origin:
     - 'https://aligent-web-theme.local.pwadev:8128'
