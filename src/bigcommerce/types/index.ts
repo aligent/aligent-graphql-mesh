@@ -79,3 +79,14 @@ interface Money {
     value: number;
     currencyCode: string;
 }
+
+export interface Countries {
+    id: number;
+    country: string;
+    country_iso2: string;
+    country_iso3: string;
+    states: {
+        url: string;
+        resource: string;
+    };
+}
