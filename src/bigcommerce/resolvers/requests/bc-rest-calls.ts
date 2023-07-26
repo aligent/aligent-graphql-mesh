@@ -60,3 +60,13 @@ export const getCountriesStates = async (countryResource: string): Promise<Count
 
     return response;
 };
+
+export const createEmptyCart = async (): Promise<string> => {
+    const path = `/v3/carts`;
+    const data = {
+        line_items: [],
+    };
+
+    const response = await bcPost(path, data);
+    return response.data.id;
+};
