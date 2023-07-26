@@ -26,6 +26,7 @@
     "@graphql-mesh/runtime": "0.94.x",
     "axios": "1.4.x",
     "graphql": "16.7.x",
+    "graphql-tag": "^2.12.6",
     "jsonwebtoken": "9.0.x"
   }
 }
