@@ -1,11 +1,13 @@
 import { gql } from 'graphql-tag';
-import { ProductsDetails } from './fragments/productDetails';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
+import { ProductsDetails } from './fragments/productDetails';
+import { seoDetails } from './fragments/seoDetails';
 
 export const getRouteQuery = stripIgnoredCharacters(
     print(gql`
         ${ProductsDetails}
+        ${seoDetails}
 
         query getRoute($path: String!) {
             site {
@@ -42,7 +44,7 @@ export const getRouteQuery = stripIgnoredCharacters(
                                 urlOriginal
                             }
                             seo {
-                                pageTitle
+                                ...SeoDetails
                             }
                             path
                         }
@@ -56,9 +58,7 @@ export const getRouteQuery = stripIgnoredCharacters(
                                 __typename
                             }
                             seo {
-                                pageTitle
-                                metaDescription
-                                metaKeywords
+                                ...SeoDetails
                             }
                             path
                             __typename
@@ -79,9 +79,7 @@ export const getRouteQuery = stripIgnoredCharacters(
                             name
                             isVisibleInNavigation
                             seo {
-                                pageTitle
-                                metaDescription
-                                metaKeywords
+                                ...SeoDetails
                             }
                             __typename
                         }
