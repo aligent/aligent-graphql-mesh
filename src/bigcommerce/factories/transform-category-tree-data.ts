@@ -1,5 +1,5 @@
-import { btoa } from '../../utils/encode-decode';
 import { AcCategoryItem, BcCategoryTree } from '../types';
+import { btoa, slashAtStartOrEnd } from '../../utils';
 
 export const getTransformedCategoryTreeData = (category: BcCategoryTree): AcCategoryItem => {
     const { children, description, entityId, name, path, productCount } = category;
@@ -16,7 +16,7 @@ export const getTransformedCategoryTreeData = (category: BcCategoryTree): AcCate
         position: 0,
         product_count: productCount,
         uid: btoa(entityId.toString()),
-        url_path: path.replace(/(^\/|\/$)/g, ''),
+        url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
     };
 };

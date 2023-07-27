@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer';
+import { atob as BufferAtob, Buffer } from 'buffer';
 
 /**
  * Encodes a string to base64.
@@ -14,3 +14,5 @@ import { Buffer } from 'buffer';
 export const btoa = (input: string): string => {
     return Buffer.from(input).toString('base64');
 };
+
+export const atob = BufferAtob;

@@ -1,4 +1,4 @@
-import { atob } from 'buffer';
+import { atob } from '../../../utils';
 import { getCategoryTree } from '../requests/bc-graphql-calls';
 import { getTransformedCategoryTreeData } from '../../factories/transform-category-tree-data';
 import { AcCategory } from '../../types';
