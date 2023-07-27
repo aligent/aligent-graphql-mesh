@@ -2,6 +2,7 @@ import { mockCategories } from '../mocks/categories';
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
+import { getTransformedCategoryTreeData } from '../../factories/transform-category-tree-data';
 
 const getTransformedRouteData = data => {
     const { __typename } = data;
@@ -14,13 +15,12 @@ const getTransformedRouteData = data => {
     }
 
     if (__typename === 'Category') {
-        const transformedCategoryData = {
-            ...mockCategories.items[0].children[1],
-            products: productsMock,
-        };
         return {
+            // @todo replace with "Category" transformation method instead of "CategoryTree"
+            // "CategoryTree" works for now but contains different properties.
+            ...getTransformedCategoryTreeData(data),
             type: 'CATEGORY',
-            ...transformedCategoryData,
+            __typename: 'CategoryTree',
         };
     }
 

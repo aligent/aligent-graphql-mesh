@@ -1,3 +1,7 @@
+export enum CategoryTreeTypename {
+    CategoryTree = 'CategoryTree',
+}
+
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -78,4 +82,34 @@ export interface BcProduct {
 interface Money {
     value: number;
     currencyCode: string;
+}
+
+export interface BcCategoryTree {
+    name: string;
+    description: string;
+    entityId: number;
+    path: string;
+    productCount: number;
+    children?: BcCategoryTree[];
+}
+
+export interface AcCategory {
+    items: AcCategoryItem[];
+}
+
+export interface AcCategoryItem {
+    breadcrumbs?: null;
+    children?: AcCategoryItem[];
+    children_count?: string;
+    description?: string;
+    id?: number;
+    include_in_menu?: number;
+    meta_description?: string;
+    name?: string;
+    position?: number;
+    product_count?: number;
+    uid?: string;
+    url_path?: string;
+    url_suffix?: string;
+    __typename?: CategoryTreeTypename;
 }

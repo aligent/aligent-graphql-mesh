@@ -5,9 +5,10 @@ import {
     logAndThrowUnknownError,
     throwAndLogAxiosError,
 } from '../error-handling';
-import { BcProduct, GraphQlQuery } from '../../types';
+import { BcCategoryTree, BcProduct, GraphQlQuery } from '../../types';
 import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
+import { getCategoryTreeQuery } from './graphql/category-tree';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -16,7 +17,7 @@ const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: st
     try {
         const response = await axios.post(BC_GRAPHQL_API, data, { headers });
         return response.data;
-    } catch (error: unknown) {
+    } catch (error) {
         if (axios.isAxiosError(error)) {
             throwAndLogAxiosError(error, bcGraphQlRequest.name);
         } else {
@@ -85,4 +86,23 @@ export const getRoute = async (url: string) => {
 
     const response = await bcGraphQlRequest(routeQuery, headers);
     return response.data.site.route.node;
+};
+
+export const getCategoryTree = async (rootEntityId: number): Promise<BcCategoryTree[]> => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+
+    const routeQuery = {
+        query: getCategoryTreeQuery,
+        variables: {
+            /* "2" is the root Category used in AC. If we receive 2 then treat
+                this as if were getting megamenu data.
+            */
+            rootEntityId: rootEntityId === 2 ? null : rootEntityId,
+        },
+    };
+
+    const response = await bcGraphQlRequest(routeQuery, headers);
+    return response.data.site.categoryTree;
 };
