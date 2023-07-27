@@ -5,10 +5,11 @@ import {
     logAndThrowUnknownError,
     throwAndLogAxiosError,
 } from '../error-handling';
-import { BcCategoryTree, BcProduct, GraphQlQuery } from '../../types';
+import { BcCategory, BcCategoryTree, BcProduct, GraphQlQuery } from '../../types';
 import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
+import { getCategoryQuery } from './graphql/category';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -88,12 +89,14 @@ export const getRoute = async (url: string) => {
     return response.data.site.route.node;
 };
 
-export const getCategoryTree = async (rootEntityId: number): Promise<BcCategoryTree[]> => {
+export const getCategoryTree = async (
+    rootEntityId: number
+): Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
-    const routeQuery = {
+    const categoryTreeQuery = {
         query: getCategoryTreeQuery,
         variables: {
             /* "2" is the root Category used in AC. If we receive 2 then treat
@@ -103,6 +106,19 @@ export const getCategoryTree = async (rootEntityId: number): Promise<BcCategoryT
         },
     };
 
-    const response = await bcGraphQlRequest(routeQuery, headers);
-    return response.data.site.categoryTree;
+    const categoryTreeResponse = await bcGraphQlRequest(categoryTreeQuery, headers);
+
+    const categoryQuery = {
+        query: getCategoryQuery,
+        variables: {
+            entityId: rootEntityId,
+        },
+    };
+
+    const categoryResponse = await bcGraphQlRequest(categoryQuery, headers);
+
+    return {
+        categoryTree: categoryTreeResponse.data.site.categoryTree,
+        category: categoryResponse.data.site.category,
+    };
 };

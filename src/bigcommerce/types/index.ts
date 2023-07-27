@@ -85,12 +85,27 @@ interface Money {
 }
 
 export interface BcCategoryTree {
-    name: string;
-    description: string;
+    children?: BcCategoryTree[];
+    description?: string;
     entityId: number;
+    name: string;
     path: string;
     productCount: number;
-    children?: BcCategoryTree[];
+}
+
+export interface BcCategory {
+    description?: string;
+    metaDescription?: string;
+    pageTitle?: string;
+    products?: {
+        collectionInfo: {
+            totalItems: number;
+        };
+    };
+    seo?: {
+        metaDescription: string;
+        pageTitle: string;
+    };
 }
 
 export interface AcCategory {
@@ -105,6 +120,7 @@ export interface AcCategoryItem {
     id?: number;
     include_in_menu?: number;
     meta_description?: string;
+    meta_title?: string;
     name?: string;
     position?: number;
     product_count?: number;

@@ -20,9 +20,10 @@ export const categoriesResolver = {
 
         const rootEntityId = Number(atob(categoryUid));
 
-        const data = await getCategoryTree(rootEntityId);
+        const { category, categoryTree } = await getCategoryTree(rootEntityId);
 
-        const transformedData = data.map(getTransformedCategoryTreeData);
+        categoryTree[0] = { ...categoryTree[0], ...category };
+        const transformedData = categoryTree.map(getTransformedCategoryTreeData);
 
         /*
          * AC has a default category of "2" set for the mega menu.

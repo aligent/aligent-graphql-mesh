@@ -1,8 +1,13 @@
-import { AcCategoryItem, BcCategoryTree } from '../types';
+import { AcCategoryItem, BcCategory, BcCategoryTree } from '../types';
 import { btoa, slashAtStartOrEnd } from '../../utils';
 
-export const getTransformedCategoryTreeData = (category: BcCategoryTree): AcCategoryItem => {
-    const { children, description, entityId, name, path, productCount } = category;
+interface Category extends BcCategory, BcCategoryTree {}
+
+export const getTransformedCategoryTreeData = (category: Category): AcCategoryItem => {
+    const { children, description, entityId, name, path, products, seo } = category;
+
+    const productCount = category.productCount || products?.collectionInfo?.totalItems;
+    const { metaDescription, pageTitle } = seo || {};
 
     const children_count = children ? children.length : 0;
     return {
@@ -11,7 +16,8 @@ export const getTransformedCategoryTreeData = (category: BcCategoryTree): AcCate
         description,
         id: entityId,
         include_in_menu: 1, // BC doesn't support
-        meta_description: '',
+        meta_description: metaDescription,
+        meta_title: pageTitle,
         name,
         position: 0,
         product_count: productCount,
