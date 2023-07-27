@@ -89,7 +89,7 @@ export const getRoute = async (url: string) => {
     return response.data.site.route.node;
 };
 
-export const getCategoryTree = async (
+export const getCategories = async (
     rootEntityId: number
 ): Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }> => {
     const headers = {

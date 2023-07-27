@@ -16,8 +16,6 @@ const getTransformedRouteData = data => {
 
     if (__typename === 'Category') {
         return {
-            // @todo replace with "Category" transformation method instead of "CategoryTree"
-            // "CategoryTree" works for now but contains different properties.
             ...getTransformedCategoriesData(data),
             type: 'CATEGORY',
             __typename: 'CategoryTree',

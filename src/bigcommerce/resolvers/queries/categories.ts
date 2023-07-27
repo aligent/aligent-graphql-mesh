@@ -1,5 +1,5 @@
 import { atob } from '../../../utils';
-import { getCategoryTree } from '../requests/bc-graphql-calls';
+import { getCategories } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
 import { AcCategory } from '../../types';
 
@@ -20,8 +20,10 @@ export const categoriesResolver = {
 
         const rootEntityId = Number(atob(categoryUid));
 
-        const { category, categoryTree } = await getCategoryTree(rootEntityId);
+        const { category, categoryTree } = await getCategories(rootEntityId);
 
+        // Because we make a "category" query based on the "categoryUid" passed to this resolver,
+        // the data returned will correspond to the first "categoryTree" item so merge them together.
         categoryTree[0] = { ...categoryTree[0], ...category };
         const transformedData = categoryTree.map(getTransformedCategoriesData);
 
