@@ -53,7 +53,7 @@ export interface BcProduct {
         ];
     };
     availabilityV2: {
-        status: string;
+        status: "Available" | "Preorder" | "Unavailable";
     };
     reviewSummary: {
         numberOfReviews: number;
