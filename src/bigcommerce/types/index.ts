@@ -1,3 +1,5 @@
+import { CurrencyEnum } from "../../meshrc/.mesh";
+
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -77,5 +79,5 @@ export interface BcProduct {
 
 interface Money {
     value: number;
-    currencyCode: string;
+    currencyCode: CurrencyEnum;
 }

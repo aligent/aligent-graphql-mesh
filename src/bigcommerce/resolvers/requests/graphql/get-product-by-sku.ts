@@ -4,6 +4,7 @@ export const getProductBySkuQuery = (sku: string) => {
             site {
             product(sku: "${sku}") {
                 entityId
+                id
                 sku
                 name
                 addToCartUrl

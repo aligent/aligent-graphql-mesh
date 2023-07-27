@@ -1,3 +1,9 @@
+import {
+    CategoryInterface,
+    MediaGalleryEntry,
+    ProductInterface,
+    Products,
+} from '../../../meshrc/.mesh';
 import { BcProduct } from '../../types';
 import { getBcProductGraphql } from '../requests/bc-graphql-calls';
 
@@ -5,21 +11,31 @@ export const productsResolver = {
     resolve: async (_root, args, _context, _info) => {
         const bcProduct = await getBcProductGraphql(args.filter.sku.eq);
 
-        return createAcReadyProduct(bcProduct);
+        const acReadyProduct = createAcReadyProduct(bcProduct);
+
+        if (acReadyProduct.configurable_options) {
+            acReadyProduct.items[0].__typename = 'ConfigurableProduct'
+            return acReadyProduct;
+        } else {
+            acReadyProduct.items[0].__typename = 'SimpleProduct'
+            return acReadyProduct
+        }
     },
 };
 
-const createAcReadyProduct = (bcProduct: BcProduct) => {
+const createAcReadyProduct = (bcProduct: BcProduct): Products => {
     const images = createImages(bcProduct.images);
 
     return {
         items: [
             {
-                __typename: 'ConfigurableProduct',
                 categories: createCategories(bcProduct.categories),
                 description: {
                     html: bcProduct.description,
                 },
+                staged: true,
+                uid: bcProduct.id,
+                custom_attributes: [],
                 id: bcProduct.entityId,
                 media_gallery_entries: images,
                 meta_title: bcProduct.seo.pageTitle,
@@ -75,6 +91,14 @@ const createAcReadyProduct = (bcProduct: BcProduct) => {
                 stock_status: transformAvailabilityStatus(bcProduct.availabilityV2.status),
                 url_key: bcProduct.addToCartUrl,
                 url_suffix: '.html',
+                reviews: {
+                    items: [],
+                    page_info: {
+                        current_page: 1,
+                        page_size: 1,
+                        total_pages: 1,
+                    },
+                },
             },
         ],
     };
@@ -85,44 +109,51 @@ const transformAvailabilityStatus = (status: BcProduct['availabilityV2']['status
     else return 'OUT_OF_STOCK';
 };
 
-const createCategories = (categories: BcProduct['categories']) => {
+const createCategories = (categories: BcProduct['categories']): CategoryInterface[] => {
     console.log(JSON.stringify(categories));
     return categories.edges.map((catItem) => {
         return {
             __typename: 'CategoryTree',
-            uid: catItem.node.entityId,
+            uid: String(catItem.node.entityId),
             name: catItem.node.name,
             level: 1111,
+            staged: true,
             breadcrumbs: catItem.node.breadcrumbs.edges.map((crumbItem) => {
                 return {
                     __typename: 'Breadcrumb',
                     category_name: crumbItem.node.name,
-                    category_uid: crumbItem.node.entityId,
+                    category_uid: String(crumbItem.node.entityId),
                 };
             }),
         };
     });
 };
 
-const createImages = (images: BcProduct['images']) => {
+const createImages = (images: BcProduct['images']): MediaGalleryEntry[] => {
     return images.edges.map((image) => {
         return {
-            __typename: 'MediaGalleryEntry',
             file: image.node.urlOriginal,
             label: image.node.altText,
             disabled: image.node.isDefault,
-            id: 1111,
+            uid: '1111',
             position: 1111,
         };
     });
 };
 
-const createRelatedProducts = (relatedProducts: BcProduct['relatedProducts']) => {
+const createRelatedProducts = (
+    relatedProducts: BcProduct['relatedProducts']
+): ProductInterface[] => {
     return relatedProducts?.edges.map((product) => {
-        return {
+        const baseProduct: ProductInterface = {
             categories: createCategories(product.node.categories),
             id: product.node.entityId,
             name: product.node.name,
+            rating_summary: product.node.reviewSummary.summationOfRatings,
+            review_count: product.node.reviewSummary.numberOfReviews,
+            staged: true,
+            uid: product.node.id,
+            custom_attributes: [],
             price: {
                 regularPrice: {
                     amount: {
@@ -161,13 +192,37 @@ const createRelatedProducts = (relatedProducts: BcProduct['relatedProducts']) =>
                     },
                 },
             },
+            reviews: {
+                items: [],
+                page_info: {
+                    current_page: 1,
+                    page_size: 1,
+                    total_pages: 1,
+                },
+            },
             sku: product.node.sku,
             small_image: {
-                __typename: 'ProductImage',
                 url: product.node.images.edges[0].node.urlOriginal,
             },
             url_key: product.node.addToCartUrl,
             url_suffix: '.html',
         };
+
+        baseProduct.reviews.items.push({
+            ratings_breakdown: [
+                {
+                    name: 'Jack',
+                    value: '1',
+                },
+            ],
+            average_rating: 1,
+            created_at: 'today',
+            nickname: 'yelp',
+            summary: 'was good',
+            text: 'decent',
+            product: baseProduct,
+        });
+
+        return baseProduct;
     });
 };
