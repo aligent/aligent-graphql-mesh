@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebundle": "rm -rf dist && rm -rf src",
-    "bundle": "cp -r ../src/ src && ln index.ts src/index.ts && node bundle.mjs",
+    "bundle": "cp -r ../src/ src && cp index.ts src/index.ts && node bundle.mjs",
     "postbundle": "cd dist && zip -r index.zip ./ && rm -rf ../src"
   },
   "dependencies": {

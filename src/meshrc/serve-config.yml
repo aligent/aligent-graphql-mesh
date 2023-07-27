@@ -3,11 +3,11 @@
 # sslCredentials:
 #   key: "cert.key"
 #   cert: "cert.crt"
-cors:
-  origin:
-    - 'https://aligent-web-theme.local.pwadev:8128'
-    - 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud'
-  credentials: true
+#cors:
+#  origin:
+#    - 'https://aligent-web-theme.local.pwadev:8128'
+#    - 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud'
+#  credentials: true
 port: 4000
 #hostname: mesh.local.pwadev # uncomment this for dev, and comment the next line, DO NOT COMMIT
 hostname: 0.0.0.0
