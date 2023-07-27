@@ -3,3 +3,4 @@ sources:
   - !include ../bigcommerce/api.yml
 
 serve: !include serve-config.yml
+cache: !include cache-config.yml

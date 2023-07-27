@@ -1,0 +1,3 @@
+redis:
+  host: mesh-0001-001.c0n7pa.0001.apse2.cache.amazonaws.com
+  port: '6379'
