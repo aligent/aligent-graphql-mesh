@@ -3,7 +3,7 @@ import { btoa, slashAtStartOrEnd } from '../../utils';
 
 interface Category extends BcCategory, BcCategoryTree {}
 
-export const getTransformedCategoryTreeData = (category: Category): AcCategoryItem => {
+export const getTransformedCategoriesData = (category: Category): AcCategoryItem => {
     const { children, description, entityId, name, path, products, seo } = category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
@@ -11,7 +11,7 @@ export const getTransformedCategoryTreeData = (category: Category): AcCategoryIt
 
     const children_count = children ? children.length : 0;
     return {
-        children: children ? children.map(getTransformedCategoryTreeData) : [],
+        children: children ? children.map(getTransformedCategoriesData) : [],
         children_count: String(children_count),
         description,
         id: entityId,

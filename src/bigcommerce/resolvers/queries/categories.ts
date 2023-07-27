@@ -1,6 +1,6 @@
 import { atob } from '../../../utils';
 import { getCategoryTree } from '../requests/bc-graphql-calls';
-import { getTransformedCategoryTreeData } from '../../factories/transform-category-tree-data';
+import { getTransformedCategoriesData } from '../../factories/transform-category-data';
 import { AcCategory } from '../../types';
 
 export const categoriesResolver = {
@@ -23,7 +23,7 @@ export const categoriesResolver = {
         const { category, categoryTree } = await getCategoryTree(rootEntityId);
 
         categoryTree[0] = { ...categoryTree[0], ...category };
-        const transformedData = categoryTree.map(getTransformedCategoryTreeData);
+        const transformedData = categoryTree.map(getTransformedCategoriesData);
 
         /*
          * AC has a default category of "2" set for the mega menu.
