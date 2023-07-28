@@ -128,6 +128,22 @@ export const mockCart = {
     is_virtual: false,
     items: [
         {
+            configurable_options: [
+                {
+                    id: 93,
+                    option_label: 'Color',
+                    value_id: 62,
+                    value_label: 'Green',
+                    __typename: 'SelectedConfigurableOption',
+                },
+                {
+                    id: 187,
+                    option_label: 'Size',
+                    value_id: 180,
+                    value_label: 'S',
+                    __typename: 'SelectedConfigurableOption',
+                },
+            ],
             errors: null,
             id: '44342',
             prices: {
@@ -157,6 +173,7 @@ export const mockCart = {
             product: productsMock.items[0],
             quantity: 1,
             uid: 'NDQzNDI=',
+            __typename: 'ConfigurableCartItem',
         },
     ],
     prices: {
@@ -396,4 +413,5 @@ export const mockCart = {
         },
     ],
     total_quantity: 1,
+    __typename: 'Cart',
 };
