@@ -106,8 +106,6 @@ export const getCategories = async (
         },
     };
 
-    const categoryTreeResponse = await bcGraphQlRequest(categoryTreeQuery, headers);
-
     const categoryQuery = {
         query: getCategoryQuery,
         variables: {
@@ -115,7 +113,10 @@ export const getCategories = async (
         },
     };
 
-    const categoryResponse = await bcGraphQlRequest(categoryQuery, headers);
+    const [categoryTreeResponse, categoryResponse] = await Promise.all([
+        bcGraphQlRequest(categoryTreeQuery, headers),
+        bcGraphQlRequest(categoryQuery, headers),
+    ]);
 
     return {
         categoryTree: categoryTreeResponse.data.site.categoryTree,
