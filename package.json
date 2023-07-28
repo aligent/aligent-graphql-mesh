@@ -7,11 +7,15 @@
     "dev": "yarn start:dev",
     "start:dev": "mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
-    "build": "mesh build --dir ./src/meshrc"
+    "build": "mesh build --dir ./src/meshrc",
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "@graphql-mesh/cli": "0.82.x",
-    "@types/jsonwebtoken": "9.0.x"
+    "@types/jest": "^29.5.3",
+    "@types/jsonwebtoken": "9.0.x",
+    "jest": "^29.6.1",
+    "ts-jest": "^29.1.1"
   },
   "dependencies": {
     "@envelop/core": "4.0.x",
@@ -22,6 +26,7 @@
     "@graphql-mesh/runtime": "0.94.x",
     "axios": "1.4.x",
     "graphql": "16.7.x",
+    "graphql-tag": "^2.12.6",
     "jsonwebtoken": "9.0.x"
   }
 }

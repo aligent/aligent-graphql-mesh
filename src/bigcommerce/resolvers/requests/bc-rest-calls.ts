@@ -30,3 +30,13 @@ export const getBcGraphqlToken = async (data: BcGraphqlTokenData): Promise<strin
     const response = await bcPost(path, data);
     return response.data.token;
 };
+
+export const createEmptyCart = async (): Promise<string> => {
+    const path = `/v3/carts`;
+    const data = {
+        line_items: [],
+    };
+
+    const response = await bcPost(path, data);
+    return response.data.id;
+};

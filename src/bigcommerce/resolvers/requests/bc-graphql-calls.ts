@@ -7,6 +7,7 @@ import {
 } from '../error-handling';
 import { BcProduct, GraphQlQuery, BcStoreConfigMetafields } from '../../types';
 import { getProductBySkuQuery } from './graphql/get-product-by-sku';
+import { getRouteQuery } from './graphql/route';
 import { storeConfigByNamespaceQuery} from './graphql/store-config-by-namespace-query';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
@@ -69,6 +70,22 @@ export const getBcProductGraphql = async (sku: string): Promise<BcProduct> => {
     }
 
     return response.data.site.product;
+};
+
+export const getRoute = async (url: string) => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+
+    const routeQuery = {
+        query: getRouteQuery,
+        variables: {
+            path: url,
+        },
+    };
+
+    const response = await bcGraphQlRequest(routeQuery, headers);
+    return response.data.site.route.node;
 };
 
 //FIXME: replace any with BcStoreConfig
