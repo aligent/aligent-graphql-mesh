@@ -60,7 +60,13 @@ export const getBcProductGraphql = async (sku: string): Promise<BcProduct> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
-    const productBySkuQuery = getProductBySkuQuery(sku);
+
+    const productBySkuQuery = {
+        query: getProductBySkuQuery,
+        variables: {
+            sku: sku,
+        },
+    };
 
     const response = await bcGraphQlRequest(productBySkuQuery, headers);
 

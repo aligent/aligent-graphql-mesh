@@ -1,4 +1,6 @@
-export const mockStoreConfig = {
+import { StoreConfig } from "../../../meshrc/.mesh";
+
+export const mockStoreConfig: StoreConfig = {
     id: 1337,
     category_url_suffix: '.html',
     grid_per_page: 24,
