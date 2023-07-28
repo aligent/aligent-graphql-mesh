@@ -7,14 +7,13 @@ export const productsResolver = {
 
         const acReadyProduct = createAcReadyProduct(bcProduct);
 
-        // if (acReadyProduct.configurable_options) {
-        //     acReadyProduct.items[0].__typename = 'ConfigurableProduct'
-        //     return acReadyProduct;
-        // } else {
-        //     acReadyProduct.items[0].__typename = 'SimpleProduct'
-        //     return acReadyProduct
-        // }
+        if (acReadyProduct.configurable_options) {
+            acReadyProduct.items[0].__typename = 'ConfigurableProduct'
+            return acReadyProduct;
+        } else {
+            acReadyProduct.items[0].__typename = 'SimpleProduct'
+            return acReadyProduct
+        }
 
-        return acReadyProduct
     },
 };
