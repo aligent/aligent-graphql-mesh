@@ -1,90 +1,109 @@
 import {
     CategoryInterface,
+    Maybe,
     MediaGalleryEntry,
     ProductInterface,
+    ProductInterfaceResolvers,
     Products,
 } from '../../meshrc/.mesh';
 import { BcProduct } from '../types';
 
+// const isType = (
+//     parent: TParent,
+//     context: TContext,
+//     info: GraphQLResolveInfo
+//   ) => Maybe<TTypes> | Promise<Maybe<TTypes>> {
 
+//   }
+
+const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProduct' => {
+    if (bcProduct.variants.edges.length === 1) {
+        return 'SimpleProduct';
+    } else {
+        return 'ConfigurableProduct';
+    }
+};
+
+// VirtualProduct' | 'SimpleProduct' | 'DownloadableProduct' | 'BundleProduct' | 'GroupedProduct' | 'ConfigurableProduct' | 'GiftCardProduct'
 export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
     const images = createImages(bcProduct.images);
 
-    return {
-        items: [
-            {
-                categories: createCategories(bcProduct.categories),
-                description: {
-                    html: bcProduct.description,
-                },
-                staged: true,
-                uid: bcProduct.id,
-                custom_attributes: [],
-                id: bcProduct.entityId,
-                media_gallery_entries: images,
-                meta_title: bcProduct.seo.pageTitle,
-                meta_keyword: bcProduct.seo.metaKeywords,
-                meta_description: bcProduct.seo.metaKeywords,
-                name: bcProduct.name,
-                price: {
-                    regularPrice: {
-                        amount: {
-                            currency: bcProduct.prices.price.currencyCode,
-                            value: bcProduct.prices.price.value,
-                        },
-                    },
-                },
-                price_range: {
-                    maximum_price: {
-                        discount: {
-                            amount_off: 1111,
-                            percent_off: 1111,
-                        },
-                        final_price: {
-                            currency: 'AUD',
-                            value: 1111,
-                        },
-                        regular_price: {
-                            currency: bcProduct.prices.priceRange.max.currencyCode,
-                            value: bcProduct.prices.priceRange.max.value,
-                        },
-                    },
-                    minimum_price: {
-                        discount: {
-                            amount_off: 1111,
-                            percent_off: 1111,
-                        },
-                        final_price: {
-                            currency: 'AUD',
-                            value: 1111,
-                        },
-                        regular_price: {
-                            currency: bcProduct.prices.priceRange.min.currencyCode,
-                            value: bcProduct.prices.priceRange.min.value,
-                        },
-                    },
-                },
-                price_tiers: [],
-                rating_summary: bcProduct.reviewSummary.summationOfRatings,
-                review_count: bcProduct.reviewSummary.numberOfReviews,
-                related_products: createRelatedProducts(bcProduct.relatedProducts),
-                sku: bcProduct.sku,
-                small_image: {
-                    url: images[0].file,
-                },
-                stock_status: transformAvailabilityStatus(bcProduct.availabilityV2.status),
-                url_key: bcProduct.addToCartUrl,
-                url_suffix: '.html',
-                reviews: {
-                    items: [],
-                    page_info: {
-                        current_page: 1,
-                        page_size: 1,
-                        total_pages: 1,
-                    },
+    const product: ProductInterface = {
+        __typename: getTypeName(bcProduct),
+        categories: createCategories(bcProduct.categories),
+        description: {
+            html: bcProduct.description,
+        },
+        staged: true,
+        uid: bcProduct.id,
+        custom_attributes: [],
+        id: bcProduct.entityId,
+        media_gallery_entries: images,
+        meta_title: bcProduct.seo.pageTitle,
+        meta_keyword: bcProduct.seo.metaKeywords,
+        meta_description: bcProduct.seo.metaKeywords,
+        name: bcProduct.name,
+        price: {
+            regularPrice: {
+                amount: {
+                    currency: bcProduct.prices.price.currencyCode,
+                    value: bcProduct.prices.price.value,
                 },
             },
-        ],
+        },
+        price_range: {
+            maximum_price: {
+                discount: {
+                    amount_off: 1111,
+                    percent_off: 1111,
+                },
+                final_price: {
+                    currency: 'AUD',
+                    value: 1111,
+                },
+                regular_price: {
+                    currency: bcProduct.prices.priceRange.max.currencyCode,
+                    value: bcProduct.prices.priceRange.max.value,
+                },
+            },
+            minimum_price: {
+                discount: {
+                    amount_off: 1111,
+                    percent_off: 1111,
+                },
+                final_price: {
+                    currency: 'AUD',
+                    value: 1111,
+                },
+                regular_price: {
+                    currency: bcProduct.prices.priceRange.min.currencyCode,
+                    value: bcProduct.prices.priceRange.min.value,
+                },
+            },
+        },
+        price_tiers: [],
+        rating_summary: bcProduct.reviewSummary.summationOfRatings,
+        review_count: bcProduct.reviewSummary.numberOfReviews,
+        related_products: createRelatedProducts(bcProduct.relatedProducts),
+        sku: bcProduct.sku,
+        small_image: {
+            url: images[0].file,
+        },
+        stock_status: transformAvailabilityStatus(bcProduct.availabilityV2.status),
+        url_key: bcProduct.addToCartUrl,
+        url_suffix: '.html',
+        reviews: {
+            items: [],
+            page_info: {
+                current_page: 1,
+                page_size: 1,
+                total_pages: 1,
+            },
+        },
+    };
+
+    return {
+        items: [product],
     };
 };
 
@@ -94,7 +113,6 @@ const transformAvailabilityStatus = (status: BcProduct['availabilityV2']['status
 };
 
 const createCategories = (categories: BcProduct['categories']): CategoryInterface[] => {
-    console.log(JSON.stringify(categories));
     return categories.edges.map((catItem) => {
         return {
             __typename: 'CategoryTree',
@@ -133,8 +151,8 @@ const createRelatedProducts = (
             categories: createCategories(product.node.categories),
             id: product.node.entityId,
             name: product.node.name,
-            rating_summary: product.node.reviewSummary.summationOfRatings,
-            review_count: product.node.reviewSummary.numberOfReviews,
+            rating_summary: 0,
+            review_count: 0,
             staged: true,
             uid: product.node.id,
             custom_attributes: [],
@@ -185,8 +203,9 @@ const createRelatedProducts = (
                 },
             },
             sku: product.node.sku,
+
             small_image: {
-                url: product.node.images.edges[0].node.urlOriginal,
+                url: 'URL',
             },
             url_key: product.node.addToCartUrl,
             url_suffix: '.html',

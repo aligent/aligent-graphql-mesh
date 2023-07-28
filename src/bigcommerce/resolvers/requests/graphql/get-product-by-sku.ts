@@ -4,7 +4,6 @@ import { print } from 'graphql/index';
 
 export const getProductBySkuQuery = stripIgnoredCharacters(
     print(gql`
-    
         query getProductBySku($sku: String!) {
             site {
                 product(sku: $sku) {
@@ -14,6 +13,13 @@ export const getProductBySkuQuery = stripIgnoredCharacters(
                     name
                     addToCartUrl
                     description
+                    variants {
+                        edges {
+                            node {
+                                sku
+                            }
+                        }
+                    }
                     seo {
                         pageTitle
                         metaDescription
@@ -73,6 +79,7 @@ export const getProductBySkuQuery = stripIgnoredCharacters(
                                 entityId
                                 name
                                 sku
+                                id
                                 addToCartUrl
                                 prices {
                                     price {

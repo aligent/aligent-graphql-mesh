@@ -1,4 +1,4 @@
-import { CurrencyEnum } from "../../meshrc/.mesh";
+import { CurrencyEnum } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
@@ -18,6 +18,7 @@ export interface BcProduct {
     name: string;
     addToCartUrl: string;
     description: string;
+    variants: { edges: [node: BcProduct] };
     seo: {
         pageTitle: string;
         metaDescription: string;
@@ -55,7 +56,7 @@ export interface BcProduct {
         ];
     };
     availabilityV2: {
-        status: "Available" | "Preorder" | "Unavailable";
+        status: 'Available' | 'Preorder' | 'Unavailable';
     };
     reviewSummary: {
         numberOfReviews: number;
