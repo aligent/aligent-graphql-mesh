@@ -1,9 +1,10 @@
-import { AcCategoryItem, BcCategory, BcCategoryTree } from '../types';
+import { BcCategory, BcCategoryTree } from '../types';
 import { btoa, slashAtStartOrEnd } from '../../utils';
+import { CategoryTree } from '../../meshrc/.mesh';
 
 interface Category extends BcCategory, BcCategoryTree {}
 
-export const getTransformedCategoriesData = (category: Category): AcCategoryItem => {
+export const getTransformedCategoriesData = (category: Category): CategoryTree => {
     const { children, description, entityId, name, path, products, seo } = category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
@@ -21,8 +22,10 @@ export const getTransformedCategoriesData = (category: Category): AcCategoryItem
         name,
         position: 0,
         product_count: productCount,
+        redirect_code: 0,
         uid: btoa(entityId.toString()),
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
+        staged: false,
     };
 };

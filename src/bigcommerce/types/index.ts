@@ -107,25 +107,3 @@ export interface BcCategory {
         pageTitle: string;
     };
 }
-
-export interface AcCategory {
-    items: AcCategoryItem[];
-}
-
-export interface AcCategoryItem {
-    breadcrumbs?: null;
-    children?: AcCategoryItem[];
-    children_count?: string;
-    description?: string;
-    id?: number;
-    include_in_menu?: number;
-    meta_description?: string;
-    meta_title?: string;
-    name?: string;
-    position?: number;
-    product_count?: number;
-    uid?: string;
-    url_path?: string;
-    url_suffix?: string;
-    __typename?: CategoryTreeTypename;
-}

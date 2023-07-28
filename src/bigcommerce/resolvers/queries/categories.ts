@@ -1,7 +1,7 @@
 import { atob } from '../../../utils';
 import { getCategories } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
-import { AcCategory } from '../../types';
+import { CategoryResult } from '../../../meshrc/.mesh';
 
 export const categoriesResolver = {
     resolve: async (
@@ -11,7 +11,7 @@ export const categoriesResolver = {
             headers: { authorization: string };
         },
         info: any
-    ): Promise<AcCategory> => {
+    ): Promise<CategoryResult> => {
         const {
             filters: {
                 category_uid: { eq: categoryUid },
@@ -33,7 +33,16 @@ export const categoriesResolver = {
          * of a default category.
          * */
         return Number(atob(categoryUid)) === 2
-            ? { items: [{ children: transformedData, uid: categoryUid }] }
+            ? {
+                  items: [
+                      {
+                          children: transformedData,
+                          redirect_code: 0,
+                          staged: false,
+                          uid: categoryUid,
+                      },
+                  ],
+              }
             : { items: transformedData };
     },
 };
