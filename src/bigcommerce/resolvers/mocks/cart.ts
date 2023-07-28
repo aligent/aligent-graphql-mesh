@@ -1,183 +1,399 @@
+import { productsMock } from './products';
+
 export const mockCart = {
-    id: "MOCKHTnZsIwxnoPokubNi04ZAxNopLydKfcI",
-    total_quantity: 4,
-    error_type: "NONE",
-    items: [
+    applied_coupon: null,
+    applied_coupons: null,
+    applied_gift_cards: [],
+    applied_reward_points: null,
+    applied_store_credit: {
+        applied_balance: {
+            currency: 'AUD',
+            value: 0,
+        },
+        current_balance: {
+            currency: 'AUD',
+            value: 0,
+        },
+        enabled: true,
+    },
+    available_gift_wrappings: [],
+    available_payment_methods: [
         {
-            id: "43073",
-            uid: "NDMwNzM=",
-            errors: null,
-            prices: {
-                price_including_tax: {
-                    currency: "AUD",
-                    value: 30,
-                    __typename: "Money",
-                },
-                __typename: "CartItemPrices",
-            },
-            product: {
-                id: 1034,
-                name: "Mona Pullover Hoodlie",
-                sku: "WH01",
-                small_image: {
-                    url: "https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/w/h/wh01-green_main.jpg",
-                    label: "Mona Pullover Hoodlie",
-                    __typename: "ProductImage",
-                },
-                categories: [],
-                price_range: {
-                    minimum_price: {
-                        final_price: {
-                            currency: "AUD",
-                            value: 30,
-                            __typename: "Money",
-                        },
-                        discount: {
-                            amount_off: 27,
-                            __typename: "ProductDiscount",
-                        },
-                        regular_price: {
-                            currency: "AUD",
-                            value: 57,
-                            __typename: "Money",
-                        },
-                        __typename: "ProductPrice",
-                    },
-                    __typename: "PriceRange",
-                },
-                rating_summary: 0,
-                review_count: 0,
-                stock_status: "IN_STOCK",
-                url_key: "mona-pullover-hoodlie",
-                url_suffix: ".html",
-                __typename: "ConfigurableProduct",
-            },
-            quantity: 3,
-            configurable_options: [
-                {
-                    id: 93,
-                    option_label: "Color",
-                    value_id: 62,
-                    value_label: "Green",
-                    __typename: "SelectedConfigurableOption",
-                },
-                {
-                    id: 187,
-                    option_label: "Size",
-                    value_id: 180,
-                    value_label: "S",
-                    __typename: "SelectedConfigurableOption",
-                },
-            ],
-            __typename: "ConfigurableCartItem",
+            code: 'checkmo',
+            is_deferred: false,
+            title: 'Check / Money order',
         },
         {
-            id: "43075",
-            uid: "NDMwNzU=",
-            errors: null,
-            prices: {
-                price_including_tax: {
-                    currency: "AUD",
-                    value: 56.25,
-                    __typename: "Money",
-                },
-                __typename: "CartItemPrices",
-            },
-            product: {
-                id: 1227,
-                name: "Josie Yoga Jacket",
-                sku: "WJ02",
-                small_image: {
-                    url: "https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/w/j/wj02-blue_main.jpg",
-                    label: "Josie Yoga Jacket",
-                    __typename: "ProductImage",
-                },
-                categories: [],
-                price_range: {
-                    minimum_price: {
-                        final_price: {
-                            currency: "AUD",
-                            value: 56.25,
-                            __typename: "Money",
-                        },
-                        discount: {
-                            amount_off: 0,
-                            __typename: "ProductDiscount",
-                        },
-                        regular_price: {
-                            currency: "AUD",
-                            value: 56.25,
-                            __typename: "Money",
-                        },
-                        __typename: "ProductPrice",
-                    },
-                    __typename: "PriceRange",
-                },
-                rating_summary: 0,
-                review_count: 0,
-                stock_status: "IN_STOCK",
-                url_key: "josie-yoga-jacket",
-                url_suffix: ".html",
-                __typename: "ConfigurableProduct",
-            },
-            quantity: 1,
-            configurable_options: [
-                {
-                    id: 93,
-                    option_label: "Color",
-                    value_id: 59,
-                    value_label: "Blue",
-                    __typename: "SelectedConfigurableOption",
-                },
-                {
-                    id: 187,
-                    option_label: "Size",
-                    value_id: 180,
-                    value_label: "S",
-                    __typename: "SelectedConfigurableOption",
-                },
-            ],
-            __typename: "ConfigurableCartItem",
+            code: 'purchaseorder',
+            is_deferred: false,
+            title: 'Purchase Order',
+        },
+        {
+            code: 'paypal_express',
+            is_deferred: true,
+            title: 'PayPal Express Checkout',
+        },
+        {
+            code: 'hosted_pro',
+            is_deferred: true,
+            title: 'Payment by cards or by PayPal account',
+        },
+        {
+            code: 'adyen_cc_vault',
+            is_deferred: true,
+            title: 'Stored Cards (Adyen)',
+        },
+        {
+            code: 'afterpay',
+            is_deferred: true,
+            title: 'Afterpay',
+        },
+        {
+            code: 'braintree',
+            is_deferred: true,
+            title: 'Credit Card (Braintree Sandbox)',
+        },
+        {
+            code: 'braintree_paypal',
+            is_deferred: true,
+            title: 'PayPal (Braintree)',
+        },
+        {
+            code: 'braintree_cc_vault',
+            is_deferred: true,
+            title: 'Stored Cards (Braintree)',
+        },
+        {
+            code: 'braintree_paypal_vault',
+            is_deferred: true,
+            title: 'Stored Accounts (PayPal)',
+        },
+        {
+            code: 'adyen_oneclick',
+            is_deferred: true,
+            title: 'Adyen Stored Payment Methods',
+        },
+        {
+            code: 'adyen_cc',
+            is_deferred: true,
+            title: 'Credit Card',
         },
     ],
-    is_virtual: false,
+    billing_address: {
+        city: 'Adelaide',
+        company: 'Aligent',
+        country: {
+            code: 'AU',
+            label: 'AU',
+        },
+        customer_notes: 'This is a billing note',
+        firstname: 'John',
+        lastname: 'Doe',
+        postcode: '5000',
+        region: {
+            code: 'SA',
+            label: 'South Australia',
+            region_id: 573,
+        },
+        street: ['1 pirie st'],
+        telephone: '0000000000',
+        uid: 'MTIyNzEw',
+        vat_id: null,
+    },
+    cart_reward_points: {
+        money: {
+            currency: 'AUD',
+            value: 52.5,
+        },
+        points: 530,
+    },
+    email: 'john.doe@aligent.com.au',
+    error_type: null,
     free_shipping_details: {
         free_shipping_active: true,
         free_shipping_percentage: 100,
         free_shipping_remaining: {
+            currency: 'AUD',
             value: 0,
-            currency: "AUD",
-            __typename: "Money",
         },
         free_shipping_threshold: {
+            currency: 'AUD',
             value: 1,
-            currency: "AUD",
-            __typename: "Money",
         },
-        __typename: "FreeShippingDetails",
     },
+    gift_message: null,
+    gift_receipt_included: false,
+    gift_wrapping: null,
+    id: '8D6fzVllsGQJirjIeAloJUm4g5nub0Fv',
+    is_virtual: false,
+    items: [
+        {
+            errors: null,
+            id: '44342',
+            prices: {
+                discounts: null,
+                fixed_product_taxes: [],
+                price: {
+                    currency: 'AUD',
+                    value: 27.27,
+                },
+                price_including_tax: {
+                    value: 30,
+                    currency: 'AUD',
+                },
+                row_total: {
+                    value: 27.27,
+                    currency: 'AUD',
+                },
+                row_total_including_tax: {
+                    currency: 'AUD',
+                    value: 30,
+                },
+                total_item_discount: {
+                    currency: 'AUD',
+                    value: 0,
+                },
+            },
+            product: productsMock.items[0],
+            quantity: 1,
+            uid: 'NDQzNDI=',
+        },
+    ],
     prices: {
         applied_taxes: [
             {
                 amount: {
-                    currency: "AUD",
-                    value: 13.3,
-                    __typename: "Money",
+                    currency: 'AUD',
+                    value: 4.78,
                 },
-                __typename: "CartTaxItem",
+                label: 'GST',
             },
         ],
+        discount: null,
+        discounts: [],
+        gift_options: {
+            gift_wrapping_for_items: {
+                currency: 'AUD',
+                value: 0,
+            },
+            gift_wrapping_for_order: {
+                currency: 'AUD',
+                value: 0,
+            },
+            printed_card: {
+                currency: 'AUD',
+                value: 0,
+            },
+        },
         grand_total: {
-            currency: "AUD",
-            value: 146.25,
-            __typename: "Money",
+            currency: 'AUD',
+            value: 52.5,
+        },
+        subtotal_excluding_tax: {
+            currency: 'AUD',
+            value: 27.27,
         },
         subtotal_including_tax: {
-            currency: "AUD",
-            value: 146.25,
-            __typename: "Money",
+            currency: 'AUD',
+            value: 30,
         },
-        __typename: "CartPrices",
+        subtotal_with_discount_excluding_tax: {
+            currency: 'AUD',
+            value: 27.27,
+        },
+        subtotal_with_discount_including_tax: {
+            currency: 'AUD',
+            value: 30,
+        },
     },
-    __typename: "Cart",
+    printed_card_included: false,
+    selected_payment_method: {
+        code: '',
+        purchase_order_number: null,
+        title: '',
+    },
+    shipping_addresses: [
+        {
+            available_shipping_methods: [
+                {
+                    amount: {
+                        currency: 'AUD',
+                        value: 0,
+                    },
+                    available: true,
+                    base_amount: null,
+                    carrier_code: 'freeshipping',
+                    carrier_title: 'Free Shipping',
+                    error_message: '',
+                    method_code: 'freeshipping',
+                    method_title: 'Free',
+                    price_excl_tax: {
+                        currency: 'AUD',
+                        value: 0,
+                    },
+                    price_incl_tax: {
+                        currency: 'AUD',
+                        value: 0,
+                    },
+                },
+                {
+                    amount: {
+                        currency: 'AUD',
+                        value: 12,
+                    },
+                    available: true,
+                    base_amount: null,
+                    carrier_code: 'flatrate',
+                    carrier_title: 'Flat Rate',
+                    error_message: '',
+                    method_code: 'flatrate',
+                    method_title: 'Fixed',
+                    price_excl_tax: {
+                        currency: 'AUD',
+                        value: 10.91,
+                    },
+                    price_incl_tax: {
+                        currency: 'AUD',
+                        value: 12,
+                    },
+                },
+                {
+                    amount: {
+                        currency: 'AUD',
+                        value: 22.5,
+                    },
+                    available: true,
+                    base_amount: null,
+                    carrier_code: 'tablerate',
+                    carrier_title: 'Best Way',
+                    error_message: '',
+                    method_code: 'bestway',
+                    method_title: 'Table Rate',
+                    price_excl_tax: {
+                        currency: 'AUD',
+                        value: 20.45,
+                    },
+                    price_incl_tax: {
+                        currency: 'AUD',
+                        value: 22.5,
+                    },
+                },
+            ],
+            cart_items: [
+                {
+                    cart_item_id: 44342,
+                    quantity: 1,
+                },
+                {
+                    cart_item_id: 44343,
+                    quantity: 1,
+                },
+            ],
+            cart_items_v2: [
+                {
+                    errors: null,
+                    id: '44342',
+                    prices: {
+                        discounts: null,
+                        fixed_product_taxes: [],
+                        price: {
+                            currency: 'AUD',
+                            value: 27.27,
+                        },
+                        price_including_tax: {
+                            currency: 'AUD',
+                            value: 30,
+                        },
+                        row_total: {
+                            currency: 'AUD',
+                            value: 27.27,
+                        },
+                        row_total_including_tax: {
+                            currency: 'AUD',
+                            value: 30,
+                        },
+                        total_item_discount: {
+                            currency: 'AUD',
+                            value: 0,
+                        },
+                    },
+                    quantity: 1,
+                },
+                {
+                    errors: null,
+                    id: '44343',
+                    prices: {
+                        discounts: null,
+                        fixed_product_taxes: [],
+                        price: {
+                            currency: 'AUD',
+                            value: 0,
+                        },
+                        price_including_tax: {
+                            currency: 'AUD',
+                            value: null,
+                        },
+                        row_total: {
+                            currency: 'AUD',
+                            value: 0,
+                        },
+                        row_total_including_tax: {
+                            currency: 'AUD',
+                            value: null,
+                        },
+                        total_item_discount: {
+                            currency: 'AUD',
+                            value: 0,
+                        },
+                    },
+                    quantity: 1,
+                },
+            ],
+            city: 'Adelaide',
+            company: null,
+            country: {
+                code: 'AU',
+                label: 'AU',
+            },
+            customer_notes: null,
+            deliveryInstructions: {
+                authorityToLeave: false,
+                instructions: '',
+            },
+            firstname: 'John',
+            items_weight: 1,
+            lastname: 'Doe',
+            pickup_location_code: null,
+            postcode: '5000',
+            region: {
+                code: 'SA',
+                label: 'South Australia',
+                region_id: 573,
+            },
+            selected_shipping_method: {
+                amount: {
+                    currency: 'AUD',
+                    value: 20.45,
+                },
+                base_amount: null,
+                carrier_code: 'tablerate',
+                carrier_title: 'Best Way',
+                method_code: 'bestway',
+                method_title: 'Table Rate',
+                price_excl_tax: {
+                    currency: 'AUD',
+                    value: 20.45,
+                },
+                price_incl_tax: {
+                    currency: 'AUD',
+                    value: 22.5,
+                },
+            },
+            street: ['1 pirie st'],
+            telephone: '0000000000',
+            uid: 'MTIxNTIy',
+            vat_id: null,
+        },
+    ],
+    total_quantity: 1,
 };
