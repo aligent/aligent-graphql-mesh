@@ -101,5 +101,5 @@ export const getStoreConfig = async (namespace: string): Promise<BcStoreConfigMe
         logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductGraphql.name);
     }
 
-    return response.data.channel.metafields.edges
+    return response.data
 };
