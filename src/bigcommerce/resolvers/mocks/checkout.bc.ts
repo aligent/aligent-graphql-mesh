@@ -1,6 +1,47 @@
 import { mockBcCart } from './cart.bc';
 
 export const mockBcCheckout = {
+    id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',
+    entityId: '98bf4b97-14a8-4860-ada3-44a780c24eb4',
+    cart: mockBcCart,
+    taxes: [
+        {
+            name: 'GST',
+            amount: {
+                currencyCode: 'AUD',
+                value: 8.18,
+            },
+        },
+    ],
+    subtotal: {
+        value: 90,
+        currencyCode: 'AUD',
+    },
+    shippingCostTotal: {
+        value: 0,
+        currencyCode: 'AUD',
+    },
+    handlingCostTotal: {
+        value: 0,
+        currencyCode: 'AUD',
+    },
+    taxTotal: {
+        value: 8.18,
+        currencyCode: 'AUD',
+    },
+    grandTotal: {
+        value: 90,
+        currencyCode: 'AUD',
+    },
+    outstandingBalance: {
+        value: 90,
+        currencyCode: 'AUD',
+    },
+    giftWrappingCostTotal: {
+        value: 0,
+        currencyCode: 'AUD',
+    },
+    coupons: [],
     billingAddress: {
         stateOrProvinceCode: 'QLD',
         stateOrProvince: 'Queensland',
@@ -27,30 +68,6 @@ export const mockBcCheckout = {
         city: 'Gold Coast',
         address2: '',
         address1: '14 Billing Ct',
-    },
-    updatedAt: {
-        utc: '2023-07-28T01:17:18Z',
-    },
-    taxes: [
-        {
-            name: 'GST',
-            amount: {
-                currencyCode: 'AUD',
-                value: 8.18,
-            },
-        },
-    ],
-    taxTotal: {
-        value: 8.18,
-        currencyCode: 'AUD',
-    },
-    subtotal: {
-        value: 90,
-        currencyCode: 'AUD',
-    },
-    shippingCostTotal: {
-        value: 0,
-        currencyCode: 'AUD',
     },
     shippingConsignments: [
         {
@@ -112,29 +129,12 @@ export const mockBcCheckout = {
             },
         },
     ],
-    outstandingBalance: {
-        value: 90,
-        currencyCode: 'AUD',
-    },
     order: null,
-    id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',
-    handlingCostTotal: {
-        value: 0,
-        currencyCode: 'AUD',
-    },
-    grandTotal: {
-        value: 90,
-        currencyCode: 'AUD',
-    },
-    giftWrappingCostTotal: {
-        value: 0,
-        currencyCode: 'AUD',
-    },
-    entityId: '98bf4b97-14a8-4860-ada3-44a780c24eb4',
     customerMessage: 'This is my order',
     createdAt: {
         utc: '2023-07-28T00:53:59Z',
     },
-    coupons: [],
-    cart: mockBcCart,
+    updatedAt: {
+        utc: '2023-07-28T01:17:18Z',
+    },
 };

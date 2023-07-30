@@ -33,17 +33,27 @@ export const mockBcCart = {
         giftCertificates: [],
         physicalItems: [
             {
+                name: 'Mona Pullover Hoodlie',
                 brand: 'Weller',
-                couponAmount: {
-                    currencyCode: 'AUD',
-                    value: 0,
-                },
-                discountedAmount: {
-                    currencyCode: 'AUD',
-                    value: 0,
-                },
-                discounts: [],
+                sku: 'WH01-S-Green',
+                url: 'https://aligent.mybigcommerce.com/mona-pullover-hoodlie/',
                 entityId: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
+                variantEntityId: 513,
+                parentEntityId: null,
+                productEntityId: 492,
+                discounts: [],
+                originalPrice: {
+                    currencyCode: 'AUD',
+                    value: 55,
+                },
+                listPrice: {
+                    currencyCode: 'AUD',
+                    value: 30,
+                },
+                salePrice: {
+                    currencyCode: 'AUD',
+                    value: 30,
+                },
                 extendedListPrice: {
                     currencyCode: 'AUD',
                     value: 90,
@@ -52,27 +62,15 @@ export const mockBcCart = {
                     currencyCode: 'AUD',
                     value: 90,
                 },
-                giftWrapping: null,
-                imageUrl:
-                    'https://cdn11.bigcommerce.com/s-xxazhvt7gd/product_images/attribute_rule_images/54_thumb_1690452039.jpg',
-                isShippingRequired: true,
-                isTaxable: true,
-                listPrice: {
+                couponAmount: {
                     currencyCode: 'AUD',
-                    value: 30,
+                    value: 0,
                 },
-                name: 'Mona Pullover Hoodlie',
-                originalPrice: {
+                discountedAmount: {
                     currencyCode: 'AUD',
-                    value: 55,
+                    value: 0,
                 },
-                parentEntityId: null,
-                productEntityId: 492,
                 quantity: 3,
-                salePrice: {
-                    currencyCode: 'AUD',
-                    value: 30,
-                },
                 selectedOptions: [
                     {
                         name: 'Color',
@@ -89,9 +87,11 @@ export const mockBcCart = {
                         value: 'S',
                     },
                 ],
-                url: 'https://aligent.mybigcommerce.com/mona-pullover-hoodlie/',
-                sku: 'WH01-S-Green',
-                variantEntityId: 513,
+                giftWrapping: null,
+                imageUrl:
+                    'https://cdn11.bigcommerce.com/s-xxazhvt7gd/product_images/attribute_rule_images/54_thumb_1690452039.jpg',
+                isShippingRequired: true,
+                isTaxable: true,
             },
         ],
         totalQuantity: 3,
