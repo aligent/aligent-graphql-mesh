@@ -84,7 +84,7 @@ interface Money {
     currencyCode: string;
 }
 
-export interface Countries {
+export interface Country {
     id: number;
     country: string;
     country_iso2: string;
@@ -95,7 +95,7 @@ export interface Countries {
     };
 }
 
-export interface CountriesStates {
+export interface CountryStates {
     id: number;
     state: string;
     state_abbreviation: string;
