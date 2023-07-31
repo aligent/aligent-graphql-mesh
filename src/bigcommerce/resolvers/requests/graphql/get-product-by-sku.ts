@@ -57,6 +57,23 @@ export const getProductBySkuQuery = stripIgnoredCharacters(
                         numberOfReviews
                         summationOfRatings
                     }
+                    reviews {
+                        edges {
+                            cursor
+                            node {
+                                entityId
+                                author {
+                                    name
+                                }
+                                title
+                                text
+                                rating
+                                createdAt {
+                                    utc
+                                }
+                            }
+                        }
+                    }
                     prices {
                         price {
                             value

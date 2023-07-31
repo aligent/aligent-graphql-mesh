@@ -1,20 +1,10 @@
 import {
     CategoryInterface,
-    Maybe,
     MediaGalleryEntry,
     ProductInterface,
-    ProductInterfaceResolvers,
     Products,
 } from '../../meshrc/.mesh';
 import { BcProduct } from '../types';
-
-// const isType = (
-//     parent: TParent,
-//     context: TContext,
-//     info: GraphQLResolveInfo
-//   ) => Maybe<TTypes> | Promise<Maybe<TTypes>> {
-
-//   }
 
 const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProduct' => {
     if (bcProduct.variants.edges.length === 1) {
@@ -25,7 +15,7 @@ const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProdu
 };
 
 // VirtualProduct' | 'SimpleProduct' | 'DownloadableProduct' | 'BundleProduct' | 'GroupedProduct' | 'ConfigurableProduct' | 'GiftCardProduct'
-export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
+export const createAcReadyProduct = (bcProduct: BcProduct): Products=> {
     const images = createImages(bcProduct.images);
 
     const product: ProductInterface = {
@@ -102,9 +92,30 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
         },
     };
 
+    product.reviews.items.push(createReviewItems(bcProduct.reviews, product));
+
     return {
         items: [product],
     };
+};
+
+const createReviewItems = (reviews: BcProduct['reviews'], product: ProductInterface) => {
+    return reviews.edges.map((review) => {
+        return {
+            ratings_breakdown: [
+                {
+                    name: review.node.author.name,
+                    value: 'value',
+                },
+            ],
+            average_rating: review.node.rating,
+            created_at: review.node.createdAt.utc,
+            nickname: 'nickname',
+            summary: review.node.title,
+            text: review.node.text,
+            product: product,
+        };
+    });
 };
 
 const transformAvailabilityStatus = (status: BcProduct['availabilityV2']['status']) => {

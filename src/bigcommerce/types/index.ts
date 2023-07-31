@@ -55,6 +55,31 @@ export interface BcProduct {
             }
         ];
     };
+    reviews: {
+        edges: [
+            {
+                cursor: string;
+                node: {
+                    entityId: number;
+                    author: {
+                        name: string;
+                    };
+                    title: string;
+                    text: string;
+                    rating: number;
+                    createdAt: {
+                        utc: string;
+                    };
+                };
+            }
+        ];
+        pageInfo: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor: string;
+            endCursor: string;
+        };
+    };
     availabilityV2: {
         status: 'Available' | 'Preorder' | 'Unavailable';
     };
