@@ -19,7 +19,7 @@ export const transformCountries = async (countries: Country[]) => {
     );
 };
 
-const transformCountry = (country: Country, states: CountryStates[]) => {
+export const transformCountry = (country: Country, states: CountryStates[]) => {
     const transformedCountryStates = transformCountriesStates(states);
 
     return {
@@ -30,7 +30,7 @@ const transformCountry = (country: Country, states: CountryStates[]) => {
     };
 };
 
-const transformCountriesStates = (states: CountryStates[]) => {
+export const transformCountriesStates = (states: CountryStates[]) => {
     if (states.length > 0) {
         return states.map((state) => {
             return {
