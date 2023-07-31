@@ -1,6 +1,7 @@
 merger: stitching
 sources:
-  - !include ../bigcommerce/api.yml
+  - !include ../bigcommerce/take-flight-graphql-api.yml
+  - !include ../bigcommerce/bc-graphql-api.yml
 
 additionalResolvers:
   - '../bigcommerce/resolvers/resolver-definitions'

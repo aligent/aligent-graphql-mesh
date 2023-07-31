@@ -1,4 +1,0 @@
-name: TakeFlightGraphqlApi
-handler:
-  graphql:
-    endpoint: https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/graphql
