@@ -1,6 +1,7 @@
 import { getNewUrl } from '../../utils/get-url';
 import { getIsVirtualCart } from '../../utils/get-is-virtual-cart';
 import {
+    AvailableShippingMethod,
     BC_CartPhysicalItem,
     BC_CartSelectedMultipleChoiceOption,
     BC_Checkout,
@@ -9,10 +10,18 @@ import {
     BC_CheckoutConsignmentAddress,
     BC_CheckoutSelectedShippingOption,
     BC_CheckoutShippingConsignment,
+    BillingCartAddress,
     Cart,
+    CartAddressCountry,
+    CartAddressInterface,
     CartTaxItem,
     CurrencyEnum,
+    InputMaybe,
     Maybe,
+    Scalars,
+    SelectedShippingMethod,
+    ShippingAddressInput,
+    ShippingCartAddress,
 } from '../../meshrc/.mesh';
 
 const getCartItems = (cartItems: Array<BC_CartPhysicalItem> | undefined = []) => {
@@ -116,19 +125,13 @@ const getCartItems = (cartItems: Array<BC_CartPhysicalItem> | undefined = []) =>
     });
 };
 
-const getShippingMethod = (
-    shippingOption:
-        | BC_CheckoutAvailableShippingOption
-        | BC_CheckoutSelectedShippingOption
-        | null
-        | undefined
-) => {
-    if (!shippingOption) return {};
-
-    const { type, transitTime, imageUrl, entityId, description, cost } = shippingOption;
+const getAvailableShippingMethod = (
+    shippingOption: BC_CheckoutAvailableShippingOption | BC_CheckoutSelectedShippingOption
+): AvailableShippingMethod => {
+    const { type, transitTime, imageUrl, entityId = '', description, cost } = shippingOption;
     return {
         amount: {
-            currency: cost.currencyCode,
+            currency: cost.currencyCode as Maybe<CurrencyEnum>,
             value: cost.value,
         },
         // If the option is returned in the data it's available?
@@ -137,24 +140,31 @@ const getShippingMethod = (
         carrier_code: type,
         carrier_title: description,
         error_message: '',
-        method_code: entityId,
+        method_code: entityId || '',
         method_title: description,
         // @todo work if "cost" is ex or inc gst
         price_excl_tax: {
-            currency: cost.currencyCode,
+            currency: cost.currencyCode as Maybe<CurrencyEnum>,
             value: cost.value,
         },
         price_incl_tax: {
-            currency: cost.currencyCode,
+            currency: cost.currencyCode as Maybe<CurrencyEnum>,
             value: cost.value,
         },
     };
 };
 
-const getAddress = (
-    bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillingAddress | undefined | null
-) => {
-    if (!bcAddress) return null;
+const getSelectedShippingMethod = (
+    shippingOption: BC_CheckoutSelectedShippingOption
+): SelectedShippingMethod => {
+    return {
+        ...getAvailableShippingMethod(shippingOption),
+        method_code: shippingOption.entityId || '',
+        method_title: shippingOption.description,
+    };
+};
+
+const getAddress = (bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillingAddress) => {
     const {
         stateOrProvinceCode,
         stateOrProvince,
@@ -166,18 +176,18 @@ const getAddress = (
         countryCode,
         company,
         city,
-        address2,
-        address1,
+        address2 = null,
+        address1 = null,
     } = bcAddress;
 
     return {
-        firstname: firstName,
-        lastname: lastName,
+        firstname: firstName || '',
+        lastname: lastName || '',
         company: company,
-        city: city,
+        city: city ? city : '',
         country: {
-            code: countryCode,
-            label: countryCode, // Only "countryCode" comes from the bc checkout query
+            code: countryCode || '',
+            label: countryCode || '', // Only "countryCode" comes from the bc checkout query
         },
         postcode: postalCode,
         region: {
@@ -187,32 +197,41 @@ const getAddress = (
         },
         street: [address1, address2].filter(Boolean),
         telephone: phone,
+        uid: '',
     };
 };
 
 const getShippingAddresses = (
     bcShippingAddresses: Array<BC_CheckoutShippingConsignment> | undefined | null,
     customerMessage: string | null | undefined
-) => {
+): Array<Maybe<ShippingCartAddress>> => {
     if (!bcShippingAddresses) return [];
-    const shippingAddresses = bcShippingAddresses.map(bcAddress => {
-        const {
-            shippingCost,
-            selectedShippingOption,
-            lineItemIds,
-            handlingCost,
-            entityId,
-            coupons,
-            availableShippingOptions,
-            address,
-        } = bcAddress;
 
-        return {
-            ...getAddress(address),
-            available_shipping_methods: availableShippingOptions?.map(getShippingMethod) || [],
-            selected_shipping_method: getShippingMethod(selectedShippingOption),
-            customer_notes: customerMessage,
-            deliveryInstructions: {
+    return bcShippingAddresses.map(
+        (bcAddress: BC_CheckoutShippingConsignment): ShippingCartAddress => {
+            const {
+                shippingCost,
+                selectedShippingOption,
+                lineItemIds,
+                handlingCost,
+                entityId,
+                coupons,
+                availableShippingOptions,
+                address,
+            } = bcAddress;
+
+            return {
+                ...getAddress(address),
+                available_shipping_methods:
+                    availableShippingOptions?.map(getAvailableShippingMethod) || [],
+                selected_shipping_method: selectedShippingOption
+                    ? getSelectedShippingMethod(selectedShippingOption)
+                    : null,
+                customer_notes: customerMessage,
+                deliveryInstructions: {
+                    authorityToLeave: false,
+                    instructions: '',
+                },
                 /* @todo This is from "customFields" on the "shippingAddress" object. To get this
                  *  we need to know what customField.fieldId corresponds to. The BC Aligent instance currently
                  * shows this as
@@ -227,13 +246,9 @@ const getShippingAddresses = (
                  *   }
                  * ]
                  */
-                authorityToLeave: false,
-                instructions: '',
-            },
-        };
-    });
-
-    return shippingAddresses;
+            };
+        }
+    );
 };
 
 export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
@@ -291,11 +306,11 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
             const { name, amount } = tax;
             return {
                 amount: {
-                    currency: amount?.currencyCode,
+                    currency: amount?.currencyCode as Maybe<CurrencyEnum>,
                     value: amount?.value,
                 },
                 label: name,
-            } as CartTaxItem;
+            };
         }) || null;
 
     return {
@@ -342,8 +357,24 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
                 currency: taxTotal?.currencyCode as Maybe<CurrencyEnum>,
             },
         },
-        billing_address: getAddress(billingAddress),
+        billing_address: billingAddress ? getAddress(billingAddress) : null,
         shipping_addresses: getShippingAddresses(shippingConsignments, customerMessage),
         __typename: 'Cart',
     };
 };
+
+type AcName = {
+    name: string;
+};
+
+type BcName = {
+    name: string | undefined;
+};
+
+const getName = ({ name }: BcName): AcName => {
+    return {
+        name: name || '',
+    };
+};
+
+getName({ name: 'Brett' });
