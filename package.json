@@ -8,14 +8,24 @@
     "start:dev": "mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
     "build": "mesh build --dir ./src/meshrc",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "lint": "eslint --color . --ext .ts",
+    "lint:fix": "eslint --color --fix . --ext .ts",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "check-types": "tsc --pretty --noEmit"
   },
   "devDependencies": {
     "@graphql-mesh/cli": "0.82.x",
     "@types/jest": "29.5.x",
     "@types/jsonwebtoken": "9.0.x",
     "jest": "29.6.x",
-    "ts-jest": "29.1.x"
+    "ts-jest": "29.1.x",
+    "eslint": "^8.46.0",
+    "prettier": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint-config-prettier": "^8.8.0"
   },
   "dependencies": {
     "@envelop/core": "4.0.x",
