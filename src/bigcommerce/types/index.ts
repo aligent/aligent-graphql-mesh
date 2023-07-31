@@ -1,5 +1,9 @@
 import { CurrencyEnum } from '../../meshrc/.mesh';
 
+export enum CategoryTreeTypename {
+    CategoryTree = 'CategoryTree',
+}
+
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -106,4 +110,28 @@ export interface BcProduct {
 interface Money {
     value: number;
     currencyCode: CurrencyEnum;
+}
+
+export interface BcCategoryTree {
+    children?: BcCategoryTree[];
+    description?: string;
+    entityId: number;
+    name: string;
+    path: string;
+    productCount: number;
+}
+
+export interface BcCategory {
+    description?: string;
+    metaDescription?: string;
+    pageTitle?: string;
+    products?: {
+        collectionInfo: {
+            totalItems: number;
+        };
+    };
+    seo?: {
+        metaDescription: string;
+        pageTitle: string;
+    };
 }
