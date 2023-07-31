@@ -991,6 +991,15 @@
     json-pointer "0.6.2"
     lodash.get "4.4.2"
 
+"@graphql-mesh/transform-prefix@^0.95.0":
+  version "0.95.0"
+  resolved "https://registry.yarnpkg.com/@graphql-mesh/transform-prefix/-/transform-prefix-0.95.0.tgz#c9b8a93959d362dba30315dcf7660dd6fd3a2958"
+  integrity sha512-O4514gsVAYnZTBJrB33k4WiIxp1097/o4AJRXSMnlGly0Izw/ciazI3pFIb48n99/VBb1gX+3M7mgbPVNZn1sA==
+  dependencies:
+    "@graphql-tools/delegate" "^10.0.0"
+    "@graphql-tools/wrap" "^10.0.0"
+    graphql-scalars "^1.22.2"
+
 "@graphql-mesh/types@^0.93.1":
   version "0.93.2"
   resolved "https://registry.yarnpkg.com/@graphql-mesh/types/-/types-0.93.2.tgz#053a41567234af72bbc65acf4a2e88126132d9d3"
@@ -2905,7 +2914,14 @@ graphql-import-node@^0.0.5:
   resolved "https://registry.yarnpkg.com/graphql-import-node/-/graphql-import-node-0.0.5.tgz#caf76a6cece10858b14f27cce935655398fc1bf0"
   integrity sha512-OXbou9fqh9/Lm7vwXT0XoRN9J5+WCYKnbiTalgFDvkQERITRmcfncZs6aVABedd5B85yQU5EULS4a5pnbpuI0Q==
 
-graphql-tag@^2.11.0:
+graphql-scalars@^1.22.2:
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/graphql-scalars/-/graphql-scalars-1.22.2.tgz#6326e6fe2d0ad4228a9fea72a977e2bf26b86362"
+  integrity sha512-my9FB4GtghqXqi/lWSVAOPiTzTnnEzdOXCsAC2bb5V7EFNQjVjwy3cSSbUvgYOtDuDibd+ZsCDhz+4eykYOlhQ==
+  dependencies:
+    tslib "^2.5.0"
+
+graphql-tag@^2.11.0, graphql-tag@^2.12.6:
   version "2.12.6"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
   integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
