@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { logAndThrowUnknownError, throwAndLogAxiosError } from '../error-handling';
-import { BcGraphqlTokenData } from '../../types';
+import { BcCustomer, BcGraphqlTokenData } from '../../types';
 
 const BC_REST_API = process.env.BC_REST_API as string;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
@@ -39,4 +39,30 @@ export const createEmptyCart = async (): Promise<string> => {
 
     const response = await bcPost(path, data);
     return response.data.id;
+};
+
+export const createCustomer = async (
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string
+): Promise<BcCustomer> => {
+    const path = `/v3/customers`;
+
+    const data = [
+        {
+            email: email,
+            first_name: firstName,
+            last_name: lastName,
+            authentication: {
+                force_password_rest: false,
+                new_password: password,
+            },
+        },
+    ];
+
+    console.log(data);
+
+    const response = await bcPost(path, data);
+    return response.data[0];
 };
