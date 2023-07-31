@@ -5,6 +5,7 @@ import {
     Products,
 } from '../../meshrc/.mesh';
 import { BcProduct } from '../types';
+import { getTransformedCategoriesData } from './transform-category-data';
 
 const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProduct' => {
     if (bcProduct.variants.edges.length <= 1) {
@@ -20,7 +21,7 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
 
     const product: ProductInterface = {
         __typename: getTypeName(bcProduct),
-        categories: createCategories(bcProduct.categories),
+        categories: getTransformedCategoriesData(bcProduct.categories),
         description: {
             html: bcProduct.description,
         },
@@ -81,7 +82,7 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
         },
         stock_status: transformAvailabilityStatus(bcProduct.availabilityV2.status),
         url_key: bcProduct.addToCartUrl,
-        url_suffix: '.html',
+        url_suffix: '',
         reviews: {
             items: [],
             page_info: {
