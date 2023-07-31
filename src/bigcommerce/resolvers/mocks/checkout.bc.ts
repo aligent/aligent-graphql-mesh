@@ -41,7 +41,17 @@ export const mockBcCheckout = {
         value: 0,
         currencyCode: 'AUD',
     },
-    coupons: [],
+    coupons: [
+        {
+            entityId: 2,
+            discountedAmount: {
+                currencyCode: 'AUD',
+                value: 10,
+            },
+            couponType: 'PER_TOTAL_DISCOUNT',
+            code: 'sale',
+        },
+    ],
     billingAddress: {
         stateOrProvinceCode: 'QLD',
         stateOrProvince: 'Queensland',
