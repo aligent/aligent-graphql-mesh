@@ -1,10 +1,5 @@
 import axios from 'axios';
-import {
-    logAndThrowErrorsFromGraphQlResponse,
-    logAndThrowErrorsFromRESTApiResponse,
-    logAndThrowUnknownError,
-    throwAndLogAxiosError,
-} from '../error-handling';
+import { logAndThrowError, } from '../error-handling';
 import { BcCategory, BcCategoryTree, BcProduct, GraphQlQuery } from '../../types';
 import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
@@ -14,17 +9,9 @@ import { getCategoryQuery } from './graphql/category';
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
+// TODO: return type
 const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: string }) => {
-    try {
-        const response = await axios.post(BC_GRAPHQL_API, data, { headers });
-        return response.data;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            throwAndLogAxiosError(error, bcGraphQlRequest.name);
-        } else {
-            logAndThrowUnknownError(error, bcGraphQlRequest.name);
-        }
-    }
+    return axios.post(BC_GRAPHQL_API, data, { headers }).then(resp => resp.data).catch(logAndThrowError);
 };
 
 export const bcLogin = async (
@@ -47,14 +34,13 @@ export const bcLogin = async (
     };
 
     const response = await bcGraphQlRequest(graphqlQuery, headers);
-
-    const entityId = response.data.data?.login.customer.entityId;
     const result = response.data.data?.login.result;
 
     if (result !== 'success') {
-        logAndThrowErrorsFromRESTApiResponse(response, bcLogin.name);
+        logAndThrowError(new Error(`Failed to authenticate with BigCommerce: ${JSON.stringify(response)}`));
     }
 
+    const entityId = response.data.data?.login.customer.entityId;
     return entityId;
 };
 
@@ -67,7 +53,7 @@ export const getBcProductGraphql = async (sku: string): Promise<BcProduct> => {
     const response = await bcGraphQlRequest(productBySkuQuery, headers);
 
     if (response.data.errors) {
-        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductGraphql.name);
+        logAndThrowError(new Error(`Failed to fetch products from BigCommerce: ${JSON.stringify(response.data.errors)}`));
     }
 
     return response.data.site.product;

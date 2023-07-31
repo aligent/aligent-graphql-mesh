@@ -1,7 +1,7 @@
 import { mockStoreConfig } from '../mocks/store-config';
 
 export const storeConfigResolver = {
-    resolve: () => {
+    resolve: async (_root, _args, _context, _info) => {
         return mockStoreConfig;
     },
 };
