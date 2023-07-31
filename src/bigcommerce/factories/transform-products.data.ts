@@ -7,7 +7,7 @@ import {
 import { BcProduct } from '../types';
 
 const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProduct' => {
-    if (bcProduct.variants.edges.length === 1) {
+    if (bcProduct.variants.edges.length <= 1) {
         return 'SimpleProduct';
     } else {
         return 'ConfigurableProduct';
@@ -15,7 +15,7 @@ const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProdu
 };
 
 // VirtualProduct' | 'SimpleProduct' | 'DownloadableProduct' | 'BundleProduct' | 'GroupedProduct' | 'ConfigurableProduct' | 'GiftCardProduct'
-export const createAcReadyProduct = (bcProduct: BcProduct): Products=> {
+export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
     const images = createImages(bcProduct.images);
 
     const product: ProductInterface = {
@@ -44,12 +44,12 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products=> {
         price_range: {
             maximum_price: {
                 discount: {
-                    amount_off: 1111,
-                    percent_off: 1111,
+                    amount_off: null,
+                    percent_off: null,
                 },
                 final_price: {
                     currency: 'AUD',
-                    value: 1111,
+                    value: null,
                 },
                 regular_price: {
                     currency: bcProduct.prices.priceRange.max.currencyCode,
@@ -58,12 +58,12 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products=> {
             },
             minimum_price: {
                 discount: {
-                    amount_off: 1111,
-                    percent_off: 1111,
+                    amount_off: null,
+                    percent_off: null,
                 },
                 final_price: {
                     currency: 'AUD',
-                    value: 1111,
+                    value: null,
                 },
                 regular_price: {
                     currency: bcProduct.prices.priceRange.min.currencyCode,
@@ -92,7 +92,7 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products=> {
         },
     };
 
-    product.reviews.items.push(createReviewItems(bcProduct.reviews, product));
+    product.reviews.items = createReviewItems(bcProduct.reviews, product);
 
     return {
         items: [product],
@@ -105,15 +105,15 @@ const createReviewItems = (reviews: BcProduct['reviews'], product: ProductInterf
             ratings_breakdown: [
                 {
                     name: review.node.author.name,
-                    value: 'value',
+                    value: 'null',
                 },
             ],
             average_rating: review.node.rating,
             created_at: review.node.createdAt.utc,
-            nickname: 'nickname',
+            nickname: 'null',
             summary: review.node.title,
             text: review.node.text,
-            product: product,
+            product,
         };
     });
 };
@@ -129,7 +129,7 @@ const createCategories = (categories: BcProduct['categories']): CategoryInterfac
             __typename: 'CategoryTree',
             uid: String(catItem.node.entityId),
             name: catItem.node.name,
-            level: 1111,
+            level: null,
             staged: true,
             breadcrumbs: catItem.node.breadcrumbs.edges.map((crumbItem) => {
                 return {
@@ -148,8 +148,8 @@ const createImages = (images: BcProduct['images']): MediaGalleryEntry[] => {
             file: image.node.urlOriginal,
             label: image.node.altText,
             disabled: image.node.isDefault,
-            uid: '1111',
-            position: 1111,
+            uid: 'null',
+            position: null,
         };
     });
 };
@@ -159,11 +159,12 @@ const createRelatedProducts = (
 ): ProductInterface[] => {
     return relatedProducts?.edges.map((product) => {
         const baseProduct: ProductInterface = {
+            __typename: 'ConfigurableProduct',
             categories: createCategories(product.node.categories),
             id: product.node.entityId,
             name: product.node.name,
-            rating_summary: 0,
-            review_count: 0,
+            rating_summary: null,
+            review_count: null,
             staged: true,
             uid: product.node.id,
             custom_attributes: [],
@@ -178,12 +179,12 @@ const createRelatedProducts = (
             price_range: {
                 maximum_price: {
                     discount: {
-                        amount_off: 1111,
-                        percent_off: 1111,
+                        amount_off: null,
+                        percent_off: null,
                     },
                     final_price: {
                         currency: 'AUD',
-                        value: 1111,
+                        value: null,
                     },
                     regular_price: {
                         currency: product.node.prices.priceRange.max.currencyCode,
@@ -192,12 +193,12 @@ const createRelatedProducts = (
                 },
                 minimum_price: {
                     discount: {
-                        amount_off: 1111,
-                        percent_off: 1111,
+                        amount_off: null,
+                        percent_off: null,
                     },
                     final_price: {
                         currency: 'AUD',
-                        value: 1111,
+                        value: null,
                     },
                     regular_price: {
                         currency: product.node.prices.priceRange.min.currencyCode,
@@ -214,28 +215,12 @@ const createRelatedProducts = (
                 },
             },
             sku: product.node.sku,
-
             small_image: {
-                url: 'URL',
+                url: 'null',
             },
             url_key: product.node.addToCartUrl,
             url_suffix: '.html',
         };
-
-        baseProduct.reviews.items.push({
-            ratings_breakdown: [
-                {
-                    name: 'Jack',
-                    value: '1',
-                },
-            ],
-            average_rating: 1,
-            created_at: 'today',
-            nickname: 'yelp',
-            summary: 'was good',
-            text: 'decent',
-            product: baseProduct,
-        });
 
         return baseProduct;
     });
