@@ -7,6 +7,7 @@ definitions:
         script:
           - FORCE_COLOR=true
           - yarn install
+          - yarn build
           - yarn lint
           - yarn check-types
           - yarn test
