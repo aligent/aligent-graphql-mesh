@@ -1,22 +1,79 @@
-import { mockRoute } from '../mocks/route';
+import { mockCategories } from '../mocks/categories';
+import { productsMock } from '../mocks/products';
+import { mockCmsPage } from '../mocks/cms-page';
+import { getRoute } from '../requests/bc-graphql-calls';
+import { getTransformedCategoriesData } from '../../factories/transform-category-data';
+
+const getTransformedRouteData = data => {
+    const { __typename } = data;
+    if (__typename === 'Brand') {
+        const transformedBrandData = productsMock.items[0];
+        return {
+            type: 'BRAND',
+            ...transformedBrandData,
+        };
+    }
+
+    if (__typename === 'Category') {
+        return {
+            ...getTransformedCategoriesData(data),
+            type: 'CATEGORY',
+            __typename: 'CategoryTree',
+        };
+    }
+
+    if (__typename === 'ContactPage') {
+        return {
+            type: 'CONTACT_PAGE',
+            mockRestResponse: {
+                ...mockCategories.items[0].children[1],
+                products: productsMock,
+            },
+        };
+    }
+
+    if (__typename === 'NormalPage') {
+        const transformedCmsData = mockCmsPage;
+        return { type: 'CMS_PAGE', ...transformedCmsData };
+    }
+
+    if (__typename === 'Product') {
+        const transformedProductData = productsMock.items[0];
+        return {
+            type: 'PRODUCT',
+            ...transformedProductData,
+        };
+    }
+
+    const transformedCmsData = mockCmsPage;
+    return { type: 'CMS_PAGE', ...transformedCmsData };
+};
 
 export const routeResolver = {
-    resolve: () => {
+    resolve: async (
+        root: any,
+        args: { url: string },
+        context: {
+            headers: { authorization: string };
+        },
+        info: any
+    ): Promise<any> => {
+        const urlParam = args.url === '/' ? '/home' : args.url;
+
+        const data = await getRoute(urlParam);
+
+        if (!data) {
+            return null;
+        }
+
+        const { path } = data;
+
+        const transformedRouteData = getTransformedRouteData(data);
+
         return {
-            type: 'CMS_PAGE',
-            relative_url: 'home',
             redirect_code: 0,
-            url_key: 'home',
-            content:
-                '<style>#html-body [data-pb-style=HECBBU0],#html-body [data-pb-style=OD2W25O]{background-size:cover;background-repeat:no-repeat;background-attachment:scroll}#html-body [data-pb-style=HECBBU0]{justify-content:center;display:flex;flex-direction:column;background-position:right center;text-align:center;border-style:none;border-width:1px;border-radius:0;min-height:660px;margin:0;padding:10px}#html-body [data-pb-style=OD2W25O]{background-position:left top;align-self:stretch}#html-body [data-pb-style=Q5SVMS6]{display:flex;width:100%}#html-body [data-pb-style=CLJLJEV],#html-body [data-pb-style=XN5DHW1]{background-position:left top;background-size:cover;background-repeat:no-repeat;background-attachment:scroll}#html-body [data-pb-style=CLJLJEV]{justify-content:flex-start;display:flex;flex-direction:column}#html-body [data-pb-style=XN5DHW1]{align-self:stretch}#html-body [data-pb-style=WLF5MQC]{display:flex;width:100%}#html-body [data-pb-style=MRI68KX]{justify-content:flex-end;display:flex;flex-direction:column;background-position:left top;background-size:cover;background-repeat:no-repeat;background-attachment:scroll;min-height:660px;width:100%;align-self:center}#html-body [data-pb-style=D8Y75O3],#html-body [data-pb-style=UE0JR1W]{padding:20px}#html-body [data-pb-style=D8Y75O3],#html-body [data-pb-style=UE0JR1W],#html-body [data-pb-style=WP4XCLK]{justify-content:flex-end;display:flex;flex-direction:column;background-position:left top;background-size:cover;background-repeat:no-repeat;background-attachment:scroll;min-height:280px;width:33.3333%;align-self:stretch}#html-body [data-pb-style=AMXTVI0],#html-body [data-pb-style=D3PC3Y9]{text-align:left}#html-body [data-pb-style=RUTW9BY]{padding:20px}#html-body [data-pb-style=OT2YI0G]{display:inline-block}#html-body [data-pb-style=LHPXXMC]{text-align:center}</style><div data-content-type="row" data-appearance="contained" data-element="main"><div class="row_page_builder background-image-64b5eeca0eae3" data-enable-parallax="0" data-parallax-speed="0.5" data-background-images=\'{\\"desktop_image\\":\\"https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/venia-hero1.jpg\\"}\' data-background-type="image" data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true" data-video-fallback-src="" data-element="inner" data-pb-style="HECBBU0"><div class="pagebuilder-column-group" data-background-images="{}" data-content-type="column-group" data-appearance="default" data-grid-size="12" data-element="main" data-pb-style="OD2W25O"><div class="pagebuilder-column-line" data-content-type="column-line" data-element="main" data-pb-style="Q5SVMS6"><div class="pagebuilder-column column_page_builder_home" data-content-type="column" data-appearance="align-center" data-background-images="{}" data-element="main" data-pb-style="MRI68KX"><div data-content-type="text" data-appearance="default" data-element="main" data-pb-style="AMXTVI0"><h1><span style="font-size: 40px;">Shop The New Look&nbsp;</span></h1></div><div data-content-type="buttons" data-appearance="inline" data-same-width="false" data-element="main" data-pb-style="D3PC3Y9"><div data-content-type="button-item" data-appearance="default" data-element="main" data-pb-style="OT2YI0G"><a class="pagebuilder-button-primary" href="/what-is-new.html?page=1" target="" data-link-type="default" data-element="link" data-pb-style="LHPXXMC"><span data-element="link_text">Shop Now</span></a></div></div></div></div></div></div><style type="text/css">.background-image-64b5eeca0eae3 {background-image: url(https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/venia-hero1.jpg);}</style></div><div data-content-type="row" data-appearance="contained" data-element="main"><div data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-background-type="image" data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true" data-video-fallback-src="" data-element="inner" data-pb-style="CLJLJEV"><div class="pagebuilder-column-group" data-background-images="{}" data-content-type="column-group" data-appearance="default" data-grid-size="12" data-element="main" data-pb-style="XN5DHW1"><div class="pagebuilder-column-line" data-content-type="column-line" data-element="main" data-pb-style="WLF5MQC"><div class="pagebuilder-column column_card_page_builder background-image-64b5eeca0eb09" data-content-type="column" data-appearance="full-height" data-background-images=\'{\\"desktop_image\\":\\"https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/AdobeStock_189473898_sm.jpg\\"}\' data-element="main" data-pb-style="D8Y75O3"><div data-content-type="text" data-appearance="default" data-element="main"><h3 id="ASCQFW4" style="text-align: right;"><span style="font-size: 20px; color: #ffffff; background-color: #333333;">Shop Women</span></h3></div></div><div class="pagebuilder-column column_card_page_builder background-image-64b5eeca0eb13" data-content-type="column" data-appearance="full-height" data-background-images=\'{\\"desktop_image\\":\\"https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/shallow-focus-photography-of-man-wearing-eyeglasses-837306_sm.jpg\\"}\' data-element="main" data-pb-style="UE0JR1W"><div data-content-type="text" data-appearance="default" data-element="main"><h3 id="ASCQFW4" style="text-align: right;"><span style="font-size: 20px; color: #ffffff; background-color: #333333;">Shop Men</span></h3></div></div><div class="pagebuilder-column column_card_page_builder background-image-64b5eeca0eb1b" data-content-type="column" data-appearance="full-height" data-background-images=\'{\\"desktop_image\\":\\"https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/round-gold-colored-analog-watch-with-pink-leather-strap-on-1162519_sm.jpg\\"}\' data-element="main" data-pb-style="WP4XCLK"><div data-content-type="text" data-appearance="default" data-element="main" data-pb-style="RUTW9BY"><h3 id="ASCQFW4" style="text-align: right;"><span style="font-size: 20px; color: #ffffff; background-color: #333333;"><span style="line-height: 20px;">What\'s</span> New</span></h3></div></div><style type="text/css">.background-image-64b5eeca0eb09 {background-image: url(https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/AdobeStock_189473898_sm.jpg);}</style><style type="text/css">.background-image-64b5eeca0eb13 {background-image: url(https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/shallow-focus-photography-of-man-wearing-eyeglasses-837306_sm.jpg);}</style><style type="text/css">.background-image-64b5eeca0eb1b {background-image: url(https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/wysiwyg/round-gold-colored-analog-watch-with-pink-leather-strap-on-1162519_sm.jpg);}</style></div></div></div></div>',
-            content_heading: 'Home Page',
-            identifier: 'home',
-            title: 'Home Page',
-            page_layout: 'cms-full-width',
-            meta_title: '',
-            meta_keywords: '',
-            meta_description: '',
-            __typename: 'CmsPage',
+            relative_url: path.replace(/^\//, ''),
+            ...transformedRouteData,
         };
     },
 };
