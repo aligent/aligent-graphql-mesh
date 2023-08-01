@@ -3,6 +3,7 @@ import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
+import { QueryResolvers } from '../../../meshrc/.mesh';
 
 const getTransformedRouteData = data => {
     const { __typename } = data;
@@ -49,15 +50,8 @@ const getTransformedRouteData = data => {
     return { type: 'CMS_PAGE', ...transformedCmsData };
 };
 
-export const routeResolver = {
-    resolve: async (
-        root: any,
-        args: { url: string },
-        context: {
-            headers: { authorization: string };
-        },
-        info: any
-    ): Promise<any> => {
+export const routeResolver: QueryResolvers['route'] = {
+    resolve: async (_root, args, _context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
 
         const data = await getRoute(urlParam);

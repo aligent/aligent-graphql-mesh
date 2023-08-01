@@ -1,7 +1,8 @@
+import { MutationResolvers } from "../../../meshrc/.mesh";
 import { mockMergeCarts } from "../mocks/merge-carts";
 
-export const mergeCartsResolver = {
-    resolve: () => {
+export const mergeCartsResolver: MutationResolvers['mergeCarts']= {
+    resolve: (_root, _args, _context, _info) => {
         return mockMergeCarts;
     },
 };

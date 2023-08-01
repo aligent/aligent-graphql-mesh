@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { logAndThrowError } from '../error-handling';
 import { BcGraphqlTokenData } from '../../types';
 
@@ -10,10 +10,13 @@ const headers = {
     'Content-Type': 'application/json',
 };
 
-// TODO: return type
-const bcPost = async (path: string, data?: unknown) => {
+// TODO: generic return type
+const bcPost = async (path: string, data?: unknown): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
-    return axios.post(url, data, { headers }).then(resp => resp.data).catch(logAndThrowError);
+    return axios
+        .post(url, data, { headers })
+        .then((resp) => resp.data)
+        .catch(logAndThrowError);
 };
 
 export const getBcGraphqlToken = async (data: BcGraphqlTokenData): Promise<string> => {
