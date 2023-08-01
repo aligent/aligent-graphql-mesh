@@ -78,6 +78,7 @@ const expectedResponse = {
                     },
                 },
                 staged: false,
+                __typename: 'ConfigurableProduct',
             },
             quantity: 3,
             configurable_options: [
@@ -94,6 +95,7 @@ const expectedResponse = {
                     value_label: 'S',
                 },
             ],
+            __typename: 'ConfigurableCartItem',
         },
     ],
     is_virtual: false,

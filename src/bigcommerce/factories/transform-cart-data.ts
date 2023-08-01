@@ -116,9 +116,11 @@ const getCartItems = (
                     },
                 },
                 staged: false,
+                __typename: 'ConfigurableProduct',
             },
             quantity: quantity,
             configurable_options,
+            __typename: 'ConfigurableCartItem',
         };
     });
 };
