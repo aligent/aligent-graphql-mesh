@@ -1,6 +1,7 @@
 import { mockBcCart } from './cart.bc';
+import { BC_Checkout } from '../../../meshrc/.mesh';
 
-export const mockBcCheckout = {
+export const mockBcCheckout: BC_Checkout = {
     id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',
     entityId: '98bf4b97-14a8-4860-ada3-44a780c24eb4',
     cart: mockBcCart,
@@ -64,12 +65,10 @@ export const mockBcCheckout = {
         customFields: [
             {
                 entityId: 26,
-                __typename: 'CheckoutAddressTextFieldCustomField',
                 text: 'My Billing Comment',
             },
             {
                 entityId: 29,
-                __typename: 'CheckoutAddressCheckboxesCustomField',
                 valueEntityIds: [0],
             },
         ],
@@ -89,7 +88,7 @@ export const mockBcCheckout = {
                 type: 'shipping_pickupinstore',
                 transitTime: '',
                 imageUrl: '',
-                entityId: '648037a197d7750aef4aab3f3cc804c1',
+                entityId: '1e9ff660b3d44d196a85b40dcb307e2e',
                 description: 'Pickup In Store',
                 cost: {
                     value: 0,
@@ -108,25 +107,25 @@ export const mockBcCheckout = {
                     type: 'shipping_pickupinstore',
                     transitTime: '',
                     imageUrl: '',
-                    entityId: '648037a197d7750aef4aab3f3cc804c1',
+                    entityId: '1e9ff660b3d44d196a85b40dcb307e2e',
                     description: 'Pickup In Store',
                     cost: {
                         value: 0,
                         currencyCode: 'AUD',
                     },
+                    isRecommended: false,
                 },
             ],
             address: {
                 stateOrProvinceCode: 'SA',
                 stateOrProvince: 'South Australia',
                 postalCode: '5000',
-                phone: '72262152',
+                phone: '0000000000',
                 lastName: 'Doe',
                 firstName: 'John',
                 email: 'john.doe@aligent.com.au',
                 customFields: [
                     {
-                        __typename: 'CheckoutAddressCheckboxesCustomField',
                         valueEntityIds: [0],
                         entityId: 29,
                     },
@@ -144,6 +143,7 @@ export const mockBcCheckout = {
     createdAt: {
         utc: '2023-07-28T00:53:59Z',
     },
+    promotions: [],
     updatedAt: {
         utc: '2023-07-28T01:17:18Z',
     },

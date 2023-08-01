@@ -75,14 +75,12 @@ export const mockBcCart = {
                     {
                         name: 'Color',
                         entityId: 148,
-                        __typename: 'CartSelectedMultipleChoiceOption',
                         valueEntityId: 182,
                         value: 'Green',
                     },
                     {
                         name: 'Size',
                         entityId: 149,
-                        __typename: 'CartSelectedMultipleChoiceOption',
                         valueEntityId: 184,
                         value: 'S',
                     },
@@ -94,7 +92,7 @@ export const mockBcCart = {
                 isTaxable: true,
             },
         ],
-        totalQuantity: 3,
+        totalQuantity: 1,
     },
     locale: 'en',
     updatedAt: {

@@ -229,6 +229,7 @@ const getShippingAddresses = (
 
             return {
                 ...getAddress(address),
+                uid: btoa(entityId),
                 available_shipping_methods:
                     availableShippingOptions?.map(getAvailableShippingMethod) || [],
                 selected_shipping_method: selectedShippingOption
