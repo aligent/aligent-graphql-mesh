@@ -71,9 +71,7 @@ export const createEmptyCart = async (): Promise<string> => {
     return response.data.id;
 };
 
-export const createCustomerImpersonationToken = async (
-    expiresAt: number
-): Promise<string> => {
+export const createCustomerImpersonationToken = async (expiresAt: number): Promise<string> => {
     const path = `/v3/storefront/api-token-customer-impersonation`;
     const data = {
         channel_id: 1,

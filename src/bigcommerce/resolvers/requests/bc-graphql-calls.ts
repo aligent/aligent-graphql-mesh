@@ -47,9 +47,9 @@ export const bcLogin = async (
     };
 
     const response = await bcGraphQlRequest(graphqlQuery, headers);
-
-    const entityId = response.data.data?.login.customer.entityId;
-    const result = response.data.data?.login.result;
+    
+    const entityId = response.data?.login.customer.entityId;
+    const result = response.data?.login.result;
 
     if (result !== 'success') {
         logAndThrowErrorsFromRESTApiResponse(response, bcLogin.name);
