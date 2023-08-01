@@ -7,137 +7,113 @@ export const getProductBySkuQuery = stripIgnoredCharacters(
         query getProductBySku($sku: String!) {
             site {
                 product(sku: $sku) {
-                    entityId
-                    id
-                    sku
-                    name
                     addToCartUrl
-                    description
-                    variants {
-                        edges {
-                            node {
-                                sku
-                            }
-                        }
-                    }
-                    seo {
-                        pageTitle
-                        metaDescription
-                        metaKeywords
-                    }
-                    images {
-                        edges {
-                            node {
-                                urlOriginal
-                                altText
-                                isDefault
-                            }
-                        }
-                    }
-                    categories {
-                        edges {
-                            node {
-                                name
-                                entityId
-                                breadcrumbs(depth: 10) {
-                                    edges {
-                                        node {
-                                            name
-                                            entityId
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    addToWishlistUrl
+                    availability
+                    availabilityDescription
                     availabilityV2 {
+                        description
                         status
                     }
-                    reviewSummary {
-                        numberOfReviews
-                        summationOfRatings
-                    }
-                    reviews {
-                        edges {
-                            cursor
-                            node {
-                                entityId
-                                author {
-                                    name
-                                }
-                                title
-                                text
-                                rating
-                                createdAt {
-                                    utc
-                                }
-                            }
-                        }
-                    }
-                    prices {
-                        price {
-                            value
-                            currencyCode
-                        }
+                    condition
+                    description
+                    entityId
+                    id
+                    gtin
+                    maxPurchaseQuantity
+                    minPurchaseQuantity
+                    mpn
+                    name
+                    path
+                    showCartAction
+                    sku
+                    type
+                    upc
+                    warranty
+                    priceRanges {
                         priceRange {
                             max {
                                 currencyCode
+                                formatted
                                 value
                             }
                             min {
                                 currencyCode
+                                formatted
+                                value
+                            }
+                        }
+                        retailPriceRange {
+                            max {
+                                currencyCode
+                                formatted
+                                value
+                            }
+                            min {
+                                currencyCode
+                                formatted
                                 value
                             }
                         }
                     }
-                    relatedProducts {
-                        edges {
-                            node {
-                                entityId
-                                name
-                                sku
-                                id
-                                addToCartUrl
-                                prices {
-                                    price {
-                                        currencyCode
-                                        value
-                                    }
-                                    priceRange {
-                                        max {
-                                            currencyCode
-                                            value
-                                        }
-                                        min {
-                                            currencyCode
-                                            value
-                                        }
-                                    }
-                                }
-                                images {
-                                    edges {
-                                        node {
-                                            urlOriginal
-                                        }
-                                    }
-                                }
-                                categories {
-                                    edges {
-                                        node {
-                                            name
-                                            entityId
-                                            breadcrumbs(depth: 10) {
-                                                edges {
-                                                    node {
-                                                        name
-                                                        entityId
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                    prices {
+                        basePrice {
+                            currencyCode
+                            formatted
+                            value
+                        }
+                        bulkPricing {
+                            maximumQuantity
+                            minimumQuantity
+                        }
+                        mapPrice {
+                            currencyCode
+                            formatted
+                            value
+                        }
+                        price {
+                            currencyCode
+                            formatted
+                            value
+                        }
+                        priceRange {
+                            max {
+                                currencyCode
+                                formatted
+                                value
                             }
+                            min {
+                                currencyCode
+                                formatted
+                                value
+                            }
+                        }
+                        retailPrice {
+                            currencyCode
+                            formatted
+                            value
+                        }
+                        retailPriceRange {
+                            max {
+                                currencyCode
+                                formatted
+                                value
+                            }
+                            min {
+                                currencyCode
+                                formatted
+                                value
+                            }
+                        }
+                        salePrice {
+                            currencyCode
+                            formatted
+                            value
+                        }
+                        saved {
+                            currencyCode
+                            formatted
+                            value
                         }
                     }
                 }
