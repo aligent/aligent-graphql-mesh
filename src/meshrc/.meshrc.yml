@@ -6,4 +6,6 @@ sources:
 additionalResolvers:
   - '../bigcommerce/resolvers/resolver-definitions'
 
+additionalEnvelopPlugins: '../bigcommerce/plugins/additionalPlugins.ts'
+
 serve: !include serve-config.yml

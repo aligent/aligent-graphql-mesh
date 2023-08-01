@@ -124,3 +124,15 @@ export interface BcCategory {
         pageTitle: string;
     };
 }
+
+export interface DecodedCustomerImpersonationToken {
+    cid: number;
+    cors: string[];
+    eat: number;
+    iat: number;
+    iss: string;
+    sid: number;
+    sub: string;
+    sub_type: number;
+    token_type: number;
+}

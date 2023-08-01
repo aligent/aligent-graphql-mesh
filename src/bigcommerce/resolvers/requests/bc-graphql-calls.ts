@@ -14,7 +14,7 @@ import { getCategoryQuery } from './graphql/category';
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
-const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: string }) => {
+const bcGraphQlRequest = async (data: GraphQlQuery, headers?: { Authorization: string }) => {
     try {
         const response = await axios.post(BC_GRAPHQL_API, data, { headers });
         return response.data;
@@ -58,9 +58,12 @@ export const bcLogin = async (
     return entityId;
 };
 
-export const getBcProductGraphql = async (sku: string): Promise<BcProduct> => {
+export const getBcProductGraphql = async (
+    sku: string,
+    Authorization: string
+): Promise<BcProduct> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization,
     };
     const productBySkuQuery = getProductBySkuQuery(sku);
 

@@ -70,3 +70,16 @@ export const createEmptyCart = async (): Promise<string> => {
     const response = await bcPost(path, data);
     return response.data.id;
 };
+
+export const createCustomerImpersonationToken = async (
+    expiresAt: number
+): Promise<string> => {
+    const path = `/v3/storefront/api-token-customer-impersonation`;
+    const data = {
+        channel_id: 1,
+        expires_at: expiresAt,
+    };
+
+    const response = await bcPost(path, data);
+    return response.data.token;
+};
