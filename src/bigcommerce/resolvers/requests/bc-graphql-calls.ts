@@ -6,7 +6,7 @@ import {
     throwAndLogAxiosError,
 } from '../error-handling';
 import { BcCategory, BcCategoryTree, GraphQlQuery } from '../../types';
-import { getProductBySkuQuery } from './graphql/get-product-by-sku';
+import { getProductsQuery } from './graphql/products';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
@@ -69,7 +69,7 @@ export const getBcProductsGraphql = async (
     };
 
     const productsQuery = {
-        query: getProductBySkuQuery,
+        query: getProductsQuery,
         variables: {
             ids,
         },

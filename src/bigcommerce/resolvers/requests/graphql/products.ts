@@ -4,7 +4,7 @@ import { print } from 'graphql/index';
 import { pageInfo } from './fragments/pageInfo';
 import { ProductsDetails } from './fragments/productDetails';
 
-export const getProductBySkuQuery = stripIgnoredCharacters(
+export const getProductsQuery = stripIgnoredCharacters(
     print(gql`
         ${pageInfo}
         ${ProductsDetails}
