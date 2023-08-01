@@ -36,7 +36,6 @@ const expectedResponse = {
                     currency: 'AUD',
                     value: 0,
                 },
-                __typename: 'CartItemPrices',
             },
             product: {
                 id: 492,
@@ -47,14 +46,12 @@ const expectedResponse = {
                     url:
                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/product_images/attribute_rule_images/54_thumb_1690452039.jpg',
                     label: 'Mona Pullover Hoodlie',
-                    __typename: 'ProductImage',
                 },
                 categories: [],
                 price_range: {
                     minimum_price: {
                         discount: {
                             amount_off: 25,
-                            __typename: 'ProductDiscount',
                         },
                         final_price: {
                             currency: 'AUD',
@@ -64,9 +61,7 @@ const expectedResponse = {
                             currency: 'AUD',
                             value: 55,
                         },
-                        __typename: 'ProductPrice',
                     },
-                    __typename: 'PriceRange',
                 },
                 rating_summary: 0,
                 review_count: 0,
@@ -83,7 +78,6 @@ const expectedResponse = {
                     },
                 },
                 staged: false,
-                __typename: 'ConfigurableProduct',
             },
             quantity: 3,
             configurable_options: [
@@ -92,17 +86,14 @@ const expectedResponse = {
                     option_label: 'Color',
                     value_id: 182,
                     value_label: 'Green',
-                    __typename: 'SelectedConfigurableOption',
                 },
                 {
                     id: 149,
                     option_label: 'Size',
                     value_id: 184,
                     value_label: 'S',
-                    __typename: 'SelectedConfigurableOption',
                 },
             ],
-            __typename: 'ConfigurableCartItem',
         },
     ],
     is_virtual: false,
@@ -254,7 +245,6 @@ const expectedResponse = {
 
 describe('Passing tests', () => {
     it('Transforms BC cart data to AC', () => {
-        console.dir(JSON.stringify(getTransformedCartData(mockBcCheckout)));
         expect(getTransformedCartData(mockBcCheckout)).toEqual(expectedResponse);
     });
 });

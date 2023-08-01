@@ -81,7 +81,6 @@ const getCartItems = (
                 row_total: getPrice(extendedListPrice),
                 row_total_including_tax: getPrice(extendedListPrice),
                 total_item_discount,
-                __typename: 'CartItemPrices',
             },
             product: {
                 id: productEntityId,
@@ -91,20 +90,16 @@ const getCartItems = (
                 small_image: {
                     url: imageUrl,
                     label: name,
-                    __typename: 'ProductImage',
                 },
                 categories: [],
                 price_range: {
                     minimum_price: {
                         discount: {
                             amount_off: originalPrice.value - salePrice.value,
-                            __typename: 'ProductDiscount',
                         },
                         final_price: getPrice(salePrice),
                         regular_price: getPrice(originalPrice),
-                        __typename: 'ProductPrice',
                     },
-                    __typename: 'PriceRange',
                 },
                 rating_summary: 0,
                 review_count: 0,
@@ -121,11 +116,9 @@ const getCartItems = (
                     },
                 },
                 staged: false,
-                __typename: 'ConfigurableProduct',
             },
             quantity: quantity,
             configurable_options,
-            __typename: 'ConfigurableCartItem',
         };
     });
 };
