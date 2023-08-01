@@ -31,27 +31,17 @@ const getCartItems = (
     return cartItems.map(item => {
         const {
             name,
-            brand,
             sku,
             url,
             entityId, // cart item id
-            parentEntityId,
             productEntityId,
-            variantEntityId,
-            couponAmount,
-            discountedAmount,
             discounts,
             extendedListPrice,
-            extendedSalePrice,
-            salePrice, // RRP price with discount
-            listPrice,
+            salePrice, // R
             originalPrice, // RRP price
             quantity,
             selectedOptions,
-            giftWrapping,
             imageUrl,
-            isShippingRequired,
-            isTaxable,
         } = item;
 
         const configurable_options = selectedOptions.map(option => {
@@ -66,7 +56,6 @@ const getCartItems = (
                 option_label: name,
                 value_id: valueEntityId,
                 value_label: value,
-                __typename: 'SelectedConfigurableOption',
             };
         });
 
@@ -144,7 +133,7 @@ const getCartItems = (
 const getAvailableShippingMethod = (
     shippingOption: BC_CheckoutAvailableShippingOption | BC_CheckoutSelectedShippingOption
 ): AvailableShippingMethod => {
-    const { type, transitTime, imageUrl, entityId = '', description, cost } = shippingOption;
+    const { type, entityId = '', description, cost } = shippingOption;
     return {
         amount: getPrice(cost),
         // If the option is returned in the data it's available?
@@ -179,7 +168,6 @@ const getAddress = (bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillin
         phone,
         lastName,
         firstName,
-        email,
         countryCode,
         company,
         city,
@@ -217,12 +205,8 @@ const getShippingAddresses = (
     return bcShippingAddresses.map(
         (bcAddress: BC_CheckoutShippingConsignment): ShippingCartAddress => {
             const {
-                shippingCost,
                 selectedShippingOption,
-                lineItemIds,
-                handlingCost,
                 entityId,
-                coupons,
                 availableShippingOptions,
                 address,
             } = bcAddress;
@@ -316,14 +300,9 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
         customerMessage,
         coupons,
         entityId,
-        grandTotal,
-        id,
         shippingConsignments,
-        subtotal,
-        taxes,
-        taxTotal,
     } = checkoutData || { billingAddress: [], cart: {}, shippingConsignments: [], taxes: [] };
-    const { customItems, digitalItems, giftCertificates, physicalItems } = cart?.lineItems || {
+    const { physicalItems } = cart?.lineItems || {
         customItems: [],
         digitalItems: [],
         giftCertificates: [],
