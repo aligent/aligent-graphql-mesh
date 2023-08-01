@@ -37,7 +37,7 @@ const getCartItems = (
             productEntityId,
             discounts,
             extendedListPrice,
-            salePrice, // R
+            salePrice,
             originalPrice, // RRP price
             quantity,
             selectedOptions,
