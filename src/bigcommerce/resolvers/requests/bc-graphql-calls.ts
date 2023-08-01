@@ -5,12 +5,12 @@ import {
     logAndThrowUnknownError,
     throwAndLogAxiosError,
 } from '../error-handling';
-import { BcCategory, BcCategoryTree, BcProduct, GraphQlQuery } from '../../types';
+import { BcCategory, BcCategoryTree, GraphQlQuery } from '../../types';
 import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
-import { BC_Product } from '../../../meshrc/.mesh';
+import { BC_ProductConnection, BC_SiteproductsArgs } from '../../../meshrc/.mesh';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -59,25 +59,29 @@ export const bcLogin = async (
     return entityId;
 };
 
-export const getBcProductGraphql = async (sku: string): Promise<BC_Product> => {
+export const getBcProductsGraphql = async (
+    filters: BC_SiteproductsArgs
+): Promise<BC_ProductConnection> => {
+    const { ids } = filters;
+
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
-    const productBySkuQuery = {
+    const productsQuery = {
         query: getProductBySkuQuery,
         variables: {
-            sku: sku,
+            ids,
         },
     };
 
-    const response = await bcGraphQlRequest(productBySkuQuery, headers);
+    const response = await bcGraphQlRequest(productsQuery, headers);
 
     if (response.data.errors) {
-        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductGraphql.name);
+        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductsGraphql.name);
     }
 
-    return response.data.site.product;
+    return response.data.site.products;
 };
 
 export const getRoute = async (url: string) => {

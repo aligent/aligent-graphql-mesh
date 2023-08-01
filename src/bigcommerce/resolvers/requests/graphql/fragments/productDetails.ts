@@ -2,6 +2,7 @@ import { DocumentNode } from 'graphql';
 import { gql } from 'graphql-tag';
 import { breadcrumbs } from './breadcrumbs';
 import { image } from './image';
+import { pageInfo } from './pageInfo';
 import { productOptions } from './productOptions';
 import { prices } from './prices';
 import { seoDetails } from './seoDetails';
@@ -11,6 +12,7 @@ export const ProductsDetails: DocumentNode = gql`
     ${breadcrumbs}
     ${categoryDetails}
     ${image}
+    ${pageInfo}
     ${productOptions}
     ${prices}
     ${seoDetails}
@@ -66,10 +68,7 @@ export const ProductsDetails: DocumentNode = gql`
                 }
             }
             pageInfo {
-                hasNextPage
-                hasPreviousPage
-                startCursor
-                endCursor
+                ...PageInfo
             }
         }
         prices {

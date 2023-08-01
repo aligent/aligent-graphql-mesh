@@ -1,6 +1,8 @@
 import {
     BC_ImageConnection,
     BC_Product,
+    BC_ProductAvailabilityStatus,
+    BC_ProductConnection,
     BC_ReviewConnection,
     CategoryInterface,
     CurrencyEnum,
@@ -8,6 +10,8 @@ import {
     MediaGalleryEntry,
     ProductInterface,
     ProductReview,
+    Products,
+    ProductStockStatus,
 } from '../../meshrc/.mesh';
 import { BcProduct } from '../types';
 import { getTransformedCategoriesData } from './transform-category-data';
@@ -23,7 +27,7 @@ const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProd
 };
 
 // VirtualProduct' | 'SimpleProduct' | 'DownloadableProduct' | 'BundleProduct' | 'GroupedProduct' | 'ConfigurableProduct' | 'GiftCardProduct'
-export const createAcReadyProduct = (bcProduct: BC_Product): ProductInterface => {
+export const getTransformedProductData = (bcProduct: BC_Product): ProductInterface => {
     const {
         availabilityV2,
         categories,
@@ -36,8 +40,7 @@ export const createAcReadyProduct = (bcProduct: BC_Product): ProductInterface =>
 
     const images = createImages(bcProduct.images);
 
-    const product: ProductInterface = {
-        __typename: getTypeName(bcProduct),
+    return {
         categories:
             categories?.edges && categories.edges.length > 0
                 ? categories.edges.map(category => {
@@ -104,7 +107,7 @@ export const createAcReadyProduct = (bcProduct: BC_Product): ProductInterface =>
             relatedProducts?.edges && relatedProducts.edges.length > 0
                 ? relatedProducts.edges.map(relatedProduct => {
                       if (!relatedProduct?.node) return null;
-                      return createAcReadyProduct(relatedProduct.node);
+                      return getTransformedProductData(relatedProduct.node);
                   })
                 : null,
         sku: bcProduct.sku,
@@ -125,10 +128,27 @@ export const createAcReadyProduct = (bcProduct: BC_Product): ProductInterface =>
                 total_pages: 0,
             },
         },
+        // @ts-ignore this isn't included in the product prop types but is needed to prevent graohql from complaining
+        __typename: getTypeName(bcProduct),
     };
+};
+
+export const getTransformedProductsData = (bcProducts: BC_ProductConnection): Products => {
+    const { collectionInfo, edges, pageInfo } = bcProducts;
 
     return {
-        items: [product],
+        items: edges
+            ? edges.map(product => {
+                  if (!product) return null;
+                  return getTransformedProductData(product.node);
+              })
+            : null,
+        page_info: {
+            current_page: 0,
+            page_size: 0,
+            total_pages: 0,
+        },
+        total_count: collectionInfo?.totalItems,
     };
 };
 
@@ -156,7 +176,7 @@ const createReviewItems = (reviews: BC_ReviewConnection): Array<Maybe<ProductRev
     });
 };
 
-const transformAvailabilityStatus = status => {
+const transformAvailabilityStatus = (status: BC_ProductAvailabilityStatus): ProductStockStatus => {
     if (status === 'Available') return 'IN_STOCK';
     else return 'OUT_OF_STOCK';
 };
