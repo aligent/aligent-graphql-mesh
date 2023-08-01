@@ -4,12 +4,16 @@ import { breadcrumbs } from './breadcrumbs';
 import { image } from './image';
 import { productOptions } from './productOptions';
 import { prices } from './prices';
+import { seoDetails } from './seoDetails';
+import { categoryDetails } from './categoryDetails';
 
 export const ProductsDetails: DocumentNode = gql`
     ${breadcrumbs}
+    ${categoryDetails}
     ${image}
     ${productOptions}
     ${prices}
+    ${seoDetails}
 
     fragment ProductDetails on Product {
         __typename
@@ -23,9 +27,7 @@ export const ProductsDetails: DocumentNode = gql`
             ...Image
         }
         seo {
-            pageTitle
-            metaDescription
-            metaKeywords
+            ...SeoDetails
         }
         images {
             edges {
@@ -37,11 +39,7 @@ export const ProductsDetails: DocumentNode = gql`
         categories {
             edges {
                 node {
-                    name
-                    entityId
-                    breadcrumbs(depth: 10) {
-                        ...Breadcrumbs
-                    }
+                    ...CategoryDetails
                 }
             }
         }
@@ -51,6 +49,28 @@ export const ProductsDetails: DocumentNode = gql`
         reviewSummary {
             numberOfReviews
             summationOfRatings
+        }
+        reviews {
+            edges {
+                node {
+                    entityId
+                    author {
+                        name
+                    }
+                    title
+                    text
+                    rating
+                    createdAt {
+                        utc
+                    }
+                }
+            }
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+            }
         }
         prices {
             ...Prices
@@ -78,11 +98,7 @@ export const ProductsDetails: DocumentNode = gql`
                     categories {
                         edges {
                             node {
-                                name
-                                entityId
-                                breadcrumbs(depth: 10) {
-                                    ...Breadcrumbs
-                                }
+                                ...CategoryDetails
                             }
                         }
                     }
