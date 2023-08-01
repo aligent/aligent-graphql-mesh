@@ -7,6 +7,7 @@ import { productOptions } from './productOptions';
 import { prices } from './prices';
 import { seoDetails } from './seoDetails';
 import { categoryDetails } from './categoryDetails';
+import { variants } from './variants';
 
 export const ProductsDetails: DocumentNode = gql`
     ${breadcrumbs}
@@ -16,6 +17,7 @@ export const ProductsDetails: DocumentNode = gql`
     ${productOptions}
     ${prices}
     ${seoDetails}
+    ${variants}
 
     fragment ProductDetails on Product {
         __typename
@@ -71,6 +73,7 @@ export const ProductsDetails: DocumentNode = gql`
                 ...PageInfo
             }
         }
+        path
         prices {
             ...Prices
         }
@@ -101,9 +104,16 @@ export const ProductsDetails: DocumentNode = gql`
                             }
                         }
                     }
+                    path
                 }
             }
         }
-        path
+        variants {
+            edges {
+                node {
+                    ...Variants
+                }
+            }
+        }
     }
 `;
