@@ -103,3 +103,5 @@ export interface BcCategory {
         pageTitle: string;
     };
 }
+
+export interface Category extends BcCategory, BcCategoryTree {}
