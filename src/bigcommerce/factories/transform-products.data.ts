@@ -1,27 +1,50 @@
 import {
+    BC_ImageConnection,
+    BC_Product,
+    BC_ReviewConnection,
     CategoryInterface,
+    CurrencyEnum,
+    Maybe,
     MediaGalleryEntry,
     ProductInterface,
-    Products,
+    ProductReview,
 } from '../../meshrc/.mesh';
 import { BcProduct } from '../types';
 import { getTransformedCategoriesData } from './transform-category-data';
 
-const getTypeName = (bcProduct: BcProduct): 'SimpleProduct' | 'ConfigurableProduct' => {
-    if (bcProduct.variants.edges.length <= 1) {
-        return 'SimpleProduct';
-    } else {
+const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
+    const { variants } = bcProduct;
+
+    if (variants?.edges && variants?.edges.length > 0) {
         return 'ConfigurableProduct';
+    } else {
+        return 'SimpleProduct';
     }
 };
 
 // VirtualProduct' | 'SimpleProduct' | 'DownloadableProduct' | 'BundleProduct' | 'GroupedProduct' | 'ConfigurableProduct' | 'GiftCardProduct'
-export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
+export const createAcReadyProduct = (bcProduct: BC_Product): ProductInterface => {
+    const {
+        availabilityV2,
+        categories,
+        prices,
+        relatedProducts,
+        reviewSummary,
+        reviews,
+        seo,
+    } = bcProduct;
+
     const images = createImages(bcProduct.images);
 
     const product: ProductInterface = {
         __typename: getTypeName(bcProduct),
-        categories: getTransformedCategoriesData(bcProduct.categories),
+        categories:
+            categories?.edges && categories.edges.length > 0
+                ? categories.edges.map(category => {
+                      if (!category?.node) return null;
+                      return getTransformedCategoriesData(category.node);
+                  })
+                : null,
         description: {
             html: bcProduct.description,
         },
@@ -30,33 +53,35 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
         custom_attributes: [],
         id: bcProduct.entityId,
         media_gallery_entries: images,
-        meta_title: bcProduct.seo.pageTitle,
-        meta_keyword: bcProduct.seo.metaKeywords,
-        meta_description: bcProduct.seo.metaKeywords,
+        meta_title: seo?.pageTitle || '',
+        meta_keyword: seo?.metaKeywords || '',
+        meta_description: seo?.metaKeywords || '',
         name: bcProduct.name,
         price: {
             regularPrice: {
                 amount: {
-                    currency: bcProduct.prices.price.currencyCode,
-                    value: bcProduct.prices.price.value,
+                    currency: prices ? (prices.price.currencyCode as CurrencyEnum) : null,
+                    value: prices ? prices.price.value : null,
                 },
             },
         },
         price_range: {
-            maximum_price: {
-                discount: {
-                    amount_off: null,
-                    percent_off: null,
-                },
-                final_price: {
-                    currency: 'AUD',
-                    value: null,
-                },
-                regular_price: {
-                    currency: bcProduct.prices.priceRange.max.currencyCode,
-                    value: bcProduct.prices.priceRange.max.value,
-                },
-            },
+            maximum_price: prices
+                ? {
+                      discount: {
+                          amount_off: null,
+                          percent_off: null,
+                      },
+                      final_price: {
+                          currency: 'AUD',
+                          value: null,
+                      },
+                      regular_price: {
+                          currency: (prices.priceRange.max.currencyCode as CurrencyEnum) || null,
+                          value: prices.priceRange.max.value || null,
+                      },
+                  }
+                : null,
             minimum_price: {
                 discount: {
                     amount_off: null,
@@ -67,72 +92,84 @@ export const createAcReadyProduct = (bcProduct: BcProduct): Products => {
                     value: null,
                 },
                 regular_price: {
-                    currency: bcProduct.prices.priceRange.min.currencyCode,
-                    value: bcProduct.prices.priceRange.min.value,
+                    currency: prices ? (prices.priceRange.min.currencyCode as CurrencyEnum) : null,
+                    value: prices ? prices.priceRange.min.value : null,
                 },
             },
         },
         price_tiers: [],
-        rating_summary: bcProduct.reviewSummary.summationOfRatings,
-        review_count: bcProduct.reviewSummary.numberOfReviews,
-        related_products: createRelatedProducts(bcProduct.relatedProducts),
+        rating_summary: reviewSummary?.summationOfRatings || 0,
+        review_count: reviewSummary?.numberOfReviews || 0,
+        related_products:
+            relatedProducts?.edges && relatedProducts.edges.length > 0
+                ? relatedProducts.edges.map(relatedProduct => {
+                      if (!relatedProduct?.node) return null;
+                      return createAcReadyProduct(relatedProduct.node);
+                  })
+                : null,
         sku: bcProduct.sku,
         small_image: {
-            url: images[0].file,
+            url: images[0]?.file,
         },
-        stock_status: transformAvailabilityStatus(bcProduct.availabilityV2.status),
+        stock_status: availabilityV2?.status
+            ? transformAvailabilityStatus(availabilityV2.status)
+            : null,
         url_key: bcProduct.addToCartUrl,
         url_suffix: '',
+        // @todo add reviews data
         reviews: {
-            items: [],
+            items: createReviewItems(reviews),
             page_info: {
-                current_page: 1,
-                page_size: 1,
-                total_pages: 1,
+                current_page: 0,
+                page_size: 0,
+                total_pages: 0,
             },
         },
     };
-
-    product.reviews.items = createReviewItems(bcProduct.reviews, product);
 
     return {
         items: [product],
     };
 };
 
-const createReviewItems = (reviews: BcProduct['reviews'], product: ProductInterface) => {
-    return reviews.edges.map((review) => {
+const createReviewItems = (reviews: BC_ReviewConnection): Array<Maybe<ProductReview>> => {
+    if (!reviews?.edges || !reviews.edges?.length) return [];
+
+    return reviews.edges.map(review => {
+        if (!review?.node) return null;
+        const { author, createdAt, rating, text, title } = review.node;
         return {
             ratings_breakdown: [
                 {
-                    name: review.node.author.name,
+                    name: author.name,
                     value: 'null',
                 },
             ],
-            average_rating: review.node.rating,
-            created_at: review.node.createdAt.utc,
+            average_rating: rating,
+            created_at: createdAt.utc,
             nickname: 'null',
-            summary: review.node.title,
-            text: review.node.text,
-            product,
+            summary: title,
+            text: text,
+            // @todo TF doesn't get products for reviews. This will need follow up implementation
+            product: {} as ProductInterface,
         };
     });
 };
 
-const transformAvailabilityStatus = (status: BcProduct['availabilityV2']['status']) => {
+const transformAvailabilityStatus = status => {
     if (status === 'Available') return 'IN_STOCK';
     else return 'OUT_OF_STOCK';
 };
 
 const createCategories = (categories: BcProduct['categories']): CategoryInterface[] => {
-    return categories.edges.map((catItem) => {
+    return categories.edges.map(catItem => {
         return {
             __typename: 'CategoryTree',
             uid: String(catItem.node.entityId),
             name: catItem.node.name,
             level: null,
             staged: true,
-            breadcrumbs: catItem.node.breadcrumbs.edges.map((crumbItem) => {
+            breadcrumbs: catItem.node.breadcrumbs.edges.map(crumbItem => {
                 return {
                     __typename: 'Breadcrumb',
                     category_name: crumbItem.node.name,
@@ -143,86 +180,18 @@ const createCategories = (categories: BcProduct['categories']): CategoryInterfac
     });
 };
 
-const createImages = (images: BcProduct['images']): MediaGalleryEntry[] => {
-    return images.edges.map((image) => {
+const createImages = (images: BC_ImageConnection): Array<Maybe<MediaGalleryEntry>> => {
+    if (!images?.edges || !images?.edges.length) return [];
+
+    return images?.edges.map(image => {
+        if (!image) return null;
+        const { altText, isDefault, urlOriginal } = image.node;
         return {
-            file: image.node.urlOriginal,
-            label: image.node.altText,
-            disabled: image.node.isDefault,
+            file: urlOriginal,
+            label: altText,
+            disabled: isDefault,
             uid: 'null',
             position: null,
         };
-    });
-};
-
-const createRelatedProducts = (
-    relatedProducts: BcProduct['relatedProducts']
-): ProductInterface[] => {
-    return relatedProducts?.edges.map((product) => {
-        const baseProduct: ProductInterface = {
-            __typename: 'ConfigurableProduct',
-            categories: createCategories(product.node.categories),
-            id: product.node.entityId,
-            name: product.node.name,
-            rating_summary: null,
-            review_count: null,
-            staged: true,
-            uid: product.node.id,
-            custom_attributes: [],
-            price: {
-                regularPrice: {
-                    amount: {
-                        currency: product.node.prices.price.currencyCode,
-                        value: product.node.prices.price.value,
-                    },
-                },
-            },
-            price_range: {
-                maximum_price: {
-                    discount: {
-                        amount_off: null,
-                        percent_off: null,
-                    },
-                    final_price: {
-                        currency: 'AUD',
-                        value: null,
-                    },
-                    regular_price: {
-                        currency: product.node.prices.priceRange.max.currencyCode,
-                        value: product.node.prices.priceRange.max.value,
-                    },
-                },
-                minimum_price: {
-                    discount: {
-                        amount_off: null,
-                        percent_off: null,
-                    },
-                    final_price: {
-                        currency: 'AUD',
-                        value: null,
-                    },
-                    regular_price: {
-                        currency: product.node.prices.priceRange.min.currencyCode,
-                        value: product.node.prices.priceRange.min.value,
-                    },
-                },
-            },
-            reviews: {
-                items: [],
-                page_info: {
-                    current_page: 1,
-                    page_size: 1,
-                    total_pages: 1,
-                },
-            },
-            sku: product.node.sku,
-            small_image: {
-                url: 'null',
-            },
-            url_key: product.node.addToCartUrl,
-            url_suffix: '.html',
-        };
-
-        return baseProduct;
     });
 };

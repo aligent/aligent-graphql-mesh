@@ -10,6 +10,7 @@ import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
+import { BC_Product } from '../../../meshrc/.mesh';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -58,7 +59,7 @@ export const bcLogin = async (
     return entityId;
 };
 
-export const getBcProductGraphql = async (sku: string): Promise<BcProduct> => {
+export const getBcProductGraphql = async (sku: string): Promise<BC_Product> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };

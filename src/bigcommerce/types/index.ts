@@ -135,7 +135,7 @@ export interface BcCategoryTree {
     entityId: number;
     name: string;
     path: string;
-    productCount: number;
+    productCount?: number;
 }
 
 export interface BcCategory {
@@ -143,9 +143,9 @@ export interface BcCategory {
     metaDescription?: string;
     pageTitle?: string;
     products?: {
-        collectionInfo: {
-            totalItems: number;
-        };
+        collectionInfo?: {
+            totalItems?: number;
+        } | undefined | null;
     };
     seo?: {
         metaDescription: string;
