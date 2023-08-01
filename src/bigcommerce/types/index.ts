@@ -136,3 +136,10 @@ export interface DecodedCustomerImpersonationToken {
     sub_type: number;
     token_type: number;
 }
+
+export interface MeshToken {
+    bc_token: string;
+    bc_customer_id: number;
+    iat: number;
+    exp: number;
+}

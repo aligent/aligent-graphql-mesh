@@ -1,8 +1,11 @@
-import { useExtendContext } from '@envelop/core';
+import { Plugin, useExtendContext, envelop } from '@envelop/core';
 import { createCustomerImpersonationToken } from '../resolvers/requests/bc-rest-calls';
-import { DecodedCustomerImpersonationToken} from '../types';
-import { JwtPayload, decode } from 'jsonwebtoken';
+import { DecodedCustomerImpersonationToken, MeshToken } from '../types';
+import { JwtPayload, decode, verify } from 'jsonwebtoken';
 import { logAndThrowError } from '../resolvers/error-handling';
+import { MeshContext } from '@graphql-mesh/runtime';
+
+const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
 export const getUnixTimeStampInSeconds = (hours: number) => {
     const hoursInSeconds = 60 * 60 * hours; // sec * mins * hours
@@ -22,9 +25,17 @@ const getDecodedCustomerImpersonationToken = (
     }
 };
 
+const getDecodedMeshToken = (meshToken: string): MeshToken => {
+    try {
+        return verify(meshToken, JWT_PRIVATE_KEY) as JwtPayload as unknown as MeshToken;
+    } catch (error) {
+        return logAndThrowError(`mesh-token could not be decoded ${error}`);
+    }
+};
+
 let customerImpersonationToken = '';
 
-export const useExtendContextPlugin = useExtendContext(async (context) => {
+export const useExtendContextPlugin = useExtendContext(async (context)  => {
     if (customerImpersonationToken === '') {
         const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds(24);
 
@@ -48,5 +59,9 @@ export const useExtendContextPlugin = useExtendContext(async (context) => {
     }
 
     context.headers.customerImpersonationToken = `bearer ${customerImpersonationToken}`;
-});
 
+    if (context.headers['mesh-token']) {
+        const { bc_customer_id } = getDecodedMeshToken(context.headers['mesh-token']);
+        context.headers['x-bc-customer-id'] = bc_customer_id;
+    }
+});

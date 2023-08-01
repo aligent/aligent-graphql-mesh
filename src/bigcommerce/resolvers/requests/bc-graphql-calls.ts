@@ -47,7 +47,7 @@ export const bcLogin = async (
     };
 
     const response = await bcGraphQlRequest(graphqlQuery, headers);
-    
+
     const entityId = response.data?.login.customer.entityId;
     const result = response.data?.login.result;
 
@@ -74,6 +74,29 @@ export const getBcProductGraphql = async (
     }
 
     return response.data.site.product;
+};
+
+export const getBcCustomer = async (Authorization: string, bcCustomerId: number): Promise<any> => {
+    const headers = {
+        Authorization,
+        'x-bc-customer-id': bcCustomerId,
+    };
+    const getCustomer = {
+        query: `query customer {
+            customer{
+            entityId
+            email
+          }
+        }`,
+    };
+
+    const response = await bcGraphQlRequest(getCustomer, headers);
+
+    if (response.data.errors) {
+        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductGraphql.name);
+    }
+
+    return response.data.customer;
 };
 
 export const getRoute = async (url: string) => {
