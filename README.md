@@ -85,3 +85,19 @@ through the Mesh service, and then appropriately sent out to corresponding API's
 
 To use as a Gateway, after running `yarn dev`, update your app to send GraphQL requests to the server URL provided
 by the CLI, likely `https://localhost:4000/graphql`.
+
+## Hosting
+
+There are currently two methods for hosting the mesh.
+
+### Fargate
+
+At this stage Fargate is our preferred hosting option. 
+
+The pipeline is configured to build a docker image and push to ECR. This will then trigger a deployment from ECS which will use the latest image found in ECR. The infrastructure code can be [here](https://bitbucket.org/aligent/aligent-graphql-mesh-hosting/src/main/).
+
+### Lambda
+
+Unfortunately the performance of Lambda is not great, it can take a while for requests to process which is not ideal for our use case.
+
+The Guild do list this as a hosting option so presumably there is a way to make it work efficiently. The code is still available here as a baseline if we decide to investigate Lambda hosting in the future.
