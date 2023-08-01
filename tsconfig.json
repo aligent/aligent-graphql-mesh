@@ -19,7 +19,7 @@
         "strictPropertyInitialization": false,
         "typeRoots": ["./node_modules/@types"]
     },
-    "include": ["./src/**/*.ts"],
+    "include": ["./src/**/*.ts", "./lambda"],
     "exclude": [
         "node_modules/**/*"
     ]
