@@ -9,21 +9,21 @@ import {
     BC_CheckoutConsignmentAddress,
     BC_CheckoutSelectedShippingOption,
     BC_CheckoutShippingConsignment,
-    BillingCartAddress,
+    BC_Money,
     Cart,
-    CartAddressCountry,
-    CartAddressInterface,
     CartItemInterface,
     CartPrices,
-    CartTaxItem,
     CurrencyEnum,
-    InputMaybe,
     Maybe,
-    Scalars,
+    Money,
     SelectedShippingMethod,
-    ShippingAddressInput,
     ShippingCartAddress,
 } from '../../meshrc/.mesh';
+
+const getPrice = (priceObject: BC_Money): Money => {
+    const { currencyCode, value } = priceObject;
+    return { currency: currencyCode as Maybe<CurrencyEnum>, value: value || 0 };
+};
 
 const getCartItems = (
     cartItems: Array<BC_CartPhysicalItem> | undefined = []
@@ -70,31 +70,28 @@ const getCartItems = (
             };
         });
 
+        const total_item_discount = discounts.reduce(
+            (carry, discount) => {
+                const { currencyCode, value } = discount.discountedAmount;
+                return {
+                    currency: currencyCode as Maybe<CurrencyEnum>,
+                    value: carry.value + value,
+                };
+            },
+            { currency: 'AUD' as Maybe<CurrencyEnum>, value: 0 }
+        );
+
         return {
             id: entityId, // cart item id
-            uid: btoa(entityId), // @todo use btoa method
+            uid: btoa(entityId),
             errors: null,
             prices: {
-                price_including_tax: {
-                    currency: salePrice.currencyCode as Maybe<CurrencyEnum>,
-                    value: salePrice.value,
-                    __typename: 'Money',
-                },
-                row_total_including_tax: {
-                    currency: salePrice.currencyCode as Maybe<CurrencyEnum>,
-                    value: salePrice.value,
-                    __typename: 'Money',
-                },
-                row_total: {
-                    currency: salePrice.currencyCode as Maybe<CurrencyEnum>,
-                    value: salePrice.value,
-                    __typename: 'Money',
-                },
-                price: {
-                    currency: salePrice.currencyCode as Maybe<CurrencyEnum>,
-                    value: salePrice.value,
-                    __typename: 'Money',
-                },
+                price: getPrice(salePrice),
+                price_including_tax: getPrice(salePrice),
+                // @todo need a away to work out inc/ex gst
+                row_total: getPrice(extendedListPrice),
+                row_total_including_tax: getPrice(extendedListPrice),
+                total_item_discount,
                 __typename: 'CartItemPrices',
             },
             product: {
@@ -104,7 +101,7 @@ const getCartItems = (
                 sku: sku,
                 small_image: {
                     url: imageUrl,
-                    label: name, // @todo might need to update to image label
+                    label: name,
                     __typename: 'ProductImage',
                 },
                 categories: [],
@@ -114,16 +111,8 @@ const getCartItems = (
                             amount_off: originalPrice.value - salePrice.value,
                             __typename: 'ProductDiscount',
                         },
-                        final_price: {
-                            currency: salePrice.currencyCode as Maybe<CurrencyEnum>,
-                            value: salePrice.value,
-                            __typename: 'Money',
-                        },
-                        regular_price: {
-                            currency: originalPrice.currencyCode as Maybe<CurrencyEnum>,
-                            value: originalPrice.value,
-                            __typename: 'Money',
-                        },
+                        final_price: getPrice(salePrice),
+                        regular_price: getPrice(originalPrice),
                         __typename: 'ProductPrice',
                     },
                     __typename: 'PriceRange',
@@ -157,10 +146,7 @@ const getAvailableShippingMethod = (
 ): AvailableShippingMethod => {
     const { type, transitTime, imageUrl, entityId = '', description, cost } = shippingOption;
     return {
-        amount: {
-            currency: cost.currencyCode as Maybe<CurrencyEnum>,
-            value: cost.value,
-        },
+        amount: getPrice(cost),
         // If the option is returned in the data it's available?
         available: true,
         base_amount: null,
@@ -170,14 +156,8 @@ const getAvailableShippingMethod = (
         method_code: entityId || '',
         method_title: description,
         // @todo work if "cost" is ex or inc gst
-        price_excl_tax: {
-            currency: cost.currencyCode as Maybe<CurrencyEnum>,
-            value: cost.value,
-        },
-        price_incl_tax: {
-            currency: cost.currencyCode as Maybe<CurrencyEnum>,
-            value: cost.value,
-        },
+        price_excl_tax: getPrice(cost),
+        price_incl_tax: getPrice(cost),
     };
 };
 
@@ -290,51 +270,33 @@ const getPrices = (checkoutData: BC_Checkout): CartPrices => {
         taxes?.map(tax => {
             const { name, amount } = tax;
             return {
-                amount: {
-                    currency: amount?.currencyCode as Maybe<CurrencyEnum>,
-                    value: amount?.value,
-                },
+                amount: getPrice(amount),
                 label: name,
             };
         }) || null;
 
     const discounts = coupons.map(coupon => {
-        const {
-            code,
-            discountedAmount: { currencyCode, value },
-        } = coupon;
+        const { code, discountedAmount } = coupon;
 
         return {
             label: code,
-            amount: {
-                value: value,
-                currency: currencyCode as Maybe<CurrencyEnum>,
-            },
+            amount: getPrice(discountedAmount),
         };
     });
 
     const discountedAmount = coupons.reduce(
-        (carry, coupon): { currencyCode: string; value: number } => {
-            const { currencyCode, value } = discountedAmount;
-            return { currencyCode: currencyCode, value: carry.value + value };
+        (carry, coupon) => {
+            const { currencyCode, value } = coupon.discountedAmount;
+            return { currency: currencyCode, value: carry.value + value };
         },
-        { currencyCode: '', value: 0 }
+        { currency: '', value: 0 }
     );
     return {
         applied_taxes,
         discounts,
-        grand_total: {
-            currency: grandTotal?.currencyCode as Maybe<CurrencyEnum>,
-            value: grandTotal?.value,
-        },
-        subtotal_excluding_tax: {
-            currency: subtotal?.currencyCode as Maybe<CurrencyEnum>,
-            value: subtotal?.value,
-        },
-        subtotal_including_tax: {
-            currency: subtotal?.currencyCode as Maybe<CurrencyEnum>,
-            value: subtotal?.value,
-        },
+        grand_total: grandTotal?.value ? getPrice(grandTotal) : null,
+        subtotal_excluding_tax: subtotal?.value ? getPrice(subtotal) : null,
+        subtotal_including_tax: subtotal?.value ? getPrice(subtotal) : null,
         subtotal_with_discount_including_tax: {
             value: grandTotal?.value + discountedAmount.value,
             currency: taxTotal?.currencyCode as Maybe<CurrencyEnum>,
@@ -399,19 +361,3 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
         printed_card_included: false,
     };
 };
-
-type AcName = {
-    name: string;
-};
-
-type BcName = {
-    name: string | undefined;
-};
-
-const getName = ({ name }: BcName): AcName => {
-    return {
-        name: name || '',
-    };
-};
-
-getName({ name: 'Brett' });
