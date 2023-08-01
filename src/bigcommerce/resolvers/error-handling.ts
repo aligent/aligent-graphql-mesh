@@ -10,7 +10,7 @@ import { isAxiosError } from 'axios';
  * @param context a map of extra contextual information
 */
 export const logAndThrowError = (error: Error, context?: Record<string, string>) => {
-    let messages = [`ERROR: ${JSON.stringify(error)}`];
+    const messages = [`ERROR: ${JSON.stringify(error)}`];
 
     if (context !== undefined) {
         messages.push(`Context: ${JSON.stringify(context)}`);

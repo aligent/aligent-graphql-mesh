@@ -1,7 +1,3 @@
-export enum CategoryTreeTypename {
-    CategoryTree = 'CategoryTree',
-}
-
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
