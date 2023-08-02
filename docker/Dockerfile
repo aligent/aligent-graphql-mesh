@@ -2,14 +2,13 @@ FROM node:18-buster
 
 WORKDIR /usr/src/app
 
-RUN npm install -g typescript
 COPY tsconfig.json ./
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install
 COPY src ./src
 COPY docker/server.ts ./src/meshrc/server.ts
-RUN tsc
+RUN npx tsc
 
 EXPOSE 4000
 
