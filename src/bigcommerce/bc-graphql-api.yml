@@ -1,0 +1,10 @@
+name: BigCommerceGraphqlApi
+handler:
+  graphql:
+    endpoint: '{env.BC_GRAPHQL_API}'
+    schemaHeaders:
+      Authorization: bearer {env.BC_GRAPHQL_TOKEN}
+transforms:
+  - prefix:
+      mode: wrap
+      value: BC_
