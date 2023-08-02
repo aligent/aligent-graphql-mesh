@@ -1,0 +1,18 @@
+image: node:18
+
+definitions:
+  steps:
+    - step: &test
+        name: Test
+        script:
+          - FORCE_COLOR=true
+          - yarn install
+          - yarn build
+          - yarn lint
+          - yarn check-types
+          - yarn test
+
+pipelines:
+  pull-requests:
+    '**':
+      - step: *test
