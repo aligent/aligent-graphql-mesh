@@ -1,5 +1,9 @@
 import { mockBcCart } from './cart.bc';
-import { BC_Checkout } from '../../../meshrc/.mesh';
+import {
+    BC_Checkout,
+    BC_CheckoutAddressCheckboxesCustomField,
+    BC_CheckoutAddressTextFieldCustomField,
+} from '../../../meshrc/.mesh';
 
 export const mockBcCheckout: BC_Checkout = {
     id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',
@@ -66,11 +70,11 @@ export const mockBcCheckout: BC_Checkout = {
             {
                 entityId: 26,
                 text: 'My Billing Comment',
-            },
+            } as BC_CheckoutAddressTextFieldCustomField,
             {
                 entityId: 29,
                 valueEntityIds: [0],
-            },
+            } as BC_CheckoutAddressCheckboxesCustomField,
         ],
         countryCode: 'AU',
         company: 'Aligent',
@@ -128,7 +132,7 @@ export const mockBcCheckout: BC_Checkout = {
                     {
                         valueEntityIds: [0],
                         entityId: 29,
-                    },
+                    } as BC_CheckoutAddressCheckboxesCustomField,
                 ],
                 countryCode: 'AU',
                 company: 'Aligent',
