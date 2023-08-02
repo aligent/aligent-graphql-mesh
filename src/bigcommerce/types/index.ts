@@ -142,4 +142,4 @@ export interface MeshToken {
 }
 export interface Category extends BcCategory, BcCategoryTree {}
 
-export type OurContext = MeshContext & { headers: Record<string, string> };
+export type CustomContext = MeshContext & { headers: Record<string, string> };

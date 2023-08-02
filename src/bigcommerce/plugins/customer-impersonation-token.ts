@@ -2,9 +2,9 @@ import { useExtendContext } from '@envelop/core';
 import { createCustomerImpersonationToken } from '../resolvers/requests/bc-rest-calls';
 import { getDecodedCustomerImpersonationToken, getDecodedMeshToken } from '../../utils/tokens';
 import { getUnixTimeStampInSeconds } from '../../utils/time-and-date';
-import { OurContext } from '../types';
+import { CustomContext } from '../types';
 
-export const useExtendContextPlugin = useExtendContext(async (context: OurContext) => {
+export const useExtendContextPlugin = useExtendContext(async (context: CustomContext) => {
     if (!await context.cache.get('customerImpersonationToken')) {
         const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds(24);
 
