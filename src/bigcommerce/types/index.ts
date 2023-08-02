@@ -85,14 +85,16 @@ export interface BcStoreConfigMetafields {
         entityId: number,
         metafields: {
             edges: [
-                node: {
-                    id: string,
-                    key: string,
-                    value: string
-                }
+                node: BcMetafieldNode
             ]
         }
     };
+}
+
+export interface BcMetafieldNode {
+    id: string,
+    key: string,
+    value: string
 }
 
 export interface AcStoreConfig {
