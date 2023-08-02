@@ -2,9 +2,8 @@ import { useExtendContext } from '@envelop/core';
 import { createCustomerImpersonationToken } from '../resolvers/requests/bc-rest-calls';
 import { getDecodedCustomerImpersonationToken, getDecodedMeshToken } from '../../utils/tokens';
 import { getUnixTimeStampInSeconds } from '../../utils/time-and-date';
-import { CustomContext } from '../types';
 
-export const useExtendContextPlugin = useExtendContext(async (context: CustomContext) => {
+export const useExtendContextPlugin = useExtendContext(async (context) => {
     if (!await context.cache.get('customerImpersonationToken')) {
         const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds(24);
 
@@ -29,11 +28,8 @@ export const useExtendContextPlugin = useExtendContext(async (context: CustomCon
         }
     }
 
-    context.headers.customerImpersonationToken = `bearer ${await context.cache.get(
-        'customerImpersonationToken'
-    )}`;
     if (context.headers['mesh-token']) {
         const { bc_customer_id } = getDecodedMeshToken(context.headers['mesh-token']);
-        context.headers['x-bc-customer-id'] = bc_customer_id
+        context.cache.set('x-bc-customer-id', bc_customer_id)
     }
 });

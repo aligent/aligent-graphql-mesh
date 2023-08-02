@@ -56,10 +56,10 @@ export const bcLogin = async (
 
 export const getBcProductGraphql = async (
     sku: string,
-    Authorization: string
+    customerImpersonationToken: string
 ): Promise<BcProduct> => {
     const headers = {
-        Authorization,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
     const productBySkuQuery = getProductBySkuQuery(sku);
 
@@ -77,11 +77,11 @@ export const getBcProductGraphql = async (
 };
 
 export const getBcCustomer = async (
-    Authorization: string,
+    customerImpersonationToken: string,
     bcCustomerId: number
 ): Promise<BC_Customer> => {
     const headers = {
-        Authorization,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,
     };
     const getCustomer = {

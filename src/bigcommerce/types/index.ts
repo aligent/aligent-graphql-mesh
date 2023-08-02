@@ -136,7 +136,7 @@ export interface DecodedCustomerImpersonationToken {
 }
 
 export interface MeshToken {
-    bc_customer_id: string;
+    bc_customer_id: number;
     iat: number;
     exp: number;
 }
