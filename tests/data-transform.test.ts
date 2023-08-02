@@ -1,4 +1,4 @@
-import { createAcReadyCustomer } from '../src/bigcommerce/factories/transform-customers-data';
+import { transformCustomerData } from '../src/bigcommerce/factories/transform-customers-data';
 import { bcCountry, bcCustomerCreated, bcStates } from './__data__/bigcommerce-data';
 import {
     transformedCountries,
@@ -46,7 +46,7 @@ describe('Create customer data transform tests', () => {
         const inputBcCustomerCreated = bcCustomerCreated;
         const inputTransformedCreatedCustomer = transformedCreatedCustomer;
 
-        const transformed = createAcReadyCustomer(inputBcCustomerCreated);
+        const transformed = transformCustomerData(inputBcCustomerCreated);
 
         expect(transformed).toEqual(inputTransformedCreatedCustomer);
     });
