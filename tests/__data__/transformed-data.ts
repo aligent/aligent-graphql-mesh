@@ -43,7 +43,7 @@ export const transformedStates = [
 
 export const transformedCountries = {
     full_name_english: 'Australia',
-    id: 13,
+    id: '13',
     two_letter_abbreviation: 'AU',
     available_regions: transformedStates,
 };

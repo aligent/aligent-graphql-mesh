@@ -11,7 +11,9 @@ export const createCustomerResolver: MutationResolvers['createCustomer'] = {
             !args.input.lastname ||
             !args.input.password
         ) {
-            return logAndThrowError('Missing email or firstname or lastname or password');
+            return logAndThrowError(
+                new Error('Missing email or firstname or lastname or password')
+            );
         }
 
         const bcCustomer = await createCustomer(
