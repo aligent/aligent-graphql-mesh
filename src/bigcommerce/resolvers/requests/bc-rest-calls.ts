@@ -91,8 +91,6 @@ export const createCustomer = async (
         },
     ];
 
-    console.log(data);
-
     const response = await bcPost(path, data);
     return response.data[0];
 };
