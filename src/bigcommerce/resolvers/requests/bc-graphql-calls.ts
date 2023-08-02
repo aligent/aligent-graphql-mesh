@@ -135,10 +135,8 @@ export const getChannelMetafields = async (namespace: string): Promise<BC_Metafi
             `Failed to fetch channel metafields from BigCommerce: ${JSON.stringify(response.data.errors)}`
         ));
     }
-    const channelData: BC_Channel = response.data;
-
-    console.log('getChannelMetafields: ');
-    console.log(JSON.stringify(channelData.metafields));
+    //response.data looks like: {"channel":{"entityId":1,"metafields":{"edges":[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]}}}
+    const channelData: BC_Channel = response.data.channel;
 
     return channelData.metafields;
 };

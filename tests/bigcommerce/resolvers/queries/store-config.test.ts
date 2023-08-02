@@ -1,7 +1,7 @@
 import { simpleObject } from '../../../__data__/example-data';
 import { transformChannelMetafieldsToStoreConfig } from '../../../../src/bigcommerce/resolvers/queries/store-config';
 import { BcStoreConfigMetafields } from '../../../../src/bigcommerce/types';
-import { StoreConfig } from '../../../../src/meshrc/.mesh';
+import { BC_Channel, StoreConfig } from '../../../../src/meshrc/.mesh';
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', async () => {
@@ -23,7 +23,7 @@ describe('Transform StoreConfig tests', () => {
     });
 });
 
-const bcStoreConfigDataExpected: BcStoreConfigMetafields = {
+const bcStoreConfigDataExpected: BC_Channel = {
     channel: {
         entityId: 1,
         metafields: {
