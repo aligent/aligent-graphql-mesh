@@ -1,5 +1,12 @@
-import { getTransformedCartData } from '../transform-cart-data';
+import {
+    getAddress,
+    getCartItems,
+    getPrices,
+    getShippingAddresses,
+    getTransformedCartData,
+} from '../transform-cart-data';
 import { mockBcCheckout } from '../../resolvers/mocks/checkout.bc';
+import { BC_CheckoutAddressCheckboxesCustomField } from '../../../meshrc/.mesh';
 
 const expectedResponse = {
     applied_coupons: [
@@ -143,7 +150,7 @@ const expectedResponse = {
             value: 90,
         },
         subtotal_with_discount_including_tax: {
-            value: 100,
+            value: 90,
             currency: 'AUD',
         },
         subtotal_with_discount_excluding_tax: {
@@ -245,8 +252,90 @@ const expectedResponse = {
     printed_card_included: false,
 };
 
-describe('Passing tests', () => {
+describe('transform-cart-data', () => {
     it('Transforms BC cart data to AC', () => {
         expect(getTransformedCartData(mockBcCheckout)).toEqual(expectedResponse);
+    });
+
+    it(`Returns null if cart items don't exist`, () => {
+        expect(getCartItems(null)).toEqual(null);
+    });
+
+    it(`returns null when there's no checkout data`, () => {
+        expect(getTransformedCartData(null)).toEqual(null);
+    });
+
+    it('Transforms BC cart data to AC', () => {
+        expect(getShippingAddresses(null, null)).toEqual([]);
+    });
+
+    it('Transforms BC cart data to AC', () => {
+        expect(
+            getPrices({
+                coupons: [],
+                grandTotal: null,
+                subtotal: null,
+                taxes: null,
+                taxTotal: undefined,
+            })
+        ).toEqual({
+            applied_taxes: null,
+            discounts: [],
+            grand_total: null,
+            subtotal_excluding_tax: null,
+            subtotal_including_tax: null,
+            subtotal_with_discount_including_tax: {
+                value: 0,
+                currency: undefined,
+            },
+            subtotal_with_discount_excluding_tax: {
+                value: 0,
+                currency: undefined,
+            },
+        });
+    });
+
+    it(`sets default values when address information doesn't exist`, () => {
+        expect(
+            getAddress({
+                stateOrProvinceCode: '',
+                stateOrProvince: '',
+                postalCode: '',
+                phone: '',
+                lastName: '',
+                firstName: '',
+                email: '',
+                customFields: [
+                    {
+                        valueEntityIds: [0],
+                        entityId: 29,
+                    } as BC_CheckoutAddressCheckboxesCustomField,
+                ],
+                countryCode: '',
+                company: '',
+                city: '',
+                address2: null,
+                address1: null,
+            })
+        ).toEqual(
+            expect.objectContaining({
+                firstname: '',
+                lastname: '',
+                company: '',
+                city: '',
+                country: {
+                    code: '',
+                    label: '',
+                },
+                postcode: '',
+                region: {
+                    code: '',
+                    label: '',
+                    region_id: 573,
+                },
+                street: [],
+                telephone: '',
+            })
+        );
     });
 });

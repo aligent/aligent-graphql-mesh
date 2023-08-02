@@ -41,7 +41,15 @@ export const mockBcCart = {
                 variantEntityId: 513,
                 parentEntityId: null,
                 productEntityId: 492,
-                discounts: [],
+                discounts: [
+                    {
+                        entityId: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
+                        discountedAmount: {
+                            currencyCode: 'AUD',
+                            value: 0,
+                        },
+                    },
+                ],
                 originalPrice: {
                     currencyCode: 'AUD',
                     value: 55,

@@ -1,14 +1,16 @@
 import { btoa, getIsVirtualCart, getNewUrl } from '../../utils';
 import {
     AvailableShippingMethod,
-    BC_CartPhysicalItem,
+    BC_Cart,
     BC_CartSelectedMultipleChoiceOption,
     BC_Checkout,
     BC_CheckoutAvailableShippingOption,
     BC_CheckoutBillingAddress,
     BC_CheckoutConsignmentAddress,
+    BC_CheckoutCoupon,
     BC_CheckoutSelectedShippingOption,
     BC_CheckoutShippingConsignment,
+    BC_CheckoutTax,
     BC_Money,
     Cart,
     CartItemInterface,
@@ -25,10 +27,10 @@ const getPrice = (priceObject: BC_Money): Money => {
     return { currency: currencyCode as Maybe<CurrencyEnum>, value: value || 0 };
 };
 
-const getCartItems = (
-    cartItems: Array<BC_CartPhysicalItem> | undefined = []
-): Array<CartItemInterface> => {
-    return cartItems.map(item => {
+export const getCartItems = (cartItems: Maybe<BC_Cart>): Maybe<Array<Maybe<CartItemInterface>>> => {
+    if (!cartItems?.lineItems) return null;
+
+    return cartItems.lineItems.physicalItems.map(item => {
         const {
             name,
             sku,
@@ -128,7 +130,7 @@ const getCartItems = (
 const getAvailableShippingMethod = (
     shippingOption: BC_CheckoutAvailableShippingOption | BC_CheckoutSelectedShippingOption
 ): AvailableShippingMethod => {
-    const { type, entityId = '', description, cost } = shippingOption;
+    const { type, entityId, description, cost } = shippingOption;
     return {
         amount: getPrice(cost),
         // If the option is returned in the data it's available?
@@ -137,7 +139,7 @@ const getAvailableShippingMethod = (
         carrier_code: type,
         carrier_title: description,
         error_message: '',
-        method_code: entityId || '',
+        method_code: entityId,
         method_title: description,
         // @todo work if "cost" is ex or inc gst
         price_excl_tax: getPrice(cost),
@@ -145,17 +147,19 @@ const getAvailableShippingMethod = (
     };
 };
 
-const getSelectedShippingMethod = (
+export const getSelectedShippingMethod = (
     shippingOption: BC_CheckoutSelectedShippingOption
 ): SelectedShippingMethod => {
     return {
         ...getAvailableShippingMethod(shippingOption),
-        method_code: shippingOption.entityId || '',
+        method_code: shippingOption.entityId,
         method_title: shippingOption.description,
     };
 };
 
-const getAddress = (bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillingAddress) => {
+export const getAddress = (
+    bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillingAddress
+) => {
     const {
         stateOrProvinceCode,
         stateOrProvince,
@@ -166,8 +170,8 @@ const getAddress = (bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillin
         countryCode,
         company,
         city,
-        address2 = null,
-        address1 = null,
+        address2,
+        address1,
     } = bcAddress;
 
     return {
@@ -185,13 +189,13 @@ const getAddress = (bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillin
             label: stateOrProvince,
             region_id: 573, // @todo BC checkout doesn't return the region_id
         },
-        street: [address1, address2].filter(Boolean),
+        street: [address1 || null, address2 || null].filter(Boolean),
         telephone: phone,
         uid: '',
     };
 };
 
-const getShippingAddresses = (
+export const getShippingAddresses = (
     bcShippingAddresses: Array<BC_CheckoutShippingConsignment> | undefined | null,
     customerMessage: string | null | undefined
 ): Array<Maybe<ShippingCartAddress>> => {
@@ -238,13 +242,15 @@ const getShippingAddresses = (
     );
 };
 
-const getPrices = (checkoutData: BC_Checkout): CartPrices => {
-    const { coupons, grandTotal, subtotal, taxes, taxTotal } = checkoutData || {
-        billingAddress: [],
-        cart: {},
-        shippingConsignments: [],
-        taxes: [],
-    };
+type Prices = {
+    coupons: Array<BC_CheckoutCoupon>;
+    grandTotal?: Maybe<BC_Money>;
+    subtotal?: Maybe<BC_Money>;
+    taxes?: Maybe<Array<BC_CheckoutTax>>;
+    taxTotal?: Maybe<BC_Money>;
+};
+export const getPrices = (prices: Prices): CartPrices => {
+    const { coupons, grandTotal, subtotal, taxes, taxTotal } = prices;
 
     const applied_taxes =
         taxes?.map(tax => {
@@ -278,7 +284,7 @@ const getPrices = (checkoutData: BC_Checkout): CartPrices => {
         subtotal_excluding_tax: subtotal?.value ? getPrice(subtotal) : null,
         subtotal_including_tax: subtotal?.value ? getPrice(subtotal) : null,
         subtotal_with_discount_including_tax: {
-            value: grandTotal?.value + discountedAmount.value,
+            value: grandTotal?.value || 0 + discountedAmount.value || 0,
             currency: taxTotal?.currencyCode as Maybe<CurrencyEnum>,
         },
         subtotal_with_discount_excluding_tax: {
@@ -288,7 +294,9 @@ const getPrices = (checkoutData: BC_Checkout): CartPrices => {
     };
 };
 
-export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
+export const getTransformedCartData = (checkoutData: Maybe<BC_Checkout>): Maybe<Cart> => {
+    if (!checkoutData) return null;
+
     const {
         billingAddress,
         cart,
@@ -296,15 +304,9 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
         coupons,
         entityId,
         shippingConsignments,
-    } = checkoutData || { billingAddress: [], cart: {}, shippingConsignments: [], taxes: [] };
-    const { physicalItems } = cart?.lineItems || {
-        customItems: [],
-        digitalItems: [],
-        giftCertificates: [],
-        physicalItems: [],
-    };
+    } = checkoutData;
 
-    const items = getCartItems([...physicalItems]);
+    const items = getCartItems(cart || null);
 
     const applied_coupons = coupons.map(({ code }) => ({ code }));
 
@@ -314,7 +316,7 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
         total_quantity: cart?.lineItems?.totalQuantity || 0,
         error_type: null,
         items,
-        is_virtual: getIsVirtualCart(cart),
+        is_virtual: getIsVirtualCart(cart?.lineItems),
         // @todo work out free shipping details
         free_shipping_details: {
             free_shipping_active: false,

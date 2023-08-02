@@ -1,22 +1,16 @@
-import { BC_Cart, Maybe, Scalars } from '../meshrc/.mesh';
+import { BC_CartLineItems, Scalars } from '../meshrc/.mesh';
 
 /**
  * Indicates if the cart only has virtual items
- * @param cart
+ * @param lineItems
  */
-export const getIsVirtualCart = (cart: Maybe<BC_Cart> | undefined): Scalars['Boolean'] => {
-    if (!cart) return false;
+export const getIsVirtualCart = (lineItems: BC_CartLineItems | undefined): Scalars['Boolean'] => {
+    if (!lineItems) return false;
 
-    const { customItems, digitalItems, giftCertificates, physicalItems } = cart.lineItems || {
-        digitalItems: [],
-        customItems: [],
-        giftCertificates: [],
-        physicalItems: [],
-    };
-
+    const { customItems, digitalItems, giftCertificates, physicalItems } = lineItems;
     const hasDigitalItems = digitalItems.length > 0;
     const hasNoPhysicalItems = [customItems, giftCertificates, physicalItems].every(
-        items => items.length === 0
+        items => !items || (items && items.length === 0)
     );
 
     return hasDigitalItems && hasNoPhysicalItems;
