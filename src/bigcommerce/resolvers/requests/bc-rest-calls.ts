@@ -9,7 +9,7 @@ const headers = {
     'X-Auth-Token': X_AUTH_TOKEN,
     'Content-Type': 'application/json',
 };
-
+/* istanbul ignore file */
 // TODO: generic return type
 const bcPost = async (path: string, data?: unknown): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;

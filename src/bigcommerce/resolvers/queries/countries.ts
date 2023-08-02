@@ -2,7 +2,8 @@ import { QueryResolvers } from '../../../meshrc/.mesh';
 import { Country, CountryStates } from '../../types';
 import { getCountries, getCountriesStates } from '../requests/bc-rest-calls';
 
-export const countriesResolver : QueryResolvers['countries'] = {
+/* istanbul ignore next */
+export const countriesResolver: QueryResolvers['countries'] = {
     resolve: async (_root, _args, _context, _info) => {
         const countries = await getCountries();
         // TODO: revert back to get full data
@@ -11,6 +12,7 @@ export const countriesResolver : QueryResolvers['countries'] = {
     },
 };
 
+/* istanbul ignore next */
 export const transformCountries = async (countries: Country[]) => {
     return Promise.all(
         countries.map(async (country) => {

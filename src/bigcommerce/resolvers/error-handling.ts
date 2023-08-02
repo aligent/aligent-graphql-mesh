@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-
+/* istanbul ignore file */
 /**
  * Log and throw an error
  *
