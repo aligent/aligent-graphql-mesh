@@ -1,0 +1,48 @@
+import { simpleObject } from '../../../__data__/example-data';
+import { transformStoreConfig } from '../../../../src/bigcommerce/resolvers/queries/store-config';
+import { BcStoreConfigMetafields } from '../../../../src/bigcommerce/types';
+import { StoreConfig } from '../../../../src/meshrc/.mesh';
+
+describe('Transform StoreConfig tests', () => {
+    test('Mandatory StoreConfig exits', async () => {
+
+        const transformedConfig: StoreConfig = await transformStoreConfig(bcStoreConfigDataExpected);
+
+        expect(transformedConfig.contact_enabled).toEqual(false);
+        expect(transformedConfig.newsletter_enabled).toEqual(false);
+        expect(transformedConfig.pwa_base_url).toEqual('');
+        expect(transformedConfig.returns_enabled).toEqual('');
+    });
+    test('Specified StoreConfig exits', async () => {
+
+        const transformedConfig: StoreConfig = await transformStoreConfig(bcStoreConfigDataExpected);
+
+
+        expect(transformedConfig.category_url_suffix).toEqual('.html');
+        expect(transformedConfig.grid_per_page).toEqual(24);
+    });
+});
+
+const bcStoreConfigDataExpected: BcStoreConfigMetafields = {
+    channel: {
+        entityId: 1,
+        metafields: {
+            edges: [
+                {
+                    node: {
+                        id: "TWV0YWZpZWxkczoxODk=",
+                        key: "category_url_suffix",
+                        value: ".html"
+                    }
+                },
+                {
+                    node: {
+                        id: "TWV0YWZpZWxkczoxOTA=",
+                        key: "grid_per_page",
+                        value: "24"
+                    }
+                }
+            ]
+        }
+    }
+}
