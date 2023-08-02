@@ -1,11 +1,11 @@
 import { mockBcCart } from './cart.bc';
 import {
-    BC_Checkout,
     BC_CheckoutAddressCheckboxesCustomField,
     BC_CheckoutAddressTextFieldCustomField,
+    BC_CouponType,
 } from '../../../meshrc/.mesh';
 
-export const mockBcCheckout: BC_Checkout = {
+export const mockBcCheckout = {
     id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',
     entityId: '98bf4b97-14a8-4860-ada3-44a780c24eb4',
     cart: mockBcCart,
@@ -53,7 +53,7 @@ export const mockBcCheckout: BC_Checkout = {
                 currencyCode: 'AUD',
                 value: 10,
             },
-            couponType: 'PER_TOTAL_DISCOUNT',
+            couponType: 'PER_TOTAL_DISCOUNT' as BC_CouponType,
             code: 'sale',
         },
     ],
