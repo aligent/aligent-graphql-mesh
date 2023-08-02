@@ -7,4 +7,4 @@ additionalResolvers:
   - '../bigcommerce/resolvers/resolver-definitions'
 
 serve: !include serve-config.yml
-cache: !include cache-config.yml
+#cache: !include cache-config.yml
