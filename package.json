@@ -8,7 +8,8 @@
     "start:dev": "mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
     "build": "mesh build --dir ./src/meshrc",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "dev:debug": "yarn mesh dev --dir ./src/meshrc"
   },
   "devDependencies": {
     "@graphql-mesh/cli": "0.82.x",
