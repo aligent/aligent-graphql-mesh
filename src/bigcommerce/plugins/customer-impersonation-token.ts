@@ -1,45 +1,13 @@
-import { Plugin, useExtendContext, envelop } from '@envelop/core';
+import { useExtendContext } from '@envelop/core';
 import { createCustomerImpersonationToken } from '../resolvers/requests/bc-rest-calls';
-import { DecodedCustomerImpersonationToken, MeshToken } from '../types';
-import { JwtPayload, decode, verify } from 'jsonwebtoken';
-import { logAndThrowError } from '../resolvers/error-handling';
-import { MeshContext } from '@graphql-mesh/runtime';
+import { getDecodedCustomerImpersonationToken, getDecodedMeshToken } from '../../utils/tokens';
+import { getUnixTimeStampInSeconds } from '../../utils/time-and-date';
 
-const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
-
-export const getUnixTimeStampInSeconds = (hours: number) => {
-    const hoursInSeconds = 60 * 60 * hours; // sec * mins * hours
-    const unixTimeStampNow = Math.round(Date.now() / 1000); // Need in secs not ms
-    return unixTimeStampNow + hoursInSeconds;
-};
-
-const getDecodedCustomerImpersonationToken = (
-    customerImpersonationToken: string
-): DecodedCustomerImpersonationToken => {
-    try {
-        return decode(
-            customerImpersonationToken
-        ) as JwtPayload as DecodedCustomerImpersonationToken;
-    } catch (error) {
-        return logAndThrowError(`customerImpersonationToken could not be decoded ${error}`);
-    }
-};
-
-const getDecodedMeshToken = (meshToken: string): MeshToken => {
-    try {
-        return verify(meshToken, JWT_PRIVATE_KEY) as JwtPayload as unknown as MeshToken;
-    } catch (error) {
-        return logAndThrowError(`mesh-token could not be decoded ${error}`);
-    }
-};
-
-let customerImpersonationToken = '';
-
-export const useExtendContextPlugin = useExtendContext(async (context)  => {
-    if (customerImpersonationToken === '') {
+export const useExtendContextPlugin = useExtendContext(async (context) => {
+    if (!context.cache.customerImpersonationToken) {
         const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds(24);
 
-        customerImpersonationToken = await createCustomerImpersonationToken(
+        context.cache.customerImpersonationToken = await createCustomerImpersonationToken(
             unixTimeStampNowAdd24Hours
         );
     } else {
@@ -47,18 +15,18 @@ export const useExtendContextPlugin = useExtendContext(async (context)  => {
         const unixTimeStampNowInSeconds = Math.round(Date.now() / 1000);
 
         const decodedCustomerImpersonationToken = getDecodedCustomerImpersonationToken(
-            customerImpersonationToken
+            context.cache.customerImpersonationToken
         );
 
         // Checking if token is expired and if so refreshing
         if (decodedCustomerImpersonationToken.eat < unixTimeStampNowInSeconds) {
-            customerImpersonationToken = await createCustomerImpersonationToken(
+            context.cache.customerImpersonationToken = await createCustomerImpersonationToken(
                 unixTimeStampNowAdd24Hours
             );
         }
     }
 
-    context.headers.customerImpersonationToken = `bearer ${customerImpersonationToken}`;
+    context.headers.customerImpersonationToken = `bearer ${context.cache.customerImpersonationToken}`;
 
     if (context.headers['mesh-token']) {
         const { bc_customer_id } = getDecodedMeshToken(context.headers['mesh-token']);
