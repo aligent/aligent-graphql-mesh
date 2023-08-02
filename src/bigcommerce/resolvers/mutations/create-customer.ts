@@ -1,5 +1,5 @@
 import { MutationResolvers } from '../../../meshrc/.mesh';
-import { createAcReadyCustomer } from '../../factories/transform-customers-data';
+import { transformCustomerData } from '../../factories/transform-customers-data';
 import { logAndThrowError } from '../error-handling';
 import { createCustomer } from '../requests/bc-rest-calls';
 
@@ -24,7 +24,7 @@ export const createCustomerResolver: MutationResolvers['createCustomer'] = {
         );
 
         return {
-            customer: createAcReadyCustomer(bcCustomer),
+            customer: transformCustomerData(bcCustomer),
         };
     },
 };

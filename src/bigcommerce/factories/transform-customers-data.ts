@@ -1,7 +1,7 @@
 import { BcCustomer } from '../types';
 import { Customer } from '../../meshrc/.mesh';
 
-export const createAcReadyCustomer = (bcCustomer: BcCustomer): Customer => {
+export const transformCustomerData = (bcCustomer: BcCustomer): Customer => {
     return {
         id: bcCustomer.id,
         // all data below is to satisfy TS, FE only needs id
