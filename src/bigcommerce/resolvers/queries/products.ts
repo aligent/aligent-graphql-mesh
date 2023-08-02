@@ -1,7 +1,7 @@
+import { Products, QueryResolvers } from '../../../meshrc/.mesh';
 import { productsMock } from '../mocks/products';
-import { getBcProductGraphql } from '../requests/bc-graphql-calls';
 
-export const productsResolver = {
+export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, _args, context, _info) => {
         if (!context.headers.customerImpersonationToken) {
             throw new Error('No token generated in mesh plugin');
@@ -12,6 +12,6 @@ export const productsResolver = {
         //     'WH01',
         //     context.headers.customerImpersonationToken
         // );
-        return productsMock;
+        return productsMock as unknown as Products;
     },
 };

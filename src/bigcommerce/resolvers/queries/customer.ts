@@ -1,5 +1,5 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
-import { getBcCustomer } from '../requests/bc-graphql-calls';
+import { Customer, QueryResolvers } from '../../../meshrc/.mesh';
+import { mockCustomer } from '../mocks/customer';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
@@ -7,13 +7,12 @@ export const customerResolver: QueryResolvers['customer'] = {
             throw new Error('No token generated in mesh plugin');
         }
 
-        const customer = await getBcCustomer(
-            context.headers.customerImpersonationToken,
-            context.headers['x-bc-customer-id']
-        );
+        // Sample for using the cust imp token with the bc user id header
+        // const customer = await getBcCustomer(
+        //     context.headers.customerImpersonationToken,
+        //     context.headers['x-bc-customer-id']
+        // );
 
-        return {
-            email: customer.email,
-        };
+        return mockCustomer as unknown as Customer;
     },
 };

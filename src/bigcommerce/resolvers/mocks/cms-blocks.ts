@@ -1,4 +1,4 @@
-export const createCmsBlocksMock = (identifiers: String[]) => {
+export const createCmsBlocksMock = (identifiers: string[]) => {
     const content =
         identifiers.length > 0
             ? `<div>${identifiers.map((id) => `"${id}" CMS Block, `)}</div>`
