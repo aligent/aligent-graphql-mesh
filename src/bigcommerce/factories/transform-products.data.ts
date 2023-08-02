@@ -184,7 +184,7 @@ const getTransformedConfigurableOptions = (
             attribute_code,
             attribute_id: String(entityId),
             displayStyle,
-            id: 1,
+            id: entityId,
             label: displayName,
             values: optionValues,
             attribute_uid: btoa(String(entityId)),

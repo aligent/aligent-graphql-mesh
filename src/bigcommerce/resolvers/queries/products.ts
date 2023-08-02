@@ -11,6 +11,8 @@ export const productsResolver: QueryResolvers['products'] = {
 
         if (url_key) {
             const bcProduct = await getBcProductByPathGraphql({ path: url_key });
+
+            if (!bcProduct) return null;
             return { items: [getTransformedProductData(bcProduct)] };
         }
 

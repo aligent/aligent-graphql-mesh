@@ -3,6 +3,7 @@ import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
+import { getTransformedProductData } from '../../factories/transform-products.data';
 
 const getTransformedRouteData = data => {
     const { __typename } = data;
@@ -38,7 +39,7 @@ const getTransformedRouteData = data => {
     }
 
     if (__typename === 'Product') {
-        const transformedProductData = productsMock.items[0];
+        const transformedProductData = getTransformedProductData(data);
         return {
             type: 'PRODUCT',
             ...transformedProductData,
