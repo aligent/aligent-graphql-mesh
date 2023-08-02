@@ -171,7 +171,7 @@ export const getTransformedProductData = (bcProduct: BC_Product): ProductInterfa
                 total_pages: 0,
             },
         },
-        // @ts-ignore this isn't included in the product prop types but is needed to prevent graohql from complaining
+        // @ts-ignore this isn't included in the product prop types but is needed to prevent graphql from complaining
         __typename: getTypeName(bcProduct),
     };
 };

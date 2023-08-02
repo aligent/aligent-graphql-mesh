@@ -27,5 +27,7 @@ export const getTransformedCategoriesData = (category: Category): CategoryTree =
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
         staged: false,
+        // @ts-ignore this isn't included in the category prop types but is needed to prevent graphql from complaining
+        __typename: 'CategoryTree',
     };
 };
