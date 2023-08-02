@@ -5,12 +5,16 @@ import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
+import { BC_Customer } from '../../../meshrc/.mesh';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
 // TODO: generic return type
-const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: string }): Promise<AxiosResponse['data']> => {
+const bcGraphQlRequest = async (
+    data: GraphQlQuery,
+    headers: { Authorization: string }
+): Promise<AxiosResponse['data']> => {
     return axios
         .post(BC_GRAPHQL_API, data, { headers })
         .then((resp) => resp.data)
@@ -72,7 +76,10 @@ export const getBcProductGraphql = async (
     return response.data.site.product;
 };
 
-export const getBcCustomer = async (Authorization: string, bcCustomerId: number): Promise<any> => {
+export const getBcCustomer = async (
+    Authorization: string,
+    bcCustomerId: number
+): Promise<BC_Customer> => {
     const headers = {
         Authorization,
         'x-bc-customer-id': bcCustomerId,
@@ -89,7 +96,13 @@ export const getBcCustomer = async (Authorization: string, bcCustomerId: number)
     const response = await bcGraphQlRequest(getCustomer, headers);
 
     if (response.data.errors) {
-        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductGraphql.name);
+        logAndThrowError(
+            new Error(
+                `Failed to fetch customers from BigCommerce: ${JSON.stringify(
+                    response.data.errors
+                )}`
+            )
+        );
     }
 
     return response.data.customer;
