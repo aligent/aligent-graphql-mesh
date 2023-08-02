@@ -1,4 +1,3 @@
-import { getBcGraphqlToken } from '../requests/bc-rest-calls';
 import { bcLogin } from '../requests/bc-graphql-calls';
 import { sign } from 'jsonwebtoken';
 import { MutationResolvers } from '../../../meshrc/.mesh';
@@ -14,26 +13,10 @@ const generateMeshToken = (entityId: number): string => {
 };
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
-    resolve: async (_root, args, _context, _info) => {
-        let corsUrl: string | string[] = process.env.GRAPHQL_TOKEN_CORS_URL as string;
-        const dateCreated = Math.round(new Date().getTime() / 1000);
-        const dateEndAt = dateCreated + 86400; // Adding 1 day
+    resolve: async (_root, args, context, _info) => {
+        const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 
-        if (corsUrl === 'no-cors') {
-            corsUrl = [];
-        } else {
-            corsUrl = corsUrl.split(',');
-        }
-
-        const data = {
-            allowed_cors_origins: corsUrl,
-            channel_id: 1,
-            expires_at: dateEndAt,
-        };
-
-        const bcGraphqlToken = await getBcGraphqlToken(data);
-
-        const entityId = await bcLogin(bcGraphqlToken, args.email, args.password);
+        const entityId = await bcLogin(customerImpersonationToken, args.email, args.password);
 
         return {
             token: generateMeshToken(entityId),

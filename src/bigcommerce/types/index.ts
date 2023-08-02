@@ -1,11 +1,3 @@
-import { MeshContext } from '@graphql-mesh/runtime';
-
-export interface BcGraphqlTokenData {
-    allowed_cors_origins: [] | string[];
-    channel_id: number;
-    expires_at: number;
-}
-
 export interface GraphQlQuery {
     query: string;
 }
@@ -141,5 +133,3 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
-
-export type CustomContext = MeshContext & { headers: Record<string, string> };

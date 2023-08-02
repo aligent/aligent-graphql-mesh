@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { logAndThrowError } from '../error-handling';
-import { BcGraphqlTokenData, Country, CountryStates } from '../../types';
+import { Country, CountryStates } from '../../types';
 
 const BC_REST_API = process.env.BC_REST_API as string;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
@@ -27,13 +27,6 @@ const bcGet = async (path: string) => {
     } catch (error) {
         logAndThrowError(error as Error);
     }
-};
-
-export const getBcGraphqlToken = async (data: BcGraphqlTokenData): Promise<string> => {
-    const path = `/v3/storefront/api-token`;
-
-    const response = await bcPost(path, data);
-    return response.data.token;
 };
 
 export const getCountries = async (): Promise<Country[]> => {
