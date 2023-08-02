@@ -5,7 +5,8 @@ import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
-import { storeConfigByNamespaceQuery} from './graphql/store-config-by-namespace-query';
+import { channelMetafieldsByNamespaceQuery} from './graphql/channel-metafields-by-namespace-query';
+import { BC_Channel, BC_MetafieldConnection } from '../../../meshrc/.mesh';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -121,19 +122,23 @@ export const getCategories = async (
 };
 
 //FIXME: replace any with BcStoreConfig
-export const getStoreConfig = async (namespace: string): Promise<BcStoreConfigMetafields> => {
+export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
-    const query = storeConfigByNamespaceQuery(namespace);
+    const query = channelMetafieldsByNamespaceQuery(namespace);
 
     const response = await bcGraphQlRequest(query, headers);
 
     if (response.data.errors) {
         logAndThrowError(new Error(
-            `Failed to fetch storeConfig from BigCommerce: ${JSON.stringify(response.data.errors)}`
+            `Failed to fetch channel metafields from BigCommerce: ${JSON.stringify(response.data.errors)}`
         ));
     }
+    const channelData: BC_Channel = response.data;
 
-    return response.data
+    console.log('getChannelMetafields: ');
+    console.log(JSON.stringify(channelData.metafields));
+
+    return channelData.metafields;
 };

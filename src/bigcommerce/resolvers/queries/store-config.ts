@@ -1,21 +1,25 @@
-import {getStoreConfig } from '../requests/bc-graphql-calls';
+import {getChannelMetafields } from '../requests/bc-graphql-calls';
 import { BcMetafieldNode, BcStoreConfigMetafields } from '../../types';
-import { StoreConfig, StoreConfigResolvers } from '../../../meshrc/.mesh';
+import { BC_MetafieldConnection, StoreConfig, StoreConfigResolvers } from '../../../meshrc/.mesh';
+import { logAndThrowError } from '../error-handling';
 
 
 
 export const storeConfigResolver: StoreConfigResolvers<StoreConfig> = {
     resolve: async () => {
-        const storeConfig = await getStoreConfig('pwa_config');
+        const storeConfig: BC_MetafieldConnection = await getChannelMetafields('pwa_config');
 
-        return await transformStoreConfig(storeConfig);
+        return await transformChannelMetafieldsToStoreConfig(storeConfig);
     },
 };
 
-export async function transformStoreConfig(bcStoreConfig: BcStoreConfigMetafields): Promise<StoreConfig> {
-    const metafields = bcStoreConfig.channel.metafields.edges;
+export async function transformChannelMetafieldsToStoreConfig(bcStoreConfig: BC_MetafieldConnection): Promise<StoreConfig> {
+    const metafields = bcStoreConfig?.edges;
 
-    const categoryUrl: BcMetafieldNode | undefined = metafields.find(node => {
+    console.log('My metafields:');
+    console.log(JSON.stringify(metafields));
+
+    const categoryUrl: BcMetafieldNode | undefined = metafields.find(myNode => {
         return node.key === 'category_url_suffix';
     });
     const gridPerPage: BcMetafieldNode | undefined = metafields.find(node => {

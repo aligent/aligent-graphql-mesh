@@ -1,6 +1,6 @@
 import { GraphQlQuery } from '../../../types';
 
-export const storeConfigByNamespaceQuery = (namespace: string) : GraphQlQuery => {
+export const channelMetafieldsByNamespaceQuery = (namespace: string) : GraphQlQuery => {
     return {
         query: `query {
                   channel {

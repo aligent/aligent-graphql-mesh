@@ -1,12 +1,12 @@
 import { simpleObject } from '../../../__data__/example-data';
-import { transformStoreConfig } from '../../../../src/bigcommerce/resolvers/queries/store-config';
+import { transformChannelMetafieldsToStoreConfig } from '../../../../src/bigcommerce/resolvers/queries/store-config';
 import { BcStoreConfigMetafields } from '../../../../src/bigcommerce/types';
 import { StoreConfig } from '../../../../src/meshrc/.mesh';
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', async () => {
 
-        const transformedConfig: StoreConfig = await transformStoreConfig(bcStoreConfigDataExpected);
+        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(bcStoreConfigDataExpected);
 
         expect(transformedConfig.contact_enabled).toEqual(false);
         expect(transformedConfig.newsletter_enabled).toEqual(false);
@@ -15,7 +15,7 @@ describe('Transform StoreConfig tests', () => {
     });
     test('Specified StoreConfig exits', async () => {
 
-        const transformedConfig: StoreConfig = await transformStoreConfig(bcStoreConfigDataExpected);
+        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(bcStoreConfigDataExpected);
 
 
         expect(transformedConfig.category_url_suffix).toEqual('.html');

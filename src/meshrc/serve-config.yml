@@ -1,17 +1,17 @@
 # Shouldn't be needed as we can serve securely through cloudfront
 # Enable in local development environment if needed to serve via ssl
-# sslCredentials:
-#   key: 'cert.key'
-#   cert: 'cert.crt'
+sslCredentials:
+ key: 'cert.key'
+ cert: 'cert.crt'
 cors:
   origin:
     - 'https://aligent-web-theme.local.pwadev:8128'
     - 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud'
   credentials: true
 port: 4000
-#hostname: mesh.local.pwadev # uncomment this for dev, and comment the next line, DO NOT COMMIT
-hostname: 0.0.0.0
+hostname: mesh.local.pwadev # uncomment this for dev, and comment the next line, DO NOT COMMIT
+#hostname: 0.0.0.0
 browser: false
-playground: false # DISABLE WHEN DEPLOYING LIVE SITE
+playground: true # DISABLE WHEN DEPLOYING LIVE SITE
 
 # TODO: get playground and hostname from env
