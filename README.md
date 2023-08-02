@@ -19,6 +19,7 @@ The Schemas dir contains all the request and response Json Schema or Json Sample
 The resolvers are mostly used to intercept a request to an endpoint and then do something before continuing.
 
 Each new handler should be nested under the relevant platform directory in a `handlers` directory. E.g. `src/bigcommerce/handlers`.
+
 ## Local Dev Setup
 
 1. Clone the repository
@@ -37,7 +38,7 @@ $ cp .env.template src//meshrc/.env
 
 4. Generate SSL certificate (see section below: Generating an SSL Certificate)
 
-6. Add custom domain, `mesh.local.pwadev` to `/etc/hosts` file
+5. Add custom domain, `mesh.local.pwadev` to `/etc/hosts` file
 
 ```shell
 sudoedit /etc/hosts
@@ -55,7 +56,6 @@ Please don't commit this change. Unfortunately we need to do this in order to su
 environment variable approach isn't working
 
 8. Start the mesh server from project root (see section below: Using the Mesh)
-
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
@@ -85,6 +85,10 @@ through the Mesh service, and then appropriately sent out to corresponding API's
 
 To use as a Gateway, after running `yarn dev`, update your app to send GraphQL requests to the server URL provided
 by the CLI, likely `https://localhost:4000/graphql`.
+
+## Tests
+
+The sample tests can be ran with `yarn test`
 
 ## Hosting
 
