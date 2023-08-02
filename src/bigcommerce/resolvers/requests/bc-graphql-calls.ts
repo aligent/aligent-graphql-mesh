@@ -10,7 +10,13 @@ import { getProductsQuery } from './graphql/products';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
-import { BC_ProductConnection, BC_SiteproductsArgs } from '../../../meshrc/.mesh';
+import {
+    BC_Product,
+    BC_ProductConnection,
+    BC_SiteproductsArgs,
+    BC_SiterouteArgs,
+} from '../../../meshrc/.mesh';
+import { getPdpProductQuery } from './graphql/PdpProduct';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -82,6 +88,25 @@ export const getBcProductsGraphql = async (
     }
 
     return response.data.site.products;
+};
+
+export const getBcProductByPathGraphql = async (path: BC_SiterouteArgs): Promise<BC_Product> => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+
+    const productsQuery = {
+        query: getPdpProductQuery,
+        variables: path,
+    };
+
+    const response = await bcGraphQlRequest(productsQuery, headers);
+
+    if (response.data.errors) {
+        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductsGraphql.name);
+    }
+
+    return response.data.site.route.node;
 };
 
 export const getRoute = async (url: string) => {

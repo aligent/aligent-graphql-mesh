@@ -9,7 +9,7 @@ export const getProductsQuery = stripIgnoredCharacters(
         ${pageInfo}
         ${ProductsDetails}
 
-        query getProductBySku($ids: [ID!]) {
+        query products($ids: [ID!]) {
             site {
                 products(ids: $ids) {
                     edges {
