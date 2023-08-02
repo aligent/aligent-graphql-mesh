@@ -1,7 +1,8 @@
+import { Products, QueryResolvers } from '../../../meshrc/.mesh';
 import { productsMock } from '../mocks/products';
 
-export const productsResolver = {
+export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, _args, _context, _info) => {
-        return productsMock;
+        return (productsMock as unknown) as Products;
     },
 };

@@ -8,7 +8,7 @@
     "start:dev": "mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
     "build": "mesh build --dir ./src/meshrc",
-    "test": "jest --coverage",
+    "test": "jest --coverage --passWithNoTests",
     "lint": "eslint --color . --ext .ts",
     "lint:fix": "eslint --color --fix . --ext .ts",
     "format": "prettier --check .",
