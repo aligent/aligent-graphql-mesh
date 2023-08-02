@@ -7,10 +7,10 @@ COPY tsconfig.json ./
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install
-COPY docker/server.ts ./
-COPY src/meshrc/.mesh ./.mesh
+COPY src ./src
+COPY docker/server.ts ./src/meshrc/server.ts
 RUN tsc
 
 EXPOSE 4000
 
-CMD [ "node", "server.js" ]
+CMD [ "node", "src/meshrc/server.js" ]
