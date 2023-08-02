@@ -8,15 +8,25 @@
     "start:dev": "mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
     "build": "mesh build --dir ./src/meshrc",
-    "test": "jest --coverage",
+    "test": "jest --coverage --passWithNoTests",
+    "lint": "eslint --color . --ext .ts",
+    "lint:fix": "eslint --color --fix . --ext .ts",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "check-types": "tsc --pretty --noEmit",
     "dev:debug": "yarn mesh dev --dir ./src/meshrc"
   },
   "devDependencies": {
     "@graphql-mesh/cli": "0.82.x",
-    "@types/jest": "^29.5.3",
+    "@types/jest": "29.5.x",
     "@types/jsonwebtoken": "9.0.x",
-    "jest": "^29.6.1",
-    "ts-jest": "^29.1.1"
+    "jest": "29.6.x",
+    "ts-jest": "29.1.x",
+    "eslint": "^8.46.0",
+    "prettier": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint-config-prettier": "^8.8.0"
   },
   "dependencies": {
     "@envelop/core": "4.0.x",
@@ -25,9 +35,10 @@
     "@graphql-mesh/graphql": "0.94.x",
     "@graphql-mesh/merger-stitching": "0.94.x",
     "@graphql-mesh/runtime": "0.94.x",
+    "@graphql-mesh/transform-prefix": "0.95.x",
     "axios": "1.4.x",
     "graphql": "16.7.x",
-    "graphql-tag": "^2.12.6",
+    "graphql-tag": "2.12.x",
     "jsonwebtoken": "9.0.x"
   }
 }

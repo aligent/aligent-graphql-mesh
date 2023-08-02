@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { logAndThrowUnknownError, throwAndLogAxiosError } from '../error-handling';
-import { BcGraphqlTokenData } from '../../types';
+import axios, { AxiosResponse } from 'axios';
+import { logAndThrowError } from '../error-handling';
+import { BcGraphqlTokenData, Country, CountryStates } from '../../types';
 
 const BC_REST_API = process.env.BC_REST_API as string;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
@@ -9,26 +9,47 @@ const headers = {
     'X-Auth-Token': X_AUTH_TOKEN,
     'Content-Type': 'application/json',
 };
+/* istanbul ignore file */
+// TODO: generic return type
+const bcPost = async (path: string, data?: unknown): Promise<AxiosResponse['data']> => {
+    const url = `${BC_REST_API}${path}`;
+    return axios
+        .post(url, data, { headers })
+        .then((resp) => resp.data)
+        .catch(logAndThrowError);
+};
 
-const bcPost = async (path: string, data?: unknown) => {
+const bcGet = async (path: string) => {
     const url = `${BC_REST_API}${path}`;
     try {
-        const response = await axios.post(url, data, { headers });
+        const response = await axios.get(url, { headers });
         return response.data;
-    } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-            throwAndLogAxiosError(error, bcPost.name, path);
-        } else {
-            logAndThrowUnknownError(error, bcPost.name, path);
-        }
+    } catch (error) {
+        logAndThrowError(error as Error);
     }
 };
 
 export const getBcGraphqlToken = async (data: BcGraphqlTokenData): Promise<string> => {
-    const path = `/storefront/api-token`;
+    const path = `/v3/storefront/api-token`;
 
     const response = await bcPost(path, data);
     return response.data.token;
+};
+
+export const getCountries = async (): Promise<Country[]> => {
+    const path = `/v2/countries`;
+
+    const response = await bcGet(path);
+
+    return response;
+};
+
+export const getCountriesStates = async (countryResource: string): Promise<CountryStates[]> => {
+    const path = `/v2${countryResource}`;
+
+    const response = await bcGet(path);
+
+    return response;
 };
 
 export const createEmptyCart = async (): Promise<string> => {
