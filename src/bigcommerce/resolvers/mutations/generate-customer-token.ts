@@ -5,10 +5,9 @@ import { MutationResolvers } from '../../../meshrc/.mesh';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
-const generateJwt = (bcToken: string, entityId: number): string => {
+const generateJwt = (entityId: number): string => {
     const payload = {
-        bc_token: bcToken,
-        bc_customer_id: entityId,
+        bc_customer_id: String(entityId),
     };
 
     return sign(payload, JWT_PRIVATE_KEY, { expiresIn: '1d' });
@@ -37,7 +36,7 @@ export const generateCustomerTokenResolver: MutationResolvers['generateCustomerT
         const entityId = await bcLogin(bcGraphqlToken, args.email, args.password);
 
         return {
-            token: generateJwt(bcGraphqlToken, entityId),
+            token: generateJwt(entityId),
         };
     },
 };

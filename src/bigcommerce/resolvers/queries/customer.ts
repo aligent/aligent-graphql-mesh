@@ -4,7 +4,7 @@ import { mockCustomer } from '../mocks/customer';
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         if (!context.headers.customerImpersonationToken) {
-            throw new Error('No token generated in mesh plugin');
+            throw new Error('No token generated in 🕸️ Mesh plugin');
         }
 
         // Sample for using the cust imp token with the bc user id header

@@ -12,7 +12,9 @@ export const getDecodedCustomerImpersonationToken = (
             customerImpersonationToken
         ) as JwtPayload as DecodedCustomerImpersonationToken;
     } catch (error) {
-        return logAndThrowError(`customerImpersonationToken could not be decoded ${error}`);
+        return logAndThrowError(
+            new Error(`customerImpersonationToken could not be decoded ${error}`)
+        );
     }
 };
 
@@ -20,6 +22,6 @@ export const getDecodedMeshToken = (meshToken: string): MeshToken => {
     try {
         return verify(meshToken, JWT_PRIVATE_KEY) as JwtPayload as unknown as MeshToken;
     } catch (error) {
-        return logAndThrowError(`mesh-token could not be decoded ${error}`);
+        return logAndThrowError(new Error(`mesh-token could not be decoded ${error}`));
     }
 };

@@ -1,3 +1,5 @@
+import { MeshContext } from '@graphql-mesh/runtime';
+
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -29,7 +31,7 @@ export interface BcProduct {
                     altText: string;
                     isDefault: boolean;
                 };
-            }
+            },
         ];
     };
     categories: {
@@ -45,11 +47,11 @@ export interface BcProduct {
                                     name: string;
                                     entityId: number;
                                 };
-                            }
+                            },
                         ];
                     };
                 };
-            }
+            },
         ];
     };
     availabilityV2: {
@@ -70,7 +72,7 @@ export interface BcProduct {
         edges: [
             {
                 node: BcProduct;
-            }
+            },
         ];
     };
 }
@@ -134,9 +136,10 @@ export interface DecodedCustomerImpersonationToken {
 }
 
 export interface MeshToken {
-    bc_token: string;
-    bc_customer_id: number;
+    bc_customer_id: string;
     iat: number;
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
+
+export type OurContext = MeshContext & { headers: Record<string, string> };
