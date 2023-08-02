@@ -1,5 +1,6 @@
 import { MutationResolvers } from '../../../meshrc/.mesh';
 import { createAcReadyCustomer } from '../../factories/transform-customers-data';
+import { logAndThrowError } from '../error-handling';
 import { createCustomer } from '../requests/bc-rest-calls';
 
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {
@@ -10,7 +11,7 @@ export const createCustomerResolver: MutationResolvers['createCustomer'] = {
             !args.input.lastname ||
             !args.input.password
         ) {
-            throw new Error('Missing email or firstname or lastname or password');
+            return logAndThrowError('Missing email or firstname or lastname or password');
         }
 
         const bcCustomer = await createCustomer(

@@ -1,6 +1,7 @@
+import { createAcReadyCustomer } from '../src/bigcommerce/factories/transform-customers-data';
 import { transformCountriesStates, transformCountry } from '../src/bigcommerce/resolvers/queries/countries';
-import { bcCountries, bcCountry, bcStates } from './__data__/bigcommerce-data';
-import { transformedCountries, transformedStates } from './__data__/transformed-data';
+import {  bcCountry, bcCustomerCreated, bcStates } from './__data__/bigcommerce-data';
+import { transformedCountries, transformedCreatedCustomer, transformedStates } from './__data__/transformed-data';
 
 describe('Countries data transform tests', () => {
     test('return transformed states', () => {
@@ -23,3 +24,15 @@ describe('Countries data transform tests', () => {
     });
 });
 
+
+describe('Create customer data transform tests', () => {
+    test('return transformed customer', () => {
+        const inputBcCustomerCreated = bcCustomerCreated;
+        const inputTransformedCreatedCustomer = transformedCreatedCustomer;
+
+        const transformed = createAcReadyCustomer(inputBcCustomerCreated);
+
+        expect(transformed).toEqual(inputTransformedCreatedCustomer);
+    });
+
+});

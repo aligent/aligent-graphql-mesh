@@ -33,7 +33,7 @@ export interface BcProduct {
                     altText: string;
                     isDefault: boolean;
                 };
-            }
+            },
         ];
     };
     categories: {
@@ -49,11 +49,11 @@ export interface BcProduct {
                                     name: string;
                                     entityId: number;
                                 };
-                            }
+                            },
                         ];
                     };
                 };
-            }
+            },
         ];
     };
     availabilityV2: {
@@ -74,7 +74,7 @@ export interface BcProduct {
         edges: [
             {
                 node: BcProduct;
-            }
+            },
         ];
     };
 }
@@ -101,7 +101,7 @@ export interface BcCustomer {
     accepts_product_review_abandoned_cart_emails: false;
     store_credit_amounts: [{ amount: number }];
     origin_channel_id: number;
-    channel_ids: number[];
+    channel_ids: number[] | null;
 }
 export interface Country {
     id: number;
