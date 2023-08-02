@@ -1,7 +1,7 @@
 import { simpleObject } from '../../../__data__/example-data';
 import { transformChannelMetafieldsToStoreConfig } from '../../../../src/bigcommerce/resolvers/queries/store-config';
 import { BcStoreConfigMetafields } from '../../../../src/bigcommerce/types';
-import { BC_Channel, StoreConfig } from '../../../../src/meshrc/.mesh';
+import { BC_Channel, BC_MetafieldConnection, StoreConfig } from '../../../../src/meshrc/.mesh';
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', async () => {
@@ -23,10 +23,9 @@ describe('Transform StoreConfig tests', () => {
     });
 });
 
-const bcStoreConfigDataExpected: BC_Channel = {
-    channel: {
-        entityId: 1,
-        metafields: {
+//Ignore Additional fields that are not returned by real request, but required by the types, such as entityId
+// @ts-ignore
+const bcStoreConfigDataExpected: BC_MetafieldConnection = {
             edges: [
                 {
                     node: {
@@ -43,6 +42,4 @@ const bcStoreConfigDataExpected: BC_Channel = {
                     }
                 }
             ]
-        }
-    }
 }
