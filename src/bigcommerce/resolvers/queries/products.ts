@@ -8,10 +8,10 @@ export const productsResolver = {
         }
 
         // This is a sample of how to grab the customerImpersonationToken from headers
-        const getProduct = await getBcProductGraphql(
-            'WH01',
-            context.headers.customerImpersonationToken
-        );
+        // const getProduct = await getBcProductGraphql(
+        //     'WH01',
+        //     context.headers.customerImpersonationToken
+        // );
         return productsMock;
     },
 };
