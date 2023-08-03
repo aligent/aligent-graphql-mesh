@@ -1,9 +1,9 @@
 import { QueryResolvers } from '../../../meshrc/.mesh';
-import { Country, CountryStates } from '../../types';
+import { Country, CountryStates, CustomContext } from '../../types';
 import { getCountries, getCountriesStates } from '../requests/bc-rest-calls';
 
 /* istanbul ignore next */
-export const countriesResolver: QueryResolvers['countries'] = {
+export const countriesResolver: QueryResolvers<CustomContext>['countries'] = {
     resolve: async (_root, _args, _context, _info) => {
         const countries = await getCountries();
         // TODO: revert back to get full data
