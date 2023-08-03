@@ -15,6 +15,7 @@ import { postContactFormResolver } from './mutations/post-contact-form';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
 import { reorderItemsResolver } from './mutations/reorder-items';
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
+import { setShippingMethodsOnCartResolver } from './mutations/set-shipping-methods-on-cart';
 import { subscribeEmailToNewsletterResolver } from './mutations/subscribe-email-to-newsletter';
 import { updateCartItemsResolver } from './mutations/update-cart-items';
 import { updateCustomerResolver } from './mutations/update-customer';
@@ -70,6 +71,7 @@ const resolvers: Resolvers = {
         removeItemFromCart: removeItemFromCartResolver,
         reorderItems: reorderItemsResolver,
         setGuestEmailOnCart: setGuestEmailOnCartResolver,
+        setShippingMethodsOnCart: setShippingMethodsOnCartResolver,
         subscribeEmailToNewsletter: subscribeEmailToNewsletterResolver,
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
