@@ -5,7 +5,6 @@ import {
 import {
     BC_MetafieldConnection,
     BC_MetafieldEdge,
-    Maybe,
     StoreConfig
 } from '../../../../src/meshrc/.mesh';
 
@@ -28,6 +27,7 @@ describe('Transform StoreConfig tests', () => {
         expect(transformedConfig.grid_per_page).toEqual(24);
     });
     test('No metafield data given', async () => {
+        // @ts-expect-error: 'null' is not assignable to parameter of type 'BC_MetafieldConnection'
         const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(null);
 
         expect(transformedConfig.category_url_suffix).toBeUndefined();
@@ -39,6 +39,7 @@ describe('Transform StoreConfig tests', () => {
     });
     test('Find metafield value with invalid data', async () => {
         const data : BC_MetafieldEdge[] = [{
+            // @ts-expect-error: Type expects `entityId`
             node: {
                 id: '',
                 key: '',
