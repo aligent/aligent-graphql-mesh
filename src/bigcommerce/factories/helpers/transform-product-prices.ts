@@ -4,16 +4,14 @@ import { getTransformedPrice } from './transform-price';
 export const getTransformedPriceRange = (prices?: Maybe<BC_Prices>): PriceRange => {
     if (!prices)
         return {
-            maximum_price: prices
-                ? {
-                      discount: {
-                          amount_off: null,
-                          percent_off: null,
-                      },
-                      final_price: { currency: null, value: null },
-                      regular_price: { currency: null, value: null },
-                  }
-                : null,
+            maximum_price: {
+                discount: {
+                    amount_off: null,
+                    percent_off: null,
+                },
+                final_price: { currency: null, value: null },
+                regular_price: { currency: null, value: null },
+            },
             minimum_price: {
                 discount: {
                     amount_off: null,
@@ -25,23 +23,21 @@ export const getTransformedPriceRange = (prices?: Maybe<BC_Prices>): PriceRange 
         };
 
     return {
-        maximum_price: prices
-            ? {
-                  discount: {
-                      amount_off: null,
-                      percent_off: null,
-                  },
-                  final_price: getTransformedPrice(prices.priceRange.max),
-                  regular_price: getTransformedPrice(prices.priceRange.max),
-              }
-            : null,
+        maximum_price: {
+            discount: {
+                amount_off: null,
+                percent_off: null,
+            },
+            final_price: getTransformedPrice(prices.priceRange.max),
+            regular_price: getTransformedPrice(prices.priceRange.max),
+        },
         minimum_price: {
             discount: {
                 amount_off: null,
                 percent_off: null,
             },
-            final_price: prices?.priceRange.min ? getTransformedPrice(prices.priceRange.min) : {},
-            regular_price: prices?.priceRange.min ? getTransformedPrice(prices.priceRange.min) : {},
+            final_price: getTransformedPrice(prices.priceRange.min),
+            regular_price: getTransformedPrice(prices.priceRange.min),
         },
     };
 };
