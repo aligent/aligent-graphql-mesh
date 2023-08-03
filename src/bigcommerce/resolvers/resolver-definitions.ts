@@ -1,6 +1,7 @@
 import { Resolvers } from '../../meshrc/.mesh';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 import { addProductsToWishlistResolver } from './mutations/add-products-to-wishlist';
+import { addWishlistItemsToCartResolver } from './mutations/add-wishlist-items-to-cart';
 import { applyCouponToCartResolver } from './mutations/apply-coupon-to-cart';
 import { applyGiftCardToCartResolver } from './mutations/apply-gift-card-to-cart';
 import { changeCustomerPasswordResolver } from './mutations/change-customer-password';
@@ -60,6 +61,7 @@ const resolvers: Resolvers = {
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
         addProductsToWishlist: addProductsToWishlistResolver,
+        addWishlistItemsToCart: addWishlistItemsToCartResolver,
         applyCouponToCart: applyCouponToCartResolver,
         applyGiftCardToCart: applyGiftCardToCartResolver,
         changeCustomerPassword: changeCustomerPasswordResolver,
