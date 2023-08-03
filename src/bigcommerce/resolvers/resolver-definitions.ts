@@ -20,6 +20,7 @@ import { setBillingAddressOnCartResolver } from './mutations/set-billing-address
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
 import { setShippingAddressesOnCartResolver } from './mutations/set-shipping-addresses-on-cart';
 import { setShippingMethodsOnCartResolver } from './mutations/set-shipping-methods-on-cart';
+import { shareWishlistResolver } from './mutations/share-wishlist';
 import { subscribeEmailToNewsletterResolver } from './mutations/subscribe-email-to-newsletter';
 import { updateCartItemsResolver } from './mutations/update-cart-items';
 import { updateCustomerResolver } from './mutations/update-customer';
@@ -64,6 +65,7 @@ const resolvers: Resolvers = {
         addWishlistItemsToCart: addWishlistItemsToCartResolver,
         applyCouponToCart: applyCouponToCartResolver,
         applyGiftCardToCart: applyGiftCardToCartResolver,
+        shareWishlist: shareWishlistResolver,
         changeCustomerPassword: changeCustomerPasswordResolver,
         createCustomer: createCustomerResolver,
         createCustomerAddress: createCustomerAddressResolver,
