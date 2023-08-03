@@ -24,7 +24,7 @@ describe('get-is-virtual-cart', () => {
         ).toEqual(true);
     });
 
-    test(`returns false when there's digital items and another type of itme`, () => {
+    test(`returns false when there's digital items and another type of time`, () => {
         expect(
             getIsVirtualCart({
                 ...lineItems,
