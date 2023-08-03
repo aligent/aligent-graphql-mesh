@@ -28,6 +28,7 @@ definitions:
     - step: &deploy
       name: 📦 Push to ECR
       script:
+        - docker tag mesh:latest ${IMAGE_NAME}:latest
         - pipe: atlassian/aws-ecr-push-image:2.0.0
           variables:
             IMAGE_NAME: ${IMAGE_NAME}
