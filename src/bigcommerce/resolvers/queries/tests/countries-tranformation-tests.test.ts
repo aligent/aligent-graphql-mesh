@@ -1,8 +1,12 @@
-
+import { transformCustomerData } from '../../../factories/transform-customers-data';
 import { CountryStates } from '../../../types';
 import { transformCountriesStates, transformCountry } from '../countries';
-import { bcCountry, bcStates } from './__data__/countries-input-data';
-import { transformedCountries, transformedStates } from './__data__/countries-transformed-data';
+import { bcCountry, bcCustomerCreated, bcStates } from './__data__/countries-input-data';
+import {
+    transformedCountries,
+    transformedCreatedCustomer,
+    transformedStates,
+} from './__data__/countries-transformed-data';
 
 describe('Countries data transform tests', () => {
     test('return transformed states', () => {
@@ -30,5 +34,16 @@ describe('Countries data transform tests', () => {
         const transformed = transformCountry(inputBcCountry, inputBcStates);
 
         expect(transformed).toEqual(inputTransformedCountries);
+    });
+});
+
+describe('Create customer data transform tests', () => {
+    test('return transformed customer', () => {
+        const inputBcCustomerCreated = bcCustomerCreated;
+        const inputTransformedCreatedCustomer = transformedCreatedCustomer;
+
+        const transformed = transformCustomerData(inputBcCustomerCreated);
+
+        expect(transformed).toEqual(inputTransformedCreatedCustomer);
     });
 });
