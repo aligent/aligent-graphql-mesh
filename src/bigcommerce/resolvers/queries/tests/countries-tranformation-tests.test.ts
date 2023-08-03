@@ -1,10 +1,8 @@
-import {
-    transformCountriesStates,
-    transformCountry,
-} from '../src/bigcommerce/resolvers/queries/countries';
-import { CountryStates } from '../src/bigcommerce/types';
-import { bcCountry, bcStates } from './__data__/bigcommerce-data';
-import { transformedCountries, transformedStates } from './__data__/transformed-data';
+
+import { CountryStates } from '../../../types';
+import { transformCountriesStates, transformCountry } from '../countries';
+import { bcCountry, bcStates } from './__data__/countries-input-data';
+import { transformedCountries, transformedStates } from './__data__/countries-transformed-data';
 
 describe('Countries data transform tests', () => {
     test('return transformed states', () => {
