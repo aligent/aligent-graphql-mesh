@@ -97,7 +97,7 @@ export const getTransformCartItems = (
                     },
                 },
                 staged: false,
-                // __typename: 'ConfigurableProduct',
+                __typename: 'ConfigurableProduct',
             },
             quantity: quantity,
             configurable_options,
