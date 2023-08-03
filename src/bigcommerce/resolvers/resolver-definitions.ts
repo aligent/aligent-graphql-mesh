@@ -13,6 +13,7 @@ import { generateCustomerTokenResolver } from './mutations/generate-customer-tok
 import { mergeCartsResolver } from './mutations/merge-carts';
 import { postContactFormResolver } from './mutations/post-contact-form';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
+import { removeProductsFromWishlistResolver } from './mutations/remove-products-from-wishlist';
 import { reorderItemsResolver } from './mutations/reorder-items';
 import { setBillingAddressOnCartResolver } from './mutations/set-billing-address-on-cart';
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
@@ -71,6 +72,7 @@ const resolvers: Resolvers = {
         mergeCarts: mergeCartsResolver,
         postContactForm: postContactFormResolver,
         removeItemFromCart: removeItemFromCartResolver,
+        removeProductsFromWishlist: removeProductsFromWishlistResolver,
         reorderItems: reorderItemsResolver,
         setBillingAddressOnCart: setBillingAddressOnCartResolver,
         setGuestEmailOnCart: setGuestEmailOnCartResolver,
