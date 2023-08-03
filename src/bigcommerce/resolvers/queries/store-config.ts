@@ -1,40 +1,48 @@
 import {getChannelMetafields } from '../requests/bc-graphql-calls';
-import { BcMetafieldNode, BcStoreConfigMetafields } from '../../types';
 import {
     BC_MetafieldConnection, BC_MetafieldEdge,
-    BC_Metafields,
+    Maybe,
     StoreConfig,
     StoreConfigResolvers
 } from '../../../meshrc/.mesh';
-import { logAndThrowError } from '../error-handling';
 
-
+const NAMESPACE: string = 'pwa_config';
 
 export const storeConfigResolver: StoreConfigResolvers<StoreConfig> = {
     resolve: async () => {
-        const storeConfig: BC_MetafieldConnection = await getChannelMetafields('pwa_config');
+        //The namespace needs to match the metafield namespace when created in BigCommerce
+        const storeConfig: BC_MetafieldConnection = await getChannelMetafields(NAMESPACE);
 
         return await transformChannelMetafieldsToStoreConfig(storeConfig);
     },
 };
 
+/*
+ * Metafields have to be added to BigCommerce manually on channel level.
+ * Make sure the namespace is matching the NAMESPACE constant.
+ * Use the Rest API or the Metafield Manger (if installed).
+ * API endpoint:  https://api.bigcommerce.com/stores/{{store_hash}}/v3/channels/1/metafields
+ * Docs: https://developer.bigcommerce.com/docs/rest-management/channels/channel-metafields#create-a-channel-metafield
+ */
 export async function transformChannelMetafieldsToStoreConfig(bcStoreConfig: BC_MetafieldConnection): Promise<StoreConfig> {
     const metafields = bcStoreConfig?.edges;
 
-    //The metafields data has this extra node, I'm not sure how to handle that correctly, without getting errors
+    //The metafields data has this ane extra node attribute and needs to be accessed via node.node
     ///[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]
 
     const storeConfigTransformed: StoreConfig = {
         //Mandatory fields, always returned (currently no value assigned)
         contact_enabled: false, newsletter_enabled: false, pwa_base_url: '', returns_enabled: ''
     }
+
     if(metafields) {
-        const categoryUrl: BC_MetafieldEdge | null | undefined = metafields.find(node => {
+        const categoryUrl: Maybe<BC_MetafieldEdge> | undefined = metafields.find(node => {
             return node ? node.node.key === 'category_url_suffix': null;
         });
-        const gridPerPage: BC_MetafieldEdge | null | undefined = metafields.find(node => {
+        const gridPerPage: Maybe<BC_MetafieldEdge> | undefined = metafields.find(node => {
             return node ? node.node.key === 'grid_per_page': null;
         });
+        //Add more metafields as required here. Metafields need to be added to bigcommerce manually first.
 
         storeConfigTransformed.category_url_suffix = categoryUrl?.node?.value;
         storeConfigTransformed.grid_per_page =  parseInt(gridPerPage ? gridPerPage.node?.value: '24'); // default set to 24
