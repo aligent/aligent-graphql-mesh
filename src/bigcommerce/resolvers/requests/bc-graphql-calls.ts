@@ -7,6 +7,7 @@ import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
 import { channelMetafieldsByNamespaceQuery } from './graphql/channel-metafields-by-namespace-query';
 import { BC_Channel, BC_Customer, BC_MetafieldConnection } from '../../../meshrc/.mesh';
+import { checkout } from './graphql/checkout';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -182,4 +183,21 @@ export const getChannelMetafields = async (namespace: string): Promise<BC_Metafi
     const channelData: BC_Channel = response.data.channel;
 
     return channelData.metafields;
+};
+
+export const getCart = async (entityId: string) => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+
+    const checkoutQuery = {
+        query: checkout,
+        variables: {
+            entityId,
+        },
+    };
+
+    const response = await bcGraphQlRequest(checkoutQuery, headers);
+
+    return response.data.site.checkout;
 };
