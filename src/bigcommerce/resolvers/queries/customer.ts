@@ -1,7 +1,7 @@
 import { QueryResolvers } from '../../../meshrc/.mesh';
 import { getDecodedMeshToken } from '../../../utils/tokens';
-import { logAndThrowError } from '../error-handling';
-import { getBcCustomer } from '../requests/bc-graphql-calls';
+import { logAndThrowError } from '../../../utils/error-handling';
+import { getBcCustomer } from '../../apis/graphql/customer';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {

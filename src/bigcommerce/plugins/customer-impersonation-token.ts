@@ -1,7 +1,7 @@
 import { useExtendContext } from '@envelop/core';
-import { createCustomerImpersonationToken } from '../resolvers/requests/bc-rest-calls';
 import { getDecodedCustomerImpersonationToken } from '../../utils/tokens';
 import { getUnixTimeStampInSeconds } from '../../utils/time-and-date';
+import { createCustomerImpersonationToken } from '../apis/rest/client';
 
 export const useExtendContextPlugin = useExtendContext(async (context) => {
     if (!(await context.cache.get('customerImpersonationToken'))) {

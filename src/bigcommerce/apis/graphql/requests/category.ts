@@ -1,9 +1,9 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { image } from './fragments/image';
-import { breadcrumbs } from './fragments/breadcrumbs';
-import { seoDetails } from './fragments/seoDetails';
+import { image } from '../fragments/image';
+import { breadcrumbs } from '../fragments/breadcrumbs';
+import { seoDetails } from '../fragments/seoDetails';
 
 export const getCategoryQuery = stripIgnoredCharacters(
     print(gql`

@@ -1,6 +1,6 @@
-import { bcLogin } from '../requests/bc-graphql-calls';
 import { sign } from 'jsonwebtoken';
 import { MutationResolvers } from '../../../meshrc/.mesh';
+import { bcLogin } from '../../apis/graphql/login';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
