@@ -5,6 +5,7 @@ import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
+import { checkout } from './graphql/checkout';
 import { BC_Customer } from '../../../meshrc/.mesh';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
@@ -17,7 +18,7 @@ const bcGraphQlRequest = async (
 ): Promise<AxiosResponse['data']> => {
     return axios
         .post(BC_GRAPHQL_API, data, { headers })
-        .then((resp) => resp.data)
+        .then(resp => resp.data)
         .catch(logAndThrowError);
 };
 
@@ -157,4 +158,21 @@ export const getCategories = async (
         categoryTree: categoryTreeResponse.data.site.categoryTree,
         category: categoryResponse.data.site.category,
     };
+};
+
+export const getCart = async (entityId: string) => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+
+    const checkoutQuery = {
+        query: checkout,
+        variables: {
+            entityId,
+        },
+    };
+
+    const response = await bcGraphQlRequest(checkoutQuery, headers);
+
+    return response.data.site.checkout;
 };
