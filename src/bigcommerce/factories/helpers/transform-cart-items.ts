@@ -13,7 +13,7 @@ export const getTransformCartItems = (
 ): Maybe<Array<Maybe<CartItemInterface>>> => {
     if (!cartItems?.lineItems) return null;
 
-    return cartItems.lineItems.physicalItems.map(item => {
+    return cartItems.lineItems.physicalItems.map((item) => {
         const {
             name,
             sku,
@@ -29,13 +29,9 @@ export const getTransformCartItems = (
             imageUrl,
         } = item;
 
-        const configurable_options = selectedOptions.map(option => {
-            const {
-                entityId,
-                name,
-                value,
-                valueEntityId,
-            } = option as BC_CartSelectedMultipleChoiceOption;
+        const configurable_options = selectedOptions.map((option) => {
+            const { entityId, name, value, valueEntityId } =
+                option as BC_CartSelectedMultipleChoiceOption;
             return {
                 id: entityId,
                 option_label: name,
@@ -101,7 +97,7 @@ export const getTransformCartItems = (
                     },
                 },
                 staged: false,
-                __typename: 'ConfigurableProduct',
+                // __typename: 'ConfigurableProduct',
             },
             quantity: quantity,
             configurable_options,
