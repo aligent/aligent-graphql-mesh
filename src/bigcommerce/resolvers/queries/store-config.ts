@@ -1,19 +1,25 @@
-import {getChannelMetafields } from '../requests/bc-graphql-calls';
+import { getChannelMetafields } from '../requests/bc-graphql-calls';
 import {
-    BC_MetafieldConnection, BC_MetafieldEdge,
-    Maybe, QueryResolvers,
-    StoreConfig
+    BC_MetafieldConnection,
+    BC_MetafieldEdge,
+    Maybe,
+    QueryResolvers,
+    StoreConfig,
 } from '../../../meshrc/.mesh';
 
 const NAMESPACE: string = 'pwa_config';
 
 /* istanbul ignore next */
-export const storeConfigResolver:  QueryResolvers['storeConfig'] = {
+export const storeConfigResolver: QueryResolvers['storeConfig'] = {
     resolve: async () => {
         //The namespace needs to match the metafield namespace when created in BigCommerce
-        const bcChannelMetafieldsConfig: BC_MetafieldConnection = await getChannelMetafields(NAMESPACE);
+        const bcChannelMetafieldsConfig: BC_MetafieldConnection = await getChannelMetafields(
+            NAMESPACE
+        );
 
-        const storeConfig = await transformChannelMetafieldsToStoreConfig(bcChannelMetafieldsConfig);
+        const storeConfig = await transformChannelMetafieldsToStoreConfig(
+            bcChannelMetafieldsConfig
+        );
         return storeConfig;
     },
 };
@@ -25,7 +31,9 @@ export const storeConfigResolver:  QueryResolvers['storeConfig'] = {
  * API endpoint:  https://api.bigcommerce.com/stores/{{store_hash}}/v3/channels/1/metafields
  * Docs: https://developer.bigcommerce.com/docs/rest-management/channels/channel-metafields#create-a-channel-metafield
  */
-export async function transformChannelMetafieldsToStoreConfig(bcStoreConfig: BC_MetafieldConnection): Promise<StoreConfig> {
+export async function transformChannelMetafieldsToStoreConfig(
+    bcStoreConfig: BC_MetafieldConnection
+): Promise<StoreConfig> {
     const metafields: Maybe<Maybe<BC_MetafieldEdge>[]> | undefined = bcStoreConfig?.edges;
 
     //The metafields data has this ane extra node attribute and needs to be accessed via node.node
@@ -33,24 +41,30 @@ export async function transformChannelMetafieldsToStoreConfig(bcStoreConfig: BC_
 
     const storeConfigTransformed: StoreConfig = {
         //Mandatory fields, always returned (currently no value assigned)
-        contact_enabled: false, newsletter_enabled: false, pwa_base_url: '', returns_enabled: ''
-    }
+        contact_enabled: false,
+        newsletter_enabled: false,
+        pwa_base_url: '',
+        returns_enabled: '',
+    };
 
-    if(metafields) {
+    if (metafields) {
         const categoryUrl: string = findMetafieldValueByKey(metafields, 'category_url_suffix');
         const gridPerPage: string = findMetafieldValueByKey(metafields, 'grid_per_page');
 
         //Add more metafields as required here. Metafields need to be added to bigcommerce manually first.
 
         storeConfigTransformed.category_url_suffix = categoryUrl;
-        storeConfigTransformed.grid_per_page =  parseInt((gridPerPage !== '') ? gridPerPage: '24'); // default set to 24
+        storeConfigTransformed.grid_per_page = parseInt(gridPerPage !== '' ? gridPerPage : '24'); // default set to 24
     }
 
     return storeConfigTransformed;
 }
 
-export function findMetafieldValueByKey(metafields: Maybe<BC_MetafieldEdge>[], metafieldKey: string): string {
-    const metafieldValue = metafields.find(node => {
+export function findMetafieldValueByKey(
+    metafields: Maybe<BC_MetafieldEdge>[],
+    metafieldKey: string
+): string {
+    const metafieldValue = metafields.find((node) => {
         return node?.node.key === metafieldKey;
     });
     return metafieldValue ? metafieldValue.node?.value : '';
