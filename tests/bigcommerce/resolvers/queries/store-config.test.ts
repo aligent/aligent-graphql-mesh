@@ -21,8 +21,6 @@ describe('Transform StoreConfig tests', () => {
     });
 });
 
-//Ignore Additional fields that are not returned by real request, but required by the types, such as entityId
-// @ts-ignore
 const bcStoreConfigDataExpected: BC_MetafieldConnection = {
             edges: [
                 {
