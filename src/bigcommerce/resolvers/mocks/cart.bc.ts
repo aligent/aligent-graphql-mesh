@@ -41,7 +41,15 @@ export const mockBcCart = {
                 variantEntityId: 513,
                 parentEntityId: null,
                 productEntityId: 492,
-                discounts: [],
+                discounts: [
+                    {
+                        entityId: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
+                        discountedAmount: {
+                            currencyCode: 'AUD',
+                            value: 0,
+                        },
+                    },
+                ],
                 originalPrice: {
                     currencyCode: 'AUD',
                     value: 55,
@@ -75,14 +83,12 @@ export const mockBcCart = {
                     {
                         name: 'Color',
                         entityId: 148,
-                        __typename: 'CartSelectedMultipleChoiceOption',
                         valueEntityId: 182,
                         value: 'Green',
                     },
                     {
                         name: 'Size',
                         entityId: 149,
-                        __typename: 'CartSelectedMultipleChoiceOption',
                         valueEntityId: 184,
                         value: 'S',
                     },
@@ -94,7 +100,7 @@ export const mockBcCart = {
                 isTaxable: true,
             },
         ],
-        totalQuantity: 3,
+        totalQuantity: 1,
     },
     locale: 'en',
     updatedAt: {
