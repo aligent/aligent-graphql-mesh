@@ -1,7 +1,7 @@
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
-import { getTransformedCategoriesData } from '../../factories/transform-category-data';
+import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products.data';
 import { QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
 import { Category } from '../../types';
@@ -22,7 +22,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     if (__typename === 'Category') {
         return {
-            ...getTransformedCategoriesData((data as unknown) as Category),
+            ...getTransformedCategoryData((data as unknown) as Category),
             type: 'CATEGORY',
         };
     }

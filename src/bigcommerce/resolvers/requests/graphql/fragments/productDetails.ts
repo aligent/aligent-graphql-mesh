@@ -90,6 +90,9 @@ export const ProductsDetails: DocumentNode = gql`
                     prices {
                         ...Prices
                     }
+                    defaultImage {
+                        ...Image
+                    }
                     images {
                         edges {
                             node {

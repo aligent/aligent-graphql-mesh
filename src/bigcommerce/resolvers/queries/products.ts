@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { Maybe, Products, QueryResolvers } from '../../../meshrc/.mesh';
 import {
     getTransformedProductData,
     getTransformedProductsData,
@@ -6,14 +6,13 @@ import {
 import { getBcProductByPathGraphql, getBcProductsGraphql } from '../requests/bc-graphql-calls';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (_root, args, _context, _info) => {
+    resolve: async (_root, args, _context, _info): Promise<Maybe<Products>> => {
         const url_key = args.filter?.url_key?.eq;
 
         if (url_key) {
             const bcProduct = await getBcProductByPathGraphql({ path: url_key });
 
             if (!bcProduct) return null;
-            console.dir(JSON.stringify(bcProduct));
             return { items: [getTransformedProductData(bcProduct)] };
         }
 

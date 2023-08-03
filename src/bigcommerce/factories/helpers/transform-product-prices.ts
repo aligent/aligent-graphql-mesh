@@ -1,0 +1,60 @@
+import { BC_Prices, Maybe, PriceRange, ProductPrices } from '../../../meshrc/.mesh';
+import { getTransformedPrice } from './transform-price';
+
+export const getTransformedPriceRange = (prices?: Maybe<BC_Prices>): PriceRange => {
+    if (!prices)
+        return {
+            maximum_price: prices
+                ? {
+                      discount: {
+                          amount_off: null,
+                          percent_off: null,
+                      },
+                      final_price: { currency: null, value: null },
+                      regular_price: { currency: null, value: null },
+                  }
+                : null,
+            minimum_price: {
+                discount: {
+                    amount_off: null,
+                    percent_off: null,
+                },
+                final_price: { currency: null, value: null },
+                regular_price: { currency: null, value: null },
+            },
+        };
+
+    return {
+        maximum_price: prices
+            ? {
+                  discount: {
+                      amount_off: null,
+                      percent_off: null,
+                  },
+                  final_price: getTransformedPrice(prices.priceRange.max),
+                  regular_price: getTransformedPrice(prices.priceRange.max),
+              }
+            : null,
+        minimum_price: {
+            discount: {
+                amount_off: null,
+                percent_off: null,
+            },
+            final_price: prices?.priceRange.min ? getTransformedPrice(prices.priceRange.min) : {},
+            regular_price: prices?.priceRange.min ? getTransformedPrice(prices.priceRange.min) : {},
+        },
+    };
+};
+
+/**
+ * This returns deprecated prices but being used in TF
+ * @param prices
+ */
+export const getTransformedPrices = (prices: Maybe<BC_Prices>): Maybe<ProductPrices> => {
+    if (!prices) return null;
+    return {
+        regularPrice: {
+            amount: prices ? getTransformedPrice(prices.price) : null,
+        },
+    };
+};
