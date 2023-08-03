@@ -13,6 +13,7 @@ import { deleteCustomerAddressResolver } from './mutations/delete-customer-addre
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
 import { postContactFormResolver } from './mutations/post-contact-form';
+import { removeCouponFromCartResolver } from './mutations/remove-coupon-from-cart';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
 import { removeProductsFromWishlistResolver } from './mutations/remove-products-from-wishlist';
 import { reorderItemsResolver } from './mutations/reorder-items';
@@ -75,6 +76,7 @@ const resolvers: Resolvers = {
         generateCustomerToken: generateCustomerTokenResolver,
         mergeCarts: mergeCartsResolver,
         postContactForm: postContactFormResolver,
+        removeCouponFromCart: removeCouponFromCartResolver,
         removeItemFromCart: removeItemFromCartResolver,
         removeProductsFromWishlist: removeProductsFromWishlistResolver,
         reorderItems: reorderItemsResolver,
