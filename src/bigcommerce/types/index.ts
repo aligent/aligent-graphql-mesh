@@ -1,9 +1,5 @@
 import { CurrencyEnum } from '../../meshrc/.mesh';
 
-export enum CategoryTreeTypename {
-    CategoryTree = 'CategoryTree',
-}
-
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -152,3 +148,5 @@ export interface BcCategory {
         pageTitle: string;
     };
 }
+
+export interface Category extends BcCategory, BcCategoryTree {}

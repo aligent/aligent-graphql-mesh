@@ -13,6 +13,7 @@ export const productsResolver: QueryResolvers['products'] = {
             const bcProduct = await getBcProductByPathGraphql({ path: url_key });
 
             if (!bcProduct) return null;
+            console.dir(JSON.stringify(bcProduct));
             return { items: [getTransformedProductData(bcProduct)] };
         }
 

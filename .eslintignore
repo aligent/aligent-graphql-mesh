@@ -19,3 +19,6 @@ test-results.json
 yarn-error.log
 .tsc
 generated/
+src/meshrc/.mesh
+lambda
+docker

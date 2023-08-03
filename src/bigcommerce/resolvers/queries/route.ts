@@ -1,64 +1,70 @@
-import { mockCategories } from '../mocks/categories';
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products.data';
+import { QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
+import { Category } from '../../types';
 
-const getTransformedRouteData = data => {
+const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
     const { __typename } = data;
     if (__typename === 'Brand') {
         const transformedBrandData = productsMock.items[0];
+        // TODO
         return {
-            type: 'BRAND',
+            // FIXME: BRAND is not a valid UrlRewriteEntityTypeEnum value
+            // previously 'BRAND' - is this a Takeflight thing?
+            redirect_code: 0,
+            type: 'CMS_PAGE',
             ...transformedBrandData,
         };
     }
 
     if (__typename === 'Category') {
         return {
-            ...getTransformedCategoriesData(data),
+            ...getTransformedCategoriesData((data as unknown) as Category),
             type: 'CATEGORY',
-            __typename: 'CategoryTree',
         };
     }
 
     if (__typename === 'ContactPage') {
+        // TODO
         return {
-            type: 'CONTACT_PAGE',
-            mockRestResponse: {
-                ...mockCategories.items[0].children[1],
-                products: productsMock,
-            },
+            // FIXME: CONTACT_PAGE is not a valid UrlRewriteEntityTypeEnum value
+            // previously 'CONTACT_PAGE' - is this a Takeflight thing?
+            type: 'CMS_PAGE',
+            ...mockCmsPage,
         };
     }
 
     if (__typename === 'NormalPage') {
-        const transformedCmsData = mockCmsPage;
-        return { type: 'CMS_PAGE', ...transformedCmsData };
+        return {
+            type: 'CMS_PAGE',
+            ...mockCmsPage,
+        };
     }
 
     if (__typename === 'Product') {
         const transformedProductData = getTransformedProductData(data);
         return {
             type: 'PRODUCT',
+            redirect_code: 0,
             ...transformedProductData,
         };
     }
 
-    const transformedCmsData = mockCmsPage;
-    return { type: 'CMS_PAGE', ...transformedCmsData };
+    return {
+        type: 'CMS_PAGE',
+        ...mockCmsPage,
+    };
 };
 
-export const routeResolver = {
-    resolve: async (
-        root: any,
-        args: { url: string },
-        context: {
-            headers: { authorization: string };
-        },
-        info: any
-    ): Promise<any> => {
+// TODO:
+// - Clear up why we have Brand, ContactPage and NormalPage as types (are these client-specific?)
+// - Re-test this resolver for each type of entity now that types are locking things down
+// - Add tests for getTransformedRouteData
+export const routeResolver: QueryResolvers['route'] = {
+    resolve: async (_root, args, _context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
 
         const data = await getRoute(urlParam);
@@ -72,7 +78,6 @@ export const routeResolver = {
         const transformedRouteData = getTransformedRouteData(data);
 
         return {
-            redirect_code: 0,
             relative_url: path.replace(/^\//, ''),
             ...transformedRouteData,
         };

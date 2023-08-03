@@ -1,8 +1,6 @@
-import { BcCategory, BcCategoryTree } from '../types';
+import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '../../utils';
 import { CategoryTree } from '../../meshrc/.mesh';
-
-interface Category extends BcCategory, BcCategoryTree {}
 
 export const getTransformedCategoriesData = (category: Category): CategoryTree => {
     const { children, description, entityId, name, path, products, seo } = category;

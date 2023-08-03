@@ -1,12 +1,9 @@
-import axios from 'axios';
-import {
-    logAndThrowErrorsFromGraphQlResponse,
-    logAndThrowErrorsFromRESTApiResponse,
-    logAndThrowUnknownError,
-    throwAndLogAxiosError,
-} from '../error-handling';
+import axios, { AxiosResponse } from 'axios';
+
 import { BcCategory, BcCategoryTree, GraphQlQuery } from '../../types';
 import { getProductsQuery } from './graphql/products';
+
+import { logAndThrowError } from '../error-handling';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
@@ -21,17 +18,15 @@ import { getPdpProductQuery } from './graphql/PdpProduct';
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
-const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: string }) => {
-    try {
-        const response = await axios.post(BC_GRAPHQL_API, data, { headers });
-        return response.data;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            throwAndLogAxiosError(error, bcGraphQlRequest.name);
-        } else {
-            logAndThrowUnknownError(error, bcGraphQlRequest.name);
-        }
-    }
+// TODO: generic return type
+const bcGraphQlRequest = async (
+    data: GraphQlQuery,
+    headers: { Authorization: string }
+): Promise<AxiosResponse['data']> => {
+    return axios
+        .post(BC_GRAPHQL_API, data, { headers })
+        .then(resp => resp.data)
+        .catch(logAndThrowError);
 };
 
 export const bcLogin = async (
@@ -54,14 +49,15 @@ export const bcLogin = async (
     };
 
     const response = await bcGraphQlRequest(graphqlQuery, headers);
-
-    const entityId = response.data.data?.login.customer.entityId;
     const result = response.data.data?.login.result;
 
     if (result !== 'success') {
-        logAndThrowErrorsFromRESTApiResponse(response, bcLogin.name);
+        logAndThrowError(
+            new Error(`Failed to authenticate with BigCommerce: ${JSON.stringify(response)}`)
+        );
     }
 
+    const entityId = response.data.data?.login.customer.entityId;
     return entityId;
 };
 
@@ -83,10 +79,6 @@ export const getBcProductsGraphql = async (
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 
-    if (response.data.errors) {
-        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductsGraphql.name);
-    }
-
     return response.data.site.products;
 };
 
@@ -101,10 +93,6 @@ export const getBcProductByPathGraphql = async (path: BC_SiterouteArgs): Promise
     };
 
     const response = await bcGraphQlRequest(productsQuery, headers);
-
-    if (response.data.errors) {
-        logAndThrowErrorsFromGraphQlResponse(response.data.errors, getBcProductsGraphql.name);
-    }
 
     return response.data.site.route.node;
 };

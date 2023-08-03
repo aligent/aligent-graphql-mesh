@@ -1,8 +1,10 @@
+import { QueryResolvers } from '../../../meshrc/.mesh';
 import { Country, CountryStates } from '../../types';
 import { getCountries, getCountriesStates } from '../requests/bc-rest-calls';
 
-export const countriesResolver = {
-    resolve: async () => {
+/* istanbul ignore next */
+export const countriesResolver: QueryResolvers['countries'] = {
+    resolve: async (_root, _args, _context, _info) => {
         const countries = await getCountries();
         // TODO: revert back to get full data
         // This is just temporary to get TF to work with AUS data
@@ -10,6 +12,7 @@ export const countriesResolver = {
     },
 };
 
+/* istanbul ignore next */
 export const transformCountries = async (countries: Country[]) => {
     return Promise.all(
         countries.map(async (country) => {
@@ -23,7 +26,7 @@ export const transformCountry = (country: Country, states: CountryStates[]) => {
     const transformedCountryStates = transformCountriesStates(states);
 
     return {
-        id: country.id,
+        id: country.id.toString(),
         two_letter_abbreviation: country.country_iso2,
         full_name_english: country.country,
         available_regions: transformedCountryStates,
