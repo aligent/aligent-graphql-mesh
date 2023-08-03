@@ -24,13 +24,15 @@ describe('Transform StoreConfig tests', () => {
 const bcStoreConfigDataExpected: BC_MetafieldConnection = {
             edges: [
                 {
+                    // @ts-expect-error: Type expects `entityId`
                     node: {
                         id: "TWV0YWZpZWxkczoxODk=",
                         key: "category_url_suffix",
-                        value: ".html"
+                        value: ".html",
                     }
                 },
                 {
+                    // @ts-expect-error: Type expects `entityId`
                     node: {
                         id: "TWV0YWZpZWxkczoxOTA=",
                         key: "grid_per_page",
