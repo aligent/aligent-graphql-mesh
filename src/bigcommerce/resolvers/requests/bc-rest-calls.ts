@@ -1,4 +1,4 @@
-import { BcCustomer, BcGraphqlTokenData, Country, CountryStates } from '../../types';
+import { BcCustomer, Country, CountryStates } from '../../types';
 import axios, { AxiosResponse } from 'axios';
 import { logAndThrowError } from '../error-handling';
 
@@ -27,13 +27,6 @@ const bcGet = async (path: string) => {
     } catch (error) {
         logAndThrowError(error as Error);
     }
-};
-
-export const getBcGraphqlToken = async (data: BcGraphqlTokenData): Promise<string> => {
-    const path = `/v3/storefront/api-token`;
-
-    const response = await bcPost(path, data);
-    return response.data.token;
 };
 
 export const getCountries = async (): Promise<Country[]> => {
@@ -84,4 +77,15 @@ export const createCustomer = async (
 
     const response = await bcPost(path, data);
     return response.data[0];
+};
+
+export const createCustomerImpersonationToken = async (expiresAt: number): Promise<string> => {
+    const path = `/v3/storefront/api-token-customer-impersonation`;
+    const data = {
+        channel_id: 1,
+        expires_at: expiresAt,
+    };
+
+    const response = await bcPost(path, data);
+    return response.data.token;
 };

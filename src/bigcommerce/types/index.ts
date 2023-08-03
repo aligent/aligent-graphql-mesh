@@ -1,9 +1,3 @@
-export interface BcGraphqlTokenData {
-    allowed_cors_origins: [] | string[];
-    channel_id: number;
-    expires_at: number;
-}
-
 export interface GraphQlQuery {
     query: string;
 }
@@ -140,4 +134,21 @@ export interface BcCategory {
     };
 }
 
+export interface DecodedCustomerImpersonationToken {
+    cid: number;
+    cors: string[];
+    eat: number;
+    iat: number;
+    iss: string;
+    sid: number;
+    sub: string;
+    sub_type: number;
+    token_type: number;
+}
+
+export interface MeshToken {
+    bc_customer_id: number;
+    iat: number;
+    exp: number;
+}
 export interface Category extends BcCategory, BcCategoryTree {}
