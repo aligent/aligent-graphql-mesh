@@ -11,6 +11,7 @@ import { generateCustomerTokenResolver } from './mutations/generate-customer-tok
 import { mergeCartsResolver } from './mutations/merge-carts';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
+import { subscribeEmailToNewsletterResolver } from './mutations/subscribe-email-to-newsletter';
 import { updateCartItemsResolver } from './mutations/update-cart-items';
 import { updateCustomerResolver } from './mutations/update-customer';
 import { cartResolver } from './queries/cart';
@@ -56,6 +57,7 @@ const resolvers: Resolvers = {
         mergeCarts: mergeCartsResolver,
         removeItemFromCart: removeItemFromCartResolver,
         setGuestEmailOnCart: setGuestEmailOnCartResolver,
+        subscribeEmailToNewsletter: subscribeEmailToNewsletterResolver,
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
     },
