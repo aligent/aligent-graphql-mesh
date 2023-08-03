@@ -20,12 +20,6 @@ describe('Transform StoreConfig tests', () => {
         expect(transformedConfig.category_url_suffix).toEqual('.html');
         expect(transformedConfig.grid_per_page).toEqual(24);
     });
-    test('No metafield data given', async () => {
-        // @ts-expect-error: 'null' is not assignable to parameter of type 'BC_MetafieldConnection'
-        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(null);
-
-        expect(transformedConfig.category_url_suffix).toBeUndefined();
-    });
     test('Bad metafield data given', async () => {
         const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(
             bcStoreConfigBadData

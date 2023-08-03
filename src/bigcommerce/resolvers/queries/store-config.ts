@@ -34,7 +34,7 @@ export const storeConfigResolver: QueryResolvers['storeConfig'] = {
 export async function transformChannelMetafieldsToStoreConfig(
     bcStoreConfig: BC_MetafieldConnection
 ): Promise<StoreConfig> {
-    const metafields: Maybe<Maybe<BC_MetafieldEdge>[]> | undefined = bcStoreConfig?.edges;
+    const metafields = bcStoreConfig.edges;
 
     //The metafields data has this ane extra node attribute and needs to be accessed via node.node
     ///[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]
