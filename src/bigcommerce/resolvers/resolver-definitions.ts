@@ -14,6 +14,7 @@ import { mergeCartsResolver } from './mutations/merge-carts';
 import { postContactFormResolver } from './mutations/post-contact-form';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
 import { reorderItemsResolver } from './mutations/reorder-items';
+import { setBillingAddressOnCartResolver } from './mutations/set-billing-address-on-cart';
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
 import { setShippingAddressesOnCartResolver } from './mutations/set-shipping-addresses-on-cart';
 import { setShippingMethodsOnCartResolver } from './mutations/set-shipping-methods-on-cart';
@@ -71,6 +72,7 @@ const resolvers: Resolvers = {
         postContactForm: postContactFormResolver,
         removeItemFromCart: removeItemFromCartResolver,
         reorderItems: reorderItemsResolver,
+        setBillingAddressOnCart: setBillingAddressOnCartResolver,
         setGuestEmailOnCart: setGuestEmailOnCartResolver,
         setShippingAddressesOnCart: setShippingAddressesOnCartResolver,
         setShippingMethodsOnCart: setShippingMethodsOnCartResolver,
