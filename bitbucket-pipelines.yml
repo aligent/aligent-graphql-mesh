@@ -2,17 +2,69 @@ image: node:18
 
 definitions:
   steps:
+    - step: &install
+        name: 🧶 Install
+        script:
+          - yarn install
+        artifacts:
+          - node_modules/**
+
     - step: &test
-        name: Test
+        name: ⚙️ Test
         script:
           - FORCE_COLOR=true
-          - yarn install
-          - yarn build
+          - yarn test
+
+    - step: &code-quality
+        name: 🕵️‍♀️ Code Quality
+        script:
+          - FORCE_COLOR=true
           - yarn lint
           - yarn check-types
-          - yarn test
+
+    - step: &build
+        name: 🏭 Build Mesh
+        script:
+          - yarn build
+        artifacts:
+          - src/meshrc/.mesh/**
+
+    - step: &build-container
+        name: 🏗️ Build Docker Container
+        services:
+          - docker
+        script:
+          - yarn build:docker
+        artifacts:
+          - src/meshrc/.mesh/**
+        caches:
+          - docker
+
+    - step: &deploy
+        name: 📦 Push to ECR
+        services:
+          - docker
+        script:
+          - docker tag mesh:latest ${IMAGE_NAME}:latest
+          - pipe: atlassian/aws-ecr-push-image:2.0.0
+            variables:
+              IMAGE_NAME: ${IMAGE_NAME}
+        caches:
+          - docker
 
 pipelines:
   pull-requests:
     '**':
-      - step: *test
+      - step: *install
+      - step: *build
+      - parallel:
+        - step: *build-container
+        - step: *code-quality
+        - step: *test
+
+  branches:
+    main:
+      - step: *install
+      - step: *build
+      - step: *build-container
+      - step: *deploy

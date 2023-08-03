@@ -1,0 +1,18 @@
+{
+  "name": "mesh-lambda",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "prebundle": "rm -rf dist && rm -rf src",
+    "bundle": "cp -r ../src/ src && cp index.ts src/index.ts && node bundle.mjs",
+    "postbundle": "cd dist && zip -r index.zip ./ && rm -rf ../src"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-lambda": "^1.204.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "esbuild": "^0.18.16"
+  }
+}

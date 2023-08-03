@@ -89,3 +89,19 @@ by the CLI, likely `https://localhost:4000/graphql`.
 ## Tests
 
 The sample tests can be ran with `yarn test`
+
+## Hosting
+
+There are currently two methods for hosting the mesh.
+
+### Fargate
+
+At this stage Fargate is our preferred hosting option. We run a container with an express server that runs the mesh code (see the [docs](https://the-guild.dev/graphql/mesh/docs/getting-started/deploy-mesh-gateway#mesh-as-an-express-route) for more info)
+
+The pipeline is configured to build a docker image and push to ECR. This will then trigger a deployment from ECS which will use the latest image found in ECR. The infrastructure code can be [here](https://bitbucket.org/aligent/aligent-graphql-mesh-hosting/src/main/).
+
+### Lambda
+
+Unfortunately the performance of Lambda is not great, it can take a while for requests to process which is not ideal for our use case.
+
+The Guild do list this as a hosting option so presumably there is a way to make it work efficiently. The code is still available here as a baseline if we decide to investigate Lambda hosting in the future.

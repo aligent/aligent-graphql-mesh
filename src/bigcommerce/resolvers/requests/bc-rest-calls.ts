@@ -1,6 +1,6 @@
+import { BcCustomer, Country, CountryStates } from '../../types';
 import axios, { AxiosResponse } from 'axios';
 import { logAndThrowError } from '../error-handling';
-import { BcGraphqlTokenData, Country, CountryStates } from '../../types';
 
 const BC_REST_API = process.env.BC_REST_API as string;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
@@ -29,13 +29,6 @@ const bcGet = async (path: string) => {
     }
 };
 
-export const getBcGraphqlToken = async (data: BcGraphqlTokenData): Promise<string> => {
-    const path = `/v3/storefront/api-token`;
-
-    const response = await bcPost(path, data);
-    return response.data.token;
-};
-
 export const getCountries = async (): Promise<Country[]> => {
     const path = `/v2/countries`;
 
@@ -60,4 +53,39 @@ export const createEmptyCart = async (): Promise<string> => {
 
     const response = await bcPost(path, data);
     return response.data.id;
+};
+
+export const createCustomer = async (
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string
+): Promise<BcCustomer> => {
+    const path = `/v3/customers`;
+
+    const data = [
+        {
+            email: email,
+            first_name: firstName,
+            last_name: lastName,
+            authentication: {
+                force_password_rest: false,
+                new_password: password,
+            },
+        },
+    ];
+
+    const response = await bcPost(path, data);
+    return response.data[0];
+};
+
+export const createCustomerImpersonationToken = async (expiresAt: number): Promise<string> => {
+    const path = `/v3/storefront/api-token-customer-impersonation`;
+    const data = {
+        channel_id: 1,
+        expires_at: expiresAt,
+    };
+
+    const response = await bcPost(path, data);
+    return response.data.token;
 };

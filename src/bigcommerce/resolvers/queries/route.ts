@@ -21,7 +21,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     if (__typename === 'Category') {
         return {
-            ...getTransformedCategoriesData((data as unknown) as Category),
+            ...getTransformedCategoriesData(data as unknown as Category),
             type: 'CATEGORY',
         };
     }
@@ -56,7 +56,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
     return {
         type: 'CMS_PAGE',
         redirect_code: 0,
-        ...mockCmsPage
+        ...mockCmsPage,
     };
 };
 

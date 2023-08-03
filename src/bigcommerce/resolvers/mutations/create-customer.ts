@@ -1,8 +1,30 @@
-import { CustomerOutput, MutationResolvers } from '../../../meshrc/.mesh';
-import { mockCreateCustomer } from '../mocks/create-customer';
+import { MutationResolvers } from '../../../meshrc/.mesh';
+import { transformCustomerData } from '../../factories/transform-customers-data';
+import { logAndThrowError } from '../error-handling';
+import { createCustomer } from '../requests/bc-rest-calls';
 
-export const createCustomerResolver: MutationResolvers['createCustomer']= {
-    resolve: (_root, _args, _context, _info) => {
-        return (mockCreateCustomer as unknown) as CustomerOutput;
+export const createCustomerResolver: MutationResolvers['createCustomer'] = {
+    resolve: async (_root, args, _context, _info) => {
+        if (
+            !args.input.email ||
+            !args.input.firstname ||
+            !args.input.lastname ||
+            !args.input.password
+        ) {
+            return logAndThrowError(
+                new Error('Missing email or firstname or lastname or password')
+            );
+        }
+
+        const bcCustomer = await createCustomer(
+            args.input.email,
+            args.input.firstname,
+            args.input.lastname,
+            args.input.password
+        );
+
+        return {
+            customer: transformCustomerData(bcCustomer),
+        };
     },
 };
