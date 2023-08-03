@@ -121,7 +121,6 @@ export const getCategories = async (
     };
 };
 
-//FIXME: replace any with BcStoreConfig
 export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,

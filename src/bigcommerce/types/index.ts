@@ -122,26 +122,3 @@ export interface BcCategory {
 }
 
 export interface Category extends BcCategory, BcCategoryTree {}
-
-export interface BcStoreConfigMetafields {
-    channel: {
-        entityId: number,
-        metafields: {
-            edges: [
-                node: BcMetafieldNode
-            ]
-        }
-    };
-}
-
-export interface BcMetafieldNode {
-    id: string,
-    key: string,
-    value: string
-}
-
-export interface AcStoreConfig {
-    category_url_suffix: string;
-    grid_per_page: number;
-    //more see mocks/store-config.ts
-}
