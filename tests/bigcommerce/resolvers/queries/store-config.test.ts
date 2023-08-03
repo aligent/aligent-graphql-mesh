@@ -19,6 +19,11 @@ describe('Transform StoreConfig tests', () => {
         expect(transformedConfig.category_url_suffix).toEqual('.html');
         expect(transformedConfig.grid_per_page).toEqual(24);
     });
+    test('No custom metafield specified', async () => {
+        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(null);
+
+        expect(transformedConfig.category_url_suffix).toBeUndefined();
+    });
 });
 
 const bcStoreConfigDataExpected: BC_MetafieldConnection = {

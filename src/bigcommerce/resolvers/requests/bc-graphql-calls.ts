@@ -11,6 +11,7 @@ import { BC_Channel, BC_MetafieldConnection } from '../../../meshrc/.mesh';
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
+/* istanbul ignore file */
 // TODO: generic return type
 const bcGraphQlRequest = async (data: GraphQlQuery, headers: { Authorization: string }): Promise<AxiosResponse['data']> => {
     return axios

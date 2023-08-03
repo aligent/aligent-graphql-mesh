@@ -7,6 +7,7 @@ import {
 
 const NAMESPACE: string = 'pwa_config';
 
+/* istanbul ignore next */
 export const storeConfigResolver:  QueryResolvers['storeConfig'] = {
     resolve: async () => {
         //The namespace needs to match the metafield namespace when created in BigCommerce
