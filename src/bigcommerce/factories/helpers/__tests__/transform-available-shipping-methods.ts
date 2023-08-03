@@ -1,6 +1,4 @@
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
-import { mockBcCart } from '../../../resolvers/mocks/cart.bc';
-import { getTransformCartItems } from '../transform-cart-items';
 import {
     getTransformedAvailableShippingMethods,
     getTransformedSelectedShippingOption,
@@ -32,8 +30,6 @@ const expectResult = [
 
 describe('transform-available-shipping-methods', () => {
     it(`transforms available shipping methods`, () => {
-        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
-
         expect(
             getTransformedAvailableShippingMethods(
                 mockBcCheckout.shippingConsignments[0].availableShippingOptions
@@ -42,14 +38,10 @@ describe('transform-available-shipping-methods', () => {
     });
 
     it(`returns "null" if there's no availableShippingOptions`, () => {
-        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
-
         expect(getTransformedAvailableShippingMethods(null)).toEqual(expect.objectContaining(null));
     });
 
     it(`returns "null" if there's no selectedShippingOption`, () => {
-        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
-
         expect(getTransformedSelectedShippingOption(null)).toEqual(expect.objectContaining(null));
     });
 });

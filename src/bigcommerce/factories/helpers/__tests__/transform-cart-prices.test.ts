@@ -52,8 +52,6 @@ describe('transform-prices', () => {
     });
 
     it(`handles nullish cart prices`, () => {
-        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
-
         expect(
             getTransformedCartPrices({
                 coupons: [],

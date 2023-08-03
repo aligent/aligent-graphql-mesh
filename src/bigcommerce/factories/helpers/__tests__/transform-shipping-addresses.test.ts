@@ -76,8 +76,6 @@ const customerMessage = 'This is my order';
 
 describe('transform-shipping-address', () => {
     it(`transforms shipping addresses`, () => {
-        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
-
         expect(
             getTransformedShippingAddresses(mockBcCheckout.shippingConsignments, customerMessage)
         ).toEqual(expect.objectContaining(expectResult));
