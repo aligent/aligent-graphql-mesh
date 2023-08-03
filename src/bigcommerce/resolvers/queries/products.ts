@@ -5,12 +5,18 @@ import {
 } from '../../factories/transform-products.data';
 import { getBcProductByPathGraphql, getBcProductsGraphql } from '../requests/bc-graphql-calls';
 
+//import { getBcProductGraphql } from '../requests/bc-graphql-calls';
+
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (_root, args, _context, _info): Promise<Maybe<Products>> => {
+    resolve: async (_root, args, context, _info): Promise<Maybe<Products>> => {
+        const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
         const url_key = args.filter?.url_key?.eq;
 
         if (url_key) {
-            const bcProduct = await getBcProductByPathGraphql({ path: url_key });
+            const bcProduct = await getBcProductByPathGraphql(
+                { path: url_key },
+                customerImpersonationToken
+            );
 
             if (!bcProduct) return null;
             return { items: [getTransformedProductData(bcProduct)] };
@@ -27,7 +33,7 @@ export const productsResolver: QueryResolvers['products'] = {
               }
             : {};
 
-        const bcProducts = await getBcProductsGraphql(filters);
+        const bcProducts = await getBcProductsGraphql(filters, customerImpersonationToken);
         return getTransformedProductsData(bcProducts);
     },
 };

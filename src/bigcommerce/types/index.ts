@@ -32,7 +32,7 @@ export interface BcProduct {
                     altText: string;
                     isDefault: boolean;
                 };
-            }
+            },
         ];
     };
     categories: {
@@ -48,11 +48,11 @@ export interface BcProduct {
                                     name: string;
                                     entityId: number;
                                 };
-                            }
+                            },
                         ];
                     };
                 };
-            }
+            },
         ];
     };
     reviews: {
@@ -98,7 +98,7 @@ export interface BcProduct {
         edges: [
             {
                 node: BcProduct;
-            }
+            },
         ];
     };
 }
@@ -108,6 +108,25 @@ interface Money {
     currencyCode: CurrencyEnum;
 }
 
+export interface BcCustomer {
+    id: number;
+    authentication: { force_password_reset: boolean };
+    company: string;
+    customer_group_id: number;
+    email: string;
+    first_name: string;
+    last_name: string;
+    notes: string;
+    phone: string;
+    registration_ip_address: string;
+    tax_exempt_category: string;
+    date_created: string;
+    date_modified: string;
+    accepts_product_review_abandoned_cart_emails: false;
+    store_credit_amounts: [{ amount: number }];
+    origin_channel_id: number;
+    channel_ids: number[] | null;
+}
 export interface Country {
     id: number;
     country: string;
@@ -149,4 +168,21 @@ export interface BcCategory {
     };
 }
 
+export interface DecodedCustomerImpersonationToken {
+    cid: number;
+    cors: string[];
+    eat: number;
+    iat: number;
+    iss: string;
+    sid: number;
+    sub: string;
+    sub_type: number;
+    token_type: number;
+}
+
+export interface MeshToken {
+    bc_customer_id: number;
+    iat: number;
+    exp: number;
+}
 export interface Category extends BcCategory, BcCategoryTree {}

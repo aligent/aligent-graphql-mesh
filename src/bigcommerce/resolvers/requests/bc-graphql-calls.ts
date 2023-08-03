@@ -8,6 +8,7 @@ import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
 import {
+    BC_Customer,
     BC_Product,
     BC_ProductConnection,
     BC_SiteproductsArgs,
@@ -49,7 +50,9 @@ export const bcLogin = async (
     };
 
     const response = await bcGraphQlRequest(graphqlQuery, headers);
-    const result = response.data.data?.login.result;
+
+    const entityId = response.data?.login.customer.entityId;
+    const result = response.data?.login.result;
 
     if (result !== 'success') {
         logAndThrowError(
@@ -57,17 +60,17 @@ export const bcLogin = async (
         );
     }
 
-    const entityId = response.data.data?.login.customer.entityId;
     return entityId;
 };
 
 export const getBcProductsGraphql = async (
-    filters: BC_SiteproductsArgs
+    filters: BC_SiteproductsArgs,
+    customerImpersonationToken: string
 ): Promise<BC_ProductConnection> => {
     const { ids } = filters;
 
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const productsQuery = {
@@ -82,9 +85,12 @@ export const getBcProductsGraphql = async (
     return response.data.site.products;
 };
 
-export const getBcProductByPathGraphql = async (path: BC_SiterouteArgs): Promise<BC_Product> => {
+export const getBcProductByPathGraphql = async (
+    path: BC_SiterouteArgs,
+    customerImpersonationToken: string
+): Promise<BC_Product> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const productsQuery = {
@@ -95,6 +101,38 @@ export const getBcProductByPathGraphql = async (path: BC_SiterouteArgs): Promise
     const response = await bcGraphQlRequest(productsQuery, headers);
 
     return response.data.site.route.node;
+};
+
+export const getBcCustomer = async (
+    customerImpersonationToken: string,
+    bcCustomerId: number
+): Promise<BC_Customer> => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+        'x-bc-customer-id': bcCustomerId,
+    };
+    const getCustomer = {
+        query: `query customer {
+            customer{
+            entityId
+            email
+          }
+        }`,
+    };
+
+    const response = await bcGraphQlRequest(getCustomer, headers);
+
+    if (response.data.errors) {
+        logAndThrowError(
+            new Error(
+                `Failed to fetch customers from BigCommerce: ${JSON.stringify(
+                    response.data.errors
+                )}`
+            )
+        );
+    }
+
+    return response.data.customer;
 };
 
 export const getRoute = async (url: string) => {

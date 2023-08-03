@@ -55,6 +55,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     return {
         type: 'CMS_PAGE',
+        redirect_code: 0,
         ...mockCmsPage,
     };
 };
