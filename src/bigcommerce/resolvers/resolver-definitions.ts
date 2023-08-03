@@ -22,6 +22,7 @@ import { categoriesResolver } from './queries/categories';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { countriesResolver } from './queries/countries';
+import { currencyResolver } from './queries/currency';
 import { customerResolver } from './queries/customer';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { isEmailAvailableResolver } from './queries/is-email-available';
@@ -38,6 +39,7 @@ const resolvers: Resolvers = {
         countries: countriesResolver,
         cmsBlocks: cmsBlocksResolver,
         cmsPage: cmsPageResolver,
+        currency: currencyResolver,
         customer: customerResolver,
         getSocialLinks: getSocialLinksResolver,
         isEmailAvailable: isEmailAvailableResolver,
