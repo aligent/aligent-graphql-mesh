@@ -37,7 +37,8 @@ definitions:
           - yarn build:docker
         artifacts:
           - src/meshrc/.mesh/**
-          - /var/lib/docker/image/**
+        caches:
+          - docker
 
     - step: &deploy
         name: 📦 Push to ECR
@@ -48,6 +49,8 @@ definitions:
           - pipe: atlassian/aws-ecr-push-image:2.0.0
             variables:
               IMAGE_NAME: ${IMAGE_NAME}
+        caches:
+          - docker
 
 pipelines:
   pull-requests:
