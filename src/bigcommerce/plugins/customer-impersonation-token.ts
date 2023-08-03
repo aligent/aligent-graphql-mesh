@@ -4,15 +4,15 @@ import { getDecodedCustomerImpersonationToken } from '../../utils/tokens';
 import { getUnixTimeStampInSeconds } from '../../utils/time-and-date';
 
 export const useExtendContextPlugin = useExtendContext(async (context) => {
-    if (!await context.cache.get('customerImpersonationToken')) {
-        const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds(24);
+    if (!(await context.cache.get('customerImpersonationToken'))) {
+        const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds({ additionalHours: 24 });
 
         context.cache.set(
             'customerImpersonationToken',
             await createCustomerImpersonationToken(unixTimeStampNowAdd24Hours)
         );
     } else {
-        const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds(24);
+        const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds({ additionalHours: 24 });
         const unixTimeStampNowInSeconds = Math.round(Date.now() / 1000);
 
         const decodedCustomerImpersonationToken = getDecodedCustomerImpersonationToken(
@@ -27,5 +27,4 @@ export const useExtendContextPlugin = useExtendContext(async (context) => {
             );
         }
     }
-
 });
