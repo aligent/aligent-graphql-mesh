@@ -3,9 +3,9 @@ image: node:18
 definitions:
   steps:
     - step: &install
-      name: 🧶 Install
-      script:
-        - yarn install
+        name: 🧶 Install
+        script:
+          - yarn install
 
     - step: &test
         name: ⚙️ Test
@@ -26,27 +26,25 @@ definitions:
           - yarn build:docker
 
     - step: &deploy
-      name: 📦 Push to ECR
-      script:
-        - docker tag mesh:latest ${IMAGE_NAME}:latest
-        - pipe: atlassian/aws-ecr-push-image:2.0.0
-          variables:
-            IMAGE_NAME: ${IMAGE_NAME}
+        name: 📦 Push to ECR
+        script:
+          - docker tag mesh:latest ${IMAGE_NAME}:latest
+          - pipe: atlassian/aws-ecr-push-image:2.0.0
+            variables:
+              IMAGE_NAME: ${IMAGE_NAME}
 
 pipelines:
   pull-requests:
     '**':
       - step: *install
       - parallel:
-        - steps:
-          - step: *build-docker
-          - step: *code-quality
-          - step: *test
+        - step: *build-docker
+        - step: *code-quality
+        - step: *test
 
   branches:
     main:
       - step: *install
       - parallel:
-        - steps:
-          - step: *build-docker
-          - step: *deploy
+        - step: *build-docker
+        - step: *deploy
