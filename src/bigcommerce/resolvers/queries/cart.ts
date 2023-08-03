@@ -1,9 +1,8 @@
-import { Cart, QueryResolvers } from "../../../meshrc/.mesh";
-import { CustomContext } from "../../types";
-import { mockCart } from "../mocks/cart";
+import { Cart, QueryResolvers } from '../../../meshrc/.mesh';
+import { mockCart } from '../mocks/cart';
 
-export const cartResolver: QueryResolvers<CustomContext>['cart'] = {
+export const cartResolver: QueryResolvers['cart'] = {
     resolve: (_root, _args, _context, _info) => {
-        return (mockCart as unknown) as Cart;
+        return mockCart as unknown as Cart;
     },
 };

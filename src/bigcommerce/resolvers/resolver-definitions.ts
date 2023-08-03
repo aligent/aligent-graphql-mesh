@@ -1,5 +1,4 @@
 import { Resolvers } from '../../meshrc/.mesh';
-import { CustomContext } from '../types';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 import { addProductsToWishlistResolver } from './mutations/add-products-to-wishlist';
 import { applyCouponToCartResolver } from './mutations/apply-coupon-to-cart';
@@ -27,7 +26,7 @@ import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
 
-const resolvers: Resolvers<CustomContext> = {
+const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
         products: productsResolver,

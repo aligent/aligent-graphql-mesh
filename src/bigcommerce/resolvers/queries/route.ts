@@ -3,7 +3,7 @@ import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
 import { QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
-import { Category, CustomContext } from '../../types';
+import { Category } from '../../types';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
     const { __typename } = data;
@@ -21,7 +21,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     if (__typename === 'Category') {
         return {
-            ...getTransformedCategoriesData((data as unknown) as Category),
+            ...getTransformedCategoriesData(data as unknown as Category),
             type: 'CATEGORY',
         };
     }
@@ -56,7 +56,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
     return {
         type: 'CMS_PAGE',
         redirect_code: 0,
-        ...mockCmsPage
+        ...mockCmsPage,
     };
 };
 
@@ -64,7 +64,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 // - Clear up why we have Brand, ContactPage and NormalPage as types (are these client-specific?)
 // - Re-test this resolver for each type of entity now that types are locking things down
 // - Add tests for getTransformedRouteData
-export const routeResolver: QueryResolvers<CustomContext>['route'] = {
+export const routeResolver: QueryResolvers['route'] = {
     resolve: async (_root, args, _context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
 

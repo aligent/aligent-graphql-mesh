@@ -1,5 +1,3 @@
-import { MeshContext } from '@graphql-mesh/runtime';
-
 export interface GraphQlQuery {
     query: string;
 }
@@ -135,5 +133,3 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
-
-export type CustomContext = MeshContext & { headers: Record<string, string> };

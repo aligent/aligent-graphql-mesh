@@ -1,10 +1,9 @@
 import { QueryResolvers } from '../../../meshrc/.mesh';
 import { getDecodedMeshToken } from '../../../utils/tokens';
-import { CustomContext } from '../../types';
 import { logAndThrowError } from '../error-handling';
 import { getBcCustomer } from '../requests/bc-graphql-calls';
 
-export const customerResolver: QueryResolvers<CustomContext>['customer'] = {
+export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 

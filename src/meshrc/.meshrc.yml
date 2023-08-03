@@ -8,4 +8,7 @@ additionalResolvers:
 
 additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins.ts'
 
+codegen:
+  contextType: ../types#GraphQlContext
+
 serve: !include serve-config.yml
