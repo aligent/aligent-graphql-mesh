@@ -441,6 +441,7 @@ export const mockBcProducts = [
         variants: {
             edges: [
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
                         id: 'VmFyaWFudDo1MTM=',
                         entityId: 513,
@@ -485,9 +486,11 @@ export const mockBcProducts = [
                         options: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 148,
                                         displayName: 'Color',
+                                        isRequired: true,
                                         values: {
                                             edges: [
                                                 {
@@ -498,13 +501,21 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                            },
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
+                                        isRequired: true,
                                         values: {
                                             edges: [
                                                 {
@@ -515,10 +526,22 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                            },
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                            },
                         },
                         productOptions: {
                             edges: [
@@ -959,6 +982,12 @@ export const mockBcProducts = [
                     },
                 },
             ],
+            pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false,
+                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+            },
         },
     },
 ];

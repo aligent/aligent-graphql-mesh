@@ -6,7 +6,7 @@ import {
 } from '../../../meshrc/.mesh';
 import { getTransformedImage } from './transform-images';
 import { getTransformedPriceRange } from './transform-product-prices';
-import { getTransformedOptions } from './transform-product-options';
+import { getTransformedProductsAttributes } from './transform-product-attributes';
 
 export const getTransformedVariants = (
     variants: BC_VariantConnection
@@ -18,7 +18,7 @@ export const getTransformedVariants = (
         const { defaultImage, entityId, id, inventory, options, prices = null, sku } = variant.node;
 
         return {
-            attributes: getTransformedOptions(options),
+            attributes: getTransformedProductsAttributes(options),
             product: {
                 custom_attributes: [],
                 id: entityId,
