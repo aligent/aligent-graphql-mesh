@@ -1,14 +1,13 @@
 import {getChannelMetafields } from '../requests/bc-graphql-calls';
 import {
     BC_MetafieldConnection, BC_MetafieldEdge,
-    Maybe,
-    StoreConfig,
-    StoreConfigResolvers
+    Maybe, QueryResolvers,
+    StoreConfig
 } from '../../../meshrc/.mesh';
 
 const NAMESPACE: string = 'pwa_config';
 
-export const storeConfigResolver: StoreConfigResolvers<StoreConfig> = {
+export const storeConfigResolver:  QueryResolvers['storeConfig'] = {
     resolve: async () => {
         //The namespace needs to match the metafield namespace when created in BigCommerce
         const bcChannelMetafieldsConfig: BC_MetafieldConnection = await getChannelMetafields(NAMESPACE);
