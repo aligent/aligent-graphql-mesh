@@ -6,6 +6,8 @@ definitions:
         name: 🧶 Install
         script:
           - yarn install
+        artifacts:
+          - node_modules/**
 
     - step: &test
         name: ⚙️ Test
@@ -24,6 +26,9 @@ definitions:
         name: 🏗️ Build Docker Container
         script:
           - yarn build:docker
+        artifacts:
+          - src/meshrc/.mesh/**
+          - /var/lib/docker/image/**
 
     - step: &deploy
         name: 📦 Push to ECR
