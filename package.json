@@ -14,8 +14,7 @@
     "lint:fix": "eslint --color --fix . --ext .ts",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "check-types": "tsc --pretty --noEmit",
-    "dev:debug": "yarn mesh dev --dir ./src/meshrc"
+    "check-types": "tsc --pretty --noEmit"
   },
   "devDependencies": {
     "@graphql-mesh/cli": "^0.82.0",
