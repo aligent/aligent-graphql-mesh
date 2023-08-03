@@ -178,6 +178,7 @@ export const mockBcProducts = [
         productOptions: {
             edges: [
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
                         entityId: 148,
                         displayName: 'Color',
@@ -207,6 +208,7 @@ export const mockBcProducts = [
                     },
                 },
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                     node: {
                         entityId: 149,
                         displayName: 'Size',
@@ -234,6 +236,12 @@ export const mockBcProducts = [
                     },
                 },
             ],
+            pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false,
+                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                endCursor: 'YXJyYXljb25uZWN0aW9uOjI=',
+            },
         },
         relatedProducts: {
             edges: [
