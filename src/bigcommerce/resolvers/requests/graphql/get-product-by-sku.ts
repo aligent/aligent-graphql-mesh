@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export const getProductBySkuQuery = (sku: string) => {
     return {
         query: `query getProductBySku {

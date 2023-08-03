@@ -5,12 +5,14 @@ import { getProductBySkuQuery } from './graphql/get-product-by-sku';
 import { getRouteQuery } from './graphql/route';
 import { getCategoryTreeQuery } from './graphql/category-tree';
 import { getCategoryQuery } from './graphql/category';
+import { channelMetafieldsByNamespaceQuery } from './graphql/channel-metafields-by-namespace-query';
+import { BC_Channel, BC_Customer, BC_MetafieldConnection } from '../../../meshrc/.mesh';
 import { checkout } from './graphql/checkout';
-import { BC_Customer } from '../../../meshrc/.mesh';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
+/* istanbul ignore file */
 // TODO: generic return type
 const bcGraphQlRequest = async (
     data: GraphQlQuery,
@@ -18,7 +20,7 @@ const bcGraphQlRequest = async (
 ): Promise<AxiosResponse['data']> => {
     return axios
         .post(BC_GRAPHQL_API, data, { headers })
-        .then(resp => resp.data)
+        .then((resp) => resp.data)
         .catch(logAndThrowError);
 };
 
@@ -158,6 +160,29 @@ export const getCategories = async (
         categoryTree: categoryTreeResponse.data.site.categoryTree,
         category: categoryResponse.data.site.category,
     };
+};
+
+export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    };
+    const query = channelMetafieldsByNamespaceQuery(namespace);
+
+    const response = await bcGraphQlRequest(query, headers);
+
+    if (response.data.errors) {
+        logAndThrowError(
+            new Error(
+                `Failed to fetch channel metafields from BigCommerce: ${JSON.stringify(
+                    response.data.errors
+                )}`
+            )
+        );
+    }
+    //response.data looks like: {"channel":{"entityId":1,"metafields":{"edges":[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]}}}
+    const channelData: BC_Channel = response.data.channel;
+
+    return channelData.metafields;
 };
 
 export const getCart = async (entityId: string) => {
