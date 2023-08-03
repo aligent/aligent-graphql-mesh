@@ -32,6 +32,7 @@ export const mockBcProducts = [
                         altText: '',
                         isDefault: true,
                     },
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                 },
                 {
                     node: {
@@ -42,6 +43,7 @@ export const mockBcProducts = [
                         altText: '',
                         isDefault: false,
                     },
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                 },
             ],
         },

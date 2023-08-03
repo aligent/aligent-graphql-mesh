@@ -1,6 +1,7 @@
 import {
     BC_Image,
     BC_ImageConnection,
+    BC_ImageEdge,
     Maybe,
     MediaGalleryEntry,
     ProductImage,
@@ -22,9 +23,9 @@ export const getTransformedImage = (
     };
 };
 
-export const getTransformedMediaGalleryEntries = (
-    images: BC_ImageConnection
-): Array<Maybe<MediaGalleryEntry>> => {
+export const getTransformedMediaGalleryEntries = (images: {
+    edges?: Maybe<Array<Maybe<BC_ImageEdge>>>;
+}): Array<Maybe<MediaGalleryEntry>> => {
     if (!images?.edges || !images?.edges.length) return [];
 
     return images?.edges.map((image, index) => {
