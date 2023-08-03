@@ -31,6 +31,8 @@ definitions:
 
     - step: &build-container
         name: 🏗️ Build Docker Container
+        services:
+          - docker
         script:
           - yarn build:docker
         artifacts:
@@ -39,6 +41,8 @@ definitions:
 
     - step: &deploy
         name: 📦 Push to ECR
+        services:
+          - docker
         script:
           - docker tag mesh:latest ${IMAGE_NAME}:latest
           - pipe: atlassian/aws-ecr-push-image:2.0.0
