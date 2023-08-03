@@ -18,6 +18,7 @@ import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
+import { productsMock } from '../resolvers/mocks/products';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
@@ -94,6 +95,8 @@ export const getTransformedProductsData = (bcProducts: BC_ProductConnection): Ma
     const { collectionInfo, edges, pageInfo } = bcProducts;
 
     return {
+        // @todo get "aggregations/filters" from site.search.productSearch when following up for category products
+        aggregations: productsMock.aggregations,
         items: edges
             ? edges.map(product => {
                   if (!product) return null;

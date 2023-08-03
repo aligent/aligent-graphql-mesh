@@ -5,8 +5,6 @@ import {
 } from '../../factories/transform-products.data';
 import { getBcProductByPathGraphql, getBcProductsGraphql } from '../requests/bc-graphql-calls';
 
-//import { getBcProductGraphql } from '../requests/bc-graphql-calls';
-
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Maybe<Products>> => {
         const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
