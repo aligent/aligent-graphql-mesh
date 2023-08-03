@@ -18,7 +18,7 @@ const bcGraphQlRequest = async (
 ): Promise<AxiosResponse['data']> => {
     return axios
         .post(BC_GRAPHQL_API, data, { headers })
-        .then((resp) => resp.data)
+        .then(resp => resp.data)
         .catch(logAndThrowError);
 };
 
