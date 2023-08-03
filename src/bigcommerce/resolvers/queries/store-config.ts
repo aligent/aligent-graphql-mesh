@@ -26,7 +26,7 @@ export const storeConfigResolver:  QueryResolvers['storeConfig'] = {
  * Docs: https://developer.bigcommerce.com/docs/rest-management/channels/channel-metafields#create-a-channel-metafield
  */
 export async function transformChannelMetafieldsToStoreConfig(bcStoreConfig: BC_MetafieldConnection): Promise<StoreConfig> {
-    const metafields = bcStoreConfig?.edges;
+    const metafields: Maybe<Maybe<BC_MetafieldEdge>[]> | undefined = bcStoreConfig?.edges;
 
     //The metafields data has this ane extra node attribute and needs to be accessed via node.node
     ///[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]
@@ -37,17 +37,21 @@ export async function transformChannelMetafieldsToStoreConfig(bcStoreConfig: BC_
     }
 
     if(metafields) {
-        const categoryUrl: Maybe<BC_MetafieldEdge> | undefined = metafields.find(node => {
-            return node ? node.node.key === 'category_url_suffix': null;
-        });
-        const gridPerPage: Maybe<BC_MetafieldEdge> | undefined = metafields.find(node => {
-            return node ? node.node.key === 'grid_per_page': null;
-        });
+        const categoryUrl: string = findMetafieldValueByKey(metafields, 'category_url_suffix');
+        const gridPerPage: string = findMetafieldValueByKey(metafields, 'grid_per_page');
+
         //Add more metafields as required here. Metafields need to be added to bigcommerce manually first.
 
-        storeConfigTransformed.category_url_suffix = categoryUrl?.node?.value;
-        storeConfigTransformed.grid_per_page =  parseInt(gridPerPage ? gridPerPage.node?.value: '24'); // default set to 24
+        storeConfigTransformed.category_url_suffix = categoryUrl;
+        storeConfigTransformed.grid_per_page =  parseInt((gridPerPage !== '') ? gridPerPage: '24'); // default set to 24
     }
 
     return storeConfigTransformed;
+}
+
+export function findMetafieldValueByKey(metafields: Maybe<BC_MetafieldEdge>[], metafieldKey: string): string {
+    const metafieldValue = metafields.find(node => {
+        return node?.node.key === metafieldKey;
+    });
+    return metafieldValue ? metafieldValue.node?.value : '';
 }
