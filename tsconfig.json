@@ -21,8 +21,9 @@
         "skipLibCheck": true,
         "typeRoots": ["./node_modules/@types"]
     },
-    "include": ["./src/**/*.ts", "./tests/**/*.ts"],
     "exclude": [
-        "node_modules/**/*"
+        "node_modules/**/*",
+        "docker/**/*",
+        "lambda/**/*"
     ]
 }
