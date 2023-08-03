@@ -7,6 +7,7 @@ import { changeCustomerPasswordResolver } from './mutations/change-customer-pass
 import { createCustomerResolver } from './mutations/create-customer';
 import { createCustomerAddressResolver } from './mutations/create-customer-address';
 import { createEmptyCartResolver } from './mutations/create-empty-cart';
+import { deleteCustomerAddressResolver } from './mutations/delete-customer-address';
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
@@ -54,6 +55,7 @@ const resolvers: Resolvers = {
         createCustomer: createCustomerResolver,
         createCustomerAddress: createCustomerAddressResolver,
         createEmptyCart: createEmptyCartResolver,
+        deleteCustomerAddress: deleteCustomerAddressResolver,
         generateCustomerToken: generateCustomerTokenResolver,
         mergeCarts: mergeCartsResolver,
         removeItemFromCart: removeItemFromCartResolver,
