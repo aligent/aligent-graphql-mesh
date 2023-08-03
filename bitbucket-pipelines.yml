@@ -2,17 +2,50 @@ image: node:18
 
 definitions:
   steps:
+    - step: &install
+      name: 🧶 Install
+      script:
+        - yarn install
+
     - step: &test
-        name: Test
+        name: ⚙️ Test
         script:
           - FORCE_COLOR=true
-          - yarn install
-          - yarn build
+          - yarn test
+
+    - step: &code-quality
+        name: 🕵️‍♀️ Code Quality
+        script:
+          - FORCE_COLOR=true
           - yarn lint
           - yarn check-types
-          - yarn test
+
+    - step: &build-docker
+        name: 🏗️ Build Docker Container
+        script:
+          - yarn build:docker
+
+    - step: &deploy
+      name: 📦 Push to ECR
+      script:
+        - pipe: atlassian/aws-ecr-push-image:2.0.0
+          variables:
+            IMAGE_NAME: ${IMAGE_NAME}
 
 pipelines:
   pull-requests:
     '**':
-      - step: *test
+      - step: *install
+      - parallel:
+        - steps:
+          - step: *build-docker
+          - step: *code-quality
+          - step: *test
+
+  branches:
+    main:
+      - step: *install
+      - parallel:
+        - steps:
+          - step: *build-docker
+          - step: *deploy
