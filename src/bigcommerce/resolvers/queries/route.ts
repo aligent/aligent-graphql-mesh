@@ -3,7 +3,7 @@ import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../requests/bc-graphql-calls';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products.data';
-import { QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
+import { BC_Product, QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
 import { Category } from '../../types';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
@@ -45,7 +45,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
     }
 
     if (__typename === 'Product') {
-        const transformedProductData = getTransformedProductData(data);
+        const transformedProductData = getTransformedProductData((data as unknown) as BC_Product);
         return {
             type: 'PRODUCT',
             redirect_code: 0,

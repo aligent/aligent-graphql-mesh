@@ -34,8 +34,7 @@ export const getTransformedProductData = (
     bcProduct: BC_Product
 ): Maybe<ProductInterface | ConfigurableProduct> => {
     if (!bcProduct) return null;
-    console.dir(bcProduct);
-    console.dir(JSON.stringify(bcProduct.images));
+
     try {
         const {
             availabilityV2,
