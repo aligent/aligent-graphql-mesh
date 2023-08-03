@@ -22,7 +22,14 @@ definitions:
           - yarn lint
           - yarn check-types
 
-    - step: &build-docker
+    - step: &build
+        name: 🏭 Build Mesh
+        script:
+          - yarn build
+        artifacts:
+          - src/meshrc/.mesh/**
+
+    - step: &build-container
         name: 🏗️ Build Docker Container
         script:
           - yarn build:docker
@@ -42,14 +49,15 @@ pipelines:
   pull-requests:
     '**':
       - step: *install
+      - step: *build
       - parallel:
-        - step: *build-docker
+        - step: *build-container
         - step: *code-quality
         - step: *test
 
   branches:
     main:
       - step: *install
-      - parallel:
-        - step: *build-docker
-        - step: *deploy
+      - step: *build
+      - step: *build-container
+      - step: *deploy
