@@ -6,4 +6,10 @@ sources:
 additionalResolvers:
   - '../bigcommerce/resolvers/resolver-definitions'
 
+additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins.ts'
+
+codegen:
+  contextType: ../types#GraphQlContext
+
 serve: !include serve-config.yml
+#cache: !include cache-config.yml

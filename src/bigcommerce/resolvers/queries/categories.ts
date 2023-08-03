@@ -3,7 +3,7 @@ import { getCategories } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
 import { QueryResolvers } from '../../../meshrc/.mesh';
 
-export const categoriesResolver: QueryResolvers['categories']= {
+export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, _context, _info) => {
         /*
          * AC has a default category of "2" set for the mega menu.
