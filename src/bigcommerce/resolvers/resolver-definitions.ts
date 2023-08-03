@@ -28,6 +28,7 @@ import { customerResolver } from './queries/customer';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { isEmailAvailableResolver } from './queries/is-email-available';
 import { keyMessagesResolver } from './queries/key-messages';
+import { productReviewRatingsMetadataResolver } from './queries/product-review-ratings-metadata';
 import { productsResolver } from './queries/products';
 import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
@@ -45,6 +46,7 @@ const resolvers: Resolvers = {
         getSocialLinks: getSocialLinksResolver,
         isEmailAvailable: isEmailAvailableResolver,
         keyMessages: keyMessagesResolver,
+        productReviewRatingsMetadata: productReviewRatingsMetadataResolver,
         products: productsResolver,
         route: routeResolver,
         storeConfig: storeConfigResolver,
