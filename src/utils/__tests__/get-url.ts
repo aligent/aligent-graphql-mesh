@@ -1,4 +1,4 @@
-import { getNewUrl } from '../get-url';
+import { CONST__INVALID_NEW_URL, getNewUrl } from '../get-url';
 
 describe('get-url', () => {
     test('returns a url object', () => {
@@ -25,6 +25,6 @@ describe('get-url', () => {
     test('returns null for an invalid url', () => {
         const newUrl = getNewUrl('www.aligent.mybigcommerce.com/mona-pullover-hoodlie/');
 
-        expect(newUrl).toEqual(null);
+        expect(newUrl).toEqual(CONST__INVALID_NEW_URL);
     });
 });
