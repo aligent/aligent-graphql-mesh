@@ -9,9 +9,7 @@ import { getTransformedPrice } from './transform-price';
 
 export const getTransformedAvailableShippingMethod = (
     shippingOption: BC_CheckoutAvailableShippingOption | BC_CheckoutSelectedShippingOption
-): Maybe<AvailableShippingMethod> => {
-    if (!shippingOption) return null;
-
+): AvailableShippingMethod => {
     const { type, entityId, description, cost } = shippingOption;
     return {
         amount: getTransformedPrice(cost),
@@ -35,7 +33,6 @@ export const getTransformedAvailableShippingMethods = (
     if (!availableShippingOptions) return null;
 
     return availableShippingOptions.map(availableShippingOption => {
-        if (!availableShippingOption) return null;
         return getTransformedAvailableShippingMethod(availableShippingOption);
     });
 };
@@ -47,7 +44,6 @@ export const getTransformedSelectedShippingOption = (
 
     const transformedShippingMethod = getTransformedAvailableShippingMethod(selectedShippingOption);
 
-    if (!transformedShippingMethod) return null;
     return {
         ...transformedShippingMethod,
         method_code: selectedShippingOption.entityId,

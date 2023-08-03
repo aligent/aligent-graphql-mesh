@@ -89,7 +89,7 @@ export const getTransformCartItems = (
                 rating_summary: 0,
                 review_count: 0,
                 stock_status: 'IN_STOCK', // @todo if required might need more data from another product api
-                url_key: getNewUrl(url)?.pathname,
+                url_key: getNewUrl(url).pathname,
                 url_suffix: '', // BC doesn't use suffix
                 custom_attributes: [],
                 reviews: {

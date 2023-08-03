@@ -1,5 +1,3 @@
-import { getTransformedAddress } from '../transform-address';
-import { BC_CheckoutAddressCheckboxesCustomField } from '../../../../meshrc/.mesh';
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
 import { getTransformedCartPrices } from '../transform-cart-prices';
 
@@ -51,5 +49,29 @@ describe('transform-prices', () => {
         expect(
             getTransformedCartPrices({ coupons, grandTotal, subtotal, taxes, taxTotal })
         ).toEqual(expect.objectContaining(expectResult));
+    });
+
+    it(`handles nullish cart prices`, () => {
+        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
+
+        expect(
+            getTransformedCartPrices({
+                coupons: [],
+                grandTotal: null,
+                subtotal: null,
+                taxes: null,
+                taxTotal: null,
+            })
+        ).toEqual(
+            expect.objectContaining({
+                applied_taxes: null,
+                discounts: [],
+                grand_total: null,
+                subtotal_excluding_tax: null,
+                subtotal_including_tax: null,
+                subtotal_with_discount_including_tax: { value: 0 },
+                subtotal_with_discount_excluding_tax: { value: 0 },
+            })
+        );
     });
 });

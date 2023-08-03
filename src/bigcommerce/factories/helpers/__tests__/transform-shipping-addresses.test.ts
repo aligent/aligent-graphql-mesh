@@ -1,5 +1,4 @@
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
-import { getTransformCartItems } from '../transform-cart-items';
 import { getTransformedShippingAddresses } from '../transform-shipping-addresses';
 
 const expectResult = [
@@ -84,9 +83,7 @@ describe('transform-shipping-address', () => {
         ).toEqual(expect.objectContaining(expectResult));
     });
 
-    it(`returns "null" if there's no cart`, () => {
-        const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
-
-        expect(getTransformCartItems(null)).toEqual(expect.objectContaining(null));
+    it(`returns an empty array if there's no shippingConsignments`, () => {
+        expect(getTransformedShippingAddresses(null)).toEqual([]);
     });
 });

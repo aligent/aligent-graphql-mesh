@@ -3,7 +3,7 @@ import { BC_Checkout, Cart, Maybe } from '../../meshrc/.mesh';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
-import { getTransformedAddress } from './helpers/transform-address';
+import { getTransformedBillingAddress } from './helpers/transform-address';
 
 export const getTransformedCartData = (checkoutData: Maybe<BC_Checkout>): Maybe<Cart> => {
     if (!checkoutData) return null;
@@ -40,7 +40,7 @@ export const getTransformedCartData = (checkoutData: Maybe<BC_Checkout>): Maybe<
             },
         },
         prices: getTransformedCartPrices(checkoutData),
-        billing_address: getTransformedAddress(billingAddress),
+        billing_address: getTransformedBillingAddress(billingAddress),
         shipping_addresses: getTransformedShippingAddresses(shippingConsignments, customerMessage),
         available_gift_wrappings: [],
         gift_receipt_included: false,

@@ -20,7 +20,6 @@ export const getTransformedShippingAddresses = (
 
     return shippingConsignments.map(
         (shippingConsignment: BC_CheckoutShippingConsignment): Maybe<ShippingCartAddress> => {
-            if (!shippingConsignment) return null;
             const {
                 selectedShippingOption,
                 entityId,
@@ -29,8 +28,6 @@ export const getTransformedShippingAddresses = (
             } = shippingConsignment;
 
             const transformedAddress = getTransformedAddress(address);
-
-            if (!transformedAddress) return null;
 
             return {
                 ...transformedAddress,

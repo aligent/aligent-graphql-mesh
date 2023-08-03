@@ -1,14 +1,14 @@
 import {
     BC_CheckoutBillingAddress,
     BC_CheckoutConsignmentAddress,
+    BillingCartAddress,
     Maybe,
     ShippingCartAddress,
 } from '../../../meshrc/.mesh';
 
 export const getTransformedAddress = (
-    bcAddress?: Maybe<BC_CheckoutConsignmentAddress> | Maybe<BC_CheckoutBillingAddress>
-): Maybe<ShippingCartAddress> => {
-    if (!bcAddress) return null;
+    bcAddress: BC_CheckoutConsignmentAddress
+): ShippingCartAddress => {
     const {
         stateOrProvinceCode,
         stateOrProvince,
@@ -42,4 +42,11 @@ export const getTransformedAddress = (
         telephone: phone,
         uid: '',
     };
+};
+
+export const getTransformedBillingAddress = (
+    billingAddress?: Maybe<BC_CheckoutBillingAddress>
+): Maybe<BillingCartAddress> => {
+    if (!billingAddress) return null;
+    return getTransformedAddress(billingAddress);
 };
