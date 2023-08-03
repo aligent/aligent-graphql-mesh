@@ -10,6 +10,7 @@ import { createEmptyCartResolver } from './mutations/create-empty-cart';
 import { deleteCustomerAddressResolver } from './mutations/delete-customer-address';
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
+import { postContactFormResolver } from './mutations/post-contact-form';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
 import { reorderItemsResolver } from './mutations/reorder-items';
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
@@ -61,6 +62,7 @@ const resolvers: Resolvers = {
         deleteCustomerAddress: deleteCustomerAddressResolver,
         generateCustomerToken: generateCustomerTokenResolver,
         mergeCarts: mergeCartsResolver,
+        postContactForm: postContactFormResolver,
         removeItemFromCart: removeItemFromCartResolver,
         reorderItems: reorderItemsResolver,
         setGuestEmailOnCart: setGuestEmailOnCartResolver,
