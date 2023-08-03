@@ -1,0 +1,4 @@
+name: TakeFlightGraphqlApi
+handler:
+  graphql:
+    endpoint: '{env.TF_GRAPHQL_API}'
