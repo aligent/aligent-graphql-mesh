@@ -5,6 +5,7 @@ import { applyCouponToCartResolver } from './mutations/apply-coupon-to-cart';
 import { applyGiftCardToCartResolver } from './mutations/apply-gift-card-to-cart';
 import { changeCustomerPasswordResolver } from './mutations/change-customer-password';
 import { createCustomerResolver } from './mutations/create-customer';
+import { createCustomerAddressResolver } from './mutations/create-customer-address';
 import { createEmptyCartResolver } from './mutations/create-empty-cart';
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
@@ -49,6 +50,7 @@ const resolvers: Resolvers = {
         applyGiftCardToCart: applyGiftCardToCartResolver,
         changeCustomerPassword: changeCustomerPasswordResolver,
         createCustomer: createCustomerResolver,
+        createCustomerAddress: createCustomerAddressResolver,
         createEmptyCart: createEmptyCartResolver,
         generateCustomerToken: generateCustomerTokenResolver,
         mergeCarts: mergeCartsResolver,
