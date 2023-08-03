@@ -14,6 +14,7 @@ import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart
 import { subscribeEmailToNewsletterResolver } from './mutations/subscribe-email-to-newsletter';
 import { updateCartItemsResolver } from './mutations/update-cart-items';
 import { updateCustomerResolver } from './mutations/update-customer';
+import { updateCustomerAddressResolver } from './mutations/update-customer-address';
 import { cartResolver } from './queries/cart';
 import { categoriesResolver } from './queries/categories';
 import { cmsBlocksResolver } from './queries/cms-blocks';
@@ -60,6 +61,7 @@ const resolvers: Resolvers = {
         subscribeEmailToNewsletter: subscribeEmailToNewsletterResolver,
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
+        updateCustomerAddress: updateCustomerAddressResolver,
     },
 };
 
