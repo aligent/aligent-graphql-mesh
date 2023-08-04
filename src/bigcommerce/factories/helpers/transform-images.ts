@@ -27,20 +27,14 @@ export const getTransformedMediaGalleryEntries = (images: {
 }): Array<Maybe<MediaGalleryEntry>> => {
     if (!images?.edges || !images?.edges.length) return [];
 
-    return images?.edges.map((image, index) => {
-        if (!image) return null;
-        return getTransformedImage(image.node, index);
-    });
+    return images?.edges
+        .map((image, index) => {
+            if (!image) return null;
+            return getTransformedImage(image.node, index);
+        })
+        .filter(Boolean);
 };
 
-export const getTransformedSmallImage = (defaultImage?: Maybe<BC_Image>): Maybe<ProductImage> => {
-    if (!defaultImage)
-        return {
-            url: '',
-        };
-    const { url } = defaultImage;
-
-    return {
-        url,
-    };
-};
+export const getTransformedSmallImage = (defaultImage?: Maybe<BC_Image>): Maybe<ProductImage> => ({
+    url: defaultImage?.url || '',
+});

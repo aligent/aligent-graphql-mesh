@@ -16,7 +16,7 @@ describe('transform-image', () => {
         });
     });
 
-    it('values defaults to 0 if no price is defined', () => {
+    it('transforms bc product "image" data into a AC "media_gallery_entries" structure', () => {
         expect(getTransformedMediaGalleryEntries(mockBcProducts[0].images)).toEqual([
             {
                 disabled: false,
@@ -37,11 +37,8 @@ describe('transform-image', () => {
         ]);
     });
 
-    it(`returns an empty array if there's no bc product image`, () => {
+    it(`returns an empty array if there's no bc product images`, () => {
         expect(getTransformedMediaGalleryEntries({ edges: null })).toEqual([]);
-    });
-
-    it(`returns null in the images array if there are no images`, () => {
-        expect(getTransformedMediaGalleryEntries({ edges: [{} as BC_ImageEdge] })).toEqual([null]);
+        expect(getTransformedMediaGalleryEntries({ edges: [{} as BC_ImageEdge] })).toEqual([]);
     });
 });
