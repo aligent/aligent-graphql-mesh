@@ -35,22 +35,20 @@ definitions:
           - docker
         script:
           - yarn build:docker
+          - docker save mesh:latest | gzip > mesh_latest.tar.gz
         artifacts:
-          - src/meshrc/.mesh/**
-        caches:
-          - docker
+          - mesh_latest.tar.gz
 
     - step: &deploy
         name: 📦 Push to ECR
         services:
           - docker
         script:
+          - docker load --input mesh_latest.tar.gz
           - docker tag mesh:latest ${IMAGE_NAME}:latest
           - pipe: atlassian/aws-ecr-push-image:2.0.0
             variables:
               IMAGE_NAME: ${IMAGE_NAME}
-        caches:
-          - docker
 
 pipelines:
   pull-requests:
