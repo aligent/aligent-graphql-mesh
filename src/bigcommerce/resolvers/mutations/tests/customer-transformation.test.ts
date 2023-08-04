@@ -1,4 +1,4 @@
-import { transformCustomerData } from '../../../factories/transform-customers-data';
+import { transformCustomerData } from '../create-customer';
 import { bcCustomerCreated } from './__data__/customer-input-data';
 import { transformedCreatedCustomer } from './__data__/customer-transformed-data';
 
