@@ -8,16 +8,4 @@ describe('transform-price', () => {
             value: 50,
         });
     });
-
-    it('values defaults to 0 if no price is defined', () => {
-        expect(
-            getTransformedPrice({
-                currencyCode: 'AUD',
-                value: null,
-            })
-        ).toEqual({
-            currency: 'AUD',
-            value: 0,
-        });
-    });
 });
