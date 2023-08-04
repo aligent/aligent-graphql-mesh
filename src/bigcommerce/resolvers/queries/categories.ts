@@ -1,5 +1,5 @@
 import { atob } from '../../../utils';
-import { getCategories } from '../requests/bc-graphql-calls';
+import { getCategories } from '../../apis/graphql/categories';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { QueryResolvers } from '../../../meshrc/.mesh';
 

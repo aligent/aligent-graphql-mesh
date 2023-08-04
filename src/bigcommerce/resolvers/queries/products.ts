@@ -3,7 +3,8 @@ import {
     getTransformedProductData,
     getTransformedProductsData,
 } from '../../factories/transform-products-data';
-import { getBcProductByPathGraphql, getBcProductsGraphql } from '../requests/bc-graphql-calls';
+import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
+import { getBcProductGraphql } from '../../apis/graphql/product';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Maybe<Products>> => {
@@ -31,7 +32,7 @@ export const productsResolver: QueryResolvers['products'] = {
               }
             : {};
 
-        const bcProducts = await getBcProductsGraphql(filters, customerImpersonationToken);
+        const bcProducts = await getBcProductGraphql(filters, customerImpersonationToken);
         return getTransformedProductsData(bcProducts);
     },
 };

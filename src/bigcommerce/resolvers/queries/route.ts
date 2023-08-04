@@ -1,6 +1,6 @@
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
-import { getRoute } from '../requests/bc-graphql-calls';
+import { getRoute } from '../../apis/graphql/route';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
 import { BC_Product, QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
