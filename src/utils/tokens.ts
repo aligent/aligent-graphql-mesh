@@ -39,7 +39,7 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number | null =
 
         if (!decodedMeshToken?.bc_customer_id) return null;
 
-        return decodedMeshToken?.bc_customer_id;
+        return decodedMeshToken.bc_customer_id;
     } catch {
         return null;
     }
