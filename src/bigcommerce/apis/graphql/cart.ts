@@ -1,11 +1,9 @@
 import { bcGraphQlRequest } from './client';
 import { checkout } from './requests/checkout';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-
-export const getCart = async (entityId: string) => {
+export const getCart = async (entityId: string, customerImpersonationToken: string) => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const checkoutQuery = {
