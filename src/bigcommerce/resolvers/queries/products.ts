@@ -2,7 +2,7 @@ import { Maybe, Products, QueryResolvers } from '../../../meshrc/.mesh';
 import {
     getTransformedProductData,
     getTransformedProductsData,
-} from '../../factories/transform-products.data';
+} from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql, getBcProductsGraphql } from '../requests/bc-graphql-calls';
 
 export const productsResolver: QueryResolvers['products'] = {

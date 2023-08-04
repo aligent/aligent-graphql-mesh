@@ -92,7 +92,7 @@ export const getTransformedProductData = (
 };
 
 export const getTransformedProductsData = (bcProducts: BC_ProductConnection): Maybe<Products> => {
-    const { collectionInfo, edges, pageInfo } = bcProducts;
+    const { collectionInfo, edges } = bcProducts;
 
     return {
         // @todo get "aggregations/filters" from site.search.productSearch when following up for category products
@@ -103,6 +103,7 @@ export const getTransformedProductsData = (bcProducts: BC_ProductConnection): Ma
                   return getTransformedProductData(product.node);
               })
             : null,
+        // @todo add pagination for category products
         page_info: {
             current_page: 0,
             page_size: 0,

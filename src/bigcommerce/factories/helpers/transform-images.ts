@@ -1,6 +1,5 @@
 import {
     BC_Image,
-    BC_ImageConnection,
     BC_ImageEdge,
     Maybe,
     MediaGalleryEntry,

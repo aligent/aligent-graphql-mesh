@@ -1,4 +1,4 @@
-import { getTransformedProductData } from '../transform-products.data';
+import { getTransformedProductData } from '../transform-products-data';
 import {
     BC_RelatedProductsConnection,
     BC_RelatedProductsEdge,

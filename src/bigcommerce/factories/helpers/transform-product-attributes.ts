@@ -1,9 +1,4 @@
-import {
-    BC_OptionConnection,
-    BC_OptionEdge,
-    ConfigurableAttributeOption,
-    Maybe,
-} from '../../../meshrc/.mesh';
+import { BC_OptionEdge, ConfigurableAttributeOption, Maybe } from '../../../meshrc/.mesh';
 import { btoa } from '../../../utils';
 
 export const getTransformedProductsAttributes = (options: {
@@ -14,7 +9,7 @@ export const getTransformedProductsAttributes = (options: {
     const optionsResult = options.edges
         .map(option => {
             if (!option?.node) return null;
-            const { entityId: optionEntityId, displayName, values } = option.node;
+            const { displayName, values } = option.node;
 
             if (!values?.edges?.[0]?.node) return null;
             const { entityId: valueEntityId, label } = values.edges[0].node;
