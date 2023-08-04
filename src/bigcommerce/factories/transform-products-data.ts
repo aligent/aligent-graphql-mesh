@@ -19,6 +19,7 @@ import { getTransformedConfigurableOptions } from './helpers/transform-configura
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
 import { productsMock } from '../resolvers/mocks/products';
+import { logAndThrowError } from '../../utils/error-handling';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
@@ -30,7 +31,6 @@ export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'Configura
     }
 };
 
-// VirtualProduct' | 'SimpleProduct' | 'DownloadableProduct' | 'BundleProduct' | 'GroupedProduct' | 'ConfigurableProduct' | 'GiftCardProduct'
 export const getTransformedProductData = (
     bcProduct: BC_Product
 ): Maybe<ProductInterface | ConfigurableProduct> => {
@@ -85,9 +85,9 @@ export const getTransformedProductData = (
             // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
             __typename: getTypeName(bcProduct),
         };
-    } catch (e) {
-        console.error(e);
-        throw new Error(JSON.stringify(e));
+    } catch (error) {
+        logAndThrowError(error as Error);
+        return null;
     }
 };
 
