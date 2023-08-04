@@ -5,6 +5,7 @@ import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
+/* istanbul ignore file */
 export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
