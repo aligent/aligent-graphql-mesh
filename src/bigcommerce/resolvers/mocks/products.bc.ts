@@ -112,22 +112,9 @@ export const mockBcProducts = [
         reviews: {
             edges: [
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                     node: {
                         entityId: 4,
-                        author: {
-                            name: 'John',
-                        },
-                        title: 'Great product',
-                        text: 'I want more of this',
-                        rating: 5,
-                        createdAt: {
-                            utc: '2019-08-24T14:15:22Z',
-                        },
-                    },
-                },
-                {
-                    node: {
-                        entityId: 5,
                         author: {
                             name: 'John',
                         },

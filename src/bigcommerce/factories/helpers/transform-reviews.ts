@@ -28,10 +28,12 @@ export const getTransformedReview = (review: BC_Review): Maybe<ProductReview> =>
 
 export const getTransformedReviews = (reviews: BC_ReviewConnection): ProductReviews => {
     const reviewItems = reviews.edges
-        ? reviews.edges.map(review => {
-              if (!review?.node) return null;
-              return getTransformedReview(review.node);
-          })
+        ? reviews.edges
+              .map(review => {
+                  if (!review?.node) return null;
+                  return getTransformedReview(review.node);
+              })
+              .filter(Boolean)
         : [];
 
     /*
