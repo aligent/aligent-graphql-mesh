@@ -26,6 +26,6 @@ export const logAndThrowError = (error: Error, context?: Record<string, string>)
     }
 
     const message = logMessages.join('\n')
-    console.log(logMessages);
+    console.log(message);
     throw new Error(userMessage);
 }

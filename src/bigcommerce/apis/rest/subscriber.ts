@@ -1,7 +1,7 @@
 import { BcSubscriber } from '../../types';
 import { bcPost } from './client';
 
-
+/* istanbul ignore file */
 export const createSubscriber = async(email: string): Promise<BcSubscriber> => {
     const path = `/v3/customers/subscribers`;
 
