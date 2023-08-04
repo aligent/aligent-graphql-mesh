@@ -82,7 +82,7 @@ export const getTransformedProductData = (
             url_suffix: '',
             reviews: getTransformedReviews(reviews),
             variants: getTransformedVariants(bcVariants),
-            // @ts-ignore this isn't included in the product prop types but is needed to prevent graphql from complaining
+            // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
             __typename: getTypeName(bcProduct),
         };
     } catch (e) {
