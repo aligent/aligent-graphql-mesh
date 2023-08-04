@@ -10,7 +10,7 @@ export const createSubscriber = async(email: string): Promise<BcSubscriber> => {
     }
 
     const response = await bcPost(path, data);
-    console.log(JSON.stringify(response.data));
+    console.log('Subscriber added: ' + JSON.stringify(response.data));
 
-    return response;
+    return response.data;
 }

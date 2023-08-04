@@ -18,7 +18,6 @@ export const logAndThrowError = (error: Error, context?: Record<string, string>)
 
     let userMessage = "Unknown Server Error";
     if (isAxiosError(error)) {
-        userMessage = JSON.stringify(error?.response);
         if(error.response?.data?.title) {
             userMessage = error.response.data.title;
         }
