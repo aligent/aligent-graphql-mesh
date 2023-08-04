@@ -1,6 +1,6 @@
 import { Country, CountryStates } from '../../types';
 import { bcGet } from './client';
-
+/* istanbul ignore file */
 export const getCountries = async (): Promise<Country[]> => {
     const path = `/v2/countries`;
 

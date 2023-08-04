@@ -1,9 +1,9 @@
 import { transformCustomerData } from '../../../factories/transform-customers-data';
-import { transformedCreatedCustomer } from './__data__/countries-transformed-data';
 import { bcCustomerCreated } from './__data__/customer-input-data';
+import { transformedCreatedCustomer } from './__data__/customer-transformed-data';
 
 describe('Create customer data transform tests', () => {
-    test('return transformed customer', () => {
+    test('return transformed customer after being created', () => {
         const inputBcCustomerCreated = bcCustomerCreated;
         const inputTransformedCreatedCustomer = transformedCreatedCustomer;
 

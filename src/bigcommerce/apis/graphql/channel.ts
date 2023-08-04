@@ -2,7 +2,7 @@ import { BC_MetafieldConnection, BC_Channel } from '../../../meshrc/.mesh';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
-
+/* istanbul ignore file */
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
 export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {

@@ -47,20 +47,3 @@ export const transformedCountries = {
     two_letter_abbreviation: 'AU',
     available_regions: transformedStates,
 };
-
-export const transformedCreatedCustomer = {
-    id: 19,
-    allow_remote_shopping_assistance: true,
-    reviews: {
-        items: [],
-        page_info: {
-            current_page: null,
-            page_size: null,
-            total_pages: null,
-        },
-    },
-    wishlists: [],
-    wishlist: {
-        visibility: 'PRIVATE',
-    },
-};
