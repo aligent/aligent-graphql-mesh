@@ -1,4 +1,4 @@
-import { logAndThrowError } from '../bigcommerce/resolvers/error-handling';
+import { logAndThrowError } from './error-handling';
 import { JwtPayload, decode, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
 

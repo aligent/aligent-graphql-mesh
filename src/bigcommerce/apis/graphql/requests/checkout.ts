@@ -1,8 +1,8 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { cartDetails } from './fragments/cartDetails';
-import { money } from './fragments/money';
+import { cartDetails } from '../fragments/cartDetails';
+import { money } from '../fragments/money';
 
 export const checkout = stripIgnoredCharacters(
     print(gql`

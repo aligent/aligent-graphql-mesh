@@ -1,7 +1,7 @@
 import { MutationResolvers } from '../../../meshrc/.mesh';
 import { transformCustomerData } from '../../factories/transform-customers-data';
-import { logAndThrowError } from '../error-handling';
-import { createCustomer } from '../requests/bc-rest-calls';
+import { logAndThrowError } from '../../../utils/error-handling';
+import { createCustomer } from '../../apis/rest/customer';
 
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {
     resolve: async (_root, args, _context, _info) => {

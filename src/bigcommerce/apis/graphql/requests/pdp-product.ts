@@ -1,7 +1,7 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { ProductsDetails } from './fragments/productDetails';
+import { ProductsDetails } from '../fragments/productDetails';
 
 export const getPdpProductQuery = stripIgnoredCharacters(
     print(gql`
