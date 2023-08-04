@@ -3,7 +3,6 @@ import { bcPost } from './client';
 
 
 export const createSubscriber = async(email: string): Promise<BcSubscriber> => {
-    console.log('In createSubscriber');
     const path = `/v3/customers/subscribers`;
 
     const data = {
