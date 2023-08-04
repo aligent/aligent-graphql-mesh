@@ -25,7 +25,7 @@ definitions:
     - step: &build
         name: 🏭 Build Mesh
         script:
-          - yarn build
+          - STAGE=prod yarn build
         artifacts:
           - src/meshrc/.mesh/**
 

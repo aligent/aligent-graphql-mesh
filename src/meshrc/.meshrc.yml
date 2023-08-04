@@ -11,5 +11,5 @@ additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins.ts'
 codegen:
   contextType: ../types#GraphQlContext
 
-serve: !include serve-config.yml
-#cache: !include cache-config.yml
+serve: !include '${STAGE}/serve.yml'
+cache: !include '${STAGE}/cache.yml'
