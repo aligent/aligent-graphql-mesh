@@ -1,8 +1,8 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { ProductsDetails } from './fragments/productDetails';
-import { seoDetails } from './fragments/seoDetails';
+import { ProductsDetails } from '../fragments/productDetails';
+import { seoDetails } from '../fragments/seoDetails';
 
 export const getRouteQuery = stripIgnoredCharacters(
     print(gql`

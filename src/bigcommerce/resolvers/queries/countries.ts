@@ -1,6 +1,6 @@
 import { QueryResolvers } from '../../../meshrc/.mesh';
+import { getCountries, getCountriesStates } from '../../apis/rest/countries';
 import { Country, CountryStates } from '../../types';
-import { getCountries, getCountriesStates } from '../requests/bc-rest-calls';
 
 /* istanbul ignore next */
 export const countriesResolver: QueryResolvers['countries'] = {

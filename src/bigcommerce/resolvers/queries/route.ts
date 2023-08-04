@@ -1,9 +1,9 @@
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
-import { getRoute } from '../requests/bc-graphql-calls';
 import { getTransformedCategoriesData } from '../../factories/transform-category-data';
 import { QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
 import { Category } from '../../types';
+import { getRoute } from '../../apis/graphql/route';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
     const { __typename } = data;

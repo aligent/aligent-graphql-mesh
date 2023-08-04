@@ -1,7 +1,7 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { categoryTreeItem } from './fragments/categoryTreeItem';
+import { categoryTreeItem } from '../fragments/categoryTreeItem';
 
 export const getCategoryTreeQuery = stripIgnoredCharacters(
     print(gql`

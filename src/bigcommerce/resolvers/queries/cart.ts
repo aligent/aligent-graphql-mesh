@@ -1,5 +1,6 @@
 import { Cart, Maybe, QueryResolvers } from '../../../meshrc/.mesh';
-import { getCart } from '../requests/bc-graphql-calls';
+import { getCart } from '../../apis/graphql/cart';
+
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const cartResolver: QueryResolvers['cart'] = {

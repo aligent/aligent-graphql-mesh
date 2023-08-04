@@ -1,4 +1,3 @@
-import { getChannelMetafields } from '../requests/bc-graphql-calls';
 import {
     BC_MetafieldConnection,
     BC_MetafieldEdge,
@@ -6,6 +5,7 @@ import {
     QueryResolvers,
     StoreConfig,
 } from '../../../meshrc/.mesh';
+import { getChannelMetafields } from '../../apis/graphql/channel';
 
 const NAMESPACE: string = 'pwa_config';
 
