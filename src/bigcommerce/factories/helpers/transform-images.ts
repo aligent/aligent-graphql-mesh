@@ -8,7 +8,7 @@ import {
 } from '../../../meshrc/.mesh';
 
 export const getTransformedImage = (
-    image: Maybe<BC_Image>,
+    image?: Maybe<BC_Image>,
     position?: number | undefined
 ): Maybe<MediaGalleryEntry> => {
     if (!image) return null;

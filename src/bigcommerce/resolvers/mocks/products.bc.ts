@@ -1,3 +1,5 @@
+import { BC_MetafieldConnection, BC_PageInfo } from '../../../meshrc/.mesh';
+
 export const mockBcProducts = [
     {
         __typename: 'Product',
@@ -454,6 +456,7 @@ export const mockBcProducts = [
                             altText: '',
                             isDefault: true,
                         },
+                        metafields: {} as BC_MetafieldConnection,
                         prices: {
                             basePrice: {
                                 currencyCode: 'AUD',
@@ -546,6 +549,7 @@ export const mockBcProducts = [
                         productOptions: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 148,
                                         displayName: 'Color',
@@ -563,10 +567,12 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -576,6 +582,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 184,
                                                         label: 'S',
@@ -583,10 +590,12 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         inventory: {
                             isInStock: true,
@@ -595,6 +604,7 @@ export const mockBcProducts = [
                     },
                 },
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
                         id: 'VmFyaWFudDo1MTQ=',
                         entityId: 514,
@@ -636,7 +646,9 @@ export const mockBcProducts = [
                         options: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 148,
                                         displayName: 'Color',
                                         values: {
@@ -649,11 +661,14 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 149,
                                         displayName: 'Size',
                                         values: {
@@ -666,14 +681,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         productOptions: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 148,
                                         displayName: 'Color',
@@ -683,6 +701,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 182,
                                                         label: 'Green',
@@ -691,10 +710,12 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -711,18 +732,22 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         inventory: {
                             isInStock: true,
                         },
                         isPurchasable: true,
+                        metafields: {} as BC_MetafieldConnection,
                     },
                 },
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
                         id: 'VmFyaWFudDo1MTU=',
                         entityId: 515,
@@ -767,7 +792,9 @@ export const mockBcProducts = [
                         options: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 148,
                                         displayName: 'Color',
                                         values: {
@@ -780,11 +807,14 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 149,
                                         displayName: 'Size',
                                         values: {
@@ -797,14 +827,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         productOptions: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 148,
                                         displayName: 'Color',
@@ -814,6 +847,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 183,
                                                         label: 'Purple',
@@ -822,10 +856,12 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -835,6 +871,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 184,
                                                         label: 'S',
@@ -842,18 +879,22 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         inventory: {
                             isInStock: true,
                         },
                         isPurchasable: true,
+                        metafields: {} as BC_MetafieldConnection,
                     },
                 },
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
                         id: 'VmFyaWFudDo1MTY=',
                         entityId: 516,
@@ -895,7 +936,9 @@ export const mockBcProducts = [
                         options: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 148,
                                         displayName: 'Color',
                                         values: {
@@ -908,11 +951,14 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 149,
                                         displayName: 'Size',
                                         values: {
@@ -925,14 +971,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         productOptions: {
                             edges: [
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 148,
                                         displayName: 'Color',
@@ -950,10 +999,12 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -963,6 +1014,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 185,
                                                         label: 'M',
@@ -970,15 +1022,18 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
+                                            pageInfo: {} as BC_PageInfo,
                                         },
                                     },
                                 },
                             ],
+                            pageInfo: {} as BC_PageInfo,
                         },
                         inventory: {
                             isInStock: true,
                         },
                         isPurchasable: true,
+                        metafields: {} as BC_MetafieldConnection,
                     },
                 },
             ],
