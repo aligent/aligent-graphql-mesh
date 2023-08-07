@@ -1,0 +1,12 @@
+sslCredentials:
+  key: 'cert.key'
+  cert: 'cert.crt'
+cors:
+  origin:
+    - 'https://aligent-web-theme.local.pwadev:8128'
+    - 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud'
+  credentials: true
+port: 4000
+hostname: 0.0.0.0
+browser: false
+playground: true
