@@ -8,6 +8,7 @@ const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
     Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
 };
+
 export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
     const query = channelMetafieldsByNamespaceQuery(namespace);
 
