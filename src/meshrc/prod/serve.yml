@@ -1,0 +1,9 @@
+cors:
+  origin:
+    - 'https://aligent-web-theme.local.pwadev:8128'
+    - 'https://stgbigcommerce.pwa.aligent.com.au/'
+  credentials: true
+port: 4000
+hostname: api.bigcommerce.aligent.com.au
+browser: false
+playground: false
