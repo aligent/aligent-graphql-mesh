@@ -32,10 +32,7 @@ export const getDecodedMeshToken = (meshToken: string): MeshToken => {
  */
 export const getBcCustomerIdFromMeshToken = (meshToken: string): number | null => {
     try {
-        const decodedMeshToken = ((verify(
-            meshToken,
-            JWT_PRIVATE_KEY
-        ) as JwtPayload) as unknown) as MeshToken;
+        const decodedMeshToken = verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
 
         if (!decodedMeshToken?.bc_customer_id) return null;
 
