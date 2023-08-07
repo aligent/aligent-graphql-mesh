@@ -1,8 +1,8 @@
-import { BC_MetafieldConnection, BC_Channel, BC_SocialMediaLink } from '../../../meshrc/.mesh';
-import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
+import { BC_MetafieldConnection, BC_Channel, BC_SocialMediaLink } from '../../../meshrc/.mesh';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
 import { channelSocialLinks } from './requests/channel-social-links';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
