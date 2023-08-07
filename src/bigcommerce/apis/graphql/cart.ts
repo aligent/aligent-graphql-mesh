@@ -1,7 +1,5 @@
 import { bcGraphQlRequest } from './client';
 import { checkout } from './requests/checkout';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
-import { GraphQlContext } from '../../../meshrc/types';
 
 export const getCart = async (
     entityId: string,
