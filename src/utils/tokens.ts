@@ -20,7 +20,7 @@ export const getDecodedCustomerImpersonationToken = (
 
 export const getDecodedMeshToken = (meshToken: string): MeshToken => {
     try {
-        return ((verify(meshToken, JWT_PRIVATE_KEY) as JwtPayload) as unknown) as MeshToken;
+        return verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
     } catch (error) {
         return logAndThrowError(new Error(`mesh-token could not be decoded ${error}`));
     }
@@ -41,6 +41,7 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number | null =
 
         return decodedMeshToken.bc_customer_id;
     } catch {
+        console.error('"bc_customer_id" could not found in the mesh-token');
         return null;
     }
 };
