@@ -1,9 +1,10 @@
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
-import { getTransformedCategoriesData } from '../../factories/transform-category-data';
-import { QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
-import { Category } from '../../types';
 import { getRoute } from '../../apis/graphql/route';
+import { getTransformedCategoryData } from '../../factories/transform-category-data';
+import { getTransformedProductData } from '../../factories/transform-products-data';
+import { BC_Product, QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
+import { Category } from '../../types';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
     const { __typename } = data;
@@ -21,7 +22,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     if (__typename === 'Category') {
         return {
-            ...getTransformedCategoriesData(data as unknown as Category),
+            ...getTransformedCategoryData((data as unknown) as Category),
             type: 'CATEGORY',
         };
     }
@@ -32,7 +33,6 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
             // FIXME: CONTACT_PAGE is not a valid UrlRewriteEntityTypeEnum value
             // previously 'CONTACT_PAGE' - is this a Takeflight thing?
             type: 'CMS_PAGE',
-            redirect_code: 0,
             ...mockCmsPage,
         };
     }
@@ -40,22 +40,21 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
     if (__typename === 'NormalPage') {
         return {
             type: 'CMS_PAGE',
-            redirect_code: 0,
             ...mockCmsPage,
         };
     }
 
     if (__typename === 'Product') {
+        const transformedProductData = getTransformedProductData((data as unknown) as BC_Product);
         return {
             type: 'PRODUCT',
             redirect_code: 0,
-            ...productsMock.items[0],
+            ...transformedProductData,
         };
     }
 
     return {
         type: 'CMS_PAGE',
-        redirect_code: 0,
         ...mockCmsPage,
     };
 };
