@@ -5,9 +5,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "yarn start:dev",
-    "start:dev": "mesh dev --dir ./src/meshrc",
+    "start:dev": "STAGE=dev mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
-    "build": "mesh build --dir ./src/meshrc",
+    "build": "mesh build --throwOnInvalidConfiguration --dir ./src/meshrc",
     "build:docker": "docker build -f docker/Dockerfile -t mesh .",
     "test": "jest --coverage --passWithNoTests",
     "lint": "eslint --color . --ext .ts",

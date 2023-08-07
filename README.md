@@ -50,12 +50,7 @@ Adding the entry:
 127.0.0.1 mesh.local.pwadev
 ```
 
-7. Uncomment the dev hostname in `serve-config.yml`, and comment out the existing hostname
-
-Please don't commit this change. Unfortunately we need to do this in order to support production builds, while the
-environment variable approach isn't working
-
-8. Start the mesh server from project root (see section below: Using the Mesh)
+6. Start the mesh server from project root (see section below: Using the Mesh)
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
