@@ -1,7 +1,7 @@
 import { atob } from '../../../utils';
-import { getTransformedCategoriesData } from '../../factories/transform-category-data';
-import { QueryResolvers } from '../../../meshrc/.mesh';
 import { getCategories } from '../../apis/graphql/categories';
+import { getTransformedCategoryData } from '../../factories/transform-category-data';
+import { QueryResolvers } from '../../../meshrc/.mesh';
 
 export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, _context, _info) => {
@@ -17,7 +17,7 @@ export const categoriesResolver: QueryResolvers['categories'] = {
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,
         // the data returned will correspond to the first "categoryTree" item so merge them together.
         categoryTree[0] = { ...categoryTree[0], ...category };
-        const transformedData = categoryTree.map(getTransformedCategoriesData);
+        const transformedData = categoryTree.map(getTransformedCategoryData);
 
         return Number(atob(categoryUid)) === 2
             ? {
