@@ -6,7 +6,7 @@ import { getCategoryTreeQuery } from './requests/category-tree';
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
 export const getCategories = async (
-    rootEntityId: number
+    rootEntityId?: number | null
 ): Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
@@ -15,10 +15,7 @@ export const getCategories = async (
     const categoryTreeQuery = {
         query: getCategoryTreeQuery,
         variables: {
-            /* "2" is the root Category used in AC. If we receive 2 then treat
-                this as if were getting megamenu data.
-            */
-            rootEntityId: rootEntityId === 2 ? null : rootEntityId,
+            rootEntityId,
         },
     };
 
@@ -31,11 +28,13 @@ export const getCategories = async (
 
     const [categoryTreeResponse, categoryResponse] = await Promise.all([
         bcGraphQlRequest(categoryTreeQuery, headers),
-        bcGraphQlRequest(categoryQuery, headers),
+        /* Conditionally make a call to get "category" data if we have a "rootEntityId" as if we don't
+         * the "category" query will fail */
+        ...(rootEntityId ? [await bcGraphQlRequest(categoryQuery, headers)] : []),
     ]);
 
     return {
         categoryTree: categoryTreeResponse.data.site.categoryTree,
-        category: categoryResponse.data.site.category,
+        category: categoryResponse ? categoryResponse?.data.site?.category : {},
     };
 };

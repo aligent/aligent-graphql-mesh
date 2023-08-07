@@ -5,13 +5,9 @@ import { QueryResolvers } from '../../../meshrc/.mesh';
 
 export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, _context, _info) => {
-        /*
-         * AC has a default category of "2" set for the mega menu.
-         * If this happens wrap the received category content as if it's a child
-         * of a default category.
-         */
-        const categoryUid = args?.filters?.category_uid?.eq || '2';
-        const rootEntityId = Number(atob(categoryUid));
+        const categoryUid = args?.filters?.category_uid?.eq;
+        const rootEntityId =
+            categoryUid && categoryUid !== 'null' ? Number(atob(categoryUid)) : null;
         const { category, categoryTree } = await getCategories(rootEntityId);
 
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,
@@ -19,14 +15,16 @@ export const categoriesResolver: QueryResolvers['categories'] = {
         categoryTree[0] = { ...categoryTree[0], ...category };
         const transformedData = categoryTree.map(getTransformedCategoryData);
 
-        return Number(atob(categoryUid)) === 2
+        /* If there's no "rootEntityId" then the PWA is most likely asking for the mega menu category tree
+         * which doesn't require an id.*/
+        return !rootEntityId
             ? {
                   items: [
                       {
                           children: transformedData,
                           redirect_code: 0,
                           staged: false,
-                          uid: categoryUid,
+                          uid: 'null',
                       },
                   ],
               }
