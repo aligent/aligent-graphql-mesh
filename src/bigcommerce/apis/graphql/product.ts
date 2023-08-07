@@ -1,22 +1,20 @@
 import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
-import { getProductsQuery } from './requests/products';
-import { BC_ProductConnection, BC_SiteproductsArgs } from '../../../meshrc/.mesh';
+import { BC_ProductConnection, BC_SearchProductsFiltersInput } from '../../../meshrc/.mesh';
+import { getProductsSearchQuery } from './requests/product-search';
 
-export const getBcProductGraphql = async (
-    filters: BC_SiteproductsArgs,
+export const getBcProductsGraphql = async (
+    filters: BC_SearchProductsFiltersInput,
     customerImpersonationToken: string
 ): Promise<BC_ProductConnection> => {
-    const { ids } = filters;
-
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const productsQuery = {
-        query: getProductsQuery,
+        query: getProductsSearchQuery,
         variables: {
-            ids,
+            filters,
         },
     };
 
@@ -30,5 +28,5 @@ export const getBcProductGraphql = async (
         );
     }
 
-    return response.data.site.products;
+    return response.data.site.search.searchProducts.products;
 };
