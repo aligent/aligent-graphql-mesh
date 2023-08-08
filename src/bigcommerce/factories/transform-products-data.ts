@@ -19,7 +19,7 @@ import { getTransformedConfigurableOptions } from './helpers/transform-configura
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
 import { logAndThrowError } from '../../utils/error-handling';
-import { getTransformedProductAggregations } from './transform-product-aggregations';
+import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
 import { BC_SearchProductFilters } from '../types';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {

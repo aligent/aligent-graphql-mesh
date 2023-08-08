@@ -8,8 +8,8 @@ import {
     BC_PriceSearchFilter,
     BC_RatingSearchFilter,
     BC_ProductAttributeSearchFilterItemConnection,
-} from '../../meshrc/.mesh';
-import { BC_SearchProductFilters } from '../types';
+} from '../../../meshrc/.mesh/index';
+import { BC_SearchProductFilters } from '../../types';
 
 const getFilterInputType = (typename?: string): FilterTypeEnum => {
     if (typename === 'PriceSearchFilter') {
@@ -19,11 +19,11 @@ const getFilterInputType = (typename?: string): FilterTypeEnum => {
     return 'FilterEqualTypeInput';
 };
 
-const getTransformedAggregationOptions = (
+export const getTransformedAggregationOptions = (
     attributes: BC_ProductAttributeSearchFilterItemConnection,
     filterName: string
 ): Maybe<Array<Maybe<AggregationOption>>> => {
-    if (!filterName || attributes.edges?.length === 0) return null;
+    if (!filterName || attributes.edges?.length === 0) return [];
 
     const aggregationOptions = attributes?.edges
         ? attributes.edges
@@ -45,14 +45,31 @@ const getTransformedAggregationOptions = (
                   };
               })
               .filter(Boolean)
-        : null;
+        : [];
 
     return aggregationOptions;
 };
 
-const getAggregationsFromBrandFilter = (filter?: BC_BrandSearchFilter): Maybe<Aggregation> => {
-    if (!filter) return null;
+const getAggregationsFromProductAttributeSearchFilter = (
+    filter: BC_ProductAttributeSearchFilter
+): Maybe<Aggregation> => {
+    const { filterName, name, attributes } = filter;
 
+    const options = getTransformedAggregationOptions(attributes, filterName);
+
+    return {
+        attribute_code: name.toLowerCase(),
+        count: attributes?.edges ? attributes.edges.length : 0,
+        label: name,
+        options,
+        // @ts-expect-error: the AC proptypes don't handle the __typename
+        filterType: getFilterInputType(filter.__typename),
+    };
+};
+
+export const getAggregationsFromBrandFilter = (
+    filter: BC_BrandSearchFilter
+): Maybe<Aggregation> => {
     const { brands, name } = filter;
 
     const options = brands?.edges
@@ -69,7 +86,7 @@ const getAggregationsFromBrandFilter = (filter?: BC_BrandSearchFilter): Maybe<Ag
                   };
               })
               .filter(Boolean)
-        : null;
+        : [];
 
     return {
         attribute_code: name.toLowerCase(),
@@ -87,9 +104,7 @@ const getAggregationsFromBrandFilter = (filter?: BC_BrandSearchFilter): Maybe<Ag
  * based on providing a price range.
  * @param filter
  */
-const getAggregationsFromPriceFilter = (filter?: BC_PriceSearchFilter): Maybe<Aggregation> => {
-    if (!filter) return null;
-
+const getAggregationsFromPriceFilter = (filter: BC_PriceSearchFilter): Maybe<Aggregation> => {
     const { name } = filter;
 
     return {
@@ -102,28 +117,9 @@ const getAggregationsFromPriceFilter = (filter?: BC_PriceSearchFilter): Maybe<Ag
     };
 };
 
-const getAggregationsFromProductAttributeSearchFilter = (
-    filter?: BC_ProductAttributeSearchFilter
+export const getAggregationsFromRatingFilter = (
+    filter: BC_RatingSearchFilter
 ): Maybe<Aggregation> => {
-    if (!filter) return null;
-
-    const { filterName, name, attributes } = filter;
-
-    const options = getTransformedAggregationOptions(attributes, filterName);
-
-    return {
-        attribute_code: name.toLowerCase(),
-        count: attributes?.edges ? attributes.edges.length : 0,
-        label: name,
-        options,
-        // @ts-expect-error: the AC proptypes don't handle the __typename
-        filterType: getFilterInputType(filter.__typename),
-    };
-};
-
-const getAggregationsFromRatingFilter = (filter?: BC_RatingSearchFilter): Maybe<Aggregation> => {
-    if (!filter) return null;
-
     const { name, ratings } = filter;
 
     const options = ratings?.edges
@@ -138,7 +134,7 @@ const getAggregationsFromRatingFilter = (filter?: BC_RatingSearchFilter): Maybe<
                   };
               })
               .filter(Boolean)
-        : null;
+        : [];
 
     return {
         attribute_code: name.toLowerCase(),
@@ -153,7 +149,7 @@ const getAggregationsFromRatingFilter = (filter?: BC_RatingSearchFilter): Maybe<
 export const getTransformedProductAggregations = (
     filters: BC_SearchProductFilters
 ): Maybe<Array<Maybe<Aggregation>>> => {
-    if (!filters?.edges) return null;
+    if (!filters?.edges) return [];
     return filters.edges
         .map(filter => {
             if (!filter?.node) return null;
