@@ -56,8 +56,8 @@ export async function transformChannelMetafieldsToStoreConfig(
 
         storeConfigTransformed.category_url_suffix = categoryUrl;
         storeConfigTransformed.grid_per_page = parseInt(gridPerPage !== '' ? gridPerPage : '24'); // default set to 24
-        storeConfigTransformed.locale = locale ? locale : null;
-        storeConfigTransformed.root_category_uid = root_category_uid ? root_category_uid : null;
+        storeConfigTransformed.locale = locale || null;
+        storeConfigTransformed.root_category_uid = root_category_uid || null;
     }
 
     return storeConfigTransformed;
