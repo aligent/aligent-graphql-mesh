@@ -30,7 +30,7 @@ export const getCategories = async (
         bcGraphQlRequest(categoryTreeQuery, headers),
         /* Conditionally make a call to get "category" data if we have a "rootEntityId" as if we don't
          * the "category" query will fail */
-        ...(rootEntityId ? [await bcGraphQlRequest(categoryQuery, headers)] : []),
+        ...(rootEntityId ? [bcGraphQlRequest(categoryQuery, headers)] : []),
     ]);
 
     return {
