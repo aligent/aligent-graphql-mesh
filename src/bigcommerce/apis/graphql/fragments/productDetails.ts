@@ -80,37 +80,6 @@ export const ProductsDetails: DocumentNode = gql`
         productOptions {
             ...ProductOptions
         }
-        relatedProducts {
-            edges {
-                node {
-                    entityId
-                    name
-                    sku
-                    addToCartUrl
-                    prices {
-                        ...Prices
-                    }
-                    defaultImage {
-                        ...Image
-                    }
-                    images {
-                        edges {
-                            node {
-                                ...Image
-                            }
-                        }
-                    }
-                    categories {
-                        edges {
-                            node {
-                                ...CategoryDetails
-                            }
-                        }
-                    }
-                    path
-                }
-            }
-        }
         variants {
             edges {
                 node {

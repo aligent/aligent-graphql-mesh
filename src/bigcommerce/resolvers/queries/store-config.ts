@@ -50,11 +50,14 @@ export async function transformChannelMetafieldsToStoreConfig(
     if (metafields) {
         const categoryUrl: string = findMetafieldValueByKey(metafields, 'category_url_suffix');
         const gridPerPage: string = findMetafieldValueByKey(metafields, 'grid_per_page');
-
+        const locale: string = findMetafieldValueByKey(metafields, 'locale');
+        const root_category_uid: string = findMetafieldValueByKey(metafields, 'root_category_uid');
         //Add more metafields as required here. Metafields need to be added to bigcommerce manually first.
 
         storeConfigTransformed.category_url_suffix = categoryUrl;
         storeConfigTransformed.grid_per_page = parseInt(gridPerPage !== '' ? gridPerPage : '24'); // default set to 24
+        storeConfigTransformed.locale = locale || null;
+        storeConfigTransformed.root_category_uid = root_category_uid || null;
     }
 
     return storeConfigTransformed;
@@ -64,7 +67,7 @@ export function findMetafieldValueByKey(
     metafields: Maybe<BC_MetafieldEdge>[],
     metafieldKey: string
 ): string {
-    const metafieldValue = metafields.find((node) => {
+    const metafieldValue = metafields.find(node => {
         return node?.node.key === metafieldKey;
     });
     return metafieldValue ? metafieldValue.node?.value : '';
