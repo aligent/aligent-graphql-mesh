@@ -30,7 +30,7 @@ const getTransformedAggregationOptions = (
               .map(attribute => {
                   if (!attribute?.node) return null;
 
-                  const { value, isSelected, productCount } = attribute.node;
+                  const { value, productCount } = attribute.node;
 
                   return {
                       count: productCount,
@@ -60,7 +60,7 @@ const getAggregationsFromBrandFilter = (filter?: BC_BrandSearchFilter): Maybe<Ag
               .map(brand => {
                   if (!brand?.node) return null;
 
-                  const { productCount, name, isSelected, entityId } = brand.node;
+                  const { productCount, name } = brand.node;
 
                   return {
                       count: productCount,
@@ -107,7 +107,7 @@ const getAggregationsFromProductAttributeSearchFilter = (
 ): Maybe<Aggregation> => {
     if (!filter) return null;
 
-    const { displayProductCount, filterName, isCollapsedByDefault, name, attributes } = filter;
+    const { filterName, name, attributes } = filter;
 
     const options = getTransformedAggregationOptions(attributes, filterName);
 
