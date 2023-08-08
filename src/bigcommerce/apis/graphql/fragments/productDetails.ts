@@ -2,14 +2,22 @@ import { DocumentNode } from 'graphql';
 import { gql } from 'graphql-tag';
 import { breadcrumbs } from './breadcrumbs';
 import { image } from './image';
+import { pageInfo } from './pageInfo';
 import { productOptions } from './productOptions';
 import { prices } from './prices';
+import { seoDetails } from './seoDetails';
+import { categoryDetails } from './categoryDetails';
+import { variants } from './variants';
 
 export const ProductsDetails: DocumentNode = gql`
     ${breadcrumbs}
+    ${categoryDetails}
     ${image}
+    ${pageInfo}
     ${productOptions}
     ${prices}
+    ${seoDetails}
+    ${variants}
 
     fragment ProductDetails on Product {
         __typename
@@ -23,9 +31,7 @@ export const ProductsDetails: DocumentNode = gql`
             ...Image
         }
         seo {
-            pageTitle
-            metaDescription
-            metaKeywords
+            ...SeoDetails
         }
         images {
             edges {
@@ -37,11 +43,7 @@ export const ProductsDetails: DocumentNode = gql`
         categories {
             edges {
                 node {
-                    name
-                    entityId
-                    breadcrumbs(depth: 10) {
-                        ...Breadcrumbs
-                    }
+                    ...CategoryDetails
                 }
             }
         }
@@ -52,43 +54,38 @@ export const ProductsDetails: DocumentNode = gql`
             numberOfReviews
             summationOfRatings
         }
+        reviews {
+            edges {
+                node {
+                    entityId
+                    author {
+                        name
+                    }
+                    title
+                    text
+                    rating
+                    createdAt {
+                        utc
+                    }
+                }
+            }
+            pageInfo {
+                ...PageInfo
+            }
+        }
+        path
         prices {
             ...Prices
         }
         productOptions {
             ...ProductOptions
         }
-        relatedProducts {
+        variants {
             edges {
                 node {
-                    entityId
-                    name
-                    sku
-                    addToCartUrl
-                    prices {
-                        ...Prices
-                    }
-                    images {
-                        edges {
-                            node {
-                                ...Image
-                            }
-                        }
-                    }
-                    categories {
-                        edges {
-                            node {
-                                name
-                                entityId
-                                breadcrumbs(depth: 10) {
-                                    ...Breadcrumbs
-                                }
-                            }
-                        }
-                    }
+                    ...Variants
                 }
             }
         }
-        path
     }
 `;

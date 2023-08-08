@@ -1,4 +1,6 @@
-export const mockCmsPage = {
+import { CmsPage } from "../../../meshrc/.mesh";
+
+export const mockCmsPage: CmsPage = {
     url_key: "home",
     content: "<div>Mock CMS Page</div>",
     content_heading: "Home Page",
@@ -6,5 +8,5 @@ export const mockCmsPage = {
     title: "Home Page",
     page_layout: "cms-full-width",
     meta_description: "",
-    __typename: "CmsPage",
+    redirect_code: 1,
 };

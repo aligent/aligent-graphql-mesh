@@ -1,14 +1,15 @@
-import { BC_MetafieldConnection, BC_Channel } from '../../../meshrc/.mesh';
-import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
+import { BC_MetafieldConnection, BC_Channel, BC_SocialMediaLink } from '../../../meshrc/.mesh';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
+import { channelSocialLinks } from './requests/channel-social-links';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+const headers = {
+    Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+};
 
 export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
-    const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
-    };
     const query = channelMetafieldsByNamespaceQuery(namespace);
 
     const response = await bcGraphQlRequest(query, headers);
@@ -26,4 +27,13 @@ export const getChannelMetafields = async (namespace: string): Promise<BC_Metafi
     const channelData: BC_Channel = response.data.channel;
 
     return channelData.metafields;
+};
+
+export const getSocialLinks = async (): Promise<BC_SocialMediaLink[]> => {
+    const socialLinkQuery = {
+        query: channelSocialLinks,
+    };
+
+    const response = await bcGraphQlRequest(socialLinkQuery, headers);
+    return response.data.site.settings.socialMediaLinks;
 };

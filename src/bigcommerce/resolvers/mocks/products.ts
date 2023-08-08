@@ -1,3 +1,5 @@
+import { FilterTypeEnum } from '../../../meshrc/.mesh';
+
 export const productsMock = {
     items: [
         {
@@ -524,7 +526,7 @@ export const productsMock = {
             attribute_code: 'price',
             count: 3,
             label: 'Price',
-            filterType: 'FilterRangeTypeInput',
+            filterType: 'FilterRangeTypeInput' as FilterTypeEnum,
             options: [
                 {
                     count: 1,
@@ -550,7 +552,7 @@ export const productsMock = {
             attribute_code: 'category_uid',
             count: 4,
             label: 'Category',
-            filterType: 'FilterEqualTypeInput',
+            filterType: 'FilterEqualTypeInput' as FilterTypeEnum,
             options: [
                 {
                     count: 3,
@@ -582,7 +584,7 @@ export const productsMock = {
             attribute_code: 'color',
             count: 3,
             label: 'Color',
-            filterType: 'FilterEqualTypeInput',
+            filterType: 'FilterEqualTypeInput' as FilterTypeEnum,
             options: [
                 {
                     count: 2,
@@ -617,7 +619,7 @@ export const productsMock = {
             attribute_code: 'sale',
             count: 1,
             label: 'Sale',
-            filterType: 'FilterEqualTypeInput',
+            filterType: 'FilterEqualTypeInput' as FilterTypeEnum,
             options: [
                 {
                     count: 3,
@@ -631,7 +633,7 @@ export const productsMock = {
             attribute_code: 'size',
             count: 6,
             label: 'Size',
-            filterType: 'FilterEqualTypeInput',
+            filterType: 'FilterEqualTypeInput' as FilterTypeEnum,
             options: [
                 {
                     count: 2,
