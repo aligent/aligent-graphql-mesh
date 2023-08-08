@@ -1,9 +1,18 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
+import { pageInfo } from '../fragments/pagInfo';
+import { image } from '../fragments/image';
+import { productOptions } from '../fragments/productOptions';
+import { prices } from '../fragments/prices';
 
 export const customer = stripIgnoredCharacters(
     print(gql`
+        ${pageInfo}
+        ${image}
+        ${productOptions}
+        ${prices}
+
         query customer {
             customer {
                 addressCount
@@ -16,11 +25,82 @@ export const customer = stripIgnoredCharacters(
                 lastName
                 notes
                 phone
+                taxExemptCategory
+                attributes {
+                    #Not sure what this will be used for yet
+                    #The attributeCount will show how many there are
+                    #However you can only get 1 at a time here
+                    attribute(entityId: 1) {
+                        entityId
+                        name
+                        value
+                    }
+                }
                 storeCredit {
                     currencyCode
                     value
                 }
-                taxExemptCategory
+                wishlists {
+                    edges {
+                        cursor
+                        node {
+                            entityId
+                            isPublic
+                            items {
+                                edges {
+                                    cursor
+                                    node {
+                                        entityId
+                                        productEntityId
+                                        variantEntityId
+                                        product {
+                                            __typename
+                                            id
+                                            entityId
+                                            sku
+                                            name
+                                            addToCartUrl
+                                            description
+                                            defaultImage {
+                                                ...Image
+                                            }
+                                            seo {
+                                                pageTitle
+                                                metaDescription
+                                                metaKeywords
+                                            }
+                                            images {
+                                                edges {
+                                                    node {
+                                                        ...Image
+                                                    }
+                                                }
+                                            }
+                                            availabilityV2 {
+                                                status
+                                            }
+                                            prices {
+                                                ...Prices
+                                            }
+                                            productOptions {
+                                                ...ProductOptions
+                                            }
+                                            path
+                                        }
+                                    }
+                                }
+                                pageInfo {
+                                    ...PageInfo
+                                }
+                            }
+                            name
+                            token
+                        }
+                    }
+                    pageInfo {
+                        ...PageInfo
+                    }
+                }
             }
         }
     `)

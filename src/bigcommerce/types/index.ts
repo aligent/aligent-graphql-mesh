@@ -152,3 +152,20 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
+
+export interface BcAddress {
+    id: number;
+    address1: string;
+    address2: string;
+    address_type: string;
+    city: string;
+    company: string;
+    country: string;
+    country_code: string;
+    customer_id: number;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    postal_code: string;
+    state_or_province: string;
+}

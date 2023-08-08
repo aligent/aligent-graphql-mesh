@@ -3,20 +3,19 @@ import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
 
-export const getBcCustomer = async (
-    customerImpersonationToken: string,
-    bcCustomerId: number
-): Promise<BC_Customer> => {
+const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+
+export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> => {
     const headers = {
-        Authorization: `Bearer ${customerImpersonationToken}`,
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
         'x-bc-customer-id': bcCustomerId,
     };
     const customerQuery = {
         query: customer,
     };
-
+    console.log(customerQuery);
     const response = await bcGraphQlRequest(customerQuery, headers);
-
+    console.log(JSON.stringify(response));
     if (response.data.errors) {
         logAndThrowError(
             new Error(
