@@ -12,7 +12,7 @@ export const DEFAULT_IMAGE =
 /**
  * Gets the image id from the image url
  *
- * e.g. returns 1690452070 from "/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg"
+ * e.g. returns all the numbers added together in "/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg"
  *
  * @param url
  */
