@@ -7,14 +7,13 @@ import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductGraphql } from '../../apis/graphql/product';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (_root, args, context, _info): Promise<Maybe<Products>> => {
-        const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
+    resolve: async (_root, args, _context, _info): Promise<Maybe<Products>> => {
+       // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
         const url_key = args.filter?.url_key?.eq;
 
         if (url_key) {
             const bcProduct = await getBcProductByPathGraphql(
                 { path: url_key },
-                customerImpersonationToken
             );
 
             if (!bcProduct) return null;
@@ -32,7 +31,7 @@ export const productsResolver: QueryResolvers['products'] = {
               }
             : {};
 
-        const bcProducts = await getBcProductGraphql(filters, customerImpersonationToken);
+        const bcProducts = await getBcProductGraphql(filters);
         return getTransformedProductsData(bcProducts);
     },
 };

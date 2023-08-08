@@ -3,14 +3,16 @@ import { bcGraphQlRequest } from './client';
 import { getProductsQuery } from './requests/products';
 import { BC_ProductConnection, BC_SiteproductsArgs } from '../../../meshrc/.mesh';
 
+const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+
+
 export const getBcProductGraphql = async (
     filters: BC_SiteproductsArgs,
-    customerImpersonationToken: string
 ): Promise<BC_ProductConnection> => {
     const { ids } = filters;
 
     const headers = {
-        Authorization: `Bearer ${customerImpersonationToken}`,
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
     const productsQuery = {

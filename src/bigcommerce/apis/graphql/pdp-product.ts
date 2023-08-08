@@ -3,12 +3,13 @@ import { bcGraphQlRequest } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
 import { logAndThrowError } from '../../../utils/error-handling';
 
+const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+
 export const getBcProductByPathGraphql = async (
     path: BC_SiterouteArgs,
-    customerImpersonationToken: string
 ): Promise<BC_Product> => {
     const headers = {
-        Authorization: `Bearer ${customerImpersonationToken}`,
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
     const productsQuery = {
