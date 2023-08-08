@@ -23,7 +23,7 @@ export const getTransformedVariants = (
                 product: {
                     custom_attributes: [],
                     id: entityId,
-                    media_gallery_entries: [getTransformedImage(defaultImage)],
+                    media_gallery_entries: [getTransformedImage(defaultImage)].filter(Boolean),
                     price_range: getTransformedPriceRange(prices),
                     rating_summary: 0,
                     redirect_code: 0,

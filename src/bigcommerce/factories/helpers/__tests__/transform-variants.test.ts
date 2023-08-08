@@ -16,6 +16,7 @@ const expectResult = [
                     disabled: false,
                     file:
                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
+                    id: 1690452856,
                     label: '',
                     position: 0,
                     uid: '',
@@ -56,6 +57,7 @@ const expectResult = [
                     disabled: false,
                     file:
                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
+                    id: 1690452860,
                     label: '',
                     position: 0,
                     uid: '',
@@ -96,6 +98,7 @@ const expectResult = [
                     disabled: false,
                     file:
                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
+                    id: 1690452861,
                     label: '',
                     position: 0,
                     uid: '',
@@ -136,6 +139,7 @@ const expectResult = [
                     disabled: false,
                     file:
                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
+                    id: 1690452859,
                     label: '',
                     position: 0,
                     uid: '',
