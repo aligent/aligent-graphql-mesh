@@ -4,12 +4,13 @@ import {
     getTransformedProductsData,
 } from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
-import { getBcProductGraphql } from '../../apis/graphql/product';
+import { getBcProductsGraphql } from '../../apis/graphql/product';
+import { atob, getPathFromUrlKey } from '../../../utils';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, _context, _info): Promise<Maybe<Products>> => {
-       // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
-        const url_key = args.filter?.url_key?.eq;
+        //const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
+        const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
         if (url_key) {
             const bcProduct = await getBcProductByPathGraphql(
@@ -20,18 +21,13 @@ export const productsResolver: QueryResolvers['products'] = {
             return { items: [getTransformedProductData(bcProduct)] };
         }
 
-        const hasFilters = Object.keys(args?.filter || {}).length > 0;
+        const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
 
-        const filters = hasFilters
-            ? {
-                  ...(args.filter?.category_uid?.in
-                      ? { ids: args.filter.category_uid?.in }
-                      : { ids: [] }),
-                  ...(args.filter?.url_key?.eq ? { path: args.filter.url_key?.eq } : { path: '' }),
-              }
-            : {};
+        const filters = {
+            ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
+        };
 
-        const bcProducts = await getBcProductGraphql(filters);
+        const bcProducts = await getBcProductsGraphql(filters);
         return getTransformedProductsData(bcProducts);
     },
 };
