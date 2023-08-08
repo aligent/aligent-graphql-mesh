@@ -173,6 +173,27 @@ export interface BcCategory {
     };
 }
 
+export interface BcAddress {
+    id?: number
+    customer_id: number,
+    first_name: string,
+    last_name: string,
+    city: string,
+    country_code: string,
+    address1: string,
+    state_or_province: string,
+    postal_code: string,
+
+    address2?: string,
+    phone?: string,
+    address_type?: string,
+    company?: string,
+    form_fields?: Array<{
+        name: string,
+        value: string|number|string[]
+    }>
+}
+
 export interface DecodedCustomerImpersonationToken {
     cid: number;
     cors: string[];

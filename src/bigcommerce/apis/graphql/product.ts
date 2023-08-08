@@ -4,15 +4,16 @@ import { BC_ProductConnection, BC_SearchProductsFiltersInput } from '../../../me
 import { getProductsSearchQuery } from './requests/product-search';
 import { BC_SearchProductFilters } from '../../types';
 
+const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+
 export const getBcProductsGraphql = async (
-    filters: BC_SearchProductsFiltersInput,
-    customerImpersonationToken: string
+    filters: BC_SearchProductsFiltersInput
 ): Promise<{
     products: BC_ProductConnection;
     filters: BC_SearchProductFilters;
 } | null> => {
     const headers = {
-        Authorization: `Bearer ${customerImpersonationToken}`,
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
     const productsQuery = {
