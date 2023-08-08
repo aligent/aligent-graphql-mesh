@@ -6,7 +6,7 @@ sources:
 additionalResolvers:
   - '../bigcommerce/resolvers/resolver-definitions'
 
-additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
+# additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
 
 codegen:
   contextType: ../types#GraphQlContext

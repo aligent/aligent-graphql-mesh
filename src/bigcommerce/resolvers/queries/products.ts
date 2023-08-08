@@ -8,14 +8,13 @@ import { getBcProductsGraphql } from '../../apis/graphql/product';
 import { atob, getPathFromUrlKey } from '../../../utils';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (_root, args, context, _info): Promise<Maybe<Products>> => {
-        const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
+    resolve: async (_root, args, _context, _info): Promise<Maybe<Products>> => {
+        //const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
         const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
         if (url_key) {
             const bcProduct = await getBcProductByPathGraphql(
                 { path: url_key },
-                customerImpersonationToken
             );
 
             if (!bcProduct) return null;
@@ -28,7 +27,7 @@ export const productsResolver: QueryResolvers['products'] = {
             ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
         };
 
-        const bcProducts = await getBcProductsGraphql(filters, customerImpersonationToken);
+        const bcProducts = await getBcProductsGraphql(filters);
         return getTransformedProductsData(bcProducts);
     },
 };
