@@ -13,7 +13,7 @@ const generateMeshToken = (entityId: number): string => {
 };
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
-    resolve: async (_root, args, context, _info) => {
+    resolve: async (_root, args, _context, _info) => {
        // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 
         const entityId = await bcLogin(args.email, args.password);
