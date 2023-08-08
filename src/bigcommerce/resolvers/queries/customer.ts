@@ -47,3 +47,34 @@ export const transformCustomer = (bcCustomer: BC_Customer): Customer => {
         allow_remote_shopping_assistance: false,
     };
 };
+
+// query getCustomer($isWishlistEnabled: Boolean!) {
+//     customer {
+//         addresses {
+//             id
+//             firstname
+//             lastname
+//             company
+//             street
+//             city
+//             region {
+//                 region_code
+//                 region_id
+//                 region
+//             }
+//             postcode
+//             country_code
+//             telephone
+//             default_billing
+//             default_shipping
+//         }
+//         firstname
+//         lastname
+//         email
+//         is_subscribed
+//         wishlists @include(if: $isWishlistEnabled) {
+//             ...Wishlist
+//         }
+//         allow_remote_shopping_assistance
+//     }
+// }"

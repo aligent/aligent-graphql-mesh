@@ -1,6 +1,7 @@
 import { BC_Customer } from '../../../meshrc/.mesh';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
+import { customer } from './requests/customer';
 
 export const getBcCustomer = async (
     customerImpersonationToken: string,
@@ -10,16 +11,11 @@ export const getBcCustomer = async (
         Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,
     };
-    const getCustomer = {
-        query: `query customer {
-            customer{
-            entityId
-            email
-          }
-        }`,
+    const customerQuery = {
+        query: customer,
     };
 
-    const response = await bcGraphQlRequest(getCustomer, headers);
+    const response = await bcGraphQlRequest(customerQuery, headers);
 
     if (response.data.errors) {
         logAndThrowError(
