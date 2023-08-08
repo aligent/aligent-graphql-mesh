@@ -29,6 +29,9 @@ export const productsResolver: QueryResolvers['products'] = {
         };
 
         const bcProducts = await getBcProductsGraphql(filters, customerImpersonationToken);
+
+        if (!bcProducts) return null;
+
         return getTransformedProductsData(bcProducts);
     },
 };

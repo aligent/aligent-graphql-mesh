@@ -2,11 +2,15 @@ import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 import { BC_ProductConnection, BC_SearchProductsFiltersInput } from '../../../meshrc/.mesh';
 import { getProductsSearchQuery } from './requests/product-search';
+import { BC_SearchProductFilters } from '../../types';
 
 export const getBcProductsGraphql = async (
     filters: BC_SearchProductsFiltersInput,
     customerImpersonationToken: string
-): Promise<BC_ProductConnection> => {
+): Promise<{
+    products: BC_ProductConnection;
+    filters: BC_SearchProductFilters;
+} | null> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
@@ -28,5 +32,5 @@ export const getBcProductsGraphql = async (
         );
     }
 
-    return response.data.site.search.searchProducts.products;
+    return response.data.site.search.searchProducts;
 };

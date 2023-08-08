@@ -18,8 +18,9 @@ import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
-import { productsMock } from '../resolvers/mocks/products';
 import { logAndThrowError } from '../../utils/error-handling';
+import { getTransformedProductAggregations } from './transform-product-aggregations';
+import { BC_SearchProductFilters } from '../types';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
@@ -91,12 +92,15 @@ export const getTransformedProductData = (
     }
 };
 
-export const getTransformedProductsData = (bcProducts: BC_ProductConnection): Maybe<Products> => {
-    const { collectionInfo, edges } = bcProducts;
+export const getTransformedProductsData = (bcProducts: {
+    products: BC_ProductConnection;
+    filters: BC_SearchProductFilters;
+}): Maybe<Products> => {
+    const { products, filters } = bcProducts;
+    const { collectionInfo, edges } = products;
 
     return {
-        // @todo get "aggregations/filters" from site.search.productSearch when following up for category products
-        aggregations: productsMock.aggregations,
+        aggregations: filters?.edges ? getTransformedProductAggregations(filters) : null,
         items: edges
             ? edges.map(product => {
                   if (!product) return null;
