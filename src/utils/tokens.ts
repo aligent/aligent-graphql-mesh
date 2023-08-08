@@ -1,5 +1,5 @@
 import { logAndThrowError } from './error-handling';
-import { JwtPayload, decode, verify } from 'jsonwebtoken';
+import { decode, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
@@ -8,9 +8,9 @@ export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
 ): DecodedCustomerImpersonationToken => {
     try {
-        return (decode(
+        return decode(
             customerImpersonationToken
-        ) as JwtPayload) as DecodedCustomerImpersonationToken;
+        ) as DecodedCustomerImpersonationToken;
     } catch (error) {
         return logAndThrowError(
             new Error(`customerImpersonationToken could not be decoded ${error}`)
