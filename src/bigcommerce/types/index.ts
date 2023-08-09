@@ -1,8 +1,20 @@
 import {
-    BC_BrandSearchFilter, BC_CategorySearchFilter, BC_OtherSearchFilter, BC_PriceSearchFilter,
-    BC_ProductAttributeSearchFilter, BC_RatingSearchFilter,
+    BC_BrandSearchFilter,
+    BC_CategorySearchFilter,
+    BC_OtherSearchFilter,
+    BC_PriceSearchFilter,
+    BC_ProductAttributeSearchFilter,
+    BC_RatingSearchFilter,
     BC_SearchProductFilterConnectionResolvers,
-    CurrencyEnum
+    BundleProduct,
+    ConfigurableProduct,
+    CurrencyEnum,
+    DownloadableProduct, GiftCardProduct, GroupedProduct,
+    Maybe,
+    Products as BC_Products,
+    RoutableInterface,
+    SimpleProduct,
+    VirtualProduct
 } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
@@ -223,3 +235,24 @@ export interface BC_SearchProductFilters  {
     | BC_SearchProductFilterConnectionResolvers<BC_OtherSearchFilter>[]
     | null;
 }
+
+
+type RemoveRoutable<T> = Omit<T, keyof RoutableInterface>;
+
+export type Products = BC_Products & {
+    items?: Maybe<
+        Array<
+            Maybe<
+                RemoveRoutable<
+                    | VirtualProduct
+                    | SimpleProduct
+                    | DownloadableProduct
+                    | BundleProduct
+                    | GroupedProduct
+                    | ConfigurableProduct
+                    | GiftCardProduct
+                >
+            >
+        >
+    >;
+};
