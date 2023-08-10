@@ -1,12 +1,15 @@
 import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
-import { BC_ProductConnection, BC_SearchProductsFiltersInput } from '../../../meshrc/.mesh';
+import {
+    BC_ProductConnection,
+    BC_SearchProductsFiltersInput,
+} from '@mesh/external/BigCommerceGraphqlApi';
 import { getProductsSearchQuery } from './requests/product-search';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
 export const getBcProductsGraphql = async (
-    filters: BC_SearchProductsFiltersInput,
+    filters: BC_SearchProductsFiltersInput
 ): Promise<BC_ProductConnection> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,

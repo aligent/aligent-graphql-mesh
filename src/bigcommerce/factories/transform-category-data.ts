@@ -1,6 +1,7 @@
 import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '../../utils';
-import { BC_CategoryConnection, CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
+import { BC_CategoryConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
     const { children, description, entityId, name, path, products, seo } = category;
@@ -35,7 +36,7 @@ export const getTransformedCategoriesData = (
 ): Maybe<Array<Maybe<CategoryInterface>>> => {
     if (!categories.edges || categories?.edges.length === 0) return null;
 
-    return categories.edges.map(category => {
+    return categories.edges.map((category) => {
         if (!category?.node) return null;
         return getTransformedCategoryData(category.node);
     });

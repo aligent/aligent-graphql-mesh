@@ -1,4 +1,4 @@
-import { Maybe, Products, QueryResolvers } from '../../../meshrc/.mesh';
+import { Maybe, Products, QueryResolvers } from '@mesh';
 import {
     getTransformedProductData,
     getTransformedProductsData,
@@ -13,9 +13,7 @@ export const productsResolver: QueryResolvers['products'] = {
         const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
         if (url_key) {
-            const bcProduct = await getBcProductByPathGraphql(
-                { path: url_key },
-            );
+            const bcProduct = await getBcProductByPathGraphql({ path: url_key });
 
             if (!bcProduct) return null;
             return { items: [getTransformedProductData(bcProduct)] };

@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { createCmsBlocksMock } from '../mocks/cms-blocks';
 
 export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {

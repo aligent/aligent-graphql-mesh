@@ -1,4 +1,5 @@
-import { BC_OptionEdge, ConfigurableAttributeOption, Maybe } from '../../../meshrc/.mesh';
+import { ConfigurableAttributeOption, Maybe } from '@mesh';
+import { BC_OptionEdge } from '@mesh/external/BigCommerceGraphqlApi';
 import { btoa } from '../../../utils';
 
 export const getTransformedProductsAttributes = (options: {
@@ -7,7 +8,7 @@ export const getTransformedProductsAttributes = (options: {
     if (!options?.edges) return [];
 
     const optionsResult = options.edges
-        .map(option => {
+        .map((option) => {
             if (!option?.node) return null;
             const { displayName, values } = option.node;
 

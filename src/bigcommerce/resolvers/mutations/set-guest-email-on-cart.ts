@@ -1,4 +1,4 @@
-import { MutationResolvers, SetGuestEmailOnCartOutput } from '../../../meshrc/.mesh';
+import { MutationResolvers, SetGuestEmailOnCartOutput } from '@mesh';
 import { mockSetGuestEmailOnCart } from '../mocks/set-guest-email-on-cart';
 
 export const setGuestEmailOnCartResolver: MutationResolvers['setGuestEmailOnCart'] = {
