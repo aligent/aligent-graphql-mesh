@@ -1,15 +1,15 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { getDecodedMeshToken } from '../../../utils/tokens';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { getBcCustomer } from '../../apis/graphql/customer';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
-        const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
+        // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 
         if (context.headers['mesh-token']) {
             const { bc_customer_id } = getDecodedMeshToken(context.headers['mesh-token']);
-            const customer = await getBcCustomer(customerImpersonationToken, bc_customer_id);
+            const customer = await getBcCustomer(bc_customer_id);
             //Sample for using the cust imp token with the bc user id from mesh-token
 
             return {

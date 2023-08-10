@@ -1,4 +1,4 @@
-import { AddProductsToCartOutput, MutationResolvers } from '../../../meshrc/.mesh';
+import { AddProductsToCartOutput, MutationResolvers } from '@mesh';
 import { mockAddProductsToCart } from '../mocks/add-products-to-cart';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {

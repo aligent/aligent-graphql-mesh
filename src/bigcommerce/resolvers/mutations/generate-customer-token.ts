@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { MutationResolvers } from '../../../meshrc/.mesh';
+import { MutationResolvers } from '@mesh';
 import { bcLogin } from '../../apis/graphql/login';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
@@ -13,10 +13,10 @@ const generateMeshToken = (entityId: number): string => {
 };
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
-    resolve: async (_root, args, context, _info) => {
-        const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
+    resolve: async (_root, args, _context, _info) => {
+        // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 
-        const entityId = await bcLogin(customerImpersonationToken, args.email, args.password);
+        const entityId = await bcLogin(args.email, args.password);
 
         return {
             token: generateMeshToken(entityId),

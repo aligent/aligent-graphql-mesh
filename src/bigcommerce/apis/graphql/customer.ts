@@ -1,13 +1,12 @@
-import { BC_Customer } from '../../../meshrc/.mesh';
+import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 
-export const getBcCustomer = async (
-    customerImpersonationToken: string,
-    bcCustomerId: number
-): Promise<BC_Customer> => {
+const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+
+export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> => {
     const headers = {
-        Authorization: `Bearer ${customerImpersonationToken}`,
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
         'x-bc-customer-id': bcCustomerId,
     };
     const getCustomer = {

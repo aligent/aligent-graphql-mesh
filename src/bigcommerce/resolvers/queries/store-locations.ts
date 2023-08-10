@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { mockStoreLocations } from '../mocks/store-locations';
 
 export const storeLocationsResolver: QueryResolvers['storeLocations'] = {

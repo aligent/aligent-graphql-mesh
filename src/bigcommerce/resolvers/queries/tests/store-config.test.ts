@@ -1,4 +1,5 @@
-import { StoreConfig, BC_MetafieldEdge, BC_MetafieldConnection } from '../../../../meshrc/.mesh';
+import { BC_MetafieldEdge, BC_MetafieldConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { StoreConfig } from '../../../../meshrc/.mesh';
 import { findMetafieldValueByKey, transformChannelMetafieldsToStoreConfig } from '../store-config';
 
 describe('Transform StoreConfig tests', () => {

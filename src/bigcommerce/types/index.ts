@@ -1,3 +1,11 @@
+import { CurrencyEnum } from '../../meshrc/.mesh';
+
+export interface BcGraphqlTokenData {
+    allowed_cors_origins: [] | string[];
+    channel_id: number;
+    expires_at: number;
+}
+
 export interface GraphQlQuery {
     query: string;
 }
@@ -10,6 +18,7 @@ export interface BcProduct {
     name: string;
     addToCartUrl: string;
     description: string;
+    variants: { edges: [node: BcProduct] };
     seo: {
         pageTitle: string;
         metaDescription: string;
@@ -46,8 +55,33 @@ export interface BcProduct {
             },
         ];
     };
+    reviews: {
+        edges: [
+            {
+                cursor: string;
+                node: {
+                    entityId: number;
+                    author: {
+                        name: string;
+                    };
+                    title: string;
+                    text: string;
+                    rating: number;
+                    createdAt: {
+                        utc: string;
+                    };
+                };
+            }
+        ];
+        pageInfo: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor: string;
+            endCursor: string;
+        };
+    };
     availabilityV2: {
-        status: string;
+        status: 'Available' | 'Preorder' | 'Unavailable';
     };
     reviewSummary: {
         numberOfReviews: number;
@@ -71,7 +105,7 @@ export interface BcProduct {
 
 interface Money {
     value: number;
-    currencyCode: string;
+    currencyCode: CurrencyEnum;
 }
 
 export interface BcCustomer {
@@ -116,7 +150,7 @@ export interface BcCategoryTree {
     entityId: number;
     name: string;
     path: string;
-    productCount: number;
+    productCount?: number;
 }
 
 export interface BcCategory {
@@ -124,14 +158,35 @@ export interface BcCategory {
     metaDescription?: string;
     pageTitle?: string;
     products?: {
-        collectionInfo: {
-            totalItems: number;
-        };
+        collectionInfo?: {
+            totalItems?: number;
+        } | undefined | null;
     };
     seo?: {
         metaDescription: string;
         pageTitle: string;
     };
+}
+
+export interface BcAddress {
+    id?: number
+    customer_id: number,
+    first_name: string,
+    last_name: string,
+    city: string,
+    country_code: string,
+    address1: string,
+    state_or_province: string,
+    postal_code: string,
+
+    address2?: string,
+    phone?: string,
+    address_type?: string,
+    company?: string,
+    form_fields?: Array<{
+        name: string,
+        value: string|number|string[]
+    }>
 }
 
 export interface DecodedCustomerImpersonationToken {
