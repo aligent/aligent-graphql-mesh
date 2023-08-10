@@ -1,5 +1,9 @@
 import { bcGraphQlRequest } from './client';
-import { BC_MetafieldConnection, BC_Channel, BC_SocialMediaLink } from '../../../meshrc/.mesh';
+import {
+    BC_Channel,
+    BC_MetafieldConnection,
+    BC_SocialMediaLink,
+} from '@mesh/external/BigCommerceGraphqlApi';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
 import { channelSocialLinks } from './requests/channel-social-links';
 import { logAndThrowError } from '../../../utils/error-handling';

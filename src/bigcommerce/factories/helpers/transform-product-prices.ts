@@ -1,4 +1,5 @@
-import { BC_Prices, Maybe, PriceRange, ProductPrices } from '../../../meshrc/.mesh';
+import { BC_Prices } from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe, PriceRange, ProductPrices } from '@mesh';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformedPriceRange = (prices?: Maybe<BC_Prices>): PriceRange => {

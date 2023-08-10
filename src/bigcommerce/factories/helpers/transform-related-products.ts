@@ -2,9 +2,8 @@ import { getTransformedProductData } from '../transform-products-data';
 import {
     BC_RelatedProductsConnection,
     BC_RelatedProductsEdge,
-    Maybe,
-    ProductInterface,
-} from '../../../meshrc/.mesh';
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe, ProductInterface } from '@mesh';
 
 export const getTransformedRelatedProduct = (
     relatedProduct: Maybe<BC_RelatedProductsEdge>
@@ -30,7 +29,7 @@ export const getTransformedRelatedProducts = (
 ): Maybe<Array<Maybe<ProductInterface>>> => {
     if (!relatedProducts?.edges || relatedProducts?.edges.length === 0) return null;
 
-    return relatedProducts.edges.map(relatedProduct => {
+    return relatedProducts.edges.map((relatedProduct) => {
         return getTransformedRelatedProduct(relatedProduct);
     });
 };

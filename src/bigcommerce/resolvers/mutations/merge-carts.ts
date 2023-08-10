@@ -1,4 +1,4 @@
-import { Cart, MutationResolvers } from '../../../meshrc/.mesh';
+import { Cart, MutationResolvers } from '@mesh';
 import { mockMergeCarts } from '../mocks/merge-carts';
 
 export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
