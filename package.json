@@ -8,7 +8,7 @@
     "start:dev": "yarn codegen && STAGE=dev mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
     "codegen": "env $(cat src/meshrc/.env | sed '/^#/d' | xargs) graphql-codegen --config src/bigcommerce/codegen.ts",
-    "build": "yarn codegen && mesh build --throwOnInvalidConfiguration --dir ./src/meshrc",
+    "build": "mesh build --throwOnInvalidConfiguration --dir ./src/meshrc && yarn codegen",
     "build:docker": "docker build -f docker/Dockerfile -t mesh .",
     "test": "jest --coverage --passWithNoTests",
     "lint": "eslint --color . --ext .ts",
