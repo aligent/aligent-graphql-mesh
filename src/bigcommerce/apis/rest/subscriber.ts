@@ -1,5 +1,6 @@
 import { BcSubscriber } from '../../types';
 import { bcPost } from './client';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 /* istanbul ignore file */
 /**
@@ -14,7 +15,12 @@ export const createSubscriber = async(email: string): Promise<BcSubscriber> => {
     }
 
     const response = await bcPost(path, data);
-    console.log('Subscriber added: ' + JSON.stringify(response.data));
 
-    return response.data;
+    const subscriber = response.data;
+    if (!response.data?.email) {
+        logAndThrowError(new Error('Invalid Subscriber object received: attribute email has to be defined.'));
+    }
+    console.log('Subscriber added: ' + JSON.stringify(subscriber));
+
+    return subscriber;
 }
