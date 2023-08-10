@@ -1,10 +1,6 @@
-import {
-    BC_Cart,
-    BC_CartSelectedMultipleChoiceOption,
-    CartItemInterface,
-    CurrencyEnum,
-    Maybe,
-} from '../../../meshrc/.mesh';
+import { BC_Cart, BC_CartSelectedMultipleChoiceOption } from '@mesh/external/BigCommerceGraphqlApi';
+
+import { CartItemInterface, CurrencyEnum, Maybe } from '@mesh';
 import { btoa, getNewUrl } from '../../../utils';
 import { getTransformedPrice } from './transform-price';
 

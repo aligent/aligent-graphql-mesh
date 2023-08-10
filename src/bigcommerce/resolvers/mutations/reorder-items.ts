@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../meshrc/.mesh';
+import { MutationResolvers } from '@mesh';
 
 export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: (_root, _args, _context, _info) => {

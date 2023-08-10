@@ -1,5 +1,6 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { BC_OptionEdge, Maybe } from '../../../../meshrc/.mesh';
+import { BC_OptionEdge } from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe } from '../../../../meshrc/.mesh';
 import { getTransformedProductsAttributes } from '../transform-product-attributes';
 
 const expectResult = [

@@ -3,7 +3,7 @@ import {
     BC_CheckoutAddressCheckboxesCustomField,
     BC_CheckoutAddressTextFieldCustomField,
     BC_CouponType,
-} from '../../../meshrc/.mesh';
+} from '@mesh/external/BigCommerceGraphqlApi';
 
 export const mockBcCheckout = {
     id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',

@@ -1,11 +1,5 @@
-import {
-    BC_CheckoutCoupon,
-    BC_CheckoutTax,
-    BC_Money,
-    CartPrices,
-    CurrencyEnum,
-    Maybe,
-} from '../../../meshrc/.mesh';
+import { BC_CheckoutCoupon, BC_CheckoutTax, BC_Money } from '@mesh/external/BigCommerceGraphqlApi';
+import { CartPrices, CurrencyEnum, Maybe } from '@mesh';
 import { getTransformedPrice } from './transform-price';
 
 type Prices = {
@@ -20,7 +14,7 @@ export const getTransformedCartPrices = (prices: Prices): CartPrices => {
     const { coupons, grandTotal, subtotal, taxes, taxTotal } = prices;
 
     const applied_taxes =
-        taxes?.map(tax => {
+        taxes?.map((tax) => {
             const { name, amount } = tax;
             return {
                 amount: getTransformedPrice(amount),
@@ -28,7 +22,7 @@ export const getTransformedCartPrices = (prices: Prices): CartPrices => {
             };
         }) || null;
 
-    const discounts = coupons.map(coupon => {
+    const discounts = coupons.map((coupon) => {
         const { code, discountedAmount } = coupon;
 
         return {

@@ -1,7 +1,7 @@
 import { atob } from '../../../utils';
 import { getCategories } from '../../apis/graphql/categories';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 
 export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, _context, _info) => {

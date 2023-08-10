@@ -1,5 +1,5 @@
 import { getIsVirtualCart } from '../get-is-virtual-cart';
-import { BC_CartDigitalItem, BC_CartPhysicalItem } from '../../meshrc/.mesh';
+import { BC_CartDigitalItem, BC_CartPhysicalItem } from '@mesh/external/BigCommerceGraphqlApi';
 
 const lineItems = {
     digitalItems: [],

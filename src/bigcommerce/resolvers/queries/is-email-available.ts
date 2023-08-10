@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { mockIsEmailAvailable } from '../mocks/is-email-available';
 
 export const isEmailAvailableResolver: QueryResolvers['isEmailAvailable'] = {

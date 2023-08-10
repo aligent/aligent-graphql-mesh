@@ -2,9 +2,8 @@ import {
     BC_MultipleChoiceOption,
     BC_ProductOptionConnection,
     BC_SwatchOptionValue,
-    ConfigurableProductOptions,
-    Maybe,
-} from '../../../meshrc/.mesh';
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { ConfigurableProductOptions, Maybe } from '@mesh';
 import { btoa } from '../../../utils';
 
 export const getTransformedConfigurableOptions = (
@@ -13,29 +12,21 @@ export const getTransformedConfigurableOptions = (
     if (!productOptions || !productOptions?.edges) return [];
 
     const options = productOptions.edges
-        .map(option => {
+        .map((option) => {
             if (!option?.node) return null;
 
-            const {
-                displayName,
-                displayStyle,
-                entityId,
-                values,
-            } = option.node as BC_MultipleChoiceOption;
+            const { displayName, displayStyle, entityId, values } =
+                option.node as BC_MultipleChoiceOption;
 
             const attribute_code = displayName.toLowerCase().replace(/ /g, '_');
 
             if (!values?.edges) return null;
 
             const optionValues = values.edges
-                .map(value => {
+                .map((value) => {
                     if (!value?.node) return null;
-                    const {
-                        entityId,
-                        hexColors,
-                        isDefault,
-                        label,
-                    } = value.node as BC_SwatchOptionValue;
+                    const { entityId, hexColors, isDefault, label } =
+                        value.node as BC_SwatchOptionValue;
                     const swatch_data =
                         hexColors && hexColors.length > 0
                             ? { value: hexColors[0], __typename: 'ColorSwatchData' }

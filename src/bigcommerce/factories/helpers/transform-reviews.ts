@@ -1,11 +1,5 @@
-import {
-    BC_Review,
-    BC_ReviewConnection,
-    Maybe,
-    ProductInterface,
-    ProductReview,
-    ProductReviews,
-} from '../../../meshrc/.mesh';
+import { BC_Review, BC_ReviewConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe, ProductInterface, ProductReview, ProductReviews } from '@mesh';
 
 export const getTransformedReview = (review: BC_Review): Maybe<ProductReview> => {
     const { author, createdAt, rating, text, title } = review;
@@ -29,7 +23,7 @@ export const getTransformedReview = (review: BC_Review): Maybe<ProductReview> =>
 export const getTransformedReviews = (reviews: BC_ReviewConnection): ProductReviews => {
     const reviewItems = reviews.edges
         ? reviews.edges
-              .map(review => {
+              .map((review) => {
                   if (!review?.node) return null;
                   return getTransformedReview(review.node);
               })

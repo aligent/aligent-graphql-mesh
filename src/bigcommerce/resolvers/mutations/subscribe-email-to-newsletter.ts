@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../meshrc/.mesh';
+import { MutationResolvers } from '@mesh';
 
 export const subscribeEmailToNewsletterResolver: MutationResolvers['subscribeEmailToNewsletter'] = {
     resolve: (_root, _args, _context, _info) => {
