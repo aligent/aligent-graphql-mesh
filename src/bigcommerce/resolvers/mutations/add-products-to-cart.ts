@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../meshrc/.mesh';
+import { MutationResolvers } from '@mesh';
 import { addProductsToCart } from '../../apis/graphql/cart';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 
