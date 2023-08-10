@@ -1,0 +1,125 @@
+import { getTransformedProductSearchArguments } from '../transform-product-search-arguments';
+
+const availableFilters = {
+    edges: [
+        {
+            node: {
+                name: 'Brand',
+                __typename: 'BrandSearchFilter',
+            },
+        },
+        {
+            node: {
+                name: 'Color',
+                __typename: 'ProductAttributeSearchFilter',
+            },
+        },
+        {
+            node: {
+                name: 'Size',
+                __typename: 'ProductAttributeSearchFilter',
+            },
+        },
+        {
+            node: {
+                name: 'Price',
+                __typename: 'PriceSearchFilter',
+            },
+        },
+        {
+            node: {
+                name: 'Rating',
+                __typename: 'RatingSearchFilter',
+            },
+        },
+        {
+            node: {
+                name: 'Other',
+                __typename: 'OtherSearchFilter',
+            },
+        },
+    ],
+};
+
+const filtersEqArgs = {
+    currentPage: 1,
+    filter: {
+        brand: { eq: 'MjM=' },
+        category_id: { eq: '60' },
+        category_uid: { eq: 'MjM=' },
+        color: { eq: 'Purple' },
+        rating: { eq: '1' },
+        size: { eq: 'M' },
+        price: { from: '20', to: '30' },
+    },
+    search: 'Mona',
+    sort: { relevance: 'ASC' },
+    pageSize: 24,
+    onServer: false,
+};
+
+const filtersInArgs = {
+    currentPage: 1,
+    filter: {
+        brand: { in: ['MjM=', 'NjA='] },
+        category_id: { in: ['60', '23'] },
+        category_uid: { in: ['MjM=', 'NjA='] },
+        color: { in: ['Green', 'Purple'] },
+        rating: { in: ['4', '1'] },
+        size: { in: ['M', 'L'] },
+        price: { from: '20', to: '30' },
+    },
+    search: 'Mona',
+    sort: { relevance: 'ASC' },
+    pageSize: 24,
+    onServer: false,
+};
+
+describe('get-product-search-filter', () => {
+    it(`Transforms Adobe Commerce search filter arguments into a Big Commerce product search arguments`, () => {
+        expect(getTransformedProductSearchArguments(filtersEqArgs, availableFilters)).toEqual({
+            brandEntityIds: [23],
+            price: { minPrice: '20', maxPrice: '30' },
+            productAttributes: [
+                { attribute: 'Color', values: ['Purple'] },
+                { attribute: 'Size', values: ['M'] },
+            ],
+            rating: { minRating: '1', maxRating: '1' },
+            searchTerm: 'Mona',
+            categoryEntityId: 23,
+        });
+
+        expect(getTransformedProductSearchArguments(filtersInArgs, availableFilters)).toEqual({
+            brandEntityIds: [23, 60],
+            price: { minPrice: '20', maxPrice: '30' },
+            productAttributes: [
+                { attribute: 'Color', values: ['Green', 'Purple'] },
+                { attribute: 'Size', values: ['M', 'L'] },
+            ],
+            rating: { minRating: 1, maxRating: 4 },
+            searchTerm: 'Mona',
+            categoryEntityIds: [23, 60],
+        });
+    });
+
+    it(`Returns a initial arguments structure if no Adobe Commerce args exist`, () => {
+        expect(getTransformedProductSearchArguments({}, null)).toEqual({
+            brandEntityIds: [],
+            price: {},
+            productAttributes: [],
+            rating: {},
+            searchTerm: '',
+        });
+    });
+
+    it(`Returns argument which are not dependant on the available filter mapping`, () => {
+        expect(getTransformedProductSearchArguments(filtersEqArgs, null)).toEqual({
+            brandEntityIds: [],
+            price: {},
+            productAttributes: [],
+            rating: {},
+            searchTerm: 'Mona',
+            categoryEntityId: 23,
+        });
+    });
+});

@@ -14,8 +14,38 @@ export const searchFilters = gql`
                         productCount
                     }
                 }
-                __typename
             }
+            __typename
+        }
+        ... on CategorySearchFilter {
+            displayProductCount
+            categories {
+                edges {
+                    node {
+                        entityId
+                        name
+                        isSelected
+                        productCount
+                    }
+                }
+            }
+        }
+        ... on OtherSearchFilter {
+            displayProductCount
+            freeShipping {
+                isSelected
+                productCount
+            }
+            isFeatured {
+                isSelected
+                productCount
+            }
+            isInStock {
+                isSelected
+                productCount
+            }
+            name
+            isCollapsedByDefault
         }
         ... on PriceSearchFilter {
             selected {
@@ -48,11 +78,14 @@ export const searchFilters = gql`
                         value
                         isSelected
                         productCount
-                        __typename
                     }
                 }
             }
+            __typename
+        }
+        ... on SearchProductFilter {
             name
+            isCollapsedByDefault
         }
     }
 `;
