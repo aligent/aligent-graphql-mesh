@@ -18,11 +18,14 @@ const config: CodegenConfig = {
                     },
                 },
             ],
-            // documents: 'src/bigcommerce/**/*.{graphql,ts}',
+            // Documents and operations/sdk plugins are used if we want to
+            // autogenerate the typescript code required to carry out
+            // graphql queries, mutations etc. defined in our .graphql files
             plugins: [
                 'typescript',
                 //  'typescript-operations', 'typescript-generic-sdk'
             ],
+            // documents: 'src/bigcommerce/**/*.{graphql,ts}',
             config: {
                 typesPrefix: 'BC_',
                 useImplementingTypes: true,
