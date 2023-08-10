@@ -9,6 +9,17 @@ type createFilterMappingProps = {
     };
 } | null;
 
+/**
+ * Creates an available filters mapping where the filter objects are assigned to a key based on
+ * their filter name but lower cased.
+ *  e.g.
+ * {
+ *     brand: {name: "Brand", __typename: "BrandSearchFilter"},
+ *     color: {name: "Color", __typename: "ProductAttributeSearchFilter"},
+ *     size: {name: "Size", __typename: "ProductAttributeSearchFilter"}
+ * }
+ * @param availableFilters
+ */
 const createFilterMapping = (availableFilters: BC_SearchProductFilterConnection | null): createFilterMappingProps => {
     if (!availableFilters?.edges || availableFilters?.edges?.length === 0) return null;
 
@@ -24,7 +35,8 @@ export const getTransformedProductSearchArguments = (
     availableBcProductFilters: BC_SearchProductFilterConnection | null
 ): BC_SearchProductsFiltersInput => {
     /* These are base filters we can send to the bc productsSearch query without affecting the results.
-     * If we have other filters like "categoryEntityId: []" pre added, this will affect the results */
+     * If we have other filters like "categoryEntityId: []" pre added, this will skew the results
+     * or even return no products */
     const bcProductFilters: {
         brandEntityIds: number[];
         categoryEntityId?: number;
@@ -93,6 +105,11 @@ export const getTransformedProductSearchArguments = (
             continue;
         }
 
+        /**
+         * "ProductAttributeSearchFilter" are custom product attributes declare on
+         * products in the Big Commerce admin and are not pre-defined filters
+         * like e.g."BrandSearchFilter", "PriceSearchFilter" etc
+         */
         if (filterType === 'ProductAttributeSearchFilter') {
             if (eqValue) {
                 bcProductFilters.productAttributes.push({
