@@ -1,34 +1,49 @@
 import { Products, QueryResolvers } from '@mesh';
-
-import {
-    getTransformedProductData,
-    getTransformedProductsData,
-} from '../../factories/transform-products-data';
+import { getTransformedProductData, getTransformedProductsData } from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductsGraphql } from '../../apis/graphql/product';
 import { atob, getPathFromUrlKey } from '../../../utils';
+import { getBcAvailableProductFilters } from '../../apis/graphql/available-product-search-filters';
+import { getTransformedProductSearchArguments } from '../../factories/helpers/transform-product-search-arguments';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, _context, _info): Promise<Products | null> => {
         //const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
-        const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
+        try {
+            const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
-        if (url_key) {
-            const bcProduct = await getBcProductByPathGraphql({ path: url_key });
+            // The PDP passes an "url_key" arg, so if we see this then get product information from Big Commerces "site.route.product" query
+            // as it's the only query that accepts a "path". "path" is based on the "url_key" but with a "/" in the front of it.
+            if (url_key) {
+                const bcProduct = await getBcProductByPathGraphql({ path: url_key });
 
-            if (!bcProduct) return null;
-            return { items: [getTransformedProductData(bcProduct)] };
+                if (!bcProduct) return null;
+                return { items: [getTransformedProductData(bcProduct)] };
+            }
+
+            const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
+            const searchTerm = args?.search || '';
+
+            /* These base filters will help the "getBcAvailableProductFilters" get the available filters for search and
+             * category pages
+             * */
+            const availableProductFiltersVariables = {
+                ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
+                ...(searchTerm && { searchTerm: searchTerm }),
+            };
+
+            const availableBcProductFilters = await getBcAvailableProductFilters(availableProductFiltersVariables);
+            const transformedFilterArguments = getTransformedProductSearchArguments(args, availableBcProductFilters);
+
+            const bcProducts = await getBcProductsGraphql(transformedFilterArguments);
+
+            if (!bcProducts) return null;
+
+            return getTransformedProductsData(bcProducts);
+        } catch (e) {
+            logAndThrowError(e as Error);
+            return null;
         }
-
-        const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
-
-        const filters = {
-            ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
-        };
-
-        const bcProducts = await getBcProductsGraphql(filters);
-        if (!bcProducts) return null;
-
-        return getTransformedProductsData(bcProducts);
     },
 };
