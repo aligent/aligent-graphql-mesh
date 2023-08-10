@@ -4,11 +4,20 @@ import cors from 'cors';
 
 const app = express();
 
+const allowedOrigins: (string | RegExp)[] = [
+    new RegExp('.*\.dev\.aligent\.consulting$'),
+    new RegExp('.*\.local\.pwadev$'),
+];
+
+if (process.env.ORIGIN) {
+    allowedOrigins.push(process.env.ORIGIN);
+}
+
 /*
 * Configure CORS and add middleware for use on all routes
 */
 const corsConfiguration: cors.CorsOptions  = {
-    origin: process.env.ORIGIN,
+    origin: allowedOrigins,
     credentials: true,
     allowedHeaders: [
         'Content-Type',
