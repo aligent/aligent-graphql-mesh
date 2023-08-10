@@ -1,13 +1,5 @@
 import {
-    BundleProduct,
-    ConfigurableProduct,
     CurrencyEnum,
-    DownloadableProduct, GiftCardProduct, GroupedProduct,
-    Maybe,
-    Products as BC_Products,
-    RoutableInterface,
-    SimpleProduct,
-    VirtualProduct
 } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
