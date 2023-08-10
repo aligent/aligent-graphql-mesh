@@ -16,7 +16,7 @@ const expectedResult = [
         attribute_code: 'brand',
         count: 0,
         label: 'Brand',
-        options: [{ count: 1, label: 'Weller', value: 'Weller' }],
+        options: [{ count: 1, label: 'Weller', value: 139 }],
         filterType: 'FilterEqualTypeInput',
     },
     {

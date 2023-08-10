@@ -77,12 +77,12 @@ export const getAggregationsFromBrandFilter = (
               .map(brand => {
                   if (!brand?.node) return null;
 
-                  const { productCount, name } = brand.node;
+                  const { entityId, productCount, name } = brand.node;
 
                   return {
                       count: productCount,
                       label: name,
-                      value: name,
+                      value: entityId,
                   };
               })
               .filter(Boolean)
