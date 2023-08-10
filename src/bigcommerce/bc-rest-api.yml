@@ -4,7 +4,6 @@ handler:
     endpoint: '{env.BC_REST_API}'
     operationHeaders:
       X-Auth-Token: '{env.X_AUTH_TOKEN}'
-      Authorization: "{context.headers['authorization']}"
       Accept: application/json
       Content-Type: application/json
     operations:
