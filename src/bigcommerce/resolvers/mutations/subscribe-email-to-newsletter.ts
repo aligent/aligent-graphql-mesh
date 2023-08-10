@@ -24,6 +24,6 @@ export const subscribeEmailToNewsletterResolver: MutationResolvers['subscribeEma
 export async function transformSubscriberToNewsletterOutput(bcSubscriber: BcSubscriber): Promise<SubscribeEmailToNewsletterOutput> {
     return {
         //BigCom does not provide a status, but if the subscriber is return it means it was successful, if it's not an error is returned.
-        status: bcSubscriber?.email ? 'SUBSCRIBED' : 'UNCONFIRMED'
+        status: bcSubscriber.email ? 'SUBSCRIBED' : 'UNCONFIRMED'
     }
 }
