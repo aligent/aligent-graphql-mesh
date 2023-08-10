@@ -5,7 +5,7 @@ import {
 import { BillingCartAddress, Maybe, ShippingCartAddress } from '@mesh';
 
 export const getTransformedAddress = (
-    bcAddress: BC_CheckoutConsignmentAddress
+    bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillingAddress
 ): ShippingCartAddress => {
     const {
         stateOrProvinceCode,
