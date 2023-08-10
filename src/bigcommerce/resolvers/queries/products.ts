@@ -1,4 +1,5 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { Products, QueryResolvers } from '@mesh';
+
 import {
     getTransformedProductData,
     getTransformedProductsData,
@@ -6,7 +7,6 @@ import {
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductsGraphql } from '../../apis/graphql/product';
 import { atob, getPathFromUrlKey } from '../../../utils';
-import { Products } from '../../types';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, _context, _info): Promise<Products | null> => {

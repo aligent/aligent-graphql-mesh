@@ -4,7 +4,7 @@ import {
     getTransformedMediaGalleryEntries,
     getTransformedSmallImage,
 } from '../transform-images';
-import { BC_ImageEdge } from '../../../../meshrc/.mesh';
+import { BC_ImageEdge } from '@mesh/external/BigCommerceGraphqlApi';
 
 describe('transform-image', () => {
     it('Gets small_image data from the bc default image', () => {

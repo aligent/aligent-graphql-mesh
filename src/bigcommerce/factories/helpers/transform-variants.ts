@@ -1,9 +1,5 @@
-import {
-    BC_VariantConnection,
-    ConfigurableVariant,
-    Maybe,
-    ProductStockStatus,
-} from '../../../meshrc/.mesh';
+import { BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { ConfigurableVariant, Maybe, ProductStockStatus } from '@mesh';
 import { getTransformedImage } from './transform-images';
 import { getTransformedPriceRange } from './transform-product-prices';
 import { getTransformedProductsAttributes } from './transform-product-attributes';
@@ -14,7 +10,7 @@ export const getTransformedVariants = (
     if (!variants?.edges || variants?.edges.length === 0) return [];
 
     const variantsResults = variants.edges
-        .map(variant => {
+        .map((variant) => {
             if (!variant?.node) return null;
             const { defaultImage, entityId, id, inventory, options, prices, sku } = variant.node;
 

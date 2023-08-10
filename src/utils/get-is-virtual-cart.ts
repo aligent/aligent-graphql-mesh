@@ -1,4 +1,5 @@
-import { BC_CartLineItems, Scalars } from '../meshrc/.mesh';
+import { BC_CartLineItems } from '@mesh/external/BigCommerceGraphqlApi';
+import { Scalars } from '../meshrc/.mesh';
 
 /**
  * Indicates if the cart only has virtual items
@@ -10,7 +11,7 @@ export const getIsVirtualCart = (lineItems: BC_CartLineItems | undefined): Scala
     const { customItems, digitalItems, giftCertificates, physicalItems } = lineItems;
     const hasDigitalItems = digitalItems.length > 0;
     const hasNoPhysicalItems = [customItems, giftCertificates, physicalItems].every(
-        items => !items || (items && items.length === 0)
+        (items) => !items || (items && items.length === 0)
     );
 
     return hasDigitalItems && hasNoPhysicalItems;

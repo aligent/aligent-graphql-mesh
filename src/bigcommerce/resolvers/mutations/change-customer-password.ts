@@ -1,4 +1,4 @@
-import { Customer, MutationResolvers } from '../../../meshrc/.mesh';
+import { Customer, MutationResolvers } from '@mesh';
 import { mockChangeCustomerPassword } from '../mocks/change-customer-password';
 
 export const changeCustomerPasswordResolver: MutationResolvers['changeCustomerPassword'] = {

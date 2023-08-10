@@ -1,4 +1,4 @@
-import { Cart, Maybe, QueryResolvers } from '../../../meshrc/.mesh';
+import { Cart, Maybe, QueryResolvers } from '@mesh';
 import { getCart } from '../../apis/graphql/cart';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { GraphQlContext } from '../../../meshrc/types';

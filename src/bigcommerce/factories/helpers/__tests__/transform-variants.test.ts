@@ -1,6 +1,6 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { getTransformedVariants } from '../transform-variants';
-import { BC_PageInfo, BC_VariantConnection } from '../../../../meshrc/.mesh';
+import { BC_PageInfo, BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 const expectResult = [
     {

@@ -3,7 +3,8 @@ import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../../apis/graphql/route';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
-import { BC_Product, QueryResolvers, RoutableInterface } from '../../../meshrc/.mesh';
+import { QueryResolvers, RoutableInterface } from '@mesh';
+import { BC_Product } from '@mesh/external/BigCommerceGraphqlApi';
 import { Category } from '../../types';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
@@ -22,7 +23,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     if (__typename === 'Category') {
         return {
-            ...getTransformedCategoryData((data as unknown) as Category),
+            ...getTransformedCategoryData(data as unknown as Category),
             type: 'CATEGORY',
         };
     }
@@ -45,7 +46,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
     }
 
     if (__typename === 'Product') {
-        const transformedProductData = getTransformedProductData((data as unknown) as BC_Product);
+        const transformedProductData = getTransformedProductData(data as unknown as BC_Product);
         return {
             type: 'PRODUCT',
             redirect_code: 0,
