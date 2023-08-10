@@ -1,10 +1,8 @@
 import {
     BC_CheckoutBillingAddress,
     BC_CheckoutConsignmentAddress,
-    BillingCartAddress,
-    Maybe,
-    ShippingCartAddress,
-} from '../../../meshrc/.mesh';
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { BillingCartAddress, Maybe, ShippingCartAddress } from '@mesh';
 
 export const getTransformedAddress = (
     bcAddress: BC_CheckoutConsignmentAddress

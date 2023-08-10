@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { mockKeyMessages } from '../mocks/key-messages';
 
 export const keyMessagesResolver: QueryResolvers['keyMessages'] = {

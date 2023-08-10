@@ -1,6 +1,6 @@
 import { getTransformedReviews } from '../transform-reviews';
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { BC_PageInfo, BC_ReviewEdge } from '../../../../meshrc/.mesh';
+import { BC_PageInfo, BC_ReviewEdge } from '@mesh/external/BigCommerceGraphqlApi';
 
 describe('transform-reviews', () => {
     it(`transforms a bc review structure to a AC format`, () => {
