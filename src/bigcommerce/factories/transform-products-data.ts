@@ -1,26 +1,16 @@
-import {
-    BC_Product,
-    BC_ProductConnection,
-    ConfigurableProduct,
-    Maybe,
-    ProductInterface,
-    Products,
-} from '../../meshrc/.mesh';
+import { BC_Product, BC_ProductConnection, BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '../../utils';
 import { getTransformedVariants } from './helpers/transform-variants';
 import { getTransformedPriceRange, getTransformedPrices } from './helpers/transform-product-prices';
-import {
-    getTransformedMediaGalleryEntries,
-    getTransformedSmallImage,
-} from './helpers/transform-images';
+import { getTransformedMediaGalleryEntries, getTransformedSmallImage } from './helpers/transform-images';
 import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
 import { logAndThrowError } from '../../utils/error-handling';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
-import { BC_SearchProductFilters } from '../types';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
@@ -32,9 +22,7 @@ export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'Configura
     }
 };
 
-export const getTransformedProductData = (
-    bcProduct: BC_Product
-): Maybe<ProductInterface | ConfigurableProduct> => {
+export const getTransformedProductData = (bcProduct: BC_Product): Maybe<ProductInterface | ConfigurableProduct> => {
     if (!bcProduct) return null;
 
     try {
@@ -94,7 +82,7 @@ export const getTransformedProductData = (
 
 export const getTransformedProductsData = (bcProducts: {
     products: BC_ProductConnection;
-    filters: BC_SearchProductFilters;
+    filters: BC_SearchProductFilterConnection;
 }): Maybe<Products> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;

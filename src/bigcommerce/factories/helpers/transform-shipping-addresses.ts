@@ -1,10 +1,5 @@
-import {
-    BC_CheckoutShippingConsignment,
-    Cart,
-    Maybe,
-    Scalars,
-    ShippingCartAddress,
-} from '../../../meshrc/.mesh';
+import { BC_CheckoutShippingConsignment } from '@mesh/external/BigCommerceGraphqlApi';
+import { Cart, Maybe, Scalars, ShippingCartAddress } from '@mesh';
 import { btoa } from '../../../utils';
 import {
     getTransformedAvailableShippingMethods,
@@ -20,24 +15,18 @@ export const getTransformedShippingAddresses = (
 
     return shippingConsignments.map(
         (shippingConsignment: BC_CheckoutShippingConsignment): Maybe<ShippingCartAddress> => {
-            const {
-                selectedShippingOption,
-                entityId,
-                availableShippingOptions,
-                address,
-            } = shippingConsignment;
+            const { selectedShippingOption, entityId, availableShippingOptions, address } =
+                shippingConsignment;
 
             const transformedAddress = getTransformedAddress(address);
 
             return {
                 ...transformedAddress,
                 uid: btoa(entityId),
-                available_shipping_methods: getTransformedAvailableShippingMethods(
-                    availableShippingOptions
-                ),
-                selected_shipping_method: getTransformedSelectedShippingOption(
-                    selectedShippingOption
-                ),
+                available_shipping_methods:
+                    getTransformedAvailableShippingMethods(availableShippingOptions),
+                selected_shipping_method:
+                    getTransformedSelectedShippingOption(selectedShippingOption),
                 customer_notes: customerMessage,
                 deliveryInstructions: {
                     authorityToLeave: false,

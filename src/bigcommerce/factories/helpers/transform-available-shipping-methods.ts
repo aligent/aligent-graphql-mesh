@@ -1,10 +1,8 @@
 import {
-    AvailableShippingMethod,
     BC_CheckoutAvailableShippingOption,
     BC_CheckoutSelectedShippingOption,
-    Maybe,
-    SelectedShippingMethod,
-} from '../../../meshrc/.mesh';
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { AvailableShippingMethod, Maybe, SelectedShippingMethod } from '@mesh';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformedAvailableShippingMethod = (
@@ -32,7 +30,7 @@ export const getTransformedAvailableShippingMethods = (
 ): Maybe<Array<Maybe<AvailableShippingMethod>>> => {
     if (!availableShippingOptions) return null;
 
-    return availableShippingOptions.map(availableShippingOption => {
+    return availableShippingOptions.map((availableShippingOption) => {
         return getTransformedAvailableShippingMethod(availableShippingOption);
     });
 };

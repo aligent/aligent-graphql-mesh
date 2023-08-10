@@ -1,4 +1,4 @@
-import { FilterTypeEnum } from '../../../meshrc/.mesh';
+import { FilterTypeEnum } from '@mesh';
 
 export const productsMock = {
     items: [
@@ -59,8 +59,7 @@ export const productsMock = {
                 },
             ],
             description: {
-                html:
-                    "Whether you're after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You'll stay warm and look fashionable, wherever you are.<br /> <br /> &bull; Light green heathered hoodie. <br /> &bull; Long-Sleeve, pullover.<br /> &bull; Long elliptical hem for extra coverage.<br /> &bull; Deep button placket for layering.<br /> &bull; Double rib design.<br /> &bull; Mid layer, mid weight.<br /> &bull; 98% Merino Wool / 2% Spandex",
+                html: "Whether you're after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You'll stay warm and look fashionable, wherever you are.<br /> <br /> &bull; Light green heathered hoodie. <br /> &bull; Long-Sleeve, pullover.<br /> &bull; Long elliptical hem for extra coverage.<br /> &bull; Deep button placket for layering.<br /> &bull; Double rib design.<br /> &bull; Mid layer, mid weight.<br /> &bull; 98% Merino Wool / 2% Spandex",
                 __typename: 'ComplexTextValue',
             },
             id: 1046,
@@ -156,8 +155,7 @@ export const productsMock = {
                     url_key: 'affirm-water-bottle',
                     url_suffix: '.html',
                     small_image: {
-                        url:
-                            'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/u/g/ug06-lb-0.jpg',
+                        url: 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/u/g/ug06-lb-0.jpg',
                         __typename: 'ProductImage',
                     },
                     price: {
@@ -196,8 +194,7 @@ export const productsMock = {
             ],
             sku: 'WH01',
             small_image: {
-                url:
-                    'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/w/h/wh01-green_main.jpg',
+                url: 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/w/h/wh01-green_main.jpg',
                 __typename: 'ProductImage',
             },
             stock_status: 'IN_STOCK',

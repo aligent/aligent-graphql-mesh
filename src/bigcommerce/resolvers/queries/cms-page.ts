@@ -1,4 +1,4 @@
-import { CmsPage, QueryResolvers } from '../../../meshrc/.mesh';
+import { CmsPage, QueryResolvers } from '@mesh';
 import { mockCmsPage } from '../mocks/cms-page';
 
 export const cmsPageResolver: QueryResolvers['cmsPage'] = {

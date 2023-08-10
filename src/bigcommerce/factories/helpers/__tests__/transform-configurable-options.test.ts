@@ -1,6 +1,10 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { getTransformedConfigurableOptions } from '../transform-configurable-options';
-import { BC_MultipleChoiceOption, BC_ProductOptionEdge, Maybe } from '../../../../meshrc/.mesh';
+import {
+    BC_MultipleChoiceOption,
+    BC_ProductOptionEdge,
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe } from '../../../../meshrc/.mesh';
 
 const expectResult = [
     {

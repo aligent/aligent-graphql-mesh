@@ -9,7 +9,8 @@ import {
     BC_BrandSearchFilter,
     BC_ProductAttributeSearchFilterItemConnection,
     BC_RatingSearchFilter,
-} from '../../../../meshrc/.mesh/index';
+    BC_SearchProductFilterConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
 
 const expectedResult = [
     {
@@ -83,12 +84,20 @@ const expectedResult = [
 
 describe('transform-price', () => {
     it('Transforms a BC filters into AC aggregations', () => {
-        expect(getTransformedProductAggregations(mockProductFilterBc)).toEqual(expectedResult);
+        expect(
+            getTransformedProductAggregations(
+                mockProductFilterBc as BC_SearchProductFilterConnection
+            )
+        ).toEqual(expectedResult);
     });
 
     it(`returns an empty array if there's no filters`, () => {
-        expect(getTransformedProductAggregations({})).toEqual([]);
-        expect(getTransformedProductAggregations({ edges: [{}] })).toEqual([]);
+        expect(getTransformedProductAggregations({} as BC_SearchProductFilterConnection)).toEqual(
+            []
+        );
+        expect(
+            getTransformedProductAggregations({ edges: [{}] } as BC_SearchProductFilterConnection)
+        ).toEqual([]);
     });
 
     it(`returns an empty array for missing getTransformedAggregationOptions data`, () => {

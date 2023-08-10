@@ -1,21 +1,4 @@
-import {
-    BC_BrandSearchFilter,
-    BC_CategorySearchFilter,
-    BC_OtherSearchFilter,
-    BC_PriceSearchFilter,
-    BC_ProductAttributeSearchFilter,
-    BC_RatingSearchFilter,
-    BC_SearchProductFilterConnectionResolvers,
-    BundleProduct,
-    ConfigurableProduct,
-    CurrencyEnum,
-    DownloadableProduct, GiftCardProduct, GroupedProduct,
-    Maybe,
-    Products as BC_Products,
-    RoutableInterface,
-    SimpleProduct,
-    VirtualProduct
-} from '../../meshrc/.mesh';
+import { CurrencyEnum } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
@@ -224,35 +207,3 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
-
-export type BC_SearchProductFilters = {
-    edges: Array<{
-        node:
-            | BC_ProductAttributeSearchFilter
-            | BC_BrandSearchFilter
-            | BC_PriceSearchFilter
-            | BC_RatingSearchFilter
-            | BC_CategorySearchFilter
-            | BC_OtherSearchFilter;
-    }>;
-} | null;
-
-type RemoveRoutable<T> = Omit<T, keyof RoutableInterface>;
-
-export type Products = BC_Products & {
-    items?: Maybe<
-        Array<
-            Maybe<
-                RemoveRoutable<
-                    | VirtualProduct
-                    | SimpleProduct
-                    | DownloadableProduct
-                    | BundleProduct
-                    | GroupedProduct
-                    | ConfigurableProduct
-                    | GiftCardProduct
-                >
-            >
-        >
-    >;
-};

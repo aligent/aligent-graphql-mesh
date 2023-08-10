@@ -1,4 +1,4 @@
-import { BC_MetafieldConnection, BC_PageInfo } from '../../../meshrc/.mesh';
+import { BC_MetafieldConnection, BC_PageInfo } from '@mesh/external/BigCommerceGraphqlApi';
 
 export const mockBcProducts = [
     {
@@ -11,8 +11,7 @@ export const mockBcProducts = [
         description:
             "<p>Whether you're after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You'll stay warm and look fashionable, wherever you are.&lt;br /&gt; &lt;br /&gt; &amp;bull; Light green heathered hoodie. &lt;br /&gt; &amp;bull; Long-Sleeve, pullover.&lt;br /&gt; &amp;bull; Long elliptical hem for extra coverage.&lt;br /&gt; &amp;bull; Deep button placket for layering.&lt;br /&gt; &amp;bull; Double rib design.&lt;br /&gt; &amp;bull; Mid layer, mid weight.&lt;br /&gt; &amp;bull; 98% Merino Wool / 2% Spandex</p>",
         defaultImage: {
-            url:
-                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
+            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
             urlOriginal:
                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/401/wh01-green_main__96543.1690452070.jpg',
             altText: '',
@@ -27,8 +26,7 @@ export const mockBcProducts = [
             edges: [
                 {
                     node: {
-                        url:
-                            'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
+                        url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
                         urlOriginal:
                             'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/401/wh01-green_main__96543.1690452070.jpg',
                         altText: '',
@@ -38,8 +36,7 @@ export const mockBcProducts = [
                 },
                 {
                     node: {
-                        url:
-                            'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/402/wh01-purple_main__43854.1690452461.jpg',
+                        url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/402/wh01-purple_main__43854.1690452461.jpg',
                         urlOriginal:
                             'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/402/wh01-purple_main__43854.1690452461.jpg',
                         altText: '',
@@ -268,8 +265,7 @@ export const mockBcProducts = [
                             saved: null,
                         },
                         defaultImage: {
-                            url:
-                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/491/400/45002-45c_001__86939.1690326868.jpg',
+                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/491/400/45002-45c_001__86939.1690326868.jpg',
                             urlOriginal:
                                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/491/400/45002-45c_001__86939.1690326868.jpg',
                             altText: '',
@@ -279,8 +275,7 @@ export const mockBcProducts = [
                             edges: [
                                 {
                                     node: {
-                                        url:
-                                            'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/491/400/45002-45c_001__86939.1690326868.jpg',
+                                        url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/491/400/45002-45c_001__86939.1690326868.jpg',
                                         urlOriginal:
                                             'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/491/400/45002-45c_001__86939.1690326868.jpg',
                                         altText: '',
@@ -436,8 +431,7 @@ export const mockBcProducts = [
                         entityId: 513,
                         sku: 'WH01-S-Green',
                         defaultImage: {
-                            url:
-                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
+                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
                             urlOriginal:
                                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/attribute_rule_images/54_source_1690452039.jpg',
                             altText: '',
@@ -597,8 +591,7 @@ export const mockBcProducts = [
                         entityId: 514,
                         sku: 'WH01-M-Green',
                         defaultImage: {
-                            url:
-                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
+                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
                             urlOriginal:
                                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/attribute_rule_images/57_source_1690452040.jpg',
                             altText: '',
@@ -740,8 +733,7 @@ export const mockBcProducts = [
                         entityId: 515,
                         sku: 'WH01-S-Purple',
                         defaultImage: {
-                            url:
-                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
+                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
                             urlOriginal:
                                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/attribute_rule_images/58_source_1690452040.jpg',
                             altText: '',
@@ -887,8 +879,7 @@ export const mockBcProducts = [
                         entityId: 516,
                         sku: 'WH01-M-Purple',
                         defaultImage: {
-                            url:
-                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
+                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
                             urlOriginal:
                                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/attribute_rule_images/56_source_1690452040.jpg',
                             altText: '',

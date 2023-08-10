@@ -1,4 +1,5 @@
-import { BC_ProductAvailabilityStatus, ProductStockStatus } from '../../../meshrc/.mesh';
+import { BC_ProductAvailabilityStatus } from '@mesh/external/BigCommerceGraphqlApi';
+import { ProductStockStatus } from '@mesh';
 
 export const getTransformedAvailabilityStatus = (
     availability: {

@@ -1,4 +1,4 @@
-import { MutationResolvers, RemoveItemFromCartOutput } from '../../../meshrc/.mesh';
+import { MutationResolvers, RemoveItemFromCartOutput } from '@mesh';
 import { mockRemoveItemFromCart } from '../mocks/remove-item-from-cart';
 
 export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart'] = {

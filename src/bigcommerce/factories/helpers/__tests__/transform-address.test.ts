@@ -1,5 +1,5 @@
 import { getTransformedBillingAddress, getTransformedAddress } from '../transform-address';
-import { BC_CheckoutAddressCheckboxesCustomField } from '../../../../meshrc/.mesh';
+import { BC_CheckoutAddressCheckboxesCustomField } from '@mesh/external/BigCommerceGraphqlApi';
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
 
 const expectShippingAddress = {

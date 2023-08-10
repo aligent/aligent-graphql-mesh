@@ -1,12 +1,12 @@
 import { getTransformedCartData } from '../transform-cart-data';
-import { BC_Cart, BC_CouponType } from '../../../meshrc/.mesh';
+import { BC_Cart, BC_CouponType } from '@mesh/external/BigCommerceGraphqlApi';
 
 describe('transform-cart-data', () => {
     it('Transforms BC cart data to AC', () => {
         expect(
             getTransformedCartData({
                 billingAddress: null,
-                cart: ({
+                cart: {
                     id: '13251',
                     lineItems: {
                         totalQuantity: 1,
@@ -15,7 +15,7 @@ describe('transform-cart-data', () => {
                         customItems: [],
                         giftCertificates: [],
                     },
-                } as unknown) as BC_Cart,
+                } as unknown as BC_Cart,
                 customerMessage: null,
                 coupons: [
                     {
