@@ -48,9 +48,7 @@ export const getTransformedAggregationOptions = (
     return aggregationOptions;
 };
 
-const getAggregationsFromProductAttributeSearchFilter = (
-    filter: BC_ProductAttributeSearchFilter
-): Maybe<Aggregation> => {
+const getAggregationsFromProductAttributeSearchFilter = (filter: BC_ProductAttributeSearchFilter): Maybe<Aggregation> => {
     const { filterName, name, attributes } = filter;
 
     const options = getTransformedAggregationOptions(attributes, filterName);
@@ -64,9 +62,7 @@ const getAggregationsFromProductAttributeSearchFilter = (
     };
 };
 
-export const getAggregationsFromBrandFilter = (
-    filter: BC_BrandSearchFilter
-): Maybe<Aggregation> => {
+export const getAggregationsFromBrandFilter = (filter: BC_BrandSearchFilter): Maybe<Aggregation> => {
     const { brands, name } = filter;
 
     const options = brands?.edges
@@ -79,7 +75,7 @@ export const getAggregationsFromBrandFilter = (
                   return {
                       count: productCount,
                       label: name,
-                      value: entityId,
+                      value: String(entityId),
                   };
               })
               .filter(Boolean)
@@ -112,9 +108,7 @@ const getAggregationsFromPriceFilter = (filter: BC_PriceSearchFilter): Maybe<Agg
     };
 };
 
-export const getAggregationsFromRatingFilter = (
-    filter: BC_RatingSearchFilter
-): Maybe<Aggregation> => {
+export const getAggregationsFromRatingFilter = (filter: BC_RatingSearchFilter): Maybe<Aggregation> => {
     const { name, ratings } = filter;
 
     const options = ratings?.edges
@@ -140,9 +134,7 @@ export const getAggregationsFromRatingFilter = (
     };
 };
 
-export const getTransformedProductAggregations = (
-    filters: BC_SearchProductFilterConnection
-): Maybe<Array<Maybe<Aggregation>>> => {
+export const getTransformedProductAggregations = (filters: BC_SearchProductFilterConnection): Maybe<Array<Maybe<Aggregation>>> => {
     if (!filters?.edges) return [];
     return filters.edges
         .map(filter => {

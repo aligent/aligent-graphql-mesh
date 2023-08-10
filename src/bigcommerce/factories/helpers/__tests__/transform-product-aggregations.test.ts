@@ -17,7 +17,7 @@ const expectedResult = [
         attribute_code: 'brand',
         count: 0,
         label: 'Brand',
-        options: [{ count: 1, label: 'Weller', value: 139 }],
+        options: [{ count: 1, label: 'Weller', value: '139' }],
         filterType: 'FilterEqualTypeInput',
     },
     {
@@ -84,43 +84,20 @@ const expectedResult = [
 
 describe('transform-price', () => {
     it('Transforms a BC filters into AC aggregations', () => {
-        expect(
-            getTransformedProductAggregations(
-                mockProductFilterBc as BC_SearchProductFilterConnection
-            )
-        ).toEqual(expectedResult);
+        expect(getTransformedProductAggregations(mockProductFilterBc as BC_SearchProductFilterConnection)).toEqual(expectedResult);
     });
 
     it(`returns an empty array if there's no filters`, () => {
-        expect(getTransformedProductAggregations({} as BC_SearchProductFilterConnection)).toEqual(
-            []
-        );
-        expect(
-            getTransformedProductAggregations({ edges: [{}] } as BC_SearchProductFilterConnection)
-        ).toEqual([]);
+        expect(getTransformedProductAggregations({} as BC_SearchProductFilterConnection)).toEqual([]);
+        expect(getTransformedProductAggregations({ edges: [{}] } as BC_SearchProductFilterConnection)).toEqual([]);
     });
 
     it(`returns an empty array for missing getTransformedAggregationOptions data`, () => {
-        expect(
-            getTransformedAggregationOptions(
-                { edges: null } as BC_ProductAttributeSearchFilterItemConnection,
-                'FilterName'
-            )
-        ).toEqual([]);
+        expect(getTransformedAggregationOptions({ edges: null } as BC_ProductAttributeSearchFilterItemConnection, 'FilterName')).toEqual([]);
 
-        expect(
-            getTransformedAggregationOptions(
-                { edges: null } as BC_ProductAttributeSearchFilterItemConnection,
-                ''
-            )
-        ).toEqual([]);
+        expect(getTransformedAggregationOptions({ edges: null } as BC_ProductAttributeSearchFilterItemConnection, '')).toEqual([]);
 
-        expect(
-            getTransformedAggregationOptions(
-                { edges: [{}] } as BC_ProductAttributeSearchFilterItemConnection,
-                'FilterName'
-            )
-        ).toEqual([]);
+        expect(getTransformedAggregationOptions({ edges: [{}] } as BC_ProductAttributeSearchFilterItemConnection, 'FilterName')).toEqual([]);
     });
 
     it(`returns an empty array for options if missing RatingFilter ratings`, () => {

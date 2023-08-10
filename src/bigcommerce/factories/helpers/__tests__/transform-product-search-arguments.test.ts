@@ -1,4 +1,5 @@
 import { getTransformedProductSearchArguments } from '../transform-product-search-arguments';
+import { BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 const availableFilters = {
     edges: [
@@ -39,7 +40,7 @@ const availableFilters = {
             },
         },
     ],
-};
+} as BC_SearchProductFilterConnection;
 
 const filtersEqArgs = {
     currentPage: 1,
@@ -53,9 +54,7 @@ const filtersEqArgs = {
         price: { from: '20', to: '30' },
     },
     search: 'Mona',
-    sort: { relevance: 'ASC' },
     pageSize: 24,
-    onServer: false,
 };
 
 const filtersInArgs = {
@@ -70,9 +69,7 @@ const filtersInArgs = {
         price: { from: '20', to: '30' },
     },
     search: 'Mona',
-    sort: { relevance: 'ASC' },
     pageSize: 24,
-    onServer: false,
 };
 
 describe('get-product-search-filter', () => {

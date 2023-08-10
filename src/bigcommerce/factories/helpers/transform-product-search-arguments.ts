@@ -1,11 +1,6 @@
 import { atob } from '../../../utils';
-import {
-    BC_SearchProductsFiltersInput,
-    FilterEqualTypeInput,
-    FilterRangeTypeInput,
-    QueryproductsArgs,
-} from '../../../meshrc/.mesh/index';
-import { BC_SearchProductFilters } from '../../types';
+import { FilterTypeInput, QueryproductsArgs } from '@mesh';
+import { BC_SearchProductsFiltersInput, BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 type createFilterMappingProps = {
     [key: string]: {
@@ -14,12 +9,11 @@ type createFilterMappingProps = {
     };
 } | null;
 
-const createFilterMapping = (
-    availableFilters: BC_SearchProductFilters
-): createFilterMappingProps => {
+const createFilterMapping = (availableFilters: BC_SearchProductFilterConnection | null): createFilterMappingProps => {
     if (!availableFilters?.edges || availableFilters?.edges?.length === 0) return null;
 
     return availableFilters.edges.reduce((carry, filter) => {
+        if (!filter?.node) return carry;
         const { name } = filter.node;
         return { ...carry, [name.toLowerCase()]: filter.node };
     }, {});
@@ -27,17 +21,25 @@ const createFilterMapping = (
 
 export const getTransformedProductSearchArguments = (
     acFilterArgs: QueryproductsArgs,
-    availableBcProductFilters: BC_SearchProductFilters
+    availableBcProductFilters: BC_SearchProductFilterConnection | null
 ): BC_SearchProductsFiltersInput => {
     /* These are base filters we can send to the bc productsSearch query without affecting the results.
      * If we have other filters like "categoryEntityId: []" pre added, this will affect the results */
-    const bcProductFilters = {
+    const bcProductFilters: {
+        brandEntityIds: number[];
+        categoryEntityId?: number;
+        categoryEntityIds?: number[];
+        price: object;
+        productAttributes: { attribute: string; values: string[] }[];
+        rating: object;
+        searchTerm: string;
+    } = {
         brandEntityIds: [],
         price: {},
         productAttributes: [],
         rating: {},
         searchTerm: '',
-    } as any;
+    };
 
     if (acFilterArgs.search) {
         bcProductFilters.searchTerm = acFilterArgs.search;
@@ -48,8 +50,7 @@ export const getTransformedProductSearchArguments = (
     const filterMapping = createFilterMapping(availableBcProductFilters);
 
     for (const [key, value] of Object.entries(acFilterArgs.filter)) {
-        const { eq: eqValue, in: inArray, to, from } = value as FilterEqualTypeInput &
-            FilterRangeTypeInput;
+        const { eq: eqValue, in: inArray, to, from } = value as FilterTypeInput;
 
         /* Transform filters which don't map to an available filter type*/
         if (key === 'category_uid') {
@@ -58,7 +59,7 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray) {
-                bcProductFilters.categoryEntityIds = inArray.map(uid => uid && Number(atob(uid)));
+                bcProductFilters.categoryEntityIds = inArray.map(id => Number(atob(String(id))));
             }
             continue;
         }
@@ -85,7 +86,9 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray) {
-                bcProductFilters.brandEntityIds = inArray.map(id => id && Number(atob(id)));
+                inArray.forEach(id => {
+                    bcProductFilters.brandEntityIds.push(Number(atob(String(id))));
+                });
             }
             continue;
         }
@@ -98,8 +101,10 @@ export const getTransformedProductSearchArguments = (
                 });
             }
 
-            if (inArray) {
-                bcProductFilters.productAttributes.push({ attribute: filterName, values: inArray });
+            if (inArray && inArray.length > 0) {
+                const attributeValues = inArray.map(value => String(value));
+
+                bcProductFilters.productAttributes.push({ attribute: filterName, values: attributeValues });
             }
             continue;
         }
