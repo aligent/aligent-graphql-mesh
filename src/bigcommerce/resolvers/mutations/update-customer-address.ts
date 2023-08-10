@@ -1,6 +1,6 @@
-import { MutationResolvers } from '../../../meshrc/.mesh';
+import { MutationResolvers } from '@mesh';
 
-export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress']= {
+export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: (_root, _args, _context, _info) => {
         // TODO
         return null;

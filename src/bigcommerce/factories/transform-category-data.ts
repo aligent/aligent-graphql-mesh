@@ -1,8 +1,9 @@
 import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '../../utils';
-import { CategoryTree } from '../../meshrc/.mesh';
+import { BC_CategoryConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
 
-export const getTransformedCategoriesData = (category: Category): CategoryTree => {
+export const getTransformedCategoryData = (category: Category): CategoryTree => {
     const { children, description, entityId, name, path, products, seo } = category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
@@ -10,7 +11,7 @@ export const getTransformedCategoriesData = (category: Category): CategoryTree =
 
     const children_count = children ? children.length : 0;
     return {
-        children: children ? children.map(getTransformedCategoriesData) : [],
+        children: children ? children.map(getTransformedCategoryData) : [],
         children_count: String(children_count),
         description,
         id: entityId,
@@ -25,5 +26,18 @@ export const getTransformedCategoriesData = (category: Category): CategoryTree =
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
         staged: false,
+        // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
+        __typename: 'CategoryTree',
     };
+};
+
+export const getTransformedCategoriesData = (
+    categories: BC_CategoryConnection
+): Maybe<Array<Maybe<CategoryInterface>>> => {
+    if (!categories.edges || categories?.edges.length === 0) return null;
+
+    return categories.edges.map((category) => {
+        if (!category?.node) return null;
+        return getTransformedCategoryData(category.node);
+    });
 };

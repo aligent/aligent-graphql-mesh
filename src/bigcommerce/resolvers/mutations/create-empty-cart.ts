@@ -1,4 +1,4 @@
-import { MutationResolvers } from '../../../meshrc/.mesh';
+import { MutationResolvers } from '@mesh';
 import { createEmptyCart } from '../../apis/rest/cart';
 
 export const createEmptyCartResolver: MutationResolvers['createEmptyCart'] = {

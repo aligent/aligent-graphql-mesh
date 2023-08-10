@@ -1,5 +1,0 @@
-# This currently doesn't work but is not blocking the mesh from running...
-# Will fix as part of MICRO-108
-redis:
-  host: mesh-0001-001.c0n7pa.0001.apse2.cache.amazonaws.com
-  port: '6379'

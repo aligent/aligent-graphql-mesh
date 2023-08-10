@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { getCountries, getCountriesStates } from '../../apis/rest/countries';
 import { Country, CountryStates } from '../../types';
 

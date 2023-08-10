@@ -1,4 +1,4 @@
-import { CustomerOutput, MutationResolvers } from '../../../meshrc/.mesh';
+import { CustomerOutput, MutationResolvers } from '@mesh';
 import { mockUpdateCustomer } from '../mocks/update-customer';
 
 export const updateCustomerResolver: MutationResolvers['updateCustomerV2'] = {

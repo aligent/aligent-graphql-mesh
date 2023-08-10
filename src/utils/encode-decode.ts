@@ -15,4 +15,14 @@ export const btoa = (input: string): string => {
     return Buffer.from(input).toString('base64');
 };
 
+/**
+ * Decodes a base64 encoded string
+ *
+ * mostly used to decode uid's to id's.
+ * e.g. atob("Ng==") = "6"
+ *
+ * The counterpart of btoa is atob
+ * btoa("6") = "Ng=="
+ *
+ */
 export const atob = BufferAtob;

@@ -1,4 +1,4 @@
-import { AddProductsToWishlistOutput, MutationResolvers } from '../../../meshrc/.mesh';
+import { AddProductsToWishlistOutput, MutationResolvers } from '@mesh';
 import { mockAddProductsToWishlist } from '../mocks/add-products-to-wishlist';
 
 export const addProductsToWishlistResolver: MutationResolvers['addProductsToWishlist'] = {

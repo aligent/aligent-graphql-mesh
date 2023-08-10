@@ -1,9 +1,10 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh';
 import { getDecodedMeshToken } from '../../../utils/tokens';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { getBcCustomer } from '../../apis/graphql/customer';
 import { transformCustomer } from '../../factories/transform-customer-data';
 import { getAllCustomerAddresses } from '../../apis/rest/customer';
+
 /* istanbul ignore next */
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
@@ -14,8 +15,7 @@ export const customerResolver: QueryResolvers['customer'] = {
             const bcCustomer = await getBcCustomer(bc_customer_id);
             const bcAddresses = await getAllCustomerAddresses(bc_customer_id);
             console.log(bcAddresses);
-            //Sample for using the cust imp token with the bc user id from mesh-token
-            //console.log(bcCustomer);
+
             return transformCustomer(bcCustomer, bcAddresses);
         } else {
             return logAndThrowError(new Error(`Failed to send mesh-token`));

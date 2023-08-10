@@ -1,4 +1,4 @@
-import { Customer, MutationResolvers } from '../../../meshrc/.mesh';
+import { Customer, MutationResolvers } from '@mesh';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';

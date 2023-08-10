@@ -1,4 +1,4 @@
-import { BC_Customer } from '../../../meshrc/.mesh';
+import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';

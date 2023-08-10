@@ -1,5 +1,5 @@
 import { BcAddress, BcCustomer } from '../../types';
-import { bcGet, bcPost } from './client';
+import { bcPost, bcGet } from './client';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
@@ -31,4 +31,9 @@ export const getAllCustomerAddresses = async (bcCustomerId: number): Promise<BcA
 
     const response = await bcGet(path);
     return response.data;
+};
+
+export const createCustomerAddress = async (address: BcAddress): Promise<BcAddress> => {
+    const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
+    return response.data[0];
 };
