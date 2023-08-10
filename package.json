@@ -7,7 +7,7 @@
     "dev": "yarn start:dev",
     "start:dev": "yarn codegen && STAGE=dev mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
-    "codegen": "graphql-codegen --config src/bigcommerce/codegen.ts",
+    "codegen": "env $(cat src/meshrc/.env | sed '/^#/d' | xargs) graphql-codegen --config src/bigcommerce/codegen.ts",
     "build": "yarn codegen && mesh build --throwOnInvalidConfiguration --dir ./src/meshrc",
     "build:docker": "docker build -f docker/Dockerfile -t mesh .",
     "test": "jest --coverage --passWithNoTests",
