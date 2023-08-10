@@ -5,16 +5,8 @@ import { BcSubscriber } from '../../types';
 
 /* istanbul ignore next */
 export const subscribeEmailToNewsletterResolver: MutationResolvers['subscribeEmailToNewsletter'] = {
-    resolve: async (_root, _args, _context, _info) => {
-        if (
-            !_args.email
-        ) {
-            return logAndThrowError(
-                new Error('Missing email')
-            );
-        }
-
-        const bcSubscriber = await createSubscriber(_args.email);
+    resolve: async (_root, args, _context, _info) => {
+        const bcSubscriber = await createSubscriber(args.email);
         const transformedSubscriber = await transformSubscriberToNewsletterOutput(bcSubscriber);
 
         return transformedSubscriber;
