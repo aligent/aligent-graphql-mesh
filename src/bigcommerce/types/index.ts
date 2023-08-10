@@ -1,11 +1,4 @@
 import {
-    BC_BrandSearchFilter,
-    BC_CategorySearchFilter,
-    BC_OtherSearchFilter,
-    BC_PriceSearchFilter,
-    BC_ProductAttributeSearchFilter,
-    BC_RatingSearchFilter,
-    BC_SearchProductFilterConnectionResolvers,
     BundleProduct,
     ConfigurableProduct,
     CurrencyEnum,
@@ -224,18 +217,6 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
-
-export interface BC_SearchProductFilters  {
-        edges?:
-    | BC_SearchProductFilterConnectionResolvers<BC_ProductAttributeSearchFilter>[]
-    | BC_SearchProductFilterConnectionResolvers<BC_BrandSearchFilter>[]
-    | BC_SearchProductFilterConnectionResolvers<BC_PriceSearchFilter>[]
-    | BC_SearchProductFilterConnectionResolvers<BC_RatingSearchFilter>[]
-    | BC_SearchProductFilterConnectionResolvers<BC_CategorySearchFilter>[]
-    | BC_SearchProductFilterConnectionResolvers<BC_OtherSearchFilter>[]
-    | null;
-}
-
 
 type RemoveRoutable<T> = Omit<T, keyof RoutableInterface>;
 

@@ -1,15 +1,13 @@
 import {
-    Aggregation,
-    FilterTypeEnum,
     Maybe,
     BC_ProductAttributeSearchFilter,
-    AggregationOption,
     BC_BrandSearchFilter,
     BC_PriceSearchFilter,
     BC_RatingSearchFilter,
     BC_ProductAttributeSearchFilterItemConnection,
-} from '../../../meshrc/.mesh/index';
-import { BC_SearchProductFilters } from '../../types';
+    BC_SearchProductFilterConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { Aggregation, FilterTypeEnum, AggregationOption } from '@mesh';
 
 const getFilterInputType = (typename?: string): FilterTypeEnum => {
     if (typename === 'PriceSearchFilter') {
@@ -62,7 +60,6 @@ const getAggregationsFromProductAttributeSearchFilter = (
         count: attributes?.edges ? attributes.edges.length : 0,
         label: name,
         options,
-        // @ts-expect-error: the AC proptypes don't handle the __typename
         filterType: getFilterInputType(filter.__typename),
     };
 };
@@ -93,7 +90,6 @@ export const getAggregationsFromBrandFilter = (
         count: 0,
         label: name,
         options,
-        // @ts-expect-error: the AC proptypes don't handle the __typename
         filterType: getFilterInputType(filter.__typename),
     };
 };
@@ -112,7 +108,6 @@ const getAggregationsFromPriceFilter = (filter: BC_PriceSearchFilter): Maybe<Agg
         count: null,
         label: name,
         options: [],
-        // @ts-expect-error: the AC proptypes don't handle the __typename
         filterType: getFilterInputType(filter.__typename),
     };
 };
@@ -141,13 +136,12 @@ export const getAggregationsFromRatingFilter = (
         count: 0,
         label: name,
         options,
-        // @ts-expect-error: the AC proptypes don't handle the __typename
         filterType: getFilterInputType(filter.__typename),
     };
 };
 
 export const getTransformedProductAggregations = (
-    filters: BC_SearchProductFilters
+    filters: BC_SearchProductFilterConnection
 ): Maybe<Array<Maybe<Aggregation>>> => {
     if (!filters?.edges) return [];
     return filters.edges

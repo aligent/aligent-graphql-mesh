@@ -1,5 +1,9 @@
-import { BC_Product, BC_ProductConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { ConfigurableProduct, Maybe, ProductInterface, Products } from '../../meshrc/.mesh';
+import {
+    BC_Product,
+    BC_ProductConnection,
+    BC_SearchProductFilterConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '../../utils';
 import { getTransformedVariants } from './helpers/transform-variants';
@@ -14,7 +18,6 @@ import { getTransformedAvailabilityStatus } from './helpers/transform-stock-stat
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
 import { logAndThrowError } from '../../utils/error-handling';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
-import { BC_SearchProductFilters } from '../types';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
@@ -88,7 +91,7 @@ export const getTransformedProductData = (
 
 export const getTransformedProductsData = (bcProducts: {
     products: BC_ProductConnection;
-    filters: BC_SearchProductFilters;
+    filters: BC_SearchProductFilterConnection;
 }): Maybe<Products> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;
@@ -96,7 +99,7 @@ export const getTransformedProductsData = (bcProducts: {
     return {
         aggregations: filters?.edges ? getTransformedProductAggregations(filters) : null,
         items: edges
-            ? edges.map((product) => {
+            ? edges.map(product => {
                   if (!product) return null;
                   return getTransformedProductData(product.node);
               })
