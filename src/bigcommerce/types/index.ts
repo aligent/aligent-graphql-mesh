@@ -1,6 +1,4 @@
-import {
-    CurrencyEnum,
-} from '../../meshrc/.mesh';
+import { CurrencyEnum } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
