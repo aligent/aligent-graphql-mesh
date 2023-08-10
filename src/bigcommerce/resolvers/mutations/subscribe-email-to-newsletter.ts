@@ -1,5 +1,4 @@
 import { MutationResolvers, SubscribeEmailToNewsletterOutput } from '@mesh';
-import { logAndThrowError } from '../../../utils/error-handling';
 import { createSubscriber } from '../../apis/rest/subscriber';
 import { BcSubscriber } from '../../types';
 
