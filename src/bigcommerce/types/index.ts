@@ -217,23 +217,3 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
-
-type RemoveRoutable<T> = Omit<T, keyof RoutableInterface>;
-
-export type Products = BC_Products & {
-    items?: Maybe<
-        Array<
-            Maybe<
-                RemoveRoutable<
-                    | VirtualProduct
-                    | SimpleProduct
-                    | DownloadableProduct
-                    | BundleProduct
-                    | GroupedProduct
-                    | ConfigurableProduct
-                    | GiftCardProduct
-                >
-            >
-        >
-    >;
-};
