@@ -1,10 +1,5 @@
-import {
-    BC_Image,
-    BC_ImageEdge,
-    Maybe,
-    MediaGalleryEntry,
-    ProductImage,
-} from '../../../meshrc/.mesh';
+import { BC_ImageEdge, BC_Image } from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe, MediaGalleryEntry, ProductImage } from '@mesh';
 
 export const getTransformedImage = (
     image?: Maybe<BC_Image>,

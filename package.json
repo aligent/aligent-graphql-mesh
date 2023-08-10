@@ -5,9 +5,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "yarn start:dev",
-    "start:dev": "STAGE=dev mesh dev --dir ./src/meshrc",
+    "start:dev": "yarn codegen && STAGE=dev mesh dev --dir ./src/meshrc",
     "start": "mesh start --dir ./src/meshrc",
-    "build": "mesh build --throwOnInvalidConfiguration --dir ./src/meshrc",
+    "codegen": "env $(cat src/meshrc/.env | sed '/^#/d' | xargs) graphql-codegen --config src/bigcommerce/codegen.ts",
+    "build": "mesh build --throwOnInvalidConfiguration --dir ./src/meshrc && yarn codegen",
     "build:docker": "docker build -f docker/Dockerfile -t mesh .",
     "test": "jest --coverage --passWithNoTests",
     "lint": "eslint --color . --ext .ts",
@@ -17,6 +18,7 @@
     "check-types": "tsc --pretty --noEmit"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
     "@graphql-mesh/cli": "^0.82.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",

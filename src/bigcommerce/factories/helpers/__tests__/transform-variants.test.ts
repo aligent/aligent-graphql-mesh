@@ -1,6 +1,6 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { getTransformedVariants } from '../transform-variants';
-import { BC_PageInfo, BC_VariantConnection } from '../../../../meshrc/.mesh';
+import { BC_PageInfo, BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 const expectResult = [
     {
@@ -14,8 +14,7 @@ const expectResult = [
             media_gallery_entries: [
                 {
                     disabled: false,
-                    file:
-                        'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
+                    file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
                     label: '',
                     position: 0,
                     uid: '',
@@ -54,8 +53,7 @@ const expectResult = [
             media_gallery_entries: [
                 {
                     disabled: false,
-                    file:
-                        'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
+                    file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
                     label: '',
                     position: 0,
                     uid: '',
@@ -94,8 +92,7 @@ const expectResult = [
             media_gallery_entries: [
                 {
                     disabled: false,
-                    file:
-                        'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
+                    file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
                     label: '',
                     position: 0,
                     uid: '',
@@ -134,8 +131,7 @@ const expectResult = [
             media_gallery_entries: [
                 {
                     disabled: false,
-                    file:
-                        'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
+                    file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
                     label: '',
                     position: 0,
                     uid: '',

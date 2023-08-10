@@ -1,10 +1,5 @@
-import {
-    BC_MetafieldConnection,
-    BC_MetafieldEdge,
-    Maybe,
-    QueryResolvers,
-    StoreConfig,
-} from '../../../meshrc/.mesh';
+import { BC_MetafieldConnection, BC_MetafieldEdge } from '@mesh/external/BigCommerceGraphqlApi';
+import { Maybe, QueryResolvers, StoreConfig } from '@mesh';
 import { getChannelMetafields } from '../../apis/graphql/channel';
 
 const NAMESPACE: string = 'pwa_config';
@@ -67,7 +62,7 @@ export function findMetafieldValueByKey(
     metafields: Maybe<BC_MetafieldEdge>[],
     metafieldKey: string
 ): string {
-    const metafieldValue = metafields.find(node => {
+    const metafieldValue = metafields.find((node) => {
         return node?.node.key === metafieldKey;
     });
     return metafieldValue ? metafieldValue.node?.value : '';
