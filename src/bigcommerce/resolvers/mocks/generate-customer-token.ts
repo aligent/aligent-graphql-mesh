@@ -1,4 +1,4 @@
 export const mockExportCustomerToken = {
-    token: "MOCKeyJraWQiOiIxIiwiYWxnI",
-    __typename: "CustomerToken",
+    token: 'MOCKeyJraWQiOiIxIiwiYWxnI',
+    __typename: 'CustomerToken',
 };
