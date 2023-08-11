@@ -48,6 +48,5 @@ app.use('/healthcheck', (_req, res) => {
 });
 
 app.listen(4000, () => {
-    console.log(allowedOrigins);
     console.log(`Mesh listening on port 4000`);
 });
