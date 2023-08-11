@@ -25,7 +25,8 @@ const corsConfiguration: cors.CorsOptions  = {
         'Authorization',
         'preview-version',
         'x-recaptcha',
-        'mesh-token'
+        'mesh-token',
+        'store'
     ]
 };
 app.use(cors(corsConfiguration));
