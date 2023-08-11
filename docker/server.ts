@@ -5,19 +5,19 @@ import cors from 'cors';
 const app = express();
 
 let allowedOrigins: (string | RegExp)[] = [
-    new RegExp('.*\.dev\.aligent\.consulting$'),
-    new RegExp('.*\.local\.pwadev$'),
+    new RegExp('.*.dev.aligent.consulting$'),
+    new RegExp('.*.local.pwadev$'),
 ];
 
 if (process.env.ORIGINS) {
     const origins = process.env.ORIGINS.split(',');
-    allowedOrigins = allowedOrigins.concat(origins)
+    allowedOrigins = allowedOrigins.concat(origins);
 }
 
 /*
-* Configure CORS and add middleware for use on all routes
-*/
-const corsConfiguration: cors.CorsOptions  = {
+ * Configure CORS and add middleware for use on all routes
+ */
+const corsConfiguration: cors.CorsOptions = {
     origin: allowedOrigins,
     credentials: true,
     allowedHeaders: [
@@ -26,14 +26,14 @@ const corsConfiguration: cors.CorsOptions  = {
         'preview-version',
         'x-recaptcha',
         'mesh-token',
-        'store'
-    ]
+        'store',
+    ],
 };
 app.use(cors(corsConfiguration));
 
 /*
-* Respond to all OPTIONS requests with CORS headers
-*/
+ * Respond to all OPTIONS requests with CORS headers
+ */
 app.options('*', cors(corsConfiguration));
 
 /**
