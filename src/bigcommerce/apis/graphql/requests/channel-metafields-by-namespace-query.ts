@@ -1,7 +1,7 @@
 import { GraphQlQuery } from '../../../types';
 
 /* istanbul ignore file */
-export const channelMetafieldsByNamespaceQuery = (namespace: string) : GraphQlQuery => {
+export const channelMetafieldsByNamespaceQuery = (namespace: string): GraphQlQuery => {
     return {
         query: `query {
                   channel {

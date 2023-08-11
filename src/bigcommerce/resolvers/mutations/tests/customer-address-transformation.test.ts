@@ -1,5 +1,8 @@
-import {bcAddress, customerAddress} from "./__data__/customer-address-data";
-import { transformCustomerAddress, transformBcAddress } from '../../../factories/transform-customer-address-data';
+import { bcAddress, customerAddress } from './__data__/customer-address-data';
+import {
+    transformCustomerAddress,
+    transformBcAddress,
+} from '../../../factories/transform-customer-address-data';
 
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress into BCAddress', () => {
@@ -8,7 +11,7 @@ describe('Customer Address Transformation tests', () => {
     });
 
     test('Transform BCAddress into CustomerAddress', () => {
-        const transformed = transformBcAddress(bcAddress)
+        const transformed = transformBcAddress(bcAddress);
         expect(transformed).toEqual(customerAddress);
     });
 });

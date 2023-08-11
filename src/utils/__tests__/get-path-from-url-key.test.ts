@@ -17,13 +17,13 @@ const plpUrlKeys = [
 
 describe('get-path-from-url-key', () => {
     test('returns the correct path from a pdp url_key', () => {
-        pdpUrlKeys.forEach(urlKey => {
+        pdpUrlKeys.forEach((urlKey) => {
             expect(getPathFromUrlKey(urlKey)).toEqual('/mona-pullover-hoodlie');
         });
     });
 
     test('returns the correct path from a plp url_key', () => {
-        plpUrlKeys.forEach(urlKey => {
+        plpUrlKeys.forEach((urlKey) => {
             expect(getPathFromUrlKey(urlKey)).toEqual('/women/mona-pullover-hoodlie');
         });
     });
