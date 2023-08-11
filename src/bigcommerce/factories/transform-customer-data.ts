@@ -1,22 +1,23 @@
-import { Customer } from "../../meshrc/.mesh";
-import { BcAddress } from "../types";
-import { getTransformedCustomerAddresses } from "./helpers/transform-customer-addresses";
+import { Customer } from '../../meshrc/.mesh';
+import { BcAddressRest } from '../types';
+import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
+import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 
-export const transformCustomer = (bcCustomer: BC_Customer, bcAddresses: BcAddress[]): Customer => {
+export const transformCustomer = (bcCustomer: BC_Customer, bcAddresses: BcAddressRest[]): Customer => {
+    const { firstName, lastName, email } = bcCustomer;
+
     return {
         addresses: getTransformedCustomerAddresses(bcAddresses),
-        email: bcCustomer.email,
-        is_subscribed: false,
-        wishlists: [
-            {
-                id: '302',
-                sharing_code: '5UpdY',
-                items_v2: {
-                    items: [],
-                },
-                visibility: 'PRIVATE',
-            },
-        ],
+        email,
+        firstname: firstName,
+        lastname: lastName,
+        is_subscribed: false, // BC SF api doesnt have this, may need to get from https://api.bigcommerce.com/stores/{store_hash}/v3/customers/subscribers
+        allow_remote_shopping_assistance: false,
+        // wishlists: getTransformedWishlists(bcCustomer.wishlists),
+        wishlist: {
+            visibility: 'PRIVATE',
+        },
+        // TF does new need reviews
         reviews: {
             items: [],
             page_info: {
@@ -25,10 +26,5 @@ export const transformCustomer = (bcCustomer: BC_Customer, bcAddresses: BcAddres
                 total_pages: null,
             },
         },
-        wishlist: {
-            visibility: 'PRIVATE',
-        },
-        allow_remote_shopping_assistance: false,
     };
 };
-

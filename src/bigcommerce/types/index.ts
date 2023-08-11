@@ -1,4 +1,4 @@
-import { CurrencyEnum } from '../../meshrc/.mesh';
+import { CountryCodeEnum, CurrencyEnum } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
@@ -71,7 +71,7 @@ export interface BcProduct {
                         utc: string;
                     };
                 };
-            }
+            },
         ];
         pageInfo: {
             hasNextPage: boolean;
@@ -158,9 +158,12 @@ export interface BcCategory {
     metaDescription?: string;
     pageTitle?: string;
     products?: {
-        collectionInfo?: {
-            totalItems?: number;
-        } | undefined | null;
+        collectionInfo?:
+            | {
+                  totalItems?: number;
+              }
+            | undefined
+            | null;
     };
     seo?: {
         metaDescription: string;
@@ -169,24 +172,23 @@ export interface BcCategory {
 }
 
 export interface BcAddress {
-    id?: number
-    customer_id: number,
-    first_name: string,
-    last_name: string,
-    city: string,
-    country_code: string,
-    address1: string,
-    state_or_province: string,
-    postal_code: string,
-
-    address2?: string,
-    phone?: string,
-    address_type?: string,
-    company?: string,
+    id?: number;
+    customer_id: number;
+    first_name: string;
+    last_name: string;
+    city: string;
+    country_code: string;
+    address1: string;
+    state_or_province: string;
+    postal_code: string;
+    address2?: string;
+    phone?: string;
+    address_type?: string;
+    company?: string;
     form_fields?: Array<{
-        name: string,
-        value: string|number|string[]
-    }>
+        name: string;
+        value: string | number | string[];
+    }>;
 }
 
 export interface DecodedCustomerImpersonationToken {
@@ -208,7 +210,7 @@ export interface MeshToken {
 }
 export interface Category extends BcCategory, BcCategoryTree {}
 
-export interface BcAddress {
+export interface BcAddressRest {
     id: number;
     address1: string;
     address2: string;

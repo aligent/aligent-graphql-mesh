@@ -9,11 +9,15 @@ import { getAllCustomerAddresses } from '../../apis/rest/customer';
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         //  const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
-        console.log(context.headers.authorization, 'heed');
-        try{
+        try {
             const { bc_customer_id } = getDecodedMeshToken(context.headers.authorization);
-            const bcCustomer = await getBcCustomer(bc_customer_id);
-            const bcAddresses = await getAllCustomerAddresses(bc_customer_id);
+
+            const [bcCustomer, bcAddresses] = await Promise.all([
+                getBcCustomer(bc_customer_id),
+                getAllCustomerAddresses(bc_customer_id),
+            ]);
+            console.log(bcCustomer);
+            console.log(bcAddresses);
 
             return transformCustomer(bcCustomer, bcAddresses);
         } catch {
