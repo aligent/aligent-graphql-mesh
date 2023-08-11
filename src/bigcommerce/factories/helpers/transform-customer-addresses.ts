@@ -18,24 +18,6 @@ export const getTransformedCustomerAddresses = (
             phone,
         } = address;
 
-console.log({
-    id: id,
-    firstname: first_name,
-    lastname: last_name,
-    company,
-    city,
-    street: [address1],
-    region: {
-        region: state_or_province,
-        region_code: null, // BC doesnt return this
-        region_id: null, // BC doesnt return this
-    },
-    postcode: postal_code,
-    country_code: country_code as CountryCodeEnum,
-    telephone: phone,
-    default_billing: null, // BC doesnt return this
-    default_shipping: null, // BC doesnt return this
-});
         return {
             id: id,
             firstname: first_name,
@@ -56,3 +38,4 @@ console.log({
         };
     });
 };
+

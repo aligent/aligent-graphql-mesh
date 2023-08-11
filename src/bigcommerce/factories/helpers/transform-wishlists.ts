@@ -1,19 +1,18 @@
 import { Maybe, Wishlist, WishlistItemInterface, WishlistVisibilityEnum } from "@mesh";
-import { BC_WishlistConnection, BC_WishlistItemEdge } from "@mesh/external/BigCommerceGraphqlApi";
-import { getTransformedProductData } from "../transform-products-data";
+import { BC_WishlistConnection, BC_WishlistItemConnection } from "@mesh/external/BigCommerceGraphqlApi";
 
-export const getTransformedWishlists = (wishlists: BC_WishlistConnection): Wishlist[] => {
+export const getTransformedWishlists = (wishlists: BC_WishlistConnection):  Array<Maybe<Wishlist>> => {
     if(!wishlists.edges) return []
     
     return wishlists.edges.map((edge) => {
         if(!edge?.node || !edge?.node.items.edges) return null
         const { entityId, isPublic, name, token } = edge.node
         return {
-            id: entityId,
+            id: String(entityId),
             name,
             visibility: getWishListVisibility(isPublic),
             items_v2:{
-                items: getTransformedWishListItems(edge?.node.items.edges),
+                items: getTransformedWishListItems(edge.node.items),
                 page_info: {
                     page_size: null,
                     total_pages: null,
@@ -22,25 +21,25 @@ export const getTransformedWishlists = (wishlists: BC_WishlistConnection): Wishl
             },
             items_count: edge?.node.items.edges?.length,
             sharing_code: token, // Im not sure if this is the same as AC sharing code
-            updated_at: "",
+            updated_at: "", 
 
              
         }
     })
 }
 
-const getTransformedWishListItems = (wishListItems: Maybe<Array<Maybe<BC_WishlistItemEdge>>>): Maybe<WishlistItemInterface>[] => {
-    if(!wishListItems) return []
-    return wishListItems.map((item) => {
-        if(!item?.node) return null
-        const { entityId } = item.node
+const getTransformedWishListItems = (wishListItems: BC_WishlistItemConnection): Array<Maybe<WishlistItemInterface>>=> {
+    if(!wishListItems.edges) return []
+    return wishListItems.edges.map((wishlistItem) => {
+        if(!wishlistItem?.node) return null
+        const { entityId } = wishlistItem.node
         return {
            id: String(entityId),
            quantity: 1,
            added_at: "null",
            customizable_options: [],
-           description: item.node.product.description,
-           product: getTransformedProductData(item.node.product)
+           description: wishlistItem.node.product.description,
+           product: null // todo product transform
         }
     })
 }
