@@ -16,10 +16,12 @@ export const customerResolver: QueryResolvers['customer'] = {
                 getBcCustomer(bc_customer_id),
                 getAllCustomerAddresses(bc_customer_id),
             ]);
-            console.log(bcCustomer);
-            console.log(bcAddresses);
+            // console.log(bcCustomer);
+            // console.log(bcAddresses);
 
-            return transformCustomer(bcCustomer, bcAddresses);
+            const response = transformCustomer(bcCustomer, bcAddresses);
+            console.log(response);
+            return response;
         } catch {
             return logAndThrowError(new Error(`Failed to send mesh-token`));
         }
