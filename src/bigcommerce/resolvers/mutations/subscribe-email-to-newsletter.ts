@@ -6,15 +6,14 @@ import { BcSubscriber } from '../../types';
 export const subscribeEmailToNewsletterResolver: MutationResolvers['subscribeEmailToNewsletter'] = {
     resolve: async (_root, args, _context, _info) => {
         const bcSubscriber = await createSubscriber(args.email);
-        const newsletterOutput = await transformSubscriberToNewsletterOutput(bcSubscriber);
 
-        return newsletterOutput;
+        return transformSubscriberToNewsletterOutput(bcSubscriber);
     },
 };
 
-export async function transformSubscriberToNewsletterOutput(
+export function transformSubscriberToNewsletterOutput(
     bcSubscriber: BcSubscriber
-): Promise<SubscribeEmailToNewsletterOutput> {
+): SubscribeEmailToNewsletterOutput {
     return {
         //BigCom does not provide a status, but if the returned subscriber has an email, it means the subscription was successful.
         status: bcSubscriber.email ? 'SUBSCRIBED' : 'UNCONFIRMED',
