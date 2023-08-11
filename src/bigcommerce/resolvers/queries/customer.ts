@@ -39,7 +39,7 @@ export const customerResolver: QueryResolvers['customer'] = {
                 allow_remote_shopping_assistance: false,
             };
         } else {
-            return logAndThrowError(new Error(`Failed to send mesh-token`));
+            return logAndThrowError('Need to send mesh token');
         }
     },
 };
