@@ -1,4 +1,5 @@
-import { Maybe, Products, QueryResolvers } from '@mesh';
+import { Products, QueryResolvers } from '@mesh';
+
 import {
     getTransformedProductData,
     getTransformedProductsData,
@@ -8,7 +9,7 @@ import { getBcProductsGraphql } from '../../apis/graphql/product';
 import { atob, getPathFromUrlKey } from '../../../utils';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (_root, args, _context, _info): Promise<Maybe<Products>> => {
+    resolve: async (_root, args, _context, _info): Promise<Products | null> => {
         //const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
         const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
@@ -26,6 +27,8 @@ export const productsResolver: QueryResolvers['products'] = {
         };
 
         const bcProducts = await getBcProductsGraphql(filters);
+        if (!bcProducts) return null;
+
         return getTransformedProductsData(bcProducts);
     },
 };

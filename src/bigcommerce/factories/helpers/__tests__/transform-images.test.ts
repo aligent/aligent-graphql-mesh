@@ -1,5 +1,9 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { getTransformedMediaGalleryEntries, getTransformedSmallImage } from '../transform-images';
+import {
+    DEFAULT_IMAGE,
+    getTransformedMediaGalleryEntries,
+    getTransformedSmallImage,
+} from '../transform-images';
 import { BC_ImageEdge } from '@mesh/external/BigCommerceGraphqlApi';
 
 describe('transform-image', () => {
@@ -9,9 +13,9 @@ describe('transform-image', () => {
         });
     });
 
-    it(`Returns a url with a empty string if there is no default image`, () => {
+    it(`Returns a default image when no default image exists`, () => {
         expect(getTransformedSmallImage(null)).toEqual({
-            url: '',
+            url: DEFAULT_IMAGE,
         });
     });
 
@@ -20,6 +24,7 @@ describe('transform-image', () => {
             {
                 disabled: false,
                 file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
+                id: 12573090,
                 label: '',
                 position: 0,
                 uid: '',
@@ -27,6 +32,7 @@ describe('transform-image', () => {
             {
                 disabled: false,
                 file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/402/wh01-purple_main__43854.1690452461.jpg',
+                id: 13020129,
                 label: '',
                 position: 1,
                 uid: '',

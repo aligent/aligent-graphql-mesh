@@ -1,5 +1,9 @@
-import { BC_Product, BC_ProductConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { ConfigurableProduct, Maybe, ProductInterface, Products } from '../../meshrc/.mesh';
+import {
+    BC_Product,
+    BC_ProductConnection,
+    BC_SearchProductFilterConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '../../utils';
 import { getTransformedVariants } from './helpers/transform-variants';
@@ -12,8 +16,8 @@ import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
-import { productsMock } from '../resolvers/mocks/products';
 import { logAndThrowError } from '../../utils/error-handling';
+import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
 
 export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
@@ -85,12 +89,15 @@ export const getTransformedProductData = (
     }
 };
 
-export const getTransformedProductsData = (bcProducts: BC_ProductConnection): Maybe<Products> => {
-    const { collectionInfo, edges } = bcProducts;
+export const getTransformedProductsData = (bcProducts: {
+    products: BC_ProductConnection;
+    filters: BC_SearchProductFilterConnection;
+}): Maybe<Products> => {
+    const { products, filters } = bcProducts;
+    const { collectionInfo, edges } = products;
 
     return {
-        // @todo get "aggregations/filters" from site.search.productSearch when following up for category products
-        aggregations: productsMock.aggregations,
+        aggregations: filters?.edges ? getTransformedProductAggregations(filters) : null,
         items: edges
             ? edges.map((product) => {
                   if (!product) return null;
