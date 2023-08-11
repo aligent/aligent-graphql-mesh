@@ -1,10 +1,17 @@
-import { BC_Product, BC_ProductConnection, BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import {
+    BC_Product,
+    BC_ProductConnection,
+    BC_SearchProductFilterConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
 import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '../../utils';
 import { getTransformedVariants } from './helpers/transform-variants';
 import { getTransformedPriceRange, getTransformedPrices } from './helpers/transform-product-prices';
-import { getTransformedMediaGalleryEntries, getTransformedSmallImage } from './helpers/transform-images';
+import {
+    getTransformedMediaGalleryEntries,
+    getTransformedSmallImage,
+} from './helpers/transform-images';
 import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
@@ -22,7 +29,9 @@ export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'Configura
     }
 };
 
-export const getTransformedProductData = (bcProduct: BC_Product): Maybe<ProductInterface | ConfigurableProduct> => {
+export const getTransformedProductData = (
+    bcProduct: BC_Product
+): Maybe<ProductInterface | ConfigurableProduct> => {
     if (!bcProduct) return null;
 
     try {
@@ -90,7 +99,7 @@ export const getTransformedProductsData = (bcProducts: {
     return {
         aggregations: filters?.edges ? getTransformedProductAggregations(filters) : null,
         items: edges
-            ? edges.map(product => {
+            ? edges.map((product) => {
                   if (!product) return null;
                   return getTransformedProductData(product.node);
               })
