@@ -210,3 +210,15 @@ export interface MeshToken {
     exp: number;
 }
 export interface Category extends BcCategory, BcCategoryTree {}
+
+export interface BcSubscriber {
+    email: string;
+    first_name: string;
+    last_name: string;
+    source: string;
+    order_id: number;
+    channel_id: number;
+    id: number;
+    date_modified: string;
+    date_created: string;
+}

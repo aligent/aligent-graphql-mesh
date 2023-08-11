@@ -3,24 +3,28 @@ import { isAxiosError } from 'axios';
 /**
  * Log and throw an error
  *
- * Extra context can be provided but isn't necesarry in most instances (the stack trace is
- * reasonably userful)
+ * Extra context can be provided but isn't necessary in most instances (the stack trace is
+ * reasonably useful)
  *
  * @param error the error to throw
  * @param context a map of extra contextual information
  */
 export const logAndThrowError = (error: Error, context?: Record<string, string>) => {
-    const messages = [`ERROR: ${JSON.stringify(error)}`];
+    const logMessages = [`ERROR: ${JSON.stringify(error)}`];
 
     if (context !== undefined) {
-        messages.push(`Context: ${JSON.stringify(context)}`);
+        logMessages.push(`Context: ${JSON.stringify(context)}`);
     }
 
+    let userMessage = 'Unknown Server Error';
     if (isAxiosError(error)) {
-        messages.push(JSON.stringify(error.response));
+        if (error.response?.data?.title) {
+            userMessage = error.response.data.title;
+        }
+        logMessages.push(JSON.stringify(userMessage));
     }
 
-    const message = messages.join('\n');
+    const message = logMessages.join('\n');
     console.log(message);
-    throw new Error(message);
+    throw new Error(userMessage);
 };
