@@ -20,6 +20,7 @@ definitions:
         script:
           - FORCE_COLOR=true
           - yarn lint
+          - yarn format
           - yarn check-types
 
     - step: &build
