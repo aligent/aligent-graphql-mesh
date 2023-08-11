@@ -34,8 +34,7 @@ const expectResult = [
             name: 'Mona Pullover Hoodlie',
             sku: 'WH01-S-Green',
             small_image: {
-                url:
-                    'https://cdn11.bigcommerce.com/s-xxazhvt7gd/product_images/attribute_rule_images/54_thumb_1690452039.jpg',
+                url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/product_images/attribute_rule_images/54_thumb_1690452039.jpg',
                 label: 'Mona Pullover Hoodlie',
             },
             categories: [],

@@ -1,8 +1,8 @@
-import {isCustomerAddressValid} from "../create-customer-address";
+import { isCustomerAddressValid } from '../create-customer-address';
 import {
     customerAddress,
-    customerAddressMissingRequiredFields
-} from "./__data__/customer-address-data";
+    customerAddressMissingRequiredFields,
+} from './__data__/customer-address-data';
 
 describe('Customer Address Validation tests', () => {
     test('Missing everything', () => {
@@ -19,5 +19,4 @@ describe('Customer Address Validation tests', () => {
         const isValid = isCustomerAddressValid(customerAddressMissingRequiredFields);
         expect(isValid).toEqual(false);
     });
-
 });

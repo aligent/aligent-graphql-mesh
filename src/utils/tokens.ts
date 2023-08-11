@@ -8,9 +8,7 @@ export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
 ): DecodedCustomerImpersonationToken => {
     try {
-        return decode(
-            customerImpersonationToken
-        ) as DecodedCustomerImpersonationToken;
+        return decode(customerImpersonationToken) as DecodedCustomerImpersonationToken;
     } catch (error) {
         return logAndThrowError(
             new Error(`customerImpersonationToken could not be decoded ${error}`)

@@ -20,6 +20,7 @@ definitions:
         script:
           - FORCE_COLOR=true
           - yarn lint
+          - yarn format
           - yarn check-types
 
     - step: &build
@@ -56,9 +57,9 @@ pipelines:
       - step: *install
       - step: *build
       - parallel:
-        - step: *build-container
-        - step: *code-quality
-        - step: *test
+          - step: *build-container
+          - step: *code-quality
+          - step: *test
 
   branches:
     main:

@@ -8,7 +8,7 @@ import { isAxiosError } from 'axios';
  *
  * @param error the error to throw
  * @param context a map of extra contextual information
-*/
+ */
 export const logAndThrowError = (error: Error, context?: Record<string, string>) => {
     const messages = [`ERROR: ${JSON.stringify(error)}`];
 
@@ -20,7 +20,7 @@ export const logAndThrowError = (error: Error, context?: Record<string, string>)
         messages.push(JSON.stringify(error.response));
     }
 
-    const message = messages.join('\n')
+    const message = messages.join('\n');
     console.log(message);
     throw new Error(message);
-}
+};
