@@ -4,13 +4,14 @@ import cors from 'cors';
 
 const app = express();
 
-const allowedOrigins: (string | RegExp)[] = [
+let allowedOrigins: (string | RegExp)[] = [
     new RegExp('.*\.dev\.aligent\.consulting$'),
     new RegExp('.*\.local\.pwadev$'),
 ];
 
-if (process.env.ORIGIN) {
-    allowedOrigins.push(process.env.ORIGIN);
+if (process.env.ORIGINS) {
+    const origins = process.env.ORIGINS.split(',');
+    allowedOrigins = allowedOrigins.concat(origins)
 }
 
 /*
@@ -47,5 +48,6 @@ app.use('/healthcheck', (_req, res) => {
 });
 
 app.listen(4000, () => {
+    console.log(allowedOrigins);
     console.log(`Mesh listening on port 4000`);
 });
