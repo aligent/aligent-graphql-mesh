@@ -9,15 +9,14 @@ import { getAllCustomerAddresses } from '../../apis/rest/customer';
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         //  const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
-
-        if (context.headers['mesh-token']) {
-            const { bc_customer_id } = getDecodedMeshToken(context.headers['mesh-token']);
+        console.log(context.headers.authorization, 'heed');
+        try{
+            const { bc_customer_id } = getDecodedMeshToken(context.headers.authorization);
             const bcCustomer = await getBcCustomer(bc_customer_id);
             const bcAddresses = await getAllCustomerAddresses(bc_customer_id);
-            console.log(bcAddresses);
 
             return transformCustomer(bcCustomer, bcAddresses);
-        } else {
+        } catch {
             return logAndThrowError(new Error(`Failed to send mesh-token`));
         }
     },

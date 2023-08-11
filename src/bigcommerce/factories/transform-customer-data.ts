@@ -1,4 +1,4 @@
-import { BC_Customer, Customer } from "../../meshrc/.mesh";
+import { Customer } from "../../meshrc/.mesh";
 import { BcAddress } from "../types";
 import { getTransformedCustomerAddresses } from "./helpers/transform-customer-addresses";
 

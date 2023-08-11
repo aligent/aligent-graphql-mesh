@@ -8,9 +8,7 @@ export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
 ): DecodedCustomerImpersonationToken => {
     try {
-        return decode(
-            customerImpersonationToken
-        ) as DecodedCustomerImpersonationToken;
+        return decode(customerImpersonationToken) as DecodedCustomerImpersonationToken;
     } catch (error) {
         return logAndThrowError(
             new Error(`customerImpersonationToken could not be decoded ${error}`)
@@ -20,6 +18,10 @@ export const getDecodedCustomerImpersonationToken = (
 
 export const getDecodedMeshToken = (meshToken: string): MeshToken => {
     try {
+        if (meshToken.toLowerCase().startsWith('bearer')) {
+            const splitMeshToken = meshToken.split(' ')[1];
+            return verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
+        }
         return verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
     } catch (error) {
         return logAndThrowError(new Error(`mesh-token could not be decoded ${error}`));

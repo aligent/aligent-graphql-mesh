@@ -56,6 +56,20 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
+`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific.
+
+Currently this isnt the normal JWT and is instead an admin version called the `customer impersonation token`. We were generating this in a plugin and setting it on `context.cache`, this caused issues on staging that are currently being investigated. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
+
+e.g.
+``const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        'x-bc-customer-id': bcCustomerId,
+    };``
+
+`X_AUTH_TOKEN`= This is an token for the BC REST APIS, it can be created in the BC Admin and can have scopes applied, e.g. will only work with the products API. This specific one is full access for the sake of development and will not be used in production.
+
+`DEBUG`= This is only used for development and adds more details to the logs via console.
+
 #### TODO (NO ENV REQUIRED YET)
 
 ## Generating an SSL Certificate
