@@ -12,9 +12,11 @@ export const subscribeEmailToNewsletterResolver: MutationResolvers['subscribeEma
     },
 };
 
-export async function transformSubscriberToNewsletterOutput(bcSubscriber: BcSubscriber): Promise<SubscribeEmailToNewsletterOutput> {
+export async function transformSubscriberToNewsletterOutput(
+    bcSubscriber: BcSubscriber
+): Promise<SubscribeEmailToNewsletterOutput> {
     return {
         //BigCom does not provide a status, but if the returned subscriber has an email, it means the subscription was successful.
-        status: bcSubscriber.email ? 'SUBSCRIBED' : 'UNCONFIRMED'
-    }
+        status: bcSubscriber.email ? 'SUBSCRIBED' : 'UNCONFIRMED',
+    };
 }

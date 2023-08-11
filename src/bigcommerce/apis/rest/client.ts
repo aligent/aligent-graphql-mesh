@@ -14,7 +14,7 @@ const headers = {
 export const bcPost = async (path: string, data?: unknown): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
     try {
-        const response = await axios.post(url, data,{ headers });
+        const response = await axios.post(url, data, { headers });
         return response.data;
     } catch (error) {
         logAndThrowError(error as Error);

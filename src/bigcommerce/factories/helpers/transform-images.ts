@@ -15,15 +15,15 @@ export const DEFAULT_IMAGE =
 const createImageIdFromUrl = (url?: string): number | null => {
     if (!url) return null;
 
-    const hash = crypto
-        .createHash('sha256')
-        .update(url)
-        .digest('hex');
+    const hash = crypto.createHash('sha256').update(url).digest('hex');
     const truncatedHash = hash.slice(0, 6); // Use the first 6 characters of the hash
     return parseInt(truncatedHash, 16);
 };
 
-export const getTransformedImage = (image?: Maybe<BC_Image>, position?: number | undefined): Maybe<MediaGalleryEntry> => {
+export const getTransformedImage = (
+    image?: Maybe<BC_Image>,
+    position?: number | undefined
+): Maybe<MediaGalleryEntry> => {
     if (!image) return null;
     const { altText, url } = image;
 
@@ -39,7 +39,9 @@ export const getTransformedImage = (image?: Maybe<BC_Image>, position?: number |
     };
 };
 
-export const getTransformedMediaGalleryEntries = (images: { edges?: Maybe<Array<Maybe<BC_ImageEdge>>> }): Array<Maybe<MediaGalleryEntry>> => {
+export const getTransformedMediaGalleryEntries = (images: {
+    edges?: Maybe<Array<Maybe<BC_ImageEdge>>>;
+}): Array<Maybe<MediaGalleryEntry>> => {
     if (!images?.edges || !images?.edges.length) return [];
 
     return images?.edges

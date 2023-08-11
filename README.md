@@ -102,6 +102,7 @@ Unfortunately the performance of Lambda is not great, it can take a while for re
 The Guild do list this as a hosting option so presumably there is a way to make it work efficiently. The code is still available here as a baseline if we decide to investigate Lambda hosting in the future.
 
 ### "uid"/"id"encoding and decoding
+
 The Take Flight PWA being based on Adobe Commerce passes uid arguments to query and mutations. These uid's are usually encoded id's which Adobe Commerce knows
 how to consume, but for some properties in Big Commerce the decoded id version is needed. To get this id from the uid use the "atob" util function found in
 src/utils/encode-decode.ts. This will decode the uid from e.g. atob("Ng==") = "6". The counter part to this is the btoa method e.g. btoa("6") = "Ng==" which
