@@ -82,7 +82,7 @@ const expectedResult = [
     },
 ];
 
-describe('transform-price', () => {
+describe('transform-product-aggregations', () => {
     it('Transforms a BC filters into AC aggregations', () => {
         expect(
             getTransformedProductAggregations(
