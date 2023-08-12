@@ -21,6 +21,6 @@ export const logAndThrowError = (error: Error, context?: Record<string, string>)
     }
 
     const message = messages.join('\n');
-    console.log(message);
+    //console.log(message);
     throw new Error(message);
 };

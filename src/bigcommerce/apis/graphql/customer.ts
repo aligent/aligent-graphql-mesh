@@ -1,5 +1,4 @@
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
-import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
 
@@ -13,17 +12,12 @@ export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> 
     const customerQuery = {
         query: customer,
     };
+    console.log(customer);
 
     const response = await bcGraphQlRequest(customerQuery, headers);
-    
+
     if (response.data.errors) {
-        logAndThrowError(
-            new Error(
-                `Failed to fetch customers from BigCommerce: ${JSON.stringify(
-                    response.data.errors
-                )}`
-            )
-        );
+        console.log('error bc customer');
     }
 
     return response.data.customer;

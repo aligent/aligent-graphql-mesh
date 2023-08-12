@@ -226,3 +226,16 @@ export interface BcAddressRest {
     postal_code: string;
     state_or_province: string;
 }
+
+export interface BcSubscriber {
+    id: number;
+    email: string;
+    first_name: string;
+    last_name: string;
+    source: string;
+    order_id: number;
+    date_created: string;
+    date_modified: string;
+    channel_id: number;
+    consents: string[];
+}

@@ -6,20 +6,21 @@ import { getTransformedWishlists } from './helpers/transform-wishlists';
 
 export const transformCustomer = (
     bcCustomer: BC_Customer,
-    bcAddresses: BcAddressRest[]
+    bcAddresses: BcAddressRest[],
+    bcSubscriber: boolean
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
-
     return {
         addresses: getTransformedCustomerAddresses(bcAddresses),
         email,
         firstname: firstName,
         lastname: lastName,
-        is_subscribed: false, // BC SF api doesnt have this, may need to get from https://api.bigcommerce.com/stores/{store_hash}/v3/customers/subscribers
+        is_subscribed: bcSubscriber, 
         allow_remote_shopping_assistance: false, // Cant see equivalent BC value
         wishlists: getTransformedWishlists(bcCustomer.wishlists),
+        // Types say wishlist is deprecated, but is required to have a visibility
         wishlist: {
-            visibility: 'PRIVATE',
+            visibility: 'PUBLIC',
         },
         // TF does new need reviews
         reviews: {

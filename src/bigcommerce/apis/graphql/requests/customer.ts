@@ -5,6 +5,7 @@ import { pageInfo } from '../fragments/pagInfo';
 import { image } from '../fragments/image';
 import { productOptions } from '../fragments/productOptions';
 import { prices } from '../fragments/prices';
+import { categoryDetails } from '../fragments/categoryDetails';
 
 export const customer = stripIgnoredCharacters(
     print(gql`
@@ -12,6 +13,7 @@ export const customer = stripIgnoredCharacters(
         ${image}
         ${productOptions}
         ${prices}
+        ${categoryDetails}
 
         query customer {
             customer {
@@ -54,7 +56,6 @@ export const customer = stripIgnoredCharacters(
                                         productEntityId
                                         variantEntityId
                                         product {
-                                            __typename
                                             id
                                             entityId
                                             sku
@@ -74,6 +75,32 @@ export const customer = stripIgnoredCharacters(
                                                     node {
                                                         ...Image
                                                     }
+                                                }
+                                            }
+                                            categories {
+                                                edges {
+                                                    node {
+                                                        ...CategoryDetails
+                                                    }
+                                                }
+                                            }
+                                            reviews {
+                                                edges {
+                                                    node {
+                                                        entityId
+                                                        author {
+                                                            name
+                                                        }
+                                                        title
+                                                        text
+                                                        rating
+                                                        createdAt {
+                                                            utc
+                                                        }
+                                                    }
+                                                }
+                                                pageInfo {
+                                                    ...PageInfo
                                                 }
                                             }
                                             availabilityV2 {
