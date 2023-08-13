@@ -1,6 +1,9 @@
 import { atob } from '../../../utils';
 import { FilterTypeInput, QueryproductsArgs } from '@mesh';
-import { BC_SearchProductsFiltersInput, BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import {
+    BC_SearchProductsFiltersInput,
+    BC_SearchProductFilterConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
 
 type createFilterMappingProps = {
     [key: string]: {
@@ -20,7 +23,9 @@ type createFilterMappingProps = {
  * }
  * @param availableFilters
  */
-const createFilterMapping = (availableFilters: BC_SearchProductFilterConnection | null): createFilterMappingProps => {
+const createFilterMapping = (
+    availableFilters: BC_SearchProductFilterConnection | null
+): createFilterMappingProps => {
     if (!availableFilters?.edges || availableFilters?.edges?.length === 0) return null;
 
     return availableFilters.edges.reduce((carry, filter) => {
@@ -71,7 +76,7 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray) {
-                bcProductFilters.categoryEntityIds = inArray.map(id => Number(atob(String(id))));
+                bcProductFilters.categoryEntityIds = inArray.map((id) => Number(atob(String(id))));
             }
             continue;
         }
@@ -82,7 +87,7 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray) {
-                bcProductFilters.categoryEntityIds = inArray.map(id => Number(id));
+                bcProductFilters.categoryEntityIds = inArray.map((id) => Number(id));
             }
             continue;
         }
@@ -98,7 +103,7 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray) {
-                inArray.forEach(id => {
+                inArray.forEach((id) => {
                     bcProductFilters.brandEntityIds.push(Number(atob(String(id))));
                 });
             }
@@ -119,9 +124,12 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray && inArray.length > 0) {
-                const attributeValues = inArray.map(value => String(value));
+                const attributeValues = inArray.map((value) => String(value));
 
-                bcProductFilters.productAttributes.push({ attribute: filterName, values: attributeValues });
+                bcProductFilters.productAttributes.push({
+                    attribute: filterName,
+                    values: attributeValues,
+                });
             }
             continue;
         }
@@ -137,8 +145,8 @@ export const getTransformedProductSearchArguments = (
             }
 
             if (inArray) {
-                const minRating = Math.min(...inArray.map(rating => Number(rating)));
-                const maxRating = Math.max(...inArray.map(rating => Number(rating)));
+                const minRating = Math.min(...inArray.map((rating) => Number(rating)));
+                const maxRating = Math.max(...inArray.map((rating) => Number(rating)));
                 bcProductFilters.rating = { minRating, maxRating };
             }
         }

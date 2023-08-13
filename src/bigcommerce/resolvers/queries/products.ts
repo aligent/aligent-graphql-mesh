@@ -1,5 +1,8 @@
 import { Products, QueryResolvers } from '@mesh';
-import { getTransformedProductData, getTransformedProductsData } from '../../factories/transform-products-data';
+import {
+    getTransformedProductData,
+    getTransformedProductsData,
+} from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductsGraphql } from '../../apis/graphql/product';
 import { atob, getPathFromUrlKey } from '../../../utils';
@@ -33,8 +36,13 @@ export const productsResolver: QueryResolvers['products'] = {
                 ...(searchTerm && { searchTerm: searchTerm }),
             };
 
-            const availableBcProductFilters = await getBcAvailableProductFilters(availableProductFiltersVariables);
-            const transformedFilterArguments = getTransformedProductSearchArguments(args, availableBcProductFilters);
+            const availableBcProductFilters = await getBcAvailableProductFilters(
+                availableProductFiltersVariables
+            );
+            const transformedFilterArguments = getTransformedProductSearchArguments(
+                args,
+                availableBcProductFilters
+            );
 
             const bcProducts = await getBcProductsGraphql(transformedFilterArguments);
 
