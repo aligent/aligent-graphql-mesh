@@ -25,7 +25,7 @@ export const getTransformedAggregationOptions = (
 
     const aggregationOptions = attributes?.edges
         ? attributes.edges
-              .map(attribute => {
+              .map((attribute) => {
                   if (!attribute?.node) return null;
 
                   const { value, productCount } = attribute.node;
@@ -67,7 +67,7 @@ export const getAggregationsFromBrandFilter = (filter: BC_BrandSearchFilter): Ma
 
     const options = brands?.edges
         ? brands.edges
-              .map(brand => {
+              .map((brand) => {
                   if (!brand?.node) return null;
 
                   const { entityId, productCount, name } = brand.node;
@@ -113,7 +113,7 @@ export const getAggregationsFromRatingFilter = (filter: BC_RatingSearchFilter): 
 
     const options = ratings?.edges
         ? ratings.edges
-              .map(rating => {
+              .map((rating) => {
                   if (!rating?.node) return null;
                   const { productCount, value } = rating.node;
                   return {
@@ -137,7 +137,7 @@ export const getAggregationsFromRatingFilter = (filter: BC_RatingSearchFilter): 
 export const getTransformedProductAggregations = (filters: BC_SearchProductFilterConnection): Maybe<Array<Maybe<Aggregation>>> => {
     if (!filters?.edges) return [];
     return filters.edges
-        .map(filter => {
+        .map((filter) => {
             if (!filter?.node) return null;
 
             const typename = filter.node.__typename;
