@@ -1,5 +1,9 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { DEFAULT_IMAGE, getTransformedMediaGalleryEntries, getTransformedSmallImage } from '../transform-images';
+import {
+    DEFAULT_IMAGE,
+    getTransformedMediaGalleryEntries,
+    getTransformedSmallImage,
+} from '../transform-images';
 import { BC_ImageEdge } from '@mesh/external/BigCommerceGraphqlApi';
 
 describe('transform-image', () => {

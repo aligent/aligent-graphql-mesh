@@ -1,8 +1,4 @@
-import {
-    BC_Money,
-    BC_Prices,
-    BC_VariantConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
+import { BC_Money, BC_Prices, BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
 import { Maybe, PriceRange, ProductPrices } from '@mesh';
 import { getTransformedPrice } from './transform-price';
 

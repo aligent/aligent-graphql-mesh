@@ -13,6 +13,7 @@ const headers = {
     Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
 };
 
+/* istanbul ignore file */
 export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
     const query = channelMetafieldsByNamespaceQuery(namespace);
 
