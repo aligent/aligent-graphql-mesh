@@ -2,48 +2,33 @@ const pricesIncGst = {
     /* "saved" only works if a "MSRP" price is set on a product.
      * This will be the difference between the "MSRP" price and which ever is lower between the
      * "default price" and "sales price". */
-    saved: {
-        value: 49.0,
-        currencyCode: 'AUD',
-    },
+    saved: null,
     /* The "sales" price of the configurable parent or lowest "sales price" of a variant if declare*/
     salePrice: {
-        value: 20.0,
+        value: 10.0,
         currencyCode: 'AUD',
     },
     /* The min and max "MSRP" price fluctuation on configurable products */
-    retailPriceRange: {
-        min: {
-            value: 45.0,
-            currencyCode: 'AUD',
-        },
-        max: {
-            value: 69.0,
-            currencyCode: 'AUD',
-        },
-    },
+    retailPriceRange: null,
     /* The "MSRP" price. Null if doesn't exist */
-    retailPrice: {
-        currencyCode: 'AUD',
-        value: 69.0,
-    },
+    retailPrice: null,
     /* The min and max "default price" or "sales price" fluctuation on configurable products.
      * NOTE: if a simple product has a "sales price" but not a strictly defined "default price" the
      * "sales price won't be applied"*/
     priceRange: {
         min: {
-            value: 20.0,
+            value: 10.0,
             currencyCode: 'AUD',
         },
         max: {
-            value: 55.0,
+            value: 57.0,
             currencyCode: 'AUD',
         },
     },
+    /* The "final price" the customer can buy the item for. This will be the price of which
+     * ever costs less between the "default price" and "sales price"*/
     price: {
-        /* The "final price" the customer can buy the item for. This will be the price of which
-         * ever costs less between the "default price" and "sales price"*/
-        value: 20.0,
+        value: 10.0,
         currencyCode: 'AUD',
     },
     mapPrice: null,
@@ -57,45 +42,30 @@ const pricesIncGst = {
 const pricesExGst = {
     price: {
         currencyCode: 'AUD',
-        value: 18.18,
+        value: 9.09,
     },
     salePrice: {
         currencyCode: 'AUD',
-        value: 18.18,
+        value: 9.09,
     },
     basePrice: {
         currencyCode: 'AUD',
         value: 51.82,
     },
-    retailPrice: {
-        currencyCode: 'AUD',
-        value: 62.73,
-    },
+    retailPrice: null,
     mapPrice: null,
     priceRange: {
         min: {
             currencyCode: 'AUD',
-            value: 18.18,
+            value: 9.09,
         },
         max: {
             currencyCode: 'AUD',
-            value: 50.0,
+            value: 51.82,
         },
     },
-    retailPriceRange: {
-        min: {
-            currencyCode: 'AUD',
-            value: 40.91,
-        },
-        max: {
-            currencyCode: 'AUD',
-            value: 62.73,
-        },
-    },
-    saved: {
-        currencyCode: 'AUD',
-        value: 44.55,
-    },
+    retailPriceRange: null,
+    saved: null,
 };
 
 export const mockProductPrices = {
@@ -108,25 +78,13 @@ export const mockProductPrices = {
                 node: {
                     PricesIncGst: {
                         // Only works out the difference between the "MSRP" price and the "default price" not "sales price"
-                        saved: {
-                            value: 15.0,
+                        saved: null,
+                        salePrice: {
+                            value: 30.0,
                             currencyCode: 'AUD',
                         },
-                        salePrice: null,
-                        retailPriceRange: {
-                            min: {
-                                value: 45.0,
-                                currencyCode: 'AUD',
-                            },
-                            max: {
-                                value: 45.0,
-                                currencyCode: 'AUD',
-                            },
-                        },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 45.0,
-                        },
+                        retailPriceRange: null,
+                        retailPrice: null,
                         priceRange: {
                             min: {
                                 value: 30.0,
@@ -146,7 +104,7 @@ export const mockProductPrices = {
                         },
                         mapPrice: null,
                         basePrice: {
-                            value: 30.0,
+                            value: 70.0,
                             currencyCode: 'AUD',
                         },
                     },
@@ -155,15 +113,15 @@ export const mockProductPrices = {
                             currencyCode: 'AUD',
                             value: 27.27,
                         },
-                        salePrice: null,
-                        basePrice: {
+                        salePrice: {
                             currencyCode: 'AUD',
                             value: 27.27,
                         },
-                        retailPrice: {
+                        basePrice: {
                             currencyCode: 'AUD',
-                            value: 40.91,
+                            value: 63.64,
                         },
+                        retailPrice: null,
                         mapPrice: null,
                         priceRange: {
                             min: {
@@ -175,62 +133,33 @@ export const mockProductPrices = {
                                 value: 27.27,
                             },
                         },
-                        retailPriceRange: {
-                            min: {
-                                currencyCode: 'AUD',
-                                value: 40.91,
-                            },
-                            max: {
-                                currencyCode: 'AUD',
-                                value: 40.91,
-                            },
-                        },
-                        saved: {
-                            currencyCode: 'AUD',
-                            value: 13.64,
-                        },
+                        retailPriceRange: null,
+                        saved: null,
                     },
                 },
             },
             {
                 node: {
                     PricesIncGst: {
-                        saved: {
-                            value: 49.0,
-                            currencyCode: 'AUD',
-                        },
+                        saved: null,
                         salePrice: {
-                            value: 20.0,
+                            value: 40.0,
                             currencyCode: 'AUD',
                         },
-                        retailPriceRange: {
-                            min: {
-                                value: 69.0,
-                                currencyCode: 'AUD',
-                            },
-                            max: {
-                                value: 69.0,
-                                currencyCode: 'AUD',
-                            },
-                        },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 69.0,
-                        },
+                        retailPriceRange: null,
+                        retailPrice: null,
                         priceRange: {
                             min: {
-                                value: 20.0,
+                                value: 40.0,
                                 currencyCode: 'AUD',
                             },
                             max: {
-                                value: 20.0,
+                                value: 40.0,
                                 currencyCode: 'AUD',
                             },
                         },
-                        /* Is the lowest price between the "default price" and "sales" price.
-                         * the parent products "sales price" will be applied over the simple products "sale price"*/
                         price: {
-                            value: 20.0,
+                            value: 40.0,
                             currencyCode: 'AUD',
                         },
                         mapPrice: null,
@@ -242,169 +171,52 @@ export const mockProductPrices = {
                     priceExGst: {
                         price: {
                             currencyCode: 'AUD',
-                            value: 18.18,
+                            value: 36.36,
                         },
                         salePrice: {
                             currencyCode: 'AUD',
-                            value: 18.18,
+                            value: 36.36,
                         },
                         basePrice: {
                             currencyCode: 'AUD',
                             value: 51.82,
                         },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 62.73,
-                        },
+                        retailPrice: null,
                         mapPrice: null,
                         priceRange: {
                             min: {
                                 currencyCode: 'AUD',
-                                value: 18.18,
+                                value: 36.36,
                             },
                             max: {
                                 currencyCode: 'AUD',
-                                value: 18.18,
+                                value: 36.36,
                             },
                         },
-                        retailPriceRange: {
-                            min: {
-                                currencyCode: 'AUD',
-                                value: 62.73,
-                            },
-                            max: {
-                                currencyCode: 'AUD',
-                                value: 62.73,
-                            },
-                        },
-                        saved: {
-                            currencyCode: 'AUD',
-                            value: 44.55,
-                        },
+                        retailPriceRange: null,
+                        saved: null,
                     },
                 },
             },
             {
                 node: {
                     PricesIncGst: {
-                        saved: {
-                            value: 5.0,
-                            currencyCode: 'AUD',
-                        },
+                        saved: null,
                         salePrice: null,
-                        retailPriceRange: {
-                            min: {
-                                value: 60.0,
-                                currencyCode: 'AUD',
-                            },
-                            max: {
-                                value: 60.0,
-                                currencyCode: 'AUD',
-                            },
-                        },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 60.0,
-                        },
+                        retailPriceRange: null,
+                        retailPrice: null,
                         priceRange: {
                             min: {
-                                value: 55.0,
+                                value: 57.0,
                                 currencyCode: 'AUD',
                             },
                             max: {
-                                value: 55.0,
+                                value: 57.0,
                                 currencyCode: 'AUD',
                             },
                         },
                         price: {
-                            value: 55.0,
-                            currencyCode: 'AUD',
-                        },
-                        mapPrice: null,
-                        basePrice: {
-                            value: 55.0,
-                            currencyCode: 'AUD',
-                        },
-                    },
-                    priceExGst: {
-                        price: {
-                            currencyCode: 'AUD',
-                            value: 50.0,
-                        },
-                        salePrice: null,
-                        basePrice: {
-                            currencyCode: 'AUD',
-                            value: 50.0,
-                        },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 54.55,
-                        },
-                        mapPrice: null,
-                        priceRange: {
-                            min: {
-                                currencyCode: 'AUD',
-                                value: 50.0,
-                            },
-                            max: {
-                                currencyCode: 'AUD',
-                                value: 50.0,
-                            },
-                        },
-                        retailPriceRange: {
-                            min: {
-                                currencyCode: 'AUD',
-                                value: 54.55,
-                            },
-                            max: {
-                                currencyCode: 'AUD',
-                                value: 54.55,
-                            },
-                        },
-                        saved: {
-                            currencyCode: 'AUD',
-                            value: 4.55,
-                        },
-                    },
-                },
-            },
-            {
-                node: {
-                    PricesIncGst: {
-                        saved: {
-                            value: 49.0,
-                            currencyCode: 'AUD',
-                        },
-                        salePrice: {
-                            value: 20.0,
-                            currencyCode: 'AUD',
-                        },
-                        retailPriceRange: {
-                            min: {
-                                value: 69.0,
-                                currencyCode: 'AUD',
-                            },
-                            max: {
-                                value: 69.0,
-                                currencyCode: 'AUD',
-                            },
-                        },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 69.0,
-                        },
-                        priceRange: {
-                            min: {
-                                value: 20.0,
-                                currencyCode: 'AUD',
-                            },
-                            max: {
-                                value: 20.0,
-                                currencyCode: 'AUD',
-                            },
-                        },
-                        price: {
-                            value: 20.0,
+                            value: 57.0,
                             currencyCode: 'AUD',
                         },
                         mapPrice: null,
@@ -416,45 +228,87 @@ export const mockProductPrices = {
                     priceExGst: {
                         price: {
                             currencyCode: 'AUD',
-                            value: 18.18,
+                            value: 51.82,
+                        },
+                        salePrice: null,
+                        basePrice: {
+                            currencyCode: 'AUD',
+                            value: 51.82,
+                        },
+                        retailPrice: null,
+                        mapPrice: null,
+                        priceRange: {
+                            min: {
+                                currencyCode: 'AUD',
+                                value: 51.82,
+                            },
+                            max: {
+                                currencyCode: 'AUD',
+                                value: 51.82,
+                            },
+                        },
+                        retailPriceRange: null,
+                        saved: null,
+                    },
+                },
+            },
+            {
+                node: {
+                    PricesIncGst: {
+                        saved: null,
+                        salePrice: {
+                            value: 10.0,
+                            currencyCode: 'AUD',
+                        },
+                        retailPriceRange: null,
+                        retailPrice: null,
+                        priceRange: {
+                            min: {
+                                value: 10.0,
+                                currencyCode: 'AUD',
+                            },
+                            max: {
+                                value: 10.0,
+                                currencyCode: 'AUD',
+                            },
+                        },
+                        price: {
+                            value: 10.0,
+                            currencyCode: 'AUD',
+                        },
+                        mapPrice: null,
+                        basePrice: {
+                            value: 57.0,
+                            currencyCode: 'AUD',
+                        },
+                    },
+                    priceExGst: {
+                        price: {
+                            currencyCode: 'AUD',
+                            value: 9.09,
                         },
                         salePrice: {
                             currencyCode: 'AUD',
-                            value: 18.18,
+                            value: 9.09,
                         },
                         basePrice: {
                             currencyCode: 'AUD',
                             value: 51.82,
                         },
-                        retailPrice: {
-                            currencyCode: 'AUD',
-                            value: 62.73,
-                        },
+                        retailPrice: null,
                         mapPrice: null,
                         priceRange: {
                             min: {
                                 currencyCode: 'AUD',
-                                value: 18.18,
+                                value: 9.09,
                             },
                             max: {
                                 currencyCode: 'AUD',
-                                value: 18.18,
+                                value: 9.09,
                             },
                         },
-                        retailPriceRange: {
-                            min: {
-                                currencyCode: 'AUD',
-                                value: 62.73,
-                            },
-                            max: {
-                                currencyCode: 'AUD',
-                                value: 62.73,
-                            },
-                        },
-                        saved: {
-                            currencyCode: 'AUD',
-                            value: 44.55,
-                        },
+                        retailPriceRange: null,
+                        saved: null,
                     },
                 },
             },

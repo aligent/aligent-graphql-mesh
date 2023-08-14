@@ -56,7 +56,7 @@ const getPercentOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => 
 };
 
 const getMostExpensiveVariant = (
-    variants: Maybe<BC_VariantConnection>
+    variants?: Maybe<BC_VariantConnection>
 ): Maybe<BC_Prices> | undefined => {
     if (!variants?.edges) return null;
 
@@ -75,7 +75,7 @@ const getMostExpensiveVariant = (
 export const getTransformedPriceRange = (
     prices: Maybe<BC_Prices>,
     productType: 'SimpleProduct' | 'ConfigurableProduct',
-    variants: Maybe<BC_VariantConnection>
+    variants?: Maybe<BC_VariantConnection>
 ): PriceRange => {
     if (!prices) return noPricesResponse;
 

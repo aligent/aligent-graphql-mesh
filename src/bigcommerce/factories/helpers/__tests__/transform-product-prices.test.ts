@@ -3,22 +3,28 @@ import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 
 describe('transform-product-prices', () => {
     it('Transforms BC product prices to a AC priceRange structure', () => {
-        expect(getTransformedPriceRange(mockBcProducts[0].prices)).toEqual({
+        expect(
+            getTransformedPriceRange(
+                mockBcProducts[0].prices,
+                'ConfigurableProduct',
+                mockBcProducts[0].variants
+            )
+        ).toEqual({
             maximum_price: {
-                discount: { amount_off: null, percent_off: null },
-                final_price: { currency: 'AUD', value: 51.82 },
-                regular_price: { currency: 'AUD', value: 51.82 },
+                discount: { amount_off: 40, percent_off: 57.14285714285714 },
+                final_price: { currency: 'AUD', value: 57 },
+                regular_price: { currency: 'AUD', value: 70 },
             },
             minimum_price: {
-                discount: { amount_off: null, percent_off: null },
-                final_price: { currency: 'AUD', value: 27.27 },
-                regular_price: { currency: 'AUD', value: 27.27 },
+                discount: { amount_off: 47, percent_off: 82.45614035087719 },
+                final_price: { currency: 'AUD', value: 10 },
+                regular_price: { currency: 'AUD', value: 57 },
             },
         });
     });
 
     it('Returns nullish values if prices are undefined for price range prices', () => {
-        expect(getTransformedPriceRange(null)).toEqual({
+        expect(getTransformedPriceRange(null, 'ConfigurableProduct')).toEqual({
             maximum_price: {
                 discount: {
                     amount_off: null,
@@ -37,7 +43,7 @@ describe('transform-product-prices', () => {
 
     it("Transforms BC product prices to a AC regularPrice structure'", () => {
         expect(getTransformedPrices(mockBcProducts[0].prices)).toEqual({
-            regularPrice: { amount: { currency: 'AUD', value: 27.27 } },
+            regularPrice: { amount: { currency: 'AUD', value: 10 } },
         });
     });
 
