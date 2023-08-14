@@ -19,7 +19,8 @@ export const createSubscriber = async (email: string): Promise<BcSubscriber> => 
     const subscriber = response.data;
     if (!subscriber?.email) {
         logAndThrowError(
-            new Error('Invalid Subscriber object received: attribute email has to be defined.')
+            'Invalid Subscriber object received: attribute email has to be defined.',
+            path
         );
     }
 

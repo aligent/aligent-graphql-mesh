@@ -34,16 +34,14 @@ export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
         if (!context.headers['mesh-token']) {
-            return logAndThrowError(new Error('mesh-token header is required for this mutation.'));
+            return logAndThrowError('mesh-token header is required for this mutation.');
         }
 
         const { bc_customer_id: customerId } = getDecodedMeshToken(context.headers['mesh-token']);
 
         if (!isCustomerAddressValid(input)) {
             return logAndThrowError(
-                new Error(
-                    'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
-                )
+                'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );
         }
 

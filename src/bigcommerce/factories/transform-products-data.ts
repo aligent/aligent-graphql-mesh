@@ -84,7 +84,7 @@ export const getTransformedProductData = (
             __typename: getTypeName(bcProduct),
         };
     } catch (error) {
-        logAndThrowError(error as Error);
+        logAndThrowError(`error ${error}`);
         return null;
     }
 };

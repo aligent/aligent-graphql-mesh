@@ -30,9 +30,7 @@ export const getBcProductsGraphql = async (
 
     if (response.data.errors) {
         logAndThrowError(
-            new Error(
-                `Failed to fetch products from BigCommerce: ${JSON.stringify(response.data.errors)}`
-            )
+            `Failed to fetch products from BigCommerce: ${JSON.stringify(response.data.errors)}`
         );
     }
 

@@ -2,9 +2,9 @@ import { AxiosResponse, AxiosError } from 'axios';
 /* istanbul ignore file */
 
 /*
-* When throwing an error the message will go through to the FE that made the request
-* The console logs will show up in AWS. This difference will determine what we log or throw
-*/
+ * Errors that are thrown will be shown via "message" in response from GraphQL,
+ * Console logs will show up in AWS.
+ */
 export const throwAndLogAxiosError = (
     axiosError: AxiosError,
     functionName: string,
