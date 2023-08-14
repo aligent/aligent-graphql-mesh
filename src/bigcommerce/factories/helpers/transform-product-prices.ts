@@ -32,6 +32,8 @@ const noPricesResponse = {
  * @param salePrice
  */
 const hasSalesPriceTakenAffect = (price: BC_Money, basePrice: BC_Money) => {
+    /* IMPORTANT: Don't rely on the "salePrice" to work this out as products can have a sales price but
+     * it's not the final price displayed to the user and what gets added to the cart*/
     return price.value < basePrice.value;
 };
 
@@ -107,7 +109,8 @@ export const getTransformedPriceRange = (
                 percent_off: getPercentOff(basePrice, price),
             },
             /* For a configurable parent product this is the price of the lowest costing variants
-             * "default price" or "sales price" */
+             * "default price" or "sales price".
+             * IMPORTANT: Don't rely on the "salePrice" being the final price for a product. */
             final_price: getTransformedPrice(price),
             regular_price: getTransformedPrice(basePrice || prices.priceRange.min),
         },

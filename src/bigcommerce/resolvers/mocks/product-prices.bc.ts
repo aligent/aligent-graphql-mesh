@@ -3,14 +3,17 @@ const pricesIncGst = {
      * This will be the difference between the "MSRP" price and which ever is lower between the
      * "default price" and "sales price". */
     saved: null,
-    /* The "sales" price of the configurable parent or lowest "sales price" of a variant if declare*/
+    /* IMPORTANT: don't use this.
+     * The "sales" price of the configurable parent or lowest "sales price" of a variant if declare.
+     * Depending on the configuration of product prices it's possible
+     * for a product to have a salePrice but it's not the final price of the product.*/
     salePrice: {
         value: 10.0,
         currencyCode: 'AUD',
     },
     /* The min and max "MSRP" price fluctuation on configurable products */
     retailPriceRange: null,
-    /* The "MSRP" price. Null if doesn't exist */
+    /* The "MSRP" price (RRP price). Null if doesn't exist */
     retailPrice: null,
     /* The min and max "default price" or "sales price" fluctuation on configurable products.
      * NOTE: if a simple product has a "sales price" but not a strictly defined "default price" the
@@ -25,8 +28,8 @@ const pricesIncGst = {
             currencyCode: 'AUD',
         },
     },
-    /* The "final price" the customer can buy the item for. This will be the price of which
-     * ever costs less between the "default price" and "sales price"*/
+    /* The "final price" is the display price and the price the customer can buy the item for. This will be the price of which
+     * costs less between the "default price" and "sales price"*/
     price: {
         value: 10.0,
         currencyCode: 'AUD',
