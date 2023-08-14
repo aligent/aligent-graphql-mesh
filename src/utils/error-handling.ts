@@ -2,8 +2,8 @@ import { AxiosResponse, AxiosError } from 'axios';
 /* istanbul ignore file */
 
 /*
- * Errors that are thrown will be shown via "message" in response from GraphQL,
- * Console logs will show up in AWS.
+    Errors that are thrown with new Error, will be shown via "message" in the response from GraphQL,
+    Console logs will show up in AWS and terminal.
  */
 export const throwAndLogAxiosError = (
     axiosError: AxiosError,
@@ -20,14 +20,14 @@ export const throwAndLogAxiosError = (
     if (data.title) {
         logAndThrowErrorsFromBCRESTApiResponse(response, functionName);
     } else if (data.data?.errMsg) {
-        logAndThrowErrorsFromRESTApiResponse(response, functionName, path, extraInfo);
+        logAndThrowErrorsFromRESTApiResponse(response, functionName);
     } else if (data.errors) {
         logAndThrowErrorsFromGraphQlResponse(response, functionName);
     } else if (data) {
         console.log(
             `Response data: ${JSON.stringify(data)}, statusText: ${
                 response.statusText
-            }, function name: ${functionName} at path: ${path}`
+            }, function name: ${functionName}`
         );
         throw new Error(`Response data: ${JSON.stringify(data)} from: ${functionName}`);
     } else {
@@ -69,13 +69,8 @@ export const logAndThrowErrorsFromGraphQlResponse = (
 
 export const logAndThrowErrorsFromRESTApiResponse = (
     response: AxiosResponse,
-    functionName: string,
-    path?: string,
-    extraInfo?: Record<string, string>
+    functionName: string
 ): void => {
-    if (path) console.log({ path });
-    if (extraInfo) console.log({ extraInfo });
-
     const errorResponse = response.data.data.errMsg;
 
     if (errorResponse) {
