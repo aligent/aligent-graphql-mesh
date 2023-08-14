@@ -1,4 +1,4 @@
-import { BC_MetafieldConnection, BC_PageInfo } from '@mesh/external/BigCommerceGraphqlApi';
+import { BC_MetafieldConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 export const mockBcProducts = [
     {

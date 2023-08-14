@@ -81,7 +81,7 @@ export const getTransformedPriceRange = (
 ): PriceRange => {
     if (!prices) return noPricesResponse;
 
-    const { basePrice, salePrice, price, priceRange } = prices;
+    const { basePrice, price, priceRange } = prices;
 
     const mostExpensiveVariant = getMostExpensiveVariant(variants);
     const maxBasePrice =
