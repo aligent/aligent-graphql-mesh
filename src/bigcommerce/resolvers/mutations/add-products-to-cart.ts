@@ -1,6 +1,7 @@
 import { MutationResolvers } from '@mesh';
-import { addProductsToCart } from '../../apis/graphql/cart';
+import { addProductsToCart, createCart } from '../../apis/graphql/cart';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
+import { EMPTY_CART_ID } from '../../apis/rest/cart';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, args, _context, _info) => {
@@ -9,11 +10,22 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             quantity,
             productEntityId: parseInt(sku), // TF FE Will send BC entity ID as SKU
             ...(selected_options && {
-                selectedOptions: transformSelectedOptions(selected_options as string[]),
+                selectedOptions: transformSelectedOptions(selected_options),
             }),
         }));
 
-        const response = await addProductsToCart(cartId, { lineItems });
-        return response;
+        let cart;
+
+        if (cartId === EMPTY_CART_ID) {
+            cart = await createCart(lineItems);
+            return {
+                cart: {
+                    ...cart,
+                    id: cart?.entityId,
+                },
+            };
+        }
+        cart = await addProductsToCart(cartId, { lineItems });
+        return { cart };
     },
 };

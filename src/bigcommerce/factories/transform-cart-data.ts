@@ -1,6 +1,6 @@
 import { getIsVirtualCart } from '../../utils';
 import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
-import { Cart, Maybe } from '../../meshrc/.mesh';
+import { Cart, Maybe } from '@mesh';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';

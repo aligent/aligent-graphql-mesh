@@ -1,10 +1,12 @@
-import {BC_CartSelectedOptionsInput, InputMaybe} from '../../meshrc/.mesh';
+import { InputMaybe } from '@mesh';
+import { BC_CartSelectedOptionsInput } from '@mesh/external/BigCommerceGraphqlApi';
+import { isNotNull } from '../../utils/is-not-null';
 
 export const transformSelectedOptions = (
-    selectedOptions: string[]
+    selectedOptions: InputMaybe<string>[]
 ): InputMaybe<BC_CartSelectedOptionsInput> => {
     return {
-        multipleChoices: selectedOptions.map((optionHash) => {
+        multipleChoices: selectedOptions.filter(isNotNull).map((optionHash) => {
             const decodedOption = atob(optionHash).split('/');
             return {
                 optionEntityId: parseInt(decodedOption[1]),
