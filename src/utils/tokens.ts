@@ -22,8 +22,9 @@ export const getDecodedMeshToken = (meshToken: string): MeshToken => {
         if (meshToken.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
             return verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
+        } else {
+            return logAndThrowError(new Error(`Need to send Bearer token`));
         }
-        return verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
     } catch (error) {
         return logAndThrowError(new Error(`mesh-token could not be decoded ${error}`));
     }
