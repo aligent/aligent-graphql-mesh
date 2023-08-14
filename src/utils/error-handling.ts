@@ -1,5 +1,10 @@
 import { AxiosResponse, AxiosError } from 'axios';
+/* istanbul ignore file */
 
+/*
+* When throwing an error the message will go through to the FE that made the request
+* The console logs will show up in AWS. This difference will determine what we log or throw
+*/
 export const throwAndLogAxiosError = (
     axiosError: AxiosError,
     functionName: string,
@@ -97,6 +102,7 @@ const logAndThrowErrorsFromBCRESTApiResponse = (
     logAndThrowUnknownError(functionName);
 };
 
+// This is the default error throwing function to use when not making an API call
 export const logAndThrowError = (message: string, path?: string) => {
     if (path) console.log({ path });
     console.log(message);
