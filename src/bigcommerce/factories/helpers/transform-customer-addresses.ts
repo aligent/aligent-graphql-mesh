@@ -31,7 +31,7 @@ export const getTransformedCustomerAddresses = (
                 region_id: null, // BC doesnt return this
             },
             postcode: postal_code,
-            country_code:  country_code as CountryCodeEnum,
+            country_code: country_code as CountryCodeEnum,
             telephone: phone,
             default_billing: null, // BC doesnt return this
             default_shipping: null, // BC doesnt return this

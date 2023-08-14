@@ -27,7 +27,7 @@ export const bcGet = async (path: string) => {
         const response = await axios.get(url, { headers });
         return response.data;
     } catch (error) {
-        console.log("error");
+        logAndThrowError(error as Error);
     }
 };
 

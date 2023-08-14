@@ -41,11 +41,8 @@ describe('transform customer address', () => {
             },
         ];
 
-        const result = getTransformedCustomerAddresses(inputBcAddress)
+        const result = getTransformedCustomerAddresses(inputBcAddress);
 
-
-        expect(result).toEqual(
-            expectResult
-        );
+        expect(result).toEqual(expectResult);
     });
 });

@@ -729,8 +729,8 @@ const transformedWishlist = [
                             },
                         },
                         price_tiers: [],
-                        rating_summary: 0,
-                        review_count: 0,
+                        rating_summary: 1,
+                        review_count: 1,
                         related_products: null,
                         sku: 'WH01',
                         small_image: {
@@ -900,8 +900,8 @@ const transformedWishlistItems = [
                 },
             },
             price_tiers: [],
-            rating_summary: 0,
-            review_count: 0,
+            rating_summary: 1,
+            review_count: 1,
             related_products: null,
             sku: 'WH01',
             small_image: {
