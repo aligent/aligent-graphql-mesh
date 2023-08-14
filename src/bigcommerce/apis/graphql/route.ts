@@ -1,22 +1,17 @@
 import { bcGraphQlRequest } from './client';
 import { getRouteQuery } from './requests/route';
+import { BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
-export const getRoute = async (url: string) => {
+export const getRoute = async (variables: BC_SiteRouteArgs & { includeTax?: boolean }) => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
     const routeQuery = {
         query: getRouteQuery,
-        variables: {
-            /* @todo add "includeTax" from admin setting.
-             * "includeTax" is only for "Product" routes. This is hardcoded at the moment as there's no admin setting to control this.
-             */
-            includeTax: true,
-            path: url,
-        },
+        variables,
     };
 
     const response = await bcGraphQlRequest(routeQuery, headers);

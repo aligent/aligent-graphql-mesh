@@ -6,17 +6,20 @@ import {
 } from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductsGraphql } from '../../apis/graphql/product';
-import { atob, getPathFromUrlKey } from '../../../utils';
+import { atob, getIncludesTax, getPathFromUrlKey } from '../../../utils';
+import { getTaxSettings } from '../../apis/graphql/settings';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, _context, _info): Promise<Products | null> => {
-        /* There's no setting in the admin to switch between including and excluding gst prices. We can send a boolean value to the products query to
-         * get either prices. */
-        const includeTax = true;
+        const taxSettings = await getTaxSettings();
+
         const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
         if (url_key) {
-            const bcProduct = await getBcProductByPathGraphql({ includeTax, path: url_key });
+            const bcProduct = await getBcProductByPathGraphql({
+                includeTax: getIncludesTax(taxSettings?.pdp),
+                path: url_key,
+            });
 
             if (!bcProduct) return null;
             return { items: [getTransformedProductData(bcProduct)] };
@@ -28,7 +31,10 @@ export const productsResolver: QueryResolvers['products'] = {
             ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
         };
 
-        const bcProducts = await getBcProductsGraphql({ includeTax, ...filters });
+        const bcProducts = await getBcProductsGraphql({
+            includeTax: getIncludesTax(taxSettings?.plp),
+            ...filters,
+        });
         if (!bcProducts) return null;
 
         return getTransformedProductsData(bcProducts);

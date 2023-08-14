@@ -6,6 +6,8 @@ import { getTransformedProductData } from '../../factories/transform-products-da
 import { QueryResolvers, RoutableInterface } from '@mesh';
 import { BC_Product } from '@mesh/external/BigCommerceGraphqlApi';
 import { Category } from '../../types';
+import { getTaxSettings } from '../../apis/graphql/settings';
+import { getIncludesTax } from '../../../utils';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
     const { __typename } = data;
@@ -68,7 +70,11 @@ export const routeResolver: QueryResolvers['route'] = {
     resolve: async (_root, args, _context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
 
-        const data = await getRoute(urlParam);
+        const taxSettings = await getTaxSettings();
+        const data = await getRoute({
+            includeTax: getIncludesTax(taxSettings?.pdp),
+            path: urlParam,
+        });
 
         if (!data) {
             return null;
