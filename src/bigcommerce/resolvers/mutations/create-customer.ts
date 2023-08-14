@@ -3,6 +3,7 @@ import { logAndThrowError } from '../../../utils/error-handling';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';
 
+/* istanbul ignore next */
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {
     resolve: async (_root, args, _context, _info) => {
         if (

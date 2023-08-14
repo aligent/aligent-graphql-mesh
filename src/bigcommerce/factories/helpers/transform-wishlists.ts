@@ -13,6 +13,7 @@ export const getTransformedWishlists = (
     return wishlists.edges.map((edge) => {
         if (!edge?.node || !edge?.node.items.edges) return null;
         const { entityId, isPublic, name, token } = edge.node;
+       // console.log(JSON.stringify(edge.node.items), '/n');
         return {
             id: String(entityId),
             name,
@@ -32,22 +33,23 @@ export const getTransformedWishlists = (
     });
 };
 
-const getTransformedWishListItems = (
+export const getTransformedWishListItems = (
     wishListItems: BC_WishlistItemConnection
 ): Array<Maybe<WishlistItemInterface>> => {
     if (!wishListItems.edges) return [];
     return wishListItems.edges.map((wishlistItem) => {
         if (!wishlistItem?.node) return null;
-        console.log(wishlistItem.node.product);
         const { entityId } = wishlistItem.node;
+        const transformedProduct = getTransformedProductData(wishlistItem.node.product);
+        console.log({transformedProduct});
         return {
-            __typename: 'WishlistItemInterface',
+            // __typename: 'SimpleWishlistItem'
             id: String(entityId),
-            quantity: 1, // BC doesnt have
+            quantity: 1, // Value not in BC
             added_at: 'null', // Value not in BC
             customizable_options: [],
             description: wishlistItem.node.product.description,
-            product: getTransformedProductData(wishlistItem.node.product),
+            product: transformedProduct,
         };
     });
 };

@@ -72,9 +72,13 @@ export const customer = stripIgnoredCharacters(
                                             }
                                             images {
                                                 edges {
+                                                    cursor
                                                     node {
                                                         ...Image
                                                     }
+                                                }
+                                                pageInfo {
+                                                    ...PageInfo
                                                 }
                                             }
                                             categories {
@@ -82,6 +86,7 @@ export const customer = stripIgnoredCharacters(
                                                     node {
                                                         ...CategoryDetails
                                                     }
+                                                    cursor
                                                 }
                                             }
                                             reviews {
@@ -98,6 +103,7 @@ export const customer = stripIgnoredCharacters(
                                                             utc
                                                         }
                                                     }
+                                                    cursor
                                                 }
                                                 pageInfo {
                                                     ...PageInfo
@@ -105,12 +111,16 @@ export const customer = stripIgnoredCharacters(
                                             }
                                             availabilityV2 {
                                                 status
+                                                description
                                             }
                                             prices {
                                                 ...Prices
                                             }
                                             productOptions {
                                                 ...ProductOptions
+                                                pageInfo {
+                                                    ...PageInfo
+                                                }
                                             }
                                             path
                                         }
