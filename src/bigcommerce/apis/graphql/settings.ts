@@ -31,8 +31,8 @@ export const getTaxSettings = async (): Promise<BC_TaxDisplaySettings | null> =>
         }
 
         return response.data.site.settings.tax;
-    } catch (e: any) {
-        logAndThrowError(e);
+    } catch (e) {
+        logAndThrowError(e as Error);
         return null;
     }
 };
