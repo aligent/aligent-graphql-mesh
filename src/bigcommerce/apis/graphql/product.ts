@@ -10,7 +10,7 @@ import { getProductsSearchQuery } from './requests/product-search';
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
 export const getBcProductsGraphql = async (
-    filters: BC_SearchProductsFiltersInput
+    filters: BC_SearchProductsFiltersInput & { includeTax?: boolean }
 ): Promise<{
     products: BC_ProductConnection;
     filters: BC_SearchProductFilterConnection;

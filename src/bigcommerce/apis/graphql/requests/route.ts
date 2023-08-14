@@ -9,7 +9,7 @@ export const getRouteQuery = stripIgnoredCharacters(
         ${ProductsDetails}
         ${seoDetails}
 
-        query getRoute($path: String!) {
+        query getRoute($path: String!, $includeTax: Boolean) {
             site {
                 route(path: $path) {
                     node {

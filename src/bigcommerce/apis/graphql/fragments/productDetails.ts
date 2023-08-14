@@ -74,10 +74,7 @@ export const ProductsDetails: DocumentNode = gql`
             }
         }
         path
-        prices(includeTax: true) {
-            ...Prices
-        }
-        priceExGst: prices(includeTax: true) {
+        prices(includeTax: $includeTax) {
             ...Prices
         }
         productOptions {

@@ -5,14 +5,16 @@ import { logAndThrowError } from '../../../utils/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
-export const getBcProductByPathGraphql = async (path: BC_SiteRouteArgs): Promise<BC_Product> => {
+export const getBcProductByPathGraphql = async (
+    variables: BC_SiteRouteArgs & { includeTax?: boolean }
+): Promise<BC_Product> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
 
     const productsQuery = {
         query: getPdpProductQuery,
-        variables: path,
+        variables: variables,
     };
 
     const response = await bcGraphQlRequest(productsQuery, headers);

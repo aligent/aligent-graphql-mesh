@@ -15,10 +15,7 @@ export const variants = gql`
         defaultImage {
             ...Image
         }
-        prices(includeTax: true) {
-            ...Prices
-        }
-        priceExGst: prices(includeTax: true) {
+        prices(includeTax: $includeTax) {
             ...Prices
         }
         options {
