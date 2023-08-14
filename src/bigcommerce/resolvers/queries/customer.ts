@@ -15,8 +15,7 @@ export const customerResolver: QueryResolvers['customer'] = {
             getAllCustomerAddresses(bc_customer_id),
         ]);
 
-        // wont find emails with '+' in them
-        const subscriber = await getSubscriberByEmail(bcCustomer.email); 
+        const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
         const isSubscriber = !!subscriber;
 
         // console.log(bcCustomer);

@@ -41,7 +41,7 @@ const getTransformedWishListItems = (
         console.log(wishlistItem.node.product);
         const { entityId } = wishlistItem.node;
         return {
-            // __typename: 'WishlistItemInterface',
+            __typename: 'WishlistItemInterface',
             id: String(entityId),
             quantity: 1, // BC doesnt have
             added_at: 'null', // Value not in BC
