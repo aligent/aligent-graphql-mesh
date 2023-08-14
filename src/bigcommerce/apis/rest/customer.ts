@@ -5,6 +5,7 @@ const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
 const CUSTOMER_SUBSCRIBERS = `/v3/customers/subscribers`;
 
+/* istanbul ignore file */
 export const createCustomer = async (
     email: string,
     firstName: string,

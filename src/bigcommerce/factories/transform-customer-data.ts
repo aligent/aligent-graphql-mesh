@@ -7,7 +7,7 @@ import { getTransformedWishlists } from './helpers/transform-wishlists';
 export const transformCustomer = (
     bcCustomer: BC_Customer,
     bcAddresses: BcAddressRest[],
-    bcSubscriber: boolean
+    isSubscriber: boolean
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
     return {
@@ -15,15 +15,15 @@ export const transformCustomer = (
         email,
         firstname: firstName,
         lastname: lastName,
-        is_subscribed: bcSubscriber, 
+        is_subscribed: isSubscriber,
         allow_remote_shopping_assistance: false, // Cant see equivalent BC value
         wishlists: getTransformedWishlists(bcCustomer.wishlists),
-        // Types say wishlist is deprecated, but is required to have a visibility
         wishlist: {
+            // Types say wishlist is deprecated, but is required and needs to have visibility
             visibility: 'PUBLIC',
         },
-        // TF does new need reviews
         reviews: {
+            // TF does new need reviews
             items: [],
             page_info: {
                 current_page: null,

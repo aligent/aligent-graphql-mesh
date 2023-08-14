@@ -16,7 +16,7 @@ export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> 
     const response = await bcGraphQlRequest(customerQuery, headers);
 
     if (response.data.errors) {
-        console.log('error bc customer');
+        console.log(`Error from getBcCustomer: ${response.data.errors}`);
     }
 
     return response.data.customer;
