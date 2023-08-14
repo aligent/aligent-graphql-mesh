@@ -36,7 +36,7 @@ describe('transform customer wishlists', () => {
         expect(result).toEqual(inputTransformedWishlistItems);
     });
     it('Returns empty array when no wishlist', () => {
-        const inputBcWishListItems = bcWishListItemsEmpty
+        const inputBcWishListItems = bcWishListItemsEmpty;
         const inputTransformedWishlistItems: WishlistItemInterface[] = [];
 
         const result = getTransformedWishListItems(inputBcWishListItems);
@@ -44,7 +44,7 @@ describe('transform customer wishlists', () => {
         expect(result).toEqual(inputTransformedWishlistItems);
     });
     it('Returns empty array when no wishlist items', () => {
-        const inputBcWishListItems = bcWishListItemsNoEdges
+        const inputBcWishListItems = bcWishListItemsNoEdges;
         const inputTransformedWishlistItems: WishlistItemInterface[] = [];
 
         const result = getTransformedWishListItems(inputBcWishListItems);
@@ -176,6 +176,12 @@ const bcWishList: BC_WishlistConnection = {
                                         },
                                     },
                                     categories: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
                                         edges: [
                                             {
                                                 node: {
@@ -497,6 +503,77 @@ const bcWishList: BC_WishlistConnection = {
                                         },
                                     },
                                     path: '/mona-pullover-hoodlie/',
+                                    addToWishlistUrl: 'deprecated',
+                                    availability: 'deprecated',
+                                    availabilityDescription: 'deprecated',
+                                    createdAt: { utc: '2019-08-24T14:15:22Z' },
+                                    customFields: {
+                                        edges: [],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: null,
+                                            endCursor: null,
+                                        },
+                                    },
+                                    giftWrappingOptions: {
+                                        edges: [],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: null,
+                                            endCursor: null,
+                                        },
+                                    },
+                                    inventory: {
+                                        isInStock: true,
+                                        hasVariantInventory: true,
+                                    },
+                                    metafields: {
+                                        edges: [],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: null,
+                                            endCursor: null,
+                                        },
+                                    },
+                                    options: {
+                                        edges: [],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: null,
+                                            endCursor: null,
+                                        },
+                                    },
+                                    plainTextDescription: 'desc',
+                                    relatedProducts: {
+                                        edges: [],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: null,
+                                            endCursor: null,
+                                        },
+                                    },
+                                    reviewSummary: {
+                                        averageRating: 1,
+                                        numberOfReviews: 1,
+                                        summationOfRatings: 1,
+                                    },
+                                    showCartAction: true,
+                                    type: 'Product',
+                                    variants: {
+                                        edges: [],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: null,
+                                            endCursor: null,
+                                        },
+                                    },
+                                    warranty: 'warranty',
                                 },
                             },
                         },
@@ -915,6 +992,12 @@ const bcWishListItems: BC_WishlistItemConnection = {
                         },
                     },
                     categories: {
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                        },
                         edges: [
                             {
                                 node: {
@@ -949,11 +1032,44 @@ const bcWishListItems: BC_WishlistItemConnection = {
                                     },
                                     seo: { pageTitle: '', metaDescription: '', metaKeywords: '' },
                                     defaultProductSort: 'FEATURED',
+                                    metafields: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
+                                    shopByPriceRanges: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
                                 },
+
                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                             },
                             {
                                 node: {
+                                    metafields: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
+                                    shopByPriceRanges: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
                                     id: 'Q2F0ZWdvcnk6NTg=',
                                     entityId: 58,
                                     name: 'Women',
@@ -994,6 +1110,22 @@ const bcWishListItems: BC_WishlistItemConnection = {
                             },
                             {
                                 node: {
+                                    metafields: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
+                                    shopByPriceRanges: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
                                     id: 'Q2F0ZWdvcnk6NTk=',
                                     entityId: 59,
                                     name: 'Tops',
@@ -1034,6 +1166,22 @@ const bcWishListItems: BC_WishlistItemConnection = {
                             },
                             {
                                 node: {
+                                    metafields: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
+                                    shopByPriceRanges: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
                                     id: 'Q2F0ZWdvcnk6NjA=',
                                     entityId: 60,
                                     name: 'Hoodies & Sweatshirts',
@@ -1141,6 +1289,77 @@ const bcWishListItems: BC_WishlistItemConnection = {
                         },
                     },
                     path: '/mona-pullover-hoodlie/',
+                    addToWishlistUrl: 'deprecated',
+                    availability: 'deprecated',
+                    availabilityDescription: 'deprecated',
+                    createdAt: { utc: '2019-08-24T14:15:22Z' },
+                    customFields: {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: null,
+                            endCursor: null,
+                        },
+                    },
+                    giftWrappingOptions: {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: null,
+                            endCursor: null,
+                        },
+                    },
+                    inventory: {
+                        isInStock: true,
+                        hasVariantInventory: true,
+                    },
+                    metafields: {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: null,
+                            endCursor: null,
+                        },
+                    },
+                    options: {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: null,
+                            endCursor: null,
+                        },
+                    },
+                    plainTextDescription: 'desc',
+                    relatedProducts: {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: null,
+                            endCursor: null,
+                        },
+                    },
+                    reviewSummary: {
+                        averageRating: 1,
+                        numberOfReviews: 1,
+                        summationOfRatings: 1,
+                    },
+                    showCartAction: true,
+                    type: 'Product',
+                    variants: {
+                        edges: [],
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: null,
+                            endCursor: null,
+                        },
+                    },
+                    warranty: 'warranty',
                 },
             },
         },
@@ -1154,8 +1373,7 @@ const bcWishListItems: BC_WishlistItemConnection = {
 };
 
 const bcWishListItemsEmpty: BC_WishlistItemConnection = {
-    edges: [
-    ],
+    edges: [],
     pageInfo: {
         hasNextPage: false,
         hasPreviousPage: false,
@@ -1163,7 +1381,6 @@ const bcWishListItemsEmpty: BC_WishlistItemConnection = {
         endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
     },
 };
-
 
 const bcWishListItemsNoEdges: BC_WishlistItemConnection = {
     pageInfo: {
