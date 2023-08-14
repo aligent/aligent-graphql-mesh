@@ -14,5 +14,5 @@ export const bcGraphQlRequest = async (
     return axios
         .post(BC_GRAPHQL_API, data, { headers })
         .then((resp) => resp.data)
-        .catch('err');
+        .catch(logAndThrowError);
 };

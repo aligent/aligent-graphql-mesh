@@ -25,7 +25,7 @@ export const getDecodedMeshToken = (meshToken: string): MeshToken => {
         }
         return verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
     } catch (error) {
-        throw new Error(`mesh-token could not be decoded ${error}`);
+        return logAndThrowError(new Error(`mesh-token could not be decoded ${error}`));
     }
 };
 
