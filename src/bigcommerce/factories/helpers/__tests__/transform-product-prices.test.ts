@@ -1,5 +1,12 @@
-import { getTransformedPriceRange, getTransformedPrices } from '../transform-product-prices';
+import {
+    getAmountOff,
+    getMostExpensiveVariant,
+    getPercentOff,
+    getTransformedPriceRange,
+    getTransformedPrices,
+} from '../transform-product-prices';
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
+import { BC_PageInfo } from '@mesh/external/BigCommerceGraphqlApi';
 
 describe('transform-product-prices', () => {
     it('Transforms BC product prices to a AC priceRange structure', () => {
@@ -49,5 +56,45 @@ describe('transform-product-prices', () => {
 
     it('Returns "null" if prices are null for productPrices', () => {
         expect(getTransformedPrices(null)).toEqual(null);
+    });
+
+    it(`getPercentOff and getAmountOff returns 0 if there's no basePrice or price`, () => {
+        expect(
+            getAmountOff({ currencyCode: 'AUD', value: null }, { currencyCode: 'AUD', value: null })
+        ).toEqual(0);
+        expect(
+            getPercentOff(
+                { currencyCode: 'AUD', value: null },
+                { currencyCode: 'AUD', value: null }
+            )
+        ).toEqual(0);
+    });
+
+    it(`getPercentOff and getAmountOff returns 0 if there's no basePrice or price`, () => {
+        const variants = {
+            edges: [
+                mockBcProducts[0].variants.edges[0],
+                {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                    node: { ...mockBcProducts[0].variants.edges[1].node, prices: null },
+                },
+            ],
+            pageInfo: {} as BC_PageInfo,
+        };
+
+        expect(getMostExpensiveVariant(variants)).toEqual({
+            basePrice: { currencyCode: 'AUD', value: 70 },
+            bulkPricing: [],
+            mapPrice: null,
+            price: { currencyCode: 'AUD', value: 30 },
+            priceRange: {
+                max: { currencyCode: 'AUD', value: 30 },
+                min: { currencyCode: 'AUD', value: 30 },
+            },
+            retailPrice: null,
+            retailPriceRange: null,
+            salePrice: { currencyCode: 'AUD', value: 30 },
+            saved: null,
+        });
     });
 });

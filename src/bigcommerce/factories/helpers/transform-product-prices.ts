@@ -37,7 +37,7 @@ const hasSalesPriceTakenAffect = (price: BC_Money, basePrice: BC_Money) => {
     return price.value < basePrice.value;
 };
 
-const getAmountOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
+export const getAmountOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
     if (!basePrice?.value || !price?.value) return 0;
 
     const isSalePriceTheFinalPrice = hasSalesPriceTakenAffect(price, basePrice);
@@ -47,7 +47,7 @@ const getAmountOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
     return basePrice.value - price.value;
 };
 
-const getPercentOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
+export const getPercentOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
     if (!basePrice?.value || !price?.value) return 0;
 
     const isSalePriceTheFinalPrice = hasSalesPriceTakenAffect(price, basePrice);
@@ -57,7 +57,7 @@ const getPercentOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => 
     return ((basePrice.value - price.value) / basePrice.value) * 100;
 };
 
-const getMostExpensiveVariant = (
+export const getMostExpensiveVariant = (
     variants?: Maybe<BC_VariantConnection>
 ): Maybe<BC_Prices> | undefined => {
     if (!variants?.edges) return null;
