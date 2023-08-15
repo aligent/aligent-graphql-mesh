@@ -22,7 +22,8 @@ export const transformCustomer = (
             // Types say wishlist is deprecated, but is required and needs to have visibility
             visibility: 'PUBLIC',
         },
-        reviews: { // Types require this be here
+        reviews: {
+            // Types require this be here
             items: [],
             page_info: {
                 current_page: null,

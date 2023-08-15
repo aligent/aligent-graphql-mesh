@@ -1,4 +1,4 @@
-import { BcCustomer } from "../../../../types";
+import { BcCustomer } from '../../../../types';
 
 export const bcCustomerCreated: BcCustomer = {
     id: 19,

@@ -1,9 +1,10 @@
 import {
     ConfigurableProduct,
+    ConfigurableWishlistItem,
     Maybe,
     ProductInterface,
+    SimpleWishlistItem,
     Wishlist,
-    WishlistItemInterface,
     WishlistVisibilityEnum,
 } from '@mesh';
 import {
@@ -43,7 +44,7 @@ export const getTransformedWishlists = (
 
 export const getTransformedWishListItems = (
     wishListItems: BC_WishlistItemConnection
-): Array<Maybe<WishlistItemInterface>> => {
+): Array<Maybe<ConfigurableWishlistItem | SimpleWishlistItem>> => {
     if (!wishListItems.edges) return [];
     return wishListItems.edges
         .map((wishlistItem) => {
@@ -56,7 +57,7 @@ export const getTransformedWishListItems = (
                 id: String(entityId),
                 quantity: 1, // Value not in BC
                 added_at: 'null', // Value not in BC
-                customizable_options: [],
+                customizable_options: [], // Value not in BC
                 description: wishlistItem.node.product.description,
                 product: transformedProduct,
             };

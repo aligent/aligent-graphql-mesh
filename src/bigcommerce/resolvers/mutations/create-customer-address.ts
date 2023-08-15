@@ -29,7 +29,7 @@ export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => 
         input.postcode
     );
 };
-/* istanbul ignore next */ 
+/* istanbul ignore next */
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
         if (!context.headers['mesh-token']) {

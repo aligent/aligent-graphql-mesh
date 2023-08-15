@@ -1,6 +1,6 @@
-import type {Config} from 'jest';
+import type { Config } from 'jest';
 
-const config: Config  = {
+const config: Config = {
     testEnvironment: 'node',
     transform: {
         '^.+\\.m?[tj]sx?$': [
@@ -18,7 +18,7 @@ const config: Config  = {
             statements: 80,
         },
     },
-    modulePathIgnorePatterns: ['__data__']
+    modulePathIgnorePatterns: ['__data__'],
 };
 
-export default config
+export default config;

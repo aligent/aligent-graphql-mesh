@@ -1,4 +1,7 @@
-import { BC_WishlistConnection, BC_WishlistItemConnection } from "@mesh/external/BigCommerceGraphqlApi";
+import {
+    BC_WishlistConnection,
+    BC_WishlistItemConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
 
 export const bcWishlistNoEdges = {
     pageInfo: {
