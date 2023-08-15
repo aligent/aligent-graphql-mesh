@@ -5,21 +5,26 @@ import {
 } from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductsGraphql } from '../../apis/graphql/product';
-import { atob, getPathFromUrlKey } from '../../../utils';
+
+import { atob, getIncludesTax, getPathFromUrlKey } from '../../../utils';
 import { getBcAvailableProductFilters } from '../../apis/graphql/available-product-search-filters';
 import { getTransformedProductSearchArguments } from '../../factories/helpers/transform-product-search-arguments';
 import { logAndThrowError } from '../../../utils/error-handling';
+import { getTaxSettings } from '../../apis/graphql/settings';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, _context, _info): Promise<Products | null> => {
-        //const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
+        const taxSettings = await getTaxSettings();
         try {
             const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
 
             // The PDP passes an "url_key" arg, so if we see this then get product information from Big Commerces "site.route.product" query
             // as it's the only query that accepts a "path". "path" is based on the "url_key" but with a "/" in the front of it.
             if (url_key) {
-                const bcProduct = await getBcProductByPathGraphql({ path: url_key });
+                const bcProduct = await getBcProductByPathGraphql({
+                    includeTax: getIncludesTax(taxSettings?.pdp),
+                    path: url_key,
+                });
 
                 if (!bcProduct) return null;
                 return { items: [getTransformedProductData(bcProduct)] };
@@ -44,7 +49,10 @@ export const productsResolver: QueryResolvers['products'] = {
                 availableBcProductFilters
             );
 
-            const bcProducts = await getBcProductsGraphql(transformedFilterArguments);
+            const bcProducts = await getBcProductsGraphql({
+                includeTax: getIncludesTax(taxSettings?.plp),
+                filters: transformedFilterArguments,
+            });
 
             if (!bcProducts) return null;
 

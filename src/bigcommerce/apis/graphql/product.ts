@@ -9,9 +9,10 @@ import { getProductsSearchQuery } from './requests/product-search';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
-export const getBcProductsGraphql = async (
-    filters: BC_SearchProductsFiltersInput
-): Promise<{
+export const getBcProductsGraphql = async (variables: {
+    filters: BC_SearchProductsFiltersInput;
+    includeTax?: boolean;
+}): Promise<{
     products: BC_ProductConnection;
     filters: BC_SearchProductFilterConnection;
 } | null> => {
@@ -21,17 +22,15 @@ export const getBcProductsGraphql = async (
 
     const productsQuery = {
         query: getProductsSearchQuery,
-        variables: {
-            filters,
-        },
+        variables,
     };
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 
-    if (response.data.errors) {
+    if (response.errors) {
         logAndThrowError(
             new Error(
-                `Failed to fetch products from BigCommerce: ${JSON.stringify(response.data.errors)}`
+                `Failed to fetch products from BigCommerce: ${JSON.stringify(response.errors)}`
             )
         );
     }
