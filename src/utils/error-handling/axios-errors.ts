@@ -1,18 +1,20 @@
 import { AxiosResponse, AxiosError } from 'axios';
+import { logAndThrowUnknownError } from './base-errors';
 /* istanbul ignore file */
 
-/*
-    Errors that are thrown with new Error, will be shown via "message" in the response from GraphQL,
-    Console logs will show up in AWS and terminal.
+/**
+ * For displaying Axios errors from multiple APIs in a nice format.
+ * Errors that are thrown with new Error, will be shown via "message" in the response from GraphQL, Console errors will show up in AWS and terminal.
+ * @param {string} axiosError - The error from Axios, needs to be confirmed first with axios.isAxiosError().
+ * @param {string} functionName - Used to display the name of the function, function.name is preferred.
+ * @param {string} path - Used for additional info where the error occurred e.g. /v3/api/resource
  */
-export const throwAndLogAxiosError = (
+export const logAndThrowAxiosError = (
     axiosError: AxiosError,
     functionName: string,
     path?: string,
-    extraInfo?: Record<string, string>
 ): void => {
-    if (path) console.log({ path });
-    if (extraInfo) console.log({ extraInfo });
+    if (path) console.error({ path });
 
     const response = axiosError.response as AxiosResponse;
     const data = response.data;
@@ -24,7 +26,7 @@ export const throwAndLogAxiosError = (
     } else if (data.errors) {
         logAndThrowErrorsFromGraphQlResponse(response, functionName);
     } else if (data) {
-        console.log(
+        console.error(
             `Response data: ${JSON.stringify(data)}, statusText: ${
                 response.statusText
             }, function name: ${functionName}`
@@ -35,18 +37,7 @@ export const throwAndLogAxiosError = (
     }
 };
 
-const logErrorAndFunctionName = (code: number, functionName: string, message: string) => {
-    console.log(`Code: ${code}`);
-    console.log(`Function name: ${functionName}`);
-    console.log(`Error message: ${message}`);
-};
-
-export const logAndThrowUnknownError = (functionName: string, path?: string): void => {
-    console.log(`There was an unknown error in the ${functionName} function, path: ${path}`);
-    throw new Error(`There was an unknown error in the ${functionName} function`);
-};
-
-export const logAndThrowErrorsFromGraphQlResponse = (
+const logAndThrowErrorsFromGraphQlResponse = (
     response: AxiosResponse,
     functionName: string
 ): void => {
@@ -59,7 +50,7 @@ export const logAndThrowErrorsFromGraphQlResponse = (
         throw new Error(errorResponse.message);
     } else if (typeof errorResponse === 'object') {
         logErrorAndFunctionName(response.status, functionName, errorResponse.message);
-        console.log(`Whole Error: ${JSON.stringify(errorResponse)}`);
+        console.error(`Whole Error: ${JSON.stringify(errorResponse)}`);
 
         throw new Error(JSON.stringify(errorResponse));
     }
@@ -67,7 +58,7 @@ export const logAndThrowErrorsFromGraphQlResponse = (
     logAndThrowUnknownError(functionName);
 };
 
-export const logAndThrowErrorsFromRESTApiResponse = (
+const logAndThrowErrorsFromRESTApiResponse = (
     response: AxiosResponse,
     functionName: string
 ): void => {
@@ -75,7 +66,7 @@ export const logAndThrowErrorsFromRESTApiResponse = (
 
     if (errorResponse) {
         logErrorAndFunctionName(response.data.code, functionName, errorResponse);
-        console.log(`Whole Error: ${JSON.stringify(response.data)}`);
+        console.error(`Whole Error: ${JSON.stringify(response.data)}`);
         throw new Error(errorResponse);
     }
 
@@ -90,16 +81,15 @@ const logAndThrowErrorsFromBCRESTApiResponse = (
 
     if (errorResponse) {
         logErrorAndFunctionName(response.data.status, functionName, errorResponse);
-        console.log(`Whole Error: ${JSON.stringify(response.data)}`);
+        console.error(`Whole Error: ${JSON.stringify(response.data)}`);
         throw new Error(errorResponse);
     }
 
     logAndThrowUnknownError(functionName);
 };
 
-// This is the default error throwing function to use when not making an API call
-export const logAndThrowError = (message: string, path?: string) => {
-    if (path) console.log({ path });
-    console.log(message);
-    throw new Error(message);
+const logErrorAndFunctionName = (code: number, functionName: string, message: string) => {
+    console.error(`Code: ${code}`);
+    console.error(`Function name: ${functionName}`);
+    console.error(`Error message: ${message}`);
 };

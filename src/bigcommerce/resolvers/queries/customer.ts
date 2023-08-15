@@ -1,6 +1,6 @@
 import { QueryResolvers } from '@mesh';
 import { getDecodedMeshToken } from '../../../utils/tokens';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
 import { getBcCustomer } from '../../apis/graphql/customer';
 
 export const customerResolver: QueryResolvers['customer'] = {

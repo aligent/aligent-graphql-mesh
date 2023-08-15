@@ -1,7 +1,7 @@
 import { BC_Product, BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 

@@ -1,5 +1,5 @@
 import { CountryCodeEnum, CustomerAddressInput, MutationResolvers } from '@mesh';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
 import { getDecodedMeshToken } from '../../../utils/tokens';
 import { createCustomerAddress } from '../../apis/rest/customer';
 import {

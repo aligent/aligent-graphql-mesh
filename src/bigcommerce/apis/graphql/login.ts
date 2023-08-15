@@ -1,4 +1,4 @@
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
 import { GraphQlQuery } from '../../types';
 import { bcGraphQlRequest } from './client';
 

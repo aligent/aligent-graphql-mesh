@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@mesh';
 import { transformCustomerData } from '../../factories/transform-customers-data';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
 import { createCustomer } from '../../apis/rest/customer';
 
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {

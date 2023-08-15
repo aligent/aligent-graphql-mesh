@@ -1,6 +1,6 @@
 import { BcSubscriber } from '../../types';
 import { bcPost } from './client';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
 
 /* istanbul ignore file */
 /**

@@ -6,7 +6,7 @@ import {
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
 import { channelSocialLinks } from './requests/channel-social-links';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/base-errors';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {

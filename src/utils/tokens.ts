@@ -1,4 +1,4 @@
-import { logAndThrowError } from './error-handling';
+import { logAndThrowError } from './error-handling/axios-errors';
 import { decode, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
 

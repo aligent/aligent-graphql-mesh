@@ -1,7 +1,10 @@
 /* istanbul ignore file */
 
 import axios, { AxiosResponse } from 'axios';
-import { logAndThrowUnknownError, throwAndLogAxiosError } from '../../../utils/error-handling';
+import {
+    logAndThrowAxiosError,
+    logAndThrowUnknownError,
+} from '../../../utils/error-handling/axios-errors';
 import { GraphQlQuery } from '../../types';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
@@ -16,7 +19,7 @@ export const bcGraphQlRequest = async (
         return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            throwAndLogAxiosError(error, bcGraphQlRequest.name);
+            logAndThrowAxiosError(error, bcGraphQlRequest.name);
         } else {
             logAndThrowUnknownError(bcGraphQlRequest.name);
         }
