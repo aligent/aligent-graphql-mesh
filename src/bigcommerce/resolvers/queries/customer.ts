@@ -13,6 +13,8 @@ export const customerResolver: QueryResolvers['customer'] = {
             getAllCustomerAddresses(bc_customer_id),
         ]);
 
+        console.log(bcAddresses);
+
         const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
         const isSubscriber = !!subscriber;
 

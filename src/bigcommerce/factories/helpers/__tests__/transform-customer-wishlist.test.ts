@@ -3,7 +3,6 @@ import {
     getTransformedWishListItems,
     getTransformedWishlists,
 } from '../transform-wishlists';
-import { Wishlist, WishlistItemInterface } from '@mesh';
 import {
     bcWishListItems,
     transformedWishlistItems,
@@ -17,69 +16,59 @@ import {
 
 describe('transform customer wishlists', () => {
     it('Returns wishlists visibility PUBLIC', () => {
-        const inputVisibility = true;
-        const expectResult = 'PUBLIC';
+        const result = getWishListVisibility(true);
 
-        const result = getWishListVisibility(inputVisibility);
-
-        expect(result).toEqual(expectResult);
+        expect(result).toEqual('PUBLIC');
     });
     it('Returns wishlists visibility PRIVATE', () => {
-        const inputVisibility = false;
-        const expectResult = 'PRIVATE';
+        const result = getWishListVisibility(false);
 
-        const result = getWishListVisibility(inputVisibility);
-
-        expect(result).toEqual(expectResult);
+        expect(result).toEqual('PRIVATE');
     });
 
     it('Returns transformed wishlist items', () => {
         const inputBcWishListItems = bcWishListItems;
-        const inputTransformedWishlistItems = transformedWishlistItems;
+        const expectedTransformedWishlistItems = transformedWishlistItems;
 
         const result = getTransformedWishListItems(inputBcWishListItems);
 
-        expect(result).toEqual(inputTransformedWishlistItems);
+        expect(result).toEqual(expectedTransformedWishlistItems);
     });
     it('Returns empty array when no wishlist', () => {
-        const inputBcWishListItems = bcWishListItemsEmpty;
-        const inputTransformedWishlistItems: WishlistItemInterface[] = [];
+        const bcWishListItems = bcWishListItemsEmpty;
 
-        const result = getTransformedWishListItems(inputBcWishListItems);
+        const result = getTransformedWishListItems(bcWishListItems);
 
-        expect(result).toEqual(inputTransformedWishlistItems);
+        expect(result).toEqual([]);
     });
     it('Returns empty array when no wishlist items', () => {
-        const inputBcWishListItems = bcWishListItemsNoEdges;
-        const inputTransformedWishlistItems: WishlistItemInterface[] = [];
+        const bcWishListItems = bcWishListItemsNoEdges;
 
-        const result = getTransformedWishListItems(inputBcWishListItems);
+        const result = getTransformedWishListItems(bcWishListItems);
 
-        expect(result).toEqual(inputTransformedWishlistItems);
+        expect(result).toEqual([]);
     });
 
     it('Returns transformed wishlists', () => {
         const inputBcWishList = bcWishList;
-        const inputTransformedWishlist = transformedWishlist;
+        const expectedTransformedWishlist = transformedWishlist;
 
         const result = getTransformedWishlists(inputBcWishList);
 
-        expect(result).toEqual(inputTransformedWishlist);
+        expect(result).toEqual(expectedTransformedWishlist);
     });
     it('Returns empty array when no wishlists', () => {
-        const inputBcWishList = bcWishlistNoEdges;
-        const inputTransformedWish: Wishlist[] = [];
+        const bcWishList = bcWishlistNoEdges;
 
-        const result = getTransformedWishlists(inputBcWishList);
+        const result = getTransformedWishlists(bcWishList);
 
-        expect(result).toEqual(inputTransformedWish);
+        expect(result).toEqual([]);
     });
     it('Returns empty array when no wishlists items', () => {
-        const inputBcWishList = bcWishListNoItemEdges;
-        const inputTransformedWish: Wishlist[] = [];
+        const bcWishList = bcWishListNoItemEdges;
 
-        const result = getTransformedWishlists(inputBcWishList);
+        const result = getTransformedWishlists(bcWishList);
 
-        expect(result).toEqual(inputTransformedWish);
+        expect(result).toEqual([]);
     });
 });

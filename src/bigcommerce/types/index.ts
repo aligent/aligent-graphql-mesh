@@ -118,6 +118,12 @@ export interface BcAddressRest {
     phone: string;
     postal_code: string;
     state_or_province: string;
+    form_fields: FormField[];
+}
+
+export interface FormField {
+    name: string;
+    value: string[] | string;
 }
 
 export interface BcSubscriber {

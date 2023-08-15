@@ -29,7 +29,7 @@ export const createCustomer = async (
 };
 
 export const getAllCustomerAddresses = async (bcCustomerId: number): Promise<BcAddressRest[]> => {
-    const path = `${CUSTOMER_ADDRESS_API}?customer_id:in=${bcCustomerId}`;
+    const path = `${CUSTOMER_ADDRESS_API}?include=formfields&customer_id:in=${bcCustomerId}`;
 
     const response = await bcGet(path);
     return response.data;
