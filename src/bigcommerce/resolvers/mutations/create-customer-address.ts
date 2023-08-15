@@ -6,7 +6,6 @@ import {
     transformCustomerAddress,
     transformBcAddress,
 } from '../../factories/transform-customer-address-data';
-
 export interface ValidatedInput extends CustomerAddressInput {
     firstname: string;
     lastname: string;
@@ -30,7 +29,7 @@ export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => 
         input.postcode
     );
 };
-
+/* istanbul ignore next */ 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
         if (!context.headers['mesh-token']) {

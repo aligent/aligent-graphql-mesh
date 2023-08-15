@@ -1,4 +1,4 @@
-import { CountryCodeEnum } from '../../../../../meshrc/.mesh';
+import { CountryCodeEnum } from "@mesh";
 
 export const bcAddress = {
     customer_id: 123,

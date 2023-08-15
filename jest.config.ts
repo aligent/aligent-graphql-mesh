@@ -1,4 +1,6 @@
-module.exports = {
+import type {Config} from 'jest';
+
+const config: Config  = {
     testEnvironment: 'node',
     transform: {
         '^.+\\.m?[tj]sx?$': [
@@ -16,4 +18,7 @@ module.exports = {
             statements: 80,
         },
     },
+    modulePathIgnorePatterns: ['__data__']
 };
+
+export default config

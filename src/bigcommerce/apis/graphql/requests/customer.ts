@@ -1,7 +1,7 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { pageInfo } from '../fragments/pagInfo';
+import { pageInfo } from '../fragments/pageInfo';
 import { image } from '../fragments/image';
 import { productOptions } from '../fragments/productOptions';
 import { prices } from '../fragments/prices';
@@ -90,21 +90,6 @@ export const customer = stripIgnoredCharacters(
                                                 }
                                             }
                                             reviews {
-                                                edges {
-                                                    node {
-                                                        entityId
-                                                        author {
-                                                            name
-                                                        }
-                                                        title
-                                                        text
-                                                        rating
-                                                        createdAt {
-                                                            utc
-                                                        }
-                                                    }
-                                                    cursor
-                                                }
                                                 pageInfo {
                                                     ...PageInfo
                                                 }

@@ -1,4 +1,4 @@
-import { Customer } from '../../../../../meshrc/.mesh';
+import { Customer } from "@mesh";
 
 export const transformedCreatedCustomer: Customer = {
     id: 19,

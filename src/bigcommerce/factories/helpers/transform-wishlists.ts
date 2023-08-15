@@ -74,6 +74,6 @@ export const getWishlistItemInterfaceType = (
     product: Maybe<ProductInterface | ConfigurableProduct>
 ): 'SimpleWishlistItem' | 'ConfigurableWishlistItem' => {
     // @ts-expect-error: This does exists, since we added it getTransformedProductData()
-    if (product.__typename === 'SimpleProduct') return 'SimpleWishlistItem';
-    return 'ConfigurableWishlistItem';
+    if (product.__typename === 'ConfigurableProduct') return 'ConfigurableWishlistItem';
+    return 'SimpleWishlistItem';
 };
