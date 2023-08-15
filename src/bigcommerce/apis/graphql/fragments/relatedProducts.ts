@@ -15,7 +15,7 @@ export const relatedProducts = gql`
                 name
                 sku
                 addToCartUrl
-                prices {
+                prices(includeTax: $includeTax) {
                     ...Prices
                 }
                 defaultImage {

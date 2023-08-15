@@ -1,6 +1,7 @@
 import {
     BC_Product,
     BC_ProductConnection,
+    BC_ProductOptionConnection,
     BC_SearchProductFilterConnection,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
@@ -19,10 +20,27 @@ import { getTransformedRelatedProducts } from './helpers/transform-related-produ
 import { logAndThrowError } from '../../utils/error-handling';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
 
-export const getTypeName = (bcProduct: BC_Product): 'SimpleProduct' | 'ConfigurableProduct' => {
+const getHasVariantOptions = (productOptions: BC_ProductOptionConnection): boolean => {
+    if (!productOptions?.edges || productOptions?.edges.length === 0) return false;
+
+    return productOptions.edges.some((productOption) => {
+        return productOption?.node.isVariantOption;
+    });
+};
+
+export const getTypeName = (
+    bcProduct: BC_Product,
+    productOptions: BC_ProductOptionConnection
+): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
 
-    if (variants?.edges && variants?.edges.length > 0) {
+    const hasProductOptions = getHasVariantOptions(productOptions);
+
+    /* Checks the combination of having both variants and product options. It's possible for a simple product
+     * to have a variant option without configurable options*/
+    const hasVariantOptions = variants?.edges && variants?.edges.length > 0 && hasProductOptions;
+
+    if (hasVariantOptions) {
         return 'ConfigurableProduct';
     } else {
         return 'SimpleProduct';
@@ -52,6 +70,9 @@ export const getTransformedProductData = (
             sku,
             variants: bcVariants,
         } = bcProduct;
+
+        const productType = getTypeName(bcProduct, productOptions);
+
         return {
             categories: getTransformedCategoriesData(categories),
             configurable_options: getTransformedConfigurableOptions(productOptions),
@@ -68,7 +89,7 @@ export const getTransformedProductData = (
             meta_description: seo?.metaKeywords || '',
             name,
             price: getTransformedPrices(prices),
-            price_range: getTransformedPriceRange(prices),
+            price_range: getTransformedPriceRange(prices, productType, bcVariants),
             price_tiers: [],
             rating_summary: reviewSummary?.summationOfRatings || 0,
             review_count: reviewSummary?.numberOfReviews || 0,
@@ -81,7 +102,7 @@ export const getTransformedProductData = (
             reviews: getTransformedReviews(reviews),
             variants: getTransformedVariants(bcVariants),
             // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
-            __typename: getTypeName(bcProduct),
+            __typename: productType,
         };
     } catch (error) {
         logAndThrowError(error as Error);
