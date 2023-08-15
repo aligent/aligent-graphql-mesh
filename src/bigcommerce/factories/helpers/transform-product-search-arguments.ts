@@ -8,6 +8,7 @@ import {
 type createFilterMappingProps = {
     [key: string]: {
         name: string;
+        filterName: string;
         __typename: string;
     };
 } | null;
@@ -95,16 +96,16 @@ export const getTransformedProductSearchArguments = (
         /* Transform arguments that correspond to an available filter types */
         if (!filterMapping) continue;
 
-        const { name: filterName, __typename: filterType } = filterMapping[key.toLowerCase()] || {};
+        const { filterName, __typename: filterType } = filterMapping[key.toLowerCase()] || {};
 
         if (filterType === 'BrandSearchFilter') {
             if (eqValue) {
-                bcProductFilters.brandEntityIds = [Number(atob(eqValue))];
+                bcProductFilters.brandEntityIds = [Number(eqValue)];
             }
 
             if (inArray) {
                 inArray.forEach((id) => {
-                    bcProductFilters.brandEntityIds.push(Number(atob(String(id))));
+                    bcProductFilters.brandEntityIds.push(Number(id));
                 });
             }
             continue;
@@ -141,7 +142,10 @@ export const getTransformedProductSearchArguments = (
 
         if (filterType === 'RatingSearchFilter') {
             if (eqValue) {
-                bcProductFilters.rating = { minRating: eqValue, maxRating: eqValue };
+                bcProductFilters.rating = {
+                    minRating: Number(eqValue),
+                    maxRating: Number(eqValue),
+                };
             }
 
             if (inArray) {

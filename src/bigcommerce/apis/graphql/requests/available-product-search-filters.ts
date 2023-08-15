@@ -25,6 +25,7 @@ export const getAvailableProductsSearchFiltersQuery = stripIgnoredCharacters(
                                         __typename
                                     }
                                     ... on ProductAttributeSearchFilter {
+                                        filterName
                                         __typename
                                     }
                                     ... on RatingSearchFilter {

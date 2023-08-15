@@ -1,0 +1,13 @@
+|
+# Add Big Commerce specific product attribute filters here so
+# they get added to the Adobe Commerce graphql schema.
+extend input ProductAttributeFilterInput {
+    """
+    Attribute label: Brand
+    """
+    brand: FilterEqualTypeInput
+    """
+    Attribute label: rating
+    """
+    rating: FilterEqualTypeInput
+}

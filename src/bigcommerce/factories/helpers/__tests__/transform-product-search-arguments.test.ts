@@ -12,12 +12,14 @@ const availableFilters = {
         {
             node: {
                 name: 'Color',
+                filterName: 'Color',
                 __typename: 'ProductAttributeSearchFilter',
             },
         },
         {
             node: {
                 name: 'Size',
+                filterName: 'Size',
                 __typename: 'ProductAttributeSearchFilter',
             },
         },
@@ -45,7 +47,7 @@ const availableFilters = {
 const filtersEqArgs = {
     currentPage: 1,
     filter: {
-        brand: { eq: 'MjM=' },
+        brand: { eq: '23' },
         category_id: { eq: '60' },
         category_uid: { eq: 'MjM=' },
         color: { eq: 'Purple' },
@@ -60,7 +62,7 @@ const filtersEqArgs = {
 const filtersInArgs = {
     currentPage: 1,
     filter: {
-        brand: { in: ['MjM=', 'NjA='] },
+        brand: { in: ['23', '60'] },
         category_id: { in: ['60', '23'] },
         category_uid: { in: ['MjM=', 'NjA='] },
         color: { in: ['Green', 'Purple'] },
@@ -81,7 +83,7 @@ describe('get-product-search-filter', () => {
                 { attribute: 'Color', values: ['Purple'] },
                 { attribute: 'Size', values: ['M'] },
             ],
-            rating: { minRating: '1', maxRating: '1' },
+            rating: { minRating: 1, maxRating: 1 },
             searchTerm: 'Mona',
             categoryEntityId: 23,
         });
