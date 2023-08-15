@@ -1,6 +1,9 @@
-|
 # Add Big Commerce specific product attribute filters here so
 # they get added to the Adobe Commerce graphql schema.
+
+# This pipe is required for separating type definitions
+|
+
 extend input ProductAttributeFilterInput {
     """
     Attribute label: Brand
