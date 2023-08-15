@@ -23,7 +23,8 @@
         "paths": {
             "@mesh": ["./src/meshrc/.mesh"],
             "@mesh/*": ["./src/meshrc/.mesh/*"],
-            "@utils": ["./src/utils"]
+            "@utils": ["./src/utils/*"],
+            "@utils/*": ["./src/utils/*"]
         }
     },
     "exclude": ["node_modules/**/*", "docker/**/*", "lambda/**/*"]
