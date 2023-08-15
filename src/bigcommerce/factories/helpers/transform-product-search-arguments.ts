@@ -36,7 +36,7 @@ const createFilterMapping = (
     }, {});
 };
 
-export const getTransformedProductSearchArguments = (
+export const getTransformedProductArgs = (
     acFilterArgs: QueryproductsArgs,
     availableBcProductFilters: BC_SearchProductFilterConnection | null
 ): BC_SearchProductsFiltersInput => {

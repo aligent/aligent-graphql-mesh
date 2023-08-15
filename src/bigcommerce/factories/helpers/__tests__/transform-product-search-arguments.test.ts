@@ -1,4 +1,4 @@
-import { getTransformedProductSearchArguments } from '../transform-product-search-arguments';
+import { getTransformedProductArgs } from '../transform-product-search-arguments';
 import { BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 const availableFilters = {
@@ -75,8 +75,8 @@ const filtersInArgs = {
 };
 
 describe('get-product-search-filter', () => {
-    it(`Transforms Adobe Commerce search filter arguments into a Big Commerce product search arguments`, () => {
-        expect(getTransformedProductSearchArguments(filtersEqArgs, availableFilters)).toEqual({
+    it(`Transforms Adobe Commerce search filter arguments with "eq" arg values into Big Commerce product search arguments`, () => {
+        expect(getTransformedProductArgs(filtersEqArgs, availableFilters)).toEqual({
             brandEntityIds: [23],
             price: { minPrice: '20', maxPrice: '30' },
             productAttributes: [
@@ -87,8 +87,10 @@ describe('get-product-search-filter', () => {
             searchTerm: 'Mona',
             categoryEntityId: 23,
         });
+    });
 
-        expect(getTransformedProductSearchArguments(filtersInArgs, availableFilters)).toEqual({
+    it(`Transforms Adobe Commerce search filter arguments with "in" arg values into Big Commerce product search arguments`, () => {
+        expect(getTransformedProductArgs(filtersInArgs, availableFilters)).toEqual({
             brandEntityIds: [23, 60],
             price: { minPrice: '20', maxPrice: '30' },
             productAttributes: [
@@ -102,7 +104,7 @@ describe('get-product-search-filter', () => {
     });
 
     it(`Returns a initial arguments structure if no Adobe Commerce args exist`, () => {
-        expect(getTransformedProductSearchArguments({}, null)).toEqual({
+        expect(getTransformedProductArgs({}, null)).toEqual({
             brandEntityIds: [],
             price: {},
             productAttributes: [],
@@ -112,7 +114,7 @@ describe('get-product-search-filter', () => {
     });
 
     it(`Returns argument which are not dependant on the available filter mapping`, () => {
-        expect(getTransformedProductSearchArguments(filtersEqArgs, null)).toEqual({
+        expect(getTransformedProductArgs(filtersEqArgs, null)).toEqual({
             brandEntityIds: [],
             price: {},
             productAttributes: [],
