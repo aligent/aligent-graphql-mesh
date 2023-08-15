@@ -30,3 +30,8 @@ export const createCustomerAddress = async (address: BcAddress): Promise<BcAddre
     const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
     return response.data[0];
 };
+
+export const updateCustomerAddress = async (address: BcAddress): Promise<BcAddress> => {
+    const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
+    return response.data[0];
+};
