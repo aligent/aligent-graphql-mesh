@@ -68,6 +68,11 @@ describe('transform-product-prices', () => {
                 { currencyCode: 'AUD', value: null }
             )
         ).toEqual(0);
+
+        expect(getAmountOff({ currencyCode: 'AUD', value: 10 }, null)).toEqual(0);
+        expect(getPercentOff({ currencyCode: 'AUD', value: 10 }, null)).toEqual(0);
+        expect(getAmountOff(null, { currencyCode: 'AUD', value: 10 })).toEqual(0);
+        expect(getPercentOff(null, { currencyCode: 'AUD', value: 10 })).toEqual(0);
     });
 
     it(`getPercentOff and getAmountOff returns 0 if there's no basePrice or price`, () => {
