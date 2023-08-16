@@ -1,8 +1,9 @@
-import { CustomerAddressInput, MutationupdateCustomerAddressArgs } from '@mesh';
+import { CustomerAddressInput } from '@mesh';
 
 //FIXME: use this function in create-customer-address.ts
-export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => {
+export const isCustomerAddressValid = (input: CustomerAddressInput | null | undefined): boolean => {
     return !!(
+        input &&
         input.firstname &&
         input.lastname &&
         input.city &&
@@ -11,14 +12,4 @@ export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => 
         input.region?.region &&
         input.postcode
     );
-};
-
-export const isUpdateCustomerAddressValid = (
-    inputArgs: MutationupdateCustomerAddressArgs
-): boolean => {
-    const customerAddressInput = inputArgs?.input;
-    if (!customerAddressInput) {
-        return false;
-    }
-    return !!(inputArgs.id && isCustomerAddressValid(customerAddressInput));
 };

@@ -1,10 +1,20 @@
-import { BcAddress } from '../types';
+import { BcAddress, CustomerAddressValidated } from '../types';
 import { CountryCodeEnum, CustomerAddress } from '../../meshrc/.mesh';
 import { ValidatedInput } from '../resolvers/mutations/create-customer-address';
 
+//TODO: remove this when create address has been refactored
+export const transformCustomerAddressUpdate = (
+    customerAddress: CustomerAddressValidated,
+    customerId: number,
+    addressId: number
+): BcAddress => {
+    return transformCustomerAddress(customerAddress, customerId, addressId);
+};
+
 export const transformCustomerAddress = (
     customerAddress: ValidatedInput,
-    customerId: number
+    customerId: number,
+    addressId?: number //optional for update address
 ): BcAddress => {
     const formFields = [];
 
@@ -22,7 +32,7 @@ export const transformCustomerAddress = (
         });
     }
 
-    return {
+    const bcAddress: BcAddress = {
         customer_id: customerId,
         first_name: customerAddress.firstname,
         last_name: customerAddress.lastname,
@@ -36,6 +46,12 @@ export const transformCustomerAddress = (
         ...(customerAddress.company && { company: customerAddress.company }),
         form_fields: formFields,
     };
+
+    if (addressId) {
+        bcAddress.id = addressId;
+    }
+
+    return bcAddress;
 };
 export const transformBcAddress = (address: BcAddress): CustomerAddress => {
     const defaultBilling = address.form_fields?.find(({ name }) => {

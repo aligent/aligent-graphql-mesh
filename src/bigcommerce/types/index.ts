@@ -223,7 +223,7 @@ export interface BcSubscriber {
     date_created: string;
 }
 
-export interface CustomerAddressCreateValidated extends CustomerAddressInput {
+export interface CustomerAddressValidated extends CustomerAddressInput {
     firstname: string;
     lastname: string;
     city: string;
@@ -233,8 +233,4 @@ export interface CustomerAddressCreateValidated extends CustomerAddressInput {
         region: string;
     };
     postcode: string;
-}
-
-export interface CustomerAddressUpdateValidated extends CustomerAddressCreateValidated {
-    id: string;
 }

@@ -22,9 +22,7 @@
         "typeRoots": ["./node_modules/@types"],
         "paths": {
             "@mesh": ["./src/meshrc/.mesh"],
-            "@mesh/*": ["./src/meshrc/.mesh/*"],
-            "@utils": ["./src/utils/*"],
-            "@utils/*": ["./src/utils/*"]
+            "@mesh/*": ["./src/meshrc/.mesh/*"]
         }
     },
     "exclude": ["node_modules/**/*", "docker/**/*", "lambda/**/*"]
