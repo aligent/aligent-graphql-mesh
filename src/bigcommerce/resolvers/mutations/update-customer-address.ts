@@ -6,8 +6,11 @@ import {
     transformCustomerAddressUpdate,
 } from '../../factories/transform-customer-address-data';
 import { CustomerAddressValidated } from '../../types';
-import { updateCustomerAddress } from '../../apis/rest/customer';
-import { isCustomerAddressValid } from '../../../utils/validators/customer-address-validator';
+import { getCustomerAddresses, updateCustomerAddress } from '../../apis/rest/customer';
+import {
+    addressBelongsToCustomer,
+    isCustomerAddressValid,
+} from '../../../utils/validators/customer-address-validator';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, args, context, _info) => {
@@ -20,6 +23,12 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
         const addressInput = args.input;
         const addressId = args.id;
 
+        const customerAddresses = await getCustomerAddresses(customerId);
+        if (!addressBelongsToCustomer(addressId, customerAddresses)) {
+            return logAndThrowError(
+                new Error('AuthorizationError: Address does not belong to customer')
+            );
+        }
         if (!isCustomerAddressValid(addressInput)) {
             return logAndThrowError(
                 new Error(

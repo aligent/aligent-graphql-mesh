@@ -1,5 +1,5 @@
 import { BcAddress, BcCustomer } from '../../types';
-import { bcPost, bcPut } from './client';
+import { bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
@@ -40,4 +40,13 @@ export const createCustomerAddress = async (address: BcAddress): Promise<BcAddre
 export const updateCustomerAddress = async (address: BcAddress): Promise<BcAddress> => {
     const response = await bcPut(CUSTOMER_ADDRESS_API, [address]);
     return response.data[0];
+};
+
+export const getCustomerAddresses = async (customerId: number): Promise<[BcAddress]> => {
+    //Assumption: customer won't have more than 100 addresses, so no paginating needed.
+    const path = `${CUSTOMER_ADDRESS_API}?customer_id:in=${customerId}&limit=100`;
+
+    const response = await bcGet(path);
+
+    return response.data;
 };
