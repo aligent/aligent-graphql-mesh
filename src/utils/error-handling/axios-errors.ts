@@ -1,25 +1,17 @@
-import { AxiosResponse, AxiosError } from 'axios';
-import { logAndThrowUnknownError } from './base-errors';
-/* istanbul ignore file */
+import { AxiosError, AxiosResponse } from 'axios';
 
-/**
- * For displaying Axios errors from multiple APIs in a nice format.
- * Errors that are thrown with new Error, will be shown via "message" in the response from GraphQL, Console errors will show up in AWS and terminal.
- * @param {string} axiosError - The error from Axios, needs to be confirmed first with axios.isAxiosError().
- * @param {string} functionName - Used to display the name of the function, function.name is preferred.
- * @param {string} path - Used for additional info where the error occurred e.g. /v3/api/resource
- */
 export const logAndThrowAxiosError = (
     axiosError: AxiosError,
-    functionName: string,
-    path?: string,
-): void => {
-    if (path) console.error({ path });
-
+    functionName?: string,
+    message?: string
+): never => {
     const response = axiosError.response as AxiosResponse;
     const data = response.data;
+    if (message) console.error({ message });
 
-    if (data.title) {
+    if (!data) {
+        logAndThrowUnknownError(functionName, 'No data object on on axiosError.response');
+    } else if (data.title) {
         logAndThrowErrorsFromBCRESTApiResponse(response, functionName);
     } else if (data.data?.errMsg) {
         logAndThrowErrorsFromRESTApiResponse(response, functionName);
@@ -29,18 +21,33 @@ export const logAndThrowAxiosError = (
         console.error(
             `Response data: ${JSON.stringify(data)}, statusText: ${
                 response.statusText
-            }, function name: ${functionName}`
+            }, function name: ${functionName}.`
         );
-        throw new Error(`Response data: ${JSON.stringify(data)} from: ${functionName}`);
-    } else {
-        logAndThrowUnknownError(functionName);
+        throw new Error(`Response data: ${data}`);
     }
+
+    return logAndThrowUnknownError(axiosError, functionName);
+};
+
+export const logAndThrowUnknownError = (
+    error: unknown,
+    functionName?: string,
+    message?: string
+): never => {
+    console.error(`${error}, functionName: ${functionName}, message: ${message}`);
+    throw new Error(`From ${functionName} function, message: ${message}`);
+};
+
+const logErrorAndFunctionName = (code: number, functionName?: string, message?: string) => {
+    console.error(`Code: ${code}`);
+    console.error(`Function name: ${functionName}`);
+    console.error(`Error message: ${message}`);
 };
 
 const logAndThrowErrorsFromGraphQlResponse = (
     response: AxiosResponse,
-    functionName: string
-): void => {
+    functionName?: string
+): never => {
     let errorResponse = response.data.errors;
 
     if (Array.isArray(response.data.errors)) {
@@ -55,13 +62,16 @@ const logAndThrowErrorsFromGraphQlResponse = (
         throw new Error(JSON.stringify(errorResponse));
     }
 
-    logAndThrowUnknownError(functionName);
+    return logAndThrowUnknownError(
+        functionName,
+        `Unknown error from ${logAndThrowErrorsFromGraphQlResponse.name}`
+    );
 };
 
 const logAndThrowErrorsFromRESTApiResponse = (
     response: AxiosResponse,
-    functionName: string
-): void => {
+    functionName?: string
+): never => {
     const errorResponse = response.data.data.errMsg;
 
     if (errorResponse) {
@@ -70,13 +80,16 @@ const logAndThrowErrorsFromRESTApiResponse = (
         throw new Error(errorResponse);
     }
 
-    logAndThrowUnknownError(functionName);
+    return logAndThrowUnknownError(
+        functionName,
+        `Unknown error from ${logAndThrowErrorsFromRESTApiResponse.name}`
+    );
 };
 
 const logAndThrowErrorsFromBCRESTApiResponse = (
     response: AxiosResponse,
-    functionName: string
-): void => {
+    functionName?: string
+): never => {
     const errorResponse = response.data.title;
 
     if (errorResponse) {
@@ -85,11 +98,8 @@ const logAndThrowErrorsFromBCRESTApiResponse = (
         throw new Error(errorResponse);
     }
 
-    logAndThrowUnknownError(functionName);
-};
-
-const logErrorAndFunctionName = (code: number, functionName: string, message: string) => {
-    console.error(`Code: ${code}`);
-    console.error(`Function name: ${functionName}`);
-    console.error(`Error message: ${message}`);
+    return logAndThrowUnknownError(
+        functionName,
+        `Unknown error from ${logAndThrowErrorsFromBCRESTApiResponse.name}`
+    );
 };

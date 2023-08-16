@@ -1,6 +1,6 @@
 import { CountryCodeEnum, CustomerAddressInput, MutationResolvers } from '@mesh';
-import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
-import { getDecodedMeshToken } from '../../../utils/tokens';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { createCustomerAddress } from '../../apis/rest/customer';
 import {
     transformCustomerAddress,
@@ -33,15 +33,12 @@ export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => 
 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
-        if (!context.headers['mesh-token']) {
-            return logAndThrowError('mesh-token header is required for this mutation.');
-        }
-
-        const { bc_customer_id: customerId } = getDecodedMeshToken(context.headers['mesh-token']);
+        const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         if (!isCustomerAddressValid(input)) {
-            return logAndThrowError(
-                'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
+            logAndThrowError(
+                'ValidationError: Failed to validate CustomerAddressInput, Required field is missing',
+                'createCustomerAddressResolver'
             );
         }
 

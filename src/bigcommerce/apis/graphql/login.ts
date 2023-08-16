@@ -1,4 +1,4 @@
-import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { GraphQlQuery } from '../../types';
 import { bcGraphQlRequest } from './client';
 
@@ -25,7 +25,7 @@ export const bcLogin = async (email: string, password: string): Promise<number> 
     const result = response.data?.login.result;
 
     if (result !== 'success') {
-        logAndThrowError(`Failed to authenticate with BigCommerce: ${JSON.stringify(response)}`);
+        logAndThrowError(`Failed to authenticate with BigCommerce`, bcLogin.name);
     }
 
     return entityId;

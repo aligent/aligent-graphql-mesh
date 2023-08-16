@@ -1,4 +1,4 @@
-import { logAndThrowError } from '../../../utils/error-handling/axios-errors';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { bcGraphQlRequest } from './client';
 import {
     BC_ProductConnection,
