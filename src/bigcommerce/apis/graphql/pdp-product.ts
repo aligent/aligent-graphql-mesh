@@ -18,9 +18,7 @@ export const getBcProductByPathGraphql = async (path: BC_SiteRouteArgs): Promise
     const response = await bcGraphQlRequest(productsQuery, headers);
 
     if (response.data.errors) {
-        logAndThrowError(
-            `Failed to fetch product from BigCommerce: ${JSON.stringify(response.data.errors)}`
-        );
+        logAndThrowError(response.data.errors);
     }
 
     return response.data.site.route.node;

@@ -8,7 +8,7 @@ export const customerResolver: QueryResolvers['customer'] = {
         // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 
         if (context.headers['mesh-token']) {
-            const bc_customer_id  = getBcCustomerIdFromMeshToken(context.headers.authorization);
+            const bc_customer_id = getBcCustomerIdFromMeshToken(context.headers.authorization);
             const customer = await getBcCustomer(bc_customer_id);
             //Sample for using the cust imp token with the bc user id from mesh-token
 

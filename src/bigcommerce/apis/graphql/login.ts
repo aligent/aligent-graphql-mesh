@@ -25,7 +25,7 @@ export const bcLogin = async (email: string, password: string): Promise<number> 
     const result = response.data?.login.result;
 
     if (result !== 'success') {
-        logAndThrowError(`Failed to authenticate with BigCommerce`, bcLogin.name);
+        logAndThrowError(`Failed to authenticate with BigCommerce`);
     }
 
     return entityId;

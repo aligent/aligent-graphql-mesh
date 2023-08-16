@@ -34,8 +34,13 @@ export const logAndThrowUnknownError = (
     functionName?: string,
     message?: string
 ): never => {
-    console.error(`${error}, functionName: ${functionName}, message: ${message}`);
-    throw new Error(`From ${functionName} function, message: ${message}`);
+    if (!functionName || !message) {
+        console.error(error);
+        throw new Error(`${error}`);
+    } else {
+        console.error(`${error} ${functionName} ${message}`);
+        throw new Error(`${error} ${functionName} ${message}`);
+    }
 };
 
 const logErrorAndFunctionName = (code: number, functionName?: string, message?: string) => {

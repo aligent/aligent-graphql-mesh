@@ -8,9 +8,13 @@ import { logAndThrowAxiosError, logAndThrowUnknownError } from './axios-errors';
  * @param {string} functionName - Used to display the name of the function, function.name is preferred.
  * @param {string} message - An optional message to be logged and thrown.
  */
-export const logAndThrowError = (error: unknown, functionName?: string, message?: string): never => {
+export const logAndThrowError = (
+    error: unknown,
+    functionName?: string,
+    message?: string
+): never => {
     if (axios.isAxiosError(error)) {
-         return logAndThrowAxiosError(error, functionName, message);
+        return logAndThrowAxiosError(error, functionName, message);
     } else {
         return logAndThrowUnknownError(error, functionName, message);
     }
