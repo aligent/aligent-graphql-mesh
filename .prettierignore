@@ -18,3 +18,4 @@ yarn-error.log
 graphql.d.ts
 graphql.schema.json
 generated/
+additional-type-defs

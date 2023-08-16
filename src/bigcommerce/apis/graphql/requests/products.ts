@@ -9,7 +9,7 @@ export const getProductsQuery = stripIgnoredCharacters(
         ${pageInfo}
         ${ProductsDetails}
 
-        query products($ids: [ID!]) {
+        query products($ids: [ID!], $includeTax: Boolean) {
             site {
                 products(ids: $ids) {
                     edges {

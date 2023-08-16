@@ -6,6 +6,9 @@ sources:
 additionalResolvers:
   - '../bigcommerce/resolvers/resolver-definitions'
 
+additionalTypeDefs:
+  - !include ../bigcommerce/additional-type-defs/product-attribute-filter-input.graphql
+
 # additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
 
 codegen:
