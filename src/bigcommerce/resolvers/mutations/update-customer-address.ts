@@ -13,15 +13,16 @@ import {
 } from '../../../utils/validators/customer-address-validator';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
-    resolve: async (_root, args, context, _info) => {
+    resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {
         if (!context.headers['mesh-token']) {
             return logAndThrowError(new Error('mesh-token header is required for this mutation.'));
         }
 
         const { bc_customer_id: customerId } = getDecodedMeshToken(context.headers['mesh-token']);
 
-        const addressInput = args.input;
-        const addressId = args.id;
+        if (!addressInput) {
+            return null;
+        }
 
         const customerAddresses = await getCustomerAddresses(customerId);
         if (!addressIdBelongsToCustomer(addressId, customerAddresses)) {

@@ -30,9 +30,9 @@ export const createCustomer = async (
 export const createCustomerAddress = async (address: BcAddress): Promise<BcAddress> => {
     const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
     if (!response.data[0]) {
-        //BC rest api would sometimes return a 200 without any data.
-        //Something has gone wrong, maybe the api token is expired, but there is no good error message.
-        logAndThrowError(new Error('Expected address data missing from BC response.'));
+        //BC rest api will return 200 without any data, if the address already exits
+        //TODO: improve error handling for this case
+        logAndThrowError(new Error('Address already exists.'));
     }
     return response.data[0];
 };

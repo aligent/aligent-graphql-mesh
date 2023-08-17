@@ -1,7 +1,7 @@
 import { CustomerAddressInput } from '@mesh';
 import { BcAddress } from '../../bigcommerce/types';
 
-export const isCustomerAddressValid = (input: CustomerAddressInput | null | undefined): boolean => {
+export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => {
     return !!(
         input &&
         input.firstname &&
