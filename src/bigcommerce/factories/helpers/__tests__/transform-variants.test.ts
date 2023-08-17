@@ -167,7 +167,6 @@ const expectResult = [
 
 describe('transform-variants', () => {
     it('Gets AC product "attributes" structured data from BC product "options"', () => {
-        console.dir(JSON.stringify(getTransformedVariants(mockBcProducts[0].variants)));
         expect(getTransformedVariants(mockBcProducts[0].variants)).toEqual(expectResult);
     });
 
