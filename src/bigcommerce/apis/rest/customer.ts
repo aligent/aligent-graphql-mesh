@@ -54,5 +54,6 @@ export const getCustomerAddresses = async (customerId: number): Promise<BcAddres
 export const deleteCustomerAddress = async (addressId: number): Promise<void> => {
     const path = `${CUSTOMER_ADDRESS_API}?id:in=${addressId}`;
 
-    return await bcDelete(path);
+    const response = await bcDelete(path);
+    return response;
 };
