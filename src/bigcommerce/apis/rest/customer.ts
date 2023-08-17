@@ -42,11 +42,19 @@ export const updateCustomerAddress = async (address: BcAddress): Promise<BcAddre
     return response.data[0];
 };
 
-export const getCustomerAddresses = async (customerId: number): Promise<BcAddress[]> => {
-    //Assumption: customer won't have more than 100 addresses, so no paginating needed.
-    const path = `${CUSTOMER_ADDRESS_API}?customer_id:in=${customerId}&limit=100`;
-
+/**
+ * Returns the address for the given addressId and customerId.
+ * If the is not address matching then return null.
+ */
+export const getCustomerAddress = async (
+    addressId: number,
+    customerId: number
+): Promise<BcAddress | null> => {
+    const path = `${CUSTOMER_ADDRESS_API}?id:in=${addressId}&customer_id:in=${customerId}`;
     const response = await bcGet(path);
 
+    if (response.data.length === 0) {
+        return null; //if there is no data we return null instead of empty array
+    }
     return response.data;
 };
