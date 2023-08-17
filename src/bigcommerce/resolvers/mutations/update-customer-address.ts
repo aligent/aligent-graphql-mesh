@@ -4,9 +4,9 @@ import {
     transformBcAddress,
     transformCustomerAddress,
 } from '../../factories/transform-customer-address-data';
-import { CustomerAddressValidated } from '../../types';
+import { CustomerAddressUpdateValidated } from '../../types';
 import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/customer';
-import { isCustomerAddressValid } from '../../../utils/validators/customer-address-validator';
+import { isCustomerAddressUpdatable } from '../../../utils/validators/customer-address-validator';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
@@ -23,14 +23,15 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
                 new Error('AuthorizationError: Address does not belong to customer')
             );
         }
-        if (!isCustomerAddressValid(addressInput)) {
+
+        const customerAddressInput = addressInput as CustomerAddressUpdateValidated;
+        if (!isCustomerAddressUpdatable(customerAddressInput)) {
             return logAndThrowError(
                 new Error(
                     'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
                 )
             );
         }
-        const customerAddressInput = addressInput as CustomerAddressValidated;
 
         const address = transformCustomerAddress(customerAddressInput, customerId, addressId);
         const response = await updateCustomerAddress(address);

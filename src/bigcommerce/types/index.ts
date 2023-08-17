@@ -234,3 +234,7 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
     };
     postcode: string;
 }
+
+export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
+    id: number;
+}
