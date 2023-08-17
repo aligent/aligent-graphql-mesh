@@ -44,23 +44,25 @@ export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<BC_Cart>):
         { currency: '', value: 0 }
     );
 
-    const subtotal_excluding_tax = cart?.baseAmount
+    const subtotal_excluding_tax = cart?.baseAmount?.value
         ? getTransformedPrice({
               value: cart.baseAmount.value - taxTotal?.value || 0,
               currencyCode: cart.baseAmount.currencyCode,
           })
         : null;
 
-    const subtotal_including_tax = cart?.baseAmount ? getTransformedPrice(cart?.baseAmount) : null;
+    const subtotal_including_tax = cart?.baseAmount?.value
+        ? getTransformedPrice(cart?.baseAmount)
+        : null;
 
-    const subtotal_with_discount_including_tax = cart?.baseAmount.value
+    const subtotal_with_discount_including_tax = cart?.baseAmount?.value
         ? {
               value: cart.baseAmount.value || 0 + discountedAmount.value || 0,
               currency: cart.baseAmount.currencyCode as Maybe<CurrencyEnum>,
           }
         : null;
 
-    const subtotal_with_discount_excluding_tax = cart?.baseAmount.value
+    const subtotal_with_discount_excluding_tax = cart?.baseAmount?.value
         ? {
               value: cart.baseAmount.value || 0 - taxTotal?.value || 0 + discountedAmount.value,
               currency: cart.baseAmount.currencyCode as Maybe<CurrencyEnum>,
