@@ -1,3 +1,4 @@
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { bcGraphQlRequest } from './client';
 import { getRouteQuery } from './requests/route';
 import { BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
@@ -15,5 +16,9 @@ export const getRoute = async (variables: BC_SiteRouteArgs & { includeTax?: bool
     };
 
     const response = await bcGraphQlRequest(routeQuery, headers);
+    if (response.data.errors) {
+        return logAndThrowError(response.data.errors);
+    }
+
     return response.data.site.route.node;
 };
