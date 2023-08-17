@@ -16,7 +16,7 @@ type Prices = {
 };
 
 export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<BC_Cart>): CartPrices => {
-    const { coupons, grandTotal, subtotal, taxes, taxTotal } = prices;
+    const { coupons, grandTotal, taxes, taxTotal } = prices;
 
     const applied_taxes =
         taxes?.map((tax) => {
