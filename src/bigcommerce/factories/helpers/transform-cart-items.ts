@@ -1,7 +1,7 @@
 import { BC_Cart, BC_CartSelectedMultipleChoiceOption } from '@mesh/external/BigCommerceGraphqlApi';
 
 import { CartItemInterface, CurrencyEnum, Maybe } from '@mesh';
-import { btoa, getNewUrl } from '../../../utils';
+import { btoa, getGstPercentBetweenPrices, getNewUrl } from '../../../utils';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformCartItems = (
@@ -16,10 +16,18 @@ export const getTransformCartItems = (
             url,
             entityId, // cart item id
             productEntityId,
+            variantEntityId,
             discounts,
+            // This is the item final price including tax
+            listPrice,
+            // This is the accumulated items final price including tax
             extendedListPrice,
+            // This is the item final price including or excluding gst depending on admin configuration
             salePrice,
-            originalPrice, // RRP price
+            // This is the accumulated items final price including or excluding gst depending on admin configuration
+            extendedSalePrice,
+            // "originalPrice" is the default price plus gst
+            originalPrice: originalPriceIncGst, // RRP price
             quantity,
             selectedOptions,
             imageUrl,
@@ -47,20 +55,31 @@ export const getTransformCartItems = (
             { currency: 'AUD' as Maybe<CurrencyEnum>, value: 0 }
         );
 
+        const gstAmount = getGstPercentBetweenPrices(listPrice, salePrice);
+
+        /* The include or exclude value of the "originalPrice" will depend on tax configuration in the admin.
+         * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
+         * [Display prices inclusive of tax, Display prices exclusive of tax]
+         * */
+        const originalPrice = originalPriceIncGst.value / (1 + gstAmount / 100);
+
         return {
             id: entityId, // cart item id
             uid: btoa(entityId),
             errors: null,
             prices: {
+                /* "Price" this should depend on excluding and include tax admin configurable */
                 price: getTransformedPrice(salePrice),
-                price_including_tax: getTransformedPrice(salePrice),
-                // @todo need a away to work out inc/ex gst
-                row_total: getTransformedPrice(extendedListPrice),
+                /* At the moment Take Flight is configured to only output the "price_including_tax" when it should be
+                 * outputting the "price", which is dependent on the admin config wanting to out including or excluding gst prices*/
+                price_including_tax: getTransformedPrice(listPrice),
+                // The value of the price multiplied by the "price"
+                row_total: getTransformedPrice(extendedSalePrice),
                 row_total_including_tax: getTransformedPrice(extendedListPrice),
                 total_item_discount,
             },
             product: {
-                id: productEntityId,
+                id: variantEntityId,
                 uid: btoa(String(productEntityId)),
                 name: name,
                 sku: sku,
@@ -72,10 +91,10 @@ export const getTransformCartItems = (
                 price_range: {
                     minimum_price: {
                         discount: {
-                            amount_off: originalPrice.value - salePrice.value,
+                            amount_off: originalPrice - salePrice.value,
                         },
                         final_price: getTransformedPrice(salePrice),
-                        regular_price: getTransformedPrice(originalPrice),
+                        regular_price: getTransformedPrice(originalPriceIncGst),
                     },
                 },
                 rating_summary: 0,
