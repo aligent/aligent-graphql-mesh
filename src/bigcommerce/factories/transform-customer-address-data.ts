@@ -1,18 +1,8 @@
 import { BcAddress, CustomerAddressValidated } from '../types';
-import { CountryCodeEnum, CustomerAddress } from '../../meshrc/.mesh';
-import { ValidatedInput } from '../resolvers/mutations/create-customer-address';
-
-//TODO: remove this when create address has been refactored
-export const transformCustomerAddressUpdate = (
-    customerAddress: CustomerAddressValidated,
-    customerId: number,
-    addressId: number
-): BcAddress => {
-    return transformCustomerAddress(customerAddress, customerId, addressId);
-};
+import { CountryCodeEnum, CustomerAddress } from '@mesh/index';
 
 export const transformCustomerAddress = (
-    customerAddress: ValidatedInput,
+    customerAddress: CustomerAddressValidated,
     customerId: number,
     addressId?: number //optional for update address
 ): BcAddress => {

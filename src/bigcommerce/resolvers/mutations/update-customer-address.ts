@@ -3,12 +3,12 @@ import { logAndThrowError } from '../../../utils/error-handling';
 import { getDecodedMeshToken } from '../../../utils/tokens';
 import {
     transformBcAddress,
-    transformCustomerAddressUpdate,
+    transformCustomerAddress,
 } from '../../factories/transform-customer-address-data';
 import { CustomerAddressValidated } from '../../types';
 import { getCustomerAddresses, updateCustomerAddress } from '../../apis/rest/customer';
 import {
-    addressBelongsToCustomer,
+    addressIdBelongsToCustomer,
     isCustomerAddressValid,
 } from '../../../utils/validators/customer-address-validator';
 
@@ -24,7 +24,7 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
         const addressId = args.id;
 
         const customerAddresses = await getCustomerAddresses(customerId);
-        if (!addressBelongsToCustomer(addressId, customerAddresses)) {
+        if (!addressIdBelongsToCustomer(addressId, customerAddresses)) {
             return logAndThrowError(
                 new Error('AuthorizationError: Address does not belong to customer')
             );
@@ -38,8 +38,7 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
         }
         const customerAddressInput = addressInput as CustomerAddressValidated;
 
-        //FIXME: addressId needs to be extracted from input, not accessible in available CustomerAddressInput interface
-        const address = transformCustomerAddressUpdate(customerAddressInput, customerId, addressId);
+        const address = transformCustomerAddress(customerAddressInput, customerId, addressId);
         const response = await updateCustomerAddress(address);
         if (!response) {
             return null; //No data returned if the updated does not contain any change

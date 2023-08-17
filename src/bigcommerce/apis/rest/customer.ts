@@ -42,7 +42,7 @@ export const updateCustomerAddress = async (address: BcAddress): Promise<BcAddre
     return response.data[0];
 };
 
-export const getCustomerAddresses = async (customerId: number): Promise<[BcAddress]> => {
+export const getCustomerAddresses = async (customerId: number): Promise<BcAddress[]> => {
     //Assumption: customer won't have more than 100 addresses, so no paginating needed.
     const path = `${CUSTOMER_ADDRESS_API}?customer_id:in=${customerId}&limit=100`;
 

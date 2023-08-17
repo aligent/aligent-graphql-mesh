@@ -15,7 +15,17 @@ export const isCustomerAddressValid = (input: CustomerAddressInput | null | unde
     );
 };
 
-export const addressBelongsToCustomer = (addressId: number, addresses: [BcAddress]): boolean => {
+/**
+ * Checks if the given addressId is in the list of given addresses.
+ * Used to validate if the addresses belong to the customer.
+ */
+export const addressIdBelongsToCustomer = (
+    addressId: number,
+    addresses: BcAddress[] | undefined
+): boolean => {
+    if (!addresses) {
+        return false;
+    }
     const matchingAddress = addresses.find((address) => {
         return address.id === addressId;
     });
