@@ -643,14 +643,17 @@ export const transformedWishlist = [
                         price: { regularPrice: { amount: { currency: 'AUD', value: 9.09 } } },
                         price_range: {
                             maximum_price: {
-                                discount: { amount_off: null, percent_off: null },
+                                discount: { amount_off: 0, percent_off: 0 },
                                 final_price: { currency: 'AUD', value: 51.82 },
                                 regular_price: { currency: 'AUD', value: 51.82 },
                             },
                             minimum_price: {
-                                discount: { amount_off: null, percent_off: null },
+                                discount: {
+                                    amount_off: 42.730000000000004,
+                                    percent_off: 82.45851022771132,
+                                },
                                 final_price: { currency: 'AUD', value: 9.09 },
-                                regular_price: { currency: 'AUD', value: 9.09 },
+                                regular_price: { currency: 'AUD', value: 51.82 },
                             },
                         },
                         price_tiers: [],
@@ -814,14 +817,14 @@ export const transformedWishlistItems = [
             price: { regularPrice: { amount: { currency: 'AUD', value: 9.09 } } },
             price_range: {
                 maximum_price: {
-                    discount: { amount_off: null, percent_off: null },
+                    discount: { amount_off: 0, percent_off: 0 },
                     final_price: { currency: 'AUD', value: 51.82 },
                     regular_price: { currency: 'AUD', value: 51.82 },
                 },
                 minimum_price: {
-                    discount: { amount_off: null, percent_off: null },
+                    discount: { amount_off: 42.730000000000004, percent_off: 82.45851022771132 },
                     final_price: { currency: 'AUD', value: 9.09 },
-                    regular_price: { currency: 'AUD', value: 9.09 },
+                    regular_price: { currency: 'AUD', value: 51.82 },
                 },
             },
             price_tiers: [],
