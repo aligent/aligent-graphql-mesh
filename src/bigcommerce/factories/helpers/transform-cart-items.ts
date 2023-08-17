@@ -76,7 +76,7 @@ export const getTransformCartItems = (
             uid: btoa(entityId),
             errors: null,
             prices: {
-                /* "Price" this should depend on excluding and include tax admin configurable */
+                /* "Price" this will depend on excluding or including tax admin configurable */
                 price: getTransformedPrice(salePrice),
                 /* At the moment Take Flight is configured to only output the "price_including_tax" when it should be
                  * outputting the "price", which is dependent on the admin config wanting to out including or excluding gst prices*/
