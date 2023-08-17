@@ -15,6 +15,7 @@ const expectResult = [
                 {
                     disabled: false,
                     file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
+                    id: 2888706,
                     label: '',
                     position: 0,
                     uid: '',
@@ -22,14 +23,14 @@ const expectResult = [
             ],
             price_range: {
                 maximum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 27.27 },
-                    regular_price: { currency: 'AUD', value: 27.27 },
+                    discount: { amount_off: 40, percent_off: 57.14285714285714 },
+                    final_price: { currency: 'AUD', value: 30 },
+                    regular_price: { currency: 'AUD', value: 70 },
                 },
                 minimum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 27.27 },
-                    regular_price: { currency: 'AUD', value: 27.27 },
+                    discount: { amount_off: 40, percent_off: 57.14285714285714 },
+                    final_price: { currency: 'AUD', value: 30 },
+                    regular_price: { currency: 'AUD', value: 70 },
                 },
             },
             rating_summary: 0,
@@ -54,6 +55,7 @@ const expectResult = [
                 {
                     disabled: false,
                     file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
+                    id: 10945416,
                     label: '',
                     position: 0,
                     uid: '',
@@ -61,14 +63,14 @@ const expectResult = [
             ],
             price_range: {
                 maximum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 51.82 },
-                    regular_price: { currency: 'AUD', value: 51.82 },
+                    discount: { amount_off: 17, percent_off: 29.82456140350877 },
+                    final_price: { currency: 'AUD', value: 40 },
+                    regular_price: { currency: 'AUD', value: 57 },
                 },
                 minimum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 51.82 },
-                    regular_price: { currency: 'AUD', value: 51.82 },
+                    discount: { amount_off: 17, percent_off: 29.82456140350877 },
+                    final_price: { currency: 'AUD', value: 40 },
+                    regular_price: { currency: 'AUD', value: 57 },
                 },
             },
             rating_summary: 0,
@@ -93,6 +95,7 @@ const expectResult = [
                 {
                     disabled: false,
                     file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
+                    id: 6943,
                     label: '',
                     position: 0,
                     uid: '',
@@ -100,14 +103,14 @@ const expectResult = [
             ],
             price_range: {
                 maximum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 27.27 },
-                    regular_price: { currency: 'AUD', value: 27.27 },
+                    discount: { amount_off: 0, percent_off: 0 },
+                    final_price: { currency: 'AUD', value: 57 },
+                    regular_price: { currency: 'AUD', value: 57 },
                 },
                 minimum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 27.27 },
-                    regular_price: { currency: 'AUD', value: 27.27 },
+                    discount: { amount_off: 0, percent_off: 0 },
+                    final_price: { currency: 'AUD', value: 57 },
+                    regular_price: { currency: 'AUD', value: 57 },
                 },
             },
             rating_summary: 0,
@@ -132,6 +135,7 @@ const expectResult = [
                 {
                     disabled: false,
                     file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
+                    id: 9437676,
                     label: '',
                     position: 0,
                     uid: '',
@@ -139,14 +143,14 @@ const expectResult = [
             ],
             price_range: {
                 maximum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 51.82 },
-                    regular_price: { currency: 'AUD', value: 51.82 },
+                    discount: { amount_off: 47, percent_off: 82.45614035087719 },
+                    final_price: { currency: 'AUD', value: 10 },
+                    regular_price: { currency: 'AUD', value: 57 },
                 },
                 minimum_price: {
-                    discount: { amount_off: null, percent_off: null },
-                    final_price: { currency: 'AUD', value: 51.82 },
-                    regular_price: { currency: 'AUD', value: 51.82 },
+                    discount: { amount_off: 47, percent_off: 82.45614035087719 },
+                    final_price: { currency: 'AUD', value: 10 },
+                    regular_price: { currency: 'AUD', value: 57 },
                 },
             },
             rating_summary: 0,
@@ -163,6 +167,7 @@ const expectResult = [
 
 describe('transform-variants', () => {
     it('Gets AC product "attributes" structured data from BC product "options"', () => {
+        console.dir(JSON.stringify(getTransformedVariants(mockBcProducts[0].variants)));
         expect(getTransformedVariants(mockBcProducts[0].variants)).toEqual(expectResult);
     });
 

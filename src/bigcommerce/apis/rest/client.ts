@@ -7,16 +7,18 @@ const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
 const headers = {
     'X-Auth-Token': X_AUTH_TOKEN,
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    Accept: 'application/json',
 };
 /* istanbul ignore file */
 // TODO: generic return type
 export const bcPost = async (path: string, data?: unknown): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
-    return axios
-        .post(url, data, { headers })
-        .then((resp) => resp.data)
-        .catch(logAndThrowError);
+    try {
+        const response = await axios.post(url, data, { headers });
+        return response.data;
+    } catch (error) {
+        logAndThrowError(error as Error);
+    }
 };
 
 export const bcGet = async (path: string) => {

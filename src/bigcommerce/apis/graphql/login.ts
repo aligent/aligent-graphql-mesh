@@ -4,10 +4,7 @@ import { bcGraphQlRequest } from './client';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
-export const bcLogin = async (
-    email: string,
-    password: string
-): Promise<number> => {
+export const bcLogin = async (email: string, password: string): Promise<number> => {
     const headers = {
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
     };
