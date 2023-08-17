@@ -1,5 +1,4 @@
 import { CountryCodeEnum } from '@mesh';
-import { BcAddress } from '../../../bigcommerce/types';
 
 export const customerAddress = {
     firstname: 'Adam',
