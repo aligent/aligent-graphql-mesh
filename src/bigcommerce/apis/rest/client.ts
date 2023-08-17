@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const BC_REST_API = process.env.BC_REST_API as string;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
@@ -17,7 +17,7 @@ export const bcPost = async (path: string, data?: unknown): Promise<AxiosRespons
         const response = await axios.post(url, data, { headers });
         return response.data;
     } catch (error) {
-        logAndThrowError(error as Error);
+        return logAndThrowError(error, bcPost.name);
     }
 };
 
@@ -37,7 +37,7 @@ export const bcGet = async (path: string) => {
         const response = await axios.get(url, { headers });
         return response.data;
     } catch (error) {
-        logAndThrowError(error as Error);
+        return logAndThrowError(error, bcGet.name);
     }
 };
 

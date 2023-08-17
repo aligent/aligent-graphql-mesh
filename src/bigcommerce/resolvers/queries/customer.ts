@@ -1,6 +1,6 @@
 import { QueryResolvers } from '@mesh';
-import { getDecodedMeshToken } from '../../../utils/tokens';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getBcCustomer } from '../../apis/graphql/customer';
 
 export const customerResolver: QueryResolvers['customer'] = {
@@ -8,7 +8,7 @@ export const customerResolver: QueryResolvers['customer'] = {
         // const customerImpersonationToken = await context.cache.get('customerImpersonationToken');
 
         if (context.headers['mesh-token']) {
-            const { bc_customer_id } = getDecodedMeshToken(context.headers['mesh-token']);
+            const bc_customer_id = getBcCustomerIdFromMeshToken(context.headers.authorization);
             const customer = await getBcCustomer(bc_customer_id);
             //Sample for using the cust imp token with the bc user id from mesh-token
 
@@ -39,7 +39,7 @@ export const customerResolver: QueryResolvers['customer'] = {
                 allow_remote_shopping_assistance: false,
             };
         } else {
-            return logAndThrowError(new Error(`Failed to send mesh-token`));
+            return logAndThrowError('Need to send mesh token');
         }
     },
 };
