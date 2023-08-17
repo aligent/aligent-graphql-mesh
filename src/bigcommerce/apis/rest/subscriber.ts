@@ -1,6 +1,6 @@
 import { BcSubscriber } from '../../types';
 import { bcPost } from './client';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 /* istanbul ignore file */
 /**
@@ -18,8 +18,8 @@ export const createSubscriber = async (email: string): Promise<BcSubscriber> => 
 
     const subscriber = response.data;
     if (!subscriber?.email) {
-        logAndThrowError(
-            new Error('Invalid Subscriber object received: attribute email has to be defined.')
+        return logAndThrowError(
+            'Invalid Subscriber object received: attribute email has to be defined.'
         );
     }
 

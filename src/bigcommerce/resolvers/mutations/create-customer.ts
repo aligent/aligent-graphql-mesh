@@ -1,7 +1,7 @@
 import { Customer, MutationResolvers } from '@mesh';
-import { logAndThrowError } from '../../../utils/error-handling';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 /* istanbul ignore next */
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {
@@ -12,21 +12,19 @@ export const createCustomerResolver: MutationResolvers['createCustomer'] = {
             !args.input.lastname ||
             !args.input.password
         ) {
-            return logAndThrowError(
-                new Error('Missing email or firstname or lastname or password')
+            return logAndThrowError('Missing email or firstname or lastname or password');
+        } else {
+            const bcCustomer = await createCustomer(
+                args.input.email,
+                args.input.firstname,
+                args.input.lastname,
+                args.input.password
             );
+
+            return {
+                customer: transformCustomerData(bcCustomer),
+            };
         }
-
-        const bcCustomer = await createCustomer(
-            args.input.email,
-            args.input.firstname,
-            args.input.lastname,
-            args.input.password
-        );
-
-        return {
-            customer: transformCustomerData(bcCustomer),
-        };
     },
 };
 

@@ -1,16 +1,16 @@
 import { QueryResolvers } from '@mesh';
-import { getDecodedMeshToken } from '../../../utils/tokens';
 import { getBcCustomer } from '../../apis/graphql/customer';
 import { transformCustomer } from '../../factories/transform-customer-data';
 import { getAllCustomerAddresses, getSubscriberByEmail } from '../../apis/rest/customer';
+import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
-        const { bc_customer_id } = getDecodedMeshToken(context.headers.authorization);
+        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         const [bcCustomer, bcAddresses] = await Promise.all([
-            getBcCustomer(bc_customer_id),
-            getAllCustomerAddresses(bc_customer_id),
+            getBcCustomer(bcCustomerId),
+            getAllCustomerAddresses(bcCustomerId),
         ]);
 
         console.log(bcAddresses);
