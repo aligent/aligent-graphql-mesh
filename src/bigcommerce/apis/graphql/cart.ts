@@ -38,7 +38,7 @@ export const getCart = async (entityId: string, bcCustomerId: number | null) => 
 export const addProductsToCart = async (
     cartId: string,
     cartItems: BC_AddCartLineItemsDataInput
-): Promise<Maybe<BC_Cart>> => {
+): Promise<BC_Cart> => {
     const addToCartQuery = {
         query: addProductsToCartMutation,
         variables: {
@@ -54,7 +54,7 @@ export const addProductsToCart = async (
 
 export const createCart = async (
     lineItems: InputMaybe<Array<BC_CartLineItemInput>>
-): Promise<Maybe<BC_Cart>> => {
+): Promise<BC_Cart> => {
     const createCartQuery = {
         query: createCartMutation,
         variables: {
