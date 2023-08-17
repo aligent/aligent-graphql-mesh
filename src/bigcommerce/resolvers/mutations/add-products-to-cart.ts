@@ -22,7 +22,7 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
                 : await addProductsToCart(cartId, { lineItems });
 
         if (!addToCartResponse?.entityId) return null;
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers['mesh-token']);
+        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         const cartResponse = await getCart(addToCartResponse.entityId, bcCustomerId);
         return {
