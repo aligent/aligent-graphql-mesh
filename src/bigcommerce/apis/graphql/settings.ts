@@ -1,7 +1,7 @@
 import { bcGraphQlRequest } from './client';
 import { BC_TaxDisplaySettings } from '@mesh/external/BigCommerceGraphqlApi';
 import { taxSettings } from './requests/tax-settings';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
@@ -25,14 +25,11 @@ export const getTaxSettings = async (): Promise<BC_TaxDisplaySettings | null> =>
         const response = await bcGraphQlRequest(taxSettingsQuery, headers);
 
         if (response.errors) {
-            new Error(
-                `Failed to fetch tax settings from BigCommerce: ${JSON.stringify(response.errors)}`
-            );
+            return logAndThrowError(response.error);
         }
 
         return response.data.site.settings.tax;
-    } catch (e) {
-        logAndThrowError(e as Error);
-        return null;
+    } catch (error) {
+        return logAndThrowError(error);
     }
 };

@@ -1,4 +1,4 @@
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { bcGraphQlRequest } from './client';
 import {
     BC_ProductConnection,
@@ -27,12 +27,8 @@ export const getBcProductsGraphql = async (variables: {
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 
-    if (response.errors) {
-        logAndThrowError(
-            new Error(
-                `Failed to fetch products from BigCommerce: ${JSON.stringify(response.errors)}`
-            )
-        );
+    if (response.data.errors) {
+        return logAndThrowError(response.data.errors);
     }
 
     return response.data.site.search.searchProducts;

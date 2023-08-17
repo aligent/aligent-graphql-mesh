@@ -1,7 +1,6 @@
 import { CustomerAddressInput } from '@mesh';
-import { BcAddress } from '../../bigcommerce/types';
 
-export const isCustomerAddressValid = (input: CustomerAddressInput | null | undefined): boolean => {
+export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => {
     return !!(
         input &&
         input.firstname &&
@@ -12,21 +11,4 @@ export const isCustomerAddressValid = (input: CustomerAddressInput | null | unde
         input.region?.region &&
         input.postcode
     );
-};
-
-/**
- * Checks if the given addressId is in the list of given addresses.
- * Used to validate if the addresses belong to the customer.
- */
-export const addressIdBelongsToCustomer = (
-    addressId: number,
-    addresses: BcAddress[] | undefined
-): boolean => {
-    if (!addresses) {
-        return false;
-    }
-    const matchingAddress = addresses.find((address) => {
-        return address.id === addressId;
-    });
-    return !!matchingAddress;
 };

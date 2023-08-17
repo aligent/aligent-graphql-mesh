@@ -1,7 +1,7 @@
 import { BC_Product, BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
@@ -20,11 +20,7 @@ export const getBcProductByPathGraphql = async (
     const response = await bcGraphQlRequest(productsQuery, headers);
 
     if (response.data.errors) {
-        logAndThrowError(
-            new Error(
-                `Failed to fetch product from BigCommerce: ${JSON.stringify(response.data.errors)}`
-            )
-        );
+        return logAndThrowError(response.data.errors);
     }
 
     return response.data.site.route.node;
