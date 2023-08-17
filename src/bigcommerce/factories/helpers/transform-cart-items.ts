@@ -1,7 +1,12 @@
 import { BC_Cart, BC_CartSelectedMultipleChoiceOption } from '@mesh/external/BigCommerceGraphqlApi';
 
 import { CartItemInterface, CurrencyEnum, Maybe } from '@mesh';
-import { btoa, getGstPercentBetweenPrices, getNewUrl } from '../../../utils';
+import {
+    btoa,
+    getCartItemOriginalPrice,
+    getGstPercentBetweenPrices,
+    getNewUrl,
+} from '../../../utils';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformCartItems = (
@@ -55,13 +60,16 @@ export const getTransformCartItems = (
             { currency: 'AUD' as Maybe<CurrencyEnum>, value: 0 }
         );
 
-        const gstAmount = getGstPercentBetweenPrices(listPrice, salePrice);
+        /* Big Commerce doesn't provide a lot of good ways to get the applied gst, so we need to work it
+         * out between the list and sale price */
+        const gstPercentage = getGstPercentBetweenPrices(listPrice, salePrice);
 
-        /* The include or exclude value of the "originalPrice" will depend on tax configuration in the admin.
+        /* The "originalPrice" value will depend on tax configuration in the admin and if it should display
+         * as including or excluding gst.
          * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
          * [Display prices inclusive of tax, Display prices exclusive of tax]
          * */
-        const originalPrice = originalPriceIncGst.value / (1 + gstAmount / 100);
+        const originalPrice = getCartItemOriginalPrice(originalPriceIncGst.value, gstPercentage);
 
         return {
             id: entityId, // cart item id
