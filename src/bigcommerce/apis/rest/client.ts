@@ -41,6 +41,16 @@ export const bcGet = async (path: string) => {
     }
 };
 
+export const bcDelete = async (path: string) => {
+    const url = `${BC_REST_API}${path}`;
+    try {
+        const response = await axios.delete(url, { headers });
+        return response.data;
+    } catch (error) {
+        logAndThrowError(error as Error);
+    }
+};
+
 export const createCustomerImpersonationToken = async (expiresAt: number): Promise<string> => {
     const path = `/v3/storefront/api-token-customer-impersonation`;
     const data = {

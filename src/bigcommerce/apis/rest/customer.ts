@@ -1,5 +1,5 @@
 import { BcAddress, BcCustomer } from '../../types';
-import { bcGet, bcPost, bcPut } from './client';
+import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
@@ -49,4 +49,10 @@ export const getCustomerAddresses = async (customerId: number): Promise<BcAddres
     const response = await bcGet(path);
 
     return response.data;
+};
+
+export const deleteCustomerAddress = async (addressId: number): Promise<void> => {
+    const path = `${CUSTOMER_ADDRESS_API}?id:in=${addressId}`;
+
+    return await bcDelete(path);
 };
