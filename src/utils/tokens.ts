@@ -6,7 +6,7 @@ const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
 export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
-): DecodedCustomerImpersonationToken | void => {
+): DecodedCustomerImpersonationToken => {
     try {
         return decode(customerImpersonationToken) as DecodedCustomerImpersonationToken;
     } catch (error) {

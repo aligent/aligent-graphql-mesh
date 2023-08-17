@@ -36,9 +36,8 @@ export const createCustomerAddressResolver: MutationResolvers['createCustomerAdd
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         if (!isCustomerAddressValid(input)) {
-            logAndThrowError(
-                'ValidationError: Failed to validate CustomerAddressInput, Required field is missing',
-                'createCustomerAddressResolver'
+            return logAndThrowError(
+                'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );
         }
 

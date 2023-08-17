@@ -105,8 +105,7 @@ export const getTransformedProductData = (
             __typename: productType,
         };
     } catch (error) {
-        logAndThrowError(error, getTransformedProductData.name);
-        return null;
+        return logAndThrowError(error, getTransformedProductData.name);
     }
 };
 

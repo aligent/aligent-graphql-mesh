@@ -58,8 +58,7 @@ export const productsResolver: QueryResolvers['products'] = {
 
             return getTransformedProductsData(bcProducts);
         } catch (error) {
-            logAndThrowError(error);
-            return null;
+            return logAndThrowError(error);
         }
     },
 };

@@ -29,7 +29,7 @@ export const getBcAvailableProductFilters = async (
     const response = await bcGraphQlRequest(productsQuery, headers);
 
     if (response.data.errors) {
-        logAndThrowError(response.data.errors);
+        return logAndThrowError(response.data.errors);
     }
 
     return response.data.site.search.searchProducts.filters;

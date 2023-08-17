@@ -17,7 +17,7 @@ export const bcPost = async (path: string, data?: unknown): Promise<AxiosRespons
         const response = await axios.post(url, data, { headers });
         return response.data;
     } catch (error) {
-        logAndThrowError(error, bcPost.name);
+        return logAndThrowError(error, bcPost.name);
     }
 };
 
@@ -27,7 +27,7 @@ export const bcGet = async (path: string) => {
         const response = await axios.get(url, { headers });
         return response.data;
     } catch (error) {
-        logAndThrowError(error, bcGet.name);
+        return logAndThrowError(error, bcGet.name);
     }
 };
 
