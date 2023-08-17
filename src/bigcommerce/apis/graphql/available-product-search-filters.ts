@@ -1,10 +1,10 @@
-import { logAndThrowError } from '../../../utils/error-handling';
 import { bcGraphQlRequest } from './client';
 import {
     BC_SearchProductFilterConnection,
     BC_SearchProductsFiltersInput,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { getAvailableProductsSearchFiltersQuery } from './requests/available-product-search-filters';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
@@ -29,13 +29,7 @@ export const getBcAvailableProductFilters = async (
     const response = await bcGraphQlRequest(productsQuery, headers);
 
     if (response.data.errors) {
-        logAndThrowError(
-            new Error(
-                `Failed to fetch products filters from BigCommerce: ${JSON.stringify(
-                    response.data.errors
-                )}`
-            )
-        );
+        return logAndThrowError(response.data.errors);
     }
 
     return response.data.site.search.searchProducts.filters;

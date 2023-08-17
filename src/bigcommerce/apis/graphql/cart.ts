@@ -1,3 +1,4 @@
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { bcGraphQlRequest } from './client';
 import { checkout } from './requests/checkout';
 
@@ -19,6 +20,10 @@ export const getCart = async (entityId: string, bcCustomerId: number | null) => 
     };
 
     const response = await bcGraphQlRequest(checkoutQuery, headers);
+
+    if (response.data.errors) {
+        return logAndThrowError(response.data.errors);
+    }
 
     return response.data.site.checkout;
 };

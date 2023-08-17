@@ -1,4 +1,4 @@
-import { logAndThrowError } from './error-handling';
+import { logAndThrowError } from './error-handling/error-handling';
 import { decode, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
 
@@ -10,17 +10,7 @@ export const getDecodedCustomerImpersonationToken = (
     try {
         return decode(customerImpersonationToken) as DecodedCustomerImpersonationToken;
     } catch (error) {
-        return logAndThrowError(
-            new Error(`customerImpersonationToken could not be decoded ${error}`)
-        );
-    }
-};
-
-export const getDecodedMeshToken = (meshToken: string): MeshToken => {
-    try {
-        return verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
-    } catch (error) {
-        return logAndThrowError(new Error(`mesh-token could not be decoded ${error}`));
+        return logAndThrowError(error, getDecodedCustomerImpersonationToken.name);
     }
 };
 
@@ -28,15 +18,16 @@ export const getDecodedMeshToken = (meshToken: string): MeshToken => {
  * Attempts to extract "bc_customer_id" for the mesh token or returns null
  * @param meshToken
  */
-export const getBcCustomerIdFromMeshToken = (meshToken: string): number | null => {
+export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
     try {
-        const decodedMeshToken = verify(meshToken, JWT_PRIVATE_KEY) as MeshToken;
-
-        if (!decodedMeshToken?.bc_customer_id) return null;
-
-        return decodedMeshToken.bc_customer_id;
-    } catch {
-        console.error('"bc_customer_id" could not found in the mesh-token');
-        return null;
+        if (meshToken.toLowerCase().startsWith('bearer')) {
+            const splitMeshToken = meshToken.split(' ')[1];
+            const decodedMeshToken = verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
+            return decodedMeshToken.bc_customer_id;
+        } else {
+            throw new Error(`Need to send Bearer token`);
+        }
+    } catch (error) {
+        return logAndThrowError(error, getBcCustomerIdFromMeshToken.name);
     }
 };
