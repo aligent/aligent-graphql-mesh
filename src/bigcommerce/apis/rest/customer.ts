@@ -1,6 +1,6 @@
 import { BcAddress, BcCustomer } from '../../types';
 import { bcGet, bcPost, bcPut } from './client';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
