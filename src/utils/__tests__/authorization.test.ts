@@ -13,8 +13,10 @@ describe('authorization', () => {
             getBcCustomerId({
                 headers: { authorization: 'Bearer abcd' },
             } as unknown as GraphQlContext);
-        } catch (e: any) {
-            expect(e.message).toBe('JsonWebTokenError: jwt malformed');
+        } catch (e) {
+            if (e instanceof Error) {
+                expect(e.message).toBe('JsonWebTokenError: jwt malformed');
+            }
         }
     });
 });

@@ -29,8 +29,6 @@ describe('get-path-from-url-key', () => {
     });
 
     test('returns "null" if the url_key does not exist', () => {
-        plpUrlKeys.forEach((urlKey) => {
-            expect(getPathFromUrlKey(null)).toEqual(null);
-        });
+        expect(getPathFromUrlKey(null)).toEqual(null);
     });
 });
