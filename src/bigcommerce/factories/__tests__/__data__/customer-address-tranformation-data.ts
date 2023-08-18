@@ -64,3 +64,28 @@ export const customerAddress = {
     default_billing: true,
     default_shipping: true,
 };
+
+export const bcAddressUpdatedShippingBillingFalse = {
+    id: 5,
+    customer_id: 123,
+    first_name: 'Adam',
+    last_name: 'Hall',
+    city: 'Adelaide',
+    country_code: 'AU',
+    address1: 'Level 1',
+    address2: '212 pirie st',
+    state_or_province: 'South Australia',
+    postal_code: '5000',
+    phone: '0400000000',
+    company: 'Aligent',
+    form_fields: [
+        {
+            name: 'Default Billing',
+            value: [],
+        },
+        {
+            name: 'Default Shipping',
+            value: [],
+        },
+    ],
+};

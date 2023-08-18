@@ -1,24 +1,40 @@
 import { BcAddress, CustomerAddressValidated } from '../types';
 import { CountryCodeEnum, CustomerAddress } from '@mesh/index';
 
+const DEFAULT_BILLING_NAME = 'Default Billing';
+const DEFAULT_SHIPPING_NAME = 'Default Shipping';
+
 export const transformCustomerAddress = (
     customerAddress: CustomerAddressValidated,
     customerId: number,
     addressId?: number //optional for update address
 ): BcAddress => {
-    const formFields = [];
+    let formFields: { name: string; value: string[] | never[] }[] = [
+        {
+            name: DEFAULT_BILLING_NAME,
+            value: [],
+        },
+        {
+            name: DEFAULT_SHIPPING_NAME,
+            value: [],
+        },
+    ];
 
     if (customerAddress.default_billing) {
-        formFields.push({
-            name: 'Default Billing',
-            value: [customerAddress.default_billing ? 'Yes' : ''],
+        formFields = formFields.map((field) => {
+            return {
+                ...field,
+                value: field.name === DEFAULT_BILLING_NAME ? ['Yes'] : [],
+            };
         });
     }
 
     if (customerAddress.default_shipping) {
-        formFields.push({
-            name: 'Default Shipping',
-            value: [customerAddress.default_shipping ? 'Yes' : ''],
+        formFields = formFields.map((field) => {
+            return {
+                ...field,
+                value: field.name === DEFAULT_SHIPPING_NAME ? ['Yes'] : [],
+            };
         });
     }
 
