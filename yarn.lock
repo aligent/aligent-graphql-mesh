@@ -926,14 +926,14 @@
   dependencies:
     localforage "1.10.0"
 
-"@graphql-mesh/cache-redis@0.95.3-alpha-20230816090356-337bc6ec9":
-  version "0.95.3-alpha-20230816090356-337bc6ec9"
-  resolved "https://registry.yarnpkg.com/@graphql-mesh/cache-redis/-/cache-redis-0.95.3-alpha-20230816090356-337bc6ec9.tgz#fdbaa79571be0f03dfa89d075e45da78a74ab0aa"
-  integrity sha512-lDL4AEGUhlGI6bNyrgMPv2GgPdv20IuNpsRTSOzlxZe49O3xkBJb1eI9QX+hPqtfnzrTJm7Idsu8Mi8XEArebQ==
+"@graphql-mesh/cache-redis@^0.95.0":
+  version "0.95.5"
+  resolved "https://registry.yarnpkg.com/@graphql-mesh/cache-redis/-/cache-redis-0.95.5.tgz#75d6c623f98b51aa4717defb965cd6b7a736f6ae"
+  integrity sha512-o/nRColDI0ogOyvqNnUEarjUs0ym4Xr47PcZmmmJxBqrhbja+uqxC4mUxThOF97i0VpNAwWTraqR6i1+82zBQA==
   dependencies:
     "@graphql-mesh/string-interpolation" "0.5.1"
-    ioredis "5.3.2"
-    ioredis-mock "8.8.2"
+    ioredis "^5.3.2"
+    ioredis-mock "^8.8.3"
 
 "@graphql-mesh/cli@^0.82.0":
   version "0.82.35"
@@ -4141,10 +4141,10 @@ invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ioredis-mock@8.8.2:
-  version "8.8.2"
-  resolved "https://registry.yarnpkg.com/ioredis-mock/-/ioredis-mock-8.8.2.tgz#58bbc41d1a0c09f8789fd78d1770b944e14d5987"
-  integrity sha512-8vdnr614VhdIpC/+19sCSUhwfQlLsIjwuDsCDL0FEi23TIb25sRCm5sRRa9x2xoxNGvStjYSSSBTDq4zluUBHQ==
+ioredis-mock@^8.8.3:
+  version "8.8.3"
+  resolved "https://registry.yarnpkg.com/ioredis-mock/-/ioredis-mock-8.8.3.tgz#cf3fc27571091f1fcbe41f6027d53e65e640adf0"
+  integrity sha512-LkF17WIyYkPfUhvp0fjIZ+HKhILEoq1J2b71vv+9EOW054UlkySVEvgQ2RolXM+eI759MteHtXQvv0oRn0lkUg==
   dependencies:
     "@ioredis/as-callback" "^3.0.0"
     "@ioredis/commands" "^1.2.0"
@@ -4152,7 +4152,7 @@ ioredis-mock@8.8.2:
     fengari-interop "^0.1.3"
     semver "^7.5.4"
 
-ioredis@5.3.2:
+ioredis@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-5.3.2.tgz#9139f596f62fc9c72d873353ac5395bcf05709f7"
   integrity sha512-1DKMMzlIHM02eBBVOFQ1+AolGjs6+xEcM4PDL7NqOS6szq7H9jSaEkIUH6/a5Hl241LzW6JLSiAbNvTQjUupUA==

@@ -37,7 +37,7 @@
     "@envelop/core": "^4.0.0",
     "@envelop/sentry": "^6.0.0",
     "@graphql-mesh/cache-localforage": "^0.94.0",
-    "@graphql-mesh/cache-redis": "0.95.3-alpha-20230816090356-337bc6ec9",
+    "@graphql-mesh/cache-redis": "^0.95.0",
     "@graphql-mesh/graphql": "^0.94.0",
     "@graphql-mesh/json-schema": "^0.95.1",
     "@graphql-mesh/merger-stitching": "^0.94.0",
