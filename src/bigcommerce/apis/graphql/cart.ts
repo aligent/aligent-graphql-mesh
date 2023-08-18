@@ -1,5 +1,4 @@
 import { bcGraphQlRequest } from './client';
-import { checkout } from './requests/checkout';
 import { addProductsToCartMutation } from './requests/add-products-to-cart';
 import {
     BC_AddCartLineItemsDataInput,
