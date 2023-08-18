@@ -1,28 +1,30 @@
-import { BcAddress } from '../types';
-import { CountryCodeEnum, CustomerAddress } from '../../meshrc/.mesh';
-import { ValidatedInput } from '../resolvers/mutations/create-customer-address';
+import { BcAddress, CustomerAddressValidated } from '../types';
+import { CountryCodeEnum, CustomerAddress } from '@mesh/index';
+
+const DEFAULT_BILLING_NAME = 'Default Billing';
+const DEFAULT_SHIPPING_NAME = 'Default Shipping';
 
 export const transformCustomerAddress = (
-    customerAddress: ValidatedInput,
-    customerId: number
+    customerAddress: CustomerAddressValidated,
+    customerId: number,
+    addressId?: number //optional for update address
 ): BcAddress => {
-    const formFields = [];
+    const billingValue = customerAddress.default_billing ? ['Yes'] : [];
+    const shippingValue = customerAddress.default_shipping ? ['Yes'] : [];
 
-    if (customerAddress.default_billing) {
-        formFields.push({
-            name: 'Default Billing',
-            value: [customerAddress.default_billing ? 'Yes' : ''],
-        });
-    }
+    // This array should only have one entry
+    const formFields = [
+        {
+            name: DEFAULT_BILLING_NAME,
+            value: billingValue,
+        },
+        {
+            name: DEFAULT_SHIPPING_NAME,
+            value: shippingValue,
+        },
+    ];
 
-    if (customerAddress.default_shipping) {
-        formFields.push({
-            name: 'Default Shipping',
-            value: [customerAddress.default_shipping ? 'Yes' : ''],
-        });
-    }
-
-    return {
+    const bcAddress: BcAddress = {
         customer_id: customerId,
         first_name: customerAddress.firstname,
         last_name: customerAddress.lastname,
@@ -36,14 +38,20 @@ export const transformCustomerAddress = (
         ...(customerAddress.company && { company: customerAddress.company }),
         form_fields: formFields,
     };
+
+    if (addressId) {
+        bcAddress.id = addressId;
+    }
+
+    return bcAddress;
 };
 export const transformBcAddress = (address: BcAddress): CustomerAddress => {
-    const defaultBilling = address.form_fields?.find(({ name }) => {
-        return name === 'Default Billing';
+    const defaultBilling = address.form_fields?.find((field) => {
+        return field.name === DEFAULT_BILLING_NAME && field.value[0] === 'Yes';
     });
 
-    const defaultShipping = address.form_fields?.find(({ name }) => {
-        return name === 'Default Shipping';
+    const defaultShipping = address.form_fields?.find((field) => {
+        return field.name === DEFAULT_SHIPPING_NAME && field.value[0] === 'Yes';
     });
 
     return {

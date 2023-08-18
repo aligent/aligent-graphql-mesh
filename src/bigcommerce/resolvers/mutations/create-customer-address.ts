@@ -1,4 +1,4 @@
-import { CountryCodeEnum, CustomerAddressInput, MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@mesh';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { createCustomerAddress } from '../../apis/rest/customer';
@@ -6,30 +6,9 @@ import {
     transformCustomerAddress,
     transformBcAddress,
 } from '../../factories/transform-customer-address-data';
-export interface ValidatedInput extends CustomerAddressInput {
-    firstname: string;
-    lastname: string;
-    city: string;
-    country_code: CountryCodeEnum;
-    street: string[];
-    region: {
-        region: string;
-    };
-    postcode: string;
-}
+import { isCustomerAddressValid } from '../../../utils/validators/customer-address-validator';
+import { CustomerAddressValidated } from '../../types';
 
-export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => {
-    return !!(
-        input.firstname &&
-        input.lastname &&
-        input.city &&
-        input.country_code &&
-        input.street &&
-        input.region?.region &&
-        input.postcode
-    );
-};
-/* istanbul ignore next */
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
@@ -40,7 +19,7 @@ export const createCustomerAddressResolver: MutationResolvers['createCustomerAdd
             );
         }
 
-        const customerAddressInput = input as ValidatedInput;
+        const customerAddressInput = input as CustomerAddressValidated;
         const address = transformCustomerAddress(customerAddressInput, customerId);
         const response = await createCustomerAddress(address);
 

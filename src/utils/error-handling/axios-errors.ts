@@ -2,6 +2,9 @@ import { AxiosError, AxiosResponse } from 'axios';
 /* istanbul ignore file */
 //TODO: MICRO-142: add tests for this file at later point
 
+/* istanbul ignore file */
+//TODO: MICRO-142: add tests for this file at later point
+
 export const logAndThrowAxiosError = (
     axiosError: AxiosError,
     functionName?: string,

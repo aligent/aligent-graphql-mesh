@@ -1,8 +1,9 @@
-import { bcAddress, customerAddress } from './__data__/customer-address-data';
+import {  customerAddress } from './__data__/customer-address-data';
 import {
     transformCustomerAddress,
     transformBcAddress,
 } from '../../../factories/transform-customer-address-data';
+import { bcAddress } from '../../../factories/__tests__/__data__/customer-address-tranformation-data';
 
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress into BCAddress', () => {
