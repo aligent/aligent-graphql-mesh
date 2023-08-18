@@ -1,4 +1,4 @@
-import { CurrencyEnum } from '../../meshrc/.mesh';
+import { CountryCodeEnum, CurrencyEnum, CustomerAddressInput } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
@@ -188,7 +188,7 @@ export interface BcAddress {
     company?: string;
     form_fields?: Array<{
         name: string;
-        value: string | number | string[];
+        value: string[] | never[];
     }>;
 }
 
@@ -221,4 +221,20 @@ export interface BcSubscriber {
     id: number;
     date_modified: string;
     date_created: string;
+}
+
+export interface CustomerAddressValidated extends CustomerAddressInput {
+    firstname: string;
+    lastname: string;
+    city: string;
+    country_code: CountryCodeEnum;
+    street: string[];
+    region: {
+        region: string;
+    };
+    postcode: string;
+}
+
+export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
+    id: number;
 }
