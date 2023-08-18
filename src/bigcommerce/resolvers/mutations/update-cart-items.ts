@@ -1,8 +1,60 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@mesh';
-import { mockUpdateCartItems } from '../mocks/update-cart-items';
+import { getCheckout, updateCartLineItem } from '../../apis/graphql';
+import { getBcCustomerId, getDeconstructedCartItemUid } from '../../../utils';
+import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
-    resolve: (_root, _args, _context, _info) => {
-        return mockUpdateCartItems as unknown as UpdateCartItemsOutput;
+    resolve: async (_root, args, context, _info): Promise<UpdateCartItemsOutput | null> => {
+        const { cart_id, cart_items } = args.input || {};
+
+        if (!cart_id || !cart_items?.[0]?.cart_item_uid) {
+            throw new Error(`Missing update cart information`);
+        }
+
+        const { quantity } = cart_items[0];
+
+        if (quantity === 0) {
+            throw new Error(`Quantity cannot be "0"`);
+        }
+
+        if (!quantity || isNaN(quantity)) {
+            throw new Error(`Cart item quantity is incorrect`);
+        }
+
+        const bcCustomerId = getBcCustomerId(context);
+
+        /**
+         * Extracts the "lineItemEntityId", "productEntityId" and "variantEntityId" properties from the "cartItemUid".
+         * The cartItemUid is initial formed via:
+         * @see createCartItemUid
+         */
+        const { lineItemEntityId, productEntityId, variantEntityId } = getDeconstructedCartItemUid(
+            cart_items[0].cart_item_uid
+        );
+
+        const updateCartResponse = await updateCartLineItem(
+            {
+                cartEntityId: cart_id,
+                lineItemEntityId,
+                data: {
+                    lineItem: {
+                        productEntityId,
+                        ...(variantEntityId && { variantEntityId }),
+                        quantity,
+                    },
+                },
+            },
+            bcCustomerId
+        );
+
+        if (!updateCartResponse?.entityId) return null;
+
+        /* The response from update cart doesn't supply enough data which Take Flight is expecting
+         * so we have to follow up with a getCheckout query to get more enriched data. */
+        const checkoutResponse = await getCheckout(updateCartResponse.entityId, bcCustomerId);
+
+        return {
+            cart: getTransformedCartData(checkoutResponse),
+        };
     },
 };

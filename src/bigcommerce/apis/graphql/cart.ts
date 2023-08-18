@@ -1,13 +1,13 @@
 import { bcGraphQlRequest } from './client';
-import { addProductsToCartMutation } from './requests/add-products-to-cart';
 import {
     BC_AddCartLineItemsDataInput,
+    BC_UpdateCartLineItemInput,
     BC_Cart,
     BC_CartLineItemInput,
     InputMaybe,
 } from '@mesh/external/BigCommerceGraphqlApi';
-import { createCartMutation } from './requests/create-cart';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { addProductsToCartMutation, createCartMutation, updateCartLineItemQuery } from './requests';
+import { logAndThrowError } from '../../../utils';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
@@ -52,4 +52,27 @@ export const createCart = async (
     }
 
     return response.data.cart.createCart.cart;
+};
+
+export const updateCartLineItem = async (
+    variables: BC_UpdateCartLineItemInput,
+    bcCustomerId: number | null
+): Promise<BC_Cart> => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
+    const updateCartItemQuery = {
+        query: updateCartLineItemQuery,
+        variables,
+    };
+
+    const response = await bcGraphQlRequest(updateCartItemQuery, headers);
+
+    if (response.data.errors) {
+        return logAndThrowError(response.data.errors);
+    }
+
+    return response.data.cart.updateCartLineItem.cart;
 };
