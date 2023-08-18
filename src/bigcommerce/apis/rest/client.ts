@@ -31,7 +31,7 @@ export const bcPut = async (path: string, data?: unknown): Promise<AxiosResponse
     }
 };
 
-export const bcGet = async (path: string) => {
+export const bcGet = async (path: string): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
     try {
         const response = await axios.get(url, { headers });
@@ -41,7 +41,7 @@ export const bcGet = async (path: string) => {
     }
 };
 
-export const bcDelete = async (path: string) => {
+export const bcDelete = async (path: string): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
     try {
         const response = await axios.delete(url, { headers });

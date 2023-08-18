@@ -16,9 +16,8 @@ export const deleteCustomerAddressResolver: MutationResolvers['deleteCustomerAdd
             );
         }
 
-        await deleteCustomerAddress(addressId);
-        //Nothing is returned by BigComm, not matter if success or not, always 204 No Content
-        //So if there is no critical error we are just returning null (TODO: Check with PWA if that's ok)
-        return null;
+        const deleted = await deleteCustomerAddress(addressId);
+
+        return deleted;
     },
 };

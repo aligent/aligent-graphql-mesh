@@ -59,9 +59,11 @@ export const getCustomerAddress = async (
     return response.data;
 };
 
-export const deleteCustomerAddress = async (addressId: number): Promise<void> => {
+export const deleteCustomerAddress = async (addressId: number): Promise<boolean> => {
     const path = `${CUSTOMER_ADDRESS_API}?id:in=${addressId}`;
 
-    const response = await bcDelete(path);
-    return response;
+    await bcDelete(path);
+    //Nothing is returned by BigComm, not matter if success or not, always 204 No Content
+    //So if there is no critical error we are just returning true
+    return true;
 };
