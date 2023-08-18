@@ -1,7 +1,6 @@
 import { Cart, MutationResolvers } from '@mesh';
 import { addProductsToCart, createCart, getCart } from '../../apis/graphql/cart';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
-import { EMPTY_CART_ID } from '../../apis/rest/cart';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
@@ -16,10 +15,9 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             }),
         }));
 
-        const addToCartResponse =
-            cartId === EMPTY_CART_ID
-                ? await createCart(lineItems)
-                : await addProductsToCart(cartId, { lineItems });
+        const addToCartResponse = cartId
+            ? await createCart(lineItems)
+            : await addProductsToCart(cartId, { lineItems });
 
         if (!addToCartResponse?.entityId) return null;
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
