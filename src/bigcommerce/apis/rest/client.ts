@@ -47,7 +47,7 @@ export const bcDelete = async (path: string): Promise<AxiosResponse['data']> => 
         const response = await axios.delete(url, { headers });
         return response.data;
     } catch (error) {
-        logAndThrowError(error as Error);
+        return logAndThrowError(error, bcDelete.name);
     }
 };
 

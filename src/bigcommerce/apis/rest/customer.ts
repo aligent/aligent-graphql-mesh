@@ -31,8 +31,7 @@ export const createCustomerAddress = async (address: BcAddress): Promise<BcAddre
     const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
     if (!response.data[0]) {
         //BC rest api will return 200 without any data, if the address already exits
-        //TODO: improve error handling for this case
-        logAndThrowError(new Error('Address already exists.'));
+        logAndThrowError('Address already exists.');
     }
     return response.data[0];
 };
