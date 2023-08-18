@@ -1,11 +1,18 @@
 export const mockBcCart = {
+    /* The "amount.value" can be the including or excluding gst price depending on admin configuration
+     * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
+     * [Display prices inclusive of tax, Display prices exclusive of tax]
+     *
+     * This amount also subtracts discounts
+     * */
     amount: {
         currencyCode: 'AUD',
-        value: 90,
+        value: 60.0,
     },
+    /* The total amount of the cart items including GST*/
     baseAmount: {
         currencyCode: 'AUD',
-        value: 90,
+        value: 60.0,
     },
     createdAt: {
         utc: '2023-07-28T00:53:59Z',
@@ -50,35 +57,47 @@ export const mockBcCart = {
                         },
                     },
                 ],
-                originalPrice: {
-                    currencyCode: 'AUD',
-                    value: 55,
-                },
-                listPrice: {
-                    currencyCode: 'AUD',
-                    value: 30,
-                },
-                salePrice: {
-                    currencyCode: 'AUD',
-                    value: 30,
-                },
-                extendedListPrice: {
-                    currencyCode: 'AUD',
-                    value: 90,
-                },
-                extendedSalePrice: {
-                    currencyCode: 'AUD',
-                    value: 90,
-                },
                 couponAmount: {
                     currencyCode: 'AUD',
-                    value: 0,
+                    value: 0.0,
                 },
                 discountedAmount: {
                     currencyCode: 'AUD',
-                    value: 0,
+                    value: 0.0,
                 },
-                quantity: 3,
+                // "originalPrice" is the price of the item that hasn't changed due to having
+                // a salePrice applied or discounts
+                originalPrice: {
+                    currencyCode: 'AUD',
+                    value: 70.0,
+                },
+                // This is the item price including tax
+                listPrice: {
+                    currencyCode: 'AUD',
+                    value: 30.0,
+                },
+                /*The "salesPrice" can be the including or excluding gst price depending on admin configuration
+                 * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
+                 * [Display prices inclusive of tax, Display prices exclusive of tax]
+                 * */
+                salePrice: {
+                    currencyCode: 'AUD',
+                    value: 30.0,
+                },
+                // This is the items "listPrice" including tax multiplied by the "quantity"
+                extendedListPrice: {
+                    currencyCode: 'AUD',
+                    value: 60.0,
+                },
+                /*The "extendedSalePrice" can be the including or excluding gst price depending on admin configuration
+                 * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
+                 * [Display prices inclusive of tax, Display prices exclusive of tax]
+                 * */
+                extendedSalePrice: {
+                    currencyCode: 'AUD',
+                    value: 60.0,
+                },
+                quantity: 2,
                 selectedOptions: [
                     {
                         name: 'Color',

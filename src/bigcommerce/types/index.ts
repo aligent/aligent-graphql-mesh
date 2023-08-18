@@ -13,7 +13,7 @@ export interface GraphQlQuery {
 export interface BcProduct {
     __typename: 'Product';
     entityId: number;
-    id: string;
+    id: number;
     sku: string;
     name: string;
     addToCartUrl: string;
@@ -188,7 +188,7 @@ export interface BcAddress {
     company?: string;
     form_fields?: Array<{
         name: string;
-        value: string | number | string[];
+        value: string[] | never[];
     }>;
 }
 
@@ -233,4 +233,8 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
         region: string;
     };
     postcode: string;
+}
+
+export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
+    id: number;
 }

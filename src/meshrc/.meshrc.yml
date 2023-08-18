@@ -9,7 +9,7 @@ additionalResolvers:
 additionalTypeDefs:
   - !include ../bigcommerce/additional-type-defs/product-attribute-filter-input.graphql
 
-# additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
+additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
 
 codegen:
   contextType: ../types#GraphQlContext

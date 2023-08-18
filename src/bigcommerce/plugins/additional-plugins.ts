@@ -1,5 +1,5 @@
-// import { useExtendContextPlugin } from './customer-impersonation-token';
+import { useExtendContextPlugin } from './customer-impersonation-token';
 
-// const plugins = [useExtendContextPlugin];
+const plugins = [useExtendContextPlugin];
 
-// export default plugins;
+export default plugins;

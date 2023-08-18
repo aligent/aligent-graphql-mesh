@@ -23,14 +23,15 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
                 new Error('AuthorizationError: Address does not belong to customer')
             );
         }
-        if (!isCustomerAddressValid(addressInput)) {
+
+        const customerAddressInput = addressInput as CustomerAddressValidated;
+        if (!isCustomerAddressValid(customerAddressInput)) {
             return logAndThrowError(
                 new Error(
                     'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
                 )
             );
         }
-        const customerAddressInput = addressInput as CustomerAddressValidated;
 
         const address = transformCustomerAddress(customerAddressInput, customerId, addressId);
         const response = await updateCustomerAddress(address);

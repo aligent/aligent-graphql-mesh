@@ -27,7 +27,7 @@ export const bcPut = async (path: string, data?: unknown): Promise<AxiosResponse
         const response = await axios.put(url, data, { headers });
         return response.data;
     } catch (error) {
-        logAndThrowError(error as Error);
+        return logAndThrowError(error, bcPut.name);
     }
 };
 
