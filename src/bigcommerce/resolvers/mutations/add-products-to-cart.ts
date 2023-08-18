@@ -22,6 +22,12 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         if (!addToCartResponse?.entityId) return null;
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
+        // Even though add to cart mutations return cart details, Big Commerce site.cart query doesn't
+        // return all the same information to satisfy the Adobe commerce cart response.
+        // The BC cart lacks a lot of the pricing information as well as shipping and billing information.
+        // Shipping information can be pretty important before reaching the checkout. This is where the site.checkout
+        // query comes in which is called when the above getCart is invoked.
+        // We’re not actually querying site.cart but site.checkout instead.
         const cartResponse = await getCart(addToCartResponse.entityId, bcCustomerId);
         return {
             cart: getTransformedCartData(cartResponse) as Cart,
