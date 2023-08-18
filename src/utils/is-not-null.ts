@@ -1,1 +1,1 @@
-export const isNotNull = (str: string | null): str is string => str !== null;
+export const isNotNull = <T>(input: T | null): input is T => input !== null;
