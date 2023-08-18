@@ -1,4 +1,4 @@
-import {  customerAddress } from './__data__/customer-address-data';
+import { customerAddress } from './__data__/customer-address-data';
 import {
     transformCustomerAddress,
     transformBcAddress,
