@@ -1,10 +1,12 @@
-import { BcAddress, BcCustomer } from '../../types';
+import { BcAddress,BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
+const CUSTOMER_SUBSCRIBERS = `/v3/customers/subscribers`;
 
+/* istanbul ignore file */
 export const createCustomer = async (
     email: string,
     firstName: string,
@@ -27,12 +29,26 @@ export const createCustomer = async (
     return response.data[0];
 };
 
+export const getAllCustomerAddresses = async (bcCustomerId: number): Promise<BcAddressRest[]> => {
+    const path = `${CUSTOMER_ADDRESS_API}?include=formfields&customer_id:in=${bcCustomerId}`;
+
+    const response = await bcGet(path);
+    return response.data;
+};
+
 export const createCustomerAddress = async (address: BcAddress): Promise<BcAddress> => {
     const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
     if (!response.data[0]) {
         //BC rest api will return 200 without any data, if the address already exits
         logAndThrowError('Address already exists.');
     }
+    return response.data[0];
+};
+
+export const getSubscriberByEmail = async (email: string): Promise<BcSubscriber | undefined> => {
+    const path = `${CUSTOMER_SUBSCRIBERS}?email=${email}`;
+    const response = await bcGet(path);
+
     return response.data[0];
 };
 
