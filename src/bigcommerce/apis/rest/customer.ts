@@ -1,5 +1,5 @@
 import { BcAddress, BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
-import { bcGet, bcPost, bcPut } from './client';
+import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
@@ -40,8 +40,7 @@ export const createCustomerAddress = async (address: BcAddress): Promise<BcAddre
     const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
     if (!response.data[0]) {
         //BC rest api will return 200 without any data, if the address already exits
-        //TODO: improve error handling for this case
-        logAndThrowError(new Error('Address already exists.'));
+        logAndThrowError('Address already exists.');
     }
     return response.data[0];
 };
@@ -73,4 +72,13 @@ export const getCustomerAddress = async (
         return null; //if there is no data we return null instead of empty array
     }
     return response.data;
+};
+
+export const deleteCustomerAddress = async (addressId: number): Promise<boolean> => {
+    const path = `${CUSTOMER_ADDRESS_API}?id:in=${addressId}`;
+
+    await bcDelete(path);
+    //Nothing is returned by BigComm, not matter if success or not, always 204 No Content
+    //So if there is no critical error we are just returning true
+    return true;
 };

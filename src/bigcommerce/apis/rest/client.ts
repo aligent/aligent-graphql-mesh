@@ -31,13 +31,23 @@ export const bcPut = async (path: string, data?: unknown): Promise<AxiosResponse
     }
 };
 
-export const bcGet = async (path: string) => {
+export const bcGet = async (path: string): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
     try {
         const response = await axios.get(url, { headers });
         return response.data;
     } catch (error) {
         return logAndThrowError(error, bcGet.name);
+    }
+};
+
+export const bcDelete = async (path: string): Promise<AxiosResponse['data']> => {
+    const url = `${BC_REST_API}${path}`;
+    try {
+        const response = await axios.delete(url, { headers });
+        return response.data;
+    } catch (error) {
+        return logAndThrowError(error, bcDelete.name);
     }
 };
 
