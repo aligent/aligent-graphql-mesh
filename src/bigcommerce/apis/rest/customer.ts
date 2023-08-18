@@ -44,7 +44,7 @@ export const updateCustomerAddress = async (address: BcAddress): Promise<BcAddre
 
 /**
  * Returns the address for the given addressId and customerId.
- * If the is not address matching then return null.
+ * If the address does not exist then return null.
  */
 export const getCustomerAddress = async (
     addressId: number,

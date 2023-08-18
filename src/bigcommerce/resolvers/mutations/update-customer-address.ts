@@ -4,9 +4,9 @@ import {
     transformBcAddress,
     transformCustomerAddress,
 } from '../../factories/transform-customer-address-data';
-import { CustomerAddressUpdateValidated } from '../../types';
+import { CustomerAddressValidated } from '../../types';
 import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/customer';
-import { isCustomerAddressUpdatable } from '../../../utils/validators/customer-address-validator';
+import { isCustomerAddressValid } from '../../../utils/validators/customer-address-validator';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
@@ -24,8 +24,8 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
             );
         }
 
-        const customerAddressInput = addressInput as CustomerAddressUpdateValidated;
-        if (!isCustomerAddressUpdatable(customerAddressInput)) {
+        const customerAddressInput = addressInput as CustomerAddressValidated;
+        if (!isCustomerAddressValid(customerAddressInput)) {
             return logAndThrowError(
                 new Error(
                     'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
