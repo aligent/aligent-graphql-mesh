@@ -188,7 +188,7 @@ export interface BcAddress {
     company?: string;
     form_fields?: Array<{
         name: string;
-        value: string | number | string[];
+        value: string[] | never[];
     }>;
 }
 

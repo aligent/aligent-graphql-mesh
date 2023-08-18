@@ -24,7 +24,7 @@ export const transformCustomerAddress = (
         formFields = formFields.map((field) => {
             return {
                 ...field,
-                value: field.name === DEFAULT_BILLING_NAME ? ['Yes'] : [],
+                value: field.name === DEFAULT_BILLING_NAME ? ['Yes'] : [field.value[0]],
             };
         });
     }
@@ -33,7 +33,7 @@ export const transformCustomerAddress = (
         formFields = formFields.map((field) => {
             return {
                 ...field,
-                value: field.name === DEFAULT_SHIPPING_NAME ? ['Yes'] : [],
+                value: field.name === DEFAULT_SHIPPING_NAME ? ['Yes'] : [field.value[0]],
             };
         });
     }
@@ -60,12 +60,12 @@ export const transformCustomerAddress = (
     return bcAddress;
 };
 export const transformBcAddress = (address: BcAddress): CustomerAddress => {
-    const defaultBilling = address.form_fields?.find(({ name }) => {
-        return name === 'Default Billing';
+    const defaultBilling = address.form_fields?.find((field) => {
+        return field.name === DEFAULT_BILLING_NAME && field.value[0] === 'Yes';
     });
 
-    const defaultShipping = address.form_fields?.find(({ name }) => {
-        return name === 'Default Shipping';
+    const defaultShipping = address.form_fields?.find((field) => {
+        return field.name === DEFAULT_SHIPPING_NAME && field.value[0] === 'Yes';
     });
 
     return {
