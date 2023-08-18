@@ -1,45 +1,15 @@
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
 import { getTransformedCartPrices } from '../transform-cart-prices';
+import { mockBcCart } from '../../../resolvers/mocks/cart.bc';
 
 const expectResult = {
-    applied_taxes: [
-        {
-            amount: {
-                currency: 'AUD',
-                value: 8.18,
-            },
-            label: 'GST',
-        },
-    ],
-    discounts: [
-        {
-            label: 'sale',
-            amount: {
-                currency: 'AUD',
-                value: 10,
-            },
-        },
-    ],
-    grand_total: {
-        currency: 'AUD',
-        value: 90,
-    },
-    subtotal_excluding_tax: {
-        currency: 'AUD',
-        value: 90,
-    },
-    subtotal_including_tax: {
-        currency: 'AUD',
-        value: 90,
-    },
-    subtotal_with_discount_including_tax: {
-        value: 90,
-        currency: 'AUD',
-    },
-    subtotal_with_discount_excluding_tax: {
-        value: 90,
-        currency: 'AUD',
-    },
+    applied_taxes: [{ amount: { currency: 'AUD', value: 5.45 }, label: 'GST' }],
+    discounts: [{ label: 'sale', amount: { currency: 'AUD', value: 10 } }],
+    grand_total: { currency: 'AUD', value: 60 },
+    subtotal_excluding_tax: { currency: 'AUD', value: 54.55 },
+    subtotal_including_tax: { currency: 'AUD', value: 60 },
+    subtotal_with_discount_including_tax: { currency: 'AUD', value: 60 },
+    subtotal_with_discount_excluding_tax: { currency: 'AUD', value: 60 },
 };
 
 describe('transform-prices', () => {
@@ -47,7 +17,7 @@ describe('transform-prices', () => {
         const { coupons, grandTotal, subtotal, taxes, taxTotal } = mockBcCheckout;
 
         expect(
-            getTransformedCartPrices({ coupons, grandTotal, subtotal, taxes, taxTotal })
+            getTransformedCartPrices({ coupons, grandTotal, subtotal, taxes, taxTotal }, mockBcCart)
         ).toEqual(expect.objectContaining(expectResult));
     });
 
@@ -67,8 +37,8 @@ describe('transform-prices', () => {
                 grand_total: null,
                 subtotal_excluding_tax: null,
                 subtotal_including_tax: null,
-                subtotal_with_discount_including_tax: { value: 0 },
-                subtotal_with_discount_excluding_tax: { value: 0 },
+                subtotal_with_discount_including_tax: null,
+                subtotal_with_discount_excluding_tax: null,
             })
         );
     });

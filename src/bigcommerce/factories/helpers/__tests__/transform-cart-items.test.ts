@@ -7,29 +7,14 @@ const expectResult = [
         uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUw',
         errors: null,
         prices: {
-            price: {
-                currency: 'AUD',
-                value: 30,
-            },
-            price_including_tax: {
-                currency: 'AUD',
-                value: 30,
-            },
-            row_total: {
-                currency: 'AUD',
-                value: 90,
-            },
-            row_total_including_tax: {
-                currency: 'AUD',
-                value: 90,
-            },
-            total_item_discount: {
-                currency: 'AUD',
-                value: 0,
-            },
+            price: { currency: 'AUD', value: 30 },
+            price_including_tax: { currency: 'AUD', value: 30 },
+            row_total: { currency: 'AUD', value: 60 },
+            row_total_including_tax: { currency: 'AUD', value: 60 },
+            total_item_discount: { currency: 'AUD', value: 0 },
         },
         product: {
-            id: 492,
+            id: 513,
             uid: 'NDky',
             name: 'Mona Pullover Hoodlie',
             sku: 'WH01-S-Green',
@@ -40,17 +25,9 @@ const expectResult = [
             categories: [],
             price_range: {
                 minimum_price: {
-                    discount: {
-                        amount_off: 25,
-                    },
-                    final_price: {
-                        currency: 'AUD',
-                        value: 30,
-                    },
-                    regular_price: {
-                        currency: 'AUD',
-                        value: 55,
-                    },
+                    discount: { amount_off: 40 },
+                    final_price: { currency: 'AUD', value: 30 },
+                    regular_price: { currency: 'AUD', value: 70 },
                 },
             },
             rating_summary: 0,
@@ -61,29 +38,15 @@ const expectResult = [
             custom_attributes: [],
             reviews: {
                 items: [],
-                page_info: {
-                    current_page: null,
-                    page_size: null,
-                    total_pages: null,
-                },
+                page_info: { current_page: null, page_size: null, total_pages: null },
             },
             staged: false,
             __typename: 'ConfigurableProduct',
         },
-        quantity: 3,
+        quantity: 2,
         configurable_options: [
-            {
-                id: 148,
-                option_label: 'Color',
-                value_id: 182,
-                value_label: 'Green',
-            },
-            {
-                id: 149,
-                option_label: 'Size',
-                value_id: 184,
-                value_label: 'S',
-            },
+            { id: 148, option_label: 'Color', value_id: 182, value_label: 'Green' },
+            { id: 149, option_label: 'Size', value_id: 184, value_label: 'S' },
         ],
         __typename: 'ConfigurableCartItem',
     },

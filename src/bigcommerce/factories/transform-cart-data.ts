@@ -34,7 +34,7 @@ export const getTransformedCartData = (checkoutData: Maybe<BC_Checkout>): Maybe<
                 currency: 'AUD',
             },
         },
-        prices: getTransformedCartPrices(checkoutData),
+        prices: getTransformedCartPrices(checkoutData, cart),
         billing_address: getTransformedBillingAddress(billingAddress),
         shipping_addresses: getTransformedShippingAddresses(shippingConsignments, customerMessage),
         available_gift_wrappings: [],
