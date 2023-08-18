@@ -9,34 +9,20 @@ export const transformCustomerAddress = (
     customerId: number,
     addressId?: number //optional for update address
 ): BcAddress => {
-    let formFields: { name: string; value: string[] | never[] }[] = [
+    const billingValue = customerAddress.default_billing ? ['Yes'] : [];
+    const shippingValue = customerAddress.default_shipping ? ['Yes'] : [];
+
+    // This array should only have one entry
+    const formFields = [
         {
             name: DEFAULT_BILLING_NAME,
-            value: [],
+            value: billingValue,
         },
         {
             name: DEFAULT_SHIPPING_NAME,
-            value: [],
+            value: shippingValue,
         },
     ];
-
-    if (customerAddress.default_billing) {
-        formFields = formFields.map((field) => {
-            return {
-                ...field,
-                value: field.name === DEFAULT_BILLING_NAME ? ['Yes'] : [field.value[0]],
-            };
-        });
-    }
-
-    if (customerAddress.default_shipping) {
-        formFields = formFields.map((field) => {
-            return {
-                ...field,
-                value: field.name === DEFAULT_SHIPPING_NAME ? ['Yes'] : [field.value[0]],
-            };
-        });
-    }
 
     const bcAddress: BcAddress = {
         customer_id: customerId,
