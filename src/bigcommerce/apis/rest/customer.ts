@@ -1,4 +1,4 @@
-import { BcAddress,BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
+import { BcAddress, BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
