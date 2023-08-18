@@ -1,4 +1,3 @@
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { bcGraphQlRequest } from './client';
 import { checkout } from './requests/checkout';
 import { addProductsToCartMutation } from './requests/add-products-to-cart';
@@ -9,7 +8,7 @@ import {
     InputMaybe,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { createCartMutation } from './requests/create-cart';
-import { logAndThrowError } from '../../../utils/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
