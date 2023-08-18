@@ -1,5 +1,6 @@
 import { MutationResolvers } from '@mesh';
-import { addProductsToCart, createCart, getCart } from '../../apis/graphql/cart';
+import { addProductsToCart, createCart } from '../../apis/graphql/cart';
+import { getCheckout } from '../../apis/graphql/checkout';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
@@ -26,9 +27,9 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         // return all the same information to satisfy the Adobe commerce cart response.
         // The BC cart lacks a lot of the pricing information as well as shipping and billing information.
         // Shipping information can be pretty important before reaching the checkout. This is where the site.checkout
-        // query comes in which is called when the above getCart is invoked.
+        // query comes in which is called when the above getCheckout is invoked.
         // We’re not actually querying site.cart but site.checkout instead.
-        const cartResponse = await getCart(addToCartResponse.entityId, bcCustomerId);
+        const cartResponse = await getCheckout(addToCartResponse.entityId, bcCustomerId);
         return {
             cart: getTransformedCartData(cartResponse),
             user_errors: [], // TODO: Decide what are the user errors which we can return

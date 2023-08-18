@@ -15,30 +15,6 @@ const headers = {
     Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
 };
 
-export const getCart = async (entityId: string, bcCustomerId: number | null) => {
-    const cartHeaders = {
-        ...headers,
-        // We need to pass the "bcCustomerId" in the headers to valid logged in user carts.
-        // guest user don't required a "x-bc-customer-id" header
-        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
-    };
-
-    const checkoutQuery = {
-        query: checkout,
-        variables: {
-            entityId,
-        },
-    };
-
-    const response = await bcGraphQlRequest(checkoutQuery, cartHeaders);
-
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
-    }
-
-    return response.data.site.checkout;
-};
-
 export const addProductsToCart = async (
     cartId: string,
     cartItems: BC_AddCartLineItemsDataInput
