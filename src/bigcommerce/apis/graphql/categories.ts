@@ -1,7 +1,7 @@
-import { BcCategory, BcCategoryTree } from '../../types';
 import { bcGraphQlRequest } from './client';
 import { getCategoryQuery } from './requests/category';
 import { getCategoryTreeQuery } from './requests/category-tree';
+import { BcCategory, BcCategoryTree } from '../../types';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
