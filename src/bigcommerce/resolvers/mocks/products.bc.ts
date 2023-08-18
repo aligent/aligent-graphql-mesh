@@ -1,4 +1,4 @@
-import { BC_MetafieldConnection, BC_PageInfo } from '@mesh/external/BigCommerceGraphqlApi';
+import { BC_MetafieldConnection } from '@mesh/external/BigCommerceGraphqlApi';
 
 export const mockBcProducts = [
     {
@@ -133,33 +133,33 @@ export const mockBcProducts = [
         },
         path: '/mona-pullover-hoodlie/',
         prices: {
-            basePrice: {
-                currencyCode: 'AUD',
-                value: 50.0,
-            },
             bulkPricing: [],
-            mapPrice: null,
-            price: {
+            saved: null,
+            salePrice: {
+                value: 10.0,
                 currencyCode: 'AUD',
-                value: 27.27,
             },
+            retailPriceRange: null,
+            retailPrice: null,
             priceRange: {
                 min: {
+                    value: 10.0,
                     currencyCode: 'AUD',
-                    value: 27.27,
                 },
                 max: {
+                    value: 57.0,
                     currencyCode: 'AUD',
-                    value: 51.82,
                 },
             },
-            retailPrice: null,
-            retailPriceRange: null,
-            salePrice: {
+            price: {
+                value: 10.0,
                 currencyCode: 'AUD',
-                value: 27.27,
             },
-            saved: null,
+            mapPrice: null,
+            basePrice: {
+                value: 57.0,
+                currencyCode: 'AUD',
+            },
         },
         productOptions: {
             edges: [
@@ -437,33 +437,32 @@ export const mockBcProducts = [
                             altText: '',
                             isDefault: true,
                         },
-                        metafields: {} as BC_MetafieldConnection,
                         prices: {
                             basePrice: {
                                 currencyCode: 'AUD',
-                                value: 50.0,
+                                value: 70.0,
                             },
                             bulkPricing: [],
                             mapPrice: null,
                             price: {
                                 currencyCode: 'AUD',
-                                value: 27.27,
+                                value: 30.0,
                             },
                             priceRange: {
                                 min: {
                                     currencyCode: 'AUD',
-                                    value: 27.27,
+                                    value: 30.0,
                                 },
                                 max: {
                                     currencyCode: 'AUD',
-                                    value: 27.27,
+                                    value: 30.0,
                                 },
                             },
                             retailPrice: null,
                             retailPriceRange: null,
                             salePrice: {
                                 currencyCode: 'AUD',
-                                value: 27.27,
+                                value: 30.0,
                             },
                             saved: null,
                         },
@@ -472,9 +471,9 @@ export const mockBcProducts = [
                                 {
                                     cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 148,
                                         displayName: 'Color',
-                                        isRequired: true,
                                         values: {
                                             edges: [
                                                 {
@@ -486,20 +485,20 @@ export const mockBcProducts = [
                                                 },
                                             ],
                                             pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                 hasNextPage: false,
                                                 hasPreviousPage: false,
                                                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                             },
                                         },
                                     },
                                 },
                                 {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                     node: {
+                                        isRequired: true,
                                         entityId: 149,
                                         displayName: 'Size',
-                                        isRequired: true,
                                         values: {
                                             edges: [
                                                 {
@@ -511,20 +510,20 @@ export const mockBcProducts = [
                                                 },
                                             ],
                                             pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                 hasNextPage: false,
                                                 hasPreviousPage: false,
                                                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                             },
                                         },
                                     },
                                 },
                             ],
                             pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                 hasNextPage: false,
                                 hasPreviousPage: false,
                                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                             },
                         },
                         productOptions: {
@@ -540,6 +539,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 182,
                                                         label: 'Green',
@@ -548,12 +548,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                                 {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -571,21 +576,32 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                             ],
-                            pageInfo: {} as BC_PageInfo,
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         inventory: {
                             isInStock: true,
                         },
                         isPurchasable: true,
+                        metafields: {} as BC_MetafieldConnection,
                     },
                 },
                 {
-                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                     node: {
                         id: 'VmFyaWFudDo1MTQ=',
                         entityId: 514,
@@ -600,27 +616,30 @@ export const mockBcProducts = [
                         prices: {
                             basePrice: {
                                 currencyCode: 'AUD',
-                                value: 51.82,
+                                value: 57.0,
                             },
                             bulkPricing: [],
                             mapPrice: null,
                             price: {
                                 currencyCode: 'AUD',
-                                value: 51.82,
+                                value: 40.0,
                             },
                             priceRange: {
                                 min: {
                                     currencyCode: 'AUD',
-                                    value: 51.82,
+                                    value: 40.0,
                                 },
                                 max: {
                                     currencyCode: 'AUD',
-                                    value: 51.82,
+                                    value: 40.0,
                                 },
                             },
                             retailPrice: null,
                             retailPriceRange: null,
-                            salePrice: null,
+                            salePrice: {
+                                currencyCode: 'AUD',
+                                value: 40.0,
+                            },
                             saved: null,
                         },
                         options: {
@@ -641,12 +660,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                                 {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                     node: {
                                         isRequired: true,
                                         entityId: 149,
@@ -661,12 +685,22 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                             ],
-                            pageInfo: {} as BC_PageInfo,
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         productOptions: {
                             edges: [
@@ -690,12 +724,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                                 {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -705,6 +744,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 185,
                                                         label: 'M',
@@ -712,12 +752,22 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                             ],
-                            pageInfo: {} as BC_PageInfo,
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         inventory: {
                             isInStock: true,
@@ -727,7 +777,7 @@ export const mockBcProducts = [
                     },
                 },
                 {
-                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                     node: {
                         id: 'VmFyaWFudDo1MTU=',
                         entityId: 515,
@@ -742,168 +792,22 @@ export const mockBcProducts = [
                         prices: {
                             basePrice: {
                                 currencyCode: 'AUD',
-                                value: 50.0,
+                                value: 57.0,
                             },
                             bulkPricing: [],
                             mapPrice: null,
                             price: {
                                 currencyCode: 'AUD',
-                                value: 27.27,
+                                value: 57.0,
                             },
                             priceRange: {
                                 min: {
                                     currencyCode: 'AUD',
-                                    value: 27.27,
+                                    value: 57.0,
                                 },
                                 max: {
                                     currencyCode: 'AUD',
-                                    value: 27.27,
-                                },
-                            },
-                            retailPrice: null,
-                            retailPriceRange: null,
-                            salePrice: {
-                                currencyCode: 'AUD',
-                                value: 27.27,
-                            },
-                            saved: null,
-                        },
-                        options: {
-                            edges: [
-                                {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                    node: {
-                                        isRequired: true,
-                                        entityId: 148,
-                                        displayName: 'Color',
-                                        values: {
-                                            edges: [
-                                                {
-                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                    node: {
-                                                        entityId: 183,
-                                                        label: 'Purple',
-                                                    },
-                                                },
-                                            ],
-                                            pageInfo: {} as BC_PageInfo,
-                                        },
-                                    },
-                                },
-                                {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                    node: {
-                                        isRequired: true,
-                                        entityId: 149,
-                                        displayName: 'Size',
-                                        values: {
-                                            edges: [
-                                                {
-                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                    node: {
-                                                        entityId: 184,
-                                                        label: 'S',
-                                                    },
-                                                },
-                                            ],
-                                            pageInfo: {} as BC_PageInfo,
-                                        },
-                                    },
-                                },
-                            ],
-                            pageInfo: {} as BC_PageInfo,
-                        },
-                        productOptions: {
-                            edges: [
-                                {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                    node: {
-                                        entityId: 148,
-                                        displayName: 'Color',
-                                        isRequired: true,
-                                        isVariantOption: true,
-                                        displayStyle: 'Swatch',
-                                        values: {
-                                            edges: [
-                                                {
-                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                    node: {
-                                                        entityId: 183,
-                                                        label: 'Purple',
-                                                        isDefault: false,
-                                                        hexColors: ['#EF3DFF'],
-                                                    },
-                                                },
-                                            ],
-                                            pageInfo: {} as BC_PageInfo,
-                                        },
-                                    },
-                                },
-                                {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                    node: {
-                                        entityId: 149,
-                                        displayName: 'Size',
-                                        isRequired: true,
-                                        isVariantOption: true,
-                                        displayStyle: 'RadioButtons',
-                                        values: {
-                                            edges: [
-                                                {
-                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                    node: {
-                                                        entityId: 184,
-                                                        label: 'S',
-                                                        isDefault: false,
-                                                    },
-                                                },
-                                            ],
-                                            pageInfo: {} as BC_PageInfo,
-                                        },
-                                    },
-                                },
-                            ],
-                            pageInfo: {} as BC_PageInfo,
-                        },
-                        inventory: {
-                            isInStock: true,
-                        },
-                        isPurchasable: true,
-                        metafields: {} as BC_MetafieldConnection,
-                    },
-                },
-                {
-                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                    node: {
-                        id: 'VmFyaWFudDo1MTY=',
-                        entityId: 516,
-                        sku: 'WH01-M-Purple',
-                        defaultImage: {
-                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
-                            urlOriginal:
-                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/attribute_rule_images/56_source_1690452040.jpg',
-                            altText: '',
-                            isDefault: true,
-                        },
-                        prices: {
-                            basePrice: {
-                                currencyCode: 'AUD',
-                                value: 51.82,
-                            },
-                            bulkPricing: [],
-                            mapPrice: null,
-                            price: {
-                                currencyCode: 'AUD',
-                                value: 51.82,
-                            },
-                            priceRange: {
-                                min: {
-                                    currencyCode: 'AUD',
-                                    value: 51.82,
-                                },
-                                max: {
-                                    currencyCode: 'AUD',
-                                    value: 51.82,
+                                    value: 57.0,
                                 },
                             },
                             retailPrice: null,
@@ -929,12 +833,17 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                                 {
-                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                     node: {
                                         isRequired: true,
                                         entityId: 149,
@@ -944,17 +853,27 @@ export const mockBcProducts = [
                                                 {
                                                     cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
-                                                        entityId: 185,
-                                                        label: 'M',
+                                                        entityId: 184,
+                                                        label: 'S',
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                             ],
-                            pageInfo: {} as BC_PageInfo,
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         productOptions: {
                             edges: [
@@ -969,6 +888,7 @@ export const mockBcProducts = [
                                         values: {
                                             edges: [
                                                 {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                     node: {
                                                         entityId: 183,
                                                         label: 'Purple',
@@ -977,12 +897,193 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                                 {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                    node: {
+                                        entityId: 149,
+                                        displayName: 'Size',
+                                        isRequired: true,
+                                        isVariantOption: true,
+                                        displayStyle: 'RadioButtons',
+                                        values: {
+                                            edges: [
+                                                {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                    node: {
+                                                        entityId: 184,
+                                                        label: 'S',
+                                                        isDefault: false,
+                                                    },
+                                                },
+                                            ],
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
+                        },
+                        inventory: {
+                            isInStock: true,
+                        },
+                        isPurchasable: true,
+                        metafields: {} as BC_MetafieldConnection,
+                    },
+                },
+                {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
+                    node: {
+                        id: 'VmFyaWFudDo1MTY=',
+                        entityId: 516,
+                        sku: 'WH01-M-Purple',
+                        defaultImage: {
+                            url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
+                            urlOriginal:
+                                'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/attribute_rule_images/56_source_1690452040.jpg',
+                            altText: '',
+                            isDefault: true,
+                        },
+                        prices: {
+                            basePrice: {
+                                currencyCode: 'AUD',
+                                value: 57.0,
+                            },
+                            bulkPricing: [],
+                            mapPrice: null,
+                            price: {
+                                currencyCode: 'AUD',
+                                value: 10.0,
+                            },
+                            priceRange: {
+                                min: {
+                                    currencyCode: 'AUD',
+                                    value: 10.0,
+                                },
+                                max: {
+                                    currencyCode: 'AUD',
+                                    value: 10.0,
+                                },
+                            },
+                            retailPrice: null,
+                            retailPriceRange: null,
+                            salePrice: {
+                                currencyCode: 'AUD',
+                                value: 10.0,
+                            },
+                            saved: null,
+                        },
+                        options: {
+                            edges: [
+                                {
                                     cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    node: {
+                                        isRequired: true,
+                                        entityId: 148,
+                                        displayName: 'Color',
+                                        values: {
+                                            edges: [
+                                                {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                    node: {
+                                                        entityId: 183,
+                                                        label: 'Purple',
+                                                    },
+                                                },
+                                            ],
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                    node: {
+                                        isRequired: true,
+                                        entityId: 149,
+                                        displayName: 'Size',
+                                        values: {
+                                            edges: [
+                                                {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                    node: {
+                                                        entityId: 185,
+                                                        label: 'M',
+                                                    },
+                                                },
+                                            ],
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
+                        },
+                        productOptions: {
+                            edges: [
+                                {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                    node: {
+                                        entityId: 148,
+                                        displayName: 'Color',
+                                        isRequired: true,
+                                        isVariantOption: true,
+                                        displayStyle: 'Swatch',
+                                        values: {
+                                            edges: [
+                                                {
+                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                    node: {
+                                                        entityId: 183,
+                                                        label: 'Purple',
+                                                        isDefault: false,
+                                                        hexColors: ['#EF3DFF'],
+                                                    },
+                                                },
+                                            ],
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                     node: {
                                         entityId: 149,
                                         displayName: 'Size',
@@ -1000,12 +1101,22 @@ export const mockBcProducts = [
                                                     },
                                                 },
                                             ],
-                                            pageInfo: {} as BC_PageInfo,
+                                            pageInfo: {
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            },
                                         },
                                     },
                                 },
                             ],
-                            pageInfo: {} as BC_PageInfo,
+                            pageInfo: {
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         inventory: {
                             isInStock: true,
@@ -1016,10 +1127,10 @@ export const mockBcProducts = [
                 },
             ],
             pageInfo: {
+                endCursor: 'YXJyYXljb25uZWN0aW9uOjM=',
                 hasNextPage: false,
                 hasPreviousPage: false,
                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
             },
         },
     },
