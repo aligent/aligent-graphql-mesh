@@ -1,4 +1,4 @@
-import { Cart, MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@mesh';
 import { addProductsToCart, createCart, getCart } from '../../apis/graphql/cart';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
@@ -30,7 +30,7 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         // We’re not actually querying site.cart but site.checkout instead.
         const cartResponse = await getCart(addToCartResponse.entityId, bcCustomerId);
         return {
-            cart: getTransformedCartData(cartResponse) as Cart,
+            cart: getTransformedCartData(cartResponse),
             user_errors: [], // TODO: Decide what are the user errors which we can return
         };
     },
