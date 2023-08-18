@@ -65,6 +65,22 @@ export const customerAddress = {
     default_shipping: true,
 };
 
+export const customerAddressBillingShippingFalse = {
+    firstname: 'Adam',
+    lastname: 'Hall',
+    city: 'Adelaide',
+    street: ['Level 1', '212 pirie st'],
+    region: {
+        region: 'South Australia',
+    },
+    postcode: '5000',
+    country_code: 'AU' as CountryCodeEnum,
+    telephone: '0400000000',
+    company: 'Aligent',
+    default_billing: false,
+    default_shipping: false,
+};
+
 export const customerAddressBillingFalse = {
     firstname: 'Adam',
     lastname: 'Hall',
