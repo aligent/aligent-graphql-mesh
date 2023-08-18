@@ -1,5 +1,6 @@
 import { bcGraphQlRequest } from './client';
 import { addProductsToCartMutation } from './requests/add-products-to-cart';
+import { deleteCartLineItemMutation } from './requests/delete-cart-line-item';
 import {
     BC_AddCartLineItemsDataInput,
     BC_Cart,
@@ -52,4 +53,25 @@ export const createCart = async (
     }
 
     return response.data.cart.createCart.cart;
+};
+
+export const deleteCartLineItem = async (
+    cartEntityId: string,
+    lineItemEntityId: string
+): Promise<BC_Cart> => {
+    const deleteCartLineItemQuery = {
+        query: deleteCartLineItemMutation,
+        variables: {
+            cartEntityId,
+            lineItemEntityId,
+        },
+    };
+
+    const response = await bcGraphQlRequest(deleteCartLineItemQuery, headers);
+
+    if (response.data.error) {
+        return logAndThrowError(response.data.error);
+    }
+
+    return response.data.cart.deleteCartLineItem.cart;
 };
