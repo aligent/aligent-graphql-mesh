@@ -27,6 +27,11 @@ export const createCustomer = async (
     return response.data[0];
 };
 
+export const updateCustomer = async (customer: BcCustomer): Promise<BcCustomer> => {
+    const response = await bcPut(CUSTOMERS_API, customer);
+    return response.data[0];
+};
+
 export const createCustomerAddress = async (address: BcAddress): Promise<BcAddress> => {
     const response = await bcPost(CUSTOMER_ADDRESS_API, [address]);
     if (!response.data[0]) {
