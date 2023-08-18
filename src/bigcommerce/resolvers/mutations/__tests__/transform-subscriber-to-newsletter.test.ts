@@ -8,9 +8,8 @@ describe('Transform SubscriberToNewsletter test', () => {
         expect(transformedSubscriber.status).toEqual('SUBSCRIBED');
     });
     test('Subscriber email does not exist', async () => {
-        const transformedSubscriber = await transformSubscriberToNewsletterOutput(
-            bcSubscriberInvalid
-        );
+        const transformedSubscriber =
+            await transformSubscriberToNewsletterOutput(bcSubscriberInvalid);
 
         expect(transformedSubscriber.status).toEqual('UNCONFIRMED');
     });
