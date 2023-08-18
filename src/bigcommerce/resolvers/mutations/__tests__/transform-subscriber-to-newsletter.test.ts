@@ -8,8 +8,7 @@ describe('Transform SubscriberToNewsletter test', () => {
         expect(transformedSubscriber.status).toEqual('SUBSCRIBED');
     });
     test('Subscriber email does not exist', () => {
-        const transformedSubscriber =
-            transformSubscriberToNewsletterOutput(bcSubscriberInvalid);
+        const transformedSubscriber = transformSubscriberToNewsletterOutput(bcSubscriberInvalid);
 
         expect(transformedSubscriber.status).toEqual('UNCONFIRMED');
     });
