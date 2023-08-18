@@ -1,14 +1,12 @@
 import { getIsVirtualCart } from '../../utils';
 import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
-import { Cart, Maybe } from '../../meshrc/.mesh';
+import { Cart } from '@mesh';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
 
-export const getTransformedCartData = (checkoutData: Maybe<BC_Checkout>): Maybe<Cart> => {
-    if (!checkoutData) return null;
-
+export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
 

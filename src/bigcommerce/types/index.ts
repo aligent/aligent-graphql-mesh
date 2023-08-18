@@ -13,7 +13,7 @@ export interface GraphQlQuery {
 export interface BcProduct {
     __typename: 'Product';
     entityId: number;
-    id: string;
+    id: number;
     sku: string;
     name: string;
     addToCartUrl: string;

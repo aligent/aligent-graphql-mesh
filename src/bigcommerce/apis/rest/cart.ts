@@ -1,11 +1,6 @@
-import { bcPost } from './client';
-
+/**
+ * @Deprecated We will just return empty string as empty cart ID since BC GraphQL doesn't support empty cart yet
+ */
 export const createEmptyCart = async (): Promise<string> => {
-    const path = `/v3/carts`;
-    const data = {
-        line_items: [],
-    };
-
-    const response = await bcPost(path, data);
-    return response.data.id;
+    return '';
 };
