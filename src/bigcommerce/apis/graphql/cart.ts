@@ -8,6 +8,7 @@ import {
     InputMaybe,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { createCartMutation } from './requests/create-cart';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
@@ -48,6 +49,10 @@ export const addProductsToCart = async (
 
     const response = await bcGraphQlRequest(addToCartQuery, headers);
 
+    if (response.data.error) {
+        return logAndThrowError(response.data.error);
+    }
+
     return response.data.cart.addCartLineItems.cart;
 };
 
@@ -62,5 +67,10 @@ export const createCart = async (
     };
 
     const response = await bcGraphQlRequest(createCartQuery, headers);
+
+    if (response.data.error) {
+        return logAndThrowError(response.data.error);
+    }
+
     return response.data.cart.createCart.cart;
 };
