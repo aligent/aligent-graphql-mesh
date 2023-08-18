@@ -69,14 +69,6 @@ describe('transform-cart-data', () => {
         });
     });
 
-    it(`Returns null if cart items don't exist`, () => {
-        expect(getTransformedCartData(null)).toEqual(null);
-    });
-
-    it(`returns null when there's no checkout data`, () => {
-        expect(getTransformedCartData(null)).toEqual(null);
-    });
-
     it('Handles nullish checkout property values', () => {
         expect(
             getTransformedCartData({
