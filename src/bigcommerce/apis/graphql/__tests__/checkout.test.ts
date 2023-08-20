@@ -37,7 +37,7 @@ describe('getCheckout', () => {
         expect(axios.post).toBeCalledTimes(1);
 
         expect(axios.post).toBeCalledWith(
-            undefined,
+            'https://aligent.mybigcommerce.com/graphql',
             {
                 query: checkout,
                 variables: {
@@ -46,7 +46,7 @@ describe('getCheckout', () => {
             },
             {
                 headers: {
-                    Authorization: 'Bearer undefined',
+                    Authorization: 'Bearer $BC_GRAPHQL_TOKEN',
                     'x-bc-customer-id': bcCustomerId,
                 },
             }

@@ -51,7 +51,7 @@ describe('createCart', () => {
         expect(axios.post).toBeCalledTimes(1);
 
         expect(axios.post).toBeCalledWith(
-            undefined,
+            'https://aligent.mybigcommerce.com/graphql',
             {
                 query: createCartMutation,
                 variables: {
@@ -60,7 +60,7 @@ describe('createCart', () => {
             },
             {
                 headers: {
-                    Authorization: 'Bearer undefined',
+                    Authorization: 'Bearer $BC_GRAPHQL_TOKEN',
                 },
             }
         );
@@ -104,7 +104,7 @@ describe('addProductsToCart', () => {
 
         expect(axios.post).toBeCalledTimes(1);
         expect(axios.post).toBeCalledWith(
-            undefined,
+            'https://aligent.mybigcommerce.com/graphql',
             {
                 query: addProductsToCartMutation,
                 variables: {
@@ -116,7 +116,7 @@ describe('addProductsToCart', () => {
             },
             {
                 headers: {
-                    Authorization: 'Bearer undefined',
+                    Authorization: 'Bearer $BC_GRAPHQL_TOKEN',
                 },
             }
         );
@@ -165,7 +165,7 @@ describe('updateCartLineItem', () => {
 
         expect(axios.post).toBeCalledTimes(1);
         expect(axios.post).toBeCalledWith(
-            undefined,
+            'https://aligent.mybigcommerce.com/graphql',
             {
                 query: updateCartLineItemQuery,
                 variables: {
@@ -176,7 +176,7 @@ describe('updateCartLineItem', () => {
             },
             {
                 headers: {
-                    Authorization: 'Bearer undefined',
+                    Authorization: 'Bearer $BC_GRAPHQL_TOKEN',
                     'x-bc-customer-id': bcCustomerId,
                 },
             }
