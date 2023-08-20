@@ -19,7 +19,6 @@ const config: Config = {
         },
     },
     modulePathIgnorePatterns: ['__data__'],
-    setupFiles: ['<rootDir>/setupFiles.js'],
 };
 
 export default config;

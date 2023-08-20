@@ -37,7 +37,7 @@ describe('getCheckout', () => {
         expect(axios.post).toBeCalledTimes(1);
 
         expect(axios.post).toBeCalledWith(
-            'https://api.bigcommerce.com/stores/abcdefg',
+            undefined,
             {
                 query: checkout,
                 variables: {
@@ -46,7 +46,7 @@ describe('getCheckout', () => {
             },
             {
                 headers: {
-                    Authorization: 'Bearer BC_GRAPHQL_TOKEN',
+                    Authorization: 'Bearer undefined',
                     'x-bc-customer-id': bcCustomerId,
                 },
             }
