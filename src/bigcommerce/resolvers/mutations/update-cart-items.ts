@@ -1,5 +1,6 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@mesh';
-import { getCheckout, updateCartLineItem } from '../../apis/graphql';
+import { getCheckout } from '../../apis/graphql/checkout';
+import { updateCartLineItem } from '../../apis/graphql/cart';
 import { getBcCustomerId, getDeconstructedCartItemUid } from '../../../utils';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
