@@ -8,15 +8,11 @@ describe('authorization', () => {
         ).toEqual(null);
     });
 
-    test('Throws an error if the authorization token is not good', () => {
-        try {
+    test('Throws an error if the authorization token is malformed', () => {
+        expect(() => {
             getBcCustomerId({
                 headers: { authorization: 'Bearer abcd' },
             } as unknown as GraphQlContext);
-        } catch (e) {
-            if (e instanceof Error) {
-                expect(e.message).toBe('JsonWebTokenError: jwt malformed');
-            }
-        }
+        }).toThrow(new Error('{"name":"JsonWebTokenError","message":"jwt malformed"}'));
     });
 });
