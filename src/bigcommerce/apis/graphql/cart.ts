@@ -29,8 +29,8 @@ export const addProductsToCart = async (
 
     const response = await bcGraphQlRequest(addToCartQuery, headers);
 
-    if (response.data.error) {
-        return logAndThrowError(response.data.error);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.cart.addCartLineItems.cart;
@@ -48,8 +48,8 @@ export const createCart = async (
 
     const response = await bcGraphQlRequest(createCartQuery, headers);
 
-    if (response.data.error) {
-        return logAndThrowError(response.data.error);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.cart.createCart.cart;
@@ -69,8 +69,8 @@ export const deleteCartLineItem = async (
 
     const response = await bcGraphQlRequest(deleteCartLineItemQuery, headers);
 
-    if (response.data.error) {
-        return logAndThrowError(response.data.error);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.cart.deleteCartLineItem.cart;
