@@ -3,6 +3,7 @@ import { BC_Cart, BC_CartSelectedMultipleChoiceOption } from '@mesh/external/Big
 import { CartItemInterface, CurrencyEnum, Maybe } from '@mesh';
 import {
     btoa,
+    createCartItemUid,
     getCartItemOriginalPrice,
     getGstPercentBetweenPrices,
     getNewUrl,
@@ -19,7 +20,7 @@ export const getTransformCartItems = (
             name,
             sku,
             url,
-            entityId, // cart item id
+            entityId: cartItemId, // cart item id
             productEntityId,
             variantEntityId,
             discounts,
@@ -71,9 +72,11 @@ export const getTransformCartItems = (
          * */
         const originalPrice = getCartItemOriginalPrice(originalPriceIncGst.value, gstPercentage);
 
+        const cartItemUid = createCartItemUid(cartItemId, productEntityId, variantEntityId);
+
         return {
-            id: entityId, // cart item id
-            uid: btoa(entityId),
+            id: cartItemId, // cart item id
+            uid: cartItemUid,
             errors: null,
             prices: {
                 /* "Price" this will depend on excluding or including tax admin configurable */
@@ -88,7 +91,7 @@ export const getTransformCartItems = (
             },
             product: {
                 id: variantEntityId,
-                uid: btoa(String(productEntityId)),
+                uid: btoa(String(variantEntityId)),
                 name: name,
                 sku: sku,
                 small_image: {

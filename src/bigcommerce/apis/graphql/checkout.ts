@@ -24,8 +24,8 @@ export const getCheckout = async (
 
     const response = await bcGraphQlRequest(checkoutQuery, cartHeaders);
 
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.site.checkout;
