@@ -16,10 +16,10 @@ export const getDecodedCustomerImpersonationToken = (
 };
 
 /**
- * Attempts to extract "bc_customer_id" for the mesh token or returns null
+ * Attempts to extract "bc_customer_id" for the mesh token or throws an error
  * @param meshToken
  */
-export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
+export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
     try {
         if (meshToken.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
