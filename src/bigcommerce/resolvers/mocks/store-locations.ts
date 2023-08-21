@@ -57,18 +57,18 @@ export const mockStoreLocations = {
 };
 
 export const mockedAcStoreLocationsArgument = {
-    area:{
+    area: {
         coordinates: { lat: -34.962192, lng: 138.638024 },
         radius: 20,
-        search_term: 'Adelaide'
+        search_term: 'Adelaide',
     },
     filters: {
         country_id: { eq: 'AU' },
-        region: { eq: 'SA' }
+        region: { eq: 'SA' },
     },
     pageSize: 20,
-    currentPage: 1
-}
+    currentPage: 1,
+};
 
 export const mockedBcStoreLocations = {
     edges: [
@@ -102,16 +102,16 @@ export const mockedBcStoreLocations = {
                 metafields: {
                     pageInfo: {
                         hasNextPage: false,
-                        hasPreviousPage: false
-                    }
+                        hasPreviousPage: false,
+                    },
                 },
                 serviceTypeIds: [],
-                specialHours: []
-            }
-        }
+                specialHours: [],
+            },
+        },
     ],
     pageInfo: {
         hasNextPage: false,
-        hasPreviousPage: false
-    }
-}
+        hasPreviousPage: false,
+    },
+};

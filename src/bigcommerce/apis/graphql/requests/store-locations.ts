@@ -7,29 +7,33 @@ export const getStoreLocationsQuery = stripIgnoredCharacters(
     print(gql`
         ${address}
         query storelocations(
-			$countryCodes: [countryCode!]
+            $countryCodes: [countryCode!]
             $cities: [String!]
             $distanceFilter: DistanceFilter
         ) {
-            inventory	{
-                locations(countryCodes: $countryCodes, cities: $cities, distanceFilter: $distanceFilter){
-					edges {
-						node {
-							entityId
-							code
-							label
-							description
-							typeId
-							address {
-								...InventoryAddress
-							}
-							distance {
-								value
-								lengthUnit
-							}
-							timeZone
-						}
-					}
+            inventory {
+                locations(
+                    countryCodes: $countryCodes
+                    cities: $cities
+                    distanceFilter: $distanceFilter
+                ) {
+                    edges {
+                        node {
+                            entityId
+                            code
+                            label
+                            description
+                            typeId
+                            address {
+                                ...InventoryAddress
+                            }
+                            distance {
+                                value
+                                lengthUnit
+                            }
+                            timeZone
+                        }
+                    }
                 }
             }
         }

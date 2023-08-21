@@ -1,4 +1,7 @@
-import { BC_InventoryLocationsArgs, BC_InventoryLocationConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import {
+    BC_InventoryLocationsArgs,
+    BC_InventoryLocationConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getStoreLocationsQuery } from './requests/store-locations';

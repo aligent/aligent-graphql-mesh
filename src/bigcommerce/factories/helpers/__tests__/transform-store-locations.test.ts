@@ -1,19 +1,25 @@
-import { mockedAcStoreLocationsArgument, mockedBcStoreLocations } from "../../../resolvers/mocks/store-locations";
-import {getTransformedStoreLocationsArgs, getTransformedStoreLocationItems } from "../transform-store-locations";
+import {
+    mockedAcStoreLocationsArgument,
+    mockedBcStoreLocations,
+} from '../../../resolvers/mocks/store-locations';
+import {
+    getTransformedStoreLocationsArgs,
+    getTransformedStoreLocationItems,
+} from '../transform-store-locations';
 
 const expectBcArgs = {
-    countryCodes: [ 'AU' ],
-    states: [ 'SA' ],
-    cities: [ 'Adelaide' ],
+    countryCodes: ['AU'],
+    states: ['SA'],
+    cities: ['Adelaide'],
     distanceFilter: {
         latitude: -34.962192,
         longitude: 138.638024,
         radius: 20,
-        lengthUnit: 'Kilometres'
-    }
+        lengthUnit: 'Kilometres',
+    },
 };
 
-const expectAcStoreLocations ={
+const expectAcStoreLocations = {
     items: [
         {
             city: 'Adelaide',
@@ -25,11 +31,11 @@ const expectAcStoreLocations ={
             phone: '',
             pickup_location_code: 'BC-ADDRESS-1',
             postcode: '5000',
-            street: 'L2/212 Pirie St'
-        }
-    ]
+            street: 'L2/212 Pirie St',
+        },
+    ],
 };
-      
+
 describe('transform store locations', () => {
     it(`transforms args`, () => {
         expect(getTransformedStoreLocationsArgs(mockedAcStoreLocationsArgument)).toEqual(
@@ -42,4 +48,4 @@ describe('transform store locations', () => {
             expectAcStoreLocations
         );
     });
-})
+});
