@@ -7,8 +7,8 @@ import {
 } from '../../factories/helpers/transform-store-locations';
 
 export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
-    resolve: async (_root, _args, _context, _info) => {
-        const variables: BC_InventoryLocationsArgs = getTransformedStoreLocationsArgs(_args);
+    resolve: async (_root, args, _context, _info) => {
+        const variables: BC_InventoryLocationsArgs = getTransformedStoreLocationsArgs(args);
         const bcStoreLocations = await getBcStoreLocationsGraphql(variables);
 
         return getTransformedStoreLocationItems(bcStoreLocations);
