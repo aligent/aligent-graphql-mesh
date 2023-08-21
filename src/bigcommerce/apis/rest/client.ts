@@ -41,6 +41,28 @@ export const bcGet = async (path: string): Promise<AxiosResponse['data']> => {
     }
 };
 
+/**
+ * Generator function to iterate over a paginated API result
+ * @param path
+ * @param page
+ * @param limit
+ */
+export const bcPaginate = async function* (path: string, page: number = 1, limit: number = 50): AsyncGenerator<AxiosResponse['data']> {
+    const url = `${BC_REST_API}${path}`;
+
+    while (page >= 1) {
+        const response = await axios.get(url, {headers, params: {page, limit}});
+        const items = response.data;
+        if (items.length === 0) {
+            break;
+        }
+        for (const item of items) {
+            yield item;
+        }
+        page++;
+    }
+}
+
 export const bcDelete = async (path: string): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
     try {
