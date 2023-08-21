@@ -4,7 +4,8 @@ import { getPdpProductQuery } from './requests/pdp-product';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 export const getBcProductByPathGraphql = async (
-    variables: BC_SiteRouteArgs & { includeTax?: boolean }, customerImpersonationToken: string
+    variables: BC_SiteRouteArgs & { includeTax?: boolean },
+    customerImpersonationToken: string
 ): Promise<BC_Product> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

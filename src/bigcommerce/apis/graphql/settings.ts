@@ -10,7 +10,9 @@ import { logAndThrowError } from '../../../utils/error-handling/error-handling';
  * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
  * [Display prices inclusive of tax, Display prices exclusive of tax]
  */
-export const getTaxSettings = async (customerImpersonationToken: string): Promise<BC_TaxDisplaySettings | null> => {
+export const getTaxSettings = async (
+    customerImpersonationToken: string
+): Promise<BC_TaxDisplaySettings | null> => {
     /* @todo If possible get the taxSettings from the mesh cache instead of performing a query */
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

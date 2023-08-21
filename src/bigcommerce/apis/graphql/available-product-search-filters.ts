@@ -23,7 +23,8 @@ export const getBcAvailableProductFilters = async (
         variables: {
             filters,
         },
-    };console.log
+    };
+    console.log;
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 

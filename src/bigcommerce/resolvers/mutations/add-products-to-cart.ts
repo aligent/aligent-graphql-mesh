@@ -32,7 +32,11 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         // Shipping information can be pretty important before reaching the checkout. This is where the site.checkout
         // query comes in which is called when the above getCheckout is invoked.
         // We’re not actually querying site.cart but site.checkout instead.
-        const checkoutResponse = await getCheckout(addToCartResponse.entityId, bcCustomerId, customerImpersonationToken);
+        const checkoutResponse = await getCheckout(
+            addToCartResponse.entityId,
+            bcCustomerId,
+            customerImpersonationToken
+        );
         return {
             cart: getTransformedCartData(checkoutResponse),
             user_errors: [], // TODO: Decide what are the user errors which we can return

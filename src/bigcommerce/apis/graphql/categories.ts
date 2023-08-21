@@ -5,7 +5,7 @@ import { BcCategory, BcCategoryTree } from '../../types';
 
 export const getCategories = async (
     customerImpersonationToken: string,
-    rootEntityId?: number | null, 
+    rootEntityId?: number | null
 ): Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

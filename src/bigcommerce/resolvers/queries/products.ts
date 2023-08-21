@@ -49,7 +49,8 @@ export const productsResolver: QueryResolvers['products'] = {
             };
 
             const availableBcProductFilters = await getBcAvailableProductFilters(
-                availableProductFiltersVariables
+                availableProductFiltersVariables,
+                customerImpersonationToken
             );
             const transformedFilterArguments = getTransformedProductArgs(
                 args,
