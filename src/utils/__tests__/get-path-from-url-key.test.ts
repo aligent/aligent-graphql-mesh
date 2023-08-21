@@ -27,4 +27,8 @@ describe('get-path-from-url-key', () => {
             expect(getPathFromUrlKey(urlKey)).toEqual('/women/mona-pullover-hoodlie');
         });
     });
+
+    test('returns "null" if the url_key does not exist', () => {
+        expect(getPathFromUrlKey(null)).toEqual(null);
+    });
 });
