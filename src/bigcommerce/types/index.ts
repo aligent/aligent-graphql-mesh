@@ -1,4 +1,4 @@
-import { CurrencyEnum } from '../../meshrc/.mesh';
+import { CountryCodeEnum, CustomerAddressInput } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
@@ -9,105 +9,6 @@ export interface BcGraphqlTokenData {
 export interface GraphQlQuery {
     query: string;
 }
-
-export interface BcProduct {
-    __typename: 'Product';
-    entityId: number;
-    id: string;
-    sku: string;
-    name: string;
-    addToCartUrl: string;
-    description: string;
-    variants: { edges: [node: BcProduct] };
-    seo: {
-        pageTitle: string;
-        metaDescription: string;
-        metaKeywords: string;
-    };
-    images: {
-        edges: [
-            {
-                node: {
-                    urlOriginal: string;
-                    altText: string;
-                    isDefault: boolean;
-                };
-            },
-        ];
-    };
-    categories: {
-        edges: [
-            {
-                node: {
-                    name: string;
-                    entityId: number;
-                    breadcrumbs: {
-                        edges: [
-                            {
-                                node: {
-                                    name: string;
-                                    entityId: number;
-                                };
-                            },
-                        ];
-                    };
-                };
-            },
-        ];
-    };
-    reviews: {
-        edges: [
-            {
-                cursor: string;
-                node: {
-                    entityId: number;
-                    author: {
-                        name: string;
-                    };
-                    title: string;
-                    text: string;
-                    rating: number;
-                    createdAt: {
-                        utc: string;
-                    };
-                };
-            },
-        ];
-        pageInfo: {
-            hasNextPage: boolean;
-            hasPreviousPage: boolean;
-            startCursor: string;
-            endCursor: string;
-        };
-    };
-    availabilityV2: {
-        status: 'Available' | 'Preorder' | 'Unavailable';
-    };
-    reviewSummary: {
-        numberOfReviews: number;
-        summationOfRatings: number;
-    };
-    prices: {
-        price: Money;
-        priceRange: {
-            max: Money;
-            min: Money;
-        };
-    };
-    relatedProducts: {
-        edges: [
-            {
-                node: BcProduct;
-            },
-        ];
-    };
-}
-
-interface Money {
-    value: number;
-    currencyCode: CurrencyEnum;
-}
-
 export interface BcCustomer {
     id: number;
     authentication: { force_password_reset: boolean };
@@ -181,14 +82,13 @@ export interface BcAddress {
     address1: string;
     state_or_province: string;
     postal_code: string;
-
     address2?: string;
     phone?: string;
     address_type?: string;
     company?: string;
     form_fields?: Array<{
         name: string;
-        value: string | number | string[];
+        value: string[] | never[];
     }>;
 }
 
@@ -211,14 +111,54 @@ export interface MeshToken {
 }
 export interface Category extends BcCategory, BcCategoryTree {}
 
+export interface BcAddressRest {
+    id: number;
+    address1: string;
+    address2: string;
+    address_type: string;
+    city: string;
+    company: string;
+    country: string;
+    country_code: string;
+    customer_id: number;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    postal_code: string;
+    state_or_province: string;
+    form_fields: FormField[];
+}
+
+export interface FormField {
+    name: string;
+    value: string[] | string;
+}
+
 export interface BcSubscriber {
+    id: number;
     email: string;
     first_name: string;
     last_name: string;
     source: string;
     order_id: number;
-    channel_id: number;
-    id: number;
-    date_modified: string;
     date_created: string;
+    date_modified: string;
+    channel_id: number;
+    consents: string[];
+}
+
+export interface CustomerAddressValidated extends CustomerAddressInput {
+    firstname: string;
+    lastname: string;
+    city: string;
+    country_code: CountryCodeEnum;
+    street: string[];
+    region: {
+        region: string;
+    };
+    postcode: string;
+}
+
+export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
+    id: number;
 }

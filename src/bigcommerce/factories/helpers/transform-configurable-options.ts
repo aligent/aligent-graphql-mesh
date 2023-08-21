@@ -15,8 +15,12 @@ export const getTransformedConfigurableOptions = (
         .map((option) => {
             if (!option?.node) return null;
 
-            const { displayName, displayStyle, entityId, values } =
-                option.node as BC_MultipleChoiceOption;
+            const {
+                displayName,
+                displayStyle,
+                entityId: optionId,
+                values,
+            } = option.node as BC_MultipleChoiceOption;
 
             const attribute_code = displayName.toLowerCase().replace(/ /g, '_');
 
@@ -25,18 +29,28 @@ export const getTransformedConfigurableOptions = (
             const optionValues = values.edges
                 .map((value) => {
                     if (!value?.node) return null;
-                    const { entityId, hexColors, isDefault, label } =
-                        value.node as BC_SwatchOptionValue;
+                    const {
+                        entityId: optionValueId,
+                        hexColors,
+                        isDefault,
+                        label,
+                    } = value.node as BC_SwatchOptionValue;
                     const swatch_data =
                         hexColors && hexColors.length > 0
                             ? { value: hexColors[0], __typename: 'ColorSwatchData' }
                             : null;
+
+                    // This uid gets formed the same way as Adobe Commerce configurable products. We
+                    // add "configurable" followed by the option id and option value id
+                    const uid = btoa(String(`configurable/${optionId}/${optionValueId}`));
+
                     return {
                         default_label: label,
                         label: label,
                         store_label: label,
                         use_default_value: isDefault,
-                        value_index: entityId,
+                        value_index: optionValueId,
+                        uid,
                         ...(swatch_data && { swatch_data }),
                         __typename: 'ConfigurableProductOptionsValues',
                     };
@@ -45,13 +59,13 @@ export const getTransformedConfigurableOptions = (
 
             return {
                 attribute_code,
-                attribute_id: String(entityId),
+                attribute_id: String(optionId),
                 displayStyle,
-                id: entityId,
+                id: optionId,
                 label: displayName,
                 values: optionValues,
-                attribute_uid: btoa(String(entityId)),
-                uid: btoa(String(entityId)),
+                attribute_uid: btoa(String(optionId)),
+                uid: btoa(String(optionId)),
             };
         })
         .filter(Boolean);

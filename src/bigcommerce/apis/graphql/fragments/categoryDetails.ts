@@ -2,11 +2,13 @@ import { gql } from 'graphql-tag';
 import { image } from './image';
 import { breadcrumbs } from './breadcrumbs';
 import { seoDetails } from './seoDetails';
+import { pageInfo } from './pageInfo';
 
 export const categoryDetails = gql`
     ${breadcrumbs}
     ${image}
     ${seoDetails}
+    ${pageInfo}
 
     fragment CategoryDetails on Category {
         id
@@ -29,6 +31,9 @@ export const categoryDetails = gql`
         products {
             collectionInfo {
                 totalItems
+            }
+            pageInfo {
+                ...PageInfo
             }
         }
         seo {

@@ -1,4 +1,4 @@
-import { isCustomerAddressValid } from '../create-customer-address';
+import { isCustomerAddressValid } from '../../../../utils/validators/customer-address-validator';
 import {
     customerAddress,
     customerAddressMissingRequiredFields,

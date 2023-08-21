@@ -14,44 +14,44 @@ export const mockBcCheckout = {
             name: 'GST',
             amount: {
                 currencyCode: 'AUD',
-                value: 8.18,
+                value: 5.45,
             },
         },
     ],
-    subtotal: {
-        value: 90,
+    taxTotal: {
         currencyCode: 'AUD',
+        value: 5.45,
+    },
+    subtotal: {
+        currencyCode: 'AUD',
+        value: 60.0,
     },
     shippingCostTotal: {
-        value: 0,
         currencyCode: 'AUD',
+        value: 0.0,
     },
     handlingCostTotal: {
-        value: 0,
         currencyCode: 'AUD',
-    },
-    taxTotal: {
-        value: 8.18,
-        currencyCode: 'AUD',
+        value: 0.0,
     },
     grandTotal: {
-        value: 90,
         currencyCode: 'AUD',
+        value: 60.0,
     },
     outstandingBalance: {
-        value: 90,
         currencyCode: 'AUD',
+        value: 60.0,
     },
     giftWrappingCostTotal: {
-        value: 0,
         currencyCode: 'AUD',
+        value: 0.0,
     },
     coupons: [
         {
             entityId: 2,
             discountedAmount: {
                 currencyCode: 'AUD',
-                value: 10,
+                value: 10.0,
             },
             couponType: 'PER_TOTAL_DISCOUNT' as BC_CouponType,
             code: 'sale',

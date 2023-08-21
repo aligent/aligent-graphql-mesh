@@ -2,15 +2,13 @@ import { BcSubscriber } from '../../../types';
 import { transformSubscriberToNewsletterOutput } from '../subscribe-email-to-newsletter';
 
 describe('Transform SubscriberToNewsletter test', () => {
-    test('Subscriber email exists', async () => {
-        const transformedSubscriber = await transformSubscriberToNewsletterOutput(bcSubscriber);
+    test('Subscriber email exists', () => {
+        const transformedSubscriber = transformSubscriberToNewsletterOutput(bcSubscriber);
 
         expect(transformedSubscriber.status).toEqual('SUBSCRIBED');
     });
-    test('Subscriber email does not exist', async () => {
-        const transformedSubscriber = await transformSubscriberToNewsletterOutput(
-            bcSubscriberInvalid
-        );
+    test('Subscriber email does not exist', () => {
+        const transformedSubscriber = transformSubscriberToNewsletterOutput(bcSubscriberInvalid);
 
         expect(transformedSubscriber.status).toEqual('UNCONFIRMED');
     });
@@ -26,6 +24,7 @@ const bcSubscriber: BcSubscriber = {
     id: 0,
     date_modified: '2019-08-24T14:15:22Z',
     date_created: '2019-08-24T14:15:22Z',
+    consents: ['consents'],
 };
 
 const bcSubscriberInvalid: BcSubscriber = {
@@ -38,4 +37,5 @@ const bcSubscriberInvalid: BcSubscriber = {
     id: 0,
     date_modified: '2019-08-24T14:15:22Z',
     date_created: '2019-08-24T14:15:22Z',
+    consents: ['consents'],
 };

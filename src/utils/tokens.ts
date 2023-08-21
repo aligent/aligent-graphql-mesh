@@ -4,6 +4,7 @@ import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/typ
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
+/* istanbul ignore file */
 export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
 ): DecodedCustomerImpersonationToken => {

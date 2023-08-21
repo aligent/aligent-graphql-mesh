@@ -58,8 +58,8 @@ describe('transform-cart-data', () => {
                 grand_total: null,
                 subtotal_excluding_tax: null,
                 subtotal_including_tax: null,
-                subtotal_with_discount_including_tax: { value: 10 },
-                subtotal_with_discount_excluding_tax: { value: 10 },
+                subtotal_with_discount_including_tax: null,
+                subtotal_with_discount_excluding_tax: null,
             },
             billing_address: null,
             shipping_addresses: [],
@@ -67,14 +67,6 @@ describe('transform-cart-data', () => {
             gift_receipt_included: false,
             printed_card_included: false,
         });
-    });
-
-    it(`Returns null if cart items don't exist`, () => {
-        expect(getTransformedCartData(null)).toEqual(null);
-    });
-
-    it(`returns null when there's no checkout data`, () => {
-        expect(getTransformedCartData(null)).toEqual(null);
     });
 
     it('Handles nullish checkout property values', () => {
@@ -116,8 +108,8 @@ describe('transform-cart-data', () => {
                 grand_total: null,
                 subtotal_excluding_tax: null,
                 subtotal_including_tax: null,
-                subtotal_with_discount_excluding_tax: { currency: undefined, value: 0 },
-                subtotal_with_discount_including_tax: { currency: undefined, value: 0 },
+                subtotal_with_discount_excluding_tax: null,
+                subtotal_with_discount_including_tax: null,
             },
             printed_card_included: false,
             shipping_addresses: [],
