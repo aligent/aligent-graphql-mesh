@@ -59,10 +59,11 @@ export const createCart = async (
 
 export const updateCartLineItem = async (
     variables: BC_UpdateCartLineItemInput,
-    bcCustomerId: number | null
+    bcCustomerId: number | null,
+    customerImpersonationToken: string
 ): Promise<BC_Cart> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
