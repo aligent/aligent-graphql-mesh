@@ -3,13 +3,12 @@ import { getCategoryQuery } from './requests/category';
 import { getCategoryTreeQuery } from './requests/category-tree';
 import { BcCategory, BcCategoryTree } from '../../types';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-
 export const getCategories = async (
-    rootEntityId?: number | null
+    customerImpersonationToken: string,
+    rootEntityId?: number | null, 
 ): Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const categoryTreeQuery = {

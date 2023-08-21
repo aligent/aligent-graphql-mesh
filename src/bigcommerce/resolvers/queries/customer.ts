@@ -7,9 +7,12 @@ import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
         const [bcCustomer, bcAddresses] = await Promise.all([
-            getBcCustomer(bcCustomerId),
+            getBcCustomer(bcCustomerId, customerImpersonationToken),
             getAllCustomerAddresses(bcCustomerId),
         ]);
 

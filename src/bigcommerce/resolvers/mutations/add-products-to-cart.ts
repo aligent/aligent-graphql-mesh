@@ -7,6 +7,9 @@ import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, args, context, _info) => {
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
         const { cartId, cartItems } = args;
         const lineItems = cartItems.map(({ sku, quantity, selected_options }) => ({
             quantity,
@@ -17,8 +20,8 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         }));
 
         const addToCartResponse = cartId
-            ? await createCart(lineItems)
-            : await addProductsToCart(cartId, { lineItems });
+            ? await createCart(lineItems, customerImpersonationToken)
+            : await addProductsToCart(cartId, { lineItems }, customerImpersonationToken);
 
         if (!addToCartResponse?.entityId) return null;
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
@@ -29,7 +32,7 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         // Shipping information can be pretty important before reaching the checkout. This is where the site.checkout
         // query comes in which is called when the above getCheckout is invoked.
         // We’re not actually querying site.cart but site.checkout instead.
-        const checkoutResponse = await getCheckout(addToCartResponse.entityId, bcCustomerId);
+        const checkoutResponse = await getCheckout(addToCartResponse.entityId, bcCustomerId, customerImpersonationToken);
         return {
             cart: getTransformedCartData(checkoutResponse),
             user_errors: [], // TODO: Decide what are the user errors which we can return

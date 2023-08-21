@@ -9,15 +9,14 @@ import {
 import { createCartMutation } from './requests/create-cart';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-const headers = {
-    Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
-};
-
 export const addProductsToCart = async (
     cartId: string,
-    cartItems: BC_AddCartLineItemsDataInput
+    cartItems: BC_AddCartLineItemsDataInput,
+    customerImpersonationToken: string
 ): Promise<BC_Cart> => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+    };
     const addToCartQuery = {
         query: addProductsToCartMutation,
         variables: {
@@ -36,8 +35,12 @@ export const addProductsToCart = async (
 };
 
 export const createCart = async (
-    lineItems: InputMaybe<Array<BC_CartLineItemInput>>
+    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    customerImpersonationToken: string
 ): Promise<BC_Cart> => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+    };
     const createCartQuery = {
         query: createCartMutation,
         variables: {

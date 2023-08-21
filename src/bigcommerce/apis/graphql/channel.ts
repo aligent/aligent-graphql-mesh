@@ -8,13 +8,14 @@ import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields
 import { channelSocialLinks } from './requests/channel-social-links';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-const headers = {
-    Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
-};
-
 /* istanbul ignore file */
-export const getChannelMetafields = async (namespace: string): Promise<BC_MetafieldConnection> => {
+export const getChannelMetafields = async (
+    namespace: string,
+    customerImpersonationToken: string
+): Promise<BC_MetafieldConnection> => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+    };
     const query = channelMetafieldsByNamespaceQuery(namespace);
 
     const response = await bcGraphQlRequest(query, headers);
@@ -28,7 +29,12 @@ export const getChannelMetafields = async (namespace: string): Promise<BC_Metafi
     return channelData.metafields;
 };
 
-export const getSocialLinks = async (): Promise<BC_SocialMediaLink[]> => {
+export const getSocialLinks = async (
+    customerImpersonationToken: string
+): Promise<BC_SocialMediaLink[]> => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+    };
     const socialLinkQuery = {
         query: channelSocialLinks,
     };
