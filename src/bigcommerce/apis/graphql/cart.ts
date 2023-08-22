@@ -16,8 +16,14 @@ const headers = {
 
 export const addProductsToCart = async (
     cartId: string,
-    cartItems: BC_AddCartLineItemsDataInput
+    cartItems: BC_AddCartLineItemsDataInput,
+    bcCustomerId: number | null
 ): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
     const addToCartQuery = {
         query: addProductsToCartMutation,
         variables: {
@@ -26,7 +32,7 @@ export const addProductsToCart = async (
         },
     };
 
-    const response = await bcGraphQlRequest(addToCartQuery, headers);
+    const response = await bcGraphQlRequest(addToCartQuery, cartHeader);
 
     if (response.errors) {
         return logAndThrowError(response.errors);
@@ -36,8 +42,14 @@ export const addProductsToCart = async (
 };
 
 export const createCart = async (
-    lineItems: InputMaybe<Array<BC_CartLineItemInput>>
+    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    bcCustomerId: number | null
 ): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
     const createCartQuery = {
         query: createCartMutation,
         variables: {
@@ -45,7 +57,7 @@ export const createCart = async (
         },
     };
 
-    const response = await bcGraphQlRequest(createCartQuery, headers);
+    const response = await bcGraphQlRequest(createCartQuery, cartHeader);
 
     if (response.errors) {
         return logAndThrowError(response.errors);
@@ -58,8 +70,8 @@ export const updateCartLineItem = async (
     variables: BC_UpdateCartLineItemInput,
     bcCustomerId: number | null
 ): Promise<BC_Cart> => {
-    const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+    const cartHeader = {
+        ...headers,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
@@ -68,7 +80,7 @@ export const updateCartLineItem = async (
         variables,
     };
 
-    const response = await bcGraphQlRequest(updateCartItemQuery, headers);
+    const response = await bcGraphQlRequest(updateCartItemQuery, cartHeader);
 
     if (response.errors) {
         return logAndThrowError(response.errors);
