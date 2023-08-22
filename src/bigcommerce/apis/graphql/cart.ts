@@ -1,13 +1,13 @@
 import { bcGraphQlRequest } from './client';
-import { addProductsToCartMutation } from './requests/add-products-to-cart';
 import {
     BC_AddCartLineItemsDataInput,
+    BC_UpdateCartLineItemInput,
     BC_Cart,
     BC_CartLineItemInput,
     InputMaybe,
 } from '@mesh/external/BigCommerceGraphqlApi';
-import { createCartMutation } from './requests/create-cart';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { addProductsToCartMutation, createCartMutation, updateCartLineItemQuery } from './requests';
+import { logAndThrowError } from '../../../utils';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
@@ -16,8 +16,14 @@ const headers = {
 
 export const addProductsToCart = async (
     cartId: string,
-    cartItems: BC_AddCartLineItemsDataInput
+    cartItems: BC_AddCartLineItemsDataInput,
+    bcCustomerId: number | null
 ): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
     const addToCartQuery = {
         query: addProductsToCartMutation,
         variables: {
@@ -26,18 +32,24 @@ export const addProductsToCart = async (
         },
     };
 
-    const response = await bcGraphQlRequest(addToCartQuery, headers);
+    const response = await bcGraphQlRequest(addToCartQuery, cartHeader);
 
-    if (response.data.error) {
-        return logAndThrowError(response.data.error);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.cart.addCartLineItems.cart;
 };
 
 export const createCart = async (
-    lineItems: InputMaybe<Array<BC_CartLineItemInput>>
+    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    bcCustomerId: number | null
 ): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
     const createCartQuery = {
         query: createCartMutation,
         variables: {
@@ -45,11 +57,34 @@ export const createCart = async (
         },
     };
 
-    const response = await bcGraphQlRequest(createCartQuery, headers);
+    const response = await bcGraphQlRequest(createCartQuery, cartHeader);
 
-    if (response.data.error) {
-        return logAndThrowError(response.data.error);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.cart.createCart.cart;
+};
+
+export const updateCartLineItem = async (
+    variables: BC_UpdateCartLineItemInput,
+    bcCustomerId: number | null
+): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
+    const updateCartItemQuery = {
+        query: updateCartLineItemQuery,
+        variables,
+    };
+
+    const response = await bcGraphQlRequest(updateCartItemQuery, cartHeader);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+
+    return response.data.cart.updateCartLineItem.cart;
 };

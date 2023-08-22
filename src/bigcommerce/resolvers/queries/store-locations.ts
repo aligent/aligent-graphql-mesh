@@ -1,8 +1,16 @@
 import { QueryResolvers } from '@mesh';
-import { mockStoreLocations } from '../mocks/store-locations';
+import { getBcStoreLocationsGraphql } from '../../apis/graphql/store-locations';
+import { BC_InventoryLocationsArgs } from '@mesh/external/BigCommerceGraphqlApi';
+import {
+    getTransformedStoreLocationItems,
+    getTransformedStoreLocationsArgs,
+} from '../../factories/helpers/transform-store-locations';
 
 export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
-    resolve: (_root, _args, _context, _info) => {
-        return mockStoreLocations;
+    resolve: async (_root, args, _context, _info) => {
+        const variables: BC_InventoryLocationsArgs = getTransformedStoreLocationsArgs(args);
+        const bcStoreLocations = await getBcStoreLocationsGraphql(variables);
+
+        return getTransformedStoreLocationItems(bcStoreLocations);
     },
 };

@@ -21,7 +21,7 @@ export const getDecodedCustomerImpersonationToken = (
  */
 export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
     try {
-        if (meshToken.toLowerCase().startsWith('bearer')) {
+        if (meshToken?.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
             const decodedMeshToken = verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
             return decodedMeshToken.bc_customer_id;

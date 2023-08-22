@@ -1,9 +1,9 @@
 import { MutationResolvers } from '@mesh';
-import { addProductsToCart, createCart } from '../../apis/graphql/cart';
-import { getCheckout } from '../../apis/graphql/checkout';
+import { addProductsToCart, createCart } from '../../apis/graphql';
+import { getCheckout } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
+import { getBcCustomerId } from '../../../utils';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, args, context, _info) => {
@@ -16,12 +16,12 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             }),
         }));
 
+        const bcCustomerId = getBcCustomerId(context);
         const addToCartResponse = cartId
-            ? await createCart(lineItems)
-            : await addProductsToCart(cartId, { lineItems });
+            ? await addProductsToCart(cartId, { lineItems }, bcCustomerId)
+            : await createCart(lineItems, bcCustomerId);
 
         if (!addToCartResponse?.entityId) return null;
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         // Even though add to cart mutations return cart details, Big Commerce site.cart query doesn't
         // return all the same information to satisfy the Adobe commerce cart response.
