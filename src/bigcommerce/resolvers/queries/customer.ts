@@ -1,6 +1,6 @@
 import { QueryResolvers } from '@mesh';
 import { getBcCustomer } from '../../apis/graphql/customer';
-import { transformCustomer } from '../../factories/transform-customer-data';
+import { transformBcCustomer } from '../../factories/transform-customer-data';
 import { getAllCustomerAddresses, getSubscriberByEmail } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 
@@ -16,6 +16,6 @@ export const customerResolver: QueryResolvers['customer'] = {
         const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
         const isSubscriber = !!subscriber;
 
-        return transformCustomer(bcCustomer, bcAddresses, isSubscriber);
+        return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber);
     },
 };

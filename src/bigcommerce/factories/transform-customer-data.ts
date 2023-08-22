@@ -1,10 +1,10 @@
-import { Customer } from '../../meshrc/.mesh';
-import { BcAddressRest } from '../types';
+import { Customer, CustomerInput, CustomerOutput } from '../../meshrc/.mesh';
+import { BcAddressRest, BcCustomerCreateOrUpdate } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
 
-export const transformCustomer = (
+export const transformBcCustomer = (
     bcCustomer: BC_Customer,
     bcAddresses: BcAddressRest[],
     isSubscriber: boolean
@@ -32,4 +32,60 @@ export const transformCustomer = (
             },
         },
     };
+};
+
+export const transformBcCustomerRest = (bcCustomer: BcCustomerCreateOrUpdate): CustomerOutput => {
+    //Assumption: PWA is ok if extra data such as firstname is sent when updating the email.
+    //BigCom rest api always provides everything, if needed we'd need to add a step to check the input payload.
+    const customer: CustomerOutput = {
+        customer: {
+            email: bcCustomer.email,
+            firstname: bcCustomer.first_name,
+            lastname: bcCustomer.last_name,
+
+            //TODO: Following attributes need to be remove using CodeGen, they are badly generated and required, but should not.
+            allow_remote_shopping_assistance: false,
+            wishlists: [],
+            wishlist: {
+                visibility: 'PUBLIC',
+            },
+            reviews: {
+                items: [],
+                page_info: {
+                    current_page: null,
+                    page_size: null,
+                    total_pages: null,
+                },
+            },
+        },
+    };
+
+    return customer;
+};
+
+export const transformCustomerForMutation = (
+    customerId: number,
+    customer: CustomerInput
+): BcCustomerCreateOrUpdate => {
+    const bcCustomer: BcCustomerCreateOrUpdate = {
+        id: customerId,
+    };
+    if (customer.email) {
+        bcCustomer.email = customer.email;
+    }
+    if (customer.firstname) {
+        bcCustomer.first_name = customer.firstname;
+    }
+    if (customer.lastname) {
+        bcCustomer.last_name = customer.lastname;
+    }
+    //Password is ignored here as that would reset the password. It's a required field to be passed by PWA.
+    // if (customer.password) {
+    //     bcCustomer.authentication = {
+    //         new_password: customer.password,
+    //         force_password_reset: false,
+    //     };
+    // }
+
+    return bcCustomer;
 };

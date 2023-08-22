@@ -1,4 +1,10 @@
-import { BcAddress, BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
+import {
+    BcAddress,
+    BcAddressRest,
+    BcCustomer,
+    BcCustomerCreateOrUpdate,
+    BcSubscriber,
+} from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
@@ -29,8 +35,10 @@ export const createCustomer = async (
     return response.data[0];
 };
 
-export const updateCustomer = async (customer: BcCustomer): Promise<BcCustomer> => {
-    const response = await bcPut(CUSTOMERS_API, customer);
+export const updateCustomer = async (
+    customer: BcCustomerCreateOrUpdate
+): Promise<BcCustomerCreateOrUpdate> => {
+    const response = await bcPut(CUSTOMERS_API, [customer]);
     return response.data[0];
 };
 
