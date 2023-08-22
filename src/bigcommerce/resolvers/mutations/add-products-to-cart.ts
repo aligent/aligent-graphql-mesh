@@ -16,12 +16,12 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             }),
         }));
 
+        const bcCustomerId = getBcCustomerId(context);
         const addToCartResponse = cartId
-            ? await addProductsToCart(cartId, { lineItems })
-            : await createCart(lineItems);
+            ? await addProductsToCart(cartId, { lineItems }, bcCustomerId)
+            : await createCart(lineItems, bcCustomerId);
 
         if (!addToCartResponse?.entityId) return null;
-        const bcCustomerId = getBcCustomerId(context);
 
         // Even though add to cart mutations return cart details, Big Commerce site.cart query doesn't
         // return all the same information to satisfy the Adobe commerce cart response.
