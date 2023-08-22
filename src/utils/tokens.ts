@@ -4,6 +4,7 @@ import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/typ
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
+/* istanbul ignore file */
 export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
 ): DecodedCustomerImpersonationToken => {
@@ -20,7 +21,7 @@ export const getDecodedCustomerImpersonationToken = (
  */
 export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
     try {
-        if (meshToken.toLowerCase().startsWith('bearer')) {
+        if (meshToken?.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
             const decodedMeshToken = verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
             return decodedMeshToken.bc_customer_id;

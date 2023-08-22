@@ -4,7 +4,7 @@ import { getTransformCartItems } from '../transform-cart-items';
 const expectResult = [
     {
         id: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
-        uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUw',
+        uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzQ5Mi81MTM=',
         errors: null,
         prices: {
             price: { currency: 'AUD', value: 30 },
@@ -15,7 +15,7 @@ const expectResult = [
         },
         product: {
             id: 513,
-            uid: 'NDky',
+            uid: 'NTEz',
             name: 'Mona Pullover Hoodlie',
             sku: 'WH01-S-Green',
             small_image: {

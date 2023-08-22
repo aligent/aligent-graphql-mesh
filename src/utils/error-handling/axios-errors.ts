@@ -1,4 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
+/* istanbul ignore file */
+//TODO: MICRO-142: add tests for this file at later point
 
 /* istanbul ignore file */
 //TODO: MICRO-142: add tests for this file at later point
@@ -38,8 +40,8 @@ export const logAndThrowUnknownError = (
     message?: string
 ): never => {
     if (!functionName || !message) {
-        console.error(error);
-        throw new Error(`${error}`);
+        console.error(JSON.stringify(error));
+        throw new Error(JSON.stringify(error));
     } else {
         console.error(`${error} ${functionName} ${message}`);
         throw new Error(`${error} ${functionName} ${message}`);

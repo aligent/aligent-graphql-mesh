@@ -7,6 +7,7 @@ export const breadcrumbs = gql`
                 name
                 entityId
             }
+            cursor
         }
     }
 `;
