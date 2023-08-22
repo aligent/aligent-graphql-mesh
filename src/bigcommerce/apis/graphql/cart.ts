@@ -18,7 +18,7 @@ export const addProductsToCart = async (
     cartId: string,
     cartItems: BC_AddCartLineItemsDataInput,
     customerImpersonationToken: string,
-    bcCustomerId: number | null,
+    bcCustomerId: number | null
 ): Promise<BC_Cart> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
@@ -71,10 +71,11 @@ export const createCart = async (
 export const deleteCartLineItem = async (
     cartEntityId: string,
     lineItemEntityId: string,
+    customerImpersonationToken: string,
     bcCustomerId: number | null
 ): Promise<BC_Cart> => {
     const cartHeader = {
-        ...headers,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
@@ -100,13 +101,8 @@ export const updateCartLineItem = async (
     bcCustomerId: number | null,
     customerImpersonationToken: string
 ): Promise<BC_Cart> => {
-<<<<<<< HEAD
-    const headers = {
-        Authorization: `Bearer ${customerImpersonationToken}`,
-=======
     const cartHeader = {
-        ...headers,
->>>>>>> main
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 

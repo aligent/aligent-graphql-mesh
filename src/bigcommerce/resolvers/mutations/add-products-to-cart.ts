@@ -21,7 +21,12 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
 
         const bcCustomerId = getBcCustomerId(context);
         const addToCartResponse = cartId
-            ? await addProductsToCart(cartId, { lineItems },customerImpersonationToken, bcCustomerId)
+            ? await addProductsToCart(
+                  cartId,
+                  { lineItems },
+                  customerImpersonationToken,
+                  bcCustomerId
+              )
             : await createCart(lineItems, customerImpersonationToken, bcCustomerId);
 
         if (!addToCartResponse?.entityId) return null;
