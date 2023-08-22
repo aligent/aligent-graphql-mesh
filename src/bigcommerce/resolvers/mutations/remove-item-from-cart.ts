@@ -1,7 +1,6 @@
 import { MutationResolvers } from '@mesh';
 import { deleteCartLineItem } from '../../apis/graphql';
-import { logAndThrowError } from '../../../utils';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
+import { getBcCustomerId, logAndThrowError } from '../../../utils';
 import { getCheckout } from '../../apis/graphql';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
@@ -11,13 +10,15 @@ export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart']
             return logAndThrowError('Missing cart id or cart item id');
         }
 
+        const bcCustomerId = getBcCustomerId(context);
+
         const removeCartItemResponse = await deleteCartLineItem(
             args.input.cart_id,
-            args.input.cart_item_id.toString()
+            args.input.cart_item_id.toString(),
+            bcCustomerId
         );
 
         if (!removeCartItemResponse?.entityId) return null;
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
         const checkoutResponse = await getCheckout(removeCartItemResponse.entityId, bcCustomerId);
 
         return {

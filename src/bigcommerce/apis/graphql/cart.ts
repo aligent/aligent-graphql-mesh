@@ -61,8 +61,14 @@ export const createCart = async (
 
 export const deleteCartLineItem = async (
     cartEntityId: string,
-    lineItemEntityId: string
+    lineItemEntityId: string,
+    bcCustomerId: number | null
 ): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
     const deleteCartLineItemQuery = {
         query: deleteCartLineItemMutation,
         variables: {
@@ -71,7 +77,7 @@ export const deleteCartLineItem = async (
         },
     };
 
-    const response = await bcGraphQlRequest(deleteCartLineItemQuery, headers);
+    const response = await bcGraphQlRequest(deleteCartLineItemQuery, cartHeader);
 
     if (response.errors) {
         return logAndThrowError(response.errors);
