@@ -8,6 +8,7 @@ export * from './channel-social-links';
 export * from './checkout';
 export * from './create-cart';
 export * from './customer';
+export * from './delete-cart-line-item';
 export * from './pdp-product';
 export * from './product-search';
 export * from './products';

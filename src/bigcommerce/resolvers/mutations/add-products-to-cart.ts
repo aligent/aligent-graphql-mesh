@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@mesh';
-import { addProductsToCart, createCart } from '../../apis/graphql/cart';
-import { getCheckout } from '../../apis/graphql/checkout';
+import { addProductsToCart, createCart } from '../../apis/graphql';
+import { getCheckout } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { getTransformedCartData } from '../../factories/transform-cart-data';

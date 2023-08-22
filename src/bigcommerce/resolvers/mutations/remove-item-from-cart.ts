@@ -1,8 +1,8 @@
 import { MutationResolvers } from '@mesh';
-import { deleteCartLineItem } from '../../apis/graphql/cart';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { deleteCartLineItem } from '../../apis/graphql';
+import { logAndThrowError } from '../../../utils';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
-import { getCheckout } from '../../apis/graphql/checkout';
+import { getCheckout } from '../../apis/graphql';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart'] = {

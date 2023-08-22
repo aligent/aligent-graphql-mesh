@@ -6,7 +6,12 @@ import {
     BC_CartLineItemInput,
     InputMaybe,
 } from '@mesh/external/BigCommerceGraphqlApi';
-import { addProductsToCartMutation, createCartMutation, updateCartLineItemQuery } from './requests';
+import {
+    addProductsToCartMutation,
+    createCartMutation,
+    deleteCartLineItemMutation,
+    updateCartLineItemQuery,
+} from './requests';
 import { logAndThrowError } from '../../../utils';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
