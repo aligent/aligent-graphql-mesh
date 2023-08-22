@@ -55,3 +55,63 @@ export const mockStoreLocations = {
     ],
     __typename: 'StoreLocations',
 };
+
+export const mockedAcStoreLocationsArgument = {
+    area: {
+        coordinates: { lat: -34.962192, lng: 138.638024 },
+        radius: 20,
+        search_term: 'Adelaide',
+    },
+    filters: {
+        country_id: { eq: 'AU' },
+        region: { eq: 'SA' },
+    },
+    pageSize: 20,
+    currentPage: 1,
+};
+
+export const mockedBcStoreLocations = {
+    edges: [
+        {
+            cursor: '1',
+            node: {
+                entityId: 1,
+                code: 'BC-LOCATION-1',
+                label: 'Aligent BC address 1',
+                description: null,
+                typeId: 'PHYSICAL',
+                address: {
+                    address1: 'L2/212 Pirie St',
+                    address2: '',
+                    city: 'Adelaide',
+                    code: 'BC-ADDRESS-1',
+                    countryCode: 'AU',
+                    description: '',
+                    email: '',
+                    entityId: 1,
+                    label: 'Address 1',
+                    latitude: -34.92396,
+                    longitude: 138.610467,
+                    phone: '',
+                    postalCode: '5000',
+                    stateOrProvince: 'SA',
+                },
+                distance: null,
+                timeZone: null,
+                blackoutHours: [],
+                metafields: {
+                    pageInfo: {
+                        hasNextPage: false,
+                        hasPreviousPage: false,
+                    },
+                },
+                serviceTypeIds: [],
+                specialHours: [],
+            },
+        },
+    ],
+    pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+    },
+};
