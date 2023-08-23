@@ -23,6 +23,16 @@ definitions:
           - yarn format
           - yarn check-types
 
+    - step: &hive-check
+        name: 🐝 Hive Schema Check
+        script:
+          - npx hive schema:check --service ${SERVICE} ${PWD}/src/meshrc/.mesh/schema.graphql
+
+    - step: &hive-publish
+        name: 🐝 Hive Schema Publish
+        script:
+          - npx hive schema:publish --service ${SERVICE} ${PWD}/src/meshrc/.mesh/schema.graphql --url $HIVE_URL
+
     - step: &build
         name: 🏭 Build Mesh
         script:
@@ -60,6 +70,7 @@ pipelines:
           - step: *build-container
           - step: *code-quality
           - step: *test
+          - step: *hive-check
 
   branches:
     main:
@@ -67,3 +78,4 @@ pipelines:
       - step: *build
       - step: *build-container
       - step: *deploy
+      - step: *hive-publish
