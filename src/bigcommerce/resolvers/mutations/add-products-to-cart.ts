@@ -1,20 +1,27 @@
 import { MutationResolvers } from '@mesh';
-import { addProductsToCart, createCart } from '../../apis/graphql';
-import { getCheckout } from '../../apis/graphql';
+import { addProductsToCart, createCart, getCheckout } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
+import { atob, getBcCustomerId } from '../../../utils';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { getBcCustomerId } from '../../../utils';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, args, context, _info) => {
         const { cartId, cartItems } = args;
-        const lineItems = cartItems.map(({ sku, quantity, selected_options }) => ({
-            quantity,
-            productEntityId: parseInt(sku), // TF FE Will send BC entity ID as SKU
-            ...(selected_options && {
-                selectedOptions: transformSelectedOptions(selected_options),
-            }),
-        }));
+
+        const lineItems = cartItems.map((cartItem) => {
+            const { quantity, selected_options, uid } = cartItem;
+
+            // The "uid" is the encoded product id with "Product:" at the beginning e.g. "Product:492"
+            const productEntityId = Number(atob(String(uid || '')).replace('Product:', ''));
+
+            return {
+                quantity,
+                productEntityId,
+                ...(selected_options && {
+                    selectedOptions: transformSelectedOptions(selected_options),
+                }),
+            };
+        });
 
         const bcCustomerId = getBcCustomerId(context);
         const addToCartResponse = cartId
