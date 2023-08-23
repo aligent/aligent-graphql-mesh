@@ -66,3 +66,11 @@ export const bcMutationCustomerWithEmail: BcMutationCustomer = {
     id: 1,
     email: 'customer@example.com',
 };
+
+export const bcCustomerForPasswordChange: BcMutationCustomer = {
+    id: 1,
+    authentication: {
+        force_password_reset: false,
+        new_password: 'Password1',
+    },
+};

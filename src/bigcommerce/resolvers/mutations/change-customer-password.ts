@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@mesh';
 import {
     transformBcCustomerToAcCustomerForMutation,
-    transformCustomerPasswordChange,
+    transformAcCustomerPasswordChange,
 } from '../../factories/transform-customer-data';
 import { updateCustomer } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
@@ -11,10 +11,10 @@ export const changeCustomerPasswordResolver: MutationResolvers['changeCustomerPa
         const newPassword = args.newPassword; //args.currentPassword is ignored, as BigComm is not using that.
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
-        const bcCustomer = transformCustomerPasswordChange(customerId, newPassword);
+        const bcCustomer = transformAcCustomerPasswordChange(customerId, newPassword);
         const customerResponse = await updateCustomer(bcCustomer);
-        const acCustomer = transformBcCustomerToAcCustomerForMutation(customerResponse);
+        const customerOutput = transformBcCustomerToAcCustomerForMutation(customerResponse);
 
-        return acCustomer;
+        return customerOutput.customer;
     },
 };

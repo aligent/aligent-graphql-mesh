@@ -83,7 +83,7 @@ export const transformCustomerForMutation = (
     return bcCustomer;
 };
 
-export const transformCustomerPasswordChange = (
+export const transformAcCustomerPasswordChange = (
     customerId: number,
     newPassword: string
 ): BcMutationCustomer => {
