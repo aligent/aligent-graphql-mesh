@@ -89,3 +89,18 @@ export const transformCustomerForMutation = (
 
     return bcCustomer;
 };
+
+export const transformCustomerPasswordChange = (
+    customerId: number,
+    newPassword: string
+): BcMutationCustomer => {
+    const bcCustomer: BcMutationCustomer = {
+        id: customerId,
+    };
+    bcCustomer.authentication = {
+        new_password: newPassword,
+        force_password_reset: false,
+    };
+
+    return bcCustomer;
+};
