@@ -6,5 +6,6 @@ export * from './get-path-from-url-key';
 export * from './get-tax';
 export * from './get-url';
 export * from './regex/slash-at-start-or-end';
+export * from './tokens';
 export * from './error-handling/axios-errors';
 export * from './error-handling/error-handling';
