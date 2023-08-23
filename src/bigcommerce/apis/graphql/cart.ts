@@ -6,7 +6,12 @@ import {
     BC_CartLineItemInput,
     InputMaybe,
 } from '@mesh/external/BigCommerceGraphqlApi';
-import { addProductsToCartMutation, createCartMutation, updateCartLineItemQuery } from './requests';
+import {
+    addProductsToCartMutation,
+    createCartMutation,
+    deleteCartLineItemMutation,
+    updateCartLineItemQuery,
+} from './requests';
 import { logAndThrowError } from '../../../utils';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
@@ -64,6 +69,33 @@ export const createCart = async (
     }
 
     return response.data.cart.createCart.cart;
+};
+
+export const deleteCartLineItem = async (
+    cartEntityId: string,
+    lineItemEntityId: string,
+    bcCustomerId: number | null
+): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
+    const deleteCartLineItemQuery = {
+        query: deleteCartLineItemMutation,
+        variables: {
+            cartEntityId,
+            lineItemEntityId,
+        },
+    };
+
+    const response = await bcGraphQlRequest(deleteCartLineItemQuery, cartHeader);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+
+    return response.data.cart.deleteCartLineItem.cart;
 };
 
 export const updateCartLineItem = async (
