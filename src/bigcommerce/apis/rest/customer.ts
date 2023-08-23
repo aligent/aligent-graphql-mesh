@@ -2,7 +2,7 @@ import {
     BcAddress,
     BcAddressRest,
     BcCustomer,
-    BcCustomerCreateOrUpdate,
+    BcMutationCustomer,
     BcSubscriber,
 } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
@@ -35,9 +35,7 @@ export const createCustomer = async (
     return response.data[0];
 };
 
-export const updateCustomer = async (
-    customer: BcCustomerCreateOrUpdate
-): Promise<BcCustomerCreateOrUpdate> => {
+export const updateCustomer = async (customer: BcMutationCustomer): Promise<BcMutationCustomer> => {
     const response = await bcPut(CUSTOMERS_API, [customer]);
     return response.data[0];
 };

@@ -29,7 +29,7 @@ export interface BcCustomer {
     channel_ids: number[] | null;
 }
 
-export interface BcCustomerCreateOrUpdate {
+export interface BcMutationCustomer {
     id: number;
     email?: string;
     first_name?: string;

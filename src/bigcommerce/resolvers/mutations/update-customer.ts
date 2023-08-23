@@ -1,7 +1,7 @@
-import { MutationResolvers } from '@mesh';
+import { Customer, CustomerOutput, MutationResolvers } from '@mesh';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import {
-    transformBcCustomerRest,
+    transformBcCustomerToAcCustomerForMutation,
     transformCustomerForMutation,
 } from '../../factories/transform-customer-data';
 import { updateCustomer } from '../../apis/rest/customer';
@@ -14,15 +14,20 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             return null;
         }
 
-        const customer = transformCustomerForMutation(customerId, customerInput);
+        const bcCustomer = transformCustomerForMutation(customerId, customerInput as Customer);
 
-        const customerResponse = await updateCustomer(customer);
+        const customerResponse = await updateCustomer(bcCustomer);
         // const subscribeResponse = await updateSubscriber(subscriber);
 
         //email, firstname, lastname, password,
         // implement update subscriber for: is_subscribed
         ///https://developer.bigcommerce.com/docs/rest-management/subscribers#update-a-subscriber
 
-        return transformBcCustomerRest(customerResponse); //todo: add subscriber
+        const customer = transformBcCustomerToAcCustomerForMutation(customerResponse);
+        const customerOutput: CustomerOutput = {
+            customer: customer,
+        };
+
+        return customerOutput; //todo: add subscriber
     },
 };

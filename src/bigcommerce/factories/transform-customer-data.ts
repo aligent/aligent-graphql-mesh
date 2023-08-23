@@ -1,5 +1,5 @@
-import { Customer, CustomerInput, CustomerOutput } from '../../meshrc/.mesh';
-import { BcAddressRest, BcCustomerCreateOrUpdate } from '../types';
+import { Customer } from '../../meshrc/.mesh';
+import { BcAddressRest, BcMutationCustomer } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
@@ -34,40 +34,38 @@ export const transformBcCustomer = (
     };
 };
 
-export const transformBcCustomerRest = (bcCustomer: BcCustomerCreateOrUpdate): CustomerOutput => {
+export const transformBcCustomerToAcCustomerForMutation = (
+    bcCustomer: BcMutationCustomer
+): Customer => {
     //Assumption: PWA is ok if extra data such as firstname is sent when updating the email.
     //BigCom rest api always provides everything, if needed we'd need to add a step to check the input payload.
-    const customer: CustomerOutput = {
-        customer: {
-            email: bcCustomer.email,
-            firstname: bcCustomer.first_name,
-            lastname: bcCustomer.last_name,
+    return {
+        email: bcCustomer.email,
+        firstname: bcCustomer.first_name,
+        lastname: bcCustomer.last_name,
 
-            //TODO: Following attributes need to be remove using CodeGen, they are badly generated and required, but should not.
-            allow_remote_shopping_assistance: false,
-            wishlists: [],
-            wishlist: {
-                visibility: 'PUBLIC',
-            },
-            reviews: {
-                items: [],
-                page_info: {
-                    current_page: null,
-                    page_size: null,
-                    total_pages: null,
-                },
+        //TODO: Following attributes need to be remove using CodeGen, they are badly generated and required, but should not.
+        allow_remote_shopping_assistance: false,
+        wishlists: [],
+        wishlist: {
+            visibility: 'PUBLIC',
+        },
+        reviews: {
+            items: [],
+            page_info: {
+                current_page: null,
+                page_size: null,
+                total_pages: null,
             },
         },
     };
-
-    return customer;
 };
 
 export const transformCustomerForMutation = (
     customerId: number,
-    customer: CustomerInput
-): BcCustomerCreateOrUpdate => {
-    const bcCustomer: BcCustomerCreateOrUpdate = {
+    customer: Customer
+): BcMutationCustomer => {
+    const bcCustomer: BcMutationCustomer = {
         id: customerId,
     };
     if (customer.email) {
