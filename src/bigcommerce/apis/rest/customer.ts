@@ -1,16 +1,9 @@
-import {
-    BcAddress,
-    BcAddressRest,
-    BcCustomer,
-    BcMutationCustomer,
-    BcSubscriber,
-} from '../../types';
+import { BcAddress, BcAddressRest, BcCustomer, BcMutationCustomer } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
-const CUSTOMER_SUBSCRIBERS = `/v3/customers/subscribers`;
 
 /* istanbul ignore file */
 export const createCustomer = async (
@@ -53,13 +46,6 @@ export const createCustomerAddress = async (address: BcAddress): Promise<BcAddre
         //BC rest api will return 200 without any data, if the address already exits
         logAndThrowError('Address already exists.');
     }
-    return response.data[0];
-};
-
-export const getSubscriberByEmail = async (email: string): Promise<BcSubscriber | undefined> => {
-    const path = `${CUSTOMER_SUBSCRIBERS}?email=${email}`;
-    const response = await bcGet(path);
-
     return response.data[0];
 };
 

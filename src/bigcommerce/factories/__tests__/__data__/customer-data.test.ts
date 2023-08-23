@@ -14,6 +14,7 @@ export const acCustomerWithEmail: Customer = {
 
 export const acCustomerEmailWithMandatoryFields: Customer = {
     email: 'customer@example.com',
+    is_subscribed: false,
     allow_remote_shopping_assistance: false,
     wishlists: [],
     wishlist: {
@@ -32,6 +33,7 @@ export const acCustomerEmailWithMandatoryFields: Customer = {
 export const acCustomerNameWithMandatoryFields: Customer = {
     firstname: 'example',
     lastname: 'customer',
+    is_subscribed: false,
     allow_remote_shopping_assistance: false,
     wishlists: [],
     wishlist: {

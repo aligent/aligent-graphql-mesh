@@ -28,14 +28,16 @@ describe('Customer Transformation', () => {
     });
     test('Transform Bc Customer to Ac Customer for Name update', () => {
         const bcCustomer = bcMutationCustomerWithName;
+        const isSubscribed = false;
         const acCustomerExpected = acCustomerNameWithMandatoryFields;
-        const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer);
+        const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer, isSubscribed);
         expect(acCustomer).toEqual(acCustomerExpected);
     });
     test('Transform Bc Customer to Ac Customer for Email update', () => {
         const bcCustomer = bcMutationCustomerWithEmail;
+        const isSubscribed = false;
         const acCustomerExpected = acCustomerEmailWithMandatoryFields;
-        const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer);
+        const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer, isSubscribed);
         expect(acCustomer).toEqual(acCustomerExpected);
     });
 });

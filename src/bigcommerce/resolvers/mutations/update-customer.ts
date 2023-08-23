@@ -5,6 +5,13 @@ import {
     transformCustomerForMutation,
 } from '../../factories/transform-customer-data';
 import { updateCustomer } from '../../apis/rest/customer';
+import { getBcCustomer } from '../../apis/graphql';
+import {
+    createSubscriber,
+    deleteSubscriberById,
+    getSubscriberByEmail,
+    updateSubscriber,
+} from '../../apis/rest/subscriber';
 
 export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
     resolve: async (_root, { input: customerInput }, context, _info) => {
@@ -14,20 +21,53 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             return null;
         }
 
-        const bcCustomer = transformCustomerForMutation(customerId, customerInput as Customer);
+        const inputEmail = customerInput.email;
+        const customer = customerInput as Customer;
 
+        const isSubscribed = await updateSubscriptionStatus(customer, customerId);
+
+        if (inputEmail) {
+            await updateSubscriberEmail(customerId, inputEmail);
+        }
+
+        const bcCustomer = transformCustomerForMutation(customerId, customer);
         const customerResponse = await updateCustomer(bcCustomer);
-        // const subscribeResponse = await updateSubscriber(subscriber);
+        const acCustomer = transformBcCustomerToAcCustomerForMutation(
+            customerResponse,
+            isSubscribed
+        );
 
-        //email, firstname, lastname, password,
-        // implement update subscriber for: is_subscribed
-        ///https://developer.bigcommerce.com/docs/rest-management/subscribers#update-a-subscriber
-
-        const customer = transformBcCustomerToAcCustomerForMutation(customerResponse);
         const customerOutput: CustomerOutput = {
-            customer: customer,
+            customer: acCustomer,
         };
 
-        return customerOutput; //todo: add subscriber
+        return customerOutput;
     },
 };
+
+async function updateSubscriberEmail(customerId: number, inputEmail: string) {
+    const bcCustomerResponse = await getBcCustomer(customerId);
+    const bcSubscriber = await getSubscriberByEmail(bcCustomerResponse.email);
+    if (bcSubscriber) {
+        await updateSubscriber(bcSubscriber.id, { email: inputEmail });
+    }
+}
+
+async function updateSubscriptionStatus(customerInput: Customer, customerId: number) {
+    let isSubscribed = false;
+    if (customerInput.is_subscribed !== undefined) {
+        const bcCustomerResponse = await getBcCustomer(customerId);
+        const email = bcCustomerResponse.email;
+        let bcSubscriber = await getSubscriberByEmail(email);
+
+        if (!bcSubscriber && customerInput.is_subscribed) {
+            //subscribe customer
+            bcSubscriber = await createSubscriber(email);
+            isSubscribed = true;
+        } else if (bcSubscriber && !customerInput.is_subscribed) {
+            //unsubscribe customer
+            isSubscribed = !(await deleteSubscriberById(bcSubscriber.id));
+        }
+    }
+    return isSubscribed;
+}

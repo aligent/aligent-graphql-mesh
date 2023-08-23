@@ -35,7 +35,8 @@ export const transformBcCustomer = (
 };
 
 export const transformBcCustomerToAcCustomerForMutation = (
-    bcCustomer: BcMutationCustomer
+    bcCustomer: BcMutationCustomer,
+    isSubscribed?: boolean
 ): Customer => {
     //Assumption: PWA is ok if extra data such as firstname is sent when updating the email.
     //BigCom rest api always provides everything, if needed we'd need to add a step to check the input payload.
@@ -43,6 +44,7 @@ export const transformBcCustomerToAcCustomerForMutation = (
         email: bcCustomer.email,
         firstname: bcCustomer.first_name,
         lastname: bcCustomer.last_name,
+        is_subscribed: isSubscribed,
 
         //TODO: Following attributes need to be remove using CodeGen, they are badly generated and required, but should not.
         allow_remote_shopping_assistance: false,
