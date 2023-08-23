@@ -58,13 +58,18 @@ async function updateSubscriptionStatus(customerInput: Customer, customerId: num
     if (customerInput.is_subscribed !== undefined) {
         const bcCustomerResponse = await getBcCustomer(customerId);
         const email = bcCustomerResponse.email;
-        let bcSubscriber = await getSubscriberByEmail(email);
+        const bcSubscriber = await getSubscriberByEmail(email);
 
+        if (bcSubscriber && customerInput.is_subscribed) {
+            //already subscribed
+            isSubscribed = true;
+        }
         if (!bcSubscriber && customerInput.is_subscribed) {
             //subscribe customer
-            bcSubscriber = await createSubscriber(email);
+            await createSubscriber(email);
             isSubscribed = true;
-        } else if (bcSubscriber && !customerInput.is_subscribed) {
+        }
+        if (bcSubscriber && !customerInput.is_subscribed) {
             //unsubscribe customer
             isSubscribed = !(await deleteSubscriberById(bcSubscriber.id));
         }
