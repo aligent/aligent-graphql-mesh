@@ -82,3 +82,10 @@ export const deleteCustomerAddress = async (addressId: number): Promise<boolean>
     //So if there is no critical error we are just returning true
     return true;
 };
+
+export const getCustomerAttributeFields = async () => {
+    const path = `${CUSTOMERS_API}/attributes`;
+    const response = await bcGet(path);
+
+    return response.data;
+};

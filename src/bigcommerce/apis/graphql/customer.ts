@@ -1,9 +1,12 @@
-import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
+import { BC_Customer, BC_CustomerAttribute } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
+import { customerAttribute } from './requests/customer-attribute';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { getCustomerAttributeFields } from '../rest/customer';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
+const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
 export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> => {
     const headers = {
@@ -25,4 +28,36 @@ export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> 
     }
 
     return response.data.customer;
+};
+
+export const getCartIdFromBcCustomerAttribute = async (
+    bcCustomerId: number
+): Promise<string | null> => {
+    const headers = {
+        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        'x-bc-customer-id': bcCustomerId,
+    };
+
+    try {
+        const customerAttributeFields = await getCustomerAttributeFields();
+        const cartAttributeFieldId = customerAttributeFields?.find(
+            (field: BC_CustomerAttribute) => field.name === CART_ID_ATTRIBUTE_FILED_NAME
+        )?.id;
+
+        if (!cartAttributeFieldId) return null;
+
+        const customerAttributeQuery = {
+            query: customerAttribute,
+            variables: {
+                attributeId: cartAttributeFieldId,
+            },
+        };
+
+        const response = await bcGraphQlRequest(customerAttributeQuery, headers);
+
+        return response.data.customer.attributes.attribute.value;
+    } catch (error) {
+        console.error(`Error from getCartIdFromBcCustomerAttribute: ${error}`);
+        return null;
+    }
 };
