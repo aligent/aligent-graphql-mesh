@@ -1,4 +1,4 @@
-import { Customer, CustomerOutput, MutationResolvers } from '@mesh';
+import { CustomerInput, MutationResolvers } from '@mesh';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import {
     transformBcCustomerToAcCustomerForMutation,
@@ -21,27 +21,17 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             return null;
         }
 
-        const customer = customerInput as Customer;
-        const email = customer.email;
-
-        const isSubscribed = await updateSubscriptionStatus(customerId, customer);
+        const email = customerInput.email;
+        const isSubscribed = await updateSubscriptionStatus(customerId, customerInput);
 
         if (email) {
             await updateSubscriberEmail(customerId, email);
         }
 
-        const bcCustomer = transformCustomerForMutation(customerId, customer);
+        const bcCustomer = transformCustomerForMutation(customerId, customerInput);
         const customerResponse = await updateCustomer(bcCustomer);
-        const acCustomer = transformBcCustomerToAcCustomerForMutation(
-            customerResponse,
-            isSubscribed
-        );
 
-        const customerOutput: CustomerOutput = {
-            customer: acCustomer,
-        };
-
-        return customerOutput;
+        return transformBcCustomerToAcCustomerForMutation(customerResponse, isSubscribed);
     },
 };
 
@@ -53,7 +43,7 @@ async function updateSubscriberEmail(customerId: number, inputEmail: string) {
     }
 }
 
-async function updateSubscriptionStatus(customerId: number, customer: Customer) {
+async function updateSubscriptionStatus(customerId: number, customer: CustomerInput) {
     let isSubscribed = false;
     if (customer.is_subscribed !== undefined) {
         const bcCustomerResponse = await getBcCustomer(customerId);

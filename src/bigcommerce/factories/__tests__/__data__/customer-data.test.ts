@@ -1,4 +1,4 @@
-import { Customer } from '@mesh';
+import { Customer, CustomerOutput } from '@mesh';
 import { BcMutationCustomer } from '../../../types';
 
 // @ts-expect-error: ignore bad non-nullable fields
@@ -12,39 +12,46 @@ export const acCustomerWithEmail: Customer = {
     email: 'customer@example.com',
 };
 
-export const acCustomerEmailWithMandatoryFields: Customer = {
-    email: 'customer@example.com',
-    is_subscribed: false,
-    allow_remote_shopping_assistance: false,
-    wishlists: [],
-    wishlist: {
-        visibility: 'PUBLIC',
-    },
-    reviews: {
-        items: [],
-        page_info: {
-            current_page: null,
-            page_size: null,
-            total_pages: null,
+export const acCustomerOutputWithEmail: CustomerOutput = {
+    customer: {
+        email: 'customer@example.com',
+        is_subscribed: false,
+        //Mandatory fields required by customer type
+        allow_remote_shopping_assistance: false,
+        wishlists: [],
+        wishlist: {
+            visibility: 'PUBLIC',
+        },
+        reviews: {
+            items: [],
+            page_info: {
+                current_page: null,
+                page_size: null,
+                total_pages: null,
+            },
         },
     },
 };
 
-export const acCustomerNameWithMandatoryFields: Customer = {
-    firstname: 'example',
-    lastname: 'customer',
-    is_subscribed: false,
-    allow_remote_shopping_assistance: false,
-    wishlists: [],
-    wishlist: {
-        visibility: 'PUBLIC',
-    },
-    reviews: {
-        items: [],
-        page_info: {
-            current_page: null,
-            page_size: null,
-            total_pages: null,
+export const acCustomerOutputWithName: CustomerOutput = {
+    customer: {
+        firstname: 'example',
+        lastname: 'customer',
+        is_subscribed: false,
+
+        //Mandatory fields required by customer type
+        allow_remote_shopping_assistance: false,
+        wishlists: [],
+        wishlist: {
+            visibility: 'PUBLIC',
+        },
+        reviews: {
+            items: [],
+            page_info: {
+                current_page: null,
+                page_size: null,
+                total_pages: null,
+            },
         },
     },
 };

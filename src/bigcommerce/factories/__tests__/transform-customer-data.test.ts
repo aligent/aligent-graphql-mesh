@@ -3,8 +3,8 @@ import {
     transformCustomerForMutation,
 } from '../transform-customer-data';
 import {
-    acCustomerEmailWithMandatoryFields,
-    acCustomerNameWithMandatoryFields,
+    acCustomerOutputWithEmail,
+    acCustomerOutputWithName,
     acCustomerWithEmail,
     acCustomerWithName,
     bcMutationCustomerWithEmail,
@@ -29,14 +29,14 @@ describe('Customer Transformation', () => {
     test('Transform Bc Customer to Ac Customer for Name update', () => {
         const bcCustomer = bcMutationCustomerWithName;
         const isSubscribed = false;
-        const acCustomerExpected = acCustomerNameWithMandatoryFields;
+        const acCustomerExpected = acCustomerOutputWithName;
         const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer, isSubscribed);
         expect(acCustomer).toEqual(acCustomerExpected);
     });
     test('Transform Bc Customer to Ac Customer for Email update', () => {
         const bcCustomer = bcMutationCustomerWithEmail;
         const isSubscribed = false;
-        const acCustomerExpected = acCustomerEmailWithMandatoryFields;
+        const acCustomerExpected = acCustomerOutputWithEmail;
         const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer, isSubscribed);
         expect(acCustomer).toEqual(acCustomerExpected);
     });
