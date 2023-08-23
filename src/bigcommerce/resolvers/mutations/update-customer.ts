@@ -21,13 +21,13 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             return null;
         }
 
-        const inputEmail = customerInput.email;
         const customer = customerInput as Customer;
+        const email = customer.email;
 
-        const isSubscribed = await updateSubscriptionStatus(customer, customerId);
+        const isSubscribed = await updateSubscriptionStatus(customerId, customer);
 
-        if (inputEmail) {
-            await updateSubscriberEmail(customerId, inputEmail);
+        if (email) {
+            await updateSubscriberEmail(customerId, email);
         }
 
         const bcCustomer = transformCustomerForMutation(customerId, customer);
@@ -53,23 +53,23 @@ async function updateSubscriberEmail(customerId: number, inputEmail: string) {
     }
 }
 
-async function updateSubscriptionStatus(customerInput: Customer, customerId: number) {
+async function updateSubscriptionStatus(customerId: number, customer: Customer) {
     let isSubscribed = false;
-    if (customerInput.is_subscribed !== undefined) {
+    if (customer.is_subscribed !== undefined) {
         const bcCustomerResponse = await getBcCustomer(customerId);
         const email = bcCustomerResponse.email;
         const bcSubscriber = await getSubscriberByEmail(email);
 
-        if (bcSubscriber && customerInput.is_subscribed) {
+        if (bcSubscriber && customer.is_subscribed) {
             //already subscribed
             isSubscribed = true;
         }
-        if (!bcSubscriber && customerInput.is_subscribed) {
+        if (!bcSubscriber && customer.is_subscribed) {
             //subscribe customer
             await createSubscriber(email);
             isSubscribed = true;
         }
-        if (bcSubscriber && !customerInput.is_subscribed) {
+        if (bcSubscriber && !customer.is_subscribed) {
             //unsubscribe customer
             isSubscribed = !(await deleteSubscriberById(bcSubscriber.id));
         }
