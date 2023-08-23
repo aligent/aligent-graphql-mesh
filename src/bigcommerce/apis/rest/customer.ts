@@ -89,3 +89,16 @@ export const getCustomerAttributeFields = async () => {
 
     return response.data;
 };
+
+export const getCustomerAttributeId = async (name: string): Promise<number> => {
+    const path = `/v3/customers/attributes?name=${name}`;
+
+    const response = await bcGet(path);
+
+    if (response.data.length === 0) {
+        console.log(`Customer attribute: ${name} not found`);
+        throw new Error(`Customer attribute: ${name} not found`);
+    }
+
+    return response.data[0].id;
+};

@@ -8,11 +8,13 @@ const NAMESPACE: string = 'pwa_config';
 export const storeConfigResolver: QueryResolvers['storeConfig'] = {
     resolve: async () => {
         //The namespace needs to match the metafield namespace when created in BigCommerce
-        const bcChannelMetafieldsConfig: BC_MetafieldConnection =
-            await getChannelMetafields(NAMESPACE);
+        const bcChannelMetafieldsConfig: BC_MetafieldConnection = await getChannelMetafields(
+            NAMESPACE
+        );
 
-        const storeConfig =
-            await transformChannelMetafieldsToStoreConfig(bcChannelMetafieldsConfig);
+        const storeConfig = await transformChannelMetafieldsToStoreConfig(
+            bcChannelMetafieldsConfig
+        );
         return storeConfig;
     },
 };
