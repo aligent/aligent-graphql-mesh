@@ -5,7 +5,7 @@ import { GraphQlContext } from '../../../meshrc/types';
 import { getBcCustomerId } from '../../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 
-const UNDEFINED_CART = {
+export const UNDEFINED_CART = {
     id: '',
     items: [],
     total_quantity: 0,
