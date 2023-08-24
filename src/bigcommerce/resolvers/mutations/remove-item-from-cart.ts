@@ -17,8 +17,14 @@ export const UNDEFINED_CART = {
 
 export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart'] = {
     resolve: async (_root, args, context, _info) => {
+        if (args.input?.cart_item_id) {
+            return logAndThrowError(
+                'cart_item_id is deprecated, please use cart_item_uid instead.'
+            );
+        }
+
         if (!args.input?.cart_id || !args.input.cart_item_uid) {
-            return logAndThrowError('Missing cart id or cart item id');
+            return logAndThrowError('Missing cart id or cart item uid');
         }
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
