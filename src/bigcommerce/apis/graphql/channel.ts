@@ -20,8 +20,8 @@ export const getChannelMetafields = async (
 
     const response = await bcGraphQlRequest(query, headers);
 
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
     //response.data looks like: {"channel":{"entityId":1,"metafields":{"edges":[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]}}}
     const channelData: BC_Channel = response.data.channel;

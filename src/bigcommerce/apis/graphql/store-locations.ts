@@ -20,9 +20,8 @@ export const getBcStoreLocationsGraphql = async (
     };
 
     const response = await bcGraphQlRequest(storeLocationsQuery, headers);
-
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.inventory.locations;

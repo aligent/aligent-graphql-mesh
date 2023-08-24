@@ -18,8 +18,8 @@ export const getBcProductByPathGraphql = async (
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.site.route.node;

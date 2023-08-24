@@ -17,8 +17,8 @@ export const getBcCustomer = async (
 
     const response = await bcGraphQlRequest(customerQuery, headers);
 
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.customer;
