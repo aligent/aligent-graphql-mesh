@@ -9,9 +9,12 @@ import { verifyCartEntityId } from './cart';
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
-export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> => {
+export const getBcCustomer = async (
+    bcCustomerId: number,
+    customerImpersonationToken: string
+): Promise<BC_Customer> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,
     };
     const customerQuery = {
@@ -20,12 +23,8 @@ export const getBcCustomer = async (bcCustomerId: number): Promise<BC_Customer> 
 
     const response = await bcGraphQlRequest(customerQuery, headers);
 
-    if (response.data.errors) {
-        console.log(`Error from getBcCustomer: ${response.data.errors}`);
-    }
-
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.customer;
@@ -39,7 +38,7 @@ export const getCartIdFromBcCustomerAttribute = async (
         'x-bc-customer-id': bcCustomerId,
     };
     try {
-        //TODO: Get this value from cache first
+        //TODO: Try to get this value from cache first before sending request
         const cartAttributeFieldId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
 
         if (!cartAttributeFieldId) return null;

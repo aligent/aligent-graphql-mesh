@@ -6,13 +6,12 @@ import { bcGraphQlRequest } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getStoreLocationsQuery } from './requests/store-locations';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-
 export const getBcStoreLocationsGraphql = async (
-    variables: BC_InventoryLocationsArgs
+    variables: BC_InventoryLocationsArgs,
+    customerImpersonationToken: string
 ): Promise<BC_InventoryLocationConnection> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const storeLocationsQuery = {
@@ -21,9 +20,8 @@ export const getBcStoreLocationsGraphql = async (
     };
 
     const response = await bcGraphQlRequest(storeLocationsQuery, headers);
-
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.inventory.locations;

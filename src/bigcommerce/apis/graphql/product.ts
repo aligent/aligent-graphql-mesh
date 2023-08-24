@@ -7,17 +7,18 @@ import {
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { getProductsSearchQuery } from './requests/product-search';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-
-export const getBcProductsGraphql = async (variables: {
-    filters: BC_SearchProductsFiltersInput;
-    includeTax?: boolean;
-}): Promise<{
+export const getBcProductsGraphql = async (
+    variables: {
+        filters: BC_SearchProductsFiltersInput;
+        includeTax?: boolean;
+    },
+    customerImpersonationToken: string
+): Promise<{
     products: BC_ProductConnection;
     filters: BC_SearchProductFilterConnection;
 } | null> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const productsQuery = {
@@ -27,8 +28,8 @@ export const getBcProductsGraphql = async (variables: {
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.site.search.searchProducts;
