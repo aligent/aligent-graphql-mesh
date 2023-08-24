@@ -80,29 +80,6 @@ export const createCart = async (
     return response.data.cart.createCart.cart;
 };
 
-export const getCartEntityId = async (
-    cartId: string,
-    bcCustomerId: number | null
-): Promise<BC_Cart> => {
-    const cartHeader = {
-        ...headers,
-        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
-    };
-
-    const cartQuery = {
-        query: getCartEntityIdQuery,
-        variables: { entityId: cartId },
-    };
-
-    const response = await bcGraphQlRequest(cartQuery, cartHeader);
-
-    if (response.errors) {
-        return logAndThrowError(response.errors);
-    }
-
-    return response.data.site.cart;
-};
-
 export const deleteCartLineItem = async (
     cartEntityId: string,
     lineItemEntityId: string,
@@ -177,8 +154,8 @@ export const verifyCartEntityId = async (
     const cartQuery = {
         query: getCartEntityIdQuery,
         variables: {
-            entityId
-        }
+            entityId,
+        },
     };
 
     const response = await bcGraphQlRequest(cartQuery, cartHeader);
@@ -186,6 +163,6 @@ export const verifyCartEntityId = async (
     if (response.errors) {
         return logAndThrowError(response.errors);
     }
-    console.log(response.data.site)
+
     return response.data.site.cart;
 };
