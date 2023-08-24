@@ -46,13 +46,17 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
         for await (const lineItem of getLineItems(orderNumber)) {
             cartItems.push({
                 quantity: lineItem.quantity,
-                // The addProductsToCartResolver actually receives the product id as the sku
-                // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:13
-                sku: lineItem.product_id,
+                // The addProductsToCartResolver actually receives the product id as the uid
+                // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:15
+                uid: btoa(`Product:${lineItem.product_id}`),
+                // The addProductsToCartResolver receives the variant product id as the sku
+                // @TODO: Confirm this is ok w/ Chamal + Brett
+                // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:16
+                sku: btoa(`Variant:${lineItem.variant_id}`),
                 // The addProductsToCart resolver expects selected options to be encoded as base64
-                // "{option_id}/{product_option_id}"
+                // "configurable/{option_id}/{product_option_id}"
                 selected_options: lineItem.product_options.map((option) => {
-                    return btoa([option.option_id, option.product_option_id].join("/"))
+                    return btoa(['configurable', option.option_id, option.product_option_id].join("/"))
                 })
             });
 
