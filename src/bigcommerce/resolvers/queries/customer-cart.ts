@@ -1,7 +1,6 @@
 import { Cart, QueryResolvers } from '@mesh';
 import { getCheckout } from '../../apis/graphql/checkout';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { GraphQlContext } from '../../../meshrc/types';
 import { getBcCustomerId } from '../../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 
@@ -23,17 +22,20 @@ export const UNDEFINED_CART = {
  * from a authorization token.
  */
 export const customerCartResolver: QueryResolvers['customerCart'] = {
-    resolve: async (_root, _args, context: GraphQlContext, _info): Promise<Cart> => {
+    resolve: async (_root, _args, context, _info): Promise<Cart> => {
         const bcCustomerId = getBcCustomerId(context);
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
 
-        if (!bcCustomerId) {
+        if (!bcCustomerId || !customerImpersonationToken) {
             throw new Error(`An authorized user is required to perform this query.`);
         }
 
-        const cartId = await getCartIdFromBcCustomerAttribute(bcCustomerId);
+        const cartId = await getCartIdFromBcCustomerAttribute(
+            bcCustomerId,
+            customerImpersonationToken
+        );
 
         if (!cartId) return UNDEFINED_CART;
 

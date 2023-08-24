@@ -6,7 +6,6 @@ import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getCustomerAttributeId } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
 export const getBcCustomer = async (
@@ -31,10 +30,11 @@ export const getBcCustomer = async (
 };
 
 export const getCartIdFromBcCustomerAttribute = async (
-    bcCustomerId: number
+    bcCustomerId: number,
+    customerImpersonationToken: string
 ): Promise<string | null> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,
     };
     try {

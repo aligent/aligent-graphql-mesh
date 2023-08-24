@@ -94,25 +94,24 @@ export const getCustomerAttributeId = async (name: string): Promise<number> => {
     const response = await bcGet(path);
 
     if (response.data.length === 0) {
-        console.log(`Customer attribute: ${name} not found`);
-        throw new Error(`Customer attribute: ${name} not found`);
+        logAndThrowError(`Customer attribute: ${name} not found`);
     }
 
     return response.data[0].id;
 };
 
 export const upsertCustomerAttributeValue = async (
-    attribute_id: number,
-    cart_id: string,
-    customer_id: number
+    attributeId: number,
+    cartId: string,
+    customerId: number
 ): Promise<BC_CustomerAttributes> => {
     const path = `/v3/customers/attribute-values`;
 
     const data = [
         {
-            attribute_id: attribute_id,
-            value: cart_id,
-            customer_id: customer_id,
+            attribute_id: attributeId,
+            value: cartId,
+            customer_id: customerId,
         },
     ];
     const response = await bcPut(path, data);
