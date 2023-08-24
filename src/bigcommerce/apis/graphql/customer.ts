@@ -4,6 +4,7 @@ import { customer } from './requests/customer';
 import { customerAttribute } from './requests/customer-attribute';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getCustomerAttributeId } from '../rest/customer';
+import { getCartEntityId } from './cart';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
@@ -52,7 +53,12 @@ export const getCartIdFromBcCustomerAttribute = async (
 
         const response = await bcGraphQlRequest(customerAttributeQuery, headers);
 
-        return response.data.customer.attributes.attribute.value;
+        const { cart_id } = response.data.customer.attributes.attribute;
+
+        // Query checkout for verifying the cart_id we retrieved from customer attribute is valid
+        const cartResponse = await getCartEntityId(cart_id, bcCustomerId);
+
+        return cartResponse.entityId;
     } catch (error) {
         console.error(`Error from getCartIdFromBcCustomerAttribute: ${error}`);
         return null;

@@ -24,7 +24,6 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
 
         const cartId = await getCartIdFromBcCustomerAttribute(bcCustomerId);
 
-        console.log('bcCustomer cart id: ', cartId);
         if (!cartId) return UNDEFINED_CART;
 
         const response = await getCheckout(cartId, bcCustomerId);

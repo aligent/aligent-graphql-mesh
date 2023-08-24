@@ -10,6 +10,7 @@ import {
     addProductsToCartMutation,
     createCartMutation,
     deleteCartLineItemMutation,
+    getCartEntityIdQuery,
     updateCartLineItemQuery,
 } from './requests';
 import { logAndThrowError } from '../../../utils';
@@ -70,14 +71,35 @@ export const createCart = async (
         return logAndThrowError(response.errors);
     }
 
-    // Update cart_id that is saved in customer attribute field
-    const { id: cart_id } = response.data.cart.createCart.cart;
-    const cartAttributeFieldId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
-    if (cart_id && bcCustomerId && cartAttributeFieldId) {
-        await upsertCustomerAttributeValue(cartAttributeFieldId, cart_id, bcCustomerId);
-    }
+    const { entityId } = response.data.cart.createCart.cart;
+    await updateCartIdAttribute({
+        cart_id: entityId,
+        customer_id: bcCustomerId,
+    });
 
     return response.data.cart.createCart.cart;
+};
+
+export const getCartEntityId = async (
+    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    bcCustomerId: number | null
+): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
+    const cartQuery = {
+        query: getCartEntityIdQuery,
+    };
+
+    const response = await bcGraphQlRequest(cartQuery, cartHeader);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+
+    return response.data.site.cart;
 };
 
 export const deleteCartLineItem = async (
@@ -128,4 +150,16 @@ export const updateCartLineItem = async (
     }
 
     return response.data.cart.updateCartLineItem.cart;
+};
+
+// Update cart_id that is saved in customer attribute field
+export const updateCartIdAttribute = async (variables: {
+    cart_id: string | null;
+    customer_id: number | null;
+}) => {
+    const { cart_id, customer_id } = variables;
+    const attribute_id = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
+    if (cart_id && customer_id && attribute_id) {
+        await upsertCustomerAttributeValue(attribute_id, cart_id, customer_id);
+    }
 };
