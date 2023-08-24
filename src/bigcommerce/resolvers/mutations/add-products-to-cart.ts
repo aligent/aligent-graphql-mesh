@@ -9,14 +9,16 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         const { cartId, cartItems } = args;
 
         const lineItems = cartItems.map((cartItem) => {
-            const { quantity, selected_options, uid } = cartItem;
+            const { quantity, selected_options, uid, sku } = cartItem;
 
             // The "uid" is the encoded product id with "Product:" at the beginning e.g. "Product:492"
             const productEntityId = Number(atob(String(uid || '')).replace('Product:', ''));
+            const variantEntityId = Number(atob(String(sku || '')).replace('Variant:', ''));
 
             return {
                 quantity,
                 productEntityId,
+                variantEntityId,
                 ...(selected_options && {
                     selectedOptions: transformSelectedOptions(selected_options),
                 }),
