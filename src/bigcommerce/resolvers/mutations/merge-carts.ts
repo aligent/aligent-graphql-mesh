@@ -16,10 +16,6 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
     resolve: async (_root, args, context, _info) => {
         const { source_cart_id: guestCartId, destination_cart_id } = args || {};
 
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
-
         // Source cart id aka guest cart id is required in merge cart query
         if (!guestCartId) throw new Error('Required parameter "source_cart_id" is missing');
 
@@ -30,6 +26,9 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             throw new Error("The current customer isn't authorized to perform merge cart");
 
         let customerCartId = null;
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
         // If FE doesn't send destination_cart_id try to get customer cart by customer ID
         if (!destination_cart_id) {
