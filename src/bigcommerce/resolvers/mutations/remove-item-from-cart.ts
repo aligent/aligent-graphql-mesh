@@ -37,9 +37,7 @@ export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart']
          * The cartItemUid is initial formed via:
          * @see createCartItemUid
          */
-        const { lineItemEntityId, productEntityId, variantEntityId } = getDeconstructedCartItemUid(
-            args.input.cart_item_uid
-        );
+        const { lineItemEntityId } = getDeconstructedCartItemUid(args.input.cart_item_uid);
 
         const removeCartItemResponse = await deleteCartLineItem(
             args.input.cart_id,
