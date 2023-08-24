@@ -1,34 +1,48 @@
 import { MutationResolvers } from '@mesh';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
+import { getBcCustomerId } from '../../../utils';
 import { getLineItems, getOrder } from '../../apis/rest/order';
-import { logAndThrowError } from "../../../utils/error-handling/error-handling";
-import { getTransformedCartData } from "../../factories/transform-cart-data";
-import { getCheckout } from "../../apis/graphql/checkout";
 import { CartItemInput } from "@mesh/sources/TakeFlightGraphqlApi/types";
+import { addProductsToCartResolver } from "./add-products-to-cart";
+
+const UNDEFINED_CART = {
+    id: '',
+    items: [],
+    total_quantity: 0,
+    available_gift_wrappings: [],
+    gift_receipt_included: false,
+    is_virtual: false,
+    printed_card_included: false,
+    shipping_addresses: [],
+};
 
 export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: async (root, { orderNumber }, context, info) => {
-        if (!context.headers["authorization"]) {
-            return logAndThrowError(
-                'RuntimeError: User must be logged in to reorder.'
-            );
-        }
+        const bcCustomerId = getBcCustomerId(context);
 
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers['authorization']);
-        //@TODO: Remove this
-        const cartId: string = "fe5561a1-e653-479b-8c31-8e6b071a665d";
+        if (!bcCustomerId) {
+            return {
+                cart: UNDEFINED_CART,
+                userInputErrors: [
+                    {
+                        code: "REORDER_NOT_AVAILABLE",
+                        message: `Customer must be logged in to use reorder.`,
+                        path: [
+                            "headers",
+                            "authorization"
+                        ]
+                    }
+                ]
+            }
+        }
 
         // Fetch the order to confirm the user has access to it
         const order = await getOrder(orderNumber);
-
-        // Get the users passed in existing checkout object so we can return it if there is an error
-        const checkout = await getCheckout(cartId, bcCustomerId);
 
         // If this user does not own this order return an error of "Order not found"
         // so we don't confirm that this order id exists
         if (order.customer_id !== order.customer_id) {
             return {
-                cart: getTransformedCartData(checkout),
+                cart: UNDEFINED_CART,
                 userInputErrors: [
                     {
                         code: "REORDER_NOT_AVAILABLE",
@@ -62,19 +76,23 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
 
         }
 
-        // Use existing resolver to add all of the products to the existing cart
-        const response = await context.TakeFlightGraphqlApi.Mutation.addProductsToCart({
+        // @TODO: Shows error in IDE but it does work
+        // Call existing resolver to add these products to the cart
+        const response = await addProductsToCartResolver.resolve(
             root,
-            info,
-            args: {
-                cartId,
+            {
+                // Don't send a cartId as the addProductsToCart will need check for a persisted cart
+                // and use that if it exists, otherwise it will create a new cart with these products
+                cartId: "",
                 cartItems
             },
-            context
-        });
+            context,
+            info,
+        );
 
         return {
-            cart: response?.cart
+            cart: response?.cart || UNDEFINED_CART,
+            userInputErrors: response?.userInputErrors || []
         };
     },
 };
