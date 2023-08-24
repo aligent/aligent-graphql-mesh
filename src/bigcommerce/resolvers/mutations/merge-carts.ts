@@ -30,7 +30,6 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             throw new Error("The current customer isn't authorized to perform merge cart");
 
         let customerCartId = null;
-        const guestCart = await getCheckout(guestCartId, null, customerImpersonationToken);
 
         // If FE doesn't send destination_cart_id try to get customer cart by customer ID
         if (!destination_cart_id) {
@@ -50,6 +49,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             customerCartId = destination_cart_id;
         }
 
+        const guestCart = await getCheckout(guestCartId, null, customerImpersonationToken);
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart return customer cart
         if (!guestCart.cart) {
             return { id: customerCartId, ...MERGE_CART_CONSTANTS } as unknown as Cart;
