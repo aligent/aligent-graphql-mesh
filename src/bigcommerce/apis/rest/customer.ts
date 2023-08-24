@@ -1,6 +1,7 @@
 import { BcAddress, BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { BC_CustomerAttributes } from '@mesh/external/BigCommerceGraphqlApi';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
@@ -101,4 +102,23 @@ export const getCustomerAttributeId = async (name: string): Promise<number> => {
     }
 
     return response.data[0].id;
+};
+
+export const upsertCustomerAttributeValue = async (
+    attribute_id: number,
+    cart_id: string,
+    customer_id: number
+): Promise<BC_CustomerAttributes> => {
+    const path = `/v3/customers/attribute-values`;
+
+    const data = [
+        {
+            attribute_id: attribute_id,
+            value: cart_id,
+            customer_id: customer_id,
+        },
+    ];
+    const response = await bcPut(path, data);
+
+    return response.data;
 };

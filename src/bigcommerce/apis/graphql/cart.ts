@@ -13,11 +13,13 @@ import {
     updateCartLineItemQuery,
 } from './requests';
 import { logAndThrowError } from '../../../utils';
+import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
     Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
 };
+const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
 export const addProductsToCart = async (
     cartId: string,
@@ -66,6 +68,13 @@ export const createCart = async (
 
     if (response.errors) {
         return logAndThrowError(response.errors);
+    }
+
+    // Update cart_id that is saved in customer attribute field
+    const { id: cart_id } = response.data.cart.createCart.cart;
+    const cartAttributeFieldId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
+    if (cart_id && bcCustomerId && cartAttributeFieldId) {
+        await upsertCustomerAttributeValue(cartAttributeFieldId, cart_id, bcCustomerId);
     }
 
     return response.data.cart.createCart.cart;
