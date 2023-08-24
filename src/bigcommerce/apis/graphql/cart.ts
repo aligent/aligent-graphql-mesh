@@ -164,3 +164,28 @@ export const updateCartIdAttribute = async (variables: {
         await upsertCustomerAttributeValue(attribute_id, cart_id, customer_id);
     }
 };
+
+export const verifyCartEntityId = async (
+    entityId: string | null,
+    bcCustomerId: number | null
+): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
+    const cartQuery = {
+        query: getCartEntityIdQuery,
+        variables: {
+            entityId
+        }
+    };
+
+    const response = await bcGraphQlRequest(cartQuery, cartHeader);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+    console.log(response.data.site)
+    return response.data.site.cart;
+};

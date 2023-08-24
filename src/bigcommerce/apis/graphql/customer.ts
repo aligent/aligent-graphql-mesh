@@ -38,7 +38,6 @@ export const getCartIdFromBcCustomerAttribute = async (
         Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
         'x-bc-customer-id': bcCustomerId,
     };
-
     try {
         const cartAttributeFieldId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
 
