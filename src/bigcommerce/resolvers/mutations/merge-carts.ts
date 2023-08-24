@@ -3,10 +3,14 @@ import {
     getCartIdFromBcCustomerAttribute,
     getCheckout,
 } from '../../apis/graphql';
-import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { MutationResolvers } from '@mesh';
+import { Cart, MutationResolvers } from '@mesh';
 import { getBcCustomerId } from '../../../utils';
 import { transformCartItemsToLineItems } from '../../factories/transform-cart-items-to-line-items';
+
+const MERGE_CART_CONSTANTS = {
+    total_quantity: 0, // This is not being using in FE send 0 until we remove this from FE
+    __typename: 'Cart',
+};
 
 export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
     resolve: async (_root, args, context, _info) => {
@@ -36,22 +40,19 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             );
             // If customer has no previous cart return the guest cart
             if (!customerCartId) {
-                return getTransformedCartData(guestCart);
+                return {
+                    id: guestCartId,
+                    ...MERGE_CART_CONSTANTS,
+                } as unknown as Cart;
             }
         } else {
             // If FE sends destination_cart_id it will become the customer cart id and no need to query customer attributes
             customerCartId = destination_cart_id;
         }
 
-        const customerCart = await getCheckout(
-            customerCartId,
-            bcCustomerId,
-            customerImpersonationToken
-        );
-
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart return customer cart
         if (!guestCart.cart) {
-            return getTransformedCartData(customerCart);
+            return { id: customerCartId, ...MERGE_CART_CONSTANTS } as unknown as Cart;
         }
 
         const guestCartLineItems = transformCartItemsToLineItems(
@@ -65,12 +66,10 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             customerImpersonationToken,
             bcCustomerId
         );
-        const updatedCustomerCart = await getCheckout(
-            updatedCustomerCartResponse.entityId,
-            bcCustomerId,
-            customerImpersonationToken
-        );
 
-        return getTransformedCartData(updatedCustomerCart);
+        return {
+            id: updatedCustomerCartResponse.entityId,
+            ...MERGE_CART_CONSTANTS,
+        } as unknown as Cart;
     },
 };
