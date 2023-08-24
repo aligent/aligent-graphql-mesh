@@ -17,10 +17,11 @@ export const changeCustomerPasswordResolver: MutationResolvers['changeCustomerPa
         )) as string;
 
         const bcCustomerResponse = await getBcCustomer(customerId, customerImpersonationToken);
+        const channelId = 1; //for now setting channel to 1, will need additional work for multichannel support
         const validatePasswordRequest = transformAcCustomerValidatePassword(
             bcCustomerResponse.email,
             currentPassword,
-            1
+            channelId
         );
         const verifyPasswordResponse = await validateCustomerCredentials(validatePasswordRequest);
         if (!verifyPasswordResponse.is_valid) {
