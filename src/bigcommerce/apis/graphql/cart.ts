@@ -71,11 +71,14 @@ export const createCart = async (
         return logAndThrowError(response.errors);
     }
 
+    // Save cart_id in customer attribute field for logged in users
     const { entityId } = response.data.cart.createCart.cart;
-    await updateCartIdAttribute({
-        cart_id: entityId,
-        customer_id: bcCustomerId,
-    });
+    if (typeof bcCustomerId === 'number' && entityId) {
+        await updateCartIdAttribute({
+            cart_id: entityId,
+            customer_id: bcCustomerId,
+        });
+    }
 
     return response.data.cart.createCart.cart;
 };
@@ -132,12 +135,13 @@ export const updateCartLineItem = async (
 
 // Update cart_id that is saved in customer attribute field
 export const updateCartIdAttribute = async (variables: {
-    cart_id: string | null;
-    customer_id: number | null;
+    cart_id: string;
+    customer_id: number;
 }) => {
     const { cart_id, customer_id } = variables;
     const attribute_id = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
-    if (cart_id && customer_id && attribute_id) {
+
+    if (attribute_id) {
         await upsertCustomerAttributeValue(attribute_id, cart_id, customer_id);
     }
 };

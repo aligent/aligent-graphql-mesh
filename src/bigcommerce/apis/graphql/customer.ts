@@ -39,6 +39,7 @@ export const getCartIdFromBcCustomerAttribute = async (
         'x-bc-customer-id': bcCustomerId,
     };
     try {
+        //TODO: Get this value from cache first
         const cartAttributeFieldId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
 
         if (!cartAttributeFieldId) return null;
