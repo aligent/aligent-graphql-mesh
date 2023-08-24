@@ -16,6 +16,12 @@ const UNDEFINED_CART = {
     shipping_addresses: [],
 };
 
+/**
+ * This resolver is used to get a logged in customers cart. This query
+ * isn't expected to receive a cart id but instead needs to work out
+ * how to get a users previous active cart based on the users customer id
+ * from a authorization token.
+ */
 export const customerCartResolver: QueryResolvers['customerCart'] = {
     resolve: async (_root, _args, context: GraphQlContext, _info): Promise<Cart> => {
         const bcCustomerId = getBcCustomerId(context);
