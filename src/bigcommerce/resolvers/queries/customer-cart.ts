@@ -2,7 +2,17 @@ import { Cart, QueryResolvers } from '@mesh';
 import { getCheckout } from '../../apis/graphql';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getBcCustomerId } from '../../../utils';
-import { AC_UNDEFINED_CART } from '../../../adobecommerce/constants';
+
+export const UNDEFINED_CART = {
+    id: '',
+    items: [],
+    total_quantity: 0,
+    available_gift_wrappings: [],
+    gift_receipt_included: false,
+    is_virtual: false,
+    printed_card_included: false,
+    shipping_addresses: [],
+};
 
 /**
  * This resolver is used to get a logged in customers cart. This query
@@ -27,11 +37,11 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
          * */
         const cartId = '';
 
-        if (!cartId) return AC_UNDEFINED_CART;
+        if (!cartId) return UNDEFINED_CART;
 
         const response = await getCheckout(cartId, bcCustomerId);
 
-        if (!response?.entityId) return AC_UNDEFINED_CART;
+        if (!response?.entityId) return UNDEFINED_CART;
 
         return getTransformedCartData(response);
     },
