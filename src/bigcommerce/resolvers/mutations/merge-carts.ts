@@ -43,7 +43,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             return getTransformedCartData(customerCart);
         }
 
-        const guestCartLineItems = transformCartItemsToLineItems(guestCart.cart);
+        const guestCartLineItems = transformCartItemsToLineItems(guestCart.cart.lineItems.physicalItems);
 
         //  Merge the gust and customer cart by adding guest cart items to customer cart
         const updatedCustomerCartResponse = await addProductsToCart(

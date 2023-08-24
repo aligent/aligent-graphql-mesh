@@ -1,6 +1,6 @@
 import {
-    BC_Cart,
     BC_CartLineItemInput,
+    BC_CartPhysicalItem,
     BC_CartSelectedCheckboxOption,
     BC_CartSelectedDateFieldOption,
     BC_CartSelectedFileUploadOption,
@@ -11,6 +11,7 @@ import {
     BC_CartSelectedTextFieldOption,
 } from '@mesh/external/BigCommerceGraphqlApi';
 
+// TODO: Throw an error for unsupported Types
 const isMultipleChoiceOption = (
     option:
         | BC_CartSelectedCheckboxOption
@@ -35,8 +36,7 @@ const getSelectedOptions = (
     });
 };
 
-export const transformCartItemsToLineItems = (cart: BC_Cart): BC_CartLineItemInput[] => {
-    const cartItems = cart.lineItems.physicalItems;
+export const transformCartItemsToLineItems = (cartItems: Array<BC_CartPhysicalItem>): BC_CartLineItemInput[] => {
     return cartItems.map(({ quantity, productEntityId, selectedOptions }) => {
         const multipleChoiceOptions = selectedOptions.filter(isMultipleChoiceOption);
         return {
