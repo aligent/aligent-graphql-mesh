@@ -13,6 +13,7 @@ import {
     updateCartLineItemQuery,
 } from './requests';
 import { logAndThrowError } from '../../../utils';
+import {assignCartToCustomerMutation} from "./requests/assign-cart";
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
@@ -69,6 +70,33 @@ export const createCart = async (
     }
 
     return response.data.cart.createCart.cart;
+};
+
+export const assignCartToCustomer = async (
+    cartEntityId: string,
+    bcCustomerId: number
+): Promise<BC_Cart> => {
+    const header = {
+        ...headers,
+        'x-bc-customer-id': bcCustomerId,
+    };
+
+    const assignCartToCustomerQuery = {
+        query: assignCartToCustomerMutation,
+        variables: {
+            input: {
+                cartEntityId
+            },
+        },
+    };
+
+    const response = await bcGraphQlRequest(assignCartToCustomerQuery, header);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+
+    return response.data.cart.assignCartToCustomer.cart;
 };
 
 export const deleteCartLineItem = async (
