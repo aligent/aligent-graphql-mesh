@@ -4,9 +4,8 @@ import { findMetafieldValueByKey, transformChannelMetafieldsToStoreConfig } from
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', async () => {
-        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(
-            bcStoreConfigData
-        );
+        const transformedConfig: StoreConfig =
+            await transformChannelMetafieldsToStoreConfig(bcStoreConfigData);
 
         expect(transformedConfig.contact_enabled).toEqual(false);
         expect(transformedConfig.newsletter_enabled).toEqual(false);
@@ -15,7 +14,7 @@ describe('Transform StoreConfig tests', () => {
     });
     test('Specified StoreConfig exits', async () => {
         const transformedConfig: StoreConfig =
-            await transformChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
+            await transformChannelMetafieldsToStoreConfig(bcStoreConfigData);
 
         expect(transformedConfig.category_url_suffix).toEqual('.html');
         expect(transformedConfig.grid_per_page).toEqual(24);

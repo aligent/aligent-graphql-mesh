@@ -80,28 +80,6 @@ export const createCart = async (
     return response.data.cart.createCart.cart;
 };
 
-export const getCartEntityId = async (
-    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
-    bcCustomerId: number | null
-): Promise<BC_Cart> => {
-    const cartHeader = {
-        ...headers,
-        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
-    };
-
-    const cartQuery = {
-        query: getCartEntityIdQuery,
-    };
-
-    const response = await bcGraphQlRequest(cartQuery, cartHeader);
-
-    if (response.errors) {
-        return logAndThrowError(response.errors);
-    }
-
-    return response.data.site.cart;
-};
-
 export const deleteCartLineItem = async (
     cartEntityId: string,
     lineItemEntityId: string,
@@ -162,4 +140,29 @@ export const updateCartIdAttribute = async (variables: {
     if (cart_id && customer_id && attribute_id) {
         await upsertCustomerAttributeValue(attribute_id, cart_id, customer_id);
     }
+};
+
+export const verifyCartEntityId = async (
+    entityId: string | null,
+    bcCustomerId: number | null
+): Promise<BC_Cart> => {
+    const cartHeader = {
+        ...headers,
+        ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+    };
+
+    const cartQuery = {
+        query: getCartEntityIdQuery,
+        variables: {
+            entityId
+        }
+    };
+
+    const response = await bcGraphQlRequest(cartQuery, cartHeader);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+    console.log(response.data.site)
+    return response.data.site.cart;
 };
