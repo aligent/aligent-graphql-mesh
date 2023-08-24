@@ -6,10 +6,15 @@ const NAMESPACE: string = 'pwa_config';
 
 /* istanbul ignore next */
 export const storeConfigResolver: QueryResolvers['storeConfig'] = {
-    resolve: async () => {
+    resolve: async (_root, _args, context, _info) => {
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
         //The namespace needs to match the metafield namespace when created in BigCommerce
-        const bcChannelMetafieldsConfig: BC_MetafieldConnection =
-            await getChannelMetafields(NAMESPACE);
+        const bcChannelMetafieldsConfig: BC_MetafieldConnection = await getChannelMetafields(
+            NAMESPACE,
+            customerImpersonationToken
+        );
 
         const storeConfig =
             await transformChannelMetafieldsToStoreConfig(bcChannelMetafieldsConfig);

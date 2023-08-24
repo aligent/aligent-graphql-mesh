@@ -16,16 +16,23 @@ import {
 export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
     resolve: async (_root, { input: customerInput }, context, _info) => {
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
         if (!customerInput) {
             return null;
         }
 
         const email = customerInput.email;
-        const isSubscribed = await updateSubscriptionStatus(customerId, customerInput);
+        const isSubscribed = await updateSubscriptionStatus(
+            customerId,
+            customerInput,
+            customerImpersonationToken
+        );
 
         if (email) {
-            await updateSubscriberEmail(customerId, email);
+            await updateSubscriberEmail(customerId, email, customerImpersonationToken);
         }
 
         const bcCustomer = transformCustomerForMutation(customerId, customerInput);
@@ -35,18 +42,26 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
     },
 };
 
-async function updateSubscriberEmail(customerId: number, inputEmail: string) {
-    const bcCustomerResponse = await getBcCustomer(customerId);
+async function updateSubscriberEmail(
+    customerId: number,
+    inputEmail: string,
+    customerImpersonationToken: string
+) {
+    const bcCustomerResponse = await getBcCustomer(customerId, customerImpersonationToken);
     const bcSubscriber = await getSubscriberByEmail(bcCustomerResponse.email);
     if (bcSubscriber) {
         await updateSubscriber(bcSubscriber.id, { email: inputEmail });
     }
 }
 
-async function updateSubscriptionStatus(customerId: number, customer: CustomerInput) {
+async function updateSubscriptionStatus(
+    customerId: number,
+    customer: CustomerInput,
+    customerImpersonationToken: string
+) {
     let isSubscribed = false;
     if (customer.is_subscribed !== undefined) {
-        const bcCustomerResponse = await getBcCustomer(customerId);
+        const bcCustomerResponse = await getBcCustomer(customerId, customerImpersonationToken);
         const email = bcCustomerResponse.email;
         const bcSubscriber = await getSubscriberByEmail(email);
 

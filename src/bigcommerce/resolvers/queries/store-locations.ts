@@ -7,9 +7,15 @@ import {
 } from '../../factories/helpers/transform-store-locations';
 
 export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
-    resolve: async (_root, args, _context, _info) => {
+    resolve: async (_root, args, context, _info) => {
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
         const variables: BC_InventoryLocationsArgs = getTransformedStoreLocationsArgs(args);
-        const bcStoreLocations = await getBcStoreLocationsGraphql(variables);
+        const bcStoreLocations = await getBcStoreLocationsGraphql(
+            variables,
+            customerImpersonationToken
+        );
 
         return getTransformedStoreLocationItems(bcStoreLocations);
     },

@@ -6,17 +6,16 @@ import {
 import { getAvailableProductsSearchFiltersQuery } from './requests/available-product-search-filters';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-
 /**
  * Gets the available filters for product search queries
  * @param filters
  */
 export const getBcAvailableProductFilters = async (
-    filters: BC_SearchProductsFiltersInput
+    filters: BC_SearchProductsFiltersInput,
+    customerImpersonationToken: string
 ): Promise<BC_SearchProductFilterConnection> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
     const productsQuery = {
@@ -28,8 +27,8 @@ export const getBcAvailableProductFilters = async (
 
     const response = await bcGraphQlRequest(productsQuery, headers);
 
-    if (response.data.errors) {
-        return logAndThrowError(response.data.errors);
+    if (response.errors) {
+        return logAndThrowError(response.errors);
     }
 
     return response.data.site.search.searchProducts.filters;
