@@ -3,6 +3,7 @@ import { getBcCustomerId } from '../../../utils';
 import { getLineItems, getOrder } from '../../apis/rest/order';
 import { CartItemInput } from "@mesh/sources/TakeFlightGraphqlApi/types";
 import { addProductsToCartResolver } from "./add-products-to-cart";
+import { getCheckout } from '../../apis/graphql';
 
 const UNDEFINED_CART = {
     id: '',
@@ -73,17 +74,20 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
                     return btoa(['configurable', option.option_id, option.product_option_id].join("/"))
                 })
             });
-
         }
+
+        // @TODO: Update to use Alan's getCartIdFromBcCustomerAttribute and validate carts existence by fetching cart by id once merged
+        // const cartId = await getCartIdFromBcCustomerAttribute(bcCustomerId);
+        const cartId = "";
+        const cart = null // getCart(cartId, bcCustomerId);
 
         // @TODO: Shows error in IDE but it does work
         // Call existing resolver to add these products to the cart
         const response = await addProductsToCartResolver.resolve(
             root,
             {
-                // Don't send a cartId as the addProductsToCart will need check for a persisted cart
-                // and use that if it exists, otherwise it will create a new cart with these products
-                cartId: "",
+                // A new cart will be created if one doesn't exist
+                cartId: cart ? cartId : "",
                 cartItems
             },
             context,
