@@ -9,17 +9,25 @@ export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart']
         if (!args.input?.cart_id || !args.input.cart_item_id) {
             return logAndThrowError('Missing cart id or cart item id');
         }
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
         const bcCustomerId = getBcCustomerId(context);
 
         const removeCartItemResponse = await deleteCartLineItem(
             args.input.cart_id,
             args.input.cart_item_id.toString(),
+            customerImpersonationToken,
             bcCustomerId
         );
 
         if (!removeCartItemResponse?.entityId) return null;
-        const checkoutResponse = await getCheckout(removeCartItemResponse.entityId, bcCustomerId);
+        const checkoutResponse = await getCheckout(
+            removeCartItemResponse.entityId,
+            bcCustomerId,
+            customerImpersonationToken
+        );
 
         return {
             cart: getTransformedCartData(checkoutResponse),

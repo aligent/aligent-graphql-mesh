@@ -3,8 +3,12 @@ import { getTransformedSocialLinks } from '../../factories/transform-social-link
 import { QueryResolvers } from '@mesh';
 
 export const getSocialLinksResolver: QueryResolvers['getSocialLinks'] = {
-    resolve: async (_root, _args, _context, _info) => {
-        const response = await getSocialLinks();
+    resolve: async (_root, _args, context, _info) => {
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
+
+        const response = await getSocialLinks(customerImpersonationToken);
         return getTransformedSocialLinks(response);
     },
 };

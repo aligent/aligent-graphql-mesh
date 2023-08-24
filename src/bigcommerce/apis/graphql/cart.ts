@@ -14,18 +14,14 @@ import {
 } from './requests';
 import { logAndThrowError } from '../../../utils';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-const headers = {
-    Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
-};
-
 export const addProductsToCart = async (
     cartId: string,
     cartItems: BC_AddCartLineItemsDataInput,
+    customerImpersonationToken: string,
     bcCustomerId: number | null
 ): Promise<BC_Cart> => {
     const cartHeader = {
-        ...headers,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
@@ -48,10 +44,11 @@ export const addProductsToCart = async (
 
 export const createCart = async (
     lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    customerImpersonationToken: string,
     bcCustomerId: number | null
 ): Promise<BC_Cart> => {
     const cartHeader = {
-        ...headers,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
@@ -74,10 +71,11 @@ export const createCart = async (
 export const deleteCartLineItem = async (
     cartEntityId: string,
     lineItemEntityId: string,
+    customerImpersonationToken: string,
     bcCustomerId: number | null
 ): Promise<BC_Cart> => {
     const cartHeader = {
-        ...headers,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
@@ -100,10 +98,11 @@ export const deleteCartLineItem = async (
 
 export const updateCartLineItem = async (
     variables: BC_UpdateCartLineItemInput,
-    bcCustomerId: number | null
+    bcCustomerId: number | null,
+    customerImpersonationToken: string
 ): Promise<BC_Cart> => {
     const cartHeader = {
-        ...headers,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 

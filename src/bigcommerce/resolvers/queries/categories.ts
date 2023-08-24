@@ -4,8 +4,11 @@ import { getTransformedCategoryData } from '../../factories/transform-category-d
 import { QueryResolvers } from '@mesh';
 
 export const categoriesResolver: QueryResolvers['categories'] = {
-    resolve: async (_root, args, _context, _info) => {
+    resolve: async (_root, args, context, _info) => {
         const categoryUid = args?.filters?.category_uid?.eq;
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
         /* The PWA sets a "root_category_uid" as an environment variable when it builds. This "root_category_uid"
          * is used when querying for category tree/mega menu data. This is something TF Adobe Commerce relies on which
@@ -13,7 +16,10 @@ export const categoriesResolver: QueryResolvers['categories'] = {
          * data. */
         const rootEntityId =
             categoryUid && categoryUid !== 'null' ? Number(atob(categoryUid)) : null;
-        const { category, categoryTree } = await getCategories(rootEntityId);
+        const { category, categoryTree } = await getCategories(
+            customerImpersonationToken,
+            rootEntityId
+        );
 
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,
         // the data returned will correspond to the first "categoryTree" item so merge them together.

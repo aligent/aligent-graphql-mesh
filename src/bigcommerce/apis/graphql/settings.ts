@@ -3,11 +3,6 @@ import { BC_TaxDisplaySettings } from '@mesh/external/BigCommerceGraphqlApi';
 import { taxSettings } from './requests/tax-settings';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-const headers = {
-    Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
-};
-
 /**
  * Gets the PDP and PLP including or excluding price display configuration.
  *
@@ -15,9 +10,13 @@ const headers = {
  * Admin > Settings > Tax > Tax Rules > Tax rates and zones > {zone} Edit settings >
  * [Display prices inclusive of tax, Display prices exclusive of tax]
  */
-export const getTaxSettings = async (): Promise<BC_TaxDisplaySettings | null> => {
+export const getTaxSettings = async (
+    customerImpersonationToken: string
+): Promise<BC_TaxDisplaySettings | null> => {
     /* @todo If possible get the taxSettings from the mesh cache instead of performing a query */
-
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+    };
     try {
         const taxSettingsQuery = {
             query: taxSettings,

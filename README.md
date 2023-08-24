@@ -56,13 +56,13 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
-`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific.
+`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codgen.
 
-Currently this isnt the normal JWT and is instead an admin version called the `customer impersonation token`. We were generating this in a plugin and setting it on `context.cache`, this caused issues on staging that are currently being investigated. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
+`customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
 
 e.g.
 ``const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,
     };``
 
