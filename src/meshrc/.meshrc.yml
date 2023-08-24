@@ -11,6 +11,11 @@ additionalTypeDefs:
 
 additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
 
+plugins:
+  - hive:
+      token: '{env.HIVE_TOKEN}'
+      usage: !include '${STAGE}/hive-usage.yml'
+
 codegen:
   contextType: ../types#GraphQlContext
 
