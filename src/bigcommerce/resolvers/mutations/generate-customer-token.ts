@@ -1,15 +1,17 @@
 import { sign } from 'jsonwebtoken';
 import { MutationResolvers } from '@mesh';
 import { bcLogin } from '../../apis/graphql/login';
+import { getUnixTimeStampInSecondsForMidnightTonight } from '../../../utils/time-and-date';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
 const generateMeshToken = (entityId: number): string => {
     const payload = {
         bc_customer_id: entityId,
+        exp: getUnixTimeStampInSecondsForMidnightTonight(),
     };
 
-    return sign(payload, JWT_PRIVATE_KEY, { expiresIn: '1d' });
+    return sign(payload, JWT_PRIVATE_KEY);
 };
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
