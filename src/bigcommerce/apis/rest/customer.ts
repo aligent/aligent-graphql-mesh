@@ -1,11 +1,10 @@
-import { BcAddress, BcAddressRest, BcCustomer, BcSubscriber } from '../../types';
+import { BcAddress, BcAddressRest, BcCustomer, BcMutationCustomer } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { BC_CustomerAttributes } from '@mesh/external/BigCommerceGraphqlApi';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
-const CUSTOMER_SUBSCRIBERS = `/v3/customers/subscribers`;
 
 /* istanbul ignore file */
 export const createCustomer = async (
@@ -30,6 +29,11 @@ export const createCustomer = async (
     return response.data[0];
 };
 
+export const updateCustomer = async (customer: BcMutationCustomer): Promise<BcMutationCustomer> => {
+    const response = await bcPut(CUSTOMERS_API, [customer]);
+    return response.data[0];
+};
+
 export const getAllCustomerAddresses = async (bcCustomerId: number): Promise<BcAddressRest[]> => {
     const path = `${CUSTOMER_ADDRESS_API}?include=formfields&customer_id:in=${bcCustomerId}`;
 
@@ -43,13 +47,6 @@ export const createCustomerAddress = async (address: BcAddress): Promise<BcAddre
         //BC rest api will return 200 without any data, if the address already exits
         logAndThrowError('Address already exists.');
     }
-    return response.data[0];
-};
-
-export const getSubscriberByEmail = async (email: string): Promise<BcSubscriber | undefined> => {
-    const path = `${CUSTOMER_SUBSCRIBERS}?email=${email}`;
-    const response = await bcGet(path);
-
     return response.data[0];
 };
 

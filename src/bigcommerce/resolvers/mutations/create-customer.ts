@@ -15,6 +15,7 @@ export const createCustomerResolver: MutationResolvers['createCustomer'] = {
             return logAndThrowError('Missing email or firstname or lastname or password');
         } else {
             const bcCustomer = await createCustomer(
+                //TODO: replace this with the customer.ts::transformCustomerForCreateOrUpdate function
                 args.input.email,
                 args.input.firstname,
                 args.input.lastname,

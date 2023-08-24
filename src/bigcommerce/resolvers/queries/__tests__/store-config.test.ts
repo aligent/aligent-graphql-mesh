@@ -14,17 +14,15 @@ describe('Transform StoreConfig tests', () => {
         expect(transformedConfig.returns_enabled).toEqual('');
     });
     test('Specified StoreConfig exits', async () => {
-        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(
-            bcStoreConfigData
-        );
+        const transformedConfig: StoreConfig =
+            await transformChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
 
         expect(transformedConfig.category_url_suffix).toEqual('.html');
         expect(transformedConfig.grid_per_page).toEqual(24);
     });
     test('Bad metafield data given', async () => {
-        const transformedConfig: StoreConfig = await transformChannelMetafieldsToStoreConfig(
-            bcStoreConfigBadData
-        );
+        const transformedConfig: StoreConfig =
+            await transformChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
 
         expect(transformedConfig.category_url_suffix).toEqual('');
     });

@@ -28,6 +28,17 @@ export interface BcCustomer {
     origin_channel_id: number;
     channel_ids: number[] | null;
 }
+
+export interface BcMutationCustomer {
+    id: number;
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    authentication?: {
+        force_password_reset: boolean;
+        new_password: string;
+    };
+}
 export interface Country {
     id: number;
     country: string;

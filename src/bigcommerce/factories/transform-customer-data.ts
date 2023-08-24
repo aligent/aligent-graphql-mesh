@@ -1,10 +1,10 @@
-import { Customer } from '../../meshrc/.mesh';
-import { BcAddressRest } from '../types';
+import { Customer, CustomerInput, CustomerOutput } from '../../meshrc/.mesh';
+import { BcAddressRest, BcMutationCustomer } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
 
-export const transformCustomer = (
+export const transformBcCustomer = (
     bcCustomer: BC_Customer,
     bcAddresses: BcAddressRest[],
     isSubscriber: boolean
@@ -32,4 +32,53 @@ export const transformCustomer = (
             },
         },
     };
+};
+
+export const transformBcCustomerToAcCustomerForMutation = (
+    bcCustomer: BcMutationCustomer,
+    isSubscribed?: boolean
+): CustomerOutput => {
+    return {
+        customer: {
+            email: bcCustomer.email,
+            firstname: bcCustomer.first_name,
+            lastname: bcCustomer.last_name,
+            is_subscribed: isSubscribed,
+
+            //TODO: Following attributes need to be remove using CodeGen, they are badly generated and required, but should not.
+            allow_remote_shopping_assistance: false,
+            wishlists: [],
+            wishlist: {
+                visibility: 'PUBLIC',
+            },
+            reviews: {
+                items: [],
+                page_info: {
+                    current_page: null,
+                    page_size: null,
+                    total_pages: null,
+                },
+            },
+        },
+    };
+};
+
+export const transformCustomerForMutation = (
+    customerId: number,
+    customer: CustomerInput
+): BcMutationCustomer => {
+    const bcCustomer: BcMutationCustomer = {
+        id: customerId,
+    };
+    if (customer.email) {
+        bcCustomer.email = customer.email;
+    }
+    if (customer.firstname) {
+        bcCustomer.first_name = customer.firstname;
+    }
+    if (customer.lastname) {
+        bcCustomer.last_name = customer.lastname;
+    }
+
+    return bcCustomer;
 };
