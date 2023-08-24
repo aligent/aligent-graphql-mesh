@@ -36,7 +36,9 @@ const getSelectedOptions = (
     });
 };
 
-export const transformCartItemsToLineItems = (cartItems: Array<BC_CartPhysicalItem>): BC_CartLineItemInput[] => {
+export const transformCartItemsToLineItems = (
+    cartItems: Array<BC_CartPhysicalItem>
+): BC_CartLineItemInput[] => {
     return cartItems.map(({ quantity, productEntityId, selectedOptions }) => {
         const multipleChoiceOptions = selectedOptions.filter(isMultipleChoiceOption);
         return {
