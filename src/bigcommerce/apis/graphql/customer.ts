@@ -53,10 +53,10 @@ export const getCartIdFromBcCustomerAttribute = async (
 
         const response = await bcGraphQlRequest(customerAttributeQuery, headers);
 
-        const { cart_id } = response.data.customer.attributes.attribute;
+        const cartId = response.data.customer.attributes.attribute.value;
 
         // Query checkout for verifying the cart_id we retrieved from customer attribute is valid
-        const cartResponse = await getCartEntityId(cart_id, bcCustomerId);
+        const cartResponse = await getCartEntityId(cartId, bcCustomerId);
 
         return cartResponse.entityId;
     } catch (error) {

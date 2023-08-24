@@ -81,7 +81,7 @@ export const createCart = async (
 };
 
 export const getCartEntityId = async (
-    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    cartId: string,
     bcCustomerId: number | null
 ): Promise<BC_Cart> => {
     const cartHeader = {
@@ -91,6 +91,7 @@ export const getCartEntityId = async (
 
     const cartQuery = {
         query: getCartEntityIdQuery,
+        variables: { entityId: cartId },
     };
 
     const response = await bcGraphQlRequest(cartQuery, cartHeader);

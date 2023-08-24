@@ -36,7 +36,6 @@ import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { countriesResolver } from './queries/countries';
 import { currencyResolver } from './queries/currency';
-import { customerCartResolver } from './queries/customer-cart';
 import { customerResolver } from './queries/customer';
 import { customerCartResolver } from './queries/customer-cart';
 import { getSocialLinksResolver } from './queries/get-social-links';
@@ -58,7 +57,6 @@ const resolvers: Resolvers = {
         cmsPage: cmsPageResolver,
         currency: currencyResolver,
         customer: customerResolver,
-        customerCart: customerCartResolver,
         getSocialLinks: getSocialLinksResolver,
         isEmailAvailable: isEmailAvailableResolver,
         keyMessages: keyMessagesResolver,
