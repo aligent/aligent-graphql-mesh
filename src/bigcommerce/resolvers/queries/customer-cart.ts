@@ -23,6 +23,9 @@ export const UNDEFINED_CART = {
 export const customerCartResolver: QueryResolvers['customerCart'] = {
     resolve: async (_root, _args, context, _info): Promise<Cart> => {
         const bcCustomerId = getBcCustomerId(context);
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
         if (!bcCustomerId) {
             throw new Error(`An authorized user is required to perform this query.`);
@@ -39,7 +42,7 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
 
         if (!cartId) return UNDEFINED_CART;
 
-        const response = await getCheckout(cartId, bcCustomerId);
+        const response = await getCheckout(cartId, bcCustomerId, customerImpersonationToken);
 
         if (!response?.entityId) return UNDEFINED_CART;
 
