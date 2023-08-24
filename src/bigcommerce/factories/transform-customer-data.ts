@@ -1,5 +1,5 @@
 import { Customer, CustomerInput, CustomerOutput } from '../../meshrc/.mesh';
-import { BcAddressRest, BcMutationCustomer } from '../types';
+import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
@@ -96,4 +96,16 @@ export const transformAcCustomerPasswordChange = (
     };
 
     return bcCustomer;
+};
+
+export const transformAcCustomerValidatePassword = (
+    email: string,
+    password: string,
+    channelId: number
+): ValidatePasswordRequest => {
+    return {
+        email: email,
+        password: password,
+        channel_id: channelId,
+    };
 };

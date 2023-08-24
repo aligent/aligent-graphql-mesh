@@ -1,5 +1,5 @@
 import { Customer, CustomerOutput } from '@mesh';
-import { BcMutationCustomer } from '../../../types';
+import { BcMutationCustomer, ValidatePasswordRequest } from '../../../types';
 
 // @ts-expect-error: ignore bad non-nullable fields
 export const acCustomerWithName: Customer = {
@@ -73,4 +73,10 @@ export const bcCustomerForPasswordChange: BcMutationCustomer = {
         force_password_reset: false,
         new_password: 'Password1',
     },
+};
+
+export const bcValidatePasswordRequest: ValidatePasswordRequest = {
+    email: 'example@example.com',
+    password: 'Password1',
+    channel_id: 1,
 };

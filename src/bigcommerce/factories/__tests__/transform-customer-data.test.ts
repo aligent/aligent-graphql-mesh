@@ -1,5 +1,6 @@
 import {
     transformAcCustomerPasswordChange,
+    transformAcCustomerValidatePassword,
     transformBcCustomerToAcCustomerForMutation,
     transformCustomerForMutation,
 } from '../transform-customer-data';
@@ -11,6 +12,7 @@ import {
     bcCustomerForPasswordChange,
     bcMutationCustomerWithEmail,
     bcMutationCustomerWithName,
+    bcValidatePasswordRequest,
 } from './__data__/customer-data.test';
 
 describe('Customer Ac to Bc Transformation', () => {
@@ -40,6 +42,21 @@ describe('Customer Ac to Bc Transformation', () => {
         const bcTransformedCustomer = transformAcCustomerPasswordChange(customerId, newPassword);
 
         expect(bcTransformedCustomer).toEqual(bcCustomerExpected);
+    });
+    test('Transform Ac current Password to Bc Password validation', () => {
+        const email = 'example@example.com';
+        const password = 'Password1';
+        const channel = 1;
+
+        const bcValidateCustomerPasswordExpected = bcValidatePasswordRequest;
+
+        const bcTransformedPasswordRequest = transformAcCustomerValidatePassword(
+            email,
+            password,
+            channel
+        );
+
+        expect(bcTransformedPasswordRequest).toEqual(bcValidateCustomerPasswordExpected);
     });
 });
 

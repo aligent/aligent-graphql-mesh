@@ -1,9 +1,17 @@
-import { BcAddress, BcAddressRest, BcCustomer, BcMutationCustomer } from '../../types';
+import {
+    BcAddress,
+    BcAddressRest,
+    BcCustomer,
+    BcMutationCustomer,
+    ValidatePasswordRequest,
+    ValidatePasswordResponse,
+} from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
+const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 
 /* istanbul ignore file */
 export const createCustomer = async (
@@ -78,4 +86,11 @@ export const deleteCustomerAddress = async (addressId: number): Promise<boolean>
     //Nothing is returned by BigComm, not matter if success or not, always 204 No Content
     //So if there is no critical error we are just returning true
     return true;
+};
+
+export const validateCustomerCredentials = async (
+    validatePassword: ValidatePasswordRequest
+): Promise<ValidatePasswordResponse> => {
+    const response = await bcPost(CUSTOMER_VALIDATE_CREDENTIALS_API, validatePassword);
+    return response;
 };
