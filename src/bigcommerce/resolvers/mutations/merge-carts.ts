@@ -37,7 +37,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
                 bcCustomerId,
                 customerImpersonationToken
             );
-            // If customer has no previous cart return the guest cart
+            // If customer has no saved cart -> return guest cart id
             if (!customerCartId) {
                 return {
                     id: guestCartId,
@@ -50,7 +50,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
         }
 
         const guestCart = await getCheckout(guestCartId, null, customerImpersonationToken);
-        // At this point we certainly have the customerCartId so If guest cart doesn't have a cart return customer cart
+        // At this point we certainly have the customerCartId so If guest cart doesn't have a cart -> return customer cart
         if (!guestCart.cart) {
             return { id: customerCartId, ...MERGE_CART_CONSTANTS } as unknown as Cart;
         }
@@ -59,7 +59,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             guestCart.cart.lineItems.physicalItems
         );
 
-        //  Merge the gust and customer cart by adding guest cart items to customer cart
+        // Merge the gust and customer cart by adding line items of guest cart to customer cart
         const updatedCustomerCartResponse = await addProductsToCart(
             customerCartId,
             { lineItems: guestCartLineItems },
