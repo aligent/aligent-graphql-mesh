@@ -173,3 +173,14 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
 export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
     id: number;
 }
+
+export interface ValidatePasswordResponse {
+    is_valid: boolean;
+    customer_id: number;
+}
+
+export interface ValidatePasswordRequest {
+    email: string;
+    password: string;
+    channel_id: number;
+}

@@ -141,8 +141,10 @@ export const updateCartIdAttribute = async (variables: {
     customerId: number | null;
 }) => {
     const { cartId, customerId } = variables;
+    /* If we're not dealing with a logged-in customer don't worry about trying to
+     * store a cart id on a customer attribute.*/
     if (!customerId) {
-        throw new Error(`An authorized user is required to perform this query.`);
+        return;
     }
 
     const attributeId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);

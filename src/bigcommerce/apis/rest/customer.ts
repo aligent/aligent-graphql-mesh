@@ -1,10 +1,18 @@
-import { BcAddress, BcAddressRest, BcCustomer, BcMutationCustomer } from '../../types';
+import {
+    BcAddress,
+    BcAddressRest,
+    BcCustomer,
+    BcMutationCustomer,
+    ValidatePasswordRequest,
+    ValidatePasswordResponse,
+} from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { BC_CustomerAttributes } from '@mesh/external/BigCommerceGraphqlApi';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
+const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 
 /* istanbul ignore file */
 export const createCustomer = async (
@@ -117,4 +125,11 @@ export const upsertCustomerAttributeValue = async (
     const response = await bcPut(path, data);
 
     return response.data;
+};
+
+export const validateCustomerCredentials = async (
+    validatePassword: ValidatePasswordRequest
+): Promise<ValidatePasswordResponse> => {
+    const response = await bcPost(CUSTOMER_VALIDATE_CREDENTIALS_API, validatePassword);
+    return response;
 };
