@@ -11,7 +11,6 @@ import {
     BC_CartSelectedTextFieldOption,
 } from '@mesh/external/BigCommerceGraphqlApi';
 
-// TODO: Throw an error for unsupported Types
 const isMultipleChoiceOption = (
     option:
         | BC_CartSelectedCheckboxOption
