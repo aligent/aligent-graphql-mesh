@@ -21,8 +21,8 @@
         "skipLibCheck": true,
         "typeRoots": ["./node_modules/@types"],
         "paths": {
-            "@mesh": ["./src/meshrc/.mesh"],
-            "@mesh/*": ["./src/meshrc/.mesh/*"]
+            "@mesh": ["./packages/mesh/.mesh"],
+            "@mesh/*": ["./packages/mesh/.mesh/*"],
             "@aligent/bigcommerce-graphql-module": ["./packages/modules/bigcommerce/src/index"],
             "@aligent/utils": ["./packages/utils/index"]
         }

@@ -1,4 +1,4 @@
-import { GraphQlContext } from '../meshrc/types';
+import { GraphQlContext } from '../mesh/types';
 import { getBcCustomerIdFromMeshToken } from './tokens';
 
 /**
