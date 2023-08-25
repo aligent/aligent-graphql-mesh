@@ -55,7 +55,11 @@ export const getCartIdFromBcCustomerAttribute = async (
         const entityId = response.data.customer.attributes.attribute.value;
 
         // Query checkout for verifying the cart_id we retrieved from customer attribute is valid
-        const cartResponse = await verifyCartEntityId(entityId, bcCustomerId);
+        const cartResponse = await verifyCartEntityId(
+            entityId,
+            bcCustomerId,
+            customerImpersonationToken
+        );
 
         return cartResponse.entityId;
     } catch (error) {
