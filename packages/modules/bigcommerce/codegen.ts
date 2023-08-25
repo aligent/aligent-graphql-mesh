@@ -8,7 +8,7 @@ const config: CodegenConfig = {
         enumsAsTypes: true,
     },
     generates: {
-        'src/meshrc/.mesh/external/BigCommerceGraphqlApi/index.ts': {
+        'packages/generated/bigcommerce/index.ts': {
             schema: [
                 {
                     [BC_GRAPHQL_API]: {
