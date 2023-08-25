@@ -18,40 +18,40 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
         if (!bcCustomerId)
             throw new Error("The current customer isn't authorized to perform merge cart");
 
-        let customerCartId = null;
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const guestCart = await getCheckout(guestCartId, null, customerImpersonationToken);
+        const guestCheckout = await getCheckout(guestCartId, null, customerImpersonationToken);
 
+        let customerCartId = null;
         // If FE doesn't send destination_cart_id try to get customer cart by customer ID
         if (!destination_cart_id) {
             customerCartId = await getCartIdFromBcCustomerAttribute(
                 bcCustomerId,
                 customerImpersonationToken
             );
-            // If customer has no saved cart -> return guest cart id
+            // If customer has no saved cart -> return guest cart
             if (!customerCartId) {
-                return getTransformedCartData(guestCart);
+                return getTransformedCartData(guestCheckout);
             }
         } else {
             // If FE sends destination_cart_id it will become the customer cart id and no need to query customer attributes
             customerCartId = destination_cart_id;
         }
 
-        const customerCart = await getCheckout(
+        const customerCheckout = await getCheckout(
             customerCartId,
             bcCustomerId,
             customerImpersonationToken
         );
 
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart -> return customer cart
-        if (!guestCart.cart) {
-            return getTransformedCartData(customerCart);
+        if (!guestCheckout.cart) {
+            return getTransformedCartData(customerCheckout);
         }
 
         const guestCartLineItems = transformCartItemsToLineItems(
-            guestCart.cart.lineItems.physicalItems
+            guestCheckout.cart.lineItems.physicalItems
         );
 
         // Merge the guest and customer cart by adding line items of guest cart to customer cart
@@ -62,12 +62,12 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             bcCustomerId
         );
 
-        const updatedCustomerCart = await getCheckout(
+        const updatedCustomerCheckout = await getCheckout(
             updatedCustomerCartResponse.entityId,
             bcCustomerId,
             customerImpersonationToken
         );
 
-        return getTransformedCartData(updatedCustomerCart);
+        return getTransformedCartData(updatedCustomerCheckout);
     },
 };
