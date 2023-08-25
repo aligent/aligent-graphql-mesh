@@ -12,9 +12,9 @@
   "scripts": {
     "dev": "yarn start:dev",
     "start:dev": "yarn codegen && STAGE=dev mesh dev --dir ./packages/mesh",
-    "start": "mesh start --dir ./src/meshrc",
+    "start": "mesh start --dir ./packages/mesh",
     "codegen": "env $(cat ./packages/mesh/.env | sed '/^#/d' | xargs) graphql-codegen --config packages/modules/bigcommerce/codegen.ts",
-    "build": "mesh build --throwOnInvalidConfiguration --dir ./src/meshrc && yarn codegen",
+    "build": "mesh build --throwOnInvalidConfiguration --dir ./packages/mesh && yarn codegen",
     "build:docker": "docker build --no-cache -f docker/Dockerfile -t mesh .",
     "test": "jest --coverage --passWithNoTests",
     "lint": "eslint --color . --ext .ts",

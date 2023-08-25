@@ -1,5 +1,6 @@
-import { useExtendContextPlugin } from './customer-impersonation-token';
+import { useGraphQLModules } from "@envelop/graphql-modules";
+import application from "../application";
 
-const plugins = [useExtendContextPlugin];
+const plugins = [useGraphQLModules(application)];
 
 export default plugins;
