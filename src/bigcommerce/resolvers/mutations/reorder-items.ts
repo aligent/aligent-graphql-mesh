@@ -2,6 +2,7 @@ import { MutationResolvers, CartItemInput } from '@mesh';
 import { addProductsToCartResolver } from './add-products-to-cart';
 import { getLineItems, getOrder } from '../../apis/rest/order';
 import { getBcCustomerId } from '../../../utils';
+import { getCartIdFromBcCustomerAttribute, getCheckout } from '../../apis/graphql';
 
 const UNDEFINED_CART = {
     id: '',
@@ -58,7 +59,6 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
                 // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:15
                 uid: btoa(`Product:${lineItem.product_id}`),
                 // The addProductsToCartResolver receives the variant product id as the sku
-                // @TODO: Confirm this is ok w/ Chamal + Brett
                 // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:16
                 sku: btoa(`Variant:${lineItem.variant_id}`),
                 // The addProductsToCart resolver expects selected options to be encoded as base64
@@ -71,10 +71,17 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             });
         }
 
-        // @TODO: Update to use Alan's getCartIdFromBcCustomerAttribute and validate carts existence by fetching cart by id once merged
-        // const cartId = await getCartIdFromBcCustomerAttribute(bcCustomerId);
-        const cartId = '';
-        const cart = null; // getCart(cartId, bcCustomerId);
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
+
+        const cartId = await getCartIdFromBcCustomerAttribute(
+            bcCustomerId,
+            customerImpersonationToken
+        );
+        const customerCheckout = cartId
+            ? await getCheckout(cartId, bcCustomerId, customerImpersonationToken)
+            : null;
 
         // @TODO: Shows error in IDE but it does work
         // Call existing resolver to add these products to the cart
@@ -82,7 +89,7 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             root,
             {
                 // A new cart will be created if one doesn't exist
-                cartId: cart ? cartId : '',
+                cartId: customerCheckout?.cart ? cartId : '',
                 cartItems,
             },
             context,
@@ -91,7 +98,7 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
 
         return {
             cart: response?.cart || UNDEFINED_CART,
-            userInputErrors: response?.userInputErrors || [],
+            userInputErrors: response?.user_errors || [],
         };
     },
 };
