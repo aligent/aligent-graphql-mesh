@@ -1,4 +1,4 @@
-import { getIsVirtualCart } from '../../utils';
+import { getIsVirtualCart } from '@aligent/utils';
 import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
 import { Cart } from '@mesh';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';

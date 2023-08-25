@@ -7,7 +7,7 @@ import {
     getCartItemOriginalPrice,
     getGstPercentBetweenPrices,
     getNewUrl,
-} from '../../../utils';
+} from '@aligent/utils';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformCartItems = (

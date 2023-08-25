@@ -1,4 +1,4 @@
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 import { bcGraphQlRequest } from './client';
 import {
     BC_ProductConnection,

@@ -12,7 +12,7 @@ import {
     deleteCartLineItemMutation,
     updateCartLineItemQuery,
 } from './requests';
-import { logAndThrowError } from '../../../utils';
+import { logAndThrowError } from '@aligent/utils';
 
 export const addProductsToCart = async (
     cartId: string,

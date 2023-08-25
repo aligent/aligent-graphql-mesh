@@ -1,6 +1,6 @@
 import { InputMaybe } from '@mesh';
 import { BC_CartSelectedOptionsInput } from '@mesh/external/BigCommerceGraphqlApi';
-import { isNotNull } from '../../utils/is-not-null';
+import { isNotNull } from '@aligent/utils';
 
 export const transformSelectedOptions = (
     selectedOptions: InputMaybe<string>[]

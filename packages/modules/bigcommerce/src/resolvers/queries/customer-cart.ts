@@ -1,7 +1,7 @@
 import { Cart, QueryResolvers } from '@mesh';
 import { getCheckout } from '../../apis/graphql';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { getBcCustomerId } from '../../../utils';
+import { getBcCustomerId } from '@aligent/utils';
 
 export const UNDEFINED_CART = {
     id: '',

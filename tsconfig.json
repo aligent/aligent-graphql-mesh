@@ -23,6 +23,8 @@
         "paths": {
             "@mesh": ["./src/meshrc/.mesh"],
             "@mesh/*": ["./src/meshrc/.mesh/*"]
+            "@aligent/bigcommerce-graphql-module": ["./packages/modules/bigcommerce/src/index"],
+            "@aligent/utils": ["./packages/utils/index"]
         }
     },
     "exclude": ["node_modules/**/*", "docker/**/*", "lambda/**/*"]

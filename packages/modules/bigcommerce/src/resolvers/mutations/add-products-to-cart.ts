@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@mesh';
 import { addProductsToCart, createCart, getCheckout } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
-import { atob, getBcCustomerId } from '../../../utils';
+import { atob, getBcCustomerId } from '@aligent/utils';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {

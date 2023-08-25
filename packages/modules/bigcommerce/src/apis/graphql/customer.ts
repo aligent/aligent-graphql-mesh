@@ -1,7 +1,7 @@
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 export const getBcCustomer = async (
     bcCustomerId: number,

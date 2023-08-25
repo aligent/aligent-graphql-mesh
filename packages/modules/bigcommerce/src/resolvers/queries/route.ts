@@ -7,7 +7,7 @@ import { QueryResolvers, RoutableInterface } from '@mesh';
 import { BC_Product } from '@mesh/external/BigCommerceGraphqlApi';
 import { Category } from '../../types';
 import { getTaxSettings } from '../../apis/graphql/settings';
-import { getIncludesTax } from '../../../utils';
+import { getIncludesTax } from '@aligent/utils';
 
 const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
     const { __typename } = data;

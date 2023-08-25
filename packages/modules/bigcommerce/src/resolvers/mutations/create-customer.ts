@@ -1,7 +1,7 @@
 import { Customer, MutationResolvers } from '@mesh';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 /* istanbul ignore next */
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {

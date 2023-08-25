@@ -1,4 +1,3 @@
-import { Resolvers } from '../../meshrc/.mesh';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 import { addProductsToWishlistResolver } from './mutations/add-products-to-wishlist';
 import { addWishlistItemsToCartResolver } from './mutations/add-wishlist-items-to-cart';
@@ -46,8 +45,9 @@ import { productsResolver } from './queries/products';
 import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
+import { Resolvers } from 'graphql-modules';
 
-const resolvers: Resolvers = {
+export const resolvers: Resolvers = {
     Query: {
         categories: categoriesResolver,
         cart: cartResolver,
@@ -100,15 +100,5 @@ const resolvers: Resolvers = {
         updateCustomerAddress: updateCustomerAddressResolver,
     },
 };
-
-// resolve: (root, args, context, info) => {
-//     // This is how to return the actual request
-//     return context.TakeFlightGraphqlApi.Query.storeConfig({
-//         root,
-//         args,
-//         context,
-//         info,
-//     });
-// },
 
 export default resolvers;

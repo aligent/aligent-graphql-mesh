@@ -1,6 +1,6 @@
 import { BC_CheckoutShippingConsignment } from '@mesh/external/BigCommerceGraphqlApi';
 import { Cart, Maybe, Scalars, ShippingCartAddress } from '@mesh';
-import { btoa } from '../../../utils';
+import { btoa } from '@aligent/utils';
 import {
     getTransformedAvailableShippingMethods,
     getTransformedSelectedShippingOption,

@@ -1,4 +1,4 @@
-import { atob } from '../../../utils';
+import { atob } from '@aligent/utils';
 import { getCategories } from '../../apis/graphql/categories';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { QueryResolvers } from '@mesh';

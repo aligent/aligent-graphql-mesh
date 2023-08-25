@@ -1,5 +1,5 @@
 import { Category } from '../types';
-import { btoa, slashAtStartOrEnd } from '../../utils';
+import { btoa, slashAtStartOrEnd } from '@aligent/utils';
 import { BC_CategoryConnection } from '@mesh/external/BigCommerceGraphqlApi';
 import { CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
 

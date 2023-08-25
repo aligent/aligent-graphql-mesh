@@ -1,4 +1,4 @@
-import { atob } from '../../../utils';
+import { atob } from '@aligent/utils';
 import { FilterTypeInput, QueryproductsArgs } from '@mesh';
 import {
     BC_SearchProductsFiltersInput,

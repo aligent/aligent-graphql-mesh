@@ -4,7 +4,7 @@ import {
     BC_SwatchOptionValue,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { ConfigurableProductOptions, Maybe } from '@mesh';
-import { btoa } from '../../../utils';
+import { btoa } from '@aligent/utils';
 
 export const getTransformedConfigurableOptions = (
     productOptions: BC_ProductOptionConnection

@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@mesh';
 import { deleteCustomerAddress, getCustomerAddress } from '../../apis/rest/customer';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
+import { logAndThrowError } from '@aligent/utils';
+import { getBcCustomerIdFromMeshToken } from '@aligent/utils';
 
 export const deleteCustomerAddressResolver: MutationResolvers['deleteCustomerAddress'] = {
     resolve: async (_root, args, context, _info) => {

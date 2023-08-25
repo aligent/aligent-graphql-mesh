@@ -4,7 +4,7 @@ import {
     BC_SearchProductsFiltersInput,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { getAvailableProductsSearchFiltersQuery } from './requests/available-product-search-filters';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 /**
  * Gets the available filters for product search queries

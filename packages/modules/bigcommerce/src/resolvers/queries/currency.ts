@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@mesh/.mesh';
 
 export const currencyResolver: QueryResolvers['currency'] = {
     resolve: (_root, _args, _context, _info) => {

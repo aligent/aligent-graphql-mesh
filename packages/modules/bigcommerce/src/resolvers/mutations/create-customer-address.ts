@@ -1,12 +1,11 @@
 import { MutationResolvers } from '@mesh';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
+import { logAndThrowError } from '@aligent/utils';
+import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '@aligent/utils';
 import { createCustomerAddress } from '../../apis/rest/customer';
 import {
     transformCustomerAddress,
     transformBcAddress,
 } from '../../factories/transform-customer-address-data';
-import { isCustomerAddressValid } from '../../../utils/validators/customer-address-validator';
 import { CustomerAddressValidated } from '../../types';
 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {

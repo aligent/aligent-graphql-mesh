@@ -1,7 +1,7 @@
 import { BC_Product, BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 export const getBcProductByPathGraphql = async (
     variables: BC_SiteRouteArgs & { includeTax?: boolean },

@@ -1,4 +1,4 @@
-import { isCustomerAddressValid } from '../../../../utils/validators/customer-address-validator';
+import { isCustomerAddressValid } from '@aligent/utils';
 import {
     customerAddress,
     customerAddressMissingRequiredFields,

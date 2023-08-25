@@ -1,6 +1,6 @@
 import { BcSubscriber } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 /* istanbul ignore file */
 

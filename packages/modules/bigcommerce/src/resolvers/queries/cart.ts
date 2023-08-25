@@ -2,7 +2,7 @@ import { Cart, Maybe, QueryResolvers } from '@mesh';
 import { getCheckout } from '../../apis/graphql/checkout';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { GraphQlContext } from '../../../meshrc/types';
-import { getBcCustomerId } from '../../../utils';
+import { getBcCustomerId } from '@aligent/utils';
 
 export const cartResolver: QueryResolvers['cart'] = {
     resolve: async (_root, args, context: GraphQlContext, _info): Promise<Maybe<Cart>> => {

@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@mesh';
 import { deleteCartLineItem } from '../../apis/graphql';
-import { getBcCustomerId, logAndThrowError } from '../../../utils';
+import { getBcCustomerId, logAndThrowError } from '@aligent/utils';
 import { getCheckout } from '../../apis/graphql';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 

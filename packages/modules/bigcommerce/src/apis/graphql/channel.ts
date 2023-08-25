@@ -6,7 +6,7 @@ import {
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
 import { channelSocialLinks } from './requests/channel-social-links';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 /* istanbul ignore file */
 export const getChannelMetafields = async (

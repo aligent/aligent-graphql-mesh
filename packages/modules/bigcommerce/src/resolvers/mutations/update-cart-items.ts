@@ -1,7 +1,7 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@mesh';
 import { getCheckout } from '../../apis/graphql/checkout';
 import { updateCartLineItem } from '../../apis/graphql/cart';
-import { getBcCustomerId, getDeconstructedCartItemUid } from '../../../utils';
+import { getBcCustomerId, getDeconstructedCartItemUid } from '@aligent/utils';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {

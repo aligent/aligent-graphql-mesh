@@ -1,6 +1,6 @@
 import { useExtendContext } from '@envelop/core';
-import { getDecodedCustomerImpersonationToken } from '../../utils/tokens';
-import { getUnixTimeStampInSeconds } from '../../utils/time-and-date';
+import { getDecodedCustomerImpersonationToken } from '@aligent/utils';
+import { getUnixTimeStampInSeconds } from '@aligent/utils';
 import { createCustomerImpersonationToken } from '../apis/rest/client';
 
 export const useExtendContextPlugin = useExtendContext(async (context) => {

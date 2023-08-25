@@ -3,7 +3,7 @@ import {
     BC_InventoryLocationConnection,
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 import { getStoreLocationsQuery } from './requests/store-locations';
 
 export const getBcStoreLocationsGraphql = async (

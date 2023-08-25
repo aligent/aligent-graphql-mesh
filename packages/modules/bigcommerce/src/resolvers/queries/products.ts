@@ -6,11 +6,10 @@ import {
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
 import { getBcProductsGraphql } from '../../apis/graphql/product';
 
-import { atob, getIncludesTax, getPathFromUrlKey } from '../../../utils';
 import { getBcAvailableProductFilters } from '../../apis/graphql/available-product-search-filters';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
 import { getTaxSettings } from '../../apis/graphql/settings';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {

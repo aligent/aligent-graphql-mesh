@@ -6,7 +6,7 @@ import {
 } from '@mesh/external/BigCommerceGraphqlApi';
 import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
 import { getTransformedCategoriesData } from './transform-category-data';
-import { slashAtStartOrEnd } from '../../utils';
+import { slashAtStartOrEnd } from '@aligent/utils';
 import { getTransformedVariants } from './helpers/transform-variants';
 import { getTransformedPriceRange, getTransformedPrices } from './helpers/transform-product-prices';
 import {
@@ -17,7 +17,7 @@ import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
-import { logAndThrowError } from '../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
 
 const getHasVariantOptions = (productOptions: BC_ProductOptionConnection): boolean => {

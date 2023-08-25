@@ -1,5 +1,5 @@
 import { CustomerInput, MutationResolvers } from '@mesh';
-import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
+import { getBcCustomerIdFromMeshToken } from '@aligent/utils';
 import {
     transformBcCustomerToAcCustomerForMutation,
     transformCustomerForMutation,

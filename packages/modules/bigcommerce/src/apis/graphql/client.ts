@@ -2,7 +2,7 @@
 
 import axios, { AxiosResponse } from 'axios';
 import { GraphQlQuery } from '../../types';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 
