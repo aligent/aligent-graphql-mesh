@@ -75,13 +75,10 @@ export const createCart = async (
 
     // Save cart_id in customer attribute field for logged in users
     const { entityId } = response.data.cart.createCart.cart;
-
-    if (bcCustomerId) {
-        await updateCartIdAttribute({
-            cartId: entityId,
-            customerId: bcCustomerId,
-        });
-    }
+    await updateCartIdAttribute({
+        cartId: entityId,
+        customerId: bcCustomerId,
+    });
 
     return response.data.cart.createCart.cart;
 };
