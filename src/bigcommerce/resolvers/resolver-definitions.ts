@@ -6,6 +6,7 @@ import { applyCouponToCartResolver } from './mutations/apply-coupon-to-cart';
 import { applyGiftCardToCartResolver } from './mutations/apply-gift-card-to-cart';
 import { changeCustomerPasswordResolver } from './mutations/change-customer-password';
 import { createBraintreeClientTokenResolver } from './mutations/create-braintree-client-token';
+import { createCartRedirectUrlsResolver } from './mutations/create-cart-redirect-urls';
 import { createCustomerResolver } from './mutations/create-customer';
 import { createCustomerAddressResolver } from './mutations/create-customer-address';
 import { createEmptyCartResolver } from './mutations/create-empty-cart';
@@ -75,6 +76,7 @@ const resolvers: Resolvers = {
         shareWishlist: shareWishlistResolver,
         changeCustomerPassword: changeCustomerPasswordResolver,
         createBraintreeClientToken: createBraintreeClientTokenResolver,
+        createCartRedirectUrls: createCartRedirectUrlsResolver,
         createCustomer: createCustomerResolver,
         createCustomerAddress: createCustomerAddressResolver,
         createEmptyCart: createEmptyCartResolver,
