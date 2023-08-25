@@ -16,3 +16,15 @@ export const cart = stripIgnoredCharacters(
         }
     `)
 );
+
+export const getCartEntityIdQuery = stripIgnoredCharacters(
+    print(gql`
+        query cart($entityId: String) {
+            site {
+                cart(entityId: $entityId) {
+                    entityId
+                }
+            }
+        }
+    `)
+);

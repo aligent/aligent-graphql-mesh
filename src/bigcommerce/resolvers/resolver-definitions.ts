@@ -37,6 +37,7 @@ import { cmsPageResolver } from './queries/cms-page';
 import { countriesResolver } from './queries/countries';
 import { currencyResolver } from './queries/currency';
 import { customerResolver } from './queries/customer';
+import { customerCartResolver } from './queries/customer-cart';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { isEmailAvailableResolver } from './queries/is-email-available';
 import { keyMessagesResolver } from './queries/key-messages';
@@ -50,6 +51,7 @@ const resolvers: Resolvers = {
     Query: {
         categories: categoriesResolver,
         cart: cartResolver,
+        customerCart: customerCartResolver,
         countries: countriesResolver,
         cmsBlocks: cmsBlocksResolver,
         cmsPage: cmsPageResolver,

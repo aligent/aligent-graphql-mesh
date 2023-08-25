@@ -6,6 +6,9 @@ import { getTransformedCartData } from '../../factories/transform-cart-data';
 
 export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
     resolve: async (_root, args, context, _info): Promise<UpdateCartItemsOutput | null> => {
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
         const { cart_id, cart_items } = args.input || {};
 
         if (!cart_id || !cart_items?.[0]?.cart_item_uid) {
@@ -45,14 +48,19 @@ export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
                     },
                 },
             },
-            bcCustomerId
+            bcCustomerId,
+            customerImpersonationToken
         );
 
         if (!updateCartResponse?.entityId) return null;
 
         /* The response from update cart doesn't supply enough data which Take Flight is expecting
          * so we have to follow up with a getCheckout query to get more enriched data. */
-        const checkoutResponse = await getCheckout(updateCartResponse.entityId, bcCustomerId);
+        const checkoutResponse = await getCheckout(
+            updateCartResponse.entityId,
+            bcCustomerId,
+            customerImpersonationToken
+        );
 
         return {
             cart: getTransformedCartData(checkoutResponse),

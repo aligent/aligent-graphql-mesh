@@ -2,11 +2,13 @@ import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { GraphQlQuery } from '../../types';
 import { bcGraphQlRequest } from './client';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-
-export const bcLogin = async (email: string, password: string): Promise<number> => {
+export const bcLogin = async (
+    email: string,
+    password: string,
+    customerImpersonationToken: string
+): Promise<number> => {
     const headers = {
-        Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
+        Authorization: `Bearer ${customerImpersonationToken}`,
     };
     const graphqlQuery: GraphQlQuery = {
         query: `mutation login {

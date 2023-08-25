@@ -67,14 +67,20 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 // - Re-test this resolver for each type of entity now that types are locking things down
 // - Add tests for getTransformedRouteData
 export const routeResolver: QueryResolvers['route'] = {
-    resolve: async (_root, args, _context, _info) => {
+    resolve: async (_root, args, context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
+        const customerImpersonationToken = (await context.cache.get(
+            'customerImpersonationToken'
+        )) as string;
 
-        const taxSettings = await getTaxSettings();
-        const data = await getRoute({
-            includeTax: getIncludesTax(taxSettings?.pdp),
-            path: urlParam,
-        });
+        const taxSettings = await getTaxSettings(customerImpersonationToken);
+        const data = await getRoute(
+            {
+                includeTax: getIncludesTax(taxSettings?.pdp),
+                path: urlParam,
+            },
+            customerImpersonationToken
+        );
 
         if (!data) {
             return null;
