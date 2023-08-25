@@ -14,7 +14,7 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
         if (!cartRedirectUrls || !cartRedirectUrls.data || !cartRedirectUrls.data.checkout_url)
             return null;
 
-        // Guest Users dont need to update jwt for redirect
+        // Guest Users dont need to createCustomerLoginToken with customer_id and redirect_to values
         const bcCustomerId = getBcCustomerId(context);
         if (!bcCustomerId) {
             return cartRedirectUrls;
@@ -22,7 +22,7 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
 
         const { origin, pathname, search } = new URL(cartRedirectUrls.data.checkout_url);
 
-        // Need to create a jwt signed by the 
+        // Need to create a jwt signed by the
         const customerLoginToken = createCustomerLoginToken(bcCustomerId, `${pathname}${search}`);
 
         const checkoutRedirectUrl = `${origin}/login/token/${customerLoginToken}`;
