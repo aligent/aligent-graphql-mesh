@@ -7,11 +7,6 @@ sources:
 
 additionalEnvelopPlugins: './plugins/additional-plugins'
 
-additionalTypeDefs:
-  - !include ../bigcommerce/additional-type-defs/product-attribute-filter-input.graphql
-
-additionalEnvelopPlugins: '../bigcommerce/plugins/additional-plugins'
-
 plugins:
   - hive:
       token: '{env.HIVE_TOKEN}'
