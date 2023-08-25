@@ -133,3 +133,10 @@ export const validateCustomerCredentials = async (
     const response = await bcPost(CUSTOMER_VALIDATE_CREDENTIALS_API, validatePassword);
     return response;
 };
+
+export const getCustomersByEmail = async (email: string): Promise<BcCustomer[]> => {
+    const path = `/v3/customers?email:in=${encodeURIComponent(email)}`;
+    const response = await bcGet(path);
+
+    return response.data;
+};
