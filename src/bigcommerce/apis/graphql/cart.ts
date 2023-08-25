@@ -16,10 +16,6 @@ import {
 import { logAndThrowError } from '../../../utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
-const headers = {
-    Authorization: `Bearer ${BC_GRAPHQL_TOKEN}`,
-};
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
 export const addProductsToCart = async (
@@ -156,10 +152,11 @@ export const updateCartIdAttribute = async (variables: {
 
 export const verifyCartEntityId = async (
     entityId: string | null,
-    bcCustomerId: number | null
+    bcCustomerId: number | null,
+    customerImpersonationToken: string
 ): Promise<BC_Cart> => {
     const cartHeader = {
-        ...headers,
+        Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
 
