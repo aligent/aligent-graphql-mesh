@@ -23,20 +23,14 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
         )) as string;
         const guestCheckout = await getCheckout(guestCartId, null, customerImpersonationToken);
 
-        let customerCartId = null;
-        // If FE doesn't send destination_cart_id try to get customer cart by customer ID
-        if (!destination_cart_id) {
-            customerCartId = await getCartIdFromBcCustomerAttribute(
-                bcCustomerId,
-                customerImpersonationToken
-            );
-            // If customer has no saved cart -> return guest cart
-            if (!customerCartId) {
-                return getTransformedCartData(guestCheckout);
-            }
-        } else {
-            // If FE sends destination_cart_id it will become the customer cart id and no need to query customer attributes
-            customerCartId = destination_cart_id;
+        // There may be a cart to merge provided by the FE or already attached to the customer
+        const customerCartId =
+            destination_cart_id ||
+            (await getCartIdFromBcCustomerAttribute(bcCustomerId, customerImpersonationToken));
+
+        if (!customerCartId) {
+            // Nothing to merge, return the guest cart
+            return getTransformedCartData(guestCheckout);
         }
 
         const customerCheckout = await getCheckout(
