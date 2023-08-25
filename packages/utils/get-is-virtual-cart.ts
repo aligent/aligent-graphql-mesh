@@ -1,5 +1,5 @@
 import { BC_CartLineItems } from '@mesh/external/BigCommerceGraphqlApi';
-import { Scalars } from '../meshrc/.mesh';
+import { Scalars } from '../mesh/.mesh';
 
 /**
  * Indicates if the cart only has virtual items

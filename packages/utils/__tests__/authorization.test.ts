@@ -1,5 +1,5 @@
 import { getBcCustomerId } from '../authorization';
-import { GraphQlContext } from '../../meshrc/types';
+import { GraphQlContext } from '../../mesh/types';
 
 describe('authorization', () => {
     test(`Returns "null" if there's no authorization header`, () => {
