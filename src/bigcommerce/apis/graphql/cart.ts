@@ -15,7 +15,7 @@ import {
 } from './requests';
 import { logAndThrowError } from '../../../utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
-import {assignCartToCustomerMutation} from "./requests/assign-cart";
+import { assignCartToCustomerMutation } from './requests/assign-cart';
 
 const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 const headers = {
@@ -97,7 +97,7 @@ export const assignCartToCustomer = async (
         query: assignCartToCustomerMutation,
         variables: {
             input: {
-                cartEntityId
+                cartEntityId,
             },
         },
     };

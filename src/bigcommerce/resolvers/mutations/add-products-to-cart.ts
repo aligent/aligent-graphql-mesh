@@ -1,5 +1,10 @@
 import { MutationResolvers } from '@mesh';
-import {addProductsToCart, assignCartToCustomer, createCart, getCheckout} from '../../apis/graphql';
+import {
+    addProductsToCart,
+    assignCartToCustomer,
+    createCart,
+    getCheckout,
+} from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { atob, getBcCustomerId } from '../../../utils';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
