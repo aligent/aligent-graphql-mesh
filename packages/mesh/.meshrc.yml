@@ -1,10 +1,11 @@
 merger: stitching
 sources:
-  - !include ../adobecommerce/take-flight-graphql-api.yml
-  - !include ../bigcommerce/bc-rest-api.yml
+  - name: TakeFlight
+    handler:
+      graphql:
+        source: ./application
 
-additionalResolvers:
-  - '../bigcommerce/resolvers/resolver-definitions'
+additionalEnvelopPlugins: './plugins/additional-plugins'
 
 additionalTypeDefs:
   - !include ../bigcommerce/additional-type-defs/product-attribute-filter-input.graphql

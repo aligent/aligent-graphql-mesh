@@ -1,0 +1,13 @@
+import { createModule } from 'graphql-modules';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { join } from 'node:path';
+import resolvers from './resolvers';
+
+const loadGraphQlFiles = () => loadFilesSync(join(__dirname, './schema/*.graphql'));
+
+export default createModule({
+    id: 'bigcommerce',
+    dirname: __dirname,
+    typeDefs: loadGraphQlFiles(),
+    resolvers,
+});
