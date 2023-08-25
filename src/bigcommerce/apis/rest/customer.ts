@@ -135,7 +135,7 @@ export const validateCustomerCredentials = async (
 };
 
 export const getCustomersByEmail = async (email: string): Promise<BcCustomer[]> => {
-    const path = `/v3/customers?email:in=${email}`;
+    const path = `/v3/customers?email:in=${encodeURIComponent(email)}`;
     const response = await bcGet(path);
 
     return response.data;
