@@ -1,9 +1,7 @@
-import { MutationResolvers } from '@mesh';
-import { getBcCustomerId } from '../../../utils';
+import { MutationResolvers, CartItemInput } from '@mesh';
+import { addProductsToCartResolver } from './add-products-to-cart';
 import { getLineItems, getOrder } from '../../apis/rest/order';
-import { CartItemInput } from "@mesh/sources/TakeFlightGraphqlApi/types";
-import { addProductsToCartResolver } from "./add-products-to-cart";
-import { getCheckout } from '../../apis/graphql';
+import { getBcCustomerId } from '../../../utils';
 
 const UNDEFINED_CART = {
     id: '',
@@ -25,15 +23,12 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
                 cart: UNDEFINED_CART,
                 userInputErrors: [
                     {
-                        code: "REORDER_NOT_AVAILABLE",
+                        code: 'REORDER_NOT_AVAILABLE',
                         message: `Customer must be logged in to use reorder.`,
-                        path: [
-                            "headers",
-                            "authorization"
-                        ]
-                    }
-                ]
-            }
+                        path: ['headers', 'authorization'],
+                    },
+                ],
+            };
         }
 
         // Fetch the order to confirm the user has access to it
@@ -46,14 +41,12 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
                 cart: UNDEFINED_CART,
                 userInputErrors: [
                     {
-                        code: "REORDER_NOT_AVAILABLE",
+                        code: 'REORDER_NOT_AVAILABLE',
                         message: `Order not found.`,
-                        path: [
-                            "orderNumber"
-                        ]
-                    }
-                ]
-            }
+                        path: ['orderNumber'],
+                    },
+                ],
+            };
         }
 
         // Fetch and Iterate over all the orders line items converting them to input object
@@ -71,15 +64,17 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
                 // The addProductsToCart resolver expects selected options to be encoded as base64
                 // "configurable/{option_id}/{product_option_id}"
                 selected_options: lineItem.product_options.map((option) => {
-                    return btoa(['configurable', option.option_id, option.product_option_id].join("/"))
-                })
+                    return btoa(
+                        ['configurable', option.option_id, option.product_option_id].join('/')
+                    );
+                }),
             });
         }
 
         // @TODO: Update to use Alan's getCartIdFromBcCustomerAttribute and validate carts existence by fetching cart by id once merged
         // const cartId = await getCartIdFromBcCustomerAttribute(bcCustomerId);
-        const cartId = "";
-        const cart = null // getCart(cartId, bcCustomerId);
+        const cartId = '';
+        const cart = null; // getCart(cartId, bcCustomerId);
 
         // @TODO: Shows error in IDE but it does work
         // Call existing resolver to add these products to the cart
@@ -87,16 +82,16 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             root,
             {
                 // A new cart will be created if one doesn't exist
-                cartId: cart ? cartId : "",
-                cartItems
+                cartId: cart ? cartId : '',
+                cartItems,
             },
             context,
-            info,
+            info
         );
 
         return {
             cart: response?.cart || UNDEFINED_CART,
-            userInputErrors: response?.userInputErrors || []
+            userInputErrors: response?.userInputErrors || [],
         };
     },
 };
