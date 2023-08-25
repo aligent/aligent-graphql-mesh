@@ -1,8 +1,12 @@
 import { logAndThrowError } from './error-handling/error-handling';
-import { decode, verify } from 'jsonwebtoken';
+import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
+const BC_CLIENT_ID = process.env.BC_CLIENT_ID as string;
+const BC_CLIENT_SECRET = process.env.BC_CLIENT_SECRET as string;
+
+const STORE_HASH = 'xxazhvt7gd';
 
 /* istanbul ignore file */
 export const getDecodedCustomerImpersonationToken = (
@@ -31,4 +35,27 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
     } catch (error) {
         return logAndThrowError(error, getBcCustomerIdFromMeshToken.name);
     }
+};
+
+export const createCustomerLoginToken = (customerId: number, redirectTo: string) => {
+    const dateCreated = Math.round(new Date().getTime() / 1000) - 5;
+    const payload = {
+        iss: BC_CLIENT_ID,
+        iat: dateCreated,
+        jti: '4a2e4359-6954-42b9-8baf-60b055d5ee2a',
+        operation: 'customer_login',
+        store_hash: STORE_HASH,
+        customer_id: customerId,
+        redirect_to: redirectTo,
+    };
+
+    return sign(payload, BC_CLIENT_SECRET);
+};
+
+export const generateMeshToken = (entityId: number): string => {
+    const payload = {
+        bc_customer_id: entityId,
+    };
+
+    return sign(payload, JWT_PRIVATE_KEY, { expiresIn: '1d' });
 };

@@ -1,10 +1,8 @@
 import { MutationResolvers } from '@mesh';
-import { getBcCustomerId } from '../../../utils';
+import { createCustomerLoginToken, getBcCustomerId } from '../../../utils';
 
 export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedirectUrls'] = {
     resolve: async (root, args, context, info) => {
-        console.log(args);
-
         const cartRedirectUrls =
             await context.BigCommerceManagementRestApi.Mutation.createCartRedirectUrls({
                 root,
@@ -13,17 +11,28 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
                 info,
             });
 
-        if (!cartRedirectUrls) return null;
+        if (!cartRedirectUrls || !cartRedirectUrls.data || !cartRedirectUrls.data.checkout_url)
+            return null;
 
-        // Guest User dont need to update jwt for redirect
+        // Guest Users dont need to update jwt for redirect
         const bcCustomerId = getBcCustomerId(context);
-        if(!bcCustomerId){
+        if (!bcCustomerId) {
             return cartRedirectUrls;
         }
 
-        console.log(bcCustomerId);
+        const { origin, pathname, search } = new URL(cartRedirectUrls.data.checkout_url);
 
-        
-        return cartRedirectUrls;
+        // Need to create a jwt signed by the 
+        const customerLoginToken = createCustomerLoginToken(bcCustomerId, `${pathname}${search}`);
+
+        const checkoutRedirectUrl = `${origin}/login/token/${customerLoginToken}`;
+
+        return {
+            data: {
+                checkout_url: checkoutRedirectUrl,
+                cart_url: cartRedirectUrls.data.cart_url,
+                embedded_checkout_url: cartRedirectUrls.data.embedded_checkout_url,
+            },
+        };
     },
 };
