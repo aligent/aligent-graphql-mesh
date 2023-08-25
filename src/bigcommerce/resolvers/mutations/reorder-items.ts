@@ -3,6 +3,7 @@ import { addProductsToCartResolver } from './add-products-to-cart';
 import { getLineItems, getOrder } from '../../apis/rest/order';
 import { getBcCustomerId } from '../../../utils';
 import { getCartIdFromBcCustomerAttribute, getCheckout } from '../../apis/graphql';
+import { transformRestCartLineItems } from '../../factories/transform-rest-cart-line-items';
 
 const UNDEFINED_CART = {
     id: '',
@@ -53,22 +54,7 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
         // Fetch and Iterate over all the orders line items converting them to input object
         const cartItems: Array<CartItemInput> = [];
         for await (const lineItem of getLineItems(orderNumber)) {
-            cartItems.push({
-                quantity: lineItem.quantity,
-                // The addProductsToCartResolver actually receives the product id as the uid
-                // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:15
-                uid: btoa(`Product:${lineItem.product_id}`),
-                // The addProductsToCartResolver receives the variant product id as the sku
-                // See: src/bigcommerce/resolvers/mutations/add-products-to-cart.ts:16
-                sku: btoa(`Variant:${lineItem.variant_id}`),
-                // The addProductsToCart resolver expects selected options to be encoded as base64
-                // "configurable/{option_id}/{product_option_id}"
-                selected_options: lineItem.product_options.map((option) => {
-                    return btoa(
-                        ['configurable', option.option_id, option.product_option_id].join('/')
-                    );
-                }),
-            });
+            cartItems.push(transformRestCartLineItems(lineItem));
         }
 
         const customerImpersonationToken = (await context.cache.get(
