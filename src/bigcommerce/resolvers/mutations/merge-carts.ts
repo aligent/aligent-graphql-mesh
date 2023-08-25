@@ -12,9 +12,6 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
     resolve: async (_root, args, context, _info) => {
         const { source_cart_id: guestCartId, destination_cart_id } = args || {};
 
-        // Source cart id aka guest cart id is required in merge cart query
-        if (!guestCartId) throw new Error('Required parameter "source_cart_id" is missing');
-
         const bcCustomerId = getBcCustomerId(context);
 
         //  Merge cart can be only performed by a logged-in user
