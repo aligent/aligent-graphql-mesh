@@ -22,7 +22,7 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
 
         const { origin, pathname, search } = new URL(cartRedirectUrls.data.checkout_url);
 
-        // Need to create a jwt signed by the
+        // Need to create a jwt signed by the BC client secret, which was created with the x-auth-token
         const customerLoginToken = createCustomerLoginToken(bcCustomerId, `${pathname}${search}`);
 
         const checkoutRedirectUrl = `${origin}/login/token/${customerLoginToken}`;

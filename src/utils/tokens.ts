@@ -37,6 +37,11 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
     }
 };
 
+/**
+ * Creates a JWT that enables a BC user to stay logged in when redirecting
+ * @param {number} customerId - The BC customers Id is needed to keep this user signed in on checkout
+ * @param {string} redirectTo - The url to redirect to, e.g. /cart.php?action=loadInCheckout&id=cart-id&token=jwt
+ */
 export const createCustomerLoginToken = (customerId: number, redirectTo: string) => {
     const dateCreated = Math.round(new Date().getTime() / 1000) - 5;
     const payload = {
