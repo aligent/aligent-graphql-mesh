@@ -11,7 +11,7 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
                 info,
             });
 
-        if (!cartRedirectUrls || !cartRedirectUrls.data || !cartRedirectUrls.data.checkout_url)
+        if (!cartRedirectUrls?.data?.checkout_url)
             return null;
 
         // Guest Users dont need to createCustomerLoginToken with customer_id and redirect_to values
