@@ -11,8 +11,7 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
                 info,
             });
 
-        if (!cartRedirectUrls?.data?.checkout_url)
-            return null;
+        if (!cartRedirectUrls?.data?.checkout_url) return null;
 
         // Guest Users dont need to createCustomerLoginToken with customer_id and redirect_to values
         const bcCustomerId = getBcCustomerId(context);
