@@ -3,7 +3,7 @@ import { getBcProductsGraphql } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { Cart, QuerycartArgs } from '@mesh';
-import { getDeNestedProductVariants } from '../../../utils';
+import { getFlattenedProducts } from '../../../utils';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -42,6 +42,8 @@ export const getEnrichedCart = async (
         (item) => item.productEntityId
     );
 
+    /* Ensures we don't query for duplicate product ids and cases we have variants in the cart
+     * from the same parent product*/
     const uniqueEntityIds = [...new Set(cartItemEntityIds)];
 
     const products = await getBcProductsGraphql(
@@ -53,6 +55,9 @@ export const getEnrichedCart = async (
 
     const transformedProducts = getTransformedProductsData({ products });
 
-    const deNestedProducts = getDeNestedProductVariants(transformedProducts);
-    return getTransformedCartData(checkoutResponse, deNestedProducts);
+    /* Get an array where parent products and variant are their own array item. This helps
+     * when mapping additional product data to its corresponding cart item*/
+    const flattenedProducts = getFlattenedProducts(transformedProducts);
+
+    return getTransformedCartData(checkoutResponse, flattenedProducts);
 };

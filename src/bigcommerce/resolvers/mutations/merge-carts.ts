@@ -7,6 +7,7 @@ import { MutationResolvers } from '@mesh';
 import { getBcCustomerId } from '../../../utils';
 import { transformCartItemsToLineItems } from '../../factories/transform-cart-items-to-line-items';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
+import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
     resolve: async (_root, args, context, _info) => {
@@ -33,15 +34,15 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             return getTransformedCartData(guestCheckout);
         }
 
-        const customerCheckout = await getCheckout(
-            customerCartId,
+        const customerCheckout = getEnrichedCart(
+            { cart_id: customerCartId },
             bcCustomerId,
             customerImpersonationToken
         );
 
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart -> return customer cart
         if (!guestCheckout.cart) {
-            return getTransformedCartData(customerCheckout);
+            return customerCheckout;
         }
 
         const guestCartLineItems = transformCartItemsToLineItems(
@@ -56,12 +57,10 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             bcCustomerId
         );
 
-        const updatedCustomerCheckout = await getCheckout(
-            updatedCustomerCartResponse.entityId,
+        return getEnrichedCart(
+            { cart_id: updatedCustomerCartResponse.entityId },
             bcCustomerId,
             customerImpersonationToken
         );
-
-        return getTransformedCartData(updatedCustomerCheckout);
     },
 };

@@ -1,10 +1,11 @@
 import { ConfigurableProduct, Maybe, ProductInterface, SimpleProduct } from '@mesh';
 
 /**
- * De nests product variants to be their own item in an array
+ * De nests product variants to be their own item in an array along with their
+ * parent product
  * @param products
  */
-export const getDeNestedProductVariants = (
+export const getFlattenedProducts = (
     products: Maybe<{ items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }>
 ): Array<ProductInterface> => {
     if (!products?.items) return [];

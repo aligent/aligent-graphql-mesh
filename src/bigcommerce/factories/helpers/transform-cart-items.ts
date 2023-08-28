@@ -1,6 +1,6 @@
 import { BC_Cart, BC_CartSelectedMultipleChoiceOption } from '@mesh/external/BigCommerceGraphqlApi';
 
-import { CartItemInterface, CurrencyEnum, Maybe } from '@mesh';
+import { CartItemInterface, CurrencyEnum, Maybe, ProductInterface } from '@mesh';
 import {
     btoa,
     createCartItemUid,
@@ -11,7 +11,8 @@ import {
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformCartItems = (
-    cartItems?: Maybe<BC_Cart>
+    cartItems?: Maybe<BC_Cart>,
+    additionalCartItemData?: Array<ProductInterface>
 ): Maybe<Array<Maybe<CartItemInterface>>> => {
     if (!cartItems?.lineItems) return null;
 
@@ -38,6 +39,10 @@ export const getTransformCartItems = (
             selectedOptions,
             imageUrl,
         } = item;
+
+        const matchingEnrichedData = additionalCartItemData?.find((enrichedItem) => {
+            return enrichedItem.sku === sku;
+        });
 
         const configurable_options = selectedOptions.map((option) => {
             const { entityId, name, value, valueEntityId } =
@@ -90,6 +95,7 @@ export const getTransformCartItems = (
                 total_item_discount,
             },
             product: {
+                ...matchingEnrichedData,
                 id: variantEntityId,
                 uid: btoa(String(variantEntityId)),
                 name: name,
@@ -110,7 +116,6 @@ export const getTransformCartItems = (
                 },
                 rating_summary: 0,
                 review_count: 0,
-                stock_status: 'IN_STOCK', // @todo if required might need more data from another product api
                 url_key: getNewUrl(url).pathname,
                 url_suffix: '', // BC doesn't use suffix
                 custom_attributes: [],

@@ -1,4 +1,4 @@
-import { getDeNestedProductVariants } from '../products';
+import { getFlattenedProducts } from '../products';
 import { productsMock } from '../../bigcommerce/resolvers/mocks/products';
 import { ConfigurableProduct } from '@mesh';
 
@@ -804,13 +804,13 @@ const expectResult = [
 
 describe('products', () => {
     it('Flattens variants as separate array items', () => {
-        expect(
-            getDeNestedProductVariants(productsMock as { items: Array<ConfigurableProduct> })
-        ).toEqual(expectResult);
+        expect(getFlattenedProducts(productsMock as { items: Array<ConfigurableProduct> })).toEqual(
+            expectResult
+        );
     });
 
     it('Returns an empty array if there are no products', () => {
-        expect(getDeNestedProductVariants(null)).toEqual([]);
-        expect(getDeNestedProductVariants({ items: [null] })).toEqual([]);
+        expect(getFlattenedProducts(null)).toEqual([]);
+        expect(getFlattenedProducts({ items: [null] })).toEqual([]);
     });
 });

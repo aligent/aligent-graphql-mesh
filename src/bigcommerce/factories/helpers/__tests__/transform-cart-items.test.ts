@@ -32,7 +32,6 @@ const expectResult = [
             },
             rating_summary: 0,
             review_count: 0,
-            stock_status: 'IN_STOCK',
             url_key: '/mona-pullover-hoodlie/',
             url_suffix: '',
             custom_attributes: [],

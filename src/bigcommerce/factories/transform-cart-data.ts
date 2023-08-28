@@ -1,12 +1,15 @@
 import { getIsVirtualCart } from '../../utils';
 import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
-import { Cart } from '@mesh';
+import { Cart, ProductInterface } from '@mesh';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
 
-export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
+export const getTransformedCartData = (
+    checkoutData: BC_Checkout,
+    additionalCartItemData?: Array<ProductInterface>
+): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
 
@@ -17,7 +20,7 @@ export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
         id: entityId,
         total_quantity: cart?.lineItems?.totalQuantity || 0,
         error_type: null,
-        items: getTransformCartItems(cart),
+        items: getTransformCartItems(cart, additionalCartItemData),
         is_virtual: getIsVirtualCart(cart?.lineItems),
         // @todo work out free shipping details
         free_shipping_details: {
