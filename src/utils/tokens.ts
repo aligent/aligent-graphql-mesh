@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const BC_CLIENT_ID = process.env.BC_CLIENT_ID as string;
 const BC_CLIENT_SECRET = process.env.BC_CLIENT_SECRET as string;
-const STORE_HASH = process.env.STORE_HASH as string; 
+const STORE_HASH = process.env.STORE_HASH as string;
 
 /* istanbul ignore file */
 export const getDecodedCustomerImpersonationToken = (
