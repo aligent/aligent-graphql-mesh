@@ -1,6 +1,6 @@
 import { MutationResolvers, CartItemInput } from '@mesh';
 import { addProductsToCartResolver } from './add-products-to-cart';
-import { getLineItems, getOrder } from '../../apis/rest/order';
+import { getLineItems } from '../../apis/rest/order';
 import { getBcCustomerId } from '../../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 import { transformRestCartLineItems } from '../../factories/transform-rest-cart-line-items';
@@ -20,6 +20,8 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: async (root, { orderNumber }, context, info) => {
         const bcCustomerId = getBcCustomerId(context);
 
+        // TODO: Look into if checks like this are necessary
+        // TF will only call this resolver if a user is logged in
         if (!bcCustomerId) {
             return {
                 cart: UNDEFINED_CART,
@@ -28,24 +30,6 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
                         code: 'REORDER_NOT_AVAILABLE',
                         message: `Customer must be logged in to use reorder.`,
                         path: ['headers', 'authorization'],
-                    },
-                ],
-            };
-        }
-
-        // Fetch the order to confirm the user has access to it
-        const order = await getOrder(orderNumber);
-
-        // If this user does not own this order return an error of "Order not found"
-        // so we don't confirm that this order id exists
-        if (order.customer_id !== order.customer_id) {
-            return {
-                cart: UNDEFINED_CART,
-                userInputErrors: [
-                    {
-                        code: 'REORDER_NOT_AVAILABLE',
-                        message: `Order not found.`,
-                        path: ['orderNumber'],
                     },
                 ],
             };

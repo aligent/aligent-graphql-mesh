@@ -1,10 +1,5 @@
 import { MutationResolvers } from '@mesh';
-import {
-    addProductsToCart,
-    assignCartToCustomer,
-    createCart,
-    getCheckout,
-} from '../../apis/graphql';
+import { addProductsToCart, createCart, getCheckout } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { atob, getBcCustomerId } from '../../../utils';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
@@ -42,15 +37,6 @@ export const addProductsToCartResolver = {
             : await createCart(lineItems, customerImpersonationToken, bcCustomerId);
 
         if (!addToCartResponse?.entityId) return null;
-
-        // ensure the cart is assigned to the customer otherwise a checkout will not be created
-        if (bcCustomerId) {
-            await assignCartToCustomer(
-                addToCartResponse.entityId,
-                bcCustomerId,
-                customerImpersonationToken
-            );
-        }
 
         // Even though add to cart mutations return cart details, Big Commerce site.cart query doesn't
         // return all the same information to satisfy the Adobe commerce cart response.
