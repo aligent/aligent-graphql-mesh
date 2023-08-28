@@ -40,11 +40,11 @@ export const getTransformedSelectedShippingOption = (
 ): Maybe<SelectedShippingMethod> => {
     if (!selectedShippingOption) return null;
 
-    const transformedShippingMethod = getTransformedAvailableShippingMethod(selectedShippingOption);
+    // Exclude __typename from transformedShippingMethod
+    const { __typename, ...transformedShippingMethod} = getTransformedAvailableShippingMethod(selectedShippingOption);
 
     return {
         ...transformedShippingMethod,
-        __typename: "SelectedShippingMethod",
         method_code: selectedShippingOption.entityId,
         method_title: selectedShippingOption.description,
     };

@@ -1,10 +1,9 @@
 import { getBcCustomerId } from '../authorization';
-import { GraphQlContext } from '../../mesh/types';
 
 describe('authorization', () => {
     test(`Returns "null" if there's no authorization header`, () => {
         expect(
-            getBcCustomerId({ headers: { authorization: null } } as unknown as GraphQlContext)
+            getBcCustomerId({ headers: { authorization: null } } as unknown as GraphQLModules.ModuleContext)
         ).toEqual(null);
     });
 
@@ -12,7 +11,7 @@ describe('authorization', () => {
         expect(() => {
             getBcCustomerId({
                 headers: { authorization: 'Bearer abcd' },
-            } as unknown as GraphQlContext);
+            } as unknown as GraphQLModules.ModuleContext);
         }).toThrow(new Error('{"name":"JsonWebTokenError","message":"jwt malformed"}'));
     });
 });

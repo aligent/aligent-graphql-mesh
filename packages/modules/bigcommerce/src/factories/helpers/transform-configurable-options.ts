@@ -45,6 +45,7 @@ export const getTransformedConfigurableOptions = (
                     const uid = btoa(String(`configurable/${optionId}/${optionValueId}`));
 
                     return {
+                        __typename: 'ConfigurableProductOptionsValues',
                         default_label: label,
                         label: label,
                         store_label: label,

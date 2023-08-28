@@ -19,6 +19,12 @@ const config: Config = {
         },
     },
     modulePathIgnorePatterns: ['__data__'],
+    moduleNameMapper: {
+        "@aligent/bigcommerce-graphql-module": "<rootDir>/packages/modules/bigcommerce/src/index",
+        "@aligent/bigcommerce-operations": "<rootDir>/packages/generated/bigcommerce/operations/index",
+        "@aligent/bigcommerce-resolvers": "<rootDir>/packages/generated/bigcommerce/resolvers/index",
+        "@aligent/utils": "<rootDir>/packages/utils/index"
+   }
 };
 
 export default config;

@@ -47,7 +47,7 @@ export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<Cart>): Ca
     const subtotal_excluding_tax = cart?.baseAmount?.value
         ? getTransformedPrice({
               value: cart.baseAmount.value - taxTotal?.value || 0,
-              currency: cart.baseAmount.currencyCode as CurrencyEnum,
+              currencyCode: cart.baseAmount.currencyCode as CurrencyEnum,
           })
         : null;
 
