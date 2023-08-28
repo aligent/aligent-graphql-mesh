@@ -640,6 +640,7 @@ export const transformedWishlist = [
                         meta_keyword: '',
                         meta_description: '',
                         name: 'Mona Pullover Hoodlie',
+                        only_x_left_in_stock: null,
                         price: { regularPrice: { amount: { currency: 'AUD', value: 9.09 } } },
                         price_range: {
                             maximum_price: {
@@ -658,6 +659,7 @@ export const transformedWishlist = [
                         },
                         price_tiers: [],
                         rating_summary: 1,
+                        redirect_code: 0,
                         review_count: 1,
                         related_products: null,
                         sku: 'WH01',
@@ -814,6 +816,7 @@ export const transformedWishlistItems = [
             meta_keyword: '',
             meta_description: '',
             name: 'Mona Pullover Hoodlie',
+            only_x_left_in_stock: null,
             price: { regularPrice: { amount: { currency: 'AUD', value: 9.09 } } },
             price_range: {
                 maximum_price: {
@@ -828,6 +831,7 @@ export const transformedWishlistItems = [
                 },
             },
             price_tiers: [],
+            redirect_code: 0,
             rating_summary: 1,
             review_count: 1,
             related_products: null,

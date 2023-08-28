@@ -21,6 +21,7 @@ const expectResult = [
                     uid: '',
                 },
             ],
+            only_x_left_in_stock: null,
             price_range: {
                 maximum_price: {
                     discount: { amount_off: 40, percent_off: 57.14285714285714 },
@@ -61,6 +62,7 @@ const expectResult = [
                     uid: '',
                 },
             ],
+            only_x_left_in_stock: null,
             price_range: {
                 maximum_price: {
                     discount: { amount_off: 17, percent_off: 29.82456140350877 },
@@ -101,6 +103,7 @@ const expectResult = [
                     uid: '',
                 },
             ],
+            only_x_left_in_stock: null,
             price_range: {
                 maximum_price: {
                     discount: { amount_off: 0, percent_off: 0 },
@@ -141,6 +144,7 @@ const expectResult = [
                     uid: '',
                 },
             ],
+            only_x_left_in_stock: null,
             price_range: {
                 maximum_price: {
                     discount: { amount_off: 47, percent_off: 82.45614035087719 },
