@@ -1,5 +1,4 @@
 import { CartLineItems } from '@aligent/bigcommerce-operations';
-import { Scalars } from '../mesh/.mesh';
 
 /**
  * Indicates if the cart only has virtual items
