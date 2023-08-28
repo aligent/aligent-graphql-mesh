@@ -2,7 +2,7 @@ import { MutationResolvers, CartItemInput } from '@mesh';
 import { addProductsToCartResolver } from './add-products-to-cart';
 import { getLineItems, getOrder } from '../../apis/rest/order';
 import { getBcCustomerId } from '../../../utils';
-import { getCartIdFromBcCustomerAttribute, getCheckout } from '../../apis/graphql';
+import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 import { transformRestCartLineItems } from '../../factories/transform-rest-cart-line-items';
 
 const UNDEFINED_CART = {
