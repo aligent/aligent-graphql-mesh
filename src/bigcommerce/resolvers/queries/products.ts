@@ -4,7 +4,7 @@ import {
     getTransformedProductsData,
 } from '../../factories/transform-products-data';
 import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
-import { getBcProductsGraphql } from '../../apis/graphql/product';
+import { getBcProductSearchGraphql } from '../../apis/graphql/product-search';
 
 import { atob, getIncludesTax, getPathFromUrlKey } from '../../../utils';
 import { getBcAvailableProductFilters } from '../../apis/graphql/available-product-search-filters';
@@ -57,7 +57,7 @@ export const productsResolver: QueryResolvers['products'] = {
                 availableBcProductFilters
             );
 
-            const bcProducts = await getBcProductsGraphql(
+            const bcProducts = await getBcProductSearchGraphql(
                 {
                     includeTax: getIncludesTax(taxSettings?.plp),
                     filters: transformedFilterArguments,

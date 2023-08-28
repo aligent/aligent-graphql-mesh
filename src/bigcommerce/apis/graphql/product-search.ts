@@ -1,13 +1,13 @@
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils';
 import { bcGraphQlRequest } from './client';
 import {
     BC_ProductConnection,
     BC_SearchProductFilterConnection,
     BC_SearchProductsFiltersInput,
 } from '@mesh/external/BigCommerceGraphqlApi';
-import { getProductsSearchQuery } from './requests/product-search';
+import { getProductsSearchQuery } from './requests';
 
-export const getBcProductsGraphql = async (
+export const getBcProductSearchGraphql = async (
     variables: {
         filters: BC_SearchProductsFiltersInput;
         includeTax?: boolean;
