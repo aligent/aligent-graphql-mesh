@@ -7,6 +7,7 @@ export * from './client';
 export * from './customer';
 export * from './login';
 export * from './pdp-product';
-export * from './product';
+export * from './products';
+export * from './product-search';
 export * from './route';
 export * from './settings';
