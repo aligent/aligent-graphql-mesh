@@ -1,6 +1,6 @@
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
-import { GraphQlQuery } from '../../types';
 import { bcGraphQlRequest } from './client';
+import { login } from './requests/login';
 
 export const bcLogin = async (
     email: string,
@@ -10,15 +10,13 @@ export const bcLogin = async (
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
-    const graphqlQuery: GraphQlQuery = {
-        query: `mutation login {
-                          login(email: "${email}", password: "${password}") {
-                            customer {
-                              entityId
-                              }
-                            result
-                          }
-                        }`,
+
+    const graphqlQuery = {
+        query: login,
+        variables: {
+            email,
+            password,
+        },
     };
 
     const response = await bcGraphQlRequest(graphqlQuery, headers);
