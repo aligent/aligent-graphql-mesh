@@ -2,7 +2,7 @@ import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
 
-export const login = stripIgnoredCharacters(
+export const loginMutation = stripIgnoredCharacters(
     print(gql`
         mutation login($email: String!, $password: String!) {
             login(email: $email, password: $password) {

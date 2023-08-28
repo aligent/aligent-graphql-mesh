@@ -1,6 +1,6 @@
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { bcGraphQlRequest } from './client';
-import { login } from './requests/login';
+import { loginMutation } from './requests/login';
 
 export const bcLogin = async (
     email: string,
@@ -12,7 +12,7 @@ export const bcLogin = async (
     };
 
     const graphqlQuery = {
-        query: login,
+        query: loginMutation,
         variables: {
             email,
             password,
