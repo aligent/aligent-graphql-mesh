@@ -1,4 +1,4 @@
-import { Customer, MutationResolvers } from '@mesh';
+import { Customer, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';
 import { logAndThrowError } from '@aligent/utils';

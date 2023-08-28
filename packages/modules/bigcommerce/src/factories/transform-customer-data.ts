@@ -1,7 +1,7 @@
-import { Customer, CustomerInput, CustomerOutput } from '../../meshrc/.mesh';
+import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 import { BcAddressRest, BcMutationCustomer } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
-import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
+import { Customer as BC_Customer} from '@aligent/bigcommerce-operations';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
 
 export const transformBcCustomer = (

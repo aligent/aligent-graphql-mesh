@@ -1,10 +1,10 @@
-import { InputMaybe } from '@mesh';
-import { BC_CartSelectedOptionsInput } from '@mesh/external/BigCommerceGraphqlApi';
+import { InputMaybe } from '@aligent/bigcommerce-resolvers';
+import { CartSelectedOptionsInput } from '@aligent/bigcommerce-operations';
 import { isNotNull } from '@aligent/utils';
 
 export const transformSelectedOptions = (
     selectedOptions: InputMaybe<string>[]
-): InputMaybe<BC_CartSelectedOptionsInput> => {
+): InputMaybe<CartSelectedOptionsInput> => {
     return {
         multipleChoices: selectedOptions.filter(isNotNull).map((optionHash) => {
             const decodedOption = atob(optionHash).split('/');

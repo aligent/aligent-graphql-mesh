@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { createEmptyCart } from '../../apis/rest/cart';
 
 /**

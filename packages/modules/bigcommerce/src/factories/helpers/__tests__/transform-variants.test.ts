@@ -1,6 +1,6 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { getTransformedVariants } from '../transform-variants';
-import { BC_PageInfo, BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { PageInfo, VariantConnection } from '@aligent/bigcommerce-operations';
 
 const expectResult = [
     {
@@ -171,13 +171,13 @@ describe('transform-variants', () => {
     });
 
     it('Returns an empty array if variant edges is empty', () => {
-        expect(getTransformedVariants({} as BC_VariantConnection)).toEqual([]);
-        expect(getTransformedVariants({ edges: null } as BC_VariantConnection)).toEqual([]);
+        expect(getTransformedVariants({} as VariantConnection)).toEqual([]);
+        expect(getTransformedVariants({ edges: null } as VariantConnection)).toEqual([]);
         expect(
             getTransformedVariants({
                 edges: [],
-                pageInfo: {} as BC_PageInfo,
-            } as BC_VariantConnection)
+                pageInfo: {} as PageInfo,
+            } as VariantConnection)
         ).toEqual([]);
     });
 
@@ -185,7 +185,7 @@ describe('transform-variants', () => {
         expect(
             getTransformedVariants({
                 edges: [{}],
-            } as BC_VariantConnection)
+            } as VariantConnection)
         ).toEqual([]);
     });
 });

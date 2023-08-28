@@ -1,13 +1,13 @@
 import {
-    BC_MultipleChoiceOption,
-    BC_ProductOptionConnection,
-    BC_SwatchOptionValue,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { ConfigurableProductOptions, Maybe } from '@mesh';
+    MultipleChoiceOption,
+    ProductOptionConnection,
+    SwatchOptionValue,
+} from '@aligent/bigcommerce-operations';
+import { ConfigurableProductOptions, Maybe } from '@aligent/bigcommerce-resolvers';
 import { btoa } from '@aligent/utils';
 
 export const getTransformedConfigurableOptions = (
-    productOptions: BC_ProductOptionConnection
+    productOptions: ProductOptionConnection
 ): Array<Maybe<ConfigurableProductOptions>> => {
     if (!productOptions || !productOptions?.edges) return [];
 
@@ -20,7 +20,7 @@ export const getTransformedConfigurableOptions = (
                 displayStyle,
                 entityId: optionId,
                 values,
-            } = option.node as BC_MultipleChoiceOption;
+            } = option.node as MultipleChoiceOption;
 
             const attribute_code = displayName.toLowerCase().replace(/ /g, '_');
 
@@ -34,7 +34,7 @@ export const getTransformedConfigurableOptions = (
                         hexColors,
                         isDefault,
                         label,
-                    } = value.node as BC_SwatchOptionValue;
+                    } = value.node as SwatchOptionValue;
                     const swatch_data =
                         hexColors && hexColors.length > 0
                             ? { value: hexColors[0], __typename: 'ColorSwatchData' }
@@ -52,7 +52,6 @@ export const getTransformedConfigurableOptions = (
                         value_index: optionValueId,
                         uid,
                         ...(swatch_data && { swatch_data }),
-                        __typename: 'ConfigurableProductOptionsValues',
                     };
                 })
                 .filter(Boolean);

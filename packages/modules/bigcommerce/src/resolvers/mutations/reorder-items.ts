@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 
 export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: (_root, _args, _context, _info) => {

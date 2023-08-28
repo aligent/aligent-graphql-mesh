@@ -1,15 +1,15 @@
 import {
-    BC_InventoryLocationsArgs,
-    BC_InventoryLocationConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    InventoryLocationsArgs,
+    InventoryLocationConnection,
+} from '@aligent/bigcommerce-operations';
 import { bcGraphQlRequest } from './client';
 import { logAndThrowError } from '@aligent/utils';
 import { getStoreLocationsQuery } from './requests/store-locations';
 
 export const getBcStoreLocationsGraphql = async (
-    variables: BC_InventoryLocationsArgs,
+    variables: InventoryLocationsArgs,
     customerImpersonationToken: string
-): Promise<BC_InventoryLocationConnection> => {
+): Promise<InventoryLocationConnection> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };

@@ -1,4 +1,4 @@
-import { CountryCodeEnum, CustomerAddress } from '../../../meshrc/.mesh';
+import { CountryCodeEnum, CustomerAddress } from '@aligent/bigcommerce-resolvers';
 import { BcAddressRest, FormField } from '../../types';
 
 export const getTransformedCustomerAddresses = (

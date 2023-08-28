@@ -1,4 +1,4 @@
-import { CountryCodeEnum } from '@mesh';
+import { CountryCodeEnum } from '@aligent/bigcommerce-resolvers';
 
 export const customerAddress = {
     firstname: 'Adam',

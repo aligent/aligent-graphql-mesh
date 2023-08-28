@@ -1,12 +1,12 @@
 import { getTransformedProductData } from '../transform-products-data';
 import {
-    BC_RelatedProductsConnection,
-    BC_RelatedProductsEdge,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe, ProductInterface } from '@mesh';
+    RelatedProductsConnection,
+    RelatedProductsEdge,
+} from '@aligent/bigcommerce-operations';
+import { Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
 
 export const getTransformedRelatedProduct = (
-    relatedProduct: Maybe<BC_RelatedProductsEdge>
+    relatedProduct: Maybe<RelatedProductsEdge>
 ): Maybe<ProductInterface> => {
     if (!relatedProduct) return null;
 
@@ -25,7 +25,7 @@ export const getTransformedRelatedProduct = (
 };
 
 export const getTransformedRelatedProducts = (
-    relatedProducts: BC_RelatedProductsConnection
+    relatedProducts: RelatedProductsConnection
 ): Maybe<Array<Maybe<ProductInterface>>> => {
     if (!relatedProducts?.edges || relatedProducts?.edges.length === 0) return null;
 

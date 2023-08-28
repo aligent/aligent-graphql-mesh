@@ -1,13 +1,13 @@
 import {
     Maybe,
-    BC_ProductAttributeSearchFilter,
-    BC_BrandSearchFilter,
-    BC_PriceSearchFilter,
-    BC_RatingSearchFilter,
-    BC_ProductAttributeSearchFilterItemConnection,
-    BC_SearchProductFilterConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { Aggregation, FilterTypeEnum, AggregationOption } from '@mesh';
+    ProductAttributeSearchFilter,
+    BrandSearchFilter,
+    PriceSearchFilter,
+    RatingSearchFilter,
+    ProductAttributeSearchFilterItemConnection,
+    SearchProductFilterConnection,
+} from '@aligent/bigcommerce-operations';
+import { Aggregation, FilterTypeEnum, AggregationOption } from '@aligent/bigcommerce-resolvers';
 
 const getFilterInputType = (typename?: string): FilterTypeEnum => {
     if (typename === 'PriceSearchFilter') {
@@ -18,7 +18,7 @@ const getFilterInputType = (typename?: string): FilterTypeEnum => {
 };
 
 export const getTransformedAggregationOptions = (
-    attributes: BC_ProductAttributeSearchFilterItemConnection,
+    attributes: ProductAttributeSearchFilterItemConnection,
     filterName: string
 ): Maybe<Array<Maybe<AggregationOption>>> => {
     if (!filterName || attributes.edges?.length === 0) return [];
@@ -49,7 +49,7 @@ export const getTransformedAggregationOptions = (
 };
 
 const getAggregationsFromProductAttributeSearchFilter = (
-    filter: BC_ProductAttributeSearchFilter
+    filter: ProductAttributeSearchFilter
 ): Maybe<Aggregation> => {
     const { filterName, name, attributes } = filter;
 
@@ -65,7 +65,7 @@ const getAggregationsFromProductAttributeSearchFilter = (
 };
 
 export const getAggregationsFromBrandFilter = (
-    filter: BC_BrandSearchFilter
+    filter: BrandSearchFilter
 ): Maybe<Aggregation> => {
     const { brands, name } = filter;
 
@@ -100,7 +100,7 @@ export const getAggregationsFromBrandFilter = (
  * based on providing a price range.
  * @param filter
  */
-const getAggregationsFromPriceFilter = (filter: BC_PriceSearchFilter): Maybe<Aggregation> => {
+const getAggregationsFromPriceFilter = (filter: PriceSearchFilter): Maybe<Aggregation> => {
     const { name } = filter;
 
     return {
@@ -113,7 +113,7 @@ const getAggregationsFromPriceFilter = (filter: BC_PriceSearchFilter): Maybe<Agg
 };
 
 export const getAggregationsFromRatingFilter = (
-    filter: BC_RatingSearchFilter
+    filter: RatingSearchFilter
 ): Maybe<Aggregation> => {
     const { name, ratings } = filter;
 
@@ -141,7 +141,7 @@ export const getAggregationsFromRatingFilter = (
 };
 
 export const getTransformedProductAggregations = (
-    filters: BC_SearchProductFilterConnection
+    filters: SearchProductFilterConnection
 ): Maybe<Array<Maybe<Aggregation>>> => {
     if (!filters?.edges) return [];
     return filters.edges

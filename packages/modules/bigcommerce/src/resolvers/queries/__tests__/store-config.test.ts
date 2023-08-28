@@ -1,5 +1,5 @@
-import { BC_MetafieldEdge, BC_MetafieldConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { StoreConfig } from '../../../../meshrc/.mesh';
+import { MetafieldEdge, MetafieldConnection } from '@aligent/bigcommerce-operations';
+import { StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { findMetafieldValueByKey, transformChannelMetafieldsToStoreConfig } from '../store-config';
 
 describe('Transform StoreConfig tests', () => {
@@ -26,7 +26,7 @@ describe('Transform StoreConfig tests', () => {
         expect(transformedConfig.category_url_suffix).toEqual('');
     });
     test('Find metafield value with invalid data', async () => {
-        const data: BC_MetafieldEdge[] = [
+        const data: MetafieldEdge[] = [
             {
                 // @ts-expect-error: Type expects `entityId`
                 node: {
@@ -42,7 +42,7 @@ describe('Transform StoreConfig tests', () => {
     });
 });
 
-const bcStoreConfigData: BC_MetafieldConnection = {
+const bcStoreConfigData: MetafieldConnection = {
     edges: [
         {
             // @ts-expect-error: Type expects `entityId`
@@ -63,7 +63,7 @@ const bcStoreConfigData: BC_MetafieldConnection = {
     ],
 };
 
-const bcStoreConfigBadData: BC_MetafieldConnection = {
+const bcStoreConfigBadData: MetafieldConnection = {
     edges: [
         {
             // @ts-expect-error: Type expects `entityId`

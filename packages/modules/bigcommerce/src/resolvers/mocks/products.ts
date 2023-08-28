@@ -1,4 +1,4 @@
-import { FilterTypeEnum } from '@mesh';
+import { FilterTypeEnum } from '@aligent/bigcommerce-resolvers';
 
 export const productsMock = {
     items: [

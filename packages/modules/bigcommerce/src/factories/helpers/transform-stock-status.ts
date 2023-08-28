@@ -1,9 +1,9 @@
-import { BC_ProductAvailabilityStatus } from '@mesh/external/BigCommerceGraphqlApi';
-import { ProductStockStatus } from '@mesh';
+import { ProductAvailabilityStatus } from '@aligent/bigcommerce-operations';
+import { ProductStockStatus } from '@aligent/bigcommerce-resolvers';
 
 export const getTransformedAvailabilityStatus = (
     availability: {
-        status?: BC_ProductAvailabilityStatus;
+        status?: ProductAvailabilityStatus;
     } = {}
 ): ProductStockStatus => {
     if (availability.status === 'Available') return 'IN_STOCK';

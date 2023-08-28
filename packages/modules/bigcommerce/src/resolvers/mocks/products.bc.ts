@@ -1,4 +1,4 @@
-import { BC_MetafieldConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 
 export const mockBcProducts = [
     {
@@ -597,7 +597,7 @@ export const mockBcProducts = [
                             isInStock: true,
                         },
                         isPurchasable: true,
-                        metafields: {} as BC_MetafieldConnection,
+                        metafields: {} as MetafieldConnection,
                     },
                 },
                 {
@@ -773,7 +773,7 @@ export const mockBcProducts = [
                             isInStock: true,
                         },
                         isPurchasable: true,
-                        metafields: {} as BC_MetafieldConnection,
+                        metafields: {} as MetafieldConnection,
                     },
                 },
                 {
@@ -946,7 +946,7 @@ export const mockBcProducts = [
                             isInStock: true,
                         },
                         isPurchasable: true,
-                        metafields: {} as BC_MetafieldConnection,
+                        metafields: {} as MetafieldConnection,
                     },
                 },
                 {
@@ -1122,7 +1122,7 @@ export const mockBcProducts = [
                             isInStock: true,
                         },
                         isPurchasable: true,
-                        metafields: {} as BC_MetafieldConnection,
+                        metafields: {} as MetafieldConnection,
                     },
                 },
             ],

@@ -1,5 +1,5 @@
 import { getIsVirtualCart } from '../get-is-virtual-cart';
-import { BC_CartDigitalItem, BC_CartPhysicalItem } from '@mesh/external/BigCommerceGraphqlApi';
+import { CartDigitalItem, CartPhysicalItem } from '@aligent/bigcommerce-operations';
 
 const lineItems = {
     digitalItems: [],
@@ -20,7 +20,7 @@ describe('get-is-virtual-cart', () => {
 
     test(`returns true when there's only digital items`, () => {
         expect(
-            getIsVirtualCart({ ...lineItems, digitalItems: [{} as BC_CartDigitalItem] })
+            getIsVirtualCart({ ...lineItems, digitalItems: [{} as CartDigitalItem] })
         ).toEqual(true);
     });
 
@@ -28,8 +28,8 @@ describe('get-is-virtual-cart', () => {
         expect(
             getIsVirtualCart({
                 ...lineItems,
-                digitalItems: [{} as BC_CartDigitalItem],
-                physicalItems: [{} as BC_CartPhysicalItem],
+                digitalItems: [{} as CartDigitalItem],
+                physicalItems: [{} as CartPhysicalItem],
             })
         ).toEqual(false);
     });

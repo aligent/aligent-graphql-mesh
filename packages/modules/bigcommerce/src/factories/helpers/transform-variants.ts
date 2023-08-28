@@ -1,11 +1,11 @@
-import { BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { ConfigurableVariant, Maybe, ProductStockStatus } from '@mesh';
+import { VariantConnection } from '@aligent/bigcommerce-operations';
+import { ConfigurableVariant, Maybe, ProductStockStatus } from '@aligent/bigcommerce-resolvers';
 import { getTransformedImage } from './transform-images';
 import { getTransformedPriceRange } from './transform-product-prices';
 import { getTransformedProductsAttributes } from './transform-product-attributes';
 
 export const getTransformedVariants = (
-    variants: Maybe<BC_VariantConnection>
+    variants: Maybe<VariantConnection>
 ): Maybe<Array<Maybe<ConfigurableVariant>>> => {
     if (!variants?.edges || variants?.edges.length === 0) return [];
 

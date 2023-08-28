@@ -1,5 +1,5 @@
 import { BcAddress, CustomerAddressValidated } from '../types';
-import { CountryCodeEnum, CustomerAddress } from '@mesh/index';
+import { CountryCodeEnum, CustomerAddress } from '@aligent/bigcommerce-resolvers';
 
 const DEFAULT_BILLING_NAME = 'Default Billing';
 const DEFAULT_SHIPPING_NAME = 'Default Shipping';

@@ -4,7 +4,7 @@ import { print } from 'graphql/index';
 
 export const deleteCartLineItemMutation = stripIgnoredCharacters(
     print(gql`
-        mutation addProductsToCart($cartEntityId: String!, $lineItemEntityId: String!) {
+        mutation deleteCartLineItem($cartEntityId: String!, $lineItemEntityId: String!) {
             cart {
                 deleteCartLineItem(
                     input: { cartEntityId: $cartEntityId, lineItemEntityId: $lineItemEntityId }

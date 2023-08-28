@@ -1,4 +1,4 @@
-import { Cart, MutationResolvers } from '@mesh';
+import { Cart, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { mockMergeCarts } from '../mocks/merge-carts';
 
 export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {

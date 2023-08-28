@@ -24,6 +24,8 @@
             "@mesh": ["./packages/mesh/.mesh"],
             "@mesh/*": ["./packages/mesh/.mesh/*"],
             "@aligent/bigcommerce-graphql-module": ["./packages/modules/bigcommerce/src/index"],
+            "@aligent/bigcommerce-operations": ["./packages/generated/bigcommerce/operations/index"],
+            "@aligent/bigcommerce-resolvers": ["./packages/generated/bigcommerce/resolvers/index"],
             "@aligent/utils": ["./packages/utils/index"]
         }
     },

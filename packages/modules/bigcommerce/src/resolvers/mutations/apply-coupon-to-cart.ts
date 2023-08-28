@@ -1,4 +1,4 @@
-import { ApplyCouponToCartOutput, MutationResolvers } from '@mesh';
+import { ApplyCouponToCartOutput, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { mockApplyCouponToCart } from '../mocks/apply-coupon-to-cart';
 
 export const applyCouponToCartResolver: MutationResolvers['applyCouponToCart'] = {

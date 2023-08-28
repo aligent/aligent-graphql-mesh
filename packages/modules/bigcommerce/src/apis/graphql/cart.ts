@@ -1,11 +1,11 @@
 import { bcGraphQlRequest } from './client';
 import {
-    BC_AddCartLineItemsDataInput,
-    BC_UpdateCartLineItemInput,
-    BC_Cart,
-    BC_CartLineItemInput,
+    AddCartLineItemsDataInput,
+    UpdateCartLineItemInput,
+    Cart,
+    CartLineItemInput,
     InputMaybe,
-} from '@mesh/external/BigCommerceGraphqlApi';
+} from '@aligent/bigcommerce-operations';
 import {
     addProductsToCartMutation,
     createCartMutation,
@@ -16,10 +16,10 @@ import { logAndThrowError } from '@aligent/utils';
 
 export const addProductsToCart = async (
     cartId: string,
-    cartItems: BC_AddCartLineItemsDataInput,
+    cartItems: AddCartLineItemsDataInput,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<BC_Cart> => {
+): Promise<Cart> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -43,10 +43,10 @@ export const addProductsToCart = async (
 };
 
 export const createCart = async (
-    lineItems: InputMaybe<Array<BC_CartLineItemInput>>,
+    lineItems: InputMaybe<Array<CartLineItemInput>>,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<BC_Cart> => {
+): Promise<Cart> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -73,7 +73,7 @@ export const deleteCartLineItem = async (
     lineItemEntityId: string,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<BC_Cart> => {
+): Promise<Cart> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -97,10 +97,10 @@ export const deleteCartLineItem = async (
 };
 
 export const updateCartLineItem = async (
-    variables: BC_UpdateCartLineItemInput,
+    variables: UpdateCartLineItemInput,
     bcCustomerId: number | null,
     customerImpersonationToken: string
-): Promise<BC_Cart> => {
+): Promise<Cart> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),

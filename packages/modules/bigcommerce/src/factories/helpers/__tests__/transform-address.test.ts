@@ -1,5 +1,5 @@
 import { getTransformedBillingAddress, getTransformedAddress } from '../transform-address';
-import { BC_CheckoutAddressCheckboxesCustomField } from '@mesh/external/BigCommerceGraphqlApi';
+import { CheckoutAddressCheckboxesCustomField } from '@aligent/bigcommerce-operations';
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
 
 const expectShippingAddress = {
@@ -62,7 +62,7 @@ describe('transform-address', () => {
                     {
                         valueEntityIds: [0],
                         entityId: 29,
-                    } as BC_CheckoutAddressCheckboxesCustomField,
+                    } as CheckoutAddressCheckboxesCustomField,
                 ],
                 countryCode: '',
                 company: '',

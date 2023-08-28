@@ -1,4 +1,4 @@
-import { Customer } from '@mesh';
+import { Customer } from '@aligent/bigcommerce-resolvers';
 
 export const transformedCreatedCustomer: Customer = {
     id: 19,

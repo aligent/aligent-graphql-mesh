@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { deleteCustomerAddress, getCustomerAddress } from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerIdFromMeshToken } from '@aligent/utils';

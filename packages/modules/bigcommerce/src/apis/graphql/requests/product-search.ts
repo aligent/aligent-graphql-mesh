@@ -11,7 +11,7 @@ export const getProductsSearchQuery = stripIgnoredCharacters(
         ${ProductsDetails}
         ${searchFilters}
 
-        query products($filters: SearchProductsFiltersInput!, $includeTax: Boolean) {
+        query productSearch($filters: SearchProductsFiltersInput!, $includeTax: Boolean) {
             site {
                 search {
                     searchProducts(filters: $filters) {

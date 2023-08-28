@@ -1,7 +1,7 @@
 import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '@aligent/utils';
-import { BC_CategoryConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
+import { CategoryConnection } from '@aligent/bigcommerce-operations';
+import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
     const { children, description, entityId, name, path, products, seo } = category;
@@ -26,14 +26,13 @@ export const getTransformedCategoryData = (category: Category): CategoryTree => 
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
         staged: false,
-        // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
         __typename: 'CategoryTree',
     };
 };
 
 export const getTransformedCategoriesData = (
-    categories: BC_CategoryConnection
-): Maybe<Array<Maybe<CategoryInterface>>> => {
+    categories: CategoryConnection
+): Maybe<Array<Maybe<CategoryTree>>> => {
     if (!categories.edges || categories?.edges.length === 0) return null;
 
     return categories.edges.map((category) => {

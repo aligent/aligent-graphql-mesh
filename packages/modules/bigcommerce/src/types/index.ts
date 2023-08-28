@@ -1,4 +1,4 @@
-import { CountryCodeEnum, CustomerAddressInput } from '../../meshrc/.mesh';
+import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];

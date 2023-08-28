@@ -1,6 +1,6 @@
-import { BC_Cart, BC_CartSelectedMultipleChoiceOption } from '@mesh/external/BigCommerceGraphqlApi';
+import { Cart, CartSelectedMultipleChoiceOption } from '@aligent/bigcommerce-operations';
 
-import { CartItemInterface, CurrencyEnum, Maybe } from '@mesh';
+import { CartItemInterface, CurrencyEnum, Maybe } from '@aligent/bigcommerce-resolvers';
 import {
     btoa,
     createCartItemUid,
@@ -11,7 +11,7 @@ import {
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformCartItems = (
-    cartItems?: Maybe<BC_Cart>
+    cartItems?: Maybe<Cart>
 ): Maybe<Array<Maybe<CartItemInterface>>> => {
     if (!cartItems?.lineItems) return null;
 
@@ -41,7 +41,7 @@ export const getTransformCartItems = (
 
         const configurable_options = selectedOptions.map((option) => {
             const { entityId, name, value, valueEntityId } =
-                option as BC_CartSelectedMultipleChoiceOption;
+                option as CartSelectedMultipleChoiceOption;
             return {
                 id: entityId,
                 option_label: name,

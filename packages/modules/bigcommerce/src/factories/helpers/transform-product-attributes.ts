@@ -1,9 +1,9 @@
-import { ConfigurableAttributeOption, Maybe } from '@mesh';
-import { BC_OptionEdge } from '@mesh/external/BigCommerceGraphqlApi';
+import { ConfigurableAttributeOption, Maybe } from '@aligent/bigcommerce-resolvers';
+import { OptionEdge } from '@aligent/bigcommerce-operations';
 import { btoa } from '@aligent/utils';
 
 export const getTransformedProductsAttributes = (options: {
-    edges?: Maybe<Array<Maybe<BC_OptionEdge>>>;
+    edges?: Maybe<Array<Maybe<OptionEdge>>>;
 }): Array<Maybe<ConfigurableAttributeOption>> => {
     if (!options?.edges) return [];
 

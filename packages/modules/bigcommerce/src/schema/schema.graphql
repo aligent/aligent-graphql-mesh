@@ -3153,6 +3153,14 @@ type CategoryProducts {
 Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for.
 """
 input ProductAttributeFilterInput {
+  """
+  Attribute label: Brand
+  """
+  brand: FilterEqualTypeInput
+  """
+  Attribute label: rating
+  """
+  rating: FilterEqualTypeInput
   """Attribute label: Activity"""
   activity: FilterEqualTypeInput
   """Attribute label: Category Gear"""
@@ -10714,17 +10722,4 @@ enum CartErrorType {
   EXISTING_CART_ERROR @deprecated(reason: "")
   NEW_CART_ERROR @deprecated(reason: "")
   NONE @deprecated(reason: "")
-}
-
-# Add Big Commerce specific product attribute filters here so
-# they get added to the Adobe Commerce graphql schema.
-extend input ProductAttributeFilterInput {
-    """
-    Attribute label: Brand
-    """
-    brand: FilterEqualTypeInput
-    """
-    Attribute label: rating
-    """
-    rating: FilterEqualTypeInput
 }

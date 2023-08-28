@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { addProductsToCart, createCart, getCheckout } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { atob, getBcCustomerId } from '@aligent/utils';

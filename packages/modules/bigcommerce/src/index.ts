@@ -11,3 +11,7 @@ export default createModule({
     typeDefs: loadGraphQlFiles(),
     resolvers,
 });
+
+// Export module defined types so they can be used in utils as needed
+// @TODO: Utils dependant on types may need to be moved into this module instead
+export * from './types'

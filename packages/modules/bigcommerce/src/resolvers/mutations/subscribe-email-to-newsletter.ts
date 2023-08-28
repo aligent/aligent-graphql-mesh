@@ -1,4 +1,4 @@
-import { MutationResolvers, SubscribeEmailToNewsletterOutput } from '@mesh';
+import { MutationResolvers, SubscribeEmailToNewsletterOutput } from '@aligent/bigcommerce-resolvers';
 import { createSubscriber } from '../../apis/rest/subscriber';
 import { BcSubscriber } from '../../types';
 

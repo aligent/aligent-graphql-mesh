@@ -1,5 +1,5 @@
 import { bcGraphQlRequest } from './client';
-import { BC_TaxDisplaySettings } from '@mesh/external/BigCommerceGraphqlApi';
+import { TaxDisplaySettings } from '@aligent/bigcommerce-operations';
 import { taxSettings } from './requests/tax-settings';
 import { logAndThrowError } from '@aligent/utils';
 
@@ -12,7 +12,7 @@ import { logAndThrowError } from '@aligent/utils';
  */
 export const getTaxSettings = async (
     customerImpersonationToken: string
-): Promise<BC_TaxDisplaySettings | null> => {
+): Promise<TaxDisplaySettings | null> => {
     /* @todo If possible get the taxSettings from the mesh cache instead of performing a query */
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

@@ -1,13 +1,13 @@
 import { checkout } from './requests/checkout';
 import { bcGraphQlRequest } from './client';
 import { logAndThrowError } from '@aligent/utils';
-import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
+import { Checkout } from '@aligent/bigcommerce-operations';
 
 export const getCheckout = async (
     entityId: string,
     bcCustomerId: number | null,
     customerImpersonationToken: string
-): Promise<BC_Checkout> => {
+): Promise<Checkout> => {
     const cartHeaders = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         // We need to pass the "bcCustomerId" in the headers to valid logged in user carts.

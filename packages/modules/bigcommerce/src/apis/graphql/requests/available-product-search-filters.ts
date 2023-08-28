@@ -4,7 +4,7 @@ import { print } from 'graphql/index';
 
 export const getAvailableProductsSearchFiltersQuery = stripIgnoredCharacters(
     print(gql`
-        query products($filters: SearchProductsFiltersInput!) {
+        query availableProductSearchFilters($filters: SearchProductsFiltersInput!) {
             site {
                 search {
                     searchProducts(filters: $filters) {

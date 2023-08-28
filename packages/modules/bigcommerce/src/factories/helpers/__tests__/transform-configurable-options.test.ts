@@ -1,10 +1,10 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { getTransformedConfigurableOptions } from '../transform-configurable-options';
 import {
-    BC_MultipleChoiceOption,
-    BC_ProductOptionEdge,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe } from '../../../../meshrc/.mesh';
+    MultipleChoiceOption,
+    ProductOptionEdge,
+} from '@aligent/bigcommerce-operations';
+import { Maybe } from '@aligent/bigcommerce-resolvers';
 
 const expectResult = [
     {
@@ -89,7 +89,7 @@ describe('transform-configurable-options', () => {
         expect(
             getTransformedConfigurableOptions({
                 ...mockBcProducts[0].productOptions,
-                edges: [{} as Maybe<BC_ProductOptionEdge>],
+                edges: [{} as Maybe<ProductOptionEdge>],
             })
         ).toEqual([]);
     });
@@ -115,7 +115,7 @@ describe('transform-configurable-options', () => {
                             values: {
                                 edges: [null],
                             },
-                        } as BC_MultipleChoiceOption,
+                        } as MultipleChoiceOption,
                     },
                 ],
             })

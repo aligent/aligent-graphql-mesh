@@ -1,9 +1,9 @@
 import { atob } from '@aligent/utils';
-import { FilterTypeInput, QueryproductsArgs } from '@mesh';
+import { FilterTypeInput, QueryProductsArgs } from '@aligent/bigcommerce-resolvers';
 import {
-    BC_SearchProductsFiltersInput,
-    BC_SearchProductFilterConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    SearchProductsFiltersInput,
+    SearchProductFilterConnection,
+} from '@aligent/bigcommerce-operations';
 
 type createFilterMappingProps = {
     [key: string]: {
@@ -25,7 +25,7 @@ type createFilterMappingProps = {
  * @param availableFilters
  */
 const createFilterMapping = (
-    availableFilters: BC_SearchProductFilterConnection | null
+    availableFilters: SearchProductFilterConnection | null
 ): createFilterMappingProps => {
     if (!availableFilters?.edges || availableFilters?.edges?.length === 0) return null;
 
@@ -37,9 +37,9 @@ const createFilterMapping = (
 };
 
 export const getTransformedProductArgs = (
-    acFilterArgs: QueryproductsArgs,
-    availableBcProductFilters: BC_SearchProductFilterConnection | null
-): BC_SearchProductsFiltersInput => {
+    acFilterArgs: QueryProductsArgs,
+    availableBcProductFilters: SearchProductFilterConnection | null
+): SearchProductsFiltersInput => {
     /* These are base filters we can send to the bc productsSearch query without affecting the results.
      * If we have other filters like "categoryEntityId: []" pre added, this will skew the results
      * or even return no products */

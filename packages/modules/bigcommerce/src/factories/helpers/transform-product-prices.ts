@@ -1,5 +1,5 @@
-import { BC_Money, BC_Prices, BC_VariantConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe, PriceRange, ProductPrices } from '@mesh';
+import { Money, Prices, VariantConnection } from '@aligent/bigcommerce-operations';
+import { Maybe, PriceRange, ProductPrices } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 
 const noPricesResponse = {
@@ -31,13 +31,13 @@ const noPricesResponse = {
  * @param price
  * @param salePrice
  */
-const hasSalesPriceTakenAffect = (price: BC_Money, basePrice: BC_Money) => {
+const hasSalesPriceTakenAffect = (price: Money, basePrice: Money) => {
     /* IMPORTANT: Don't rely on the "salePrice" to work this out as products can have a sales price but
      * it's not the final price displayed to the user and what gets added to the cart*/
     return price.value < basePrice.value;
 };
 
-export const getAmountOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
+export const getAmountOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) => {
     if (!basePrice?.value || !price?.value) return 0;
 
     const isSalePriceTheFinalPrice = hasSalesPriceTakenAffect(price, basePrice);
@@ -47,7 +47,7 @@ export const getAmountOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money
     return basePrice.value - price.value;
 };
 
-export const getPercentOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Money>) => {
+export const getPercentOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) => {
     if (!basePrice?.value || !price?.value) return 0;
 
     const isSalePriceTheFinalPrice = hasSalesPriceTakenAffect(price, basePrice);
@@ -58,8 +58,8 @@ export const getPercentOff = (basePrice?: Maybe<BC_Money>, price?: Maybe<BC_Mone
 };
 
 export const getMostExpensiveVariant = (
-    variants?: Maybe<BC_VariantConnection>
-): Maybe<BC_Prices> | undefined => {
+    variants?: Maybe<VariantConnection>
+): Maybe<Prices> | undefined => {
     if (!variants?.edges) return null;
 
     return variants.edges.reduce(
@@ -75,9 +75,9 @@ export const getMostExpensiveVariant = (
 };
 
 export const getTransformedPriceRange = (
-    prices: Maybe<BC_Prices>,
+    prices: Maybe<Prices>,
     productType: 'SimpleProduct' | 'ConfigurableProduct',
-    variants?: Maybe<BC_VariantConnection>
+    variants?: Maybe<VariantConnection>
 ): PriceRange => {
     if (!prices) return noPricesResponse;
 
@@ -123,7 +123,7 @@ export const getTransformedPriceRange = (
  * This returns deprecated prices but being used in TF
  * @param prices
  */
-export const getTransformedPrices = (prices: Maybe<BC_Prices>): Maybe<ProductPrices> => {
+export const getTransformedPrices = (prices: Maybe<Prices>): Maybe<ProductPrices> => {
     if (!prices) return null;
     return {
         regularPrice: {

@@ -1,12 +1,12 @@
 import { getIsVirtualCart } from '@aligent/utils';
-import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
-import { Cart } from '@mesh';
+import { Checkout } from '@aligent/bigcommerce-operations';
+import { Cart } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
 
-export const getTransformedCartData = (checkoutData: BC_Checkout): Cart => {
+export const getTransformedCartData = (checkoutData: Checkout): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
 

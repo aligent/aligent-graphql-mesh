@@ -1,4 +1,4 @@
-import { CmsPage } from '../../../meshrc/.mesh';
+import { CmsPage } from '@aligent/bigcommerce-resolvers';
 
 export const mockCmsPage: CmsPage = {
     url_key: 'home',

@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { bcLogin } from '../../apis/graphql/login';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;

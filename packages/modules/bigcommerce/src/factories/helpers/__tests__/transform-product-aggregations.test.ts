@@ -6,11 +6,11 @@ import {
     getTransformedProductAggregations,
 } from '../transform-product-aggregations';
 import {
-    BC_BrandSearchFilter,
-    BC_ProductAttributeSearchFilterItemConnection,
-    BC_RatingSearchFilter,
-    BC_SearchProductFilterConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    BrandSearchFilter,
+    ProductAttributeSearchFilterItemConnection,
+    RatingSearchFilter,
+    SearchProductFilterConnection,
+} from '@aligent/bigcommerce-operations';
 
 const expectedResult = [
     {
@@ -86,38 +86,38 @@ describe('transform-product-aggregations', () => {
     it('Transforms a BC filters into AC aggregations', () => {
         expect(
             getTransformedProductAggregations(
-                mockProductFilterBc as BC_SearchProductFilterConnection
+                mockProductFilterBc as SearchProductFilterConnection
             )
         ).toEqual(expectedResult);
     });
 
     it(`returns an empty array if there's no filters`, () => {
-        expect(getTransformedProductAggregations({} as BC_SearchProductFilterConnection)).toEqual(
+        expect(getTransformedProductAggregations({} as SearchProductFilterConnection)).toEqual(
             []
         );
         expect(
-            getTransformedProductAggregations({ edges: [{}] } as BC_SearchProductFilterConnection)
+            getTransformedProductAggregations({ edges: [{}] } as SearchProductFilterConnection)
         ).toEqual([]);
     });
 
     it(`returns an empty array for missing getTransformedAggregationOptions data`, () => {
         expect(
             getTransformedAggregationOptions(
-                { edges: null } as BC_ProductAttributeSearchFilterItemConnection,
+                { edges: null } as ProductAttributeSearchFilterItemConnection,
                 'FilterName'
             )
         ).toEqual([]);
 
         expect(
             getTransformedAggregationOptions(
-                { edges: null } as BC_ProductAttributeSearchFilterItemConnection,
+                { edges: null } as ProductAttributeSearchFilterItemConnection,
                 ''
             )
         ).toEqual([]);
 
         expect(
             getTransformedAggregationOptions(
-                { edges: [{}] } as BC_ProductAttributeSearchFilterItemConnection,
+                { edges: [{}] } as ProductAttributeSearchFilterItemConnection,
                 'FilterName'
             )
         ).toEqual([]);
@@ -128,7 +128,7 @@ describe('transform-product-aggregations', () => {
             getAggregationsFromRatingFilter({
                 name: 'Rating',
                 ratings: { edges: [{}] },
-            } as BC_RatingSearchFilter)
+            } as RatingSearchFilter)
         ).toEqual({
             attribute_code: 'rating',
             count: 0,
@@ -143,7 +143,7 @@ describe('transform-product-aggregations', () => {
             getAggregationsFromBrandFilter({
                 name: 'Brand',
                 brands: { edges: [{}] },
-            } as BC_BrandSearchFilter)
+            } as BrandSearchFilter)
         ).toEqual({
             attribute_code: 'brand',
             count: 0,

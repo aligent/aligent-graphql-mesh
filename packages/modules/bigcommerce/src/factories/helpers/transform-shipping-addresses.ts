@@ -1,5 +1,5 @@
-import { BC_CheckoutShippingConsignment } from '@mesh/external/BigCommerceGraphqlApi';
-import { Cart, Maybe, Scalars, ShippingCartAddress } from '@mesh';
+import { CheckoutShippingConsignment } from '@aligent/bigcommerce-operations';
+import { Cart, Maybe, Scalars, ShippingCartAddress } from '@aligent/bigcommerce-resolvers';
 import { btoa } from '@aligent/utils';
 import {
     getTransformedAvailableShippingMethods,
@@ -8,13 +8,13 @@ import {
 import { getTransformedAddress } from './transform-address';
 
 export const getTransformedShippingAddresses = (
-    shippingConsignments?: Maybe<Array<BC_CheckoutShippingConsignment>>,
+    shippingConsignments?: Maybe<Array<CheckoutShippingConsignment>>,
     customerMessage?: Maybe<Scalars['String']>
 ): Cart['shipping_addresses'] => {
     if (!shippingConsignments) return [];
 
     return shippingConsignments.map(
-        (shippingConsignment: BC_CheckoutShippingConsignment): Maybe<ShippingCartAddress> => {
+        (shippingConsignment: CheckoutShippingConsignment): Maybe<ShippingCartAddress> => {
             const { selectedShippingOption, entityId, availableShippingOptions, address } =
                 shippingConsignment;
 

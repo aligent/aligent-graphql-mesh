@@ -1,5 +1,5 @@
 import { getTransformedCartData } from '../transform-cart-data';
-import { BC_Cart, BC_CouponType } from '@mesh/external/BigCommerceGraphqlApi';
+import { Cart, CouponType } from '@aligent/bigcommerce-operations';
 
 describe('transform-cart-data', () => {
     it('Transforms BC cart data to AC', () => {
@@ -15,7 +15,7 @@ describe('transform-cart-data', () => {
                         customItems: [],
                         giftCertificates: [],
                     },
-                } as unknown as BC_Cart,
+                } as unknown as Cart,
                 customerMessage: null,
                 coupons: [
                     {
@@ -24,7 +24,7 @@ describe('transform-cart-data', () => {
                             currencyCode: 'AUD',
                             value: 10,
                         },
-                        couponType: 'PER_TOTAL_DISCOUNT' as BC_CouponType,
+                        couponType: 'PER_TOTAL_DISCOUNT' as CouponType,
                         code: 'sale',
                     },
                 ],

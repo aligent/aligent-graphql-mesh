@@ -1,4 +1,4 @@
-import { QueryResolvers } from '@mesh';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { mockIsEmailAvailable } from '../mocks/is-email-available';
 
 export const isEmailAvailableResolver: QueryResolvers['isEmailAvailable'] = {

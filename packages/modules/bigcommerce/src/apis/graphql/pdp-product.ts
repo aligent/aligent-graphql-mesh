@@ -1,12 +1,12 @@
-import { BC_Product, BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
+import { Product, SiteRouteArgs } from '@aligent/bigcommerce-operations';
 import { bcGraphQlRequest } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
 import { logAndThrowError } from '@aligent/utils';
 
 export const getBcProductByPathGraphql = async (
-    variables: BC_SiteRouteArgs & { includeTax?: boolean },
+    variables: SiteRouteArgs & { includeTax?: boolean },
     customerImpersonationToken: string
-): Promise<BC_Product> => {
+): Promise<Product> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };

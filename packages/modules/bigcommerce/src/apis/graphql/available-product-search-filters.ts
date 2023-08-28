@@ -1,8 +1,8 @@
 import { bcGraphQlRequest } from './client';
 import {
-    BC_SearchProductFilterConnection,
-    BC_SearchProductsFiltersInput,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    SearchProductFilterConnection,
+    SearchProductsFiltersInput,
+} from '@aligent/bigcommerce-operations';
 import { getAvailableProductsSearchFiltersQuery } from './requests/available-product-search-filters';
 import { logAndThrowError } from '@aligent/utils';
 
@@ -11,9 +11,9 @@ import { logAndThrowError } from '@aligent/utils';
  * @param filters
  */
 export const getBcAvailableProductFilters = async (
-    filters: BC_SearchProductsFiltersInput,
+    filters: SearchProductsFiltersInput,
     customerImpersonationToken: string
-): Promise<BC_SearchProductFilterConnection> => {
+): Promise<SearchProductFilterConnection> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };

@@ -1,4 +1,4 @@
-import { QueryResolvers } from '@mesh';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { createCmsBlocksMock } from '../mocks/cms-blocks';
 
 export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {

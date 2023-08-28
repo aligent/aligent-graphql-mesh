@@ -6,7 +6,7 @@ import {
     getTransformedPrices,
 } from '../transform-product-prices';
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { BC_PageInfo } from '@mesh/external/BigCommerceGraphqlApi';
+import { PageInfo } from '@aligent/bigcommerce-operations';
 
 describe('transform-product-prices', () => {
     it('Transforms BC product prices to a AC priceRange structure', () => {
@@ -84,7 +84,7 @@ describe('transform-product-prices', () => {
                     node: { ...mockBcProducts[0].variants.edges[1].node, prices: null },
                 },
             ],
-            pageInfo: {} as BC_PageInfo,
+            pageInfo: {} as PageInfo,
         };
 
         expect(getMostExpensiveVariant(variants)).toEqual({

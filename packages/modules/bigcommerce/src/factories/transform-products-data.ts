@@ -1,10 +1,10 @@
 import {
-    BC_Product,
-    BC_ProductConnection,
-    BC_ProductOptionConnection,
-    BC_SearchProductFilterConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@mesh';
+    Product,
+    ProductConnection,
+    ProductOptionConnection,
+    SearchProductFilterConnection,
+} from '@aligent/bigcommerce-operations';
+import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '@aligent/utils';
 import { getTransformedVariants } from './helpers/transform-variants';
@@ -20,7 +20,7 @@ import { getTransformedRelatedProducts } from './helpers/transform-related-produ
 import { logAndThrowError } from '@aligent/utils';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
 
-const getHasVariantOptions = (productOptions: BC_ProductOptionConnection): boolean => {
+const getHasVariantOptions = (productOptions: ProductOptionConnection): boolean => {
     if (!productOptions?.edges || productOptions?.edges.length === 0) return false;
 
     return productOptions.edges.some((productOption) => {
@@ -29,8 +29,8 @@ const getHasVariantOptions = (productOptions: BC_ProductOptionConnection): boole
 };
 
 export const getTypeName = (
-    bcProduct: BC_Product,
-    productOptions: BC_ProductOptionConnection
+    bcProduct: Product,
+    productOptions: ProductOptionConnection
 ): 'SimpleProduct' | 'ConfigurableProduct' => {
     const { variants } = bcProduct;
 
@@ -48,7 +48,7 @@ export const getTypeName = (
 };
 
 export const getTransformedProductData = (
-    bcProduct: BC_Product
+    bcProduct: Product
 ): Maybe<ProductInterface | ConfigurableProduct> => {
     if (!bcProduct) return null;
 
@@ -110,8 +110,8 @@ export const getTransformedProductData = (
 };
 
 export const getTransformedProductsData = (bcProducts: {
-    products: BC_ProductConnection;
-    filters: BC_SearchProductFilterConnection;
+    products: ProductConnection;
+    filters: SearchProductFilterConnection;
 }): Maybe<Products> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;

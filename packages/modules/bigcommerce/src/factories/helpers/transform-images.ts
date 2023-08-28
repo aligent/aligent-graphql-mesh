@@ -1,6 +1,6 @@
 import crypto from 'crypto';
-import { BC_ImageEdge, BC_Image } from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe, MediaGalleryEntry, ProductImage } from '@mesh';
+import { ImageEdge, Image } from '@aligent/bigcommerce-operations';
+import { Maybe, MediaGalleryEntry, ProductImage } from '@aligent/bigcommerce-resolvers';
 
 export const DEFAULT_IMAGE =
     'https://cdn11.bigcommerce.com/s-xxazhvt7gd/stencil/15eec2b0-e387-0138-ad46-0242ac110007/e/ec579c80-7d66-0139-f0a8-5273ac5aab0b/img/ProductDefault.gif';
@@ -21,7 +21,7 @@ const createImageIdFromUrl = (url?: string): number | null => {
 };
 
 export const getTransformedImage = (
-    image?: Maybe<BC_Image>,
+    image?: Maybe<Image>,
     position?: number | undefined
 ): Maybe<MediaGalleryEntry> => {
     if (!image) return null;
@@ -40,7 +40,7 @@ export const getTransformedImage = (
 };
 
 export const getTransformedMediaGalleryEntries = (images: {
-    edges?: Maybe<Array<Maybe<BC_ImageEdge>>>;
+    edges?: Maybe<Array<Maybe<ImageEdge>>>;
 }): Array<Maybe<MediaGalleryEntry>> => {
     if (!images?.edges || !images?.edges.length) return [];
 
@@ -52,6 +52,6 @@ export const getTransformedMediaGalleryEntries = (images: {
         .filter(Boolean);
 };
 
-export const getTransformedSmallImage = (defaultImage?: Maybe<BC_Image>): Maybe<ProductImage> => ({
+export const getTransformedSmallImage = (defaultImage?: Maybe<Image>): Maybe<ProductImage> => ({
     url: defaultImage?.url || DEFAULT_IMAGE,
 });

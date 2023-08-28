@@ -1,4 +1,4 @@
-import { MutationResolvers, UpdateCartItemsOutput } from '@mesh';
+import { MutationResolvers, UpdateCartItemsOutput } from '@aligent/bigcommerce-resolvers';
 import { getCheckout } from '../../apis/graphql/checkout';
 import { updateCartLineItem } from '../../apis/graphql/cart';
 import { getBcCustomerId, getDeconstructedCartItemUid } from '@aligent/utils';

@@ -1,21 +1,21 @@
 import {
-    BC_Cart,
-    BC_CheckoutCoupon,
-    BC_CheckoutTax,
-    BC_Money,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { CartPrices, CurrencyEnum, Maybe } from '@mesh';
+    Cart,
+    CheckoutCoupon,
+    CheckoutTax,
+    Money,
+} from '@aligent/bigcommerce-operations';
+import { CartPrices, CurrencyEnum, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 
 type Prices = {
-    coupons: Array<BC_CheckoutCoupon>;
-    grandTotal?: Maybe<BC_Money>;
-    subtotal?: Maybe<BC_Money>;
-    taxes?: Maybe<Array<BC_CheckoutTax>>;
-    taxTotal?: Maybe<BC_Money>;
+    coupons: Array<CheckoutCoupon>;
+    grandTotal?: Maybe<Money>;
+    subtotal?: Maybe<Money>;
+    taxes?: Maybe<Array<CheckoutTax>>;
+    taxTotal?: Maybe<Money>;
 };
 
-export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<BC_Cart>): CartPrices => {
+export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<Cart>): CartPrices => {
     const { coupons, grandTotal, taxes, taxTotal } = prices;
 
     const applied_taxes =
@@ -47,7 +47,7 @@ export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<BC_Cart>):
     const subtotal_excluding_tax = cart?.baseAmount?.value
         ? getTransformedPrice({
               value: cart.baseAmount.value - taxTotal?.value || 0,
-              currencyCode: cart.baseAmount.currencyCode,
+              currency: cart.baseAmount.currencyCode as CurrencyEnum,
           })
         : null;
 

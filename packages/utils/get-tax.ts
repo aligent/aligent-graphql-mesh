@@ -1,6 +1,6 @@
-import { BC_Money, BC_TaxPriceDisplay } from '@mesh/external/BigCommerceGraphqlApi';
+import { Money, TaxPriceDisplay } from '@aligent/bigcommerce-operations';
 
-export const getIncludesTax = (priceDisplay?: BC_TaxPriceDisplay | null): boolean => {
+export const getIncludesTax = (priceDisplay?: TaxPriceDisplay | null): boolean => {
     if (!priceDisplay) return true;
     return ['INC', 'BOTH'].includes(priceDisplay);
 };
@@ -13,7 +13,7 @@ export const getIncludesTax = (priceDisplay?: BC_TaxPriceDisplay | null): boolea
  * @param listPrice
  * @param salePrice
  */
-export const getGstPercentBetweenPrices = (listPrice: BC_Money, salePrice: BC_Money): number => {
+export const getGstPercentBetweenPrices = (listPrice: Money, salePrice: Money): number => {
     if (listPrice.value === salePrice.value) return 0;
 
     return Math.round(((listPrice.value - salePrice.value) / salePrice.value) * 100);

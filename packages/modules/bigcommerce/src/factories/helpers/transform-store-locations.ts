@@ -1,21 +1,21 @@
-import { QuerystoreLocationsArgs, StoreLocation, StoreLocations } from '@mesh';
+import { QueryStoreLocationsArgs, StoreLocation, StoreLocations } from '@aligent/bigcommerce-resolvers';
 import {
-    BC_CountryCode,
-    BC_DistanceFilter,
-    BC_InventoryLocationConnection,
-    BC_InventoryLocationsArgs,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    CountryCode,
+    DistanceFilter,
+    InventoryLocationConnection,
+    InventoryLocationsArgs,
+} from '@aligent/bigcommerce-operations';
 
 export const getTransformedStoreLocationsArgs = (
-    acStoreLocationsArgs: QuerystoreLocationsArgs
-): BC_InventoryLocationsArgs => {
+    acStoreLocationsArgs: QueryStoreLocationsArgs
+): InventoryLocationsArgs => {
     const { area, filters } = acStoreLocationsArgs;
     const applyDistanceFilter =
         area?.coordinates &&
         Object.keys(area?.coordinates).length &&
         area?.radius &&
         area?.search_term;
-    const bc_InventoryLocationsArgs: BC_InventoryLocationsArgs = {
+    const InventoryLocationsArgs: InventoryLocationsArgs = {
         countryCodes: [],
         states: [],
         cities: [],
@@ -31,20 +31,20 @@ export const getTransformedStoreLocationsArgs = (
 
     if (area) {
         const { radius, search_term, coordinates } = area;
-        bc_InventoryLocationsArgs.cities = [search_term];
+        InventoryLocationsArgs.cities = [search_term];
 
-        // BC_DistanceFilter requires all of radius, lengthUnit, longitude and latitude
+        // DistanceFilter requires all of radius, lengthUnit, longitude and latitude
         // and radius works with this coordinates only
         // TODO: Converting suburb/postcode to coordinates after AC args passed in
         if (coordinates && Object.keys(coordinates).length && radius) {
-            (bc_InventoryLocationsArgs.distanceFilter as BC_DistanceFilter).radius = radius;
-            (bc_InventoryLocationsArgs.distanceFilter as BC_DistanceFilter).lengthUnit =
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).radius = radius;
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).lengthUnit =
                 'Kilometres';
 
             const { lat, lng } = coordinates;
-            (bc_InventoryLocationsArgs.distanceFilter as BC_DistanceFilter).longitude =
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).longitude =
                 lng as number;
-            (bc_InventoryLocationsArgs.distanceFilter as BC_DistanceFilter).latitude =
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).latitude =
                 lat as number;
         }
     }
@@ -53,18 +53,18 @@ export const getTransformedStoreLocationsArgs = (
         const { country_id, region } = filters;
 
         if (country_id?.eq) {
-            bc_InventoryLocationsArgs.countryCodes = [country_id.eq as BC_CountryCode];
+            InventoryLocationsArgs.countryCodes = [country_id.eq as CountryCode];
         }
         if (region?.eq) {
-            bc_InventoryLocationsArgs.states = [region.eq];
+            InventoryLocationsArgs.states = [region.eq];
         }
     }
 
-    return bc_InventoryLocationsArgs;
+    return InventoryLocationsArgs;
 };
 
 export const getTransformedStoreLocationItems = (
-    bcStoreLocations: BC_InventoryLocationConnection
+    bcStoreLocations: InventoryLocationConnection
 ): StoreLocations => {
     const locationItems: StoreLocation[] | undefined = bcStoreLocations.edges?.map((location) => {
         return {

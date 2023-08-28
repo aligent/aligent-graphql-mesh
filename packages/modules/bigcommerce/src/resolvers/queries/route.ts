@@ -3,8 +3,8 @@ import { mockCmsPage } from '../mocks/cms-page';
 import { getRoute } from '../../apis/graphql/route';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
-import { QueryResolvers, RoutableInterface } from '@mesh';
-import { BC_Product } from '@mesh/external/BigCommerceGraphqlApi';
+import { QueryResolvers, RoutableInterface } from '@aligent/bigcommerce-resolvers';
+import { Product } from '@aligent/bigcommerce-operations';
 import { Category } from '../../types';
 import { getTaxSettings } from '../../apis/graphql/settings';
 import { getIncludesTax } from '@aligent/utils';
@@ -48,7 +48,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
     }
 
     if (__typename === 'Product') {
-        const transformedProductData = getTransformedProductData(data as unknown as BC_Product);
+        const transformedProductData = getTransformedProductData(data as unknown as Product);
         return {
             type: 'PRODUCT',
             redirect_code: 0,

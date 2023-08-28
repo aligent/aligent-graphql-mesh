@@ -1,6 +1,6 @@
 import { getTransformedReviews } from '../transform-reviews';
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { BC_PageInfo, BC_ReviewEdge } from '@mesh/external/BigCommerceGraphqlApi';
+import { PageInfo, ReviewEdge } from '@aligent/bigcommerce-operations';
 
 describe('transform-reviews', () => {
     it(`transforms a bc review structure to a AC format`, () => {
@@ -25,11 +25,11 @@ describe('transform-reviews', () => {
             items: [],
             page_info: { current_page: 0, page_size: 0, total_pages: 0 },
         };
-        expect(getTransformedReviews({ edges: null, pageInfo: {} as BC_PageInfo })).toEqual(
+        expect(getTransformedReviews({ edges: null, pageInfo: {} as PageInfo })).toEqual(
             expectedResult
         );
         expect(
-            getTransformedReviews({ edges: [{} as BC_ReviewEdge], pageInfo: {} as BC_PageInfo })
+            getTransformedReviews({ edges: [{} as ReviewEdge], pageInfo: {} as PageInfo })
         ).toEqual(expectedResult);
     });
 });

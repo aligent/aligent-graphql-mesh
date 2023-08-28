@@ -1,7 +1,7 @@
-import { BC_Review, BC_ReviewConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe, ProductInterface, ProductReview, ProductReviews } from '@mesh';
+import { Review, ReviewConnection } from '@aligent/bigcommerce-operations';
+import { Maybe, ProductInterface, ProductReview, ProductReviews } from '@aligent/bigcommerce-resolvers';
 
-export const getTransformedReview = (review: BC_Review): Maybe<ProductReview> => {
+export const getTransformedReview = (review: Review): Maybe<ProductReview> => {
     const { author, createdAt, rating, text, title } = review;
     return {
         ratings_breakdown: [
@@ -20,7 +20,7 @@ export const getTransformedReview = (review: BC_Review): Maybe<ProductReview> =>
     };
 };
 
-export const getTransformedReviews = (reviews: BC_ReviewConnection): ProductReviews => {
+export const getTransformedReviews = (reviews: ReviewConnection): ProductReviews => {
     const reviewItems = reviews.edges
         ? reviews.edges
               .map((review) => {

@@ -1,4 +1,4 @@
-import { AddProductsToWishlistOutput, MutationResolvers } from '@mesh';
+import { AddProductsToWishlistOutput, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { mockAddProductsToWishlist } from '../mocks/add-products-to-wishlist';
 
 export const addProductsToWishlistResolver: MutationResolvers['addProductsToWishlist'] = {

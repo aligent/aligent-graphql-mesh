@@ -1,4 +1,4 @@
-import { Cart, QueryResolvers } from '@mesh';
+import { Cart, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getCheckout } from '../../apis/graphql';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getBcCustomerId } from '@aligent/utils';

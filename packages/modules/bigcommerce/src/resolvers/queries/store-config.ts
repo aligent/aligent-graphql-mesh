@@ -1,5 +1,5 @@
-import { BC_MetafieldConnection, BC_MetafieldEdge } from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe, QueryResolvers, StoreConfig } from '@mesh';
+import { MetafieldConnection, MetafieldEdge } from '@aligent/bigcommerce-operations';
+import { Maybe, QueryResolvers, StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getChannelMetafields } from '../../apis/graphql/channel';
 
 const NAMESPACE: string = 'pwa_config';
@@ -11,7 +11,7 @@ export const storeConfigResolver: QueryResolvers['storeConfig'] = {
             'customerImpersonationToken'
         )) as string;
         //The namespace needs to match the metafield namespace when created in BigCommerce
-        const bcChannelMetafieldsConfig: BC_MetafieldConnection = await getChannelMetafields(
+        const bcChannelMetafieldsConfig: MetafieldConnection = await getChannelMetafields(
             NAMESPACE,
             customerImpersonationToken
         );
@@ -30,7 +30,7 @@ export const storeConfigResolver: QueryResolvers['storeConfig'] = {
  * Docs: https://developer.bigcommerce.com/docs/rest-management/channels/channel-metafields#create-a-channel-metafield
  */
 export async function transformChannelMetafieldsToStoreConfig(
-    bcStoreConfig: BC_MetafieldConnection
+    bcStoreConfig: MetafieldConnection
 ): Promise<StoreConfig> {
     const metafields = bcStoreConfig.edges;
 
@@ -62,7 +62,7 @@ export async function transformChannelMetafieldsToStoreConfig(
 }
 
 export function findMetafieldValueByKey(
-    metafields: Maybe<BC_MetafieldEdge>[],
+    metafields: Maybe<MetafieldEdge>[],
     metafieldKey: string
 ): string {
     const metafieldValue = metafields.find((node) => {

@@ -1,12 +1,13 @@
 import {
-    BC_CheckoutBillingAddress,
-    BC_CheckoutConsignmentAddress,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { BillingCartAddress, Maybe, ShippingCartAddress } from '@mesh';
+    CheckoutBillingAddress,
+    CheckoutConsignmentAddress,
+} from '@aligent/bigcommerce-operations';
+import { BillingCartAddress, Maybe, ShippingCartAddress } from '@aligent/bigcommerce-resolvers';
+import { CartAddressInterface } from '@mesh';
 
 export const getTransformedAddress = (
-    bcAddress: BC_CheckoutConsignmentAddress | BC_CheckoutBillingAddress
-): ShippingCartAddress => {
+    bcAddress: CheckoutConsignmentAddress | CheckoutBillingAddress
+): CartAddressInterface => {
     const {
         stateOrProvinceCode,
         stateOrProvince,
@@ -43,7 +44,7 @@ export const getTransformedAddress = (
 };
 
 export const getTransformedBillingAddress = (
-    billingAddress?: Maybe<BC_CheckoutBillingAddress>
+    billingAddress?: Maybe<CheckoutBillingAddress>
 ): Maybe<BillingCartAddress> => {
     if (!billingAddress) return null;
     return getTransformedAddress(billingAddress);

@@ -1,9 +1,9 @@
 import { mockBcCart } from './cart.bc';
 import {
-    BC_CheckoutAddressCheckboxesCustomField,
-    BC_CheckoutAddressTextFieldCustomField,
-    BC_CouponType,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    CheckoutAddressCheckboxesCustomField,
+    CheckoutAddressTextFieldCustomField,
+    CouponType,
+} from '@aligent/bigcommerce-operations';
 
 export const mockBcCheckout = {
     id: 'Q2hlY2tvdXQ6OThiZjRiOTctMTRhOC00ODYwLWFkYTMtNDRhNzgwYzI0ZWI0',
@@ -53,7 +53,7 @@ export const mockBcCheckout = {
                 currencyCode: 'AUD',
                 value: 10.0,
             },
-            couponType: 'PER_TOTAL_DISCOUNT' as BC_CouponType,
+            couponType: 'PER_TOTAL_DISCOUNT' as CouponType,
             code: 'sale',
         },
     ],
@@ -70,11 +70,11 @@ export const mockBcCheckout = {
             {
                 entityId: 26,
                 text: 'My Billing Comment',
-            } as BC_CheckoutAddressTextFieldCustomField,
+            } as CheckoutAddressTextFieldCustomField,
             {
                 entityId: 29,
                 valueEntityIds: [0],
-            } as BC_CheckoutAddressCheckboxesCustomField,
+            } as CheckoutAddressCheckboxesCustomField,
         ],
         countryCode: 'AU',
         company: 'Aligent',
@@ -132,7 +132,7 @@ export const mockBcCheckout = {
                     {
                         valueEntityIds: [0],
                         entityId: 29,
-                    } as BC_CheckoutAddressCheckboxesCustomField,
+                    } as CheckoutAddressCheckboxesCustomField,
                 ],
                 countryCode: 'AU',
                 company: 'Aligent',

@@ -1,20 +1,19 @@
 import {
     ConfigurableProduct,
-    ConfigurableWishlistItem,
     Maybe,
     ProductInterface,
-    SimpleWishlistItem,
     Wishlist,
     WishlistVisibilityEnum,
-} from '@mesh';
+} from '@aligent/bigcommerce-resolvers';
 import {
-    BC_WishlistConnection,
-    BC_WishlistItemConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    WishlistConnection,
+    WishlistItemConnection,
+} from '@aligent/bigcommerce-operations';
 import { getTransformedProductData } from '../transform-products-data';
+import { WishlistItemInterface } from '@mesh';
 
 export const getTransformedWishlists = (
-    wishlists: BC_WishlistConnection
+    wishlists: WishlistConnection
 ): Array<Maybe<Wishlist>> => {
     if (!wishlists.edges) return [];
     return wishlists.edges
@@ -43,8 +42,8 @@ export const getTransformedWishlists = (
 };
 
 export const getTransformedWishListItems = (
-    wishListItems: BC_WishlistItemConnection
-): Array<Maybe<ConfigurableWishlistItem | SimpleWishlistItem>> => {
+    wishListItems: WishlistItemConnection
+): Array<Maybe<WishlistItemInterface>> => {
     if (!wishListItems.edges) return [];
     return wishListItems.edges
         .map((wishlistItem) => {

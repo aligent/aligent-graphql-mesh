@@ -1,4 +1,4 @@
-import { QueryResolvers } from '@mesh';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { mockKeyMessages } from '../mocks/key-messages';
 
 export const keyMessagesResolver: QueryResolvers['keyMessages'] = {

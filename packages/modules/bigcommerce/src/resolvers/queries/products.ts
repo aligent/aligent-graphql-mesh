@@ -1,4 +1,4 @@
-import { Products, QueryResolvers } from '@mesh';
+import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import {
     getTransformedProductData,
     getTransformedProductsData,

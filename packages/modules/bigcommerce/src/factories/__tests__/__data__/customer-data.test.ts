@@ -1,4 +1,4 @@
-import { Customer, CustomerOutput } from '@mesh';
+import { Customer, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 import { BcMutationCustomer } from '../../../types';
 
 // @ts-expect-error: ignore bad non-nullable fields

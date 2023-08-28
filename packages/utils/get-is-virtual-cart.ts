@@ -1,11 +1,11 @@
-import { BC_CartLineItems } from '@mesh/external/BigCommerceGraphqlApi';
+import { CartLineItems } from '@aligent/bigcommerce-operations';
 import { Scalars } from '../mesh/.mesh';
 
 /**
  * Indicates if the cart only has virtual items
  * @param lineItems
  */
-export const getIsVirtualCart = (lineItems: BC_CartLineItems | undefined): Scalars['Boolean'] => {
+export const getIsVirtualCart = (lineItems: CartLineItems | undefined): boolean => {
     if (!lineItems) return false;
 
     const { customItems, digitalItems, giftCertificates, physicalItems } = lineItems;

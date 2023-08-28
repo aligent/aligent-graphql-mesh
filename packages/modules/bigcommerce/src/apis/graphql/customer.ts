@@ -1,4 +1,4 @@
-import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
+import { Customer } from '@aligent/bigcommerce-operations';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
 import { logAndThrowError } from '@aligent/utils';
@@ -6,7 +6,7 @@ import { logAndThrowError } from '@aligent/utils';
 export const getBcCustomer = async (
     bcCustomerId: number,
     customerImpersonationToken: string
-): Promise<BC_Customer> => {
+): Promise<Customer> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,

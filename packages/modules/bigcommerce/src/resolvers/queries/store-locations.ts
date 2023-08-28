@@ -1,6 +1,6 @@
-import { QueryResolvers } from '@mesh';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getBcStoreLocationsGraphql } from '../../apis/graphql/store-locations';
-import { BC_InventoryLocationsArgs } from '@mesh/external/BigCommerceGraphqlApi';
+import { InventoryLocationsArgs } from '@aligent/bigcommerce-operations';
 import {
     getTransformedStoreLocationItems,
     getTransformedStoreLocationsArgs,
@@ -11,7 +11,7 @@ export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const variables: BC_InventoryLocationsArgs = getTransformedStoreLocationsArgs(args);
+        const variables: InventoryLocationsArgs = getTransformedStoreLocationsArgs(args);
         const bcStoreLocations = await getBcStoreLocationsGraphql(
             variables,
             customerImpersonationToken

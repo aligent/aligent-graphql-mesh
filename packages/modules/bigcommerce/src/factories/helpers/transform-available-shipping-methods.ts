@@ -1,12 +1,12 @@
 import {
-    BC_CheckoutAvailableShippingOption,
-    BC_CheckoutSelectedShippingOption,
-} from '@mesh/external/BigCommerceGraphqlApi';
-import { AvailableShippingMethod, Maybe, SelectedShippingMethod } from '@mesh';
+    CheckoutAvailableShippingOption,
+    CheckoutSelectedShippingOption,
+} from '@aligent/bigcommerce-operations';
+import { AvailableShippingMethod, Maybe, SelectedShippingMethod } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformedAvailableShippingMethod = (
-    shippingOption: BC_CheckoutAvailableShippingOption | BC_CheckoutSelectedShippingOption
+    shippingOption: CheckoutAvailableShippingOption | CheckoutSelectedShippingOption
 ): AvailableShippingMethod => {
     const { type, entityId, description, cost } = shippingOption;
     return {
@@ -26,7 +26,7 @@ export const getTransformedAvailableShippingMethod = (
 };
 
 export const getTransformedAvailableShippingMethods = (
-    availableShippingOptions?: Maybe<Array<BC_CheckoutAvailableShippingOption>>
+    availableShippingOptions?: Maybe<Array<CheckoutAvailableShippingOption>>
 ): Maybe<Array<Maybe<AvailableShippingMethod>>> => {
     if (!availableShippingOptions) return null;
 
@@ -36,7 +36,7 @@ export const getTransformedAvailableShippingMethods = (
 };
 
 export const getTransformedSelectedShippingOption = (
-    selectedShippingOption?: Maybe<BC_CheckoutSelectedShippingOption>
+    selectedShippingOption?: Maybe<CheckoutSelectedShippingOption>
 ): Maybe<SelectedShippingMethod> => {
     if (!selectedShippingOption) return null;
 
@@ -44,6 +44,7 @@ export const getTransformedSelectedShippingOption = (
 
     return {
         ...transformedShippingMethod,
+        __typename: "SelectedShippingMethod",
         method_code: selectedShippingOption.entityId,
         method_title: selectedShippingOption.description,
     };

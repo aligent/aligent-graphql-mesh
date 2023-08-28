@@ -1,6 +1,6 @@
 import { getSocialLinks } from '../../apis/graphql/channel';
 import { getTransformedSocialLinks } from '../../factories/transform-social-links';
-import { QueryResolvers } from '@mesh';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 
 export const getSocialLinksResolver: QueryResolvers['getSocialLinks'] = {
     resolve: async (_root, _args, context, _info) => {

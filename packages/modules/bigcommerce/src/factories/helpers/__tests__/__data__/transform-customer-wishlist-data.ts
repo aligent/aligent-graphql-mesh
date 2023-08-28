@@ -1,7 +1,7 @@
 import {
-    BC_WishlistConnection,
-    BC_WishlistItemConnection,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    WishlistConnection,
+    WishlistItemConnection,
+} from '@aligent/bigcommerce-operations';
 
 export const bcWishlistNoEdges = {
     pageInfo: {
@@ -12,7 +12,7 @@ export const bcWishlistNoEdges = {
     },
 };
 
-export const bcWishListNoItemEdges: BC_WishlistConnection = {
+export const bcWishListNoItemEdges: WishlistConnection = {
     edges: [
         {
             cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
@@ -40,7 +40,7 @@ export const bcWishListNoItemEdges: BC_WishlistConnection = {
     },
 };
 
-export const bcWishList: BC_WishlistConnection = {
+export const bcWishList: WishlistConnection = {
     edges: [
         {
             cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
@@ -867,7 +867,7 @@ export const transformedWishlistItems = [
     },
 ];
 
-export const bcWishListItems: BC_WishlistItemConnection = {
+export const bcWishListItems: WishlistItemConnection = {
     edges: [
         {
             cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
@@ -1300,7 +1300,7 @@ export const bcWishListItems: BC_WishlistItemConnection = {
     },
 };
 
-export const bcWishListItemsEmpty: BC_WishlistItemConnection = {
+export const bcWishListItemsEmpty: WishlistItemConnection = {
     edges: [],
     pageInfo: {
         hasNextPage: false,
@@ -1310,7 +1310,7 @@ export const bcWishListItemsEmpty: BC_WishlistItemConnection = {
     },
 };
 
-export const bcWishListItemsNoEdges: BC_WishlistItemConnection = {
+export const bcWishListItemsNoEdges: WishlistItemConnection = {
     pageInfo: {
         hasNextPage: false,
         hasPreviousPage: false,

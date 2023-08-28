@@ -1,6 +1,6 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { BC_OptionEdge } from '@mesh/external/BigCommerceGraphqlApi';
-import { Maybe } from '../../../../meshrc/.mesh';
+import { OptionEdge } from '@aligent/bigcommerce-operations';
+import { Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsAttributes } from '../transform-product-attributes';
 
 const expectResult = [
@@ -13,7 +13,7 @@ describe('transform-product-options', () => {
         expect(
             getTransformedProductsAttributes(
                 mockBcProducts[0].variants.edges[0].node.options as {
-                    edges: Array<Maybe<BC_OptionEdge>>;
+                    edges: Array<Maybe<OptionEdge>>;
                 }
             )
         ).toEqual(expectResult);
@@ -30,7 +30,7 @@ describe('transform-product-options', () => {
     it(`Returns and empty array when there's no values for an option`, () => {
         expect(
             getTransformedProductsAttributes({ edges: [{ node: { values: { edges: null } } }] } as {
-                edges: Array<Maybe<BC_OptionEdge>>;
+                edges: Array<Maybe<OptionEdge>>;
             })
         ).toEqual([]);
     });

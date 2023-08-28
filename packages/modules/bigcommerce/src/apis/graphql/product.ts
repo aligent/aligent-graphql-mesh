@@ -1,21 +1,21 @@
 import { logAndThrowError } from '@aligent/utils';
 import { bcGraphQlRequest } from './client';
 import {
-    BC_ProductConnection,
-    BC_SearchProductFilterConnection,
-    BC_SearchProductsFiltersInput,
-} from '@mesh/external/BigCommerceGraphqlApi';
+    ProductConnection,
+    SearchProductFilterConnection,
+    SearchProductsFiltersInput,
+} from '@aligent/bigcommerce-operations';
 import { getProductsSearchQuery } from './requests/product-search';
 
 export const getBcProductsGraphql = async (
     variables: {
-        filters: BC_SearchProductsFiltersInput;
+        filters: SearchProductsFiltersInput;
         includeTax?: boolean;
     },
     customerImpersonationToken: string
 ): Promise<{
-    products: BC_ProductConnection;
-    filters: BC_SearchProductFilterConnection;
+    products: ProductConnection;
+    filters: SearchProductFilterConnection;
 } | null> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

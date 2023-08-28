@@ -1,5 +1,5 @@
 import { getTransformedProductArgs } from '../transform-product-search-arguments';
-import { BC_SearchProductFilterConnection } from '@mesh/external/BigCommerceGraphqlApi';
+import { SearchProductFilterConnection } from '@aligent/bigcommerce-operations';
 
 const availableFilters = {
     edges: [
@@ -42,7 +42,7 @@ const availableFilters = {
             },
         },
     ],
-} as BC_SearchProductFilterConnection;
+} as SearchProductFilterConnection;
 
 const filtersEqArgs = {
     currentPage: 1,

@@ -1,5 +1,5 @@
-import { CustomerAddressInput } from '@mesh';
-import { CustomerAddressUpdateValidated } from '../../bigcommerce/types';
+import { CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
+import { CustomerAddressUpdateValidated } from '@aligent/bigcommerce-graphql-module';
 
 export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => {
     return !!(

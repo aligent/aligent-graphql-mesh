@@ -1,4 +1,4 @@
-import { QueryResolvers } from '../../../meshrc/.mesh';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 
 export const productReviewRatingsMetadataResolver: QueryResolvers['productReviewRatingsMetadata'] =
     {

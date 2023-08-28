@@ -1,4 +1,4 @@
-import { MutationResolvers } from '@mesh';
+import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 
 export const createProductReviewResolver: MutationResolvers['createProductReview'] = {
     resolve: (_root, _args, _context, _info) => {

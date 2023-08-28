@@ -1,10 +1,10 @@
 import { logAndThrowError } from '@aligent/utils';
 import { bcGraphQlRequest } from './client';
 import { getRouteQuery } from './requests/route';
-import { BC_SiteRouteArgs } from '@mesh/external/BigCommerceGraphqlApi';
+import { SiteRouteArgs } from '@aligent/bigcommerce-operations';
 
 export const getRoute = async (
-    variables: BC_SiteRouteArgs & { includeTax?: boolean },
+    variables: SiteRouteArgs & { includeTax?: boolean },
     customerImpersonationToken: string
 ) => {
     const headers = {
