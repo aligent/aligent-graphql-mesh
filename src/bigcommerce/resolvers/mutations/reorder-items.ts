@@ -75,7 +75,7 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             root,
             {
                 // A new cart will be created if one doesn't exist
-                cartId: customerCheckout?.cart ? cartId : '',
+                cartId: customerCheckout?.cart ? cartId || '' : '',
                 cartItems,
             },
             context,

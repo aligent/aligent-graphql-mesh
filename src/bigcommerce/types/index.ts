@@ -97,7 +97,7 @@ export interface BcAddress {
     phone?: string;
     address_type?: string;
     company?: string;
-    form_fields?: FormField[]
+    form_fields: FormField[] | [];
 }
 
 export interface DecodedCustomerImpersonationToken {
@@ -134,12 +134,17 @@ export interface BcAddressRest {
     phone: string;
     postal_code: string;
     state_or_province: string;
-    form_fields: FormField[];
+    form_fields: FormField[] | [];
 }
 
 export interface FormField {
     name: string;
-    value: string[] | string | never[];
+    value: string | string[] | number | number[];
+}
+
+export interface DefaultBillingOrShippingField extends FormField {
+    name: 'Default Billing' | 'Default Shipping';
+    value: ['Yes'] | [];
 }
 
 export interface BcSubscriber {
