@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 
-const BC_REST_API = process.env.BC_REST_API as string;
+const STORE_HASH = process.env.STORE_HASH as string;
+const BC_REST_API = `https://api.bigcommerce.com/stores/${STORE_HASH}`;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
 
 const headers = {
