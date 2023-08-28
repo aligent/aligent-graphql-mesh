@@ -1,3 +1,4 @@
+import { BC_BreadcrumbConnection } from '@mesh/external/BigCommerceGraphqlApi';
 import { CountryCodeEnum, CustomerAddressInput } from '../../meshrc/.mesh';
 
 export interface BcGraphqlTokenData {
@@ -81,6 +82,7 @@ export interface BcCategory {
         metaDescription: string;
         pageTitle: string;
     };
+    breadcrumbs?: BC_BreadcrumbConnection;
 }
 
 export interface BcAddress {

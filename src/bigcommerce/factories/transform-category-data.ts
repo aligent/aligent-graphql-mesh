@@ -1,10 +1,13 @@
 import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '../../utils';
-import { BC_CategoryConnection } from '@mesh/external/BigCommerceGraphqlApi';
-import { CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
+import {
+    BC_BreadcrumbConnection,
+    BC_CategoryConnection,
+} from '@mesh/external/BigCommerceGraphqlApi';
+import { Breadcrumb, CategoryInterface, CategoryTree, Maybe } from '../../meshrc/.mesh';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
-    const { children, description, entityId, name, path, products, seo } = category;
+    const { children, description, entityId, name, path, products, seo, breadcrumbs } = category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
     const { metaDescription, pageTitle } = seo || {};
@@ -26,6 +29,7 @@ export const getTransformedCategoryData = (category: Category): CategoryTree => 
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
         staged: false,
+        breadcrumbs: getTransformedBreadcrumbsData(breadcrumbs),
         // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
         __typename: 'CategoryTree',
     };
@@ -39,5 +43,22 @@ export const getTransformedCategoriesData = (
     return categories.edges.map((category) => {
         if (!category?.node) return null;
         return getTransformedCategoryData(category.node);
+    });
+};
+
+const getTransformedBreadcrumbsData = (
+    breadcrumbs: BC_BreadcrumbConnection | undefined
+): Maybe<Array<Maybe<Breadcrumb>>> => {
+    if (!breadcrumbs?.edges) return null;
+
+    return breadcrumbs.edges.map((node, index) => {
+        if (!node?.node) return null;
+        return {
+            category_level: index,
+            category_name: node.node.name,
+            category_url_path: node.node.path,
+            category_url_key: null,
+            category_uid: '',
+        };
     });
 };
