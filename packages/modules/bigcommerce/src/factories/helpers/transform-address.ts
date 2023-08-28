@@ -2,8 +2,7 @@ import {
     CheckoutBillingAddress,
     CheckoutConsignmentAddress,
 } from '@aligent/bigcommerce-operations';
-import { BillingCartAddress, Maybe, ShippingCartAddress } from '@aligent/bigcommerce-resolvers';
-import { CartAddressInterface } from '@mesh';
+import { BillingCartAddress, Maybe, CartAddressInterface } from '@aligent/bigcommerce-resolvers';
 
 export const getTransformedAddress = (
     bcAddress: CheckoutConsignmentAddress | CheckoutBillingAddress

@@ -4,13 +4,13 @@ import {
     ProductInterface,
     Wishlist,
     WishlistVisibilityEnum,
+    WishlistItemInterface
 } from '@aligent/bigcommerce-resolvers';
 import {
     WishlistConnection,
     WishlistItemConnection,
 } from '@aligent/bigcommerce-operations';
 import { getTransformedProductData } from '../transform-products-data';
-import { WishlistItemInterface } from '@mesh';
 
 export const getTransformedWishlists = (
     wishlists: WishlistConnection

@@ -32,8 +32,6 @@ plugins:
       token: '{env.HIVE_TOKEN}'
       usage: !include '${STAGE}/hive-usage.yml'
 
-codegen:
-  contextType: ../types#GraphQlContext
 
 serve: !include '${STAGE}/serve.yml'
 cache: !include '${STAGE}/cache.yml'

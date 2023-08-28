@@ -1,5 +1,5 @@
 import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
-
+import { KeyValueCache, Logger } from '@graphql-mesh/types';
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -172,4 +172,15 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
 
 export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
     id: number;
+}
+
+// Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
+declare global {
+    namespace GraphQLModules {
+        interface GlobalContext {
+            headers: Record<string, string>,
+            cache: KeyValueCache;
+            logger: Logger;
+        }
+    }
 }

@@ -1,4 +1,3 @@
-import { GraphQlContext } from '../mesh/types';
 import { getBcCustomerIdFromMeshToken } from './tokens';
 
 /**
@@ -7,7 +6,7 @@ import { getBcCustomerIdFromMeshToken } from './tokens';
  * in.
  * @param context
  */
-export const getBcCustomerId = (context: GraphQlContext): number | null => {
+export const getBcCustomerId = (context: GraphQLModules.Context): number | null => {
     const hasAuthHeader = !!context.headers?.authorization;
 
     return hasAuthHeader ? getBcCustomerIdFromMeshToken(context.headers.authorization) : null;
