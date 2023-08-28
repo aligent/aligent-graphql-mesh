@@ -26,19 +26,19 @@ definitions:
     - step: &hive-check
         name: 🐝 Hive Schema Check
         script:
-          - npx hive schema:check --service ${SERVICE} ${PWD}/src/meshrc/.mesh/schema.graphql
+          - npx hive schema:check --service ${SERVICE} ${PWD}/packages/mesh/.mesh/schema.graphql
 
     - step: &hive-publish
         name: 🐝 Hive Schema Publish
         script:
-          - npx hive schema:publish --service ${SERVICE} ${PWD}/src/meshrc/.mesh/schema.graphql --url $HIVE_URL
+          - npx hive schema:publish --service ${SERVICE} ${PWD}/packages/mesh/.mesh/schema.graphql --url $HIVE_URL
 
     - step: &build
         name: 🏭 Build Mesh
         script:
           - STAGE=prod yarn build
         artifacts:
-          - src/meshrc/.mesh/**
+          - packages/mesh/.mesh/**
 
     - step: &build-container
         name: 🏗️ Build Docker Container
