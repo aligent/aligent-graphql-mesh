@@ -1,6 +1,6 @@
 import { logAndThrowError } from './error-handling/error-handling';
 import { decode, verify } from 'jsonwebtoken';
-import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
+import { DecodedCustomerImpersonationToken, MeshToken } from '@aligent/bigcommerce-graphql-module';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 

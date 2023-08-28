@@ -4,18 +4,18 @@ export const mockKeyMessages = {
         {
             message: 'MOCK 20% off selected womans clothing',
             link: 'https://pwa.staging.aligent.com.au/women.html',
-            __typename: 'KeyMessage',
+            __typename: 'KeyMessage' as 'KeyMessage',
         },
         {
             message: 'MOCK 70% off selected mens clothing',
             link: 'https://pwa.staging.aligent.com.au/men.html',
-            __typename: 'KeyMessage',
+            __typename: 'KeyMessage' as 'KeyMessage',
         },
         {
             message: "MOCK I'm a key message",
             link: 'https://pwa.staging.aligent.com.au',
-            __typename: 'KeyMessage',
+            __typename: 'KeyMessage' as 'KeyMessage',
         },
     ],
-    __typename: 'KeyMessageResult',
+    __typename: 'KeyMessageResult' as 'KeyMessageResult',
 };
