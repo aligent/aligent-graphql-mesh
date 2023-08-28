@@ -68,6 +68,8 @@ e.g.
 
 `X_AUTH_TOKEN`= This is an token for the BC REST APIS, it can be created in the BC Admin and can have scopes applied, e.g. will only work with the products API. This specific one is full access for the sake of development and will not be used in production.
 
+`STORE_HASH` Unique ID for this store, will be different values for staging and production.
+
 `DEBUG`= This is only used for development and adds more details to the logs via console.
 
 #### TODO (NO ENV REQUIRED YET)

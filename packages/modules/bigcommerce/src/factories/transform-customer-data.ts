@@ -1,5 +1,5 @@
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
-import { BcAddressRest, BcMutationCustomer } from '../types';
+import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { Customer as BC_Customer} from '@aligent/bigcommerce-operations';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
@@ -81,4 +81,31 @@ export const transformCustomerForMutation = (
     }
 
     return bcCustomer;
+};
+
+export const transformAcCustomerPasswordChange = (
+    customerId: number,
+    newPassword: string
+): BcMutationCustomer => {
+    const bcCustomer: BcMutationCustomer = {
+        id: customerId,
+    };
+    bcCustomer.authentication = {
+        new_password: newPassword,
+        force_password_reset: false,
+    };
+
+    return bcCustomer;
+};
+
+export const transformAcCustomerValidatePassword = (
+    email: string,
+    password: string,
+    channelId: number
+): ValidatePasswordRequest => {
+    return {
+        email: email,
+        password: password,
+        channel_id: channelId,
+    };
 };

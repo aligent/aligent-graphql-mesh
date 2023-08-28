@@ -1,9 +1,18 @@
-import { BcAddress, BcAddressRest, BcCustomer, BcMutationCustomer } from '../../types';
+import {
+    BcAddress,
+    BcAddressRest,
+    BcCustomer,
+    BcMutationCustomer,
+    ValidatePasswordRequest,
+    ValidatePasswordResponse,
+} from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '@aligent/utils';
+import { CustomerAttributes } from '@aligent/bigcommerce-operations';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
+const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 
 /* istanbul ignore file */
 export const createCustomer = async (
@@ -78,4 +87,56 @@ export const deleteCustomerAddress = async (addressId: number): Promise<boolean>
     //Nothing is returned by BigComm, not matter if success or not, always 204 No Content
     //So if there is no critical error we are just returning true
     return true;
+};
+
+export const getCustomerAttributeFields = async () => {
+    const path = `${CUSTOMERS_API}/attributes`;
+    const response = await bcGet(path);
+
+    return response.data;
+};
+
+export const getCustomerAttributeId = async (name: string): Promise<number> => {
+    const path = `/v3/customers/attributes?name=${name}`;
+
+    const response = await bcGet(path);
+
+    if (response.data.length === 0) {
+        logAndThrowError(`Customer attribute: ${name} not found`);
+    }
+
+    return response.data[0].id;
+};
+
+export const upsertCustomerAttributeValue = async (
+    attributeId: number,
+    cartId: string,
+    customerId: number
+): Promise<CustomerAttributes> => {
+    const path = `/v3/customers/attribute-values`;
+
+    const data = [
+        {
+            attribute_id: attributeId,
+            value: cartId,
+            customer_id: customerId,
+        },
+    ];
+    const response = await bcPut(path, data);
+
+    return response.data;
+};
+
+export const validateCustomerCredentials = async (
+    validatePassword: ValidatePasswordRequest
+): Promise<ValidatePasswordResponse> => {
+    const response = await bcPost(CUSTOMER_VALIDATE_CREDENTIALS_API, validatePassword);
+    return response;
+};
+
+export const getCustomersByEmail = async (email: string): Promise<BcCustomer[]> => {
+    const path = `/v3/customers?email:in=${encodeURIComponent(email)}`;
+    const response = await bcGet(path);
+
+    return response.data;
 };

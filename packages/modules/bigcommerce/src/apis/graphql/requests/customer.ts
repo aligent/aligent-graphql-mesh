@@ -28,16 +28,6 @@ export const customer = stripIgnoredCharacters(
                 notes
                 phone
                 taxExemptCategory
-                attributes {
-                    #Not sure what this will be used for yet
-                    #The attributeCount will show how many there are
-                    #However you can only get 1 at a time here
-                    attribute(entityId: 1) {
-                        entityId
-                        name
-                        value
-                    }
-                }
                 storeCredit {
                     currencyCode
                     value

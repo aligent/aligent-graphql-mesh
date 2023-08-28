@@ -174,6 +174,17 @@ export interface CustomerAddressUpdateValidated extends CustomerAddressValidated
     id: number;
 }
 
+export interface ValidatePasswordResponse {
+    is_valid: boolean;
+    customer_id: number;
+}
+
+export interface ValidatePasswordRequest {
+    email: string;
+    password: string;
+    channel_id: number;
+}
+
 // Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
 /* eslint-disable */
 declare global {

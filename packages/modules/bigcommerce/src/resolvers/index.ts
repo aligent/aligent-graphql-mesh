@@ -5,6 +5,7 @@ import { applyCouponToCartResolver } from './mutations/apply-coupon-to-cart';
 import { applyGiftCardToCartResolver } from './mutations/apply-gift-card-to-cart';
 import { changeCustomerPasswordResolver } from './mutations/change-customer-password';
 import { createBraintreeClientTokenResolver } from './mutations/create-braintree-client-token';
+import { createCartRedirectUrlsResolver } from './mutations/create-cart-redirect-urls';
 import { createCustomerResolver } from './mutations/create-customer';
 import { createCustomerAddressResolver } from './mutations/create-customer-address';
 import { createEmptyCartResolver } from './mutations/create-empty-cart';
@@ -35,8 +36,8 @@ import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { countriesResolver } from './queries/countries';
 import { currencyResolver } from './queries/currency';
-import { customerCartResolver } from './queries/customer-cart';
 import { customerResolver } from './queries/customer';
+import { customerCartResolver } from './queries/customer-cart';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { isEmailAvailableResolver } from './queries/is-email-available';
 import { keyMessagesResolver } from './queries/key-messages';
@@ -51,12 +52,12 @@ export const resolvers: Resolvers = {
     Query: {
         categories: categoriesResolver,
         cart: cartResolver,
+        customerCart: customerCartResolver,
         countries: countriesResolver,
         cmsBlocks: cmsBlocksResolver,
         cmsPage: cmsPageResolver,
         currency: currencyResolver,
         customer: customerResolver,
-        customerCart: customerCartResolver,
         getSocialLinks: getSocialLinksResolver,
         isEmailAvailable: isEmailAvailableResolver,
         keyMessages: keyMessagesResolver,
@@ -75,6 +76,7 @@ export const resolvers: Resolvers = {
         shareWishlist: shareWishlistResolver,
         changeCustomerPassword: changeCustomerPasswordResolver,
         createBraintreeClientToken: createBraintreeClientTokenResolver,
+        createCartRedirectUrls: createCartRedirectUrlsResolver,
         createCustomer: createCustomerResolver,
         createCustomerAddress: createCustomerAddressResolver,
         createEmptyCart: createEmptyCartResolver,

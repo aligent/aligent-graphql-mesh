@@ -1,5 +1,5 @@
 import { Customer, CustomerOutput } from '@aligent/bigcommerce-resolvers';
-import { BcMutationCustomer } from '../../../types';
+import { BcMutationCustomer, ValidatePasswordRequest } from '../../../types';
 
 // @ts-expect-error: ignore bad non-nullable fields
 export const acCustomerWithName: Customer = {
@@ -65,4 +65,18 @@ export const bcMutationCustomerWithName: BcMutationCustomer = {
 export const bcMutationCustomerWithEmail: BcMutationCustomer = {
     id: 1,
     email: 'customer@example.com',
+};
+
+export const bcCustomerForPasswordChange: BcMutationCustomer = {
+    id: 1,
+    authentication: {
+        force_password_reset: false,
+        new_password: 'Password1',
+    },
+};
+
+export const bcValidatePasswordRequest: ValidatePasswordRequest = {
+    email: 'example@example.com',
+    password: 'Password1',
+    channel_id: 1,
 };
