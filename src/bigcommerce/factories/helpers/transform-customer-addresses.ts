@@ -42,7 +42,7 @@ export const getTransformedCustomerAddresses = (
 // In BC there are optional checkboxes that have been added to custom addresses for these options
 export const checkIfDefaultAddress = (formFields: FormField[], fieldName: string): boolean => {
     const isDefaultBilling = formFields.find((field) => field.name === fieldName);
-    if (!isDefaultBilling) return false;
+    if (typeof isDefaultBilling?.value != 'string') return false;
     if (isDefaultBilling.value.includes('Yes')) return true;
     return false;
 };

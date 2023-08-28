@@ -97,7 +97,7 @@ export interface BcAddress {
     phone?: string;
     address_type?: string;
     company?: string;
-    form_fields?: FormField;
+    form_fields?: FormField[]
 }
 
 export interface DecodedCustomerImpersonationToken {
