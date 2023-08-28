@@ -45,7 +45,11 @@ export const addProductsToCartResolver = {
 
         // ensure the cart is assigned to the customer otherwise a checkout will not be created
         if (bcCustomerId) {
-            await assignCartToCustomer(addToCartResponse.entityId, bcCustomerId);
+            await assignCartToCustomer(
+                addToCartResponse.entityId,
+                bcCustomerId,
+                customerImpersonationToken
+            );
         }
 
         // Even though add to cart mutations return cart details, Big Commerce site.cart query doesn't

@@ -134,7 +134,7 @@ export interface BcAddressRest {
     phone: string;
     postal_code: string;
     state_or_province: string;
-    form_fields: FormField[] | [];
+    form_fields: FormField[] | [DefaultBillingOrShippingField];
 }
 
 export interface FormField {
