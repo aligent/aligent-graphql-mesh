@@ -65,17 +65,13 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             bcCustomerId,
             customerImpersonationToken
         );
-        const customerCheckout = cartId
-            ? await getCheckout(cartId, bcCustomerId, customerImpersonationToken)
-            : null;
 
-        // @TODO: Shows error in IDE but it does work
         // Call existing resolver to add these products to the cart
         const response = await addProductsToCartResolver.resolve(
             root,
             {
                 // A new cart will be created if one doesn't exist
-                cartId: customerCheckout?.cart ? cartId || '' : '',
+                cartId: cartId || '',
                 cartItems,
             },
             context,
