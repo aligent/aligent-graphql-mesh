@@ -121,7 +121,7 @@ export const getTransformCartItems = (
                 },
                 rating_summary: 0,
                 review_count: 0,
-                url_key: getNewUrl(url).pathname,
+                url_key: getNewUrl(url).pathname?.replace(/\//g, ''),
                 url_suffix: '', // BC doesn't use suffix
                 custom_attributes: [],
                 reviews: {
