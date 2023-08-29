@@ -1,5 +1,5 @@
 import { CountryCodeEnum, CustomerAddress } from '../../../meshrc/.mesh';
-import { BcAddressRest, FormField } from '../../types';
+import { BcAddressRest, DefaultBillingOrShippingField, FormField } from '../../types';
 
 export const getTransformedCustomerAddresses = (
     bcAddresses: BcAddressRest[]
@@ -40,9 +40,14 @@ export const getTransformedCustomerAddresses = (
 };
 
 // In BC there are optional checkboxes that have been added to custom addresses for these options
-export const checkIfDefaultAddress = (formFields: FormField[], fieldName: string): boolean => {
-    const isDefaultBilling = formFields.find((field) => field.name === fieldName);
-    if (!isDefaultBilling) return false;
-    if (isDefaultBilling.value.includes('Yes')) return true;
+export const checkIfDefaultAddress = (
+    formFields: FormField[],
+    fieldName: DefaultBillingOrShippingField['name']
+): boolean => {
+    const isDefaultBilling = formFields.find(
+        (field): field is DefaultBillingOrShippingField => field.name === fieldName
+    );
+
+    if (isDefaultBilling?.value[0] === 'Yes') return true;
     return false;
 };

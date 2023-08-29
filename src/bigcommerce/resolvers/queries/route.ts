@@ -17,7 +17,6 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
         return {
             // FIXME: BRAND is not a valid UrlRewriteEntityTypeEnum value
             // previously 'BRAND' - is this a Takeflight thing?
-            redirect_code: 0,
             type: 'CMS_PAGE',
             ...transformedBrandData,
         };

@@ -15,10 +15,10 @@ import {
 } from './helpers/transform-images';
 import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
-import { getTransformedAvailabilityStatus } from './helpers/transform-stock-status';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
 import { logAndThrowError } from '../../utils/error-handling';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
+import { getTransformedAvailableStock, getTransformedStockStatus } from './helpers/transform-stock';
 
 const getHasVariantOptions = (productOptions: BC_ProductOptionConnection): boolean => {
     if (!productOptions?.edges || productOptions?.edges.length === 0) return false;
@@ -49,16 +49,16 @@ export const getTypeName = (
 
 export const getTransformedProductData = (
     bcProduct: BC_Product
-): Maybe<ProductInterface | ConfigurableProduct> => {
+): Maybe<ProductInterface & ConfigurableProduct> => {
     if (!bcProduct) return null;
 
     try {
         const {
-            availabilityV2,
             categories,
             defaultImage,
             entityId,
             id,
+            inventory,
             name,
             path,
             prices = null,
@@ -88,15 +88,17 @@ export const getTransformedProductData = (
             meta_keyword: seo?.metaKeywords || '',
             meta_description: seo?.metaKeywords || '',
             name,
+            only_x_left_in_stock: getTransformedAvailableStock(inventory),
             price: getTransformedPrices(prices),
             price_range: getTransformedPriceRange(prices, productType, bcVariants),
             price_tiers: [],
+            redirect_code: 0,
             rating_summary: reviewSummary?.summationOfRatings || 0,
             review_count: reviewSummary?.numberOfReviews || 0,
             related_products: getTransformedRelatedProducts(relatedProducts),
             sku,
             small_image: getTransformedSmallImage(defaultImage),
-            stock_status: getTransformedAvailabilityStatus(availabilityV2),
+            stock_status: getTransformedStockStatus(inventory),
             url_key: path.replace(slashAtStartOrEnd, ''),
             url_suffix: '',
             reviews: getTransformedReviews(reviews),
@@ -111,8 +113,8 @@ export const getTransformedProductData = (
 
 export const getTransformedProductsData = (bcProducts: {
     products: BC_ProductConnection;
-    filters: BC_SearchProductFilterConnection;
-}): Maybe<Products> => {
+    filters?: BC_SearchProductFilterConnection;
+}): Maybe<Products & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;
 

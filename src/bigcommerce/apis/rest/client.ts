@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { logAndThrowError } from '../../../utils/error-handling';
 
-const BC_REST_API = process.env.BC_REST_API as string;
+const STORE_HASH = process.env.STORE_HASH as string;
+const BC_REST_API = `https://api.bigcommerce.com/stores/${STORE_HASH}`;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;
 
 const headers = {
@@ -38,6 +39,32 @@ export const bcGet = async (path: string): Promise<AxiosResponse['data']> => {
         return response.data;
     } catch (error) {
         return logAndThrowError(error, bcGet.name);
+    }
+};
+
+/**
+ * Generator function to iterate over a paginated API result
+ * @param path
+ * @param page
+ * @param limit
+ */
+export const bcPaginate = async function* (
+    path: string,
+    page: number = 1,
+    limit: number = 50
+): AsyncGenerator<AxiosResponse['data']> {
+    const url = `${BC_REST_API}${path}`;
+
+    while (page >= 1) {
+        const response = await axios.get(url, { headers, params: { page, limit } });
+        const items = response.data;
+        if (items.length === 0) {
+            break;
+        }
+        for (const item of items) {
+            yield item;
+        }
+        page++;
     }
 };
 

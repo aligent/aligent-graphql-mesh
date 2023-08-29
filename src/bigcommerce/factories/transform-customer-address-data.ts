@@ -1,5 +1,6 @@
 import { BcAddress, CustomerAddressValidated } from '../types';
 import { CountryCodeEnum, CustomerAddress } from '@mesh/index';
+import { checkIfDefaultAddress } from './helpers/transform-customer-addresses';
 
 const DEFAULT_BILLING_NAME = 'Default Billing';
 const DEFAULT_SHIPPING_NAME = 'Default Shipping';
@@ -46,14 +47,6 @@ export const transformCustomerAddress = (
     return bcAddress;
 };
 export const transformBcAddress = (address: BcAddress): CustomerAddress => {
-    const defaultBilling = address.form_fields?.find((field) => {
-        return field.name === DEFAULT_BILLING_NAME && field.value[0] === 'Yes';
-    });
-
-    const defaultShipping = address.form_fields?.find((field) => {
-        return field.name === DEFAULT_SHIPPING_NAME && field.value[0] === 'Yes';
-    });
-
     return {
         id: address.id,
         street: [address.address1, address.address2 || null],
@@ -67,7 +60,7 @@ export const transformBcAddress = (address: BcAddress): CustomerAddress => {
         region: {
             region: address.state_or_province,
         },
-        default_billing: Boolean(defaultBilling),
-        default_shipping: Boolean(defaultShipping),
+        default_billing: checkIfDefaultAddress(address.form_fields, DEFAULT_BILLING_NAME),
+        default_shipping: checkIfDefaultAddress(address.form_fields, DEFAULT_SHIPPING_NAME),
     };
 };
