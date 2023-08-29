@@ -4,6 +4,7 @@ import { transformBcCustomer } from '../../factories/transform-customer-data';
 import { getAllCustomerAddresses } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { getSubscriberByEmail } from '../../apis/rest/subscriber';
+import { getAllOrders } from '../../apis/rest/order';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
@@ -12,14 +13,15 @@ export const customerResolver: QueryResolvers['customer'] = {
             'customerImpersonationToken'
         )) as string;
 
-        const [bcCustomer, bcAddresses] = await Promise.all([
+        const [bcCustomer, bcAddresses, bcOrders] = await Promise.all([
             getBcCustomer(bcCustomerId, customerImpersonationToken),
             getAllCustomerAddresses(bcCustomerId),
+            getAllOrders(bcCustomerId)
         ]);
 
         const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
         const isSubscriber = !!subscriber;
 
-        return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber);
+        return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber, bcOrders);
     },
 };
