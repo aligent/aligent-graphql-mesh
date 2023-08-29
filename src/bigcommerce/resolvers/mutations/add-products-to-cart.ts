@@ -1,8 +1,8 @@
 import { MutationResolvers } from '@mesh';
-import { addProductsToCart, createCart, getCheckout } from '../../apis/graphql';
+import { addProductsToCart, createCart } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { atob, getBcCustomerId } from '../../../utils';
-import { getTransformedCartData } from '../../factories/transform-cart-data';
+import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, args, context, _info) => {
@@ -44,13 +44,13 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         // Shipping information can be pretty important before reaching the checkout. This is where the site.checkout
         // query comes in which is called when the above getCheckout is invoked.
         // We’re not actually querying site.cart but site.checkout instead.
-        const checkoutResponse = await getCheckout(
-            addToCartResponse.entityId,
+        const checkoutResponse = await getEnrichedCart(
+            { cart_id: addToCartResponse.entityId },
             bcCustomerId,
             customerImpersonationToken
         );
         return {
-            cart: getTransformedCartData(checkoutResponse),
+            cart: checkoutResponse,
             user_errors: [], // TODO: Decide what are the user errors which we can return
         };
     },

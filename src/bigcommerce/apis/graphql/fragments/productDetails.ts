@@ -40,6 +40,14 @@ export const ProductsDetails: DocumentNode = gql`
                 }
             }
         }
+        inventory {
+            hasVariantInventory
+            isInStock
+            aggregated {
+                availableToSell
+                warningLevel
+            }
+        }
         categories {
             edges {
                 node {

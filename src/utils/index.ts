@@ -5,6 +5,7 @@ export * from './get-is-virtual-cart';
 export * from './get-path-from-url-key';
 export * from './get-tax';
 export * from './get-url';
+export * from './products';
 export * from './regex/slash-at-start-or-end';
 export * from './tokens';
 export * from './error-handling/axios-errors';
