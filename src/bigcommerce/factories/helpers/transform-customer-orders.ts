@@ -1,13 +1,14 @@
 import { CurrencyEnum, CustomerOrder, Invoice } from '@mesh';
 import { BCOrder } from '../../types';
 import { btoa } from '../../../utils';
+import { convertDateFormat } from '../../../utils/time-and-date';
 
 export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrder[] => {
     return bcOrders.map((bcOrder) => {
         return {
             number: String(bcOrder.id),
             id: btoa(String(bcOrder.id)),
-            order_date: bcOrder.date_created,
+            order_date: convertDateFormat(bcOrder.date_created),
             status: bcOrder.status,
             total: {
                 grand_total: {
