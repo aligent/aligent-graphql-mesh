@@ -9,6 +9,7 @@ import {
     getNewUrl,
 } from '../../../utils';
 import { getTransformedPrice } from './transform-price';
+import { getTransformedCartItemErrors } from './transform-cart-item-errors';
 
 export const getTransformCartItems = (
     cartItems?: Maybe<BC_Cart>,
@@ -82,7 +83,11 @@ export const getTransformCartItems = (
         return {
             id: cartItemId, // cart item id
             uid: cartItemUid,
-            errors: null,
+            errors: getTransformedCartItemErrors(
+                quantity,
+                matchingEnrichedData?.stock_status,
+                matchingEnrichedData?.only_x_left_in_stock
+            ),
             prices: {
                 /* "Price" this will depend on excluding or including tax admin configurable */
                 price: getTransformedPrice(salePrice),
@@ -116,7 +121,7 @@ export const getTransformCartItems = (
                 },
                 rating_summary: 0,
                 review_count: 0,
-                url_key: getNewUrl(url).pathname,
+                url_key: getNewUrl(url).pathname?.replace(/\//g, ''),
                 url_suffix: '', // BC doesn't use suffix
                 custom_attributes: [],
                 reviews: {
