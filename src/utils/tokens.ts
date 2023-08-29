@@ -50,7 +50,7 @@ export const generateMeshToken = (entityId: number): string => {
     };
 
     return sign(payload, JWT_PRIVATE_KEY);
-}
+};
 
 /*
  * Creates a JWT that enables a BC user to stay logged in when redirecting
