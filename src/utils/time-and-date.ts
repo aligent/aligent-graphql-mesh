@@ -7,13 +7,11 @@ export const getUnixTimeStampInSeconds = (additionalTime: { additionalHours: num
 };
 
 export const convertDateFormat = (inputDate: string): string => {
-    const inputDateFormat = 'ddd, DD MMM YYYY HH:mm:ss Z';
-    const outputDateFormat = 'YYYY-MM-DD HH:mm:ss';
+    const inputDateFormat = 'ddd, DD MMM YYYY HH:mm:ss Z'; // BC Format
+    const outputDateFormat = 'YYYY-MM-DD HH:mm:ss'; // AC Format
 
-    // Parse the input date using the input format
     const parsedDate = moment(inputDate, inputDateFormat);
 
-    // Format the parsed date using the desired output format
     const formattedDate = parsedDate.format(outputDateFormat);
 
     return formattedDate;
