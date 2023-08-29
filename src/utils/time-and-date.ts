@@ -16,5 +16,5 @@ export const convertDateFormat = (inputDate: string): string => {
     // Format the parsed date using the desired output format
     const formattedDate = parsedDate.format(outputDateFormat);
 
-    return formattedDate
-}
+    return formattedDate;
+};
