@@ -91,6 +91,6 @@ export const restCartLineItemData: BCOrderLineItem = {
 export const cartLineItem: CartItemInput = {
     quantity: 2,
     uid: 'UHJvZHVjdDo0OTI=',
-    sku: 'VmFyaWFudDo1MTY=',
+    sku: 'WH01-M-Purple',
     selected_options: ['Y29uZmlndXJhYmxlLzcwLzE0OA==', 'Y29uZmlndXJhYmxlLzcxLzE0OQ=='],
 };
