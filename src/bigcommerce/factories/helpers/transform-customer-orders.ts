@@ -1,11 +1,12 @@
 import { CurrencyEnum, CustomerOrder, Invoice } from '@mesh';
 import { BCOrder } from '../../types';
+import { btoa } from '../../../utils';
 
 export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrder[] => {
     return bcOrders.map((bcOrder) => {
         return {
             number: String(bcOrder.id),
-            id: 'encodedThing',
+            id: btoa(String(bcOrder.id)),
             order_date: bcOrder.date_created,
             status: bcOrder.status,
             total: {

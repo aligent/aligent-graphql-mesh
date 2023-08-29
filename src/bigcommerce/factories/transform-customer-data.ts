@@ -12,6 +12,7 @@ export const transformBcCustomer = (
     bcOrders: BCOrder[]
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
+    
     return {
         addresses: getTransformedCustomerAddresses(bcAddresses),
         email,
@@ -33,9 +34,9 @@ export const transformBcCustomer = (
                 total_pages: null,
             },
         },
-        orders :{
+        orders: {
             items: getTransformedOrders(bcOrders)
-        }
+        },
     };
 };
 

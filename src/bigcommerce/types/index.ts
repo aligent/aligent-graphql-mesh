@@ -100,6 +100,22 @@ export interface BcAddress {
     form_fields: FormField[] | [];
 }
 
+export interface BcOrderAddress {
+    first_name: string;
+    last_name: string;
+    company: string;
+    street_1: string;
+    street_2: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+    country_iso2: string;
+    phone: string;
+    email: string;
+    form_fields: FormField[] | [DefaultBillingOrShippingField];
+}
+
 export interface DecodedCustomerImpersonationToken {
     cid: number;
     cors: string[];
@@ -242,9 +258,9 @@ export interface BCOrder {
     is_deleted: boolean;
     ebay_order_id: string;
     cart_id: string;
-    billing_address: BcAddress;
+    billing_address: BcOrderAddress;
     is_email_opt_in: boolean;
-    credit_card_type: string;
+    credit_card_type: string | null;
     order_source: string;
     channel_id: number;
     external_source: string;
@@ -252,8 +268,8 @@ export interface BCOrder {
     products: Resource;
     shipping_addresses: Resource;
     coupons: Resource;
-    external_id: string;
-    external_merchant_id: string;
+    external_id: string | null;
+    external_merchant_id: string | null;
     tax_provider_id: string;
     customer_locale: string;
     external_order_id: string;
