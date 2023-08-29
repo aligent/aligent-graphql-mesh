@@ -20,8 +20,7 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: async (root, { orderNumber }, context, info) => {
         const bcCustomerId = getBcCustomerId(context);
 
-        // TODO: Look into if checks like this are necessary
-        // TF will only call this resolver if a user is logged in
+        // Check to see if user is logged in
         if (!bcCustomerId) {
             return {
                 cart: UNDEFINED_CART,
