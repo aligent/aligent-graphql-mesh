@@ -160,6 +160,13 @@ export interface BcSubscriber {
     consents: string[];
 }
 
+export interface BcState {
+    id: number;
+    state: string;
+    state_abbreviation: string;
+    country_id: number;
+}
+
 export interface CustomerAddressValidated extends CustomerAddressInput {
     firstname: string;
     lastname: string;

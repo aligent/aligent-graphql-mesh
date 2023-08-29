@@ -18,7 +18,10 @@ import { getTransformedConfigurableOptions } from './helpers/transform-configura
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
 import { logAndThrowError } from '../../utils/error-handling';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
-import { getTransformedAvailableStock, getTransformedStockStatus } from './helpers/transform-stock';
+import {
+    getTransformedAvailableStock,
+    getTransformedSimpleStockStatus,
+} from './helpers/transform-stock';
 
 const getHasVariantOptions = (productOptions: BC_ProductOptionConnection): boolean => {
     if (!productOptions?.edges || productOptions?.edges.length === 0) return false;
@@ -54,6 +57,7 @@ export const getTransformedProductData = (
 
     try {
         const {
+            availabilityV2,
             categories,
             defaultImage,
             entityId,
@@ -98,7 +102,7 @@ export const getTransformedProductData = (
             related_products: getTransformedRelatedProducts(relatedProducts),
             sku,
             small_image: getTransformedSmallImage(defaultImage),
-            stock_status: getTransformedStockStatus(inventory),
+            stock_status: getTransformedSimpleStockStatus(availabilityV2, inventory),
             url_key: path.replace(slashAtStartOrEnd, ''),
             url_suffix: '',
             reviews: getTransformedReviews(reviews),

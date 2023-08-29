@@ -3,7 +3,7 @@ import { ConfigurableVariant, Maybe } from '@mesh';
 import { getTransformedImage } from './transform-images';
 import { getTransformedPriceRange } from './transform-product-prices';
 import { getTransformedProductsAttributes } from './transform-product-attributes';
-import { getTransformedAvailableStock, getTransformedStockStatus } from './transform-stock';
+import { getTransformedAvailableStock, getTransformedVariantStockStatus } from './transform-stock';
 
 export const getTransformedVariants = (
     variants: Maybe<BC_VariantConnection>
@@ -13,7 +13,8 @@ export const getTransformedVariants = (
     const variantsResults = variants.edges
         .map((variant) => {
             if (!variant?.node) return null;
-            const { defaultImage, entityId, id, inventory, options, prices, sku } = variant.node;
+            const { defaultImage, entityId, id, inventory, isPurchasable, options, prices, sku } =
+                variant.node;
 
             return {
                 attributes: getTransformedProductsAttributes(options),
@@ -36,7 +37,7 @@ export const getTransformedVariants = (
                     review_count: 0,
                     sku,
                     staged: false,
-                    stock_status: getTransformedStockStatus(inventory),
+                    stock_status: getTransformedVariantStockStatus(inventory, isPurchasable),
                     uid: id,
                 },
             };
