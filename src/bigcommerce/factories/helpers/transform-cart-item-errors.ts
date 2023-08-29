@@ -10,17 +10,13 @@ import { CartItemErrorType } from '@mesh';
  * "Admin > settings > products > inventory > stock level"
  *
  * @param cartQty
- * @param onlyXLeftInStock
+ * @param inStockAmount
  */
-export const getInsufficientStockError = (cartQty: number, onlyXLeftInStock?: number | null) => {
-    if (
-        !Number.isInteger(onlyXLeftInStock) ||
-        onlyXLeftInStock === null ||
-        onlyXLeftInStock === undefined
-    )
+export const getInsufficientStockError = (cartQty: number, inStockAmount?: number | null) => {
+    if (!Number.isInteger(inStockAmount) || inStockAmount === null || inStockAmount === undefined)
         return null;
 
-    return onlyXLeftInStock < cartQty || onlyXLeftInStock === 0
+    return inStockAmount < cartQty || inStockAmount === 0
         ? {
               code: 'ITEM_QTY' as CartItemErrorType,
               message: 'The requested qty is not available',
