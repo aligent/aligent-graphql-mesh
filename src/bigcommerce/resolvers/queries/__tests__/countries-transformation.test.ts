@@ -14,7 +14,7 @@ describe('Countries data transform tests', () => {
         expect(transformed[0].available_regions).toEqual(inputTransformedStates);
     });
 
-    test('return null when no states for a country', () => {
+    test('return empty array when no states for a country', () => {
         const inputBcCountry = [bcCountry];
         const inputNoStates: CountryStates[] = [];
 
