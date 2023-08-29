@@ -10,7 +10,7 @@ export const convertDateFormat = (inputDate: string): string => {
     const inputDateFormat = 'ddd, DD MMM YYYY HH:mm:ss Z'; // BC Format
     const outputDateFormat = 'YYYY-MM-DD HH:mm:ss'; // AC Format
 
-    const parsedDate = moment(inputDate, inputDateFormat);
+    const parsedDate = moment.utc(inputDate, inputDateFormat);
 
     const formattedDate = parsedDate.format(outputDateFormat);
 
