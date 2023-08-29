@@ -1,21 +1,24 @@
-import { getTransformedAvailableStock, getTransformedStockStatus } from '../transform-stock';
+import { getTransformedAvailableStock, getTransformedVariantStockStatus } from '../transform-stock';
 
 describe('transform-stock', () => {
     it(`can return a "IN_STOCK" stock status`, () => {
         expect(
-            getTransformedStockStatus({
-                isInStock: true,
-                aggregated: {
-                    availableToSell: 2,
-                    warningLevel: 5,
+            getTransformedVariantStockStatus(
+                {
+                    isInStock: true,
+                    aggregated: {
+                        availableToSell: 2,
+                        warningLevel: 5,
+                    },
                 },
-            })
+                true
+            )
         ).toEqual('IN_STOCK');
     });
 
     it(`can return a "OUT_OF_STOCK" stock status`, () => {
         expect(
-            getTransformedStockStatus({
+            getTransformedVariantStockStatus({
                 isInStock: false,
                 aggregated: {
                     availableToSell: 2,
@@ -24,7 +27,7 @@ describe('transform-stock', () => {
             })
         ).toEqual('OUT_OF_STOCK');
 
-        expect(getTransformedStockStatus(null)).toEqual('OUT_OF_STOCK');
+        expect(getTransformedVariantStockStatus(null)).toEqual('OUT_OF_STOCK');
     });
 
     it(`can return the available product stock`, () => {

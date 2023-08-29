@@ -13,7 +13,7 @@ import {
     getCartEntityIdQuery,
     updateCartLineItemQuery,
 } from './requests';
-import { logAndThrowError } from '../../../utils';
+import { handleCartItemErrors, logAndThrowError } from '../../../utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
@@ -40,7 +40,8 @@ export const addProductsToCart = async (
     const response = await bcGraphQlRequest(addToCartQuery, cartHeader);
 
     if (response.errors) {
-        return logAndThrowError(response.errors);
+        handleCartItemErrors(response.errors);
+        logAndThrowError(response.errors);
     }
 
     return response.data.cart.addCartLineItems.cart;
@@ -66,7 +67,8 @@ export const createCart = async (
     const response = await bcGraphQlRequest(createCartQuery, cartHeader);
 
     if (response.errors) {
-        return logAndThrowError(response.errors);
+        handleCartItemErrors(response.errors);
+        logAndThrowError(response.errors);
     }
 
     // Save cart_id in customer attribute field for logged in users
@@ -125,6 +127,7 @@ export const updateCartLineItem = async (
     const response = await bcGraphQlRequest(updateCartItemQuery, cartHeader);
 
     if (response.errors) {
+        handleCartItemErrors(response.errors);
         return logAndThrowError(response.errors);
     }
 
