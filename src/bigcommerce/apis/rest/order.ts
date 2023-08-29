@@ -5,8 +5,8 @@ export const getOrder = async (id: string): Promise<BCOrder> => {
     return bcGet(`/v2/orders/${id}`);
 };
 
-export const getAllOrders = async (bcCustomerId: number): Promise<BCOrder[]> => {
-    return bcGet(`/v2/orders?customer_id=${bcCustomerId}&limit=20&sort=date_created:desc`);
+export const getAllOrders = async function* (bcCustomerId: number): AsyncGenerator<BCOrder> {
+    yield* await bcPaginate(`/v2/orders?customer_id=${bcCustomerId}&sort=date_created:desc`);
 };
 
 /**

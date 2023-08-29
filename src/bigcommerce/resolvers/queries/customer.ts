@@ -5,6 +5,7 @@ import { getAllCustomerAddresses } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { getSubscriberByEmail } from '../../apis/rest/subscriber';
 import { getAllOrders } from '../../apis/rest/order';
+import { BCOrder } from '../../types';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
@@ -13,10 +14,14 @@ export const customerResolver: QueryResolvers['customer'] = {
             'customerImpersonationToken'
         )) as string;
 
-        const [bcCustomer, bcAddresses, bcOrders] = await Promise.all([
+        const bcOrders: BCOrder[] = [];
+        for await (const bcOrder of getAllOrders(bcCustomerId)) {
+            bcOrders.push(bcOrder);
+        }
+
+        const [bcCustomer, bcAddresses] = await Promise.all([
             getBcCustomer(bcCustomerId, customerImpersonationToken),
             getAllCustomerAddresses(bcCustomerId),
-            getAllOrders(bcCustomerId),
         ]);
 
         const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
