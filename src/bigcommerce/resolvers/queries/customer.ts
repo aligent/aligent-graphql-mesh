@@ -16,7 +16,7 @@ export const customerResolver: QueryResolvers['customer'] = {
         const [bcCustomer, bcAddresses, bcOrders] = await Promise.all([
             getBcCustomer(bcCustomerId, customerImpersonationToken),
             getAllCustomerAddresses(bcCustomerId),
-            getAllOrders(bcCustomerId)
+            getAllOrders(bcCustomerId),
         ]);
 
         const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
