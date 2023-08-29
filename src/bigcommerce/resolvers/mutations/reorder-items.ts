@@ -34,7 +34,11 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             };
         }
 
-        // Fetch and Iterate over all the orders line items converting them to input object
+        /*
+         * Fetch and Iterate over all the orders line items converting them to input object
+         * Data is being transformed from BC -> AC
+         * Since we call the add to cart resolver directly it needs to be in AC format
+         */
         const cartItems: Array<CartItemInput> = [];
         for await (const lineItem of getLineItems(orderNumber)) {
             cartItems.push(transformRestCartLineItems(lineItem));
