@@ -4,7 +4,7 @@ import { transformSelectedOptions } from '../../factories/transform-selected-opt
 import { atob, getBcCustomerId } from '../../../utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
-export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
+export const addProductsToCartResolver = {
     resolve: async (_root, args, context, _info) => {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
@@ -54,4 +54,4 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             user_errors: [], // TODO: Decide what are the user errors which we can return
         };
     },
-};
+} satisfies MutationResolvers['addProductsToCart'];

@@ -15,6 +15,7 @@ import {
 } from './requests';
 import { logAndThrowError } from '../../../utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
+import { assignCartToCustomerMutation } from './requests/assign-cart';
 
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
@@ -77,6 +78,34 @@ export const createCart = async (
     });
 
     return response.data.cart.createCart.cart;
+};
+
+export const assignCartToCustomer = async (
+    cartEntityId: string,
+    bcCustomerId: number,
+    customerImpersonationToken: string
+): Promise<BC_Cart> => {
+    const header = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+        'x-bc-customer-id': bcCustomerId,
+    };
+
+    const assignCartToCustomerQuery = {
+        query: assignCartToCustomerMutation,
+        variables: {
+            input: {
+                cartEntityId,
+            },
+        },
+    };
+
+    const response = await bcGraphQlRequest(assignCartToCustomerQuery, header);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+
+    return response.data.cart.assignCartToCustomer.cart;
 };
 
 export const deleteCartLineItem = async (
