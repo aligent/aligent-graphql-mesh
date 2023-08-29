@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 const BC_REST_API = process.env.BC_REST_API as string;
 const X_AUTH_TOKEN = process.env.X_AUTH_TOKEN as string;

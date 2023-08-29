@@ -1,6 +1,7 @@
-import { logAndThrowError } from './error-handling/error-handling';
-import { decode, verify } from 'jsonwebtoken';
+import { logAndThrowError } from './error-handling';
+import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
+import { getUnixTimeStampInSecondsForMidnightTonight } from './time-and-date';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
@@ -31,4 +32,18 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
     } catch (error) {
         return logAndThrowError(error, getBcCustomerIdFromMeshToken.name);
     }
+};
+
+/**
+ * Creates a token when a user logs in also stores the bc_customer_id in the payload
+ * which can be used for later request to the Mesh.
+ * @param {number} entityId - Bc User Id returned from logging in
+ */
+export const generateMeshToken = (entityId: number): string => {
+    const payload = {
+        bc_customer_id: entityId,
+        exp: getUnixTimeStampInSecondsForMidnightTonight(),
+    };
+
+    return sign(payload, JWT_PRIVATE_KEY);
 };

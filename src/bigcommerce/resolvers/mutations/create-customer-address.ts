@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@mesh';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 import { createCustomerAddress } from '../../apis/rest/customer';
 import {

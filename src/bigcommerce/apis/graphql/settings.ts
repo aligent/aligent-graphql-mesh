@@ -1,7 +1,7 @@
 import { bcGraphQlRequest } from './client';
 import { BC_TaxDisplaySettings } from '@mesh/external/BigCommerceGraphqlApi';
 import { taxSettings } from './requests/tax-settings';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 /**
  * Gets the PDP and PLP including or excluding price display configuration.
