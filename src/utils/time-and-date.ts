@@ -6,6 +6,14 @@ export const getUnixTimeStampInSeconds = (additionalTime: { additionalHours: num
     return unixTimeStampNow + hoursInSeconds;
 };
 
+export const getUnixTimeStampInSecondsForMidnightTonight = (): number => {
+    const currentDate = new Date();
+
+    currentDate.setHours(24, 0, 0, 0);
+
+    return currentDate.getTime() / 1000;
+};
+
 export const convertDateFormat = (inputDate: string): string => {
     const inputDateFormat = 'ddd, DD MMM YYYY HH:mm:ss Z'; // BC Format
     const outputDateFormat = 'YYYY-MM-DD HH:mm:ss'; // AC Format

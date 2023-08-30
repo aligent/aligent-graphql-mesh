@@ -10,4 +10,4 @@ export * from './regex/slash-at-start-or-end';
 export * from './tokens';
 export * from './error-handling/axios-errors';
 export * from './error-handling/cart-errors';
-export * from './error-handling/error-handling';
+export * from './error-handling';

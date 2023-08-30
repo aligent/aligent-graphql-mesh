@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 
 const STORE_HASH = process.env.STORE_HASH as string;
 const BC_REST_API = `https://api.bigcommerce.com/stores/${STORE_HASH}`;

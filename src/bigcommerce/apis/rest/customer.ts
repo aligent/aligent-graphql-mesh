@@ -7,7 +7,7 @@ import {
     ValidatePasswordResponse,
 } from '../../types';
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 import { BC_CustomerAttributes } from '@mesh/external/BigCommerceGraphqlApi';
 
 const CUSTOMERS_API = `/v3/customers`;

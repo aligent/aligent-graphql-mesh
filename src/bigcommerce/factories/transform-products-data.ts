@@ -16,7 +16,7 @@ import {
 import { getTransformedReviews } from './helpers/transform-reviews';
 import { getTransformedConfigurableOptions } from './helpers/transform-configurable-options';
 import { getTransformedRelatedProducts } from './helpers/transform-related-products';
-import { logAndThrowError } from '../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../utils/error-handling';
 import { getTransformedProductAggregations } from './helpers/transform-product-aggregations';
 import {
     getTransformedAvailableStock,

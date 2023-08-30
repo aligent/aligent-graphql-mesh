@@ -1,8 +1,8 @@
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
+import { logAndThrowError } from '../../../utils/error-handling';
 import { customerAttribute } from './requests/customer-attribute';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
 import { getCustomerAttributeId } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
 
