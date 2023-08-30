@@ -86,7 +86,7 @@ export const assignCartToCustomer = async (
     cartEntityId: string,
     bcCustomerId: number,
     customerImpersonationToken: string
-): Promise<BC_Cart> => {
+): Promise<Cart> => {
     const header = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         'x-bc-customer-id': bcCustomerId,
@@ -186,7 +186,7 @@ export const verifyCartEntityId = async (
     entityId: string | null,
     bcCustomerId: number | null,
     customerImpersonationToken: string
-): Promise<BC_Cart> => {
+): Promise<Cart> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),

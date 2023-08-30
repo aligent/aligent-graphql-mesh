@@ -20,7 +20,7 @@ export const getInsufficientStockError = (cartQty: number, inStockAmount?: numbe
         ? {
               code: 'ITEM_QTY' as CartItemErrorType,
               message: 'The requested qty is not available',
-              __typename: 'CartItemError',
+              __typename: 'CartItemError' as const,
           }
         : null;
 };
@@ -35,7 +35,7 @@ export const getInStockError = (stockStatus?: string | null) => {
         ? {
               code: 'ITEM_QTY' as CartItemErrorType,
               message: 'This item is no longer in stock or not currently purchasable',
-              __typename: 'CartItemError',
+              __typename: 'CartItemError' as const,
           }
         : null;
 };
