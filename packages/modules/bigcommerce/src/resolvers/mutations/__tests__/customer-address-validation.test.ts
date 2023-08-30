@@ -1,4 +1,4 @@
-import { isCustomerAddressValid } from '@aligent/utils';
+import { isCustomerAddressValid } from '../../../utils';
 import {
     customerAddress,
     customerAddressMissingRequiredFields,
