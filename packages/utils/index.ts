@@ -12,5 +12,4 @@ export * from './tokens';
 export * from './is-not-null';
 export * from './validators/customer-address-validator';
 export * from './error-handling/axios-errors';
-export * from './error-handling/cart-errors';
 export * from './error-handling';

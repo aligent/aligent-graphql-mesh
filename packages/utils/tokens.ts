@@ -1,4 +1,4 @@
-import { logAndThrowError } from './error-handling/error-handling';
+import { logAndThrowError } from './error-handling';
 import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '@aligent/bigcommerce-graphql-module';
 import { v4 as uuidv4 } from 'uuid';

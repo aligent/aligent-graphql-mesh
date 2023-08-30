@@ -1,4 +1,4 @@
-import { handleCartItemErrors } from '../cart-errors';
+import { handleCartItemErrors } from '../index';
 
 describe('cart-errors', () => {
     test(`Can throw an error that a item doesn't have enough stock`, () => {
