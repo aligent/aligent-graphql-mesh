@@ -39,6 +39,7 @@ definitions:
           - STAGE=prod yarn build
         artifacts:
           - packages/mesh/.mesh/**
+          - packages/generated/**
 
     - step: &build-container
         name: 🏗️ Build Docker Container
