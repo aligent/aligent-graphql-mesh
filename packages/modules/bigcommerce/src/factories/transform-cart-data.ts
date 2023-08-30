@@ -1,12 +1,15 @@
 import { getIsVirtualCart } from '@aligent/utils';
 import { Checkout } from '@aligent/bigcommerce-operations';
-import { Cart } from '@aligent/bigcommerce-resolvers';
+import { Cart, ProductInterface } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
 
-export const getTransformedCartData = (checkoutData: Checkout): Cart => {
+export const getTransformedCartData = (
+    checkoutData: Checkout,
+    additionalCartItemData?: Array<ProductInterface>
+): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
 
@@ -17,7 +20,7 @@ export const getTransformedCartData = (checkoutData: Checkout): Cart => {
         id: entityId,
         total_quantity: cart?.lineItems?.totalQuantity || 0,
         error_type: null,
-        items: getTransformCartItems(cart),
+        items: getTransformCartItems(cart, additionalCartItemData),
         is_virtual: getIsVirtualCart(cart?.lineItems),
         // @todo work out free shipping details
         free_shipping_details: {

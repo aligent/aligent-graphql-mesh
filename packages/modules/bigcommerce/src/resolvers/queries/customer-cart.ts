@@ -1,8 +1,7 @@
 import { Cart, QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { getCheckout } from '../../apis/graphql';
-import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getBcCustomerId } from '@aligent/utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
+import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -39,10 +38,6 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
 
         if (!cartId) return UNDEFINED_CART;
 
-        const response = await getCheckout(cartId, bcCustomerId, customerImpersonationToken);
-
-        if (!response?.entityId) return UNDEFINED_CART;
-
-        return getTransformedCartData(response);
+        return getEnrichedCart({ cart_id: cartId }, bcCustomerId, customerImpersonationToken);
     },
 };

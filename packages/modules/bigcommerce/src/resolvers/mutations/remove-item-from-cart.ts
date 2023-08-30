@@ -1,8 +1,7 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { deleteCartLineItem } from '../../apis/graphql';
 import { getBcCustomerId, getDeconstructedCartItemUid, logAndThrowError } from '@aligent/utils';
-import { getCheckout } from '../../apis/graphql';
-import { getTransformedCartData } from '../../factories/transform-cart-data';
+import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -51,14 +50,14 @@ export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart']
                 cart: UNDEFINED_CART,
             };
 
-        const checkoutResponse = await getCheckout(
-            removeCartItemResponse.entityId,
+        const checkoutResponse = await getEnrichedCart(
+            { cart_id: removeCartItemResponse.entityId },
             bcCustomerId,
             customerImpersonationToken
         );
 
         return {
-            cart: getTransformedCartData(checkoutResponse),
+            cart: checkoutResponse,
         };
     },
 };

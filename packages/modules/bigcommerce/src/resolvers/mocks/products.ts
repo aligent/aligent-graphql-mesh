@@ -1,4 +1,4 @@
-import { FilterTypeEnum } from '@aligent/bigcommerce-resolvers';
+import { FilterTypeEnum, ProductReviews } from '@aligent/bigcommerce-resolvers';
 
 export const productsMock = {
     items: [
@@ -10,6 +10,8 @@ export const productsMock = {
                     breadcrumbs: null,
                     name: 'New Luma Yoga Collection',
                     level: 3,
+                    staged: false,
+                    redirect_code: 0,
                     __typename: 'CategoryTree',
                 },
                 {
@@ -17,6 +19,8 @@ export const productsMock = {
                     breadcrumbs: null,
                     name: 'Women',
                     level: 2,
+                    staged: false,
+                    redirect_code: 0,
                     __typename: 'CategoryTree',
                 },
                 {
@@ -30,6 +34,8 @@ export const productsMock = {
                     ],
                     name: 'Tops',
                     level: 3,
+                    staged: false,
+                    redirect_code: 0,
                     __typename: 'CategoryTree',
                 },
                 {
@@ -48,6 +54,8 @@ export const productsMock = {
                     ],
                     name: 'Hoodies & Sweatshirts',
                     level: 4,
+                    redirect_code: 0,
+                    staged: false,
                     __typename: 'CategoryTree',
                 },
                 {
@@ -55,9 +63,12 @@ export const productsMock = {
                     breadcrumbs: null,
                     name: 'Erin Recommends',
                     level: 3,
+                    redirect_code: 0,
+                    staged: false,
                     __typename: 'CategoryTree',
                 },
             ],
+            custom_attributes: [],
             description: {
                 html: "Whether you're after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You'll stay warm and look fashionable, wherever you are.<br /> <br /> &bull; Light green heathered hoodie. <br /> &bull; Long-Sleeve, pullover.<br /> &bull; Long elliptical hem for extra coverage.<br /> &bull; Deep button placket for layering.<br /> &bull; Double rib design.<br /> &bull; Mid layer, mid weight.<br /> &bull; 98% Merino Wool / 2% Spandex",
                 __typename: 'ComplexTextValue',
@@ -70,6 +81,7 @@ export const productsMock = {
                     position: 1,
                     disabled: false,
                     file: '/w/h/wh01-green_main.jpg',
+                    uid: 'OA==',
                     __typename: 'MediaGalleryEntry',
                 },
                 {
@@ -78,6 +90,7 @@ export const productsMock = {
                     position: 2,
                     disabled: false,
                     file: '/w/h/wh01-green_alt1.jpg',
+                    uid: 'OA==',
                     __typename: 'MediaGalleryEntry',
                 },
                 {
@@ -86,6 +99,7 @@ export const productsMock = {
                     position: 3,
                     disabled: false,
                     file: '/w/h/wh01-green_back.jpg',
+                    uid: 'OA==',
                     __typename: 'MediaGalleryEntry',
                 },
             ],
@@ -189,24 +203,38 @@ export const productsMock = {
                         },
                         __typename: 'PriceRange',
                     },
+                    custom_attributes: [],
+                    rating_summary: 0,
+                    review_count: 0,
+                    reviews: [] as unknown as ProductReviews,
+                    staged: false,
+                    uid: 'OA==',
+                    redirect_code: 0,
+                    only_x_left_in_stock: 11,
                     __typename: 'SimpleProduct',
                 },
             ],
+            redirect_code: 0,
+            reviews: [] as unknown as ProductReviews,
             sku: 'WH01',
             small_image: {
                 url: 'https://take-flight-ew3k5nq-ekxw7lyelhava.ap-4.magentosite.cloud/media/catalog/product/cache/8f3d2e129ba9bc6369f4f94872c5b9a2/w/h/wh01-green_main.jpg',
                 __typename: 'ProductImage',
             },
+            staged: false,
             stock_status: 'IN_STOCK',
+            uid: 'afdgagr',
             url_key: 'mona-pullover-hoodlie',
             url_suffix: '.html',
             configurable_options: [
                 {
                     attribute_code: 'color',
                     attribute_id: '93',
+                    attribute_uid: 'sdf',
                     id: 147,
                     label: 'Color',
                     position: 1,
+                    uid: 'fdgf',
                     values: [
                         {
                             default_label: 'Green',
@@ -240,9 +268,11 @@ export const productsMock = {
                 {
                     attribute_code: 'size',
                     attribute_id: '187',
+                    attribute_uid: 'sdf',
                     id: 146,
                     label: 'Size',
                     position: 0,
+                    uid: 'fdgf',
                     values: [
                         {
                             default_label: 'S',
@@ -297,6 +327,7 @@ export const productsMock = {
                                 file: '/w/h/wh01-green_main.jpg',
                                 label: '',
                                 position: 1,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                             {
@@ -305,6 +336,7 @@ export const productsMock = {
                                 file: '/w/h/wh01-green_alt1.jpg',
                                 label: '',
                                 position: 2,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                             {
@@ -313,9 +345,12 @@ export const productsMock = {
                                 file: '/w/h/wh01-green_back.jpg',
                                 label: '',
                                 position: 3,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                         ],
+                        only_x_left_in_stock: 11,
+                        staged: false,
                         sku: 'WH01-S-Green',
                         stock_status: 'IN_STOCK',
                         price_range: {
@@ -341,6 +376,13 @@ export const productsMock = {
                         },
                         __typename: 'SimpleProduct',
                     },
+                    custom_attributes: [],
+                    rating_summary: 0,
+                    review_count: 0,
+                    reviews: [] as unknown as ProductReviews,
+                    staged: false,
+                    uid: 'OA==',
+                    redirect_code: 0,
                     __typename: 'ConfigurableVariant',
                 },
                 {
@@ -348,11 +390,13 @@ export const productsMock = {
                         {
                             code: 'color',
                             value_index: 66,
+                            uid: 'asdf',
                             __typename: 'ConfigurableAttributeOption',
                         },
                         {
                             code: 'size',
                             value_index: 180,
+                            uid: 'asdf',
                             __typename: 'ConfigurableAttributeOption',
                         },
                     ],
@@ -365,10 +409,13 @@ export const productsMock = {
                                 file: '/w/h/wh01-purple_main.jpg',
                                 label: '',
                                 position: 1,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                         ],
+                        only_x_left_in_stock: 11,
                         sku: 'WH01-S-Purple',
+                        staged: false,
                         stock_status: 'IN_STOCK',
                         price_range: {
                             minimum_price: {
@@ -391,6 +438,12 @@ export const productsMock = {
                             },
                             __typename: 'PriceRange',
                         },
+                        custom_attributes: [],
+                        rating_summary: 0,
+                        review_count: 0,
+                        reviews: [] as unknown as ProductReviews,
+                        uid: 'OA==',
+                        redirect_code: 0,
                         __typename: 'SimpleProduct',
                     },
                     __typename: 'ConfigurableVariant',
@@ -400,11 +453,13 @@ export const productsMock = {
                         {
                             code: 'color',
                             value_index: 62,
+                            uid: 'asdf',
                             __typename: 'ConfigurableAttributeOption',
                         },
                         {
                             code: 'size',
                             value_index: 181,
+                            uid: 'asdf',
                             __typename: 'ConfigurableAttributeOption',
                         },
                     ],
@@ -417,6 +472,7 @@ export const productsMock = {
                                 file: '/w/h/wh01-green_main.jpg',
                                 label: '',
                                 position: 1,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                             {
@@ -425,6 +481,7 @@ export const productsMock = {
                                 file: '/w/h/wh01-green_alt1.jpg',
                                 label: '',
                                 position: 2,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                             {
@@ -433,10 +490,13 @@ export const productsMock = {
                                 file: '/w/h/wh01-green_back.jpg',
                                 label: '',
                                 position: 3,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                         ],
+                        only_x_left_in_stock: 11,
                         sku: 'WH01-M-Green',
+                        staged: false,
                         stock_status: 'IN_STOCK',
                         price_range: {
                             minimum_price: {
@@ -459,6 +519,12 @@ export const productsMock = {
                             },
                             __typename: 'PriceRange',
                         },
+                        custom_attributes: [],
+                        rating_summary: 0,
+                        review_count: 0,
+                        reviews: [] as unknown as ProductReviews,
+                        uid: 'OA==',
+                        redirect_code: 0,
                         __typename: 'SimpleProduct',
                     },
                     __typename: 'ConfigurableVariant',
@@ -468,11 +534,13 @@ export const productsMock = {
                         {
                             code: 'color',
                             value_index: 66,
+                            uid: 'asdf',
                             __typename: 'ConfigurableAttributeOption',
                         },
                         {
                             code: 'size',
                             value_index: 181,
+                            uid: 'asdf',
                             __typename: 'ConfigurableAttributeOption',
                         },
                     ],
@@ -485,10 +553,13 @@ export const productsMock = {
                                 file: '/w/h/wh01-purple_main.jpg',
                                 label: '',
                                 position: 1,
+                                uid: 'OA==',
                                 __typename: 'MediaGalleryEntry',
                             },
                         ],
+                        only_x_left_in_stock: 11,
                         sku: 'WH01-M-Purple',
+                        staged: false,
                         stock_status: 'IN_STOCK',
                         price_range: {
                             minimum_price: {
@@ -511,6 +582,12 @@ export const productsMock = {
                             },
                             __typename: 'PriceRange',
                         },
+                        custom_attributes: [],
+                        rating_summary: 0,
+                        review_count: 0,
+                        reviews: [] as unknown as ProductReviews,
+                        uid: 'OA==',
+                        redirect_code: 0,
                         __typename: 'SimpleProduct',
                     },
                     __typename: 'ConfigurableVariant',

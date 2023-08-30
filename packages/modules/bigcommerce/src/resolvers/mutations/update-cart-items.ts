@@ -1,8 +1,7 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@aligent/bigcommerce-resolvers';
-import { getCheckout } from '../../apis/graphql/checkout';
 import { updateCartLineItem } from '../../apis/graphql/cart';
 import { getBcCustomerId, getDeconstructedCartItemUid } from '@aligent/utils';
-import { getTransformedCartData } from '../../factories/transform-cart-data';
+import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
     resolve: async (_root, args, context, _info): Promise<UpdateCartItemsOutput | null> => {
@@ -56,14 +55,14 @@ export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
 
         /* The response from update cart doesn't supply enough data which Take Flight is expecting
          * so we have to follow up with a getCheckout query to get more enriched data. */
-        const checkoutResponse = await getCheckout(
-            updateCartResponse.entityId,
+        const checkoutResponse = await getEnrichedCart(
+            { cart_id: updateCartResponse.entityId },
             bcCustomerId,
             customerImpersonationToken
         );
 
         return {
-            cart: getTransformedCartData(checkoutResponse),
+            cart: checkoutResponse,
         };
     },
 };

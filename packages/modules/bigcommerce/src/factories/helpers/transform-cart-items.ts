@@ -1,6 +1,5 @@
 import { Cart, CartSelectedMultipleChoiceOption } from '@aligent/bigcommerce-operations';
-
-import { CartItemInterface, CurrencyEnum, Maybe } from '@aligent/bigcommerce-resolvers';
+import { CartItemInterface, CurrencyEnum, Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
 import {
     btoa,
     createCartItemUid,
@@ -9,9 +8,11 @@ import {
     getNewUrl,
 } from '@aligent/utils';
 import { getTransformedPrice } from './transform-price';
+import { getTransformedCartItemErrors } from './transform-cart-item-errors';
 
 export const getTransformCartItems = (
-    cartItems?: Maybe<Cart>
+    cartItems?: Maybe<Cart>,
+    additionalCartItemData?: Array<ProductInterface>
 ): Maybe<Array<Maybe<CartItemInterface>>> => {
     if (!cartItems?.lineItems) return null;
 
@@ -38,6 +39,10 @@ export const getTransformCartItems = (
             selectedOptions,
             imageUrl,
         } = item;
+
+        const matchingEnrichedData = additionalCartItemData?.find((enrichedItem) => {
+            return enrichedItem.sku === sku;
+        });
 
         const configurable_options = selectedOptions.map((option) => {
             const { entityId, name, value, valueEntityId } =
@@ -77,7 +82,11 @@ export const getTransformCartItems = (
         return {
             id: cartItemId, // cart item id
             uid: cartItemUid,
-            errors: null,
+            errors: getTransformedCartItemErrors(
+                quantity,
+                matchingEnrichedData?.stock_status,
+                matchingEnrichedData?.only_x_left_in_stock
+            ),
             prices: {
                 /* "Price" this will depend on excluding or including tax admin configurable */
                 price: getTransformedPrice(salePrice),
@@ -90,6 +99,7 @@ export const getTransformCartItems = (
                 total_item_discount,
             },
             product: {
+                ...matchingEnrichedData,
                 id: variantEntityId,
                 uid: btoa(String(variantEntityId)),
                 name: name,
@@ -110,8 +120,7 @@ export const getTransformCartItems = (
                 },
                 rating_summary: 0,
                 review_count: 0,
-                stock_status: 'IN_STOCK', // @todo if required might need more data from another product api
-                url_key: getNewUrl(url).pathname,
+                url_key: getNewUrl(url).pathname?.replace(/\//g, ''),
                 url_suffix: '', // BC doesn't use suffix
                 custom_attributes: [],
                 reviews: {

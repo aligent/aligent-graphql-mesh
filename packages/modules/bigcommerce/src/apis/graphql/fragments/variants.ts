@@ -40,6 +40,10 @@ export const variants = gql`
         }
         inventory {
             isInStock
+            aggregated {
+                availableToSell
+                warningLevel
+            }
         }
         isPurchasable
     }

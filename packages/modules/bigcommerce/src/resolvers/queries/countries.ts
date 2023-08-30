@@ -1,48 +1,40 @@
-import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { getCountries, getCountriesStates } from '../../apis/rest/countries';
-import { Country, CountryStates } from '../../types';
+import { QueryResolvers, Country as AcCountry } from '@aligent/bigcommerce-resolvers';
+import { getAllStates, getCountries } from '../../apis/rest/countries';
+import { Country, BcState } from '../../types';
 
 /* istanbul ignore next */
 export const countriesResolver: QueryResolvers['countries'] = {
     resolve: async (_root, _args, _context, _info) => {
-        const countries = await getCountries();
-        // TODO: revert back to get full data
-        // This is just temporary to get TF to work with AUS data
-        return transformCountries(countries.filter((country) => country.country === 'Australia'));
+        const [countries, states] = await Promise.all([getCountries(), getAllStates(1)]);
+
+        return transformCountriesAndStates(countries, states);
     },
 };
 
-/* istanbul ignore next */
-export const transformCountries = async (countries: Country[]) => {
-    return Promise.all(
-        countries.map(async (country) => {
-            const states = await getCountriesStates(country.states.resource);
-            return transformCountry(country, states);
-        })
-    );
-};
-
-export const transformCountry = (country: Country, states: CountryStates[]) => {
-    const transformedCountryStates = transformCountriesStates(states);
-
-    return {
-        id: country.id.toString(),
-        two_letter_abbreviation: country.country_iso2,
-        full_name_english: country.country,
-        available_regions: transformedCountryStates,
-    };
-};
-
-export const transformCountriesStates = (states: CountryStates[]) => {
-    if (states.length > 0) {
-        return states.map((state) => {
-            return {
-                code: state.state_abbreviation,
-                name: state.state,
-                id: state.id,
-            };
-        });
-    } else {
-        return null;
-    }
+export const transformCountriesAndStates = (
+    bcCountries: Country[],
+    bcStates: BcState[]
+): AcCountry[] => {
+    return bcCountries.map((country) => {
+        const available_regions = bcStates
+            .map((state) => {
+                if (state.country_id === country.id) {
+                    return {
+                        code: state.state_abbreviation,
+                        id: state.id,
+                        name: state.state,
+                    };
+                }
+                return null;
+            })
+            .filter(Boolean);
+        return {
+            full_name_english: country.country,
+            full_name_locale: null,
+            id: String(country.id),
+            two_letter_abbreviation: country.country_iso2,
+            three_letter_abbreviation: country.country_iso3,
+            available_regions,
+        };
+    });
 };
