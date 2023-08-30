@@ -24,6 +24,8 @@ type Query {
         """
         cartId: String
     ): AdyenPaymentStatus
+    """return Afterpay config"""
+    afterpayConfig: afterpayConfigOutput
     """
     Return details about custom EAV attributes, and optionally, system attributes.
     """
@@ -16770,6 +16772,16 @@ input AfterpayInput {
     Afterpay checkout token returned by the createAfterpayCheckout mutation
     """
     afterpay_token: String!
+}
+
+type afterpayConfigOutput {
+  allowed_currencies: [String]
+  is_enabled: Boolean
+  is_enabled_cta_checkout: Boolean
+  is_enabled_cta_minicart: Boolean
+  is_enabled_cta_pdp: Boolean
+  max_amount: String
+  min_amount: String
 }
 
 enum FilterTypeEnum {
