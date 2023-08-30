@@ -1,6 +1,6 @@
 import { checkout } from './requests/checkout';
 import { bcGraphQlRequest } from './client';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 import { BC_Checkout } from '@mesh/external/BigCommerceGraphqlApi';
 
 export const getCheckout = async (

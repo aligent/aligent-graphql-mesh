@@ -52,6 +52,7 @@
     "graphql": "^16.7.0",
     "graphql-tag": "^2.12.0",
     "jsonwebtoken": "^9.0.0",
+    "moment-timezone": "^0.5.43",
     "uuid": "^9.0.0"
   }
 }

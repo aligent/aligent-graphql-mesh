@@ -25,7 +25,7 @@ describe('transform customer addresses', () => {
     it('Returns false when search for form field does not exist', () => {
         const inputBcAddress = bcAddresses;
 
-        const result = checkIfDefaultAddress(inputBcAddress[0].form_fields, 'not real');
+        const result = checkIfDefaultAddress(inputBcAddress[0].form_fields, 'Default Shipping');
 
         expect(result).toEqual(false);
     });

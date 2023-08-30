@@ -1,7 +1,8 @@
-import { logAndThrowError } from './error-handling/error-handling';
 import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../bigcommerce/types';
 import { v4 as uuidv4 } from 'uuid';
+import { logAndThrowError } from './error-handling';
+import { getUnixTimeStampInSecondsForMidnightTonight } from './time-and-date';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const BC_CLIENT_ID = process.env.BC_CLIENT_ID as string;
@@ -20,10 +21,10 @@ export const getDecodedCustomerImpersonationToken = (
 };
 
 /**
- * Attempts to extract "bc_customer_id" for the mesh token or returns null
+ * Attempts to extract "bc_customer_id" for the mesh token or throws an error
  * @param meshToken
  */
-export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
+export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
     try {
         if (meshToken?.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
@@ -38,6 +39,20 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string) => {
 };
 
 /**
+ * Creates a token when a user logs in also stores the bc_customer_id in the payload
+ * which can be used for later request to the Mesh.
+ * @param {number} entityId - Bc User Id returned from logging in
+ */
+export const generateMeshToken = (entityId: number): string => {
+    const payload = {
+        bc_customer_id: entityId,
+        exp: getUnixTimeStampInSecondsForMidnightTonight(),
+    };
+
+    return sign(payload, JWT_PRIVATE_KEY);
+};
+
+/*
  * Creates a JWT that enables a BC user to stay logged in when redirecting
  * @param {number} customerId - The BC customers Id is needed to keep this user signed in on checkout
  * @param {string} redirectTo - The url to redirect to, e.g. /cart.php?action=loadInCheckout&id=cart-id&token=jwt
@@ -55,12 +70,4 @@ export const createCustomerLoginToken = (customerId: number, redirectTo: string)
     };
 
     return sign(payload, BC_CLIENT_SECRET);
-};
-
-export const generateMeshToken = (entityId: number): string => {
-    const payload = {
-        bc_customer_id: entityId,
-    };
-
-    return sign(payload, JWT_PRIVATE_KEY, { expiresIn: '1d' });
 };

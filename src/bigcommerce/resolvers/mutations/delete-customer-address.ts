@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@mesh';
 import { deleteCustomerAddress, getCustomerAddress } from '../../apis/rest/customer';
-import { logAndThrowError } from '../../../utils/error-handling/error-handling';
+import { logAndThrowError } from '../../../utils/error-handling';
 import { getBcCustomerIdFromMeshToken } from '../../../utils/tokens';
 
 export const deleteCustomerAddressResolver: MutationResolvers['deleteCustomerAddress'] = {
