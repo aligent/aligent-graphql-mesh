@@ -2,7 +2,11 @@ import {
     CheckoutAvailableShippingOption,
     CheckoutSelectedShippingOption,
 } from '@aligent/bigcommerce-operations';
-import { AvailableShippingMethod, Maybe, SelectedShippingMethod } from '@aligent/bigcommerce-resolvers';
+import {
+    AvailableShippingMethod,
+    Maybe,
+    SelectedShippingMethod,
+} from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 
 export const getTransformedAvailableShippingMethod = (
@@ -40,7 +44,9 @@ export const getTransformedSelectedShippingOption = (
 ): Maybe<SelectedShippingMethod> => {
     if (!selectedShippingOption) return null;
 
-    const transformedShippingMethod = getTransformedAvailableShippingMethod(selectedShippingOption) as SelectedShippingMethod;
+    const transformedShippingMethod = getTransformedAvailableShippingMethod(
+        selectedShippingOption
+    ) as SelectedShippingMethod;
 
     return {
         ...transformedShippingMethod,

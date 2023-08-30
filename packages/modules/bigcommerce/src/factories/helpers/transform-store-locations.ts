@@ -1,4 +1,8 @@
-import { QueryStoreLocationsArgs, StoreLocation, StoreLocations } from '@aligent/bigcommerce-resolvers';
+import {
+    QueryStoreLocationsArgs,
+    StoreLocation,
+    StoreLocations,
+} from '@aligent/bigcommerce-resolvers';
 import {
     CountryCode,
     DistanceFilter,
@@ -38,14 +42,11 @@ export const getTransformedStoreLocationsArgs = (
         // TODO: Converting suburb/postcode to coordinates after AC args passed in
         if (coordinates && Object.keys(coordinates).length && radius) {
             (InventoryLocationsArgs.distanceFilter as DistanceFilter).radius = radius;
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).lengthUnit =
-                'Kilometres';
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).lengthUnit = 'Kilometres';
 
             const { lat, lng } = coordinates;
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).longitude =
-                lng as number;
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).latitude =
-                lat as number;
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).longitude = lng as number;
+            (InventoryLocationsArgs.distanceFilter as DistanceFilter).latitude = lat as number;
         }
     }
 

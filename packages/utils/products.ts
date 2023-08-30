@@ -1,4 +1,9 @@
-import { ConfigurableProduct, Maybe, ProductInterface, SimpleProduct } from '@aligent/bigcommerce-resolvers';
+import {
+    ConfigurableProduct,
+    Maybe,
+    ProductInterface,
+    SimpleProduct,
+} from '@aligent/bigcommerce-resolvers';
 
 /**
  * De nests product variants to be their own item in an array along with their

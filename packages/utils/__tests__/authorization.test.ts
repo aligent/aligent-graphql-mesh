@@ -3,7 +3,9 @@ import { getBcCustomerId } from '../authorization';
 describe('authorization', () => {
     test(`Returns "null" if there's no authorization header`, () => {
         expect(
-            getBcCustomerId({ headers: { authorization: null } } as unknown as GraphQLModules.ModuleContext)
+            getBcCustomerId({
+                headers: { authorization: null },
+            } as unknown as GraphQLModules.ModuleContext)
         ).toEqual(null);
     });
 

@@ -85,16 +85,12 @@ const expectedResult = [
 describe('transform-product-aggregations', () => {
     it('Transforms a BC filters into AC aggregations', () => {
         expect(
-            getTransformedProductAggregations(
-                mockProductFilterBc as SearchProductFilterConnection
-            )
+            getTransformedProductAggregations(mockProductFilterBc as SearchProductFilterConnection)
         ).toEqual(expectedResult);
     });
 
     it(`returns an empty array if there's no filters`, () => {
-        expect(getTransformedProductAggregations({} as SearchProductFilterConnection)).toEqual(
-            []
-        );
+        expect(getTransformedProductAggregations({} as SearchProductFilterConnection)).toEqual([]);
         expect(
             getTransformedProductAggregations({ edges: [{}] } as SearchProductFilterConnection)
         ).toEqual([]);

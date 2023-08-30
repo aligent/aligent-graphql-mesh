@@ -1,9 +1,6 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { getTransformedConfigurableOptions } from '../transform-configurable-options';
-import {
-    MultipleChoiceOption,
-    ProductOptionEdge,
-} from '@aligent/bigcommerce-operations';
+import { MultipleChoiceOption, ProductOptionEdge } from '@aligent/bigcommerce-operations';
 import { Maybe } from '@aligent/bigcommerce-resolvers';
 
 const expectResult = [

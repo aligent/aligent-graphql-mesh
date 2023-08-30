@@ -1,9 +1,4 @@
-import {
-    Cart,
-    CheckoutCoupon,
-    CheckoutTax,
-    Money,
-} from '@aligent/bigcommerce-operations';
+import { Cart, CheckoutCoupon, CheckoutTax, Money } from '@aligent/bigcommerce-operations';
 import { CartPrices, CurrencyEnum, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 

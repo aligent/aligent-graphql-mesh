@@ -1,5 +1,10 @@
 import { Cart, CartSelectedMultipleChoiceOption } from '@aligent/bigcommerce-operations';
-import { CartItemInterface, CurrencyEnum, Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
+import {
+    CartItemInterface,
+    CurrencyEnum,
+    Maybe,
+    ProductInterface,
+} from '@aligent/bigcommerce-resolvers';
 import {
     btoa,
     createCartItemUid,

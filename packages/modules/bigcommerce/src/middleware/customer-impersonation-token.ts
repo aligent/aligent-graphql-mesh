@@ -3,7 +3,10 @@ import { getUnixTimeStampInSeconds } from '@aligent/utils';
 import { createCustomerImpersonationToken } from '../apis/rest/client';
 import { Middleware, MiddlewareContext } from 'graphql-modules';
 
-export const setCustomerImpersonationToken: Middleware = async ({ context }: MiddlewareContext, next) => {
+export const setCustomerImpersonationToken: Middleware = async (
+    { context }: MiddlewareContext,
+    next
+) => {
     if (!(await context.cache.get('customerImpersonationToken'))) {
         const unixTimeStampNowAdd24Hours = getUnixTimeStampInSeconds({ additionalHours: 24 });
 
@@ -29,4 +32,4 @@ export const setCustomerImpersonationToken: Middleware = async ({ context }: Mid
     }
 
     return next();
-}
+};

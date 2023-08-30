@@ -64,9 +64,7 @@ const getAggregationsFromProductAttributeSearchFilter = (
     };
 };
 
-export const getAggregationsFromBrandFilter = (
-    filter: BrandSearchFilter
-): Maybe<Aggregation> => {
+export const getAggregationsFromBrandFilter = (filter: BrandSearchFilter): Maybe<Aggregation> => {
     const { brands, name } = filter;
 
     const options = brands?.edges
@@ -112,9 +110,7 @@ const getAggregationsFromPriceFilter = (filter: PriceSearchFilter): Maybe<Aggreg
     };
 };
 
-export const getAggregationsFromRatingFilter = (
-    filter: RatingSearchFilter
-): Maybe<Aggregation> => {
+export const getAggregationsFromRatingFilter = (filter: RatingSearchFilter): Maybe<Aggregation> => {
     const { name, ratings } = filter;
 
     const options = ratings?.edges

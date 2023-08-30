@@ -92,9 +92,11 @@ The skeleton of the code is in the `.meshrc.yml` file. The meshrc file can get v
 Each new platform that has been developed should be in it's own module. E.g. BigCommerce integrations go in `packages/modules/bigcommerce`.
 
 ### Modules
+
 GraphQL Modules are reusable extendable of schema, resolvers and middleware that are used to make it easier to scale and reuse GraphQL code across different servers.
 
 #### Basic Structure of a Module
+
 ```
 modules/{module}/src
  - schema/*.graphql
@@ -109,66 +111,76 @@ modules/{module}/src
 
 #### Schema
 
-The schema directory contains one or more `.graphql` files that define the graphql types, queries and mutations that this module will provide. 
+The schema directory contains one or more `.graphql` files that define the graphql types, queries and mutations that this module will provide.
 
 #### Resolvers
-The resolvers directory contains the code that will be called when executing each of the query or mutation that are defined in the module's schema. 
+
+The resolvers directory contains the code that will be called when executing each of the query or mutation that are defined in the module's schema.
 
 Each resolver should be in a seperate file and then imported into `resolvers/index.ts` and then exported as part of the default export.
 
 #### Middleware
+
 Middleware are functions that will intercept individual, or groups of resolvers to extend or alter the request or response.
 
 Reference: https://the-guild.dev/graphql/modules/docs/advanced/middlewares
 
 #### Code Generation
+
 Code generation is used to create typescript code for:
 
 Resolvers
-Input and Output types for our resolver functions based on the schema definition files listed in in each module's `packages/{module}/src/schema/*.graphql`. 
+Input and Output types for our resolver functions based on the schema definition files listed in in each module's `packages/{module}/src/schema/*.graphql`.
 
 Operations
-Types for any graphql operation we perform on external API's e.g. the BigCommerce Storefront graphql API. 
+Types for any graphql operation we perform on external API's e.g. the BigCommerce Storefront graphql API.
 
 SDKs
 TBA
 
 #### Adding a new Module
+
 1. Create the basic folder structure of a module listed above
 2. In `modules/{module}/src/index.ts` define a default export of the module
-  ```typescript
-  import { createModule } from 'graphql-modules';
-  import { loadFilesSync } from '@graphql-tools/load-files';
-  import { join } from 'node:path';
-  import resolvers from './resolvers';
-  import middlewares from './middleware' // optional
 
-  const loadGraphQlFiles = () => loadFilesSync(join(__dirname, './schema/*.graphql'));
+```typescript
+import { createModule } from 'graphql-modules';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { join } from 'node:path';
+import resolvers from './resolvers';
+import middlewares from './middleware'; // optional
 
-  export default createModule({
-      id: 'module-id', // unique module id
-      dirname: __dirname,
-      typeDefs: loadGraphQlFiles(),
-      resolvers,
-      middlewares // optional
-  });
-  ```
+const loadGraphQlFiles = () => loadFilesSync(join(__dirname, './schema/*.graphql'));
+
+export default createModule({
+  id: 'module-id', // unique module id
+  dirname: __dirname,
+  typeDefs: loadGraphQlFiles(),
+  resolvers,
+  middlewares, // optional
+});
+```
+
 3. Start defining your schema in `modules/{module}/src/schema/*.graphql` files
 4. Update `codegent.ts` to generate resolver types for your schema by adding the below to the generates object
+
 ```
         'packages/generated/{module}/resolvers/index.ts': {
             schema: "packages/modules/{module}/src/schema/*.graphql",
             plugins: [
                 'typescript',
-                'typescript-resolvers', 
+                'typescript-resolvers',
             ]
         },
 ```
+
 5. Define an alias for your module and generated code in the `tsconfig.json` paths array
+
 ```
 "@aligent/{module}-resolvers": ["./packages/generated/{module}/resolvers/index"],
 "@aligent/{module}-graphql-module": ["./packages/modules/{module}/src/index"],
 ```
+
 6. Add your module alias to the `package.json` `_moduleAliases` section
 
 ```
@@ -177,11 +189,9 @@ TBA
     "@aligent/{module}-resolvers": "./packages/generated/{module}/resolvers/index",
   },
 ```
-NOTE: This will no longer required if/when we start using a bundler
-7. Start writing resolvers in `modules/{module}/src/resolvers/` and make sure to add them to the `modules/{module}/src/resolvers/index.ts`
-8. Register your module in `packages/mesh/application.ts`
-9. IF you are making calls to an external GraphQL API define your operations and fragments using `gql` tags (see `packages/modules/bigcommerce/src/apis/graphql/requests/add-products-to-cart.ts` as an example)
-10. Update the `codegen.ts` to generate types for your operations 
+
+NOTE: This will no longer required if/when we start using a bundler 7. Start writing resolvers in `modules/{module}/src/resolvers/` and make sure to add them to the `modules/{module}/src/resolvers/index.ts` 8. Register your module in `packages/mesh/application.ts` 9. IF you are making calls to an external GraphQL API define your operations and fragments using `gql` tags (see `packages/modules/bigcommerce/src/apis/graphql/requests/add-products-to-cart.ts` as an example) 10. Update the `codegen.ts` to generate types for your operations
+
 ```
         'packages/generated/{module}/operations/index.ts': {
             schema: [
@@ -195,7 +205,7 @@ NOTE: This will no longer required if/when we start using a bundler
             ],
             plugins: [
                 'typescript',
-                'typescript-operations', 
+                'typescript-operations',
             ],
             documents: [
                 'packages/modules/{module}/src/apis/graphql/requests/*.{graphql,ts}',
@@ -206,8 +216,8 @@ NOTE: This will no longer required if/when we start using a bundler
             },
         },
 ```
-11. Repeat steps 5 and 6 to register your generated code with an alias
 
+11. Repeat steps 5 and 6 to register your generated code with an alias
 
 ## Hosting
 

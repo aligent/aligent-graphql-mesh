@@ -215,7 +215,7 @@ export interface ValidatePasswordRequest {
 declare global {
     namespace GraphQLModules {
         interface GlobalContext {
-            headers: Record<string, string>,
+            headers: Record<string, string>;
             cache: KeyValueCache;
             logger: Logger;
         }

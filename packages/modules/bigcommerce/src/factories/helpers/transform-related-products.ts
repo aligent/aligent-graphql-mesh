@@ -1,8 +1,5 @@
 import { getTransformedProductData } from '../transform-products-data';
-import {
-    RelatedProductsConnection,
-    RelatedProductsEdge,
-} from '@aligent/bigcommerce-operations';
+import { RelatedProductsConnection, RelatedProductsEdge } from '@aligent/bigcommerce-operations';
 import { Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
 
 export const getTransformedRelatedProduct = (

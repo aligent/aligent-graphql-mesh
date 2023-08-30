@@ -4,7 +4,12 @@ import {
     ProductOptionConnection,
     SearchProductFilterConnection,
 } from '@aligent/bigcommerce-operations';
-import { ConfigurableProduct, Maybe, ProductInterface, Products } from '@aligent/bigcommerce-resolvers';
+import {
+    ConfigurableProduct,
+    Maybe,
+    ProductInterface,
+    Products,
+} from '@aligent/bigcommerce-resolvers';
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '@aligent/utils';
 import { getTransformedVariants } from './helpers/transform-variants';

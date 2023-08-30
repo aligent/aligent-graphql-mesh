@@ -1,7 +1,4 @@
-import {
-    WishlistConnection,
-    WishlistItemConnection,
-} from '@aligent/bigcommerce-operations';
+import { WishlistConnection, WishlistItemConnection } from '@aligent/bigcommerce-operations';
 
 export const bcWishlistNoEdges = {
     pageInfo: {

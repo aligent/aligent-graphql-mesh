@@ -1,5 +1,5 @@
-import { useGraphQLModules } from "@envelop/graphql-modules";
-import application from "../application";
+import { useGraphQLModules } from '@envelop/graphql-modules';
+import application from '../application';
 
 const plugins = [useGraphQLModules(application)];
 

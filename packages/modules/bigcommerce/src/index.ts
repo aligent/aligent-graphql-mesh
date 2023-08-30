@@ -2,7 +2,7 @@ import { createModule } from 'graphql-modules';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { join } from 'node:path';
 import resolvers from './resolvers';
-import middlewares from './middleware'
+import middlewares from './middleware';
 
 const loadGraphQlFiles = () => loadFilesSync(join(__dirname, './schema/*.graphql'));
 
@@ -11,9 +11,9 @@ export default createModule({
     dirname: __dirname,
     typeDefs: loadGraphQlFiles(),
     resolvers,
-    middlewares
+    middlewares,
 });
 
 // Export module defined types so they can be used in utils as needed
 // @TODO: Utils dependant on types may need to be moved into this module instead
-export * from './types'
+export * from './types';

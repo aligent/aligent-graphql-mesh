@@ -4,17 +4,12 @@ import {
     ProductInterface,
     Wishlist,
     WishlistVisibilityEnum,
-    WishlistItemInterface
+    WishlistItemInterface,
 } from '@aligent/bigcommerce-resolvers';
-import {
-    WishlistConnection,
-    WishlistItemConnection,
-} from '@aligent/bigcommerce-operations';
+import { WishlistConnection, WishlistItemConnection } from '@aligent/bigcommerce-operations';
 import { getTransformedProductData } from '../transform-products-data';
 
-export const getTransformedWishlists = (
-    wishlists: WishlistConnection
-): Array<Maybe<Wishlist>> => {
+export const getTransformedWishlists = (wishlists: WishlistConnection): Array<Maybe<Wishlist>> => {
     if (!wishlists.edges) return [];
     return wishlists.edges
         .map((edge) => {

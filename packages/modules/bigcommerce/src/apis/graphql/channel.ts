@@ -1,9 +1,5 @@
 import { bcGraphQlRequest } from './client';
-import {
-    Channel,
-    MetafieldConnection,
-    SocialMediaLink,
-} from '@aligent/bigcommerce-operations';
+import { Channel, MetafieldConnection, SocialMediaLink } from '@aligent/bigcommerce-operations';
 import { channelMetafieldsByNamespaceQuery } from './requests/channel-metafields-by-namespace-query';
 import { channelSocialLinks } from './requests/channel-social-links';
 import { logAndThrowError } from '@aligent/utils';

@@ -1,5 +1,10 @@
 import { Review, ReviewConnection } from '@aligent/bigcommerce-operations';
-import { Maybe, ProductInterface, ProductReview, ProductReviews } from '@aligent/bigcommerce-resolvers';
+import {
+    Maybe,
+    ProductInterface,
+    ProductReview,
+    ProductReviews,
+} from '@aligent/bigcommerce-resolvers';
 
 export const getTransformedReview = (review: Review): Maybe<ProductReview> => {
     const { author, createdAt, rating, text, title } = review;

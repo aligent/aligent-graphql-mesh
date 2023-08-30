@@ -1,12 +1,10 @@
-import { MiddlewareMap } from "graphql-modules/shared/middleware";
-import { setCustomerImpersonationToken } from "./customer-impersonation-token";
+import { MiddlewareMap } from 'graphql-modules/shared/middleware';
+import { setCustomerImpersonationToken } from './customer-impersonation-token';
 
 const middlewareMap: MiddlewareMap = {
-    "*": {
-        "*": [
-            setCustomerImpersonationToken
-        ]
-    }
+    '*': {
+        '*': [setCustomerImpersonationToken],
+    },
 };
 
 export default middlewareMap;
