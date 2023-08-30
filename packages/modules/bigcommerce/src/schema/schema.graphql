@@ -403,7 +403,7 @@ type Query {
 
 type Mutation {
     "Generate Redirect Urls for a cart"
-    createCartRedirectUrls(cartId: String!): CreateCartRedirectUrls
+    createCartRedirectUrls(cartId: String): CreateCartRedirectUrls
 
     """
     Add one or more bundle products to the specified cart. We recommend using `addProductsToCart` instead.
