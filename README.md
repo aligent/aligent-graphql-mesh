@@ -72,6 +72,33 @@ e.g.
 
 `DEBUG`= This is only used for development and adds more details to the logs via console.
 
+## Generating Tokens
+
+### X_AUTH_TOKEN
+Needs to be requested from the BigCommerce store owner. Check with Aligent DevOps if required.
+
+### BC_GRAPHQL_TOKEN
+This is a non customer specific token that needs to be generated using the BigComm storefront api-token endpoint.
+This requires an existing X_AUTH_TOKEN to be passed in the header.
+
+Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
+
+Endpoint: https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token
+Header: X-Auth-Token: <My-XAuth-Token-Here>
+Payload:
+- choose a expired epoch timestamp far enough in the future
+- leave cors origins empty for local dev
+```json
+{
+  "channel_id": 1,
+  "expires_at": 1724983269,
+  "allowed_cors_origins": []
+}
+```
+
+
+
+
 #### TODO (NO ENV REQUIRED YET)
 
 ## Generating an SSL Certificate
