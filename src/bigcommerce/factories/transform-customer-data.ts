@@ -1,15 +1,18 @@
 import { Customer, CustomerInput, CustomerOutput } from '../../meshrc/.mesh';
-import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest } from '../types';
+import { BCOrder, BcAddressRest, BcMutationCustomer, ValidatePasswordRequest } from '../types';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { BC_Customer } from '@mesh/external/BigCommerceGraphqlApi';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
+import { getTransformedOrders } from './helpers/transform-customer-orders';
 
 export const transformBcCustomer = (
     bcCustomer: BC_Customer,
     bcAddresses: BcAddressRest[],
-    isSubscriber: boolean
+    isSubscriber: boolean,
+    bcOrders: BCOrder[]
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
+
     return {
         addresses: getTransformedCustomerAddresses(bcAddresses),
         email,
@@ -30,6 +33,9 @@ export const transformBcCustomer = (
                 page_size: null,
                 total_pages: null,
             },
+        },
+        orders: {
+            items: getTransformedOrders(bcOrders),
         },
     };
 };
