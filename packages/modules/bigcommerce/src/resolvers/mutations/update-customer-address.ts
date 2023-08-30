@@ -8,8 +8,8 @@ import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/custo
 import {
     logAndThrowError,
     isCustomerAddressValid,
-    getBcCustomerIdFromMeshToken,
 } from '@aligent/utils';
+import { getBcCustomerIdFromMeshToken } from '../../utils';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {

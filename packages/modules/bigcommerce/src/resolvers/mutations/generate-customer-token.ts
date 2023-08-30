@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { bcLogin } from '../../apis/graphql/login';
-import { generateMeshToken } from '@aligent/utils';
+import { generateMeshToken } from '../..//utils';
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {

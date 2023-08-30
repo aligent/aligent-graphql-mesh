@@ -1,5 +1,5 @@
 import { Cart, Maybe, QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { getBcCustomerId } from '@aligent/utils';
+import { getBcCustomerId } from '../../utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const cartResolver: QueryResolvers['cart'] = {

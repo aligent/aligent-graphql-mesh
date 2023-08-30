@@ -1,8 +1,9 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { addProductsToCart, createCart } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
-import { atob, getBcCustomerId } from '@aligent/utils';
+import { atob } from '@aligent/utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
+import { getBcCustomerId } from '../../utils';
 
 export const addProductsToCartResolver = {
     resolve: async (_root, args, context, _info) => {

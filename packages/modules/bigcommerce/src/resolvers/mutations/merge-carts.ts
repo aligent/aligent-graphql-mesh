@@ -4,7 +4,7 @@ import {
     getCartIdFromBcCustomerAttribute,
     getCheckout,
 } from '../../apis/graphql';
-import { getBcCustomerId } from '@aligent/utils';
+import { getBcCustomerId } from '../../utils';
 import { transformCartItemsToLineItems } from '../../factories/transform-cart-items-to-line-items';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';

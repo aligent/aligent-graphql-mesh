@@ -1,4 +1,4 @@
-import { getDecodedCustomerImpersonationToken } from '@aligent/utils';
+import { getDecodedCustomerImpersonationToken } from '../utils';
 import { getUnixTimeStampInSeconds } from '@aligent/utils';
 import { createCustomerImpersonationToken } from '../apis/rest/client';
 import { Middleware, MiddlewareContext } from 'graphql-modules';

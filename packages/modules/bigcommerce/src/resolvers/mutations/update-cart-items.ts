@@ -1,7 +1,8 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@aligent/bigcommerce-resolvers';
 import { updateCartLineItem } from '../../apis/graphql/cart';
-import { getBcCustomerId, getDeconstructedCartItemUid } from '@aligent/utils';
+import { getDeconstructedCartItemUid } from '@aligent/utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
+import { getBcCustomerId } from '../../utils';
 
 export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
     resolve: async (_root, args, context, _info): Promise<UpdateCartItemsOutput | null> => {

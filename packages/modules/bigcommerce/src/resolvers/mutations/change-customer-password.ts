@@ -5,7 +5,8 @@ import {
     transformAcCustomerValidatePassword,
 } from '../../factories/transform-customer-data';
 import { updateCustomer, validateCustomerCredentials } from '../../apis/rest/customer';
-import { getBcCustomerIdFromMeshToken, logAndThrowError } from '@aligent/utils';
+import { logAndThrowError } from '@aligent/utils';
+import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { getBcCustomer } from '../../apis/graphql';
 
 export const changeCustomerPasswordResolver: MutationResolvers['changeCustomerPassword'] = {

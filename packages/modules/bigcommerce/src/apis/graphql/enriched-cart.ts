@@ -3,7 +3,7 @@ import { getBcProductsGraphql } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
-import { getFlattenedProducts } from '@aligent/utils';
+import { getFlattenedProducts } from '../../utils';
 
 export const UNDEFINED_CART = {
     id: '',

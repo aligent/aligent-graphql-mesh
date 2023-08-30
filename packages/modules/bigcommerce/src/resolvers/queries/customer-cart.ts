@@ -1,5 +1,5 @@
 import { Cart, QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { getBcCustomerId } from '@aligent/utils';
+import { getBcCustomerId } from '../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 

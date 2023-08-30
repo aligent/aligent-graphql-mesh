@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { deleteCustomerAddress, getCustomerAddress } from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
-import { getBcCustomerIdFromMeshToken } from '@aligent/utils';
+import { getBcCustomerIdFromMeshToken } from '../../utils';
 
 export const deleteCustomerAddressResolver: MutationResolvers['deleteCustomerAddress'] = {
     resolve: async (_root, args, context, _info) => {

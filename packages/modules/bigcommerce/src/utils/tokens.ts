@@ -1,8 +1,7 @@
-import { logAndThrowError } from './error-handling';
+import { logAndThrowError, getUnixTimeStampInSecondsForMidnightTonight } from '@aligent/utils';
 import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '@aligent/bigcommerce-graphql-module';
 import { v4 as uuidv4 } from 'uuid';
-import { getUnixTimeStampInSecondsForMidnightTonight } from './time-and-date';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const BC_CLIENT_ID = process.env.BC_CLIENT_ID as string;

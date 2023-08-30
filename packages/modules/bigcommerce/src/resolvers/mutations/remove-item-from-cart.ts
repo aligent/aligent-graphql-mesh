@@ -1,7 +1,8 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { deleteCartLineItem } from '../../apis/graphql';
-import { getBcCustomerId, getDeconstructedCartItemUid, logAndThrowError } from '@aligent/utils';
+import { getDeconstructedCartItemUid, logAndThrowError } from '@aligent/utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
+import { getBcCustomerId } from '../../utils';
 
 export const UNDEFINED_CART = {
     id: '',

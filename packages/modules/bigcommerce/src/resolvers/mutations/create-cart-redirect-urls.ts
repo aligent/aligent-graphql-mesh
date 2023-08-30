@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
-import { createCustomerLoginToken, getBcCustomerId } from '@aligent/utils';
+import { createCustomerLoginToken, getBcCustomerId } from '../../utils';
 
 export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedirectUrls'] = {
     resolve: async (root, args, context, info) => {

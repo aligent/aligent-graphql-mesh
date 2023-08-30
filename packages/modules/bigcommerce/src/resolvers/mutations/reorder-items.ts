@@ -1,7 +1,7 @@
 import { MutationResolvers, CartItemInput } from '@aligent/bigcommerce-resolvers';
 import { addProductsToCartResolver } from './add-products-to-cart';
 import { getLineItems } from '../../apis/rest/order';
-import { getBcCustomerId } from '@aligent/utils';
+import { getBcCustomerId } from '../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 import { transformRestCartLineItems } from '../../factories/transform-rest-cart-line-items';
 
