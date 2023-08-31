@@ -6,6 +6,7 @@ import {
 } from '../../factories/transform-customer-data';
 import { updateCustomer } from '../../apis/rest/customer';
 import { getBcCustomer } from '../../apis/graphql';
+import { verifyCustomerCredentials } from '../../apis/helpers/verify-customer-credentials';
 import {
     createSubscriber,
     deleteSubscriberById,
@@ -20,9 +21,15 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             'customerImpersonationToken'
         )) as string;
 
-        if (!customerInput) {
+        if (!customerInput?.password) {
             return null;
         }
+
+        await verifyCustomerCredentials(
+            customerId,
+            customerImpersonationToken,
+            customerInput.password
+        );
 
         const email = customerInput.email;
         const isSubscribed = await updateSubscriptionStatus(
