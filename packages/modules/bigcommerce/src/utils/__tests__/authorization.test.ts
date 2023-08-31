@@ -10,7 +10,7 @@ describe('authorization', () => {
         ).toEqual(null);
     });
 
-    test('Throws an error that the user session has expired is the authorization token is invalid', () => {
+    test('Throws an error that the user session has expired if the authorization token is invalid', () => {
         expect(() => {
             getBcCustomerId({
                 headers: { authorization: 'Bearer abcd' },
