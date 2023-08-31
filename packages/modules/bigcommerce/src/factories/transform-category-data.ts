@@ -1,7 +1,8 @@
 import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '@aligent/utils';
-import { CategoryConnection, BreadcrumbConnection } from '@aligent/bigcommerce-operations';
-import { CategoryTree, Maybe, Breadcrumb } from '@aligent/bigcommerce-resolvers';
+import { CategoryConnection } from '@aligent/bigcommerce-operations';
+import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
+import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
     const { children, description, entityId, name, path, products, seo, breadcrumbs } = category;
@@ -42,22 +43,5 @@ export const getTransformedCategoriesData = (
     return categories.edges.map((category) => {
         if (!category?.node) return null;
         return getTransformedCategoryData(category.node);
-    });
-};
-
-const getTransformedBreadcrumbsData = (
-    breadcrumbs: BreadcrumbConnection | undefined
-): Maybe<Array<Maybe<Breadcrumb>>> => {
-    if (!breadcrumbs?.edges) return null;
-
-    return breadcrumbs.edges.map((node, index) => {
-        if (!node?.node) return null;
-        return {
-            category_level: index,
-            category_name: node.node.name,
-            category_url_path: node.node.path,
-            category_url_key: null,
-            category_uid: '',
-        };
     });
 };
