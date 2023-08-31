@@ -26,6 +26,9 @@ export const getTransformedCategoryData = (category: Category): CategoryTree => 
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
         staged: false,
+        // TODO: Need further tests
+        // BC categories endpoint is returning wrong breadcrumbs data at the moment. They have identified this as an internal
+        // task to fix(STRF-11163). 
         breadcrumbs: getTransformedBreadcrumbsData(breadcrumbs),
         // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
         __typename: 'CategoryTree',
