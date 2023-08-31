@@ -21,26 +21,33 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             'customerImpersonationToken'
         )) as string;
 
-        if (!customerInput?.password) {
+        if (!customerInput) {
             return null;
         }
 
-        await verifyCustomerCredentials(
-            customerId,
-            customerImpersonationToken,
-            customerInput.password
-        );
-
         const email = customerInput.email;
+
+        if (email && customerInput?.password) {
+            /* Customer email updates require the users password to be validated against their current
+             * email address. If this step fails, the "verifyCustomerCredentials" will pass an error
+             * to the PWA which will cause the browser to end the user's session.*/
+            await verifyCustomerCredentials(
+                customerId,
+                customerImpersonationToken,
+                customerInput.password
+            );
+
+            await updateSubscriberEmail(customerId, email, customerImpersonationToken);
+        }
+
+        /* Take flight doesn't require a password to update customer information which isn't
+         * changing a password or email */
+
         const isSubscribed = await updateSubscriptionStatus(
             customerId,
             customerInput,
             customerImpersonationToken
         );
-
-        if (email) {
-            await updateSubscriberEmail(customerId, email, customerImpersonationToken);
-        }
 
         const bcCustomer = transformCustomerForMutation(customerId, customerInput);
         const customerResponse = await updateCustomer(bcCustomer);
