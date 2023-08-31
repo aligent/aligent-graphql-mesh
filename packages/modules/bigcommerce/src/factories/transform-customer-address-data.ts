@@ -60,6 +60,7 @@ export const transformBcAddress = (address: BcAddress): CustomerAddress => {
         postcode: address.postal_code,
         region: {
             region: address.state_or_province,
+            //TODO: add region_code from bc state.state_abbreviation
         },
         default_billing: checkIfDefaultAddress(address.form_fields, DEFAULT_BILLING_NAME),
         default_shipping: checkIfDefaultAddress(address.form_fields, DEFAULT_SHIPPING_NAME),

@@ -57,7 +57,23 @@ export const bcAddressUpdated = {
     ],
 };
 
-export const acCustomerAddress = {
+export const acCustomerAddressInput = {
+    firstname: 'Adam',
+    lastname: 'Hall',
+    city: 'Adelaide',
+    street: ['Level 1', '212 pirie st'],
+    region: {
+        region_id: 212,
+    },
+    postcode: '5000',
+    country_code: 'AU' as CountryCodeEnum,
+    telephone: '0400000000',
+    company: 'Aligent',
+    default_billing: true,
+    default_shipping: true,
+};
+
+export const acCustomerAddressOutput = {
     firstname: 'Adam',
     lastname: 'Hall',
     city: 'Adelaide',
@@ -79,7 +95,7 @@ export const customerAddressBillingShippingFalse = {
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
-        region: 'South Australia',
+        region_id: 212,
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,

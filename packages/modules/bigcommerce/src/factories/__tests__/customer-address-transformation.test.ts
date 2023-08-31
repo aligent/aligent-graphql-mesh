@@ -3,20 +3,21 @@ import {
     bcAddressUpdated,
     bcAddressUpdatedShippingBillingFalse,
     bcState,
-    acCustomerAddress,
+    acCustomerAddressInput,
     customerAddressBillingFalse,
     customerAddressBillingShippingFalse,
+    acCustomerAddressOutput,
 } from './__data__/customer-address-tranformation-data';
 import { transformBcAddress, transformCustomerAddress } from '../transform-customer-address-data';
 
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress create into BCAddress', () => {
-        const transformed = transformCustomerAddress(acCustomerAddress, bcState, 123);
+        const transformed = transformCustomerAddress(acCustomerAddressInput, bcState, 123);
         expect(transformed).toEqual(bcAddress);
     });
 
     test('Transform CustomerAddress create into BCAddress', () => {
-        const transformed = transformCustomerAddress(acCustomerAddress, bcState, 123, 5);
+        const transformed = transformCustomerAddress(acCustomerAddressInput, bcState, 123, 5);
         expect(transformed).toEqual(bcAddressUpdated);
     });
 
@@ -32,7 +33,7 @@ describe('Customer Address Transformation tests', () => {
 
     test('Transform BCAddress into CustomerAddress', () => {
         const transformedAcAddress = transformBcAddress(bcAddress);
-        expect(transformedAcAddress).toEqual(acCustomerAddress);
+        expect(transformedAcAddress).toEqual(acCustomerAddressOutput);
     });
 
     test('Transform BCAddress into CustomerAddress with Default Billing false', () => {

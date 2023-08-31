@@ -7,6 +7,7 @@ import { CustomerAddressValidated } from '../../types';
 import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '../../utils';
+import { getCountryByCode, getStateByCountryIdAndStateId } from '../../apis/rest/countries';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {
@@ -32,7 +33,19 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
             );
         }
 
-        const address = transformCustomerAddress(customerAddressInput, customerId, addressId);
+        //the pwa only provides the region id, so we need to get the state from the api to get the full name
+        const country = await getCountryByCode(customerAddressInput.country_code);
+        const state = await getStateByCountryIdAndStateId(
+            country.id,
+            customerAddressInput.region.region_id
+        );
+
+        const address = transformCustomerAddress(
+            customerAddressInput,
+            state,
+            customerId,
+            addressId
+        );
         const response = await updateCustomerAddress(address);
         if (!response) {
             return null; //No data returned if the updated does not contain any change
