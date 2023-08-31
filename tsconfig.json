@@ -21,8 +21,12 @@
         "skipLibCheck": true,
         "typeRoots": ["./node_modules/@types"],
         "paths": {
-            "@mesh": ["./src/meshrc/.mesh"],
-            "@mesh/*": ["./src/meshrc/.mesh/*"]
+            "@aligent/bigcommerce-graphql-module": ["./packages/modules/bigcommerce/src/index"],
+            "@aligent/bigcommerce-operations": [
+                "./packages/generated/bigcommerce/operations/index"
+            ],
+            "@aligent/bigcommerce-resolvers": ["./packages/generated/bigcommerce/resolvers/index"],
+            "@aligent/utils": ["./packages/utils/index"]
         }
     },
     "exclude": ["node_modules/**/*", "docker/**/*", "lambda/**/*"]

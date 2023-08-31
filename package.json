@@ -3,12 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "license": "UNLICENSED",
+  "workspaces": {
+    "packages": [
+      "packages/mesh",
+      "packages/modules/*"
+    ]
+  },
+  "_moduleAliases": {
+    "@aligent/bigcommerce-graphql-module": "./packages/modules/bigcommerce/src/index",
+    "@aligent/bigcommerce-operations": "./packages/generated/bigcommerce/operations/index",
+    "@aligent/bigcommerce-resolvers": "./packages/generated/bigcommerce/resolvers/index",
+    "@aligent/utils": "./packages/utils/index"
+  },
   "scripts": {
     "dev": "yarn start:dev",
-    "start:dev": "yarn codegen && STAGE=dev mesh dev --dir ./src/meshrc",
-    "start": "mesh start --dir ./src/meshrc",
-    "codegen": "env $(cat src/meshrc/.env | sed '/^#/d' | xargs) graphql-codegen --config src/bigcommerce/codegen.ts",
-    "build": "mesh build --throwOnInvalidConfiguration --dir ./src/meshrc && yarn codegen",
+    "start:dev": "yarn codegen && STAGE=dev mesh dev --dir ./packages/mesh",
+    "start": "mesh start --dir ./packages/mesh",
+    "codegen": "env $(cat ./packages/mesh/.env | sed '/^#/d' | xargs) graphql-codegen --config ./codegen.ts",
+    "build": "mesh build --throwOnInvalidConfiguration --dir ./packages/mesh && yarn codegen",
     "build:docker": "docker build --no-cache -f docker/Dockerfile -t mesh .",
     "test": "jest --coverage --passWithNoTests",
     "lint": "eslint --color . --ext .ts",
@@ -37,6 +49,7 @@
   },
   "dependencies": {
     "@envelop/core": "^4.0.0",
+    "@envelop/graphql-modules": "^5.0.0",
     "@envelop/sentry": "^6.0.0",
     "@graphql-mesh/cache-localforage": "^0.94.0",
     "@graphql-mesh/cache-redis": "^0.95.0",
@@ -46,12 +59,15 @@
     "@graphql-mesh/plugin-hive": "^0.95.2",
     "@graphql-mesh/runtime": "^0.94.0",
     "@graphql-mesh/transform-prefix": "^0.95.0",
+    "@graphql-tools/load-files": "^7.0.0",
     "axios": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.0",
     "graphql": "^16.7.0",
+    "graphql-modules": "^2.2.0",
     "graphql-tag": "^2.12.0",
     "jsonwebtoken": "^9.0.0",
+    "module-alias": "^2.2.3",
     "moment-timezone": "^0.5.43",
     "uuid": "^9.0.0"
   }
