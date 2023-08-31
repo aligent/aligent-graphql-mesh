@@ -1,4 +1,4 @@
-import { BcAddress, CustomerAddressValidated } from '../types';
+import { BcAddress, BcState, CustomerAddressValidated } from '../types';
 import { CountryCodeEnum, CustomerAddress } from '@aligent/bigcommerce-resolvers';
 import { checkIfDefaultAddress } from './helpers/transform-customer-addresses';
 
@@ -7,6 +7,7 @@ const DEFAULT_SHIPPING_NAME = 'Default Shipping';
 
 export const transformCustomerAddress = (
     customerAddress: CustomerAddressValidated,
+    state: BcState,
     customerId: number,
     addressId?: number //optional for update address
 ): BcAddress => {
@@ -31,7 +32,7 @@ export const transformCustomerAddress = (
         last_name: customerAddress.lastname,
         city: customerAddress.city,
         country_code: customerAddress.country_code,
-        state_or_province: customerAddress.region.region,
+        state_or_province: state.state,
         postal_code: customerAddress.postcode,
         address1: customerAddress.street[0],
         address2: customerAddress.street[1] || '',

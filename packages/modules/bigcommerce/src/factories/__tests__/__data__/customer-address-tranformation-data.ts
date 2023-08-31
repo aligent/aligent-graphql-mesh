@@ -1,4 +1,5 @@
 import { CountryCodeEnum } from '@aligent/bigcommerce-resolvers';
+import { BcState } from '../../../types';
 
 export const bcAddress = {
     customer_id: 123,
@@ -22,6 +23,13 @@ export const bcAddress = {
             value: ['Yes'],
         },
     ],
+};
+
+export const bcState: BcState = {
+    id: 212,
+    state: 'South Australia',
+    state_abbreviation: 'SA',
+    country_id: 13,
 };
 
 export const bcAddressUpdated = {
@@ -49,7 +57,7 @@ export const bcAddressUpdated = {
     ],
 };
 
-export const customerAddress = {
+export const acCustomerAddress = {
     firstname: 'Adam',
     lastname: 'Hall',
     city: 'Adelaide',
