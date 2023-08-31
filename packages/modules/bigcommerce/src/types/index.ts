@@ -1,3 +1,4 @@
+import { BreadcrumbConnection } from '@aligent/bigcommerce-operations';
 import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
 export interface BcGraphqlTokenData {
@@ -81,6 +82,7 @@ export interface BcCategory {
         metaDescription: string;
         pageTitle: string;
     };
+    breadcrumbs?: BreadcrumbConnection;
 }
 
 export interface BcAddress {

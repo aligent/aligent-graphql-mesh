@@ -2,9 +2,10 @@ import { Category } from '../types';
 import { btoa, slashAtStartOrEnd } from '@aligent/utils';
 import { CategoryConnection } from '@aligent/bigcommerce-operations';
 import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
+import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
-    const { children, description, entityId, name, path, products, seo } = category;
+    const { children, description, entityId, name, path, products, seo, breadcrumbs } = category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
     const { metaDescription, pageTitle } = seo || {};
@@ -26,6 +27,10 @@ export const getTransformedCategoryData = (category: Category): CategoryTree => 
         url_path: path.replace(slashAtStartOrEnd, ''),
         url_suffix: '',
         staged: false,
+        // TODO: Need further tests
+        // BC categories endpoint is returning wrong breadcrumbs data at the moment. They have identified this as an internal
+        // task to fix(STRF-11163).
+        breadcrumbs: getTransformedBreadcrumbsData(breadcrumbs),
         __typename: 'CategoryTree',
     };
 };
