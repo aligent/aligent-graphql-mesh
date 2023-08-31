@@ -135,6 +135,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Shop All',
                                                                     entityId: 23,
+                                                                    path: '/shop-all/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                             },
@@ -194,6 +195,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Women',
                                                                     entityId: 58,
+                                                                    path: '/women/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                             },
@@ -254,6 +256,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Women',
                                                                     entityId: 58,
+                                                                    path: '/women/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                             },
@@ -261,6 +264,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Tops',
                                                                     entityId: 59,
+                                                                    path: '/women/women-tops/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                                             },
@@ -320,6 +324,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Women',
                                                                     entityId: 58,
+                                                                    path: '/women/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                             },
@@ -327,6 +332,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Tops',
                                                                     entityId: 59,
+                                                                    path: '/women/women-tops/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                                             },
@@ -334,6 +340,7 @@ export const bcWishList: WishlistConnection = {
                                                                 node: {
                                                                     name: 'Hoodies & Sweatshirts',
                                                                     entityId: 60,
+                                                                    path: '/women/tops-women/hoodies-and-sweatshirts-women/',
                                                                 },
                                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                                                             },
@@ -552,6 +559,15 @@ export const transformedWishlist = [
                                 url_path: 'shop-all',
                                 url_suffix: '',
                                 staged: false,
+                                breadcrumbs: [
+                                    {
+                                        category_level: 0,
+                                        category_name: 'Shop All',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path: '/shop-all/',
+                                    },
+                                ],
                                 __typename: 'CategoryTree',
                             },
                             {
@@ -570,6 +586,15 @@ export const transformedWishlist = [
                                 url_path: 'women',
                                 url_suffix: '',
                                 staged: false,
+                                breadcrumbs: [
+                                    {
+                                        category_level: 0,
+                                        category_name: 'Women',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path: '/women/',
+                                    },
+                                ],
                                 __typename: 'CategoryTree',
                             },
                             {
@@ -588,6 +613,22 @@ export const transformedWishlist = [
                                 url_path: 'women/tops',
                                 url_suffix: '',
                                 staged: false,
+                                breadcrumbs: [
+                                    {
+                                        category_level: 0,
+                                        category_name: 'Women',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path: '/women/',
+                                    },
+                                    {
+                                        category_level: 1,
+                                        category_name: 'Tops',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path: '/women/women-tops/',
+                                    },
+                                ],
                                 __typename: 'CategoryTree',
                             },
                             {
@@ -606,6 +647,30 @@ export const transformedWishlist = [
                                 url_path: 'hoodies-and-sweatshirts-women',
                                 url_suffix: '',
                                 staged: false,
+                                breadcrumbs: [
+                                    {
+                                        category_level: 0,
+                                        category_name: 'Women',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path: '/women/',
+                                    },
+                                    {
+                                        category_level: 1,
+                                        category_name: 'Tops',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path: '/women/women-tops/',
+                                    },
+                                    {
+                                        category_level: 2,
+                                        category_name: 'Hoodies & Sweatshirts',
+                                        category_uid: '',
+                                        category_url_key: null,
+                                        category_url_path:
+                                            '/women/tops-women/hoodies-and-sweatshirts-women/',
+                                    },
+                                ],
                                 __typename: 'CategoryTree',
                             },
                         ],
@@ -728,6 +793,15 @@ export const transformedWishlistItems = [
                     url_path: 'shop-all',
                     url_suffix: '',
                     staged: false,
+                    breadcrumbs: [
+                        {
+                            category_level: 0,
+                            category_name: 'Shop All',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/shop-all/',
+                        },
+                    ],
                     __typename: 'CategoryTree',
                 },
                 {
@@ -746,6 +820,15 @@ export const transformedWishlistItems = [
                     url_path: 'women',
                     url_suffix: '',
                     staged: false,
+                    breadcrumbs: [
+                        {
+                            category_level: 0,
+                            category_name: 'Women',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/women/',
+                        },
+                    ],
                     __typename: 'CategoryTree',
                 },
                 {
@@ -764,6 +847,22 @@ export const transformedWishlistItems = [
                     url_path: 'women/tops',
                     url_suffix: '',
                     staged: false,
+                    breadcrumbs: [
+                        {
+                            category_level: 0,
+                            category_name: 'Women',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/women/',
+                        },
+                        {
+                            category_level: 1,
+                            category_name: 'Tops',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/women/women-tops/',
+                        },
+                    ],
                     __typename: 'CategoryTree',
                 },
                 {
@@ -782,6 +881,29 @@ export const transformedWishlistItems = [
                     url_path: 'hoodies-and-sweatshirts-women',
                     url_suffix: '',
                     staged: false,
+                    breadcrumbs: [
+                        {
+                            category_level: 0,
+                            category_name: 'Women',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/women/',
+                        },
+                        {
+                            category_level: 1,
+                            category_name: 'Tops',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/women/women-tops/',
+                        },
+                        {
+                            category_level: 2,
+                            category_name: 'Hoodies & Sweatshirts',
+                            category_uid: '',
+                            category_url_key: null,
+                            category_url_path: '/women/tops-women/hoodies-and-sweatshirts-women/',
+                        },
+                    ],
                     __typename: 'CategoryTree',
                 },
             ],
@@ -939,7 +1061,11 @@ export const bcWishListItems: WishlistItemConnection = {
                                     breadcrumbs: {
                                         edges: [
                                             {
-                                                node: { name: 'Shop All', entityId: 23 },
+                                                node: {
+                                                    name: 'Shop All',
+                                                    entityId: 23,
+                                                    path: '/shop-all/',
+                                                },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                             },
                                         ],
@@ -1008,7 +1134,11 @@ export const bcWishListItems: WishlistItemConnection = {
                                     breadcrumbs: {
                                         edges: [
                                             {
-                                                node: { name: 'Women', entityId: 58 },
+                                                node: {
+                                                    name: 'Women',
+                                                    entityId: 58,
+                                                    path: '/women/',
+                                                },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                             },
                                         ],
@@ -1064,11 +1194,19 @@ export const bcWishListItems: WishlistItemConnection = {
                                     breadcrumbs: {
                                         edges: [
                                             {
-                                                node: { name: 'Women', entityId: 58 },
+                                                node: {
+                                                    name: 'Women',
+                                                    entityId: 58,
+                                                    path: '/women/',
+                                                },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                             },
                                             {
-                                                node: { name: 'Tops', entityId: 59 },
+                                                node: {
+                                                    name: 'Tops',
+                                                    entityId: 59,
+                                                    path: '/women/women-tops/',
+                                                },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                             },
                                         ],
@@ -1120,17 +1258,26 @@ export const bcWishListItems: WishlistItemConnection = {
                                     breadcrumbs: {
                                         edges: [
                                             {
-                                                node: { name: 'Women', entityId: 58 },
+                                                node: {
+                                                    name: 'Women',
+                                                    entityId: 58,
+                                                    path: '/women/',
+                                                },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                             },
                                             {
-                                                node: { name: 'Tops', entityId: 59 },
+                                                node: {
+                                                    name: 'Tops',
+                                                    entityId: 59,
+                                                    path: '/women/women-tops/',
+                                                },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                             },
                                             {
                                                 node: {
                                                     name: 'Hoodies & Sweatshirts',
                                                     entityId: 60,
+                                                    path: '/women/tops-women/hoodies-and-sweatshirts-women/',
                                                 },
                                                 cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                                             },
