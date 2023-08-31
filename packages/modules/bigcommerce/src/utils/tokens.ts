@@ -1,4 +1,8 @@
-import { logAndThrowError, getUnixTimeStampInSecondsForMidnightTonight } from '@aligent/utils';
+import {
+    logAndThrowError,
+    getUnixTimeStampInSecondsForMidnightTonight,
+    AuthorizationError,
+} from '@aligent/utils';
 import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../types';
 import { v4 as uuidv4 } from 'uuid';
@@ -33,7 +37,13 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
             throw new Error(`Need to send Bearer token`);
         }
     } catch (error) {
-        return logAndThrowError(error, getBcCustomerIdFromMeshToken.name);
+        /* For whatever reason decrypting the meshToken fails, send an error which
+         * will trigger the PWA to end the browsers user session
+         *
+         * possible error.messages 'jwt expired', 'jwt malformed', 'invalid signature'
+         * */
+
+        throw new AuthorizationError('User session has expired');
     }
 };
 

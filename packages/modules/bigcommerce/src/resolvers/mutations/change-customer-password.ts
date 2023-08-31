@@ -5,7 +5,7 @@ import {
     transformAcCustomerValidatePassword,
 } from '../../factories/transform-customer-data';
 import { updateCustomer, validateCustomerCredentials } from '../../apis/rest/customer';
-import { logAndThrowError } from '@aligent/utils';
+import { AuthorizationError } from '@aligent/utils';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { getBcCustomer } from '../../apis/graphql';
 
@@ -25,7 +25,7 @@ export const changeCustomerPasswordResolver: MutationResolvers['changeCustomerPa
         );
         const verifyPasswordResponse = await validateCustomerCredentials(validatePasswordRequest);
         if (!verifyPasswordResponse.is_valid) {
-            return logAndThrowError('Entered password is incorrect');
+            throw new AuthorizationError('Invalid login or password.');
         }
 
         const bcCustomer = transformAcCustomerPasswordChange(customerId, newPassword);
