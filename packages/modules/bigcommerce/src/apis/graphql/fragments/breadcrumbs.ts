@@ -5,6 +5,7 @@ export const breadcrumbs = gql`
         edges {
             node {
                 name
+                path
                 entityId
             }
             cursor

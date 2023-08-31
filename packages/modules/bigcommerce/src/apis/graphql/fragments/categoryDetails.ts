@@ -19,7 +19,7 @@ export const categoryDetails = gql`
             ...Image
         }
         description
-        breadcrumbs(depth: 3) {
+        breadcrumbs(depth: 5) {
             ...Breadcrumbs
             pageInfo {
                 hasNextPage
