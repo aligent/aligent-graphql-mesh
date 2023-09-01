@@ -35,7 +35,7 @@ export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
             await updateSubscriberEmail(customerId, email, customerImpersonationToken);
         }
 
-        const bcCustomer = transformCustomerForMutation(customerId, customerInput);
+        const bcCustomer = transformCustomerForMutation(customerInput, customerId);
         const customerResponse = await updateCustomer(bcCustomer);
 
         return transformBcCustomerToAcCustomerForMutation(customerResponse, isSubscribed);
