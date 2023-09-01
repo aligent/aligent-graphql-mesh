@@ -40,7 +40,7 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
-`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codgen.
+`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen.
 
 `customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
 
@@ -55,6 +55,34 @@ e.g.
 `STORE_HASH` Unique ID for this store, will be different values for staging and production.
 
 `DEBUG`= This is only used for development and adds more details to the logs via console.
+
+## Generating Tokens
+
+### X_AUTH_TOKEN
+
+Needs to be requested from the BigCommerce store owner. Check with Aligent DevOps if required.
+
+### BC_GRAPHQL_TOKEN
+
+This is a non customer specific token that needs to be generated using the BigComm storefront api-token endpoint.
+This requires an existing X_AUTH_TOKEN to be passed in the header.
+
+Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
+
+Endpoint: https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token
+Header: X-Auth-Token: <My-XAuth-Token-Here>
+Payload:
+
+- choose a expired epoch timestamp far enough in the future
+- leave cors origins empty for local dev
+
+```json
+{
+  "channel_id": 1,
+  "expires_at": 1724983269,
+  "allowed_cors_origins": []
+}
+```
 
 #### TODO (NO ENV REQUIRED YET)
 
