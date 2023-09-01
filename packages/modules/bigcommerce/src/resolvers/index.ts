@@ -46,7 +46,7 @@ import { productsResolver } from './queries/products';
 import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
-import { Resolvers } from 'graphql-modules';
+import { Resolvers } from '@aligent/bigcommerce-resolvers';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -100,6 +100,14 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
         updateCustomerAddress: updateCustomerAddressResolver,
+    },
+    Customer: {
+        //TODO: move this to it's won file. eg. queries/sub-resolver/orders.ts
+        orders: (root, args) => {
+            console.log('Inside Customers.orders');
+            console.log(root, args);
+            return null;
+        },
     },
 };
 
