@@ -70,11 +70,11 @@ export const transformBcCustomerToAcCustomerForMutation = (
 };
 
 export const transformCustomerForMutation = (
-    customerId: number,
-    customer: CustomerInput
+    customer: CustomerInput,
+    customerId?: number
 ): BcMutationCustomer => {
     const bcCustomer: BcMutationCustomer = {
-        id: customerId,
+        ...(customerId && { id: customerId }),
     };
     if (customer.email) {
         bcCustomer.email = customer.email;

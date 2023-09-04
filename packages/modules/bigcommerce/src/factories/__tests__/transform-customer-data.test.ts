@@ -21,7 +21,7 @@ describe('Customer Ac to Bc Transformation', () => {
         const customerWithNames = acCustomerWithName;
         const bcCustomerExpected = bcMutationCustomerWithName;
 
-        const bcTransformedCustomer = transformCustomerForMutation(customerId, customerWithNames);
+        const bcTransformedCustomer = transformCustomerForMutation(customerWithNames, customerId);
 
         expect(bcTransformedCustomer).toEqual(bcCustomerExpected);
     });
@@ -30,7 +30,7 @@ describe('Customer Ac to Bc Transformation', () => {
         const acCustomer = acCustomerWithEmail;
         const bcCustomerExpected = bcMutationCustomerWithEmail;
 
-        const bcTransformedCustomer = transformCustomerForMutation(customerId, acCustomer);
+        const bcTransformedCustomer = transformCustomerForMutation(acCustomer, customerId);
 
         expect(bcTransformedCustomer).toEqual(bcCustomerExpected);
     });

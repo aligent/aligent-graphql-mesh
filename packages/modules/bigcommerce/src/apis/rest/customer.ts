@@ -9,31 +9,18 @@ import {
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '@aligent/utils';
 import { CustomerAttributes } from '@aligent/bigcommerce-operations';
+import { CustomerInput } from '@aligent/bigcommerce-resolvers';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
 const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 
 /* istanbul ignore file */
-export const createCustomer = async (
-    email: string,
-    firstName: string,
-    lastName: string,
-    password: string
-): Promise<BcCustomer> => {
-    const data = [
-        {
-            email: email,
-            first_name: firstName,
-            last_name: lastName,
-            authentication: {
-                force_password_rest: false,
-                new_password: password,
-            },
-        },
-    ];
+export const createCustomer = async (customerInput: CustomerInput): Promise<BcCustomer> => {
+    const data = [customerInput];
 
     const response = await bcPost(CUSTOMERS_API, data);
+
     return response.data[0];
 };
 
