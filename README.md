@@ -12,7 +12,7 @@ https://the-guild.dev/graphql/mesh
 $ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
 ```
 
-2. Duplicate the `.env.template` file as `.env` and fill in the values (see below)
+2. Duplicate the `.env.template` file as `.env` and fill in the values and place it in `packages/mesh/.env` directory.
 
 ```shell
 $ cp .env.template packages/mesh/.env
@@ -40,7 +40,7 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
-`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen.
+`BC_GRAPHQL_TOKEN`= This is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen. To generate one follow the steps below in Generating Tokens and then BC_GRAPHQL_TOKEN.
 
 `customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
 
@@ -52,7 +52,7 @@ e.g.
 
 `X_AUTH_TOKEN`= This is an token for the BC REST APIS, it can be created in the BC Admin and can have scopes applied, e.g. will only work with the products API. This specific one is full access for the sake of development and will not be used in production.
 
-`STORE_HASH` Unique ID for this store, will be different values for staging and production.
+`STORE_HASH` Unique ID for each BigCommerce instance and can be found in the URL of the Admin Dashboard `linhpy40az` in https://store-linhpy40az.mybigcommerce.com/manage/dashboard this value will different values for staging and production.
 
 `DEBUG`= This is only used for development and adds more details to the logs via console.
 
@@ -83,8 +83,6 @@ Payload:
   "allowed_cors_origins": []
 }
 ```
-
-#### TODO (NO ENV REQUIRED YET)
 
 ## Generating an SSL Certificate
 
