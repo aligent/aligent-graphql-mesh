@@ -47,6 +47,7 @@ import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
 import { Resolvers } from '@aligent/bigcommerce-resolvers';
+import { customerOrdersResolver } from './queries/sub-query-resolvers/customerOrders';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -101,13 +102,9 @@ export const resolvers: Resolvers = {
         updateCustomer: updateCustomerResolver,
         updateCustomerAddress: updateCustomerAddressResolver,
     },
+    //sub-resolvers, used for nested queries from a query or a mutation resolver
     Customer: {
-        //TODO: move this to it's won file. eg. queries/sub-resolver/orders.ts
-        orders: (root, args) => {
-            console.log('Inside Customers.orders');
-            console.log(root, args);
-            return null;
-        },
+        orders: customerOrdersResolver,
     },
 };
 
