@@ -40,16 +40,17 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
-`BC_GRAPHQL_API` - Is used by codgen to automatically created types from the BigCommerce GraphQL Store Front API.
+The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the same time by Devops in the BC Admin, from the BC Admin in settings -> Store-level API accounts -> Create API account.
 
-`X_AUTH_TOKEN` - Is a token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API. Created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account as the name `ACCESS TOKEN`.
+`X_AUTH_TOKEN` - Is called `ACCESS TOKEN` in the BC Admin, this token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API.
 
-`BC_CLIENT_SECRET` - Is generated at the same time as the `X-AUTH_TOKEN`. This secret is used to sign a BC customer login JWT created in the `createCustomerLoginToken()` function. This JWT that is used for redirecting to the checkout whilst staying logged in.
+`BC_CLIENT_SECRET` - This secret is used to sign a BC customer login JWT created in the `createCustomerLoginToken()` function. This JWT that is used for redirecting to the checkout whilst staying logged in.
 
-`BC_CLIENT_ID` - Is also generated at the same time as the `X-AUTH_TOKEN` and is also used for the same customer login JWT, however its used in the payload of the JWT as `iss: BC_CLIENT_ID` (iss: Indicates the token's issuer. This is your API account's client ID.).
+`BC_CLIENT_ID` - Is also used for the same customer login JWT, however its used in the payload of the JWT as `iss: BC_CLIENT_ID` (iss: Indicates the token's issuer. This is your API account's client ID.).
 
-`BC_GRAPHQL_TOKEN` - Is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen. To generate one follow the steps below in Generating Tokens and then BC_GRAPHQL_TOKEN.
+`BC_GRAPHQL_API` - Is used by codgen to automatically created types from the BigCommerce GraphQL Store Front API. e.g. `https://client-sandbox.mybigcommerce.com/graphql` this URL is accessible in BC admin => Settings -> API -> Storefront API Playground
 
+`BC_GRAPHQL_TOKEN` - Is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen.
 This requires an existing X_AUTH_TOKEN to be passed in the header.
 
 Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
