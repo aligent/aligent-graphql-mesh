@@ -4,64 +4,51 @@ import {
     StoreLocations,
 } from '@aligent/bigcommerce-resolvers';
 import {
-    CountryCode,
     DistanceFilter,
     InventoryLocationConnection,
     InventoryLocationsArgs,
 } from '@aligent/bigcommerce-operations';
+import { coordinatesLookup } from '../../apis/helpers/google-geocoding';
 
-export const getTransformedStoreLocationsArgs = (
+export const getTransformedStoreLocationsArgs = async (
     acStoreLocationsArgs: QueryStoreLocationsArgs
-): InventoryLocationsArgs => {
+): Promise<InventoryLocationsArgs> => {
     const { area, filters } = acStoreLocationsArgs;
-    const applyDistanceFilter =
-        area?.coordinates &&
-        Object.keys(area?.coordinates).length &&
-        area?.radius &&
-        area?.search_term;
-    const InventoryLocationsArgs: InventoryLocationsArgs = {
-        countryCodes: [],
-        states: [],
-        cities: [],
-        ...(applyDistanceFilter && {
-            distanceFilter: {
-                latitude: 0,
-                longitude: 0,
-                radius: 0,
-                lengthUnit: 'Kilometres',
-            },
-        }),
+
+    const inventoryLocationsArgs: InventoryLocationsArgs = {
+        distanceFilter: {
+            latitude: 0,
+            longitude: 0,
+            radius: 0,
+            lengthUnit: 'Kilometres',
+        },
     };
 
     if (area) {
         const { radius, search_term, coordinates } = area;
-        InventoryLocationsArgs.cities = [search_term];
 
-        // DistanceFilter requires all of radius, lengthUnit, longitude and latitude
-        // and radius works with this coordinates only
-        // TODO: Converting suburb/postcode to coordinates after AC args passed in
-        if (coordinates && Object.keys(coordinates).length && radius) {
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).radius = radius;
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).lengthUnit = 'Kilometres';
+        (inventoryLocationsArgs.distanceFilter as DistanceFilter).radius = radius;
 
+        if (coordinates && Object.keys(coordinates).length) {
             const { lat, lng } = coordinates;
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).longitude = lng as number;
-            (InventoryLocationsArgs.distanceFilter as DistanceFilter).latitude = lat as number;
+
+            (inventoryLocationsArgs.distanceFilter as DistanceFilter).longitude = lng as number;
+            (inventoryLocationsArgs.distanceFilter as DistanceFilter).latitude = lat as number;
+        } else {
+            const coordinatesLookupResponse = await coordinatesLookup(
+                search_term,
+                filters?.country_id?.eq as string
+            );
+
+            if (coordinatesLookupResponse) {
+                const { lat, lng } = coordinatesLookupResponse;
+                (inventoryLocationsArgs.distanceFilter as DistanceFilter).longitude = lng as number;
+                (inventoryLocationsArgs.distanceFilter as DistanceFilter).latitude = lat as number;
+            }
         }
     }
 
-    if (filters) {
-        const { country_id, region } = filters;
-
-        if (country_id?.eq) {
-            InventoryLocationsArgs.countryCodes = [country_id.eq as CountryCode];
-        }
-        if (region?.eq) {
-            InventoryLocationsArgs.states = [region.eq];
-        }
-    }
-
-    return InventoryLocationsArgs;
+    return inventoryLocationsArgs;
 };
 
 export const getTransformedStoreLocationItems = (
@@ -74,7 +61,7 @@ export const getTransformedStoreLocationItems = (
             email: location?.node?.address?.email,
             latitude: location?.node?.address?.latitude,
             longitude: location?.node?.address?.longitude,
-            name: location?.node?.address?.label,
+            name: location?.node?.label,
             phone: location?.node?.address?.phone,
             pickup_location_code: location?.node?.address?.code,
             postcode: location?.node?.address?.postalCode,
