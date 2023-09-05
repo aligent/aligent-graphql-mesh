@@ -1,9 +1,34 @@
 import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
+import { BCOrder } from '../../../types';
+import { getTransformedOrders } from '../../../factories/helpers/transform-customer-orders';
+import { getAllOrders, getOrder } from '../../../apis/rest/order';
+import { getBcCustomerIdFromMeshToken } from '../../../utils';
 
 export const customerOrdersResolver: QueryResolvers['customerOrders'] = {
-    resolve: async (_root, _args, context, _info) => {
+    resolve: async (_root, args, context, _info) => {
+        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
         console.log('Inside Customers.orders sub resolver');
-        console.log(_root, _args);
-        return null;
+        const orderNumber = args?.filter?.number?.eq;
+
+        let bcOrders: BCOrder[] = [];
+        if (orderNumber) {
+            const bcOrder = await getOrder(orderNumber);
+            bcOrders.push(bcOrder);
+        }
+        if (!orderNumber) {
+            bcOrders = await getAllOrders(bcCustomerId);
+        }
+        if (bcOrders.length === 0) {
+            //no orders found
+            return null;
+        }
+
+        //TODO: process in new CustomerOrder resolver
+        // const bcOrderLineItems: Array<BCOrderLineItem> = [];
+        // for await (const lineItem of getLineItems(orderNumber)) {
+        //     bcOrderLineItems.push(lineItem);
+        // }
+
+        return getTransformedOrders(bcOrders);
     },
 };

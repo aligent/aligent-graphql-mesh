@@ -1,9 +1,9 @@
-import { CurrencyEnum, CustomerOrder, Invoice } from '@aligent/bigcommerce-resolvers';
+import { CurrencyEnum, CustomerOrders, Invoice } from '@aligent/bigcommerce-resolvers';
 import { BCOrder } from '../../types';
 import { btoa, convertDateFormat } from '@aligent/utils';
 
-export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrder[] => {
-    return bcOrders.map((bcOrder) => {
+export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrders => {
+    const customerOrderItems = bcOrders.map((bcOrder) => {
         return {
             number: String(bcOrder.id),
             id: btoa(String(bcOrder.id)),
@@ -38,4 +38,6 @@ export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrder[] => {
             invoices: [] as unknown as Invoice[],
         };
     });
+    const customerOrders: CustomerOrders = { items: customerOrderItems };
+    return customerOrders;
 };

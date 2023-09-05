@@ -4,8 +4,6 @@ import { transformBcCustomer } from '../../factories/transform-customer-data';
 import { getAllCustomerAddresses } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { getSubscriberByEmail } from '../../apis/rest/subscriber';
-import { getOrders } from '../../apis/rest/order';
-import { BCOrder } from '../../types';
 
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
@@ -14,24 +12,14 @@ export const customerResolver: QueryResolvers['customer'] = {
             'customerImpersonationToken'
         )) as string;
 
-        const [bcCustomer, bcAddresses, bcOrders] = await Promise.all([
+        const [bcCustomer, bcAddresses] = await Promise.all([
             getBcCustomer(bcCustomerId, customerImpersonationToken),
             getAllCustomerAddresses(bcCustomerId),
-            getAllOrders(bcCustomerId),
         ]);
 
         const subscriber = await getSubscriberByEmail(encodeURIComponent(bcCustomer.email));
         const isSubscriber = !!subscriber;
 
-        return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber, bcOrders);
+        return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber);
     },
-};
-
-const getAllOrders = async (bcCustomerId: number): Promise<BCOrder[]> => {
-    const bcOrders: BCOrder[] = [];
-    for await (const bcOrder of getOrders(bcCustomerId)) {
-        bcOrders.push(bcOrder);
-    }
-
-    return bcOrders;
 };
