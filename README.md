@@ -61,6 +61,7 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 ### X_AUTH_TOKEN
 
 Needs to be requested from the BigCommerce store owner. Check with Aligent DevOps if required. Created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account as the name `ACCESS TOKEN`.
+
 ### Customer Impersonation token
 
 `customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
