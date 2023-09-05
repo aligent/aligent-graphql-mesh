@@ -1,4 +1,5 @@
 import { BCOrder } from '../../../../types';
+import { CustomerOrders } from '@aligent/bigcommerce-resolvers';
 
 export const bcOrders: BCOrder[] = [
     {
@@ -219,41 +220,43 @@ export const bcOrders: BCOrder[] = [
     },
 ];
 
-export const acOrders = [
-    {
-        number: '130',
-        id: 'MTMw',
-        order_date: '2023-08-29 02:26:57',
-        status: 'Awaiting Payment',
-        total: {
-            grand_total: { currency: 'AUD', value: 62.62 },
-            base_grand_total: { currency: 'AUD', value: null },
-            subtotal: { currency: 'AUD', value: 62.62 },
-            total_shipping: { currency: 'AUD', value: 0 },
-            total_tax: { currency: 'AUD', value: 5.7 },
+export const acOrders: CustomerOrders = {
+    items: [
+        {
+            number: '130',
+            id: 'MTMw',
+            order_date: '2023-08-29 02:26:57',
+            status: 'Awaiting Payment',
+            total: {
+                grand_total: { currency: 'AUD', value: 62.62 },
+                base_grand_total: { currency: 'AUD', value: null },
+                subtotal: { currency: 'AUD', value: 62.62 },
+                total_shipping: { currency: 'AUD', value: 0 },
+                total_tax: { currency: 'AUD', value: 5.7 },
+            },
+            gift_receipt_included: false,
+            order_number: '130',
+            printed_card_included: false,
+            state: '7',
+            invoices: [],
         },
-        gift_receipt_included: false,
-        order_number: '130',
-        printed_card_included: false,
-        state: '7',
-        invoices: [],
-    },
-    {
-        number: '129',
-        id: 'MTI5',
-        order_date: '2023-08-29 02:22:35',
-        status: 'Completed',
-        total: {
-            grand_total: { currency: 'AUD', value: 368 },
-            base_grand_total: { currency: 'AUD', value: null },
-            subtotal: { currency: 'AUD', value: 368 },
-            total_shipping: { currency: 'AUD', value: 0 },
-            total_tax: { currency: 'AUD', value: 33.45 },
+        {
+            number: '129',
+            id: 'MTI5',
+            order_date: '2023-08-29 02:22:35',
+            status: 'Completed',
+            total: {
+                grand_total: { currency: 'AUD', value: 368 },
+                base_grand_total: { currency: 'AUD', value: null },
+                subtotal: { currency: 'AUD', value: 368 },
+                total_shipping: { currency: 'AUD', value: 0 },
+                total_tax: { currency: 'AUD', value: 33.45 },
+            },
+            gift_receipt_included: false,
+            order_number: '129',
+            printed_card_included: false,
+            state: '10',
+            invoices: [],
         },
-        gift_receipt_included: false,
-        order_number: '129',
-        printed_card_included: false,
-        state: '10',
-        invoices: [],
-    },
-];
+    ],
+};
