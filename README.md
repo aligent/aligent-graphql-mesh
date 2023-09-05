@@ -40,44 +40,16 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
-`BC_GRAPHQL_API` Is used by codgen to automatically created types from the BigCommerce GraphQL Store Front API.
+`BC_GRAPHQL_API` - Is used by codgen to automatically created types from the BigCommerce GraphQL Store Front API.
 
-`BC_GRAPHQL_TOKEN` Is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen. To generate one follow the steps below in Generating Tokens and then BC_GRAPHQL_TOKEN.
+`X_AUTH_TOKEN` - Is a token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API. Created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account as the name `ACCESS TOKEN`.
 
-`X_AUTH_TOKEN` Is a token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API. Its called `ACCESS TOKEN` in BC Admin.
+`BC_CLIENT_SECRET` - Is generated at the same time as the `X-AUTH_TOKEN`. This secret is used to sign a BC customer login JWT created in the `createCustomerLoginToken()` function. This JWT that is used for redirecting to the checkout whilst staying logged in.
 
-`BC_CLIENT_SECRET` Is generated at the same time as the `X-AUTH_TOKEN`. This secret is used to sign a BC customer login JWT created in the `createCustomerLoginToken()` function. This JWT that is used for redirecting to the checkout whilst staying logged in.
+`BC_CLIENT_ID` - Is also generated at the same time as the `X-AUTH_TOKEN` and is also used for the same customer login JWT, however its used in the payload of the JWT as `iss: BC_CLIENT_ID` (iss: Indicates the token's issuer. This is your API account's client ID.).
 
-`BC_CLIENT_ID` Is also generated at the same time as the `X-AUTH_TOKEN` and is also used for the same customer login JWT, however its used in the payload of the JWT as `iss: BC_CLIENT_ID` (iss: Indicates the token's issuer. This is your API account's client ID.).
+`BC_GRAPHQL_TOKEN` - Is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen. To generate one follow the steps below in Generating Tokens and then BC_GRAPHQL_TOKEN.
 
-`STORE_HASH` Unique ID for each BigCommerce instance and can be found in the URL of the Admin Dashboard `linhpy40az` in https://store-linhpy40az.mybigcommerce.com/manage/dashboard this value will different values for staging and production.
-
-`JWT_PRIVATE_KEY` Is a randomly generated key that is used for signing the `MeshToken` that is created by `generateMeshToken()`. This jwt is then used going forward to verify that a user has logged in.
-
-`DEBUG` Is only used for development and adds more details to the logs via console.
-
-## Generating Tokens
-
-### X_AUTH_TOKEN
-
-Needs to be requested from the BigCommerce store owner. Check with Aligent DevOps if required. Created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account as the name `ACCESS TOKEN`.
-
-### Customer Impersonation token
-
-`customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
-
-e.g.
-
-```json
-{
-    "Authorization": `Bearer ${customerImpersonationToken}`,
-    "x-bc-customer-id": bcCustomerId,
-}
-```
-
-### BC_GRAPHQL_TOKEN
-
-This is a non customer specific token that needs to be generated using the BigComm storefront api-token endpoint.
 This requires an existing X_AUTH_TOKEN to be passed in the header.
 
 Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
@@ -94,6 +66,29 @@ Payload:
   "channel_id": 1,
   "expires_at": 1724983269,
   "allowed_cors_origins": []
+}
+```
+
+`STORE_HASH` - Unique ID for each BigCommerce instance and can be found in the URL of the Admin Dashboard `linhpy40az` in https://store-linhpy40az.mybigcommerce.com/manage/dashboard this value will different values for staging and production.
+
+`JWT_PRIVATE_KEY` - Is a randomly generated key that is used for signing the `MeshToken` that is created by `generateMeshToken()`. This jwt is then used going forward to verify that a user has logged in.
+
+`HIVE_TOKEN` - **NOT REQUIRED FOR LOCAL DEV** - we primarily use the Hive to monitor usage and performance across the various GraphQL queries. The Hive token is used to connect the Mesh to the Hive and send these analytics. It's also used in the pipeline to publish and verify newly generated schemas.
+
+To generate this token you'll need to login to your [Hive instance](https://app.graphql-hive.com) and go to Settings -> Registry Access Tokens -> Create new registry token. Select the preset `GraphQL Operations Reporting` and copy the token. You can read more about the Hive [here](https://the-guild.dev/graphql/hive/docs).
+
+`DEBUG` - Is only used for development and adds more details to the logs via console.
+
+### Customer Impersonation token
+
+`customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
+
+e.g.
+
+```json
+{
+    "Authorization": `Bearer ${customerImpersonationToken}`,
+    "x-bc-customer-id": bcCustomerId,
 }
 ```
 
