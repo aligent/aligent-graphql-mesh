@@ -44,7 +44,7 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 `BC_GRAPHQL_TOKEN` Is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen. To generate one follow the steps below in Generating Tokens and then BC_GRAPHQL_TOKEN.
 
-`X_AUTH_TOKEN` Is an token used for the BC REST APIS, it is created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account. This token can have scopes applied, e.g. will only work with the products API.
+`X_AUTH_TOKEN` Is a token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API. Its called `ACCESS TOKEN` in BC Admin.
 
 `BC_CLIENT_SECRET` Is generated at the same time as the `X-AUTH_TOKEN`. This secret is used to sign a BC customer login JWT created in the `createCustomerLoginToken()` function. This JWT that is used for redirecting to the checkout whilst staying logged in.
 
@@ -60,8 +60,7 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ### X_AUTH_TOKEN
 
-Needs to be requested from the BigCommerce store owner. Check with Aligent DevOps if required. Created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account.
-
+Needs to be requested from the BigCommerce store owner. Check with Aligent DevOps if required. Created in the BC Admin from the BC Admin in settings > Store-level API accounts > Create API account as the name `ACCESS TOKEN`.
 ### Customer Impersonation token
 
 `customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
@@ -82,7 +81,7 @@ This requires an existing X_AUTH_TOKEN to be passed in the header.
 
 Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
 
-Endpoint: https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token
+Endpoint: POST - https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token
 Header: X-Auth-Token: <My-XAuth-Token-Here>
 Payload:
 
