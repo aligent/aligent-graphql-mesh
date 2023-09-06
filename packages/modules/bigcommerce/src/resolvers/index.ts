@@ -48,6 +48,7 @@ import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
 import { CustomerOrder, OrderItemInterface, Resolvers } from '@aligent/bigcommerce-resolvers';
 import { customerOrdersResolver } from './queries/sub-query-resolvers/customerOrders';
+import { customerOrderItemsResolver } from './queries/sub-query-resolvers/customerOrderItems';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -106,12 +107,9 @@ export const resolvers: Resolvers = {
     Customer: {
         orders: customerOrdersResolver,
     },
-    // CustomerOrder: {
-    //     items: (root, args): OrderItemInterface[] => {
-    //         console.log(root.id);
-    //         return [];
-    //     },
-    // },
+    CustomerOrder: {
+        items: customerOrderItemsResolver,
+    },
 };
 
 export default resolvers;

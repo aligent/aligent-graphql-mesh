@@ -23,12 +23,6 @@ export const customerOrdersResolver: QueryResolvers['customerOrders'] = {
             return null;
         }
 
-        //TODO: process in new CustomerOrder resolver
-        // const bcOrderLineItems: Array<BCOrderLineItem> = [];
-        // for await (const lineItem of getLineItems(orderNumber)) {
-        //     bcOrderLineItems.push(lineItem);
-        // }
-
         return getTransformedOrders(bcOrders);
     },
 };
