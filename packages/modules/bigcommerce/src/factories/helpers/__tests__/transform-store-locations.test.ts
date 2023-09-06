@@ -5,12 +5,9 @@ import {
 import {
     getTransformedStoreLocationsArgs,
     getTransformedStoreLocationItems,
-} from '../transform-store-locations';
+} from '../../transform-store-locations';
 
 const expectBcArgs = {
-    countryCodes: ['AU'],
-    states: ['SA'],
-    cities: ['Adelaide'],
     distanceFilter: {
         latitude: -34.962192,
         longitude: 138.638024,
@@ -27,7 +24,7 @@ const expectAcStoreLocations = {
             email: '',
             latitude: -34.92396,
             longitude: 138.610467,
-            name: 'Address 1',
+            name: 'Aligent BC address 1',
             phone: '',
             pickup_location_code: 'BC-ADDRESS-1',
             postcode: '5000',
@@ -37,8 +34,8 @@ const expectAcStoreLocations = {
 };
 
 describe('transform store locations', () => {
-    it(`transforms args`, () => {
-        expect(getTransformedStoreLocationsArgs(mockedAcStoreLocationsArgument)).toEqual(
+    it(`transforms args`, async () => {
+        expect(await getTransformedStoreLocationsArgs(mockedAcStoreLocationsArgument)).toEqual(
             expect.objectContaining(expectBcArgs)
         );
     });

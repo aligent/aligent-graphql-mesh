@@ -7,7 +7,7 @@ import { logAndThrowError } from '@aligent/utils';
 import { getStoreLocationsQuery } from './requests/store-locations';
 
 export const getBcStoreLocationsGraphql = async (
-    variables: InventoryLocationsArgs,
+    variables: Promise<InventoryLocationsArgs>,
     customerImpersonationToken: string
 ): Promise<InventoryLocationConnection> => {
     const headers = {
@@ -16,7 +16,9 @@ export const getBcStoreLocationsGraphql = async (
 
     const storeLocationsQuery = {
         query: getStoreLocationsQuery,
-        variables: variables,
+        variables: {
+            distanceFilter: (await variables).distanceFilter,
+        },
     };
 
     const response = await bcGraphQlRequest(storeLocationsQuery, headers);
