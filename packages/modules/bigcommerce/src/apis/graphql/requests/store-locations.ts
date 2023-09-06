@@ -6,17 +6,9 @@ import { address } from '../fragments/address';
 export const getStoreLocationsQuery = stripIgnoredCharacters(
     print(gql`
         ${address}
-        query storelocations(
-            $countryCodes: [countryCode!]
-            $cities: [String!]
-            $distanceFilter: DistanceFilter
-        ) {
+        query storelocations($distanceFilter: DistanceFilter) {
             inventory {
-                locations(
-                    countryCodes: $countryCodes
-                    cities: $cities
-                    distanceFilter: $distanceFilter
-                ) {
+                locations(distanceFilter: $distanceFilter) {
                     edges {
                         node {
                             entityId

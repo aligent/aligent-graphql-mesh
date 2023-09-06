@@ -1,3 +1,4 @@
+import { BreadcrumbConnection } from '@aligent/bigcommerce-operations';
 import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
 export interface BcGraphqlTokenData {
@@ -30,7 +31,7 @@ export interface BcCustomer {
 }
 
 export interface BcMutationCustomer {
-    id: number;
+    id?: number;
     email?: string;
     first_name?: string;
     last_name?: string;
@@ -39,6 +40,7 @@ export interface BcMutationCustomer {
         new_password: string;
     };
 }
+
 export interface Country {
     id: number;
     country: string;
@@ -81,6 +83,7 @@ export interface BcCategory {
         metaDescription: string;
         pageTitle: string;
     };
+    breadcrumbs?: BreadcrumbConnection;
 }
 
 export interface BcAddress {

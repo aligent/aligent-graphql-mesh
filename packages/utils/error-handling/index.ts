@@ -65,3 +65,23 @@ export const handleCartItemErrors = (
         throw new Error('Item is not purchasable');
     }
 };
+
+/**
+ * A specific error when decrypting the meshToken fails
+ */
+export class AuthorizationError extends Error {
+    extensions: {
+        category: string;
+    };
+
+    constructor(message: string) {
+        super(message);
+
+        /* Adding this "extensions" object tells the PWA that the users authorization token
+         * has expired. Actions will follow in the PWA to log the user out and remove
+         * session related data from browser storage. */
+        this.extensions = {
+            category: 'graphql-authorization',
+        };
+    }
+}

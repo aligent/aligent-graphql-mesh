@@ -2,25 +2,25 @@ import { Customer, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';
 import { logAndThrowError } from '@aligent/utils';
+import { transformCustomerForMutation } from '../../factories/transform-customer-data';
+import { createSubscriber } from '../../apis/rest/subscriber';
 
 /* istanbul ignore next */
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {
-    resolve: async (_root, args, _context, _info) => {
+    resolve: async (_root, { input: customerInput }, _context, _info) => {
         if (
-            !args.input.email ||
-            !args.input.firstname ||
-            !args.input.lastname ||
-            !args.input.password
+            !customerInput.email ||
+            !customerInput.firstname ||
+            !customerInput.lastname ||
+            !customerInput.password
         ) {
             return logAndThrowError('Missing email or firstname or lastname or password');
         } else {
-            const bcCustomer = await createCustomer(
-                //TODO: replace this with the customer.ts::transformCustomerForCreateOrUpdate function
-                args.input.email,
-                args.input.firstname,
-                args.input.lastname,
-                args.input.password
-            );
+            const bcCustomer = await createCustomer(transformCustomerForMutation(customerInput));
+
+            if (customerInput.is_subscribed) {
+                await createSubscriber(customerInput.email);
+            }
 
             return {
                 customer: transformCustomerData(bcCustomer),
