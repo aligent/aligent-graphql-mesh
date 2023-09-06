@@ -1,18 +1,17 @@
 import { OrderItemInterface, QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { BCOrderLineItem } from '../../../types';
 import { getLineItems } from '../../../apis/rest/order';
-import { transformRestCartLineItems } from '../../../factories/transform-rest-cart-line-items';
+import { transformBcOrderLineItem } from '../../../factories/tranform-rest-order-line-item';
 
 export const customerOrderItemsResolver: QueryResolvers['customerOrderItems'] = {
-    resolve: async (root, _args, context, _info) => {
+    resolve: async (root, _args, _context, _info) => {
         //root.id contains the orderId which is base64 encoded by the previously executed customerOrders resolver
         const orderId = Buffer.from(root.id, 'base64').toString();
-        //move this to order.ts
-        const bcOrderLineItems: Array<BCOrderLineItem> = [];
+        const orderCurrencyCode = root.currency_code;
+
+        const orderItems: Array<OrderItemInterface> = [];
         for await (const lineItem of getLineItems(orderId.toString())) {
-            bcOrderLineItems.push(lineItem);
+            orderItems.push(transformBcOrderLineItem(lineItem, orderCurrencyCode));
         }
-        //do transform
-        return [];
+        return orderItems;
     },
 };

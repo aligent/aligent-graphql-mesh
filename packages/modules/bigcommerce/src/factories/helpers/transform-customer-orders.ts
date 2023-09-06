@@ -36,6 +36,7 @@ export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrders => {
             gift_receipt_included: false,
             printed_card_included: false,
             invoices: [] as unknown as Invoice[],
+            currency_code: bcOrder.currency_code,
         };
     });
     const customerOrders: CustomerOrders = { items: customerOrderItems };

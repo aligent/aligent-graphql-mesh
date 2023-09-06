@@ -239,6 +239,7 @@ export const acOrders: CustomerOrders = {
             printed_card_included: false,
             state: '7',
             invoices: [],
+            currency_code: 'AUD',
         },
         {
             number: '129',
@@ -257,6 +258,7 @@ export const acOrders: CustomerOrders = {
             printed_card_included: false,
             state: '10',
             invoices: [],
+            currency_code: 'AUD',
         },
     ],
 };
