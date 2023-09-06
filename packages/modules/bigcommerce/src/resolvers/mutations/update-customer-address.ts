@@ -7,11 +7,7 @@ import { CustomerAddressValidated } from '../../types';
 import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '../../utils';
-import {
-    getCountryByCode,
-    getStateByCountryIdAndStateId,
-    getStateByAddress,
-} from '../../apis/rest/countries';
+import { getStateByAddress } from '../../apis/rest/countries';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {

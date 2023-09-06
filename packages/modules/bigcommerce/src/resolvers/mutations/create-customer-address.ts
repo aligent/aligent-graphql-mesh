@@ -7,11 +7,7 @@ import {
     transformBcAddress,
 } from '../../factories/transform-customer-address-data';
 import { CustomerAddressValidated } from '../../types';
-import {
-    getCountryByCode,
-    getStateByAddress,
-    getStateByCountryIdAndStateId,
-} from '../../apis/rest/countries';
+import { getStateByAddress } from '../../apis/rest/countries';
 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {

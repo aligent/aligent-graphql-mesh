@@ -1,7 +1,5 @@
 import { BcState, Country, CustomerAddressValidated } from '../../types';
 import { bcGet } from './client';
-import { CustomerAddressRegionInput } from '@aligent/bigcommerce-resolvers';
-import { logAndThrowError } from '@aligent/utils';
 
 const COUNTRIES_API = `/v2/countries`;
 
