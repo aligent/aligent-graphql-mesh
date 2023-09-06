@@ -7,26 +7,24 @@ import {
     transformBcAddress,
 } from '../../factories/transform-customer-address-data';
 import { CustomerAddressValidated } from '../../types';
-import { getCountryByCode, getStateByCountryIdAndStateId } from '../../apis/rest/countries';
+import {
+    getCountryByCode,
+    getStateByAddress,
+    getStateByCountryIdAndStateId,
+} from '../../apis/rest/countries';
 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
+        const customerAddressInput = input as CustomerAddressValidated;
         if (!isCustomerAddressValid(input)) {
             return logAndThrowError(
                 'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );
         }
 
-        const customerAddressInput = input as CustomerAddressValidated;
-
-        //the pwa only provides the region id, so we need to get the state from the api to get the full name
-        const country = await getCountryByCode(customerAddressInput.country_code);
-        const state = await getStateByCountryIdAndStateId(
-            country.id,
-            customerAddressInput.region.region_id
-        );
+        const state = await getStateByAddress(customerAddressInput);
         const address = transformCustomerAddress(customerAddressInput, state, customerId);
         const response = await createCustomerAddress(address);
 

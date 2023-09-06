@@ -1,5 +1,7 @@
-import { BcState, Country } from '../../types';
+import { BcState, Country, CustomerAddressValidated } from '../../types';
 import { bcGet } from './client';
+import { CustomerAddressRegionInput } from '@aligent/bigcommerce-resolvers';
+import { logAndThrowError } from '@aligent/utils';
 
 const COUNTRIES_API = `/v2/countries`;
 
@@ -30,6 +32,13 @@ export const getAllStates = async (page: number, states: BcState[] = []): Promis
         return getAllStates(page, newResponse);
     }
     return states;
+};
+
+export const getStateByAddress = async (address: CustomerAddressValidated): Promise<BcState> => {
+    //the frontend only provides the region id, so we need to get the state from the api to get the full name
+    const country = await getCountryByCode(address.country_code);
+    const state = await getStateByCountryIdAndStateId(country.id, address.region.region_id);
+    return state;
 };
 
 export const getStateByCountryIdAndStateId = async (
