@@ -8,7 +8,7 @@ import {
     InventoryLocationConnection,
     InventoryLocationsArgs,
 } from '@aligent/bigcommerce-operations';
-import { coordinatesLookup } from '../../apis/helpers/google-geocoding';
+import { coordinatesLookup } from '../apis/helpers/google-geocoding';
 
 export const getTransformedStoreLocationsArgs = async (
     acStoreLocationsArgs: QueryStoreLocationsArgs

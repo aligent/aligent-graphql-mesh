@@ -3,7 +3,7 @@ import { getBcStoreLocationsGraphql } from '../../apis/graphql/store-locations';
 import {
     getTransformedStoreLocationItems,
     getTransformedStoreLocationsArgs,
-} from '../../factories/helpers/transform-store-locations';
+} from '../../factories/transform-store-locations';
 
 export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
     resolve: async (_root, args, context, _info) => {

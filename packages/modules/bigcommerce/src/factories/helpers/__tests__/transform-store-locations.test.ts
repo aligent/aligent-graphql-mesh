@@ -5,7 +5,7 @@ import {
 import {
     getTransformedStoreLocationsArgs,
     getTransformedStoreLocationItems,
-} from '../transform-store-locations';
+} from '../../transform-store-locations';
 
 const expectBcArgs = {
     distanceFilter: {
