@@ -13,3 +13,5 @@ export default createModule({
     resolvers,
     middlewares,
 });
+
+export * from './plugins/customer-impersonation-token';
