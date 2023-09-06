@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import axios from 'axios';
 
-const GOOGLE_GEOCODING_API_KEY = 'AIzaSyBGxnJtMSSIF4QkuA2rfLbUGvHuQvNDN24';
+const GOOGLE_GEOCODING_API_KEY = process.env.GOOGLE_GEOCODING_API_KEY as string;
 const GOOGLE_GEOCODING_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 export const coordinatesLookup = async (search_term: string, countryCode: string) => {
