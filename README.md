@@ -78,6 +78,8 @@ Payload:
 
 To generate this token you'll need to login to your [Hive instance](https://app.graphql-hive.com) and go to Settings -> Registry Access Tokens -> Create new registry token. Select the preset `GraphQL Operations Reporting` and copy the token. You can read more about the Hive [here](https://the-guild.dev/graphql/hive/docs).
 
+`GOOGLE_GEOCODING_API_KEY` - Google location API key used for coordinates lookup functionality.
+
 `DEBUG` - Is only used for development and adds more details to the logs via console.
 
 ### Customer Impersonation token
