@@ -28,7 +28,7 @@ const config: CodegenConfig = {
                     },
                 },
             ],
-            plugins: ['typescript', 'typescript-operations'],
+            plugins: ['typescript', 'typescript-operations', 'typescript-graphql-request'],
             documents: [
                 'packages/modules/bigcommerce/src/apis/graphql/requests/*.{graphql,ts}',
                 'packages/modules/bigcommerce/src/apis/graphql/fragments/*.{graphql,ts}',

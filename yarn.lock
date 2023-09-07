@@ -991,6 +991,16 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
+"@graphql-codegen/typescript-graphql-request@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-graphql-request/-/typescript-graphql-request-5.0.0.tgz#1b118753c8cc795d0a43baae74c6eb4a5f5e6844"
+  integrity sha512-BM9UzZD/5q3b3Q4c+VOy/QoPWgsnfs1GAnGJjh9xtuty6YsCprwhh12BaV16F+xndNUd6qkghigGyjR8m8RdkA==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^3.0.0"
+    "@graphql-codegen/visitor-plugin-common" "2.13.1"
+    auto-bind "~4.0.0"
+    tslib "~2.4.0"
+
 "@graphql-codegen/typescript-operations@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-3.0.4.tgz#60163c07f0ef73655779ece450d02c1172c44027"
