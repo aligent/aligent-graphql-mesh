@@ -12,6 +12,9 @@ const config: CodegenConfig = {
         'packages/generated/bigcommerce/resolvers/index.ts': {
             schema: 'packages/modules/bigcommerce/src/schema/*.graphql',
             plugins: ['typescript', 'typescript-resolvers'],
+            config: {
+                contextType: 'GraphQLModules.ModuleContext',
+            },
         },
 
         // Generate the types for our operations on external graphql APIs using their remote schems and our operation files

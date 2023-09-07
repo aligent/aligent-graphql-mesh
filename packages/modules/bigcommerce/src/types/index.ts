@@ -1,6 +1,7 @@
 import { BreadcrumbConnection } from '@aligent/bigcommerce-operations';
 import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
+import { ReflectiveInjector } from 'graphql-modules/di';
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -221,6 +222,7 @@ declare global {
             headers: Record<string, string>;
             cache: KeyValueCache;
             logger: Logger;
+            injector: ReflectiveInjector;
         }
     }
 }
