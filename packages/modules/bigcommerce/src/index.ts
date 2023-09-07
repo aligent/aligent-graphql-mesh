@@ -28,3 +28,6 @@ export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
 };
 
 export * from './plugins/customer-impersonation-token';
+
+// Export Globally accessible DI Tokens so other modules can use them
+export { ModuleConfig } from './providers';
