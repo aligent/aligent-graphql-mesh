@@ -1,15 +1,24 @@
-import { productsMock } from '../mocks/products';
-import { mockCmsPage } from '../mocks/cms-page';
-import { getRoute } from '../../apis/graphql/route';
+import { QueryResolvers, RoutableInterface } from '@aligent/bigcommerce-resolvers';
+import {
+    Blog,
+    BlogPost,
+    Brand,
+    ContactPage,
+    NormalPage,
+    Product,
+} from '@aligent/bigcommerce-operations';
+import { getIncludesTax } from '@aligent/utils';
+import { getRoute, getTaxSettings } from '../../apis/graphql';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
-import { QueryResolvers, RoutableInterface } from '@aligent/bigcommerce-resolvers';
-import { Product } from '@aligent/bigcommerce-operations';
+import { productsMock } from '../mocks/products';
+import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
-import { getTaxSettings } from '../../apis/graphql/settings';
-import { getIncludesTax } from '@aligent/utils';
+import { getTransformedNormalPageData } from '../../factories/get-transformed-normal-page-data';
 
-const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterface => {
+const getTransformedRouteData = (
+    data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product
+): RoutableInterface => {
     const { __typename } = data;
     if (__typename === 'Brand') {
         const transformedBrandData = productsMock.items[0];
@@ -41,8 +50,8 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 
     if (__typename === 'NormalPage') {
         return {
+            ...getTransformedNormalPageData(data as NormalPage),
             type: 'CMS_PAGE',
-            ...mockCmsPage,
         };
     }
 
@@ -65,7 +74,7 @@ const getTransformedRouteData = (data: Record<string, unknown>): RoutableInterfa
 // - Clear up why we have Brand, ContactPage and NormalPage as types (are these client-specific?)
 // - Re-test this resolver for each type of entity now that types are locking things down
 // - Add tests for getTransformedRouteData
-export const routeResolver: QueryResolvers['route'] = {
+export const routeResolver = {
     resolve: async (_root, args, context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
         const customerImpersonationToken = (await context.cache.get(
@@ -94,4 +103,4 @@ export const routeResolver: QueryResolvers['route'] = {
             ...transformedRouteData,
         };
     },
-};
+} satisfies QueryResolvers['route'];
