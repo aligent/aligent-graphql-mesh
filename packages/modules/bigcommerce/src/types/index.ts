@@ -68,6 +68,7 @@ export interface BcCategoryTree {
 }
 
 export interface BcCategory {
+    __typename?: string;
     description?: string;
     metaDescription?: string;
     pageTitle?: string;

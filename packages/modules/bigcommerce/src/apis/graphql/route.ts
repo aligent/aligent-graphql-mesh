@@ -1,12 +1,21 @@
+import {
+    Blog,
+    BlogPost,
+    Brand,
+    Category,
+    ContactPage,
+    NormalPage,
+    Product,
+    SiteRouteArgs,
+} from '@aligent/bigcommerce-operations';
 import { logAndThrowError } from '@aligent/utils';
 import { bcGraphQlRequest } from './client';
-import { getRouteQuery } from './requests/route';
-import { SiteRouteArgs } from '@aligent/bigcommerce-operations';
+import { getRouteQuery } from './requests';
 
 export const getRoute = async (
     variables: SiteRouteArgs & { includeTax?: boolean },
     customerImpersonationToken: string
-) => {
+): Promise<Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
