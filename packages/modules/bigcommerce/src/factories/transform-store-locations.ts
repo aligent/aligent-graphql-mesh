@@ -4,7 +4,6 @@ import {
     StoreLocations,
 } from '@aligent/bigcommerce-resolvers';
 import {
-    DistanceFilter,
     InventoryLocationConnection,
     InventoryLocationsArgs,
 } from '@aligent/bigcommerce-operations';
@@ -15,25 +14,25 @@ export const getTransformedStoreLocationsArgs = async (
 ): Promise<InventoryLocationsArgs> => {
     const { area, filters } = acStoreLocationsArgs;
 
-    const inventoryLocationsArgs: InventoryLocationsArgs = {
-        distanceFilter: {
-            latitude: 0,
-            longitude: 0,
-            radius: 0,
-            lengthUnit: 'Kilometres',
-        },
-    };
+    const inventoryLocationsArgs: InventoryLocationsArgs = {};
 
     if (area) {
         const { radius, search_term, coordinates } = area;
 
-        (inventoryLocationsArgs.distanceFilter as DistanceFilter).radius = radius;
+        if (!search_term && !coordinates) return inventoryLocationsArgs;
+
+        inventoryLocationsArgs.distanceFilter = {
+            latitude: 0,
+            longitude: 0,
+            radius: radius,
+            lengthUnit: 'Kilometres',
+        };
 
         if (coordinates && Object.keys(coordinates).length) {
             const { lat, lng } = coordinates;
 
-            (inventoryLocationsArgs.distanceFilter as DistanceFilter).longitude = lng as number;
-            (inventoryLocationsArgs.distanceFilter as DistanceFilter).latitude = lat as number;
+            inventoryLocationsArgs.distanceFilter.longitude = lng as number;
+            inventoryLocationsArgs.distanceFilter.latitude = lat as number;
         } else {
             const coordinatesLookupResponse = await coordinatesLookup(
                 search_term,
@@ -42,8 +41,8 @@ export const getTransformedStoreLocationsArgs = async (
 
             if (coordinatesLookupResponse) {
                 const { lat, lng } = coordinatesLookupResponse;
-                (inventoryLocationsArgs.distanceFilter as DistanceFilter).longitude = lng as number;
-                (inventoryLocationsArgs.distanceFilter as DistanceFilter).latitude = lat as number;
+                inventoryLocationsArgs.distanceFilter.longitude = lng as number;
+                inventoryLocationsArgs.distanceFilter.latitude = lat as number;
             }
         }
     }
