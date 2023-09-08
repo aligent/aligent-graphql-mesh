@@ -38,41 +38,43 @@ Adding the entry:
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
+## FAQ
+
+
+
 ## Environment configuration
 
-The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the same time by Devops in the BC Admin, from the BC Admin in settings -> Store-level API accounts -> Create API account.
+The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the same time by Devops or Store owner in the BC Admin, from the BC Admin in settings -> Store-level API accounts -> Create API account. You may not be able to see this option to `Create API Account` and will need to request these details from a shared folder in Lastpass.
 
 `X_AUTH_TOKEN` - Is called `ACCESS TOKEN` in the BC Admin, this token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API.
 
-`BC_CLIENT_SECRET` - This secret is used to sign a BC customer login JWT created in the `createCustomerLoginToken()` function. This JWT that is used for redirecting to the checkout whilst staying logged in.
+`BC_CLIENT_SECRET` and `BC_CLIENT_ID` - These are used to create a BC customer login JWT created in the [createCustomerLoginToken()](packages/modules/bigcommerce/src/utils/tokens.ts) function. This JWT is used for redirecting to the checkout whilst staying logged in.
 
-`BC_CLIENT_ID` - Is also used for the same customer login JWT, however its used in the payload of the JWT as `iss: BC_CLIENT_ID` (iss: Indicates the token's issuer. This is your API account's client ID.).
+`BC_GRAPHQL_API` - Is used by codegen to automatically create types from the BigCommerce GraphQL Store Front API. e.g. `https://client-sandbox.mybigcommerce.com/graphql` this URL is accessible in BC admin => Settings -> API -> Storefront API Playground
 
-`BC_GRAPHQL_API` - Is used by codgen to automatically created types from the BigCommerce GraphQL Store Front API. e.g. `https://client-sandbox.mybigcommerce.com/graphql` this URL is accessible in BC admin => Settings -> API -> Storefront API Playground
+`STORE_HASH` - Unique ID for each BigCommerce instance and can be found in the URL of the Admin Dashboard e.g. `linhpy40az` in https://store-linhpy40az.mybigcommerce.com/manage/dashboard this value will differ for staging and production.
 
-`BC_GRAPHQL_TOKEN` - Is the JWT needed for the BC Graphql API and is not customer specific, used for introspecting BC GraphQL API for codegen.
-This requires an existing X_AUTH_TOKEN to be passed in the header.
+// TODO: Generate this at build time \
+`BC_GRAPHQL_TOKEN` - Is a JWT allowing access the BC Storefront Graphql API. This repository uses it for generating types with codegen.
 
 Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
 
-Endpoint: POST - https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token
-Header: X-Auth-Token: <My-XAuth-Token-Here>
-Payload:
-
-- choose a expired epoch timestamp far enough in the future
-- leave cors origins empty for local dev
-
+Use the following Curl to generate a new token make sure to replace `store_hash` and `X-Auth-Token` values.
 ```json
-{
+curl --location 'https://api.bigcommerce.com/stores/{store_hash}/v3/storefront/api-token' \
+--header 'X-Auth-Token: <Insert X-Auth-Token>' \
+--header 'Content-Type: application/json' \
+--data '{
+  "allowed_cors_origins": [],
   "channel_id": 1,
-  "expires_at": 1724983269,
-  "allowed_cors_origins": []
-}
+  "expires_at": 1985635176
+}'
 ```
 
-`STORE_HASH` - Unique ID for each BigCommerce instance and can be found in the URL of the Admin Dashboard `linhpy40az` in https://store-linhpy40az.mybigcommerce.com/manage/dashboard this value will different values for staging and production.
+// TODO: Should this be handled at build time \
+`JWT_PRIVATE_KEY` - This randomly generated key is used for signing the `MeshToken` that is created by [generateMeshToken()](packages/modules/bigcommerce/src/utils/tokens.ts). The MeshToken is then used to authorise actions for a logged in user.
 
-`JWT_PRIVATE_KEY` - Is a randomly generated key that is used for signing the `MeshToken` that is created by `generateMeshToken()`. This jwt is then used going forward to verify that a user has logged in.
+For local development this value can be any string.
 
 `HIVE_TOKEN` - **NOT REQUIRED FOR LOCAL DEV** - we primarily use the Hive to monitor usage and performance across the various GraphQL queries. The Hive token is used to connect the Mesh to the Hive and send these analytics. It's also used in the pipeline to publish and verify newly generated schemas.
 
@@ -134,6 +136,8 @@ through the Mesh service, and then appropriately sent out to corresponding API's
 
 To use as a Gateway, after running `yarn dev`, update your app to send GraphQL requests to the server URL provided
 by the CLI, likely `https://localhost:4000/graphql`.
+
+For further details [User Guide](docs/user-guide.md)
 
 ## Tests
 
