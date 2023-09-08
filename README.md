@@ -38,10 +38,6 @@ Adding the entry:
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
-## FAQ
-
-
-
 ## Environment configuration
 
 The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the same time by Devops or Store owner in the BC Admin, from the BC Admin in settings -> Store-level API accounts -> Create API account. You may not be able to see this option to `Create API Account` and will need to request these details from a shared folder in Lastpass.
@@ -60,6 +56,7 @@ The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the
 Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
 
 Use the following Curl to generate a new token make sure to replace `store_hash` and `X-Auth-Token` values.
+
 ```json
 curl --location 'https://api.bigcommerce.com/stores/{store_hash}/v3/storefront/api-token' \
 --header 'X-Auth-Token: <Insert X-Auth-Token>' \

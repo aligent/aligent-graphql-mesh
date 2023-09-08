@@ -3,12 +3,14 @@
 ## Logging in through the Mesh
 
 Some queries and mutations require headers that authenticate you as a logged in user.
-Add this to the headers of your operations -> 
+Add this to the headers of your operations ->
+
 ```
 "authorization" : "bearer {meshToken}"
 ```
 
 Generate your `MeshToken` using this mutation:
+
 ```graphql
 mutation generateCustomerToken($email: String!, $password: String!) {
   generateCustomerToken(email: $email, password: $password) {
