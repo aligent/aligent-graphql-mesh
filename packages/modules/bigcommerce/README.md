@@ -45,8 +45,8 @@ export const someResolver: QueryResolvers['a-resolver-type'] = {
     const sdk: Sdk = _context.injector.get(BigCommerceSdk);
 
     const response = sdk.login({
-        email,
-        password
+      email,
+      password,
     });
 
     return {};
@@ -55,34 +55,37 @@ export const someResolver: QueryResolvers['a-resolver-type'] = {
 ```
 
 ### Adding new queries to the Sdk
-1. Write out your gql query in a new file in `packages/modules/bigcommerce/src/apis/graphql/requests/` 
-    ```typescript
-      import { gql } from 'graphql-tag';
-      import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
-      import { print } from 'graphql/index';
 
-      export const customerAttribute = stripIgnoredCharacters(
-          print(gql`
-              query customerAttribute($attributeId: Int!) {
-                  customer {
-                      attributes {
-                          attribute(entityId: $attributeId) {
-                              entityId
-                              name
-                              value
-                          }
-                      }
-                  }
-              }
-          `)
-      );
-    ```
+1. Write out your gql query in a new file in `packages/modules/bigcommerce/src/apis/graphql/requests/`
+
+   ```typescript
+   import { gql } from 'graphql-tag';
+   import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
+   import { print } from 'graphql/index';
+
+   export const customerAttribute = stripIgnoredCharacters(
+     print(gql`
+       query customerAttribute($attributeId: Int!) {
+         customer {
+           attributes {
+             attribute(entityId: $attributeId) {
+               entityId
+               name
+               value
+             }
+           }
+         }
+       }
+     `)
+   );
+   ```
+
 2. Re-Run the codegen to add your query to the SDK
-    `yarn run codegen`
+   `yarn run codegen`
 
 3. Make your request!
-    ```typescript
-      const response = sdk.customerAttribute({
-          attributeId: 123,
-      });
-    ```
+   ```typescript
+   const response = sdk.customerAttribute({
+     attributeId: 123,
+   });
+   ```

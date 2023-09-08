@@ -6,9 +6,7 @@ import { GraphQLClient } from 'graphql-request';
 export const ModuleConfig = new InjectionToken<BigCommerceModuleConfig>(
     'Configuration for the BigCommerce GraphQL Module'
 );
-export const BigCommerceSdk = new InjectionToken<Sdk>(
-    ''
-)
+export const BigCommerceSdk = new InjectionToken<Sdk>('');
 
 export const getProviders = (config: BigCommerceModuleConfig): Array<Provider> => {
     return [
@@ -16,7 +14,7 @@ export const getProviders = (config: BigCommerceModuleConfig): Array<Provider> =
             provide: ModuleConfig,
             useValue: config,
             scope: Scope.Singleton,
-            global: true
+            global: true,
         },
         {
             provide: BigCommerceSdk,
@@ -24,7 +22,7 @@ export const getProviders = (config: BigCommerceModuleConfig): Array<Provider> =
                 return getSdk(new GraphQLClient(config.graphqlEndpoint));
             },
             deps: [ModuleConfig],
-            global: true
-        }
+            global: true,
+        },
     ];
 };
