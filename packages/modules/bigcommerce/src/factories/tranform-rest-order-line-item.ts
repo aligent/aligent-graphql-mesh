@@ -1,12 +1,13 @@
 import { BCOrderLineItem } from '../types';
 import { Money, CurrencyEnum, OrderItem } from '@aligent/bigcommerce-resolvers';
+import { btoa } from '@aligent/utils';
 
 export const transformBcOrderLineItem = (
     lineItem: BCOrderLineItem,
     orderCurrencyCode: string
 ): OrderItem => {
     return {
-        id: Buffer.from(String(lineItem.variant_id)).toString('base64'),
+        id: btoa(String(lineItem.variant_id)),
         product_sale_price: getSalePrice(lineItem, orderCurrencyCode),
         product_sale_price_incl_tax: getSalePriceIncTax(lineItem, orderCurrencyCode),
         product_sku: lineItem.sku, //is this parent or variant, parent sku not available, might need another api call
