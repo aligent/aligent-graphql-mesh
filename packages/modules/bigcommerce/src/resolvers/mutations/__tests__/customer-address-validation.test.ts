@@ -1,6 +1,6 @@
 import { isCustomerAddressValid } from '../../../utils';
 import {
-    customerAddress,
+    acCustomerAddress,
     customerAddressMissingRequiredFields,
 } from './__data__/customer-address-data';
 
@@ -11,7 +11,7 @@ describe('Customer Address Validation tests', () => {
     });
 
     test('Valid Address', () => {
-        const isValid = isCustomerAddressValid(customerAddress);
+        const isValid = isCustomerAddressValid(acCustomerAddress);
         expect(isValid).toEqual(true);
     });
 

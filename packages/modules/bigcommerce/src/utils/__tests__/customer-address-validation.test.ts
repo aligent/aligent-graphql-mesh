@@ -3,7 +3,7 @@ import {
     isCustomerAddressUpdatable,
 } from '../validators/customer-address-validator';
 import {
-    customerAddress,
+    acCustomerAddress,
     customerAddressMissingRequiredFields,
     customerAddressWithUpdateId,
 } from './__data__/customer-address-validation-data';
@@ -15,7 +15,7 @@ describe('Customer Address Validation tests', () => {
     });
 
     test('Valid Address', () => {
-        const isValid = isCustomerAddressValid(customerAddress);
+        const isValid = isCustomerAddressValid(acCustomerAddress);
         expect(isValid).toEqual(true);
     });
 
@@ -34,7 +34,7 @@ describe('Customer Address Update Validation tests', () => {
     test('Invalid Address without Id', () => {
         //We want to test with missing id, as that could be the input from client
         //@ts-expect-error: property 'id' is missing in type
-        const invalidAddressWithoutId = isCustomerAddressUpdatable(customerAddress);
+        const invalidAddressWithoutId = isCustomerAddressUpdatable(acCustomerAddress);
         expect(invalidAddressWithoutId).toEqual(false);
     });
 

@@ -194,7 +194,7 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
     country_code: CountryCodeEnum;
     street: string[];
     region: {
-        region: string;
+        region_id: number;
     };
     postcode: string;
 }

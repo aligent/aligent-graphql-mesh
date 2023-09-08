@@ -7,6 +7,7 @@ import { CustomerAddressValidated } from '../../types';
 import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '../../utils';
+import { getStateByAddress } from '../../apis/rest/countries';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {
@@ -32,7 +33,13 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
             );
         }
 
-        const address = transformCustomerAddress(customerAddressInput, customerId, addressId);
+        const state = await getStateByAddress(customerAddressInput);
+        const address = transformCustomerAddress(
+            customerAddressInput,
+            state,
+            customerId,
+            addressId
+        );
         const response = await updateCustomerAddress(address);
         if (!response) {
             return null; //No data returned if the updated does not contain any change

@@ -1,4 +1,5 @@
 import { CountryCodeEnum } from '@aligent/bigcommerce-resolvers';
+import { BcState } from '../../../types';
 
 export const bcAddress = {
     customer_id: 123,
@@ -22,6 +23,13 @@ export const bcAddress = {
             value: ['Yes'],
         },
     ],
+};
+
+export const bcState: BcState = {
+    id: 212,
+    state: 'South Australia',
+    state_abbreviation: 'SA',
+    country_id: 13,
 };
 
 export const bcAddressUpdated = {
@@ -49,7 +57,23 @@ export const bcAddressUpdated = {
     ],
 };
 
-export const customerAddress = {
+export const acCustomerAddressInput = {
+    firstname: 'Adam',
+    lastname: 'Hall',
+    city: 'Adelaide',
+    street: ['Level 1', '212 pirie st'],
+    region: {
+        region_id: 212,
+    },
+    postcode: '5000',
+    country_code: 'AU' as CountryCodeEnum,
+    telephone: '0400000000',
+    company: 'Aligent',
+    default_billing: true,
+    default_shipping: true,
+};
+
+export const acCustomerAddressOutput = {
     firstname: 'Adam',
     lastname: 'Hall',
     city: 'Adelaide',
@@ -71,7 +95,7 @@ export const customerAddressBillingShippingFalse = {
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
-        region: 'South Australia',
+        region_id: 212,
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
