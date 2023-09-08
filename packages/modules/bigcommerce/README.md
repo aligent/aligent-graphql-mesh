@@ -2,6 +2,15 @@
 
 ## Configuration
 
+The configuration interface is found here: `packages/modules/bigcommerce/src/index.ts` and currently contains these properties:
+
+  - `graphqlEndpoint` - BigCommerce Graphql endpoint for your store
+  - `jwtPrivateKey` - Random string used to encrypt JWT tokens
+  - `authToken` - X-Auth-Token header value
+  - `clientSecret` - BigCommerce API Client Secret
+  - `clientId` - BigCommerce API Client ID
+  - `storeHash` - BigCommerce Store hash
+
 Fetching config in a resolver:
 
 ```typescript
