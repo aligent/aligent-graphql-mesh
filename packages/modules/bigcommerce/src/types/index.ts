@@ -31,7 +31,7 @@ export interface BcCustomer {
 }
 
 export interface BcMutationCustomer {
-    id: number;
+    id?: number;
     email?: string;
     first_name?: string;
     last_name?: string;
@@ -40,6 +40,7 @@ export interface BcMutationCustomer {
         new_password: string;
     };
 }
+
 export interface Country {
     id: number;
     country: string;
@@ -67,6 +68,7 @@ export interface BcCategoryTree {
 }
 
 export interface BcCategory {
+    __typename?: string;
     description?: string;
     metaDescription?: string;
     pageTitle?: string;
