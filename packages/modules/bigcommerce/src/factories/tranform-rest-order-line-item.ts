@@ -1,10 +1,10 @@
 import { BCOrderLineItem } from '../types';
-import { Money, OrderItemInterface, CurrencyEnum } from '@aligent/bigcommerce-resolvers';
+import { Money, CurrencyEnum, OrderItem } from '@aligent/bigcommerce-resolvers';
 
 export const transformBcOrderLineItem = (
     lineItem: BCOrderLineItem,
     orderCurrencyCode: string
-): OrderItemInterface => {
+): OrderItem => {
     return {
         id: Buffer.from(String(lineItem.variant_id)).toString('base64'),
         product_sale_price: getSalePrice(lineItem, orderCurrencyCode),
@@ -14,6 +14,7 @@ export const transformBcOrderLineItem = (
         selected_options: getSelectedOptions(lineItem),
         product_name: lineItem.name,
         line_total: Number(lineItem.total_inc_tax), //This might need to get inc or ex tax based on config
+        __typename: 'OrderItem', //needs to be defined, as the OrderItemInterface does not have a typename defined
     };
 };
 

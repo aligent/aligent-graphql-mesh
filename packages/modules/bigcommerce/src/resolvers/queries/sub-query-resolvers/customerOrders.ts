@@ -7,7 +7,7 @@ import { getBcCustomerIdFromMeshToken } from '../../../utils';
 export const customerOrdersResolver: QueryResolvers['customerOrders'] = {
     resolve: async (_root, args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
-        console.log('Inside Customers.orders sub resolver');
+        // @ts-expect-error: filter is not defined in customerOrders resolvers
         const orderNumber = args?.filter?.number?.eq;
 
         let bcOrders: BCOrder[] = [];

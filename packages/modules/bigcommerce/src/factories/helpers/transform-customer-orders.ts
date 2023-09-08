@@ -39,6 +39,5 @@ export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrders => {
             currency_code: bcOrder.currency_code,
         };
     });
-    const customerOrders: CustomerOrders = { items: customerOrderItems };
-    return customerOrders;
+    return { items: customerOrderItems };
 };

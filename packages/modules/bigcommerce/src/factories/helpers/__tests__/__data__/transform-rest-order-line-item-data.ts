@@ -1,4 +1,4 @@
-import { OrderItemInterface } from '@aligent/bigcommerce-resolvers';
+import { OrderItem } from '@aligent/bigcommerce-resolvers';
 import { BCOrderLineItem } from '../../../../types';
 
 export const bcOrderLineItem: BCOrderLineItem = {
@@ -88,7 +88,7 @@ export const bcOrderLineItem: BCOrderLineItem = {
     ],
 };
 
-export const acOrderItemInterface: OrderItemInterface = {
+export const acOrderItemInterface: OrderItem = {
     id: 'NTE1',
     product_sale_price: {
         currency: 'AUD',
@@ -112,6 +112,7 @@ export const acOrderItemInterface: OrderItemInterface = {
     ],
     product_name: 'Mona Pullover Hoodlie',
     line_total: 57.0,
+    __typename: 'OrderItem',
 };
 
 /**
