@@ -4,6 +4,10 @@ import { getTransformedOrders } from '../../../factories/helpers/transform-custo
 import { getAllOrders, getOrder } from '../../../apis/rest/order';
 import { getBcCustomerIdFromMeshToken } from '../../../utils';
 
+/**
+ * This is a sub-resolver it is executed after customerResolver when orders was specified in the query
+ * The sub-resolvers is configured here in the scr/resolves/index.ts
+ */
 export const customerOrdersResolver: CustomerResolvers['orders'] = {
     resolve: async (_root, args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
@@ -23,5 +27,6 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
         }
 
         return getTransformedOrders(bcOrders);
+        //sub-resolver customerOrderItemsResolver is called after this if items is specified in query
     },
 };

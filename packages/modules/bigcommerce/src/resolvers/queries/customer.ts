@@ -5,6 +5,10 @@ import { getAllCustomerAddresses } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { getSubscriberByEmail } from '../../apis/rest/subscriber';
 
+/**
+ * CustomerOrders are fetched via the sub-resolver: customerOrdersResolver
+ * The sub-resolvers is configured here in the scr/resolves/index.ts
+ */
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
@@ -21,5 +25,6 @@ export const customerResolver: QueryResolvers['customer'] = {
         const isSubscriber = !!subscriber;
 
         return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber);
+        //sub-resolver customerOrdersResolver is called after this if orders is specified in query
     },
 };
