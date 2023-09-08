@@ -1,13 +1,12 @@
-import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
+import { CustomerResolvers } from '@aligent/bigcommerce-resolvers';
 import { BCOrder } from '../../../types';
 import { getTransformedOrders } from '../../../factories/helpers/transform-customer-orders';
 import { getAllOrders, getOrder } from '../../../apis/rest/order';
 import { getBcCustomerIdFromMeshToken } from '../../../utils';
 
-export const customerOrdersResolver: QueryResolvers['customerOrders'] = {
+export const customerOrdersResolver: CustomerResolvers['orders'] = {
     resolve: async (_root, args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
-        // @ts-expect-error: filter is not defined in customerOrders resolvers
         const orderNumber = args?.filter?.number?.eq;
 
         let bcOrders: BCOrder[] = [];
