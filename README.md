@@ -12,17 +12,19 @@ https://the-guild.dev/graphql/mesh
 $ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
 ```
 
-2. Duplicate the `.env.template` file as `.env` and fill in the values and place it in `packages/mesh/.env` directory.
+2. Run `yarn install`
+
+3. Duplicate the `.env.template` file as `.env` and fill in the values and place it in `packages/mesh/.env` directory.
 
 ```shell
 $ cp .env.template packages/mesh/.env
 ```
 
-3. Add environment configuration to .env file (see section below: Environment configuration)
+4. Add environment configuration to .env file (see section below: Environment configuration)
 
-4. Generate SSL certificate (see section below: Generating an SSL Certificate)
+5. Generate SSL certificate (see section below: Generating an SSL Certificate)
 
-5. Add custom domain, `mesh.local.pwadev` to `/etc/hosts` file
+6. Add custom domain, `mesh.local.pwadev` to `/etc/hosts` file
 
 ```shell
 sudoedit /etc/hosts
@@ -34,7 +36,7 @@ Adding the entry:
 127.0.0.1 mesh.local.pwadev
 ```
 
-6. Start the mesh server from project root (see section below: Using the Mesh)
+7. Start the mesh server from project root (see section below: Using the Mesh)
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
@@ -50,16 +52,15 @@ The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the
 
 `STORE_HASH` - Unique ID for each BigCommerce instance and can be found in the URL of the Admin Dashboard e.g. `linhpy40az` in https://store-linhpy40az.mybigcommerce.com/manage/dashboard this value will differ for staging and production.
 
-// TODO: Generate this at build time \
 `BC_GRAPHQL_TOKEN` - Is a JWT allowing access the BC Storefront Graphql API. This repository uses it for generating types with codegen.
 
 Docs: https://developer.bigcommerce.com/docs/storefront-auth/tokens
 
-Use the following Curl to generate a new token make sure to replace `store_hash` and `X-Auth-Token` values.
+Use the following Curl to generate a new token make sure to replace `STORE_HASH` and `X-AUTH-TOKEN` values.
 
 ```json
-curl --location 'https://api.bigcommerce.com/stores/{store_hash}/v3/storefront/api-token' \
---header 'X-Auth-Token: <Insert X-Auth-Token>' \
+curl --location 'https://api.bigcommerce.com/stores/{STORE_HASH}/v3/storefront/api-token' \
+--header 'X-Auth-Token: {X-AUTH-TOKEN}' \
 --header 'Content-Type: application/json' \
 --data '{
   "allowed_cors_origins": [],
@@ -68,7 +69,6 @@ curl --location 'https://api.bigcommerce.com/stores/{store_hash}/v3/storefront/a
 }'
 ```
 
-// TODO: Should this be handled at build time \
 `JWT_PRIVATE_KEY` - This randomly generated key is used for signing the `MeshToken` that is created by [generateMeshToken()](packages/modules/bigcommerce/src/utils/tokens.ts). The MeshToken is then used to authorise actions for a logged in user.
 
 For local development this value can be any string.
@@ -296,3 +296,7 @@ The Take Flight PWA being based on Adobe Commerce passes uid arguments to query 
 how to consume, but for some properties in Big Commerce the decoded id version is needed. To get this id from the uid use the "atob" util function found in
 src/utils/encode-decode.ts. This will decode the uid from e.g. atob("Ng==") = "6". The counter part to this is the btoa method e.g. btoa("6") = "Ng==" which
 encodes an id to be an uid
+
+// TODO: Generate `BC_GRAPHQL_TOKEN` this at build time \
+
+// TODO: Should `JWT_PRIVATE_KEY` also be be handled at build time? Investigate further \
