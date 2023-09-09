@@ -95,5 +95,9 @@ export const ProductsDetails: DocumentNode = gql`
                 }
             }
         }
+        weight {
+            value
+            unit
+        }
     }
 `;
