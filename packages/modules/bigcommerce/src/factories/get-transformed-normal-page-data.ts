@@ -15,5 +15,6 @@ export const getTransformedNormalPageData = (data: NormalPage): CmsPage => {
         // Since cmsPage type has extended from RoutableInterface where redirect_code is required we are just mocking as 0
         // 0 means there is no redirect error, this will be fine as TF doesn't use redirect_code in cmsPage query at all
         redirect_code: 0,
+        __typename: 'CmsPage',
     };
 };
