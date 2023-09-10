@@ -35,6 +35,7 @@ export const bcHomePageContent: NormalPage = {
 };
 
 export const transformedHomePageContent: CmsPage = {
+    __typename: 'CmsPage',
     url_key: 'home',
     content: '<p>This is the test homepage</p>',
     content_heading: 'Big Commerce Homepage',
