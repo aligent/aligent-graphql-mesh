@@ -10,21 +10,21 @@ import { Maybe, MetafieldEdge } from '@aligent/bigcommerce-operations';
  *  grid_per_page: "24"
  * }
  *
- * @param metafields
+ * @param fields
  * @param {Object} propertyTypes - An object containing arrays of string properties corresponding to a property type.
  * @property {Array<string>} propertyTypes.booleanProperties - An array of strings for boolean properties.
  * @property {Array<string>} propertyTypes.integerProperties - An array of strings for integer properties.
  * @property {Array<string>} propertyTypes.jsonStringProperties - An array of strings for JSON string properties.
  */
-export const getConfigsFromMetafields = (
-    metafields?: Maybe<Array<Maybe<MetafieldEdge>>>,
+export const getAttributesFromMetaAndCustomFields = (
+    fields?: Maybe<Array<Maybe<{ node: { key?: string; name?: string; value?: string } }>>>,
     propertyTypes?: {
         booleanProperties: Array<string>;
         integerProperties: Array<string>;
         jsonStringProperties: Array<string>;
     }
 ): { [key: string]: boolean | number | string } => {
-    if (!metafields) return {};
+    if (!fields) return {};
 
     const { booleanProperties, integerProperties, jsonStringProperties } = propertyTypes || {
         booleanProperties: [],
@@ -32,15 +32,20 @@ export const getConfigsFromMetafields = (
         jsonStringProperties: [],
     };
 
-    return metafields.reduce((carry, metafield) => {
-        if (!metafield?.node.key) return carry;
-        const { key } = metafield.node;
+    return fields.reduce((carry, field) => {
+        /*"metafields" uses "key" and "customFields" uses "name" for the main property name*/
+        const propertyName = field?.node?.key || field?.node?.name;
 
-        let value: unknown = metafield.node.value;
+        if (!propertyName) return carry;
+
+        /* By default the "value" will be a string, so if we don't predefine the property type
+         * the value will be returned as a one */
+        let value: unknown = field.node.value;
 
         if (!value) return carry;
 
-        if (booleanProperties.includes(key)) {
+        /* If we know the property value should be a boolean, cast the value as a one */
+        if (booleanProperties.includes(propertyName)) {
             if (Number.isNaN(value)) {
                 value = !(value === 'false');
             } else {
@@ -48,11 +53,13 @@ export const getConfigsFromMetafields = (
             }
         }
 
-        if (integerProperties.includes(key)) {
+        /* If we know the property value should be an integer, cast the value to an integer*/
+        if (integerProperties.includes(propertyName)) {
             value = Number(value);
         }
 
-        if (jsonStringProperties.includes(key)) {
+        /* If we know a value should be a json object, parse the property value string to an object*/
+        if (jsonStringProperties.includes(propertyName)) {
             try {
                 if (typeof value === 'string') {
                     value = JSON.parse(value);
@@ -62,7 +69,7 @@ export const getConfigsFromMetafields = (
             }
         }
 
-        return { ...carry, [key]: value };
+        return { ...carry, [propertyName]: value };
     }, {});
 };
 

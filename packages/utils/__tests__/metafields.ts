@@ -1,5 +1,5 @@
 import { MetafieldEdge, Maybe } from '@aligent/bigcommerce-operations';
-import { findMetafieldValueByKey, getConfigsFromMetafields } from '../metafields';
+import { findMetafieldValueByKey, getAttributesFromMetaAndCustomFields } from '../metafields';
 import {
     booleanStoreConfigProperties,
     integerStoreConfigProperties,
@@ -29,7 +29,7 @@ describe('findMetafieldValueByKey', () => {
     });
 });
 
-describe('getConfigsFromMetafields', () => {
+describe('getAttributesFromMetaAndCustomFields', () => {
     test('Parses a boolean string to a boolean value', async () => {
         const data = [
             {
@@ -43,7 +43,7 @@ describe('getConfigsFromMetafields', () => {
 
         const expectedResult = { newsletter_enabled: false };
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 
     test('Parses a number string to a boolean value', async () => {
@@ -59,7 +59,7 @@ describe('getConfigsFromMetafields', () => {
 
         const expectedResult = { newsletter_enabled: true };
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 
     test('Parses a JSON string value to an object value', async () => {
@@ -77,7 +77,7 @@ describe('getConfigsFromMetafields', () => {
             send_friend: { enabled_for_customers: true, enabled_for_guests: false },
         };
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 
     test('Parses a bad JSON string value to a null value', async () => {
@@ -103,7 +103,7 @@ describe('getConfigsFromMetafields', () => {
             send_friend: null,
         };
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 
     test(`Returns {} if there's no metafields`, async () => {
@@ -111,7 +111,7 @@ describe('getConfigsFromMetafields', () => {
 
         const expectedResult = {};
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 
     test(`Returns {} if there's no key`, async () => {
@@ -127,7 +127,7 @@ describe('getConfigsFromMetafields', () => {
 
         const expectedResult = {};
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 
     test(`Returns a null value if there's no property value`, async () => {
@@ -143,6 +143,6 @@ describe('getConfigsFromMetafields', () => {
 
         const expectedResult = {};
 
-        expect(getConfigsFromMetafields(data, propertyTypes)).toEqual(expectedResult);
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 });

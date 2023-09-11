@@ -1,7 +1,7 @@
 import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { QueryResolvers, StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getChannelMetafields } from '../../apis/graphql/channel';
-import { getConfigsFromMetafields } from '../../../../../utils/metafields';
+import { getAttributesFromMetaAndCustomFields } from '../../../../../utils/metafields';
 import {
     booleanStoreConfigProperties,
     integerStoreConfigProperties,
@@ -43,7 +43,7 @@ export async function transformChannelMetafieldsToStoreConfig(
     //The metafields data has this ane extra node attribute and needs to be accessed via node.node
     ///[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]
 
-    const configs = getConfigsFromMetafields(metafields, {
+    const configs = getAttributesFromMetaAndCustomFields(metafields, {
         booleanProperties: booleanStoreConfigProperties,
         integerProperties: integerStoreConfigProperties,
         jsonStringProperties: jsonStringStoreConfigProperties,
