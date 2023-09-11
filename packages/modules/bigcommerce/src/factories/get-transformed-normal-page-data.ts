@@ -1,11 +1,11 @@
 import { NormalPage } from '@aligent/bigcommerce-operations';
 import { CmsPage } from '@aligent/bigcommerce-resolvers';
 
-export const getTransformedNormalPageData = (data: NormalPage): CmsPage => {
+export const getTransformedNormalPageData = (data: NormalPage, cdnUrl: string): CmsPage => {
     const { path, htmlBody, name, seo } = data;
     return {
         url_key: path.replace(/\//g, ''),
-        content: htmlBody,
+        content: htmlBody.replace(/%%GLOBAL_CdnStorePath%%/g, cdnUrl),
         content_heading: name,
         identifier: path,
         title: name,

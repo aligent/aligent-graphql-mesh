@@ -14,6 +14,7 @@ export interface BigCommerceModuleConfig {
     clientSecret: string;
     clientId: string;
     storeHash: string;
+    graphQlToken: string;
 }
 
 export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
