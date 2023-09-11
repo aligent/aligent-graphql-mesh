@@ -298,5 +298,3 @@ src/utils/encode-decode.ts. This will decode the uid from e.g. atob("Ng==") = "6
 encodes an id to be an uid
 
 // TODO: Generate `BC_GRAPHQL_TOKEN` this at build time \
-
-// TODO: Should `JWT_PRIVATE_KEY` also be be handled at build time? Investigate further \
