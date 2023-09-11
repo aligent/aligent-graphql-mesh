@@ -36,12 +36,12 @@ export const getConfigsFromMetafields = (
         if (!metafield?.node.key) return carry;
         const { key } = metafield.node;
 
-        let value: any = metafield.node.value;
+        let value: unknown = metafield.node.value;
 
         if (!value) return carry;
 
         if (booleanProperties.includes(key)) {
-            if (isNaN(value)) {
+            if (Number.isNaN(value)) {
                 value = !(value === 'false');
             } else {
                 value = !!Number(value);
@@ -54,7 +54,9 @@ export const getConfigsFromMetafields = (
 
         if (jsonStringProperties.includes(key)) {
             try {
-                value = JSON.parse(value);
+                if (typeof value === 'string') {
+                    value = JSON.parse(value);
+                }
             } catch {
                 value = null;
             }

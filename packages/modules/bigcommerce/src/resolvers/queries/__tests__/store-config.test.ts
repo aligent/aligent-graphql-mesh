@@ -1,17 +1,6 @@
 import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { transformChannelMetafieldsToStoreConfig } from '../store-config';
-import {
-    booleanStoreConfigProperties,
-    integerStoreConfigProperties,
-    jsonStringStoreConfigProperties,
-} from '../constants';
-
-const propertyTypes = {
-    booleanProperties: booleanStoreConfigProperties,
-    integerProperties: integerStoreConfigProperties,
-    jsonStringProperties: jsonStringStoreConfigProperties,
-};
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', async () => {
