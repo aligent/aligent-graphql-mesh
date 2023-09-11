@@ -232,8 +232,10 @@ export const mockBcProducts = [
         relatedProducts: {
             edges: [
                 {
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
                         entityId: 491,
+                        id: '10',
                         name: 'Rennsteig Individual Parallel Pin Punches - Multiple Sizes',
                         sku: '45002-45C',
                         addToCartUrl:
@@ -418,6 +420,7 @@ export const mockBcProducts = [
                             ],
                         },
                         path: '/rennsteig-individual-parallel-pin-punches-multiple-sizes/',
+                        related_products: { edges: null },
                     },
                 },
             ],

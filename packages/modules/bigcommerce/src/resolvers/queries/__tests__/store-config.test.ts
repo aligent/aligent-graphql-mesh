@@ -1,6 +1,6 @@
-import { MetafieldEdge, MetafieldConnection } from '@aligent/bigcommerce-operations';
+import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
-import { findMetafieldValueByKey, transformChannelMetafieldsToStoreConfig } from '../store-config';
+import { transformChannelMetafieldsToStoreConfig } from '../store-config';
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', async () => {
@@ -24,21 +24,6 @@ describe('Transform StoreConfig tests', () => {
             await transformChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
 
         expect(transformedConfig.category_url_suffix).toEqual('');
-    });
-    test('Find metafield value with invalid data', async () => {
-        const data: MetafieldEdge[] = [
-            {
-                // @ts-expect-error: Type expects `entityId`
-                node: {
-                    id: '',
-                    key: '',
-                    value: '',
-                },
-            },
-        ];
-        const value: string = findMetafieldValueByKey(data, 'some');
-
-        expect(value).toEqual('');
     });
 });
 

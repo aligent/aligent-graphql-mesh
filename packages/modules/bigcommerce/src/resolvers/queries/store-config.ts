@@ -1,6 +1,12 @@
-import { MetafieldConnection, MetafieldEdge } from '@aligent/bigcommerce-operations';
-import { Maybe, QueryResolvers, StoreConfig } from '@aligent/bigcommerce-resolvers';
+import { MetafieldConnection } from '@aligent/bigcommerce-operations';
+import { QueryResolvers, StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getChannelMetafields } from '../../apis/graphql/channel';
+import { getAttributesFromMetaAndCustomFields } from '../../../../../utils/metafields';
+import {
+    booleanStoreConfigProperties,
+    integerStoreConfigProperties,
+    jsonStringStoreConfigProperties,
+} from './constants';
 
 const NAMESPACE: string = 'pwa_config';
 
@@ -37,36 +43,25 @@ export async function transformChannelMetafieldsToStoreConfig(
     //The metafields data has this ane extra node attribute and needs to be accessed via node.node
     ///[{"node":{"id":"TWV0YWZpZWxkczoxODk=","key":"category_url_suffix","value":".html"}},{"node":{"id":"TWV0YWZpZWxkczoxOTA=","key":"grid_per_page","value":"24"}}]
 
+    const configs = getAttributesFromMetaAndCustomFields(metafields, {
+        booleanProperties: booleanStoreConfigProperties,
+        integerProperties: integerStoreConfigProperties,
+        jsonStringProperties: jsonStringStoreConfigProperties,
+    });
+
     const storeConfigTransformed: StoreConfig = {
-        //Mandatory fields, always returned (currently no value assigned)
+        // Mandatory fields, always returned with no value assigned but configs specified via "store_config" metafields
+        // can override
         contact_enabled: false,
         newsletter_enabled: false,
         pwa_base_url: '',
         returns_enabled: '',
+        root_category_uid: 'null',
+        locale: 'en-AU',
+        category_url_suffix: '',
+        grid_per_page: 24,
+        ...configs,
     };
 
-    if (metafields) {
-        const categoryUrl: string = findMetafieldValueByKey(metafields, 'category_url_suffix');
-        const gridPerPage: string = findMetafieldValueByKey(metafields, 'grid_per_page');
-        const locale: string = findMetafieldValueByKey(metafields, 'locale');
-        const root_category_uid: string = findMetafieldValueByKey(metafields, 'root_category_uid');
-        //Add more metafields as required here. Metafields need to be added to bigcommerce manually first.
-
-        storeConfigTransformed.category_url_suffix = categoryUrl;
-        storeConfigTransformed.grid_per_page = parseInt(gridPerPage !== '' ? gridPerPage : '24'); // default set to 24
-        storeConfigTransformed.locale = locale || null;
-        storeConfigTransformed.root_category_uid = root_category_uid || null;
-    }
-
     return storeConfigTransformed;
-}
-
-export function findMetafieldValueByKey(
-    metafields: Maybe<MetafieldEdge>[],
-    metafieldKey: string
-): string {
-    const metafieldValue = metafields.find((node) => {
-        return node?.node.key === metafieldKey;
-    });
-    return metafieldValue ? metafieldValue.node?.value : '';
 }
