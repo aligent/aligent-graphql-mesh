@@ -1944,6 +1944,10 @@ type StoreConfig {
     """
     grid_per_page_values: String
     """
+    Google maps API key
+    """
+    googleMapsAPIKey: String
+    """
     Scripts that must be included in the HTML before the closing `<head>` tag.
     """
     head_includes: String

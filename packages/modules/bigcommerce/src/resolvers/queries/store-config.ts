@@ -56,6 +56,11 @@ export async function transformChannelMetafieldsToStoreConfig(
         storeConfigTransformed.grid_per_page = parseInt(gridPerPage !== '' ? gridPerPage : '24'); // default set to 24
         storeConfigTransformed.locale = locale || null;
         storeConfigTransformed.root_category_uid = root_category_uid || null;
+        storeConfigTransformed.root_category_uid = root_category_uid || null;
+        storeConfigTransformed.googleMapsAPIKey = findMetafieldValueByKey(
+            metafields,
+            'googleMapsAPIKey'
+        );
     }
 
     return storeConfigTransformed;
