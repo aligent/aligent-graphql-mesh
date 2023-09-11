@@ -1,4 +1,4 @@
-import { AuthorizationError, logAndThrowError } from '@aligent/utils';
+import { AuthorizationError } from '@aligent/utils';
 import { bcGraphQlRequest } from './client';
 import { loginMutation } from './requests/login';
 
