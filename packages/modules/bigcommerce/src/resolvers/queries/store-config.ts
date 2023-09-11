@@ -57,10 +57,6 @@ export async function transformChannelMetafieldsToStoreConfig(
         storeConfigTransformed.locale = locale || null;
         storeConfigTransformed.root_category_uid = root_category_uid || null;
         storeConfigTransformed.root_category_uid = root_category_uid || null;
-        storeConfigTransformed.googleMapsAPIKey = findMetafieldValueByKey(
-            metafields,
-            'googleMapsAPIKey'
-        );
     }
 
     return storeConfigTransformed;
