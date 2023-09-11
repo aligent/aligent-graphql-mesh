@@ -7,38 +7,23 @@ import {
     NormalPage,
     Product,
 } from '@aligent/bigcommerce-operations';
-import { getIncludesTax, logAndThrowError } from '@aligent/utils';
+import { getIncludesTax } from '@aligent/utils';
 import { Sdk } from '@aligent/bigcommerce-operations';
 import { BigCommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
 import { BigCommerceSdk, ModuleConfig } from '../../providers';
-import { getRoute, getTaxSettings } from '../../apis/graphql';
+import { getCdnUrl, getRoute, getTaxSettings } from '../../apis/graphql';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
+import { getTransformedNormalPageData } from '../../factories/get-transformed-normal-page-data';
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
-import { getTransformedNormalPageData } from '../../factories/get-transformed-normal-page-data';
-
-const getCdnUrl = async (sdk: Sdk, config: BigCommerceModuleConfig) => {
-    try {
-        const response = await sdk.cdnUrl(
-            {},
-            {
-                Authorization: `Bearer ${config.graphQlToken}`,
-            }
-        );
-
-        const originUrl = response.site.settings?.url.cdnUrl;
-        return `https://${originUrl}/s-${config.storeHash}`;
-    } catch (error) {
-        return logAndThrowError(error);
-    }
-};
 
 const getTransformedRouteData = async (
     data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product,
     sdk: Sdk,
-    config: BigCommerceModuleConfig
+    config: BigCommerceModuleConfig,
+    customerImpersonationToken: string
 ): Promise<RoutableInterface> => {
     const { __typename } = data;
     if (__typename === 'Brand') {
@@ -70,7 +55,7 @@ const getTransformedRouteData = async (
     }
 
     if (__typename === 'NormalPage') {
-        const cdnUrl = await getCdnUrl(sdk, config);
+        const cdnUrl = await getCdnUrl(sdk, config, customerImpersonationToken);
         return {
             ...getTransformedNormalPageData(data as NormalPage, cdnUrl),
             type: 'CMS_PAGE',
@@ -121,7 +106,12 @@ export const routeResolver = {
 
         const { path } = data;
 
-        const transformedRouteData = await getTransformedRouteData(data, sdk, config);
+        const transformedRouteData = await getTransformedRouteData(
+            data,
+            sdk,
+            config,
+            customerImpersonationToken
+        );
 
         return {
             relative_url: path.replace(/^\//, ''),

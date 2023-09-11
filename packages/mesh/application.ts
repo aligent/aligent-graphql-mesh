@@ -10,7 +10,6 @@ export default createApplication({
             clientSecret: process.env.BC_CLIENT_SECRET as string,
             clientId: process.env.BC_CLIENT_ID as string,
             storeHash: process.env.STORE_HASH as string,
-            graphQlToken: process.env.BC_GRAPHQL_TOKEN as string,
         }),
     ],
 });
