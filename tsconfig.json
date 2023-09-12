@@ -16,16 +16,19 @@
         "inlineSourceMap": true,
         "inlineSources": true,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "typeRoots": ["./node_modules/@types"],
         "paths": {
             "@aligent/bigcommerce-graphql-module": ["./packages/modules/bigcommerce/src/index"],
+            "@aligent/orocommerce-graphql-module": ["./packages/modules/orocommerce/src/index"],
             "@aligent/bigcommerce-operations": [
                 "./packages/generated/bigcommerce/operations/index"
             ],
             "@aligent/bigcommerce-resolvers": ["./packages/generated/bigcommerce/resolvers/index"],
+            "@aligent/orocommerce-resolvers": ["./packages/generated/orocommerce/resolvers/index"],
             "@aligent/utils": ["./packages/utils/index"]
         }
     },

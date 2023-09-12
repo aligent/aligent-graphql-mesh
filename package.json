@@ -11,8 +11,10 @@
   },
   "_moduleAliases": {
     "@aligent/bigcommerce-graphql-module": "./packages/modules/bigcommerce/src/index",
+    "@aligent/orocommerce-graphql-module": "./packages/modules/orocommerce/src/index",
     "@aligent/bigcommerce-operations": "./packages/generated/bigcommerce/operations/index",
     "@aligent/bigcommerce-resolvers": "./packages/generated/bigcommerce/resolvers/index",
+    "@aligent/orocommerce-resolvers": "./packages/generated/orocommerce/resolvers/index",
     "@aligent/utils": "./packages/utils/index"
   },
   "scripts": {
@@ -71,6 +73,7 @@
     "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.3",
     "moment-timezone": "^0.5.43",
+    "reflect-metadata": "^0.1.13",
     "uuid": "^9.0.0"
   }
 }
