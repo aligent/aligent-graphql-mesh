@@ -58,7 +58,7 @@ export const mockStoreConfig = {
     locale: 'en_AU',
     secure_base_media_url: 'https://aligent.oro-cloud.com/media/',
     root_category_uid: 'Mg==',
-    contact_enabled: false, 
+    contact_enabled: false,
     newsletter_enabled: false,
     pwa_base_url: 'https://aligent.com.au',
     returns_enabled: 'false',

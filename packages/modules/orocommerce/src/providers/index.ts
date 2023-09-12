@@ -17,5 +17,25 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             useValue: config,
             scope: Scope.Singleton,
         },
+        {
+            provide: StoreUrl,
+            useFactory: (config: OroCommerceModuleConfig) => {
+                return config.storeUrl;
+            },
+            deps: [ModuleConfig],
+            scope: Scope.Singleton,
+        },
+        {
+            useClass: ApiClient,
+            provide: ApiClient,
+            deps: [StoreUrl, Auth],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CustomerClient,
+            provide: CustomerClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
     ];
 };
