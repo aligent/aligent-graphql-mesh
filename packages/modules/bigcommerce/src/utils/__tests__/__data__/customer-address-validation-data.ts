@@ -1,12 +1,12 @@
 import { CountryCodeEnum } from '@aligent/bigcommerce-resolvers';
 
-export const customerAddress = {
+export const acCustomerAddress = {
     firstname: 'Adam',
     lastname: 'Hall',
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
-        region: 'South Australia',
+        region_id: 212,
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -23,7 +23,7 @@ export const customerAddressWithUpdateId = {
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
-        region: 'South Australia',
+        region_id: 212,
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,

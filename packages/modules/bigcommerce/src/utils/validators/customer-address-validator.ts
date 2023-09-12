@@ -9,7 +9,7 @@ export const isCustomerAddressValid = (input: CustomerAddressInput): boolean => 
         input.city &&
         input.country_code &&
         input.street &&
-        input.region?.region &&
+        input.region?.region_id &&
         input.postcode
     );
 };

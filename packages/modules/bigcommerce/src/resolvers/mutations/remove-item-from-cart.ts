@@ -15,7 +15,7 @@ export const UNDEFINED_CART = {
     shipping_addresses: [],
 };
 
-export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart'] = {
+export const removeItemFromCartResolver = {
     resolve: async (_root, args, context, _info) => {
         if (args.input?.cart_item_id) {
             return logAndThrowError(
@@ -61,4 +61,4 @@ export const removeItemFromCartResolver: MutationResolvers['removeItemFromCart']
             cart: checkoutResponse,
         };
     },
-};
+} satisfies MutationResolvers['removeItemFromCart'];

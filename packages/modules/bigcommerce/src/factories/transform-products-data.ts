@@ -27,6 +27,7 @@ import {
     getTransformedAvailableStock,
     getTransformedSimpleStockStatus,
 } from './helpers/transform-stock';
+import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
 
 const getHasVariantOptions = (productOptions: ProductOptionConnection): boolean => {
     if (!productOptions?.edges || productOptions?.edges.length === 0) return false;
@@ -63,11 +64,13 @@ export const getTransformedProductData = (
     try {
         const {
             availabilityV2,
+            customFields,
             categories,
             defaultImage,
             entityId,
             id,
             inventory,
+            metafields,
             name,
             path,
             prices = null,
@@ -81,6 +84,13 @@ export const getTransformedProductData = (
         } = bcProduct;
 
         const productType = getTypeName(bcProduct, productOptions);
+
+        const fields = [...(customFields?.edges || []), ...(metafields?.edges || [])];
+
+        /* Retrieved product meta or custom field defined in the admin.
+         * NOTE: Make sure to add new product meta or custom fields coming from the admin to schema.json
+         * */
+        const attributesFromCustomAndMetaFields = getAttributesFromMetaAndCustomFields(fields);
 
         return {
             categories: getTransformedCategoriesData(categories),
@@ -114,6 +124,7 @@ export const getTransformedProductData = (
             variants: getTransformedVariants(bcVariants),
             // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
             __typename: productType,
+            ...attributesFromCustomAndMetaFields,
         };
     } catch (error) {
         return logAndThrowError(error, getTransformedProductData.name);

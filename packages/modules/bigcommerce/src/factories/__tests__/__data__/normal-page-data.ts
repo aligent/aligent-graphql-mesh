@@ -34,7 +34,34 @@ export const bcHomePageContent: NormalPage = {
     __typename: 'NormalPage',
 };
 
+export const bcHomePageContentWithImages: NormalPage = {
+    id: 'Tm9ybWFsUGFnZToyMw==',
+    path: '/chamal-image-test/',
+    htmlBody:
+        '<p><img class="__mce_add_custom__" title="half-banner-2.jpg" src="%%GLOBAL_CdnStorePath%%/product_images/uploaded_images/half-banner-2.jpg" alt="half-banner-2.jpg" width="900" height="376" /></p>',
+    plainTextSummary: '',
+    renderedRegions: {
+        regions: [
+            {
+                name: 'header_bottom--global',
+                html: '<div data-layout-id="b9d72e17-e10a-4002-9c05-8f3fd0b321d8"><div data-sub-layout-container="054afaec-58ea-4422-9f53-42e647be0d03" data-layout-name="Layout">\n  <style data-container-styling="054afaec-58ea-4422-9f53-42e647be0d03">\n    [data-sub-layout-container="054afaec-58ea-4422-9f53-42e647be0d03"] {\n      box-sizing: border-box;\n      display: flex;\n      flex-wrap: wrap;\n      z-index: 0;\n      position: relative;\n    }\n    [data-sub-layout-container="054afaec-58ea-4422-9f53-42e647be0d03"]:after {\n      background-position: center center;\n      background-size: cover;\n      z-index: auto content: "";\n      display: block;\n      position: absolute;\n      top: 0;\n      left: 0;\n      bottom: 0;\n      right: 0;\n    }\n  </style>\n  <div data-sub-layout="dec0c475-5fb3-449d-9a68-c76027b7dfc4">\n    <style data-column-styling="dec0c475-5fb3-449d-9a68-c76027b7dfc4">\n      [data-sub-layout="dec0c475-5fb3-449d-9a68-c76027b7dfc4"] {\n        display: flex;\n        flex-direction: column;\n        box-sizing: border-box;\n        flex-basis: 100%;\n        max-width: 100%;\n        z-index: 0;\n        justify-content: center;\n        padding-right: 10.5px;\n        padding-left: 10.5px;\n        position: relative;\n      }\n      [data-sub-layout="dec0c475-5fb3-449d-9a68-c76027b7dfc4"]:after {\n        background-position: center center;\n        background-size: cover;\n        z-index: auto content: "";\n        display: block;\n        position: absolute;\n        top: 0;\n        left: 0;\n        bottom: 0;\n        right: 0;\n      }\n      @media only screen and (max-width: 700px) {\n        [data-sub-layout="dec0c475-5fb3-449d-9a68-c76027b7dfc4"] {\n          flex-basis: 100%;\n          max-width: 100%;\n        }\n      }\n    </style>\n    <div data-widget-id="2e588d87-198d-4a4a-b46c-8387b23fba3f" data-placement-id="0196fa31-9a8f-46df-9aad-b908ba7c0d8d" data-placement-status="ACTIVE"><style>\n    #sd-image-2e588d87-198d-4a4a-b46c-8387b23fba3f {\n        display: flex;\n        align-items: center;\n        background: url(\'https://images.unsplash.com/photo-1487700160041-babef9c3cb55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80\') no-repeat;\n        opacity: calc(100 / 100);\n\n\n            background-size: contain;\n\n            height: auto;\n\n        background-position:\n                center\n                center\n;\n\n\n        padding-top: 0px;\n        padding-right: 0px;\n        padding-bottom: 0px;\n        padding-left: 0px;\n\n        margin-top: 0px;\n        margin-right: 0px;\n        margin-bottom: 0px;\n        margin-left: 0px;\n    }\n\n    #sd-image-2e588d87-198d-4a4a-b46c-8387b23fba3f * {\n        margin: 0px;\n    }\n\n    #sd-image-2e588d87-198d-4a4a-b46c-8387b23fba3f img {\n        width: auto;\n        opacity: 0;\n\n            height: auto;\n    }\n\n    @media only screen and (max-width: 700px) {\n        #sd-image-2e588d87-198d-4a4a-b46c-8387b23fba3f {\n        }\n    }\n</style>\n\n<div>\n    \n    <div id="sd-image-2e588d87-198d-4a4a-b46c-8387b23fba3f" data-edit-mode>\n        <img src="https://images.unsplash.com/photo-1487700160041-babef9c3cb55?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80" alt>\n    </div>\n    \n</div>\n\n\n</div>\n  </div>\n</div></div>',
+            },
+        ],
+    },
+    entityId: 23,
+    parentEntityId: null,
+    name: 'Chamal Image test',
+    isVisibleInNavigation: true,
+    seo: {
+        pageTitle: '',
+        metaDescription: '',
+        metaKeywords: '',
+    },
+    __typename: 'NormalPage',
+};
+
 export const transformedHomePageContent: CmsPage = {
+    __typename: 'CmsPage',
     url_key: 'home',
     content: '<p>This is the test homepage</p>',
     content_heading: 'Big Commerce Homepage',
@@ -44,4 +71,18 @@ export const transformedHomePageContent: CmsPage = {
     meta_keywords: '',
     meta_description: '',
     redirect_code: 0,
+};
+
+export const transformedHomePageContentWithImages: CmsPage = {
+    url_key: 'chamal-image-test',
+    content:
+        '<p><img class="__mce_add_custom__" title="half-banner-2.jpg" src="https://cdn11.bigcommerce.com/s-xxxxxx/product_images/uploaded_images/half-banner-2.jpg" alt="half-banner-2.jpg" width="900" height="376" /></p>',
+    content_heading: 'Chamal Image test',
+    identifier: '/chamal-image-test/',
+    title: 'Chamal Image test',
+    meta_title: '',
+    meta_keywords: '',
+    meta_description: '',
+    redirect_code: 0,
+    __typename: 'CmsPage',
 };

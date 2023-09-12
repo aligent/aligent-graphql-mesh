@@ -1,7 +1,9 @@
 import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getBcCustomer } from '../../apis/graphql/customer';
-import { transformBcCustomer } from '../../factories/transform-customer-data';
-import { getAllCustomerAddresses } from '../../apis/rest/customer';
+import {
+    transformBcCustomer,
+} from '../../factories/transform-customer-data';
+import { getAllCustomerAddresses} from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { getSubscriberByEmail } from '../../apis/rest/subscriber';
 

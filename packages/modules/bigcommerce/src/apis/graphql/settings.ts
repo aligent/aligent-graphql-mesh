@@ -1,7 +1,8 @@
 import { bcGraphQlRequest } from './client';
-import { TaxDisplaySettings } from '@aligent/bigcommerce-operations';
-import { taxSettings } from './requests/tax-settings';
+import { Sdk, TaxDisplaySettings } from '@aligent/bigcommerce-operations';
+import { taxSettings } from './requests';
 import { logAndThrowError } from '@aligent/utils';
+import { BigCommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
 
 /**
  * Gets the PDP and PLP including or excluding price display configuration.
@@ -28,6 +29,26 @@ export const getTaxSettings = async (
         }
 
         return response.data.site.settings.tax;
+    } catch (error) {
+        return logAndThrowError(error);
+    }
+};
+
+export const getCdnUrl = async (
+    sdk: Sdk,
+    config: BigCommerceModuleConfig,
+    customerImpersonationToken: string
+) => {
+    try {
+        const response = await sdk.cdnUrl(
+            {},
+            {
+                Authorization: `Bearer ${customerImpersonationToken}`,
+            }
+        );
+
+        const originUrl = response.site.settings?.url.cdnUrl;
+        return `https://${originUrl}/s-${config.storeHash}`;
     } catch (error) {
         return logAndThrowError(error);
     }

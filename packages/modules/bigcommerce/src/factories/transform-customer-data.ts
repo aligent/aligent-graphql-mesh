@@ -1,8 +1,11 @@
+import { snakeCase } from 'lodash';
+
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
-import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest } from '../types';
+
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { Customer as BC_Customer } from '@aligent/bigcommerce-operations';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
+import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest, BCCustomerFormFields } from '../types';
 
 export const transformBcCustomer = (
     bcCustomer: BC_Customer,
@@ -109,4 +112,48 @@ export const transformAcCustomerValidatePassword = (
         password: password,
         channel_id: channelId,
     };
+};
+
+const formFieldPropertyMapping: { [index: string]: string } = {
+    /* Add form field name to property name mapping here*/
+    // select_your_industry: 'industry',
+};
+
+/**
+ * Gets a customer property from a form field "name".
+ * @param key
+ */
+const getCustomerPropertyFromFormFieldKey = (key: string): string => {
+    const keyToSnakeCase = snakeCase(key);
+
+    const mappedKey = formFieldPropertyMapping[keyToSnakeCase];
+
+    if (!mappedKey) return keyToSnakeCase;
+
+    return mappedKey;
+};
+
+/**
+ * Formats customer formField properties into an object of key value pairs
+ *
+ * NOTE: for custom properties defined within the store admin to be returned in a
+ * resolver response, the schema.graphql file needs to be updated with the new properties
+ *
+ * @param formFields
+ */
+export const getCustomerAttributesFromFormFields = (
+    formFields: BCCustomerFormFields
+): { [key: string]: string } => {
+    const customerAttributes = formFields.reduce((carry, formField) => {
+        const { name, value } = formField;
+
+        const propertyName = getCustomerPropertyFromFormFieldKey(name);
+
+        return {
+            ...carry,
+            [propertyName]: value,
+        };
+    }, {});
+
+    return customerAttributes;
 };
