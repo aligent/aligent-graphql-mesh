@@ -1,23 +1,21 @@
 import { snakeCase } from 'lodash';
 
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
+
+import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
+import { Customer as BC_Customer } from '@aligent/bigcommerce-operations';
+import { getTransformedWishlists } from './helpers/transform-wishlists';
 import {
-    BCOrder,
     BcAddressRest,
     BcMutationCustomer,
     ValidatePasswordRequest,
     BCCustomerFormFields,
 } from '../types';
-import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
-import { Customer as BC_Customer } from '@aligent/bigcommerce-operations';
-import { getTransformedWishlists } from './helpers/transform-wishlists';
-import { getTransformedOrders } from './helpers/transform-customer-orders';
 
 export const transformBcCustomer = (
     bcCustomer: BC_Customer,
     bcAddresses: BcAddressRest[],
-    isSubscriber: boolean,
-    bcOrders: BCOrder[]
+    isSubscriber: boolean
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
 
@@ -41,9 +39,6 @@ export const transformBcCustomer = (
                 page_size: null,
                 total_pages: null,
             },
-        },
-        orders: {
-            items: getTransformedOrders(bcOrders),
         },
     };
 };

@@ -11216,6 +11216,10 @@ type CustomerOrder {
     Details about the calculated totals for this order.
     """
     total: OrderTotal
+    """
+    Order Currency code
+    """
+    currency_code: String!
 }
 
 """
