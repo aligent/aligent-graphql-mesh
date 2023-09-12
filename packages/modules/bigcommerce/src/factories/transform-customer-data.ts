@@ -5,7 +5,12 @@ import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-re
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
 import { Customer as BC_Customer } from '@aligent/bigcommerce-operations';
 import { getTransformedWishlists } from './helpers/transform-wishlists';
-import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest, BCCustomerFormFields } from '../types';
+import {
+    BcAddressRest,
+    BcMutationCustomer,
+    ValidatePasswordRequest,
+    BCCustomerFormFields,
+} from '../types';
 
 export const transformBcCustomer = (
     bcCustomer: BC_Customer,
