@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Inject, Injectable, Scope, forwardRef } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { StoreUrl } from '../../providers';
 import { Auth } from '../../services/auth';
 

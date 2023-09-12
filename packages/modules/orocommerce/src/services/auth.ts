@@ -1,10 +1,10 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { CONTEXT, forwardRef, Inject, Injectable, Scope } from 'graphql-modules';
+import { CONTEXT, forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ModuleConfig } from '../providers';
 import { USER_AGENT } from '../apis/rest/client';
 import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
 import { Token } from '../types/auth';
-import { decode } from "jsonwebtoken";
+import { decode } from 'jsonwebtoken';
 
 // @TOOO: Set version based on NPM package version
 const OAUTH_PATH = '/oauth2-token';
@@ -56,11 +56,11 @@ export class Auth {
 
     isGuest(): boolean {
         if (this.isLoggedIn()) {
-            const token = this.context.headers.Authorization.split(" ")[1];
+            const token = this.context.headers.Authorization.split(' ')[1];
             const jwt = decode(token);
 
             if (jwt?.sub) {
-                return jwt.sub.toString().startsWith("visitor");
+                return jwt.sub.toString().startsWith('visitor');
             }
         }
 
