@@ -2,6 +2,7 @@ import {
     BcAddress,
     BcAddressRest,
     BcCustomer,
+    BCCustomerFormFields,
     BcMutationCustomer,
     ValidatePasswordRequest,
     ValidatePasswordResponse,
@@ -14,6 +15,7 @@ import { CustomerInput } from '@aligent/bigcommerce-resolvers';
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
 const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
+const CUSTOMER_FORM_FIELDS_API = `/v3/customers/form-field-values`;
 
 /* istanbul ignore file */
 export const createCustomer = async (customerInput: CustomerInput): Promise<BcCustomer> => {
@@ -125,5 +127,14 @@ export const getCustomersByEmail = async (email: string): Promise<BcCustomer[]> 
     const path = `/v3/customers?email:in=${encodeURIComponent(email)}`;
     const response = await bcGet(path);
 
+    return response.data;
+};
+
+export const getCustomerFormFields = async (
+    bcCustomerId: number
+): Promise<BCCustomerFormFields> => {
+    const path = `${CUSTOMER_FORM_FIELDS_API}?customer_id=${bcCustomerId}`;
+
+    const response = await bcGet(path);
     return response.data;
 };

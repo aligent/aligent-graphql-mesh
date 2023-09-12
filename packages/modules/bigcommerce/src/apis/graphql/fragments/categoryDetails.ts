@@ -28,6 +28,14 @@ export const categoryDetails = gql`
                 endCursor
             }
         }
+        metafields(namespace: "custom_attributes", first: 20) {
+            edges {
+                node {
+                    key
+                    value
+                }
+            }
+        }
         products {
             collectionInfo {
                 totalItems
