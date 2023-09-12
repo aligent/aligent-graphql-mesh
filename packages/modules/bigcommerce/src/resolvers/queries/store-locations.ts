@@ -10,7 +10,7 @@ export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const variables = getTransformedStoreLocationsArgs(args);
+        const variables = getTransformedStoreLocationsArgs(args, customerImpersonationToken);
         const bcStoreLocations = await getBcStoreLocationsGraphql(
             variables,
             customerImpersonationToken

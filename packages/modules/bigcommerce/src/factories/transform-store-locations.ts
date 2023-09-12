@@ -10,7 +10,8 @@ import {
 import { coordinatesLookup } from '../apis/helpers/google-geocoding';
 
 export const getTransformedStoreLocationsArgs = async (
-    acStoreLocationsArgs: QueryStoreLocationsArgs
+    acStoreLocationsArgs: QueryStoreLocationsArgs,
+    customerImpersonationToken: string
 ): Promise<InventoryLocationsArgs> => {
     const { area, filters } = acStoreLocationsArgs;
 
@@ -36,7 +37,8 @@ export const getTransformedStoreLocationsArgs = async (
         } else {
             const coordinatesLookupResponse = await coordinatesLookup(
                 search_term,
-                filters?.country_id?.eq as string
+                filters?.country_id?.eq as string,
+                customerImpersonationToken
             );
 
             if (coordinatesLookupResponse) {

@@ -35,9 +35,9 @@ const expectAcStoreLocations = {
 
 describe('transform store locations', () => {
     it(`transforms args`, async () => {
-        expect(await getTransformedStoreLocationsArgs(mockedAcStoreLocationsArgument)).toEqual(
-            expect.objectContaining(expectBcArgs)
-        );
+        expect(
+            await getTransformedStoreLocationsArgs(mockedAcStoreLocationsArgument, 'mockedToken')
+        ).toEqual(expect.objectContaining(expectBcArgs));
     });
 
     it(`transforms locations`, () => {
