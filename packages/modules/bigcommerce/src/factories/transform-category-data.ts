@@ -3,12 +3,19 @@ import { btoa, slashAtStartOrEnd } from '@aligent/utils';
 import { CategoryConnection } from '@aligent/bigcommerce-operations';
 import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
+import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
-    const { children, description, entityId, name, path, products, seo, breadcrumbs } = category;
+    const { children, description, entityId, metafields, name, path, products, seo, breadcrumbs } =
+        category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
     const { metaDescription, pageTitle } = seo || {};
+
+    /* Retrieved category metafield defined in the admin.
+     * NOTE: Make sure to add new category metafields coming from the admin to schema.json
+     * */
+    const attributesFromMetaFields = getAttributesFromMetaAndCustomFields(metafields?.edges || []);
 
     const children_count = children ? children.length : 0;
     return {
@@ -32,6 +39,7 @@ export const getTransformedCategoryData = (category: Category): CategoryTree => 
         // task to fix(STRF-11163).
         breadcrumbs: getTransformedBreadcrumbsData(breadcrumbs),
         __typename: 'CategoryTree',
+        ...attributesFromMetaFields,
     };
 };
 
