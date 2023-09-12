@@ -26,6 +26,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Singleton,
         },
         {
+            useClass: Auth,
+            provide: Auth,
+            deps: [ModuleConfig],
+            scope: Scope.Operation,
+        },
+        {
             useClass: ApiClient,
             provide: ApiClient,
             deps: [StoreUrl, Auth],
