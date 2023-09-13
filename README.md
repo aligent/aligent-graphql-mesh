@@ -46,6 +46,8 @@ Adding the entry:
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
+`MODE` - When developing for OroCommerce set this value to `ORO` to ensure the Oro module is loaded otherwise it can be left blank.
+`DEBUG` - Is only used for development and adds more details to the logs via console.
 
 ### OroCommerce
 
@@ -91,8 +93,6 @@ For local development this value can be any string.
 `HIVE_TOKEN` - **NOT REQUIRED FOR LOCAL DEV** - we primarily use the Hive to monitor usage and performance across the various GraphQL queries. The Hive token is used to connect the Mesh to the Hive and send these analytics. It's also used in the pipeline to publish and verify newly generated schemas.
 
 To generate this token you'll need to login to your [Hive instance](https://app.graphql-hive.com) and go to Settings -> Registry Access Tokens -> Create new registry token. Select the preset `GraphQL Operations Reporting` and copy the token. You can read more about the Hive [here](https://the-guild.dev/graphql/hive/docs).
-
-`DEBUG` - Is only used for development and adds more details to the logs via console.
 
 #### Customer Impersonation token
 
