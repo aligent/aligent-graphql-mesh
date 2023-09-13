@@ -1,8 +1,13 @@
 import { CurrencyEnum, CustomerOrders, Invoice } from '@aligent/bigcommerce-resolvers';
 import { BCOrder } from '../../types';
+import { SearchResultPageInfo } from '@aligent/bigcommerce-resolvers';
 import { btoa, convertDateFormat } from '@aligent/utils';
 
-export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrders => {
+export const getTransformedOrders = (
+    bcOrders: BCOrder[],
+    page_size: SearchResultPageInfo['page_size'],
+    current_page: SearchResultPageInfo['current_page']
+): CustomerOrders => {
     const customerOrderItems = bcOrders.map((bcOrder) => {
         return {
             number: String(bcOrder.id),
