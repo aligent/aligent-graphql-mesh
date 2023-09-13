@@ -25,7 +25,7 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
             //no orders found
             return null;
         }
-        
+
         const pageSize = args.pageSize ? args.pageSize : 20;
 
         return getTransformedOrders(bcOrders, pageSize, args.currentPage);
