@@ -5,7 +5,7 @@ import { btoa, convertDateFormat } from '@aligent/utils';
 
 export const getTransformedOrders = (
     bcOrders: BCOrder[],
-    page_size: SearchResultPageInfo['page_size'],
+    page_size: number,
     current_page: SearchResultPageInfo['current_page']
 ): CustomerOrders => {
     const customerOrderItems = bcOrders.map((bcOrder) => {
@@ -45,11 +45,10 @@ export const getTransformedOrders = (
         };
     });
     const total_count = customerOrderItems.length;
-    const pageSize = page_size || 1;
-    const total_pages = Math.ceil(total_count / pageSize);
+    const total_pages = Math.ceil(total_count / page_size);
     return {
         items: customerOrderItems,
         total_count,
-        page_info: { total_pages, current_page, page_size: pageSize },
+        page_info: { total_pages, current_page, page_size },
     };
 };

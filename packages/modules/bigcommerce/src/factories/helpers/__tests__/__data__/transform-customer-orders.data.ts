@@ -263,7 +263,7 @@ export const acOrders: CustomerOrders = {
     ],
     page_info: {
         current_page: 1,
-        page_size: 10,
+        page_size: 20,
         total_pages: 1,
     },
     total_count: 2,

@@ -25,8 +25,10 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
             //no orders found
             return null;
         }
+        
+        const pageSize = args.pageSize ? args.pageSize : 20;
 
-        return getTransformedOrders(bcOrders, args.pageSize, args.currentPage);
+        return getTransformedOrders(bcOrders, pageSize, args.currentPage);
         //sub-resolver customerOrderItemsResolver is called after this if items is specified in query
     },
 };
