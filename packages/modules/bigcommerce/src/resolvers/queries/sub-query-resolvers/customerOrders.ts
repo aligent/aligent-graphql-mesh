@@ -26,7 +26,7 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
             return null;
         }
 
-        return getTransformedOrders(bcOrders);
+        return getTransformedOrders(bcOrders, args.pageSize, args.currentPage);
         //sub-resolver customerOrderItemsResolver is called after this if items is specified in query
     },
 };
