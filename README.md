@@ -46,6 +46,7 @@ Adding the entry:
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
+
 `MODE` - When developing for OroCommerce set this value to `ORO` to ensure the Oro module is loaded otherwise it can be left blank.
 `DEBUG` - Is only used for development and adds more details to the logs via console.
 
