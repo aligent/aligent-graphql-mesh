@@ -39,5 +39,12 @@ export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrders => {
             currency_code: bcOrder.currency_code,
         };
     });
-    return { items: customerOrderItems };
+    const total_count = customerOrderItems.length;
+    const pageSize = page_size || 1;
+    const total_pages = Math.ceil(total_count / pageSize);
+    return {
+        items: customerOrderItems,
+        total_count,
+        page_info: { total_pages, current_page, page_size: pageSize },
+    };
 };
