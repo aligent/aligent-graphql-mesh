@@ -26,7 +26,9 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
             return null;
         }
 
-        return getTransformedOrders(bcOrders);
+        const pageSize = args.pageSize ? args.pageSize : 20;
+
+        return getTransformedOrders(bcOrders, pageSize, args.currentPage);
         //sub-resolver customerOrderItemsResolver is called after this if items is specified in query
     },
 };
