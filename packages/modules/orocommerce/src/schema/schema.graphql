@@ -1944,6 +1944,10 @@ type StoreConfig {
     """
     grid_per_page_values: String
     """
+    Google maps API key
+    """
+    googleMapsAPIKey: String
+    """
     Scripts that must be included in the HTML before the closing `<head>` tag.
     """
     head_includes: String
@@ -11212,6 +11216,10 @@ type CustomerOrder {
     Details about the calculated totals for this order.
     """
     total: OrderTotal
+    """
+    Order Currency code
+    """
+    currency_code: String!
 }
 
 """
