@@ -1,7 +1,31 @@
-import { CurrencyEnum, CustomerOrders, Invoice } from '@aligent/bigcommerce-resolvers';
+import {
+    CountryCodeEnum,
+    CurrencyEnum,
+    CustomerOrder,
+    CustomerOrders,
+    Discount,
+    Invoice,
+} from '@aligent/bigcommerce-resolvers';
 import { BCOrder } from '../../types';
 import { SearchResultPageInfo } from '@aligent/bigcommerce-resolvers';
 import { btoa, convertDateFormat } from '@aligent/utils';
+
+function transformOrderDiscount(bcOrder: BCOrder): Discount[] {
+    if (bcOrder.discount_amount === '0.0000') {
+        return [];
+    }
+    //TODO: get order coupon code and label from https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/coupons
+    return [
+        {
+            amount: {
+                currency: bcOrder.currency_code as CurrencyEnum,
+                value: Number(bcOrder.discount_amount),
+            },
+            code: 'TODO',
+            label: 'TODO',
+        },
+    ];
+}
 
 export const getTransformedOrders = (
     bcOrders: BCOrder[],
@@ -9,7 +33,7 @@ export const getTransformedOrders = (
     current_page: SearchResultPageInfo['current_page']
 ): CustomerOrders => {
     const customerOrderItems = bcOrders.map((bcOrder) => {
-        return {
+        const orderItem: CustomerOrder = {
             number: String(bcOrder.id),
             id: btoa(String(bcOrder.id)),
             order_date: convertDateFormat(bcOrder.date_created),
@@ -36,6 +60,67 @@ export const getTransformedOrders = (
                     currency: bcOrder.currency_code as CurrencyEnum,
                     value: Number(bcOrder.total_tax),
                 },
+
+                subtotal_incl_tax: {
+                    currency: bcOrder.currency_code as CurrencyEnum,
+                    value: Number(bcOrder.subtotal_inc_tax),
+                },
+                shipping_handling: {
+                    amount_including_tax: {
+                        currency: bcOrder.currency_code as CurrencyEnum,
+                        value: Number(bcOrder.shipping_cost_inc_tax),
+                    },
+                    total_amount: {
+                        currency: bcOrder.currency_code as CurrencyEnum,
+                        value: Number(bcOrder.shipping_cost_inc_tax),
+                    },
+                },
+                taxes: [
+                    {
+                        amount: {
+                            currency: bcOrder.currency_code as CurrencyEnum,
+                            value: Number(bcOrder.total_tax),
+                        },
+                        //TODO: pass in tax rate and title from somewhere in BC
+                        rate: 10,
+                        title: 'GST',
+                    },
+                ],
+                total_giftcard: {
+                    currency: bcOrder.currency_code as CurrencyEnum,
+                    value: Number(bcOrder.gift_certificate_amount),
+                },
+                discounts: transformOrderDiscount(bcOrder),
+            },
+            payment_methods: [
+                {
+                    name: bcOrder.payment_method,
+                    type: bcOrder.payment_method,
+                },
+            ],
+            billing_address: {
+                city: bcOrder.billing_address.city,
+                company: bcOrder.billing_address.company,
+                country_code: bcOrder.billing_address.country_iso2 as CountryCodeEnum,
+                firstname: bcOrder.billing_address.first_name,
+                lastname: bcOrder.billing_address.last_name,
+                postcode: bcOrder.billing_address.zip,
+                street: [bcOrder.billing_address.street_1 + ' ' + bcOrder.billing_address.street_2],
+                telephone: bcOrder.billing_address.phone,
+                region: bcOrder.billing_address.state,
+            },
+            //TODO: Get from: https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/consignments
+            shipping_method: 'Free Shipping - Free',
+            shipping_address: {
+                city: 'Testelaide',
+                company: null,
+                country_code: 'AU',
+                firstname: 'j',
+                lastname: 'p',
+                postcode: '5000',
+                street: ['11 test'],
+                telephone: '12345678',
+                region: 'South Australia',
             },
             // Needed for TS
             gift_receipt_included: false,
@@ -43,6 +128,8 @@ export const getTransformedOrders = (
             invoices: [] as unknown as Invoice[],
             currency_code: bcOrder.currency_code,
         };
+
+        return orderItem;
     });
     const total_count = customerOrderItems.length;
     const total_pages = Math.ceil(total_count / page_size);
