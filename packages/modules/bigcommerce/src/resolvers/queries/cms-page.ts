@@ -8,10 +8,14 @@ export const cmsPageResolver = {
             return logAndThrowError('Required field identifier is missing');
         }
 
+        // In big commerce all the URLs have slashes in start and end of the URL key but TF doesn't send those slashes
+        // Adding slashes manually
+        const url = `/${args.identifier}/`;
+
         const response = await routeResolver.resolve(
             root,
             {
-                url: args.identifier,
+                url,
             },
             context,
             info
