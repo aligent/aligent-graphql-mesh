@@ -2,7 +2,7 @@ import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
 import { routeResolver } from './route';
 
-export const cmsPageResolver: QueryResolvers['cmsPage'] = {
+export const cmsPageResolver = {
     resolve: async (root, args, context, info) => {
         if (!args.identifier) {
             return logAndThrowError('Required field identifier is missing');
@@ -19,4 +19,4 @@ export const cmsPageResolver: QueryResolvers['cmsPage'] = {
 
         return response;
     },
-};
+} satisfies QueryResolvers['cmsPage'];
