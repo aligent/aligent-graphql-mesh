@@ -1,4 +1,4 @@
-import { BreadcrumbConnection } from '@aligent/bigcommerce-operations';
+import { BreadcrumbConnection, MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
 import { ReflectiveInjector } from 'graphql-modules/di';
@@ -63,6 +63,7 @@ export interface BcCategoryTree {
     children?: BcCategoryTree[];
     description?: string;
     entityId: number;
+    metafields: MetafieldConnection;
     name: string;
     path: string;
     productCount?: number;
@@ -72,6 +73,7 @@ export interface BcCategory {
     __typename?: string;
     description?: string;
     metaDescription?: string;
+    metafields: MetafieldConnection;
     pageTitle?: string;
     products?: {
         collectionInfo?:
@@ -397,3 +399,9 @@ export interface CartRedirectUrls {
     checkout_url: string;
     embedded_checkout_url: string;
 }
+
+export type BCCustomerFormFields = {
+    name: string;
+    value: string | string[];
+    customer_id: number;
+}[];

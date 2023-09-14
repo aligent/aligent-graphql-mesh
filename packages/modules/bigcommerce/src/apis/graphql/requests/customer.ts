@@ -91,6 +91,22 @@ export const customer = stripIgnoredCharacters(
                                             prices {
                                                 ...Prices
                                             }
+                                            customFields {
+                                                edges {
+                                                    node {
+                                                        name
+                                                        value
+                                                    }
+                                                }
+                                            }
+                                            metafields(namespace: "custom_attributes", first: 20) {
+                                                edges {
+                                                    node {
+                                                        key
+                                                        value
+                                                    }
+                                                }
+                                            }
                                             productOptions {
                                                 ...ProductOptions
                                                 pageInfo {

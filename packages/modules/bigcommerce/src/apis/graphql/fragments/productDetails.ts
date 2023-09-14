@@ -81,6 +81,22 @@ export const ProductsDetails: DocumentNode = gql`
                 ...PageInfo
             }
         }
+        customFields {
+            edges {
+                node {
+                    name
+                    value
+                }
+            }
+        }
+        metafields(namespace: "custom_attributes", first: 20) {
+            edges {
+                node {
+                    key
+                    value
+                }
+            }
+        }
         path
         prices(includeTax: $includeTax) {
             ...Prices

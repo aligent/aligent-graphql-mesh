@@ -1,12 +1,17 @@
 import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getBcCustomer } from '../../apis/graphql/customer';
-import { transformBcCustomer } from '../../factories/transform-customer-data';
-import { getAllCustomerAddresses } from '../../apis/rest/customer';
+import {
+    getCustomerAttributesFromFormFields,
+    transformBcCustomer,
+} from '../../factories/transform-customer-data';
+import { getAllCustomerAddresses, getCustomerFormFields } from '../../apis/rest/customer';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { getSubscriberByEmail } from '../../apis/rest/subscriber';
-import { getOrders } from '../../apis/rest/order';
-import { BCOrder } from '../../types';
 
+/**
+ * CustomerOrders are fetched via the sub-resolver: customerOrdersResolver
+ * The sub-resolvers is configured here in the scr/resolves/index.ts
+ */
 export const customerResolver: QueryResolvers['customer'] = {
     resolve: async (_root, _args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
@@ -14,24 +19,24 @@ export const customerResolver: QueryResolvers['customer'] = {
             'customerImpersonationToken'
         )) as string;
 
-        const [bcCustomer, bcAddresses, bcOrders] = await Promise.all([
+        const [bcCustomer, bcAddresses, bcFormFields] = await Promise.all([
             getBcCustomer(bcCustomerId, customerImpersonationToken),
             getAllCustomerAddresses(bcCustomerId),
-            getAllOrders(bcCustomerId),
+            getCustomerFormFields(bcCustomerId),
         ]);
 
         const subscriber = await getSubscriberByEmail(bcCustomer.email);
         const isSubscriber = !!subscriber;
 
-        return transformBcCustomer(bcCustomer, bcAddresses, isSubscriber, bcOrders);
+        /* Retrieved custom customer properties defined in the admin.
+         * NOTE: Make sure to add new customer properties coming from the admin to schema.json
+         * */
+        const customerAttributesFromFormFields = getCustomerAttributesFromFormFields(bcFormFields);
+
+        return {
+            ...transformBcCustomer(bcCustomer, bcAddresses, isSubscriber),
+            ...customerAttributesFromFormFields,
+        };
+        //sub-resolver customerOrdersResolver is called after this if orders is specified in query
     },
-};
-
-const getAllOrders = async (bcCustomerId: number): Promise<BCOrder[]> => {
-    const bcOrders: BCOrder[] = [];
-    for await (const bcOrder of getOrders(bcCustomerId)) {
-        bcOrders.push(bcOrder);
-    }
-
-    return bcOrders;
 };
