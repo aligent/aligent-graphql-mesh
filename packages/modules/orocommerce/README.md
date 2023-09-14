@@ -1,5 +1,12 @@
 # OroCommerce GraphQl Module
 
+The OroCommerce REST API follows the JSON API Spec see: https://jsonapi.org/
+
+OroCommerce has two REST APIs:
+
+- Storefront API https://aligent.oro-cloud.com/api/doc
+- Admin API https://aligent.oro-cloud.com/admin/api/doc
+
 ## Configuration
 
 The configuration interface is found here: `packages/modules/orocommerce/src/index.ts` and currently contains these properties:
