@@ -60,7 +60,6 @@ export const getTransformedOrders = (
                     currency: bcOrder.currency_code as CurrencyEnum,
                     value: Number(bcOrder.total_tax),
                 },
-
                 subtotal_incl_tax: {
                     currency: bcOrder.currency_code as CurrencyEnum,
                     value: Number(bcOrder.subtotal_inc_tax),
@@ -110,7 +109,6 @@ export const getTransformedOrders = (
                 region: bcOrder.billing_address.state,
             },
             //TODO: Get from: https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/consignments
-            shipping_method: 'Free Shipping - Free',
             shipping_address: {
                 city: 'Testelaide',
                 company: null,
