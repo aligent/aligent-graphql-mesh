@@ -113,7 +113,6 @@ export const resolvers: Resolvers = {
         items: customerOrderItemsResolver,
         shipping_address: customerOrderShippingAddressResolver,
         shipping_method: customerOrderShippingMethodResolver,
-        // total: orderTotalsResolver,
     },
 };
 

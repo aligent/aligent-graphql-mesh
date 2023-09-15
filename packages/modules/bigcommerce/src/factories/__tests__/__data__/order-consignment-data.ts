@@ -14,7 +14,6 @@ export const acOrderAddress: OrderAddress = {
 };
 
 export const bcConsignment: BCConsignment = {
-    pickups: [],
     shipping: [
         {
             id: 36,
@@ -79,8 +78,4 @@ export const bcConsignment: BCConsignment = {
             },
         },
     ],
-    downloads: [],
-    email: {
-        gift_certificates: [],
-    },
 };

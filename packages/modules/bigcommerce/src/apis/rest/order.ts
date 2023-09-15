@@ -37,6 +37,9 @@ export const getLineItems = async function* (id: string): AsyncGenerator<BCOrder
     yield* await bcPaginate(`${ORDERS_API}/${id}/products`);
 };
 
+/**
+ * https://developer.bigcommerce.com/docs/rest-management/orders/order-consignments#get-consignments
+ */
 export const getConsignments = async (id: string): Promise<BCConsignment> => {
     return bcGet(`${ORDERS_API}/${id}/consignments`);
 };
