@@ -7,5 +7,8 @@ export const categoryTreeItem = gql`
         name
         path
         productCount
+        image {
+            urlOriginal
+        }
     }
 `;

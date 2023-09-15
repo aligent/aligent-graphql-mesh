@@ -6,8 +6,18 @@ import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
 import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
-    const { children, description, entityId, metafields, name, path, products, seo, breadcrumbs } =
-        category;
+    const {
+        children,
+        description,
+        entityId,
+        image,
+        metafields,
+        name,
+        path,
+        products,
+        seo,
+        breadcrumbs,
+    } = category;
 
     const productCount = category.productCount || products?.collectionInfo?.totalItems;
     const { metaDescription, pageTitle } = seo || {};
@@ -24,6 +34,7 @@ export const getTransformedCategoryData = (category: Category): CategoryTree => 
         description,
         id: entityId,
         include_in_menu: 1, // BC doesn't support
+        image: image?.urlOriginal,
         meta_description: metaDescription,
         meta_title: pageTitle,
         name,
