@@ -1,10 +1,15 @@
 import { acOrders, bcOrders } from './__data__/transform-customer-orders.data';
-import { getTransformedOrders } from '../transform-customer-orders';
+import { getTransformedOrders } from '../../transform-customer-orders';
 
 describe('transform customer orders from BC to AC', () => {
     it('Returns AC Customer order items transformed', () => {
-        const result = getTransformedOrders(bcOrders, 20, acOrders.page_info?.current_page);
+        const acOrderExpected = acOrders;
+        const transformedOrders = getTransformedOrders(
+            bcOrders,
+            20,
+            acOrderExpected.page_info?.current_page
+        );
 
-        expect(result).toEqual(acOrders);
+        expect(transformedOrders).toEqual(acOrderExpected);
     });
 });

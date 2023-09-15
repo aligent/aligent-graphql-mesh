@@ -6,9 +6,9 @@ import {
     Discount,
     Invoice,
 } from '@aligent/bigcommerce-resolvers';
-import { BCOrder } from '../../types';
 import { SearchResultPageInfo } from '@aligent/bigcommerce-resolvers';
 import { btoa, convertDateFormat } from '@aligent/utils';
+import { BCOrder } from '../types';
 
 function transformOrderDiscount(bcOrder: BCOrder): Discount[] {
     if (bcOrder.discount_amount === '0.0000') {
@@ -72,7 +72,7 @@ export const getTransformedOrders = (
                     },
                     total_amount: {
                         currency: bcOrder.currency_code as CurrencyEnum,
-                        value: Number(bcOrder.shipping_cost_inc_tax),
+                        value: Number(bcOrder.subtotal_inc_tax),
                     },
                 },
                 taxes: [
@@ -95,6 +95,7 @@ export const getTransformedOrders = (
             },
             payment_methods: [
                 {
+                    additional_data: null,
                     name: bcOrder.payment_method,
                     type: bcOrder.payment_method,
                 },
