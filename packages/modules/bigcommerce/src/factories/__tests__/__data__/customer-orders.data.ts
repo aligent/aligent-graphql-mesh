@@ -1,5 +1,5 @@
-import { BCOrder } from '../../../../types';
 import { CustomerOrders } from '@aligent/bigcommerce-resolvers';
+import { BCOrder } from '../../../types';
 
 export const bcOrders: BCOrder[] = [
     {
