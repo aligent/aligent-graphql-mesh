@@ -407,10 +407,10 @@ export type BCCustomerFormFields = {
 }[];
 
 export interface BCConsignment {
-    pickups: any[];
+    pickups: [];
     shipping: BCShipping[];
-    downloads: any[];
-    email: { gift_certificates: any[] };
+    downloads: [];
+    email: { gift_certificates: [] };
 }
 
 export interface BCShipping {

@@ -15,14 +15,15 @@ function transformOrderDiscount(bcOrder: BCOrder): Discount[] {
         return [];
     }
     //TODO: get order coupon code and label from https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/coupons
+    //check with FE if coupons are implemented in PWA
     return [
         {
             amount: {
                 currency: bcOrder.currency_code as CurrencyEnum,
                 value: Number(bcOrder.discount_amount),
             },
-            code: 'TODO',
-            label: 'TODO',
+            code: 'Not available',
+            label: 'Not available',
         },
     ];
 }
@@ -81,6 +82,7 @@ export const getTransformedOrders = (
                             value: Number(bcOrder.total_tax),
                         },
                         //TODO: pass in tax rate and title from somewhere in BC
+                        //Check with FE if this value is actually used at this point
                         rate: 10,
                         title: 'GST',
                     },
@@ -108,23 +110,13 @@ export const getTransformedOrders = (
                 telephone: bcOrder.billing_address.phone,
                 region: bcOrder.billing_address.state,
             },
-            //TODO: Get from: https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/consignments
-            shipping_address: {
-                city: 'Testelaide',
-                company: null,
-                country_code: 'AU',
-                firstname: 'j',
-                lastname: 'p',
-                postcode: '5000',
-                street: ['11 test'],
-                telephone: '12345678',
-                region: 'South Australia',
-            },
             // Needed for TS
             gift_receipt_included: false,
             printed_card_included: false,
             invoices: [] as unknown as Invoice[],
             currency_code: bcOrder.currency_code,
+            //Added by sub-resolvers: shipping_address, shipping_method, items
+            //Sub resolvers see: src/resolvers/index.ts CustomerOrder
         };
 
         return orderItem;
