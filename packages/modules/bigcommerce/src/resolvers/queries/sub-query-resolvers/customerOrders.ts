@@ -4,6 +4,13 @@ import { getTransformedOrders } from '../../../factories/helpers/transform-custo
 import { getAllOrders, getOrder } from '../../../apis/rest/order';
 import { getBcCustomerIdFromMeshToken } from '../../../utils';
 
+const EMPTY_ORDER_RESPONSE = {
+    items: [],
+    page_info: {
+        total_pages: 0,
+    },
+};
+
 /**
  * This is a sub-resolver it is executed after customerResolver when orders was specified in the query
  * The sub-resolvers is configured here in the scr/resolves/index.ts
@@ -23,7 +30,7 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
         }
         if (bcOrders.length === 0) {
             //no orders found
-            return null;
+            return EMPTY_ORDER_RESPONSE;
         }
 
         const pageSize = args.pageSize ? args.pageSize : 20;
