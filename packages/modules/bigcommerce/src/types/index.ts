@@ -408,3 +408,41 @@ export type BCCustomerFormFields = {
     value: string | string[];
     customer_id: number;
 }[];
+
+export interface BCConsignment {
+    shipping: BCShipping[];
+}
+
+export interface BCShipping {
+    id: number;
+    first_name: string;
+    last_name: string;
+    company: string;
+    street_1: string;
+    street_2: string;
+    city: string;
+    zip: string;
+    country: string;
+    country_iso2: string;
+    state: string;
+    email: string;
+    phone: string;
+    form_fields: FormField[];
+    line_items: Resource[];
+    items_total: number;
+    items_shipped: number;
+    shipping_method: string;
+    base_cost: number;
+    cost_ex_tax: number;
+    cost_inc_tax: number;
+    cost_tax: number;
+    cost_tax_class_id: number;
+    base_handling_cost: number;
+    handling_cost_ex_tax: number;
+    handling_cost_inc_tax: number;
+    handling_cost_tax: number;
+    handling_cost_tax_class_id: number;
+    shipping_zone_id: number;
+    shipping_zone_name: string;
+    shipping_quotes: Resource;
+}

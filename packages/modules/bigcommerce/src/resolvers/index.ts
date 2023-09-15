@@ -49,6 +49,8 @@ import { storeLocationsResolver } from './queries/store-locations';
 import { Resolvers } from '@aligent/bigcommerce-resolvers';
 import { customerOrdersResolver } from './queries/sub-query-resolvers/customerOrders';
 import { customerOrderItemsResolver } from './queries/sub-query-resolvers/customerOrderItems';
+import { customerOrderShippingMethodResolver } from './queries/sub-query-resolvers/customerOrderShippingMethod';
+import { customerOrderShippingAddressResolver } from './queries/sub-query-resolvers/customerOrderShippingAddress';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -109,6 +111,8 @@ export const resolvers: Resolvers = {
     },
     CustomerOrder: {
         items: customerOrderItemsResolver,
+        shipping_address: customerOrderShippingAddressResolver,
+        shipping_method: customerOrderShippingMethodResolver,
     },
 };
 

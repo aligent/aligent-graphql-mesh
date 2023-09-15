@@ -1,4 +1,4 @@
-import { BCOrder, BCOrderLineItem } from '../../types';
+import { BCConsignment, BCOrder, BCOrderLineItem } from '../../types';
 import { bcGet, bcPaginate } from './client';
 
 const ORDERS_API = `/v2/orders`;
@@ -35,4 +35,11 @@ const getOrdersPaginationGenerator = async function* (
  */
 export const getLineItems = async function* (id: string): AsyncGenerator<BCOrderLineItem> {
     yield* await bcPaginate(`${ORDERS_API}/${id}/products`);
+};
+
+/**
+ * https://developer.bigcommerce.com/docs/rest-management/orders/order-consignments#get-consignments
+ */
+export const getConsignments = async (id: string): Promise<BCConsignment> => {
+    return bcGet(`${ORDERS_API}/${id}/consignments`);
 };
