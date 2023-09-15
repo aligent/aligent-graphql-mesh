@@ -67,6 +67,9 @@ export interface BcCategoryTree {
     name: string;
     path: string;
     productCount?: number;
+    image?: {
+        urlOriginal: string;
+    };
 }
 
 export interface BcCategory {
