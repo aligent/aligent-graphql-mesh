@@ -18,6 +18,14 @@ export const variants = gql`
         prices(includeTax: $includeTax) {
             ...Prices
         }
+        metafields(namespace: "custom_attributes", first: 20) {
+            edges {
+                node {
+                    key
+                    value
+                }
+            }
+        }
         options {
             edges {
                 node {

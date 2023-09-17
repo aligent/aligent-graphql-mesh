@@ -11,8 +11,10 @@
   },
   "_moduleAliases": {
     "@aligent/bigcommerce-graphql-module": "./packages/modules/bigcommerce/src/index",
+    "@aligent/orocommerce-graphql-module": "./packages/modules/orocommerce/src/index",
     "@aligent/bigcommerce-operations": "./packages/generated/bigcommerce/operations/index",
     "@aligent/bigcommerce-resolvers": "./packages/generated/bigcommerce/resolvers/index",
+    "@aligent/orocommerce-resolvers": "./packages/generated/orocommerce/resolvers/index",
     "@aligent/utils": "./packages/utils/index"
   },
   "scripts": {
@@ -61,6 +63,7 @@
     "@graphql-mesh/runtime": "^0.94.0",
     "@graphql-mesh/transform-prefix": "^0.95.0",
     "@graphql-tools/load-files": "^7.0.0",
+    "@types/lodash": "^4.14.198",
     "axios": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.0",
@@ -69,8 +72,10 @@
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.0",
     "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
     "module-alias": "^2.2.3",
     "moment-timezone": "^0.5.43",
+    "reflect-metadata": "^0.1.13",
     "uuid": "^9.0.0"
   }
 }

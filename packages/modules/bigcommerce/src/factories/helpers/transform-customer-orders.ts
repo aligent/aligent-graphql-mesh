@@ -1,9 +1,14 @@
-import { CurrencyEnum, CustomerOrder, Invoice } from '@aligent/bigcommerce-resolvers';
+import { CurrencyEnum, CustomerOrders, Invoice } from '@aligent/bigcommerce-resolvers';
 import { BCOrder } from '../../types';
+import { SearchResultPageInfo } from '@aligent/bigcommerce-resolvers';
 import { btoa, convertDateFormat } from '@aligent/utils';
 
-export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrder[] => {
-    return bcOrders.map((bcOrder) => {
+export const getTransformedOrders = (
+    bcOrders: BCOrder[],
+    page_size: number,
+    current_page: SearchResultPageInfo['current_page']
+): CustomerOrders => {
+    const customerOrderItems = bcOrders.map((bcOrder) => {
         return {
             number: String(bcOrder.id),
             id: btoa(String(bcOrder.id)),
@@ -36,6 +41,14 @@ export const getTransformedOrders = (bcOrders: BCOrder[]): CustomerOrder[] => {
             gift_receipt_included: false,
             printed_card_included: false,
             invoices: [] as unknown as Invoice[],
+            currency_code: bcOrder.currency_code,
         };
     });
+    const total_count = customerOrderItems.length;
+    const total_pages = Math.ceil(total_count / page_size);
+    return {
+        items: customerOrderItems,
+        total_count,
+        page_info: { total_pages, current_page, page_size },
+    };
 };

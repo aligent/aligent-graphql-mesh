@@ -1,8 +1,13 @@
 # GraphQL Mesh
 
-Mesh is a framework that helps shape and build an executable GraphQL schema from multiple data sources.
+Mesh is a framework that helps shape and build an executable GraphQL schema from multiple data sources. This repository contains multiple modules to adapt different platforms to the Aligent PWA.
 
-https://the-guild.dev/graphql/mesh
+Current Platforms:
+
+- BigCommerce
+- OroCommerce
+
+Reference: https://the-guild.dev/graphql/mesh
 
 ## Local Dev Setup
 
@@ -42,6 +47,19 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
 ## Environment configuration
 
+`MODE` - When developing for OroCommerce set this value to `ORO` to ensure the Oro module is loaded otherwise it can be left blank.
+`DEBUG` - Is only used for development and adds more details to the logs via console.
+
+### OroCommerce
+
+`ORO_STORE_URL` - OroCommerce Storefront URL, used as a base for all Authentication and API calls
+`ORO_CLIENT_ID` - Storefront OAuth application client id
+`ORO_CLIENT_SECRET` - Storefront OAuth application client secret
+
+To generate a client id and client secret head here: `${ORO_STORE_URL}/admin/oauth2/frontend` and create a Password grant type application by following these instructions: https://doc.oroinc.com/user/back-office/system/user-management/oauth-app/#oauth-applications
+
+### BigCommerce
+
 The `X_AUTH_TOKEN`, `BC_CLIENT_SECRET` and `BC_CLIENT_ID` are all created at the same time by Devops or Store owner in the BC Admin, from the BC Admin in settings -> Store-level API accounts -> Create API account. You may not be able to see this option to `Create API Account` and will need to request these details from a shared folder in Lastpass.
 
 `X_AUTH_TOKEN` - Is called `ACCESS TOKEN` in the BC Admin, this token used for the BC REST APIS and has different scopes applied, e.g. will only work with the products API.
@@ -77,9 +95,7 @@ For local development this value can be any string.
 
 To generate this token you'll need to login to your [Hive instance](https://app.graphql-hive.com) and go to Settings -> Registry Access Tokens -> Create new registry token. Select the preset `GraphQL Operations Reporting` and copy the token. You can read more about the Hive [here](https://the-guild.dev/graphql/hive/docs).
 
-`DEBUG` - Is only used for development and adds more details to the logs via console.
-
-### Customer Impersonation token
+#### Customer Impersonation token
 
 `customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
 
@@ -92,7 +108,7 @@ e.g.
 }
 ```
 
-### Customer Login Token
+#### Customer Login Token
 
 This JWT is generated in the Mesh in `modules/bigcommerce/utils/tokens` in the `createCustomerLoginToken` function.
 This is needed to keep logged in users logged in when redirecting to the checkout. This JWT is signed by the `BC_CLIENT_SECRET`.

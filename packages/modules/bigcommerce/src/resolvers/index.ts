@@ -46,7 +46,9 @@ import { productsResolver } from './queries/products';
 import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
-import { Resolvers } from 'graphql-modules';
+import { Resolvers } from '@aligent/bigcommerce-resolvers';
+import { customerOrdersResolver } from './queries/sub-query-resolvers/customerOrders';
+import { customerOrderItemsResolver } from './queries/sub-query-resolvers/customerOrderItems';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -100,6 +102,13 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
         updateCustomerAddress: updateCustomerAddressResolver,
+    },
+    //sub-resolvers, used for nested queries from a query or a mutation resolver
+    Customer: {
+        orders: customerOrdersResolver,
+    },
+    CustomerOrder: {
+        items: customerOrderItemsResolver,
     },
 };
 

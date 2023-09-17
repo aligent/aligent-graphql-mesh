@@ -17,6 +17,14 @@ const config: CodegenConfig = {
             },
         },
 
+        'packages/generated/orocommerce/resolvers/index.ts': {
+            schema: 'packages/modules/orocommerce/src/schema/*.graphql',
+            plugins: ['typescript', 'typescript-resolvers'],
+            config: {
+                contextType: 'GraphQLModules.ModuleContext',
+            },
+        },
+
         // Generate the types for our operations on external graphql APIs using their remote schems and our operation files
         'packages/generated/bigcommerce/operations/index.ts': {
             schema: [
