@@ -13,7 +13,10 @@ export interface GraphQlQuery {
 }
 export interface BcCustomer {
     id: number;
-    authentication: { force_password_reset: boolean };
+    authentication: {
+        force_password_reset: boolean;
+        new_password: string;
+    };
     company: string;
     customer_group_id: number;
     email: string;
