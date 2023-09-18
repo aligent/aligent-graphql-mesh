@@ -24,8 +24,8 @@ export const createCustomerAddressResolver: MutationResolvers['createCustomerAdd
         const address = transformCustomerAddress(customerAddressInput, state, customerId);
         const response = await createCustomerAddress(address);
         const regionId = customerAddressInput.region.region_id;
-        if(!regionId){
-            return logAndThrowError('region Id could not be added to customer address')
+        if (!regionId) {
+            return logAndThrowError('region Id could not be added to customer address');
         }
 
         return transformBcAddress(response, regionId);
