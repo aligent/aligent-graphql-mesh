@@ -10,6 +10,8 @@ import {
 } from './__data__/customer-address-tranformation-data';
 import { transformBcAddress, transformCustomerAddress } from '../transform-customer-address-data';
 
+const regionId = bcState.id;
+
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress create into BCAddress', () => {
         const transformed = transformCustomerAddress(acCustomerAddressInput, bcState, 123);
@@ -32,7 +34,7 @@ describe('Customer Address Transformation tests', () => {
     });
 
     test('Transform BCAddress into CustomerAddress', () => {
-        const transformedAcAddress = transformBcAddress(bcAddress);
+        const transformedAcAddress = transformBcAddress(bcAddress, regionId);
         expect(transformedAcAddress).toEqual(acCustomerAddressOutput);
     });
 
@@ -48,7 +50,7 @@ describe('Customer Address Transformation tests', () => {
                 value: ['Yes'],
             },
         ];
-        const transformed = transformBcAddress(addressBillingFalse);
+        const transformed = transformBcAddress(addressBillingFalse, regionId);
 
         expect(transformed).toEqual(customerAddressBillingFalse);
     });
