@@ -90,7 +90,9 @@ export const getTransformedProductData = (
         /* Retrieved product meta or custom field defined in the admin.
          * NOTE: Make sure to add new product meta or custom fields coming from the admin to schema.json
          * */
-        const attributesFromCustomAndMetaFields = getAttributesFromMetaAndCustomFields(fields);
+        const attributesFromCustomAndMetaFields = getAttributesFromMetaAndCustomFields(fields, {
+            htmlStringProperties: ['short_description'],
+        });
 
         return {
             categories: getTransformedCategoriesData(categories),
