@@ -190,7 +190,7 @@ export interface BcSubscriber {
 }
 
 export interface BcState {
-    id: number;
+    id: number | null;
     state: string;
     state_abbreviation: string;
     country_id: number;
@@ -203,6 +203,7 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
     country_code: CountryCodeEnum;
     street: string[];
     region: {
+        region: string;
         region_id: number;
     };
     postcode: string;
