@@ -16,8 +16,7 @@ describe('Customer Address Transformation tests', () => {
     });
 
     test('Transform BCAddress into CustomerAddress', () => {
-        const regionId = bcState.id;
-        const transformedAcAddress = transformBcAddress(bcAddress, regionId);
+        const transformedAcAddress = transformBcAddress(bcAddress);
         expect(transformedAcAddress).toEqual(acCustomerAddressOutput);
     });
 });

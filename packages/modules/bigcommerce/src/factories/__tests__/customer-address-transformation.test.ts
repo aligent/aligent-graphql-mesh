@@ -10,8 +10,6 @@ import {
 } from './__data__/customer-address-tranformation-data';
 import { transformBcAddress, transformCustomerAddress } from '../transform-customer-address-data';
 
-const regionId = bcState.id;
-
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress create into BCAddress', () => {
         const transformed = transformCustomerAddress(acCustomerAddressInput, bcState, 123);
@@ -34,7 +32,7 @@ describe('Customer Address Transformation tests', () => {
     });
 
     test('Transform BCAddress into CustomerAddress', () => {
-        const transformedAcAddress = transformBcAddress(bcAddress, regionId);
+        const transformedAcAddress = transformBcAddress(bcAddress);
         expect(transformedAcAddress).toEqual(acCustomerAddressOutput);
     });
 
@@ -49,8 +47,16 @@ describe('Customer Address Transformation tests', () => {
                 name: 'Default Shipping',
                 value: ['Yes'],
             },
+            {
+                name: 'region',
+                value: 'South Australia',
+            },
+            {
+                name: 'region_id',
+                value: 212,
+            },
         ];
-        const transformed = transformBcAddress(addressBillingFalse, regionId);
+        const transformed = transformBcAddress(addressBillingFalse);
 
         expect(transformed).toEqual(customerAddressBillingFalse);
     });
