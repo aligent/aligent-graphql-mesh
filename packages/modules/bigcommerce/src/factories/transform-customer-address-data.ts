@@ -24,6 +24,14 @@ export const transformCustomerAddress = (
             name: DEFAULT_SHIPPING_NAME,
             value: shippingValue,
         },
+        {
+            name: 'region',
+            value: state.state,
+        },
+        {
+            name: 'region_id',
+            value: state?.id || '',
+        },
     ];
 
     const bcAddress: BcAddress = {
@@ -47,7 +55,7 @@ export const transformCustomerAddress = (
 
     return bcAddress;
 };
-export const transformBcAddress = (address: BcAddress, regionId: number): CustomerAddress => {
+export const transformBcAddress = (address: BcAddress): CustomerAddress => {
     return {
         id: address.id,
         street: [address.address1, address.address2 || null],
@@ -59,8 +67,12 @@ export const transformBcAddress = (address: BcAddress, regionId: number): Custom
         telephone: address.phone,
         postcode: address.postal_code,
         region: {
-            region: address.state_or_province,
-            region_id: regionId,
+            region:
+                address.state_or_province ||
+                (address.form_fields.find((field) => field.name === 'region')?.value as string),
+            region_id: address.form_fields.find((field) => field.name === 'region_id')?.value as
+                | number
+                | null,
             //TODO: add region_code from bc state.state_abbreviation
         },
         default_billing: checkIfDefaultAddress(address.form_fields, DEFAULT_BILLING_NAME),

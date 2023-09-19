@@ -36,11 +36,7 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
         if (!response) {
             return null; //No data returned if the updated does not contain any change
         }
-        const regionId = customerAddressInput.region.region_id;
-        if (!regionId) {
-            return logAndThrowError('region Id could not be added to customer address');
-        }
 
-        return transformBcAddress(response, regionId);
+        return transformBcAddress(response);
     },
 };
