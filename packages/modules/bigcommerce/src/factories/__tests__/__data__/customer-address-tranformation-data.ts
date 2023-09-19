@@ -22,6 +22,14 @@ export const bcAddress = {
             name: 'Default Shipping',
             value: ['Yes'],
         },
+        {
+            name: 'region',
+            value: 'South Australia',
+        },
+        {
+            name: 'region_id',
+            value: 212,
+        },
     ],
 };
 
@@ -54,6 +62,14 @@ export const bcAddressUpdated = {
             name: 'Default Shipping',
             value: ['Yes'],
         },
+        {
+            name: 'region',
+            value: 'South Australia',
+        },
+        {
+            name: 'region_id',
+            value: 212,
+        },
     ],
 };
 
@@ -63,6 +79,7 @@ export const acCustomerAddressInput = {
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
+        region: 'South Australia',
         region_id: 212,
     },
     postcode: '5000',
@@ -80,6 +97,7 @@ export const acCustomerAddressOutput = {
     street: ['Level 1', '212 pirie st'],
     region: {
         region: 'South Australia',
+        region_id: 212,
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -95,6 +113,7 @@ export const customerAddressBillingShippingFalse = {
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
+        region: 'South Australia',
         region_id: 212,
     },
     postcode: '5000',
@@ -112,6 +131,7 @@ export const customerAddressBillingFalse = {
     street: ['Level 1', '212 pirie st'],
     region: {
         region: 'South Australia',
+        region_id: 212,
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -142,6 +162,14 @@ export const bcAddressUpdatedShippingBillingFalse = {
         {
             name: 'Default Shipping',
             value: [],
+        },
+        {
+            name: 'region',
+            value: 'South Australia',
+        },
+        {
+            name: 'region_id',
+            value: 212,
         },
     ],
 };
