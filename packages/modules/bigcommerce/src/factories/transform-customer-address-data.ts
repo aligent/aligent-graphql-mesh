@@ -32,6 +32,10 @@ export const transformCustomerAddress = (
             name: 'region_id',
             value: state?.id || '',
         },
+        {
+            name: 'region_code',
+            value: state?.state_abbreviation || '',
+        },
     ];
 
     const bcAddress: BcAddress = {
@@ -73,7 +77,7 @@ export const transformBcAddress = (address: BcAddress): CustomerAddress => {
             region_id: address.form_fields.find((field) => field.name === 'region_id')?.value as
                 | number
                 | null,
-            //TODO: add region_code from bc state.state_abbreviation
+            region_code: address.form_fields.find((field) => field.name === 'region_code')?.value as string
         },
         default_billing: checkIfDefaultAddress(address.form_fields, DEFAULT_BILLING_NAME),
         default_shipping: checkIfDefaultAddress(address.form_fields, DEFAULT_SHIPPING_NAME),
