@@ -27,7 +27,7 @@ export const getTransformedCustomerAddresses = (
             street: [address1],
             region: {
                 region: state_or_province,
-                region_code: 
+                region_code:
                     (form_fields.find((field) => field.name === 'region_code')?.value as string) ||
                     '',
                 region_id:
