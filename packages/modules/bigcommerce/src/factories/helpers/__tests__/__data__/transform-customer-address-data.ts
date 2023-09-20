@@ -31,6 +31,18 @@ export const bcAddresses = [
                 name: 'Default Shipping',
                 value: [],
             },
+            {
+                name: 'region',
+                value: 'South Australia',
+            },
+            {
+                name: 'region_id',
+                value: 212,
+            },
+            {
+                name: 'region_code',
+                value: 'SA',
+            },
         ],
     },
 ];
@@ -45,8 +57,8 @@ export const transformedAddresses = [
         street: ['212 Pirie St'],
         region: {
             region: 'South Australia',
-            region_code: null,
-            region_id: null,
+            region_code: 'SA',
+            region_id: 212,
         },
         postcode: '5114',
         country_code: 'AU',
