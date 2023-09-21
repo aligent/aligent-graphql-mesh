@@ -11,6 +11,7 @@ export const relatedProducts = gql`
     fragment RelatedProducts on RelatedProductsConnection {
         edges {
             node {
+                id
                 entityId
                 name
                 sku
