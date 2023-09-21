@@ -30,6 +30,10 @@ export const bcAddress = {
             name: 'region_id',
             value: 212,
         },
+        {
+            name: 'region_code',
+            value: 'SA',
+        },
     ],
 };
 
@@ -70,6 +74,10 @@ export const bcAddressUpdated = {
             name: 'region_id',
             value: 212,
         },
+        {
+            name: 'region_code',
+            value: 'SA',
+        },
     ],
 };
 
@@ -81,6 +89,7 @@ export const acCustomerAddressInput = {
     region: {
         region: 'South Australia',
         region_id: 212,
+        region_code: 'SA',
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -98,6 +107,7 @@ export const acCustomerAddressOutput = {
     region: {
         region: 'South Australia',
         region_id: 212,
+        region_code: 'SA',
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -115,6 +125,7 @@ export const customerAddressBillingShippingFalse = {
     region: {
         region: 'South Australia',
         region_id: 212,
+        region_code: 'SA',
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -132,6 +143,7 @@ export const customerAddressBillingFalse = {
     region: {
         region: 'South Australia',
         region_id: 212,
+        region_code: 'SA',
     },
     postcode: '5000',
     country_code: 'AU' as CountryCodeEnum,
@@ -170,6 +182,10 @@ export const bcAddressUpdatedShippingBillingFalse = {
         {
             name: 'region_id',
             value: 212,
+        },
+        {
+            name: 'region_code',
+            value: 'SA',
         },
     ],
 };

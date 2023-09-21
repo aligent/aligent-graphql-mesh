@@ -55,6 +55,10 @@ describe('Customer Address Transformation tests', () => {
                 name: 'region_id',
                 value: 212,
             },
+            {
+                name: 'region_code',
+                value: 'SA',
+            },
         ];
         const transformed = transformBcAddress(addressBillingFalse);
 
