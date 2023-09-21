@@ -37,6 +37,14 @@ export const relatedProducts = gql`
                     }
                 }
                 path
+                metafields(namespace: "custom_attributes", first: 20) {
+                    edges {
+                        node {
+                            key
+                            value
+                        }
+                    }
+                }
             }
         }
     }
