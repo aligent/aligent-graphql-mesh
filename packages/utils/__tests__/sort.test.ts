@@ -31,8 +31,8 @@ const bcProducts = [
     { node: { name: 'product2', entityId: 40, sku: 'dsag' } },
 ] as Array<Maybe<ProductEdge>>;
 
-let idOrder = [25, 35, 40, 30];
-let skuOrder = ['WH01', 'dsag', 'SLLPJ', 'abcs'];
+const idOrder = [25, 35, 40, 30];
+const skuOrder = ['WH01', 'dsag', 'SLLPJ', 'abcs'];
 
 describe('getSortedProducts', () => {
     it('Can sort products in an ascending order from ids listed in an array', () => {
