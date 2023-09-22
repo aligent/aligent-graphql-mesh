@@ -1,12 +1,16 @@
-import { ProductAttributeSortInput, SortEnum } from '@aligent/bigcommerce-resolvers';
+import { ProductAttributeSortInput } from '@aligent/bigcommerce-resolvers';
+import { Maybe, ProductEdge } from '@aligent/bigcommerce-operations';
 
-const sortOptions = {
-    name: 'ASC' as SortEnum,
-    position: 'ASC' as SortEnum,
-    price: 'ASC' as SortEnum,
-    relevance: 'ASC' as SortEnum,
-};
-
+/**
+ * Transforms sort arguments coming from graphql to a structure rest GET request will understand
+ *
+ * @param sort
+ * @param sortKeyMapping - sort property name mapping
+ * const sortKeyMapping: { [index: string]: string } = {
+ *        position: 'sku',
+ *        relevance: '',
+ *    };
+ */
 export const transformGQLSortArgsToRestSortArgs = (
     sort?: ProductAttributeSortInput | null,
     sortKeyMapping: { [key: string]: string } = {}
@@ -32,10 +36,52 @@ export const transformGQLSortArgsToRestSortArgs = (
     };
 };
 
-const sortKeyMapping: { [index: string]: string } = {
-    position: 'sku',
-    relevance: '',
+/**
+ * Sort product objects based on an array of identifiers and object property
+ *
+ * @param orderedIdentifiers
+ * @param sortByProp
+ */
+const sortByIdentifier = (
+    orderedIdentifiers: Array<string | number>,
+    sortByProp: 'sku' | 'entityId'
+) => {
+    return (productA: Maybe<ProductEdge>, productB: Maybe<ProductEdge>): number => {
+        const productIdA = productA?.node?.[sortByProp] || 0;
+        const productIdB = productB?.node?.[sortByProp] || 0;
+
+        const indexA = orderedIdentifiers.indexOf(productIdA);
+        const indexB = orderedIdentifiers.indexOf(productIdB);
+
+        return indexA - indexB;
+    };
 };
 
-// console.dir(getProductsBySkuSort(sortOptions));
-console.dir(transformGQLSortArgsToRestSortArgs({}));
+/**
+ * Sorts products returned from the "Products" graphql query and according either
+ * to either the rest Products id order or the order of the args.filter.sku
+ *
+ * @param productsToSort
+ * @param identifiers
+ * @param sortDirection
+ */
+export const getSortedProducts = (
+    productsToSort: Array<Maybe<ProductEdge>>,
+    identifiers: {
+        ids?: Array<number>;
+        skus?: Array<string>;
+    },
+    sortDirection: string = 'asc'
+): Array<Maybe<ProductEdge>> => {
+    let sortedProducts = productsToSort;
+
+    if (identifiers.ids) {
+        sortedProducts = productsToSort.sort(sortByIdentifier(identifiers.ids, 'entityId'));
+    }
+
+    if (identifiers.skus) {
+        sortedProducts = productsToSort.sort(sortByIdentifier(identifiers.skus, 'sku'));
+    }
+
+    return sortDirection === 'desc' ? sortedProducts.reverse() : sortedProducts;
+};

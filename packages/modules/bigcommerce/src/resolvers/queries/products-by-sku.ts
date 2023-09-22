@@ -1,11 +1,10 @@
 import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
-import { getTaxSettings } from '../../apis/graphql/settings';
+import { getTaxSettings } from '../../apis/graphql';
 import { getProducts } from '../../apis/rest/products';
 import { getBcProductsGraphql } from '../../apis/graphql';
 import { AxiosGraphqlError, getIncludesTax } from '@aligent/utils';
-import { transformGQLSortArgsToRestSortArgs } from '../../../../../utils/sort';
-import { Maybe, ProductEdge } from '@aligent/bigcommerce-operations';
+import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../../../../utils/sort';
 
 /* This is the maximum page size we're allowing for a products by sku look up */
 const MAX_SKU_QUERY_LIMIT = 50;
@@ -17,7 +16,6 @@ const sortKeyMapping: { [index: string]: string } = {
     position: 'sku',
 };
 
-/* istanbul ignore next */
 export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
         const customerImpersonationToken = (await context.cache.get(
@@ -91,7 +89,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         /* The "graphql" products query doesn't return products in the same order as the ids passed as arguments
          * and doesn't have a sorting argument option, so we have to work out the sorting with our own functions
          * according either to the "sku" arg or order of the ids returned from the products rest request. */
-        const sortedProducts = getSortedArrayObjects(
+        const sortedProducts = getSortedProducts(
             bcProducts.edges,
             sortByIdentifiers,
             transformedSort.direction
@@ -99,56 +97,4 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
 
         return getTransformedProductsData({ products: { ...bcProducts, edges: sortedProducts } });
     },
-};
-
-/**
- * Sort product objects based on an array of identifiers and object property
- *
- * @param orderedIdentifiers
- * @param sortByProp
- */
-const sortByIdentifier = (
-    orderedIdentifiers: Array<string | number>,
-    sortByProp: 'sku' | 'entityId'
-) => {
-    return (productA: Maybe<ProductEdge>, productB: Maybe<ProductEdge>): number => {
-        const productIdA = productA?.node?.[sortByProp] || 0;
-        const productIdB = productB?.node?.[sortByProp] || 0;
-
-        const indexA = orderedIdentifiers.indexOf(productIdA);
-        const indexB = orderedIdentifiers.indexOf(productIdB);
-
-        return indexA - indexB;
-    };
-};
-
-/**
- * Sorts products returned from the "Products" graphql query and according either
- * to either the rest Products id order or the order of the args.filter.sku
- *
- * @param productsToSort
- * @param identifiers
- * @param sortDirection
- */
-const getSortedArrayObjects = (
-    productsToSort: Array<Maybe<ProductEdge>>,
-    identifiers: {
-        ids?: Array<number>;
-        skus?: Array<string>;
-    },
-    sortDirection: string = 'asc'
-): Array<Maybe<ProductEdge>> => {
-    if (!productsToSort || productsToSort?.length === 0) return productsToSort;
-
-    let sortedProducts = productsToSort;
-
-    if (identifiers.ids) {
-        sortedProducts = productsToSort.sort(sortByIdentifier(identifiers.ids, 'entityId'));
-    }
-
-    if (identifiers.skus) {
-        sortedProducts = productsToSort.sort(sortByIdentifier(identifiers.skus, 'sku'));
-    }
-
-    return sortDirection === 'desc' ? sortedProducts.reverse() : sortedProducts;
 };
