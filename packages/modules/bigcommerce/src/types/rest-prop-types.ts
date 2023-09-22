@@ -6,6 +6,7 @@ export type ProductsArgsRest = {
     'sku:in'?: Array<string>;
     sort?: string;
     direction?: string;
+    limit?: number;
 };
 
 export type ProductRest = {

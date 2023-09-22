@@ -53,6 +53,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
             ...(skuLength === 1 && { sku: uniqueSkus[0] || '' }),
             ...(skuLength > 1 && { 'sku:in': uniqueSkus as string[] }),
             include_fields: 'id,name,sku',
+            limit: args.pageSize,
             sort: transformedSort.sort,
         });
 
