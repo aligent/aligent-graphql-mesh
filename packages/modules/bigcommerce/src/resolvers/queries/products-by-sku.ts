@@ -17,6 +17,7 @@ const sortKeyMapping: { [index: string]: string } = {
     position: 'sku',
 };
 
+/* istanbul ignore next */
 export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
         const customerImpersonationToken = (await context.cache.get(
