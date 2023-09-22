@@ -352,14 +352,6 @@ type Query {
         """
         filter: ProductsBySkusInput!
         """
-        The maximum number of results to return at once. The default value is 20.
-        """
-        pageSize: Int = 20
-        """
-        The page of results to return. The default value is 1.
-        """
-        currentPage: Int = 1
-        """
         Specifies which attributes to sort on, and whether to return the results in ascending or descending order.
         """
         sort: ProductsBySkusSortInput
