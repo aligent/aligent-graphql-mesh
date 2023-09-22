@@ -344,6 +344,27 @@ type Query {
         sort: ProductAttributeSortInput
     ): Products
     """
+    Search for products that match the criteria specified in the `search` and `filter` attributes.
+    """
+    productsBySku(
+        """
+        The product attributes to search for and return.
+        """
+        filter: ProductsBySkusInput!
+        """
+        The maximum number of results to return at once. The default value is 20.
+        """
+        pageSize: Int = 20
+        """
+        The page of results to return. The default value is 1.
+        """
+        currentPage: Int = 1
+        """
+        Specifies which attributes to sort on, and whether to return the results in ascending or descending order.
+        """
+        sort: ProductsBySkusSortInput
+    ): Products
+    """
     Returns details about Google reCAPTCHA V3-Invisible configuration.
     """
     recaptchaV3Config: ReCaptchaConfigurationV3
@@ -4872,6 +4893,31 @@ input CategoryFilterInput {
     Filter by the URL path for the category.
     """
     url_path: FilterEqualTypeInput
+}
+
+input ProductsBySkusInput {
+    """
+    A number or code assigned to a product to identify the product, options, price, and manufacturer.
+    """
+    sku: FilterTypeInput!
+}
+
+"""
+Specifies the attribute to use for sorting search results and indicates whether the results are sorted in ascending or descending order. It's possible to sort products using searchable attributes with enabled 'Use in Filter Options' option
+"""
+input ProductsBySkusSortInput {
+    """
+    Attribute label: Product Name
+    """
+    name: SortEnum
+    """
+    Sort by the position of the sku items.
+    """
+    position: SortEnum
+    """
+    Attribute label: Price
+    """
+    price: SortEnum
 }
 
 """
