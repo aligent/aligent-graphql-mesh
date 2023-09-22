@@ -57,7 +57,7 @@ export const bcPaginate = async function* (
 
     while (page >= 1) {
         const response = await axios.get(url, { headers, params: { page, limit } });
-        const items = response.data;
+        const items = response.data?.data || response.data;
         if (items.length === 0) {
             break;
         }
