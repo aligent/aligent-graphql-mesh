@@ -11,11 +11,15 @@ export const getProductsSearchQuery = stripIgnoredCharacters(
         ${ProductsDetails}
         ${searchFilters}
 
-        query productSearch($filters: SearchProductsFiltersInput!, $includeTax: Boolean) {
+        query productSearch(
+            $filters: SearchProductsFiltersInput!
+            $includeTax: Boolean
+            $pageSize: Int
+        ) {
             site {
                 search {
                     searchProducts(filters: $filters) {
-                        products {
+                        products(first: $pageSize) {
                             edges {
                                 node {
                                     ...ProductDetails
