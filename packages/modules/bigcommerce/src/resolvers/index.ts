@@ -51,6 +51,7 @@ import { customerOrdersResolver } from './queries/sub-query-resolvers/customerOr
 import { customerOrderItemsResolver } from './queries/sub-query-resolvers/customerOrderItems';
 import { customerOrderShippingMethodResolver } from './queries/sub-query-resolvers/customerOrderShippingMethod';
 import { customerOrderShippingAddressResolver } from './queries/sub-query-resolvers/customerOrderShippingAddress';
+import { productsBySkuResolver } from './queries/products-by-sku';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -63,6 +64,7 @@ export const resolvers: Resolvers = {
         currency: currencyResolver,
         customer: customerResolver,
         getSocialLinks: getSocialLinksResolver,
+        productsBySku: productsBySkuResolver,
         isEmailAvailable: isEmailAvailableResolver,
         keyMessages: keyMessagesResolver,
         productReviewRatingsMetadata: productReviewRatingsMetadataResolver,
