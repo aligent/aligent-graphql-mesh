@@ -34,7 +34,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         const combinedSkus = [skus.eq, ...(skus.in || [])].filter(Boolean);
 
         /* Collects unique skus to pass the the rest Products query*/
-        const uniqueSkus = [...new Set(combinedSkus)] || [];
+        const uniqueSkus = [...new Set(combinedSkus)];
 
         const skuLength = uniqueSkus.length;
 
@@ -60,7 +60,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         if (!productsBySku?.data) return null;
 
         /* Collect all the rest products ids. They should be in the correct sort order */
-        const productIds = productsBySku?.data.map((product) => product.id) || [];
+        const productIds = productsBySku.data.map((product) => product.id);
 
         /* If we pass an empty array to the graphql products query it will return all products, so
          * return null instead */
