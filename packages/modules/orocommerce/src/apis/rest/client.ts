@@ -44,7 +44,7 @@ export class ApiClient {
 
     async get<T>(url: string, config?: AxiosRequestConfig) {
         const response = await this.client.get<{ data: T }>(url, config);
-        return response.data.data;
+        return response.data;
     }
     async post<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
         const response = await this.client.post<{ data: T }, AxiosResponse<{ data: T }>, D>(
