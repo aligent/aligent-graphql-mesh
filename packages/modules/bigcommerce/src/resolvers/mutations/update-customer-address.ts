@@ -3,10 +3,15 @@ import {
     transformBcAddress,
     transformCustomerAddress,
 } from '../../factories/transform-customer-address-data';
-import { getCustomerAddress, updateCustomerAddress } from '../../apis/rest/customer';
+import {
+    getAllCustomerAddresses,
+    getCustomerAddress,
+    updateCustomerAddress,
+} from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '../../utils';
 import { getStateByAddress } from '../../apis/rest/countries';
+import { checkIfAddressbookHasDefaultAddress } from '../../utils/checkIfAddressbookHasDefaultAddress';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {
@@ -30,6 +35,20 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
                 )
             );
         }
+
+        if (addressInput.default_shipping || addressInput.default_billing) {
+            const bcAddresses = await getAllCustomerAddresses(customerId);
+            const hasDefaultAddress = checkIfAddressbookHasDefaultAddress(bcAddresses);
+
+            if (hasDefaultAddress.hasDefaultShipping && addressInput.default_shipping) {
+                return logAndThrowError('Already have a default shipping address');
+            }
+
+            if (hasDefaultAddress.hasDefaultBilling && addressInput.default_billing) {
+                return logAndThrowError('Already have a default billing address');
+            }
+        }
+
         const state = await getStateByAddress(addressInput);
         const address = transformCustomerAddress(addressInput, state, customerId, addressId);
         const response = await updateCustomerAddress(address);
