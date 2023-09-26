@@ -19,10 +19,7 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         },
         {
             provide: StoreUrl,
-            useFactory: (config: OroCommerceModuleConfig) => {
-                return config.storeUrl;
-            },
-            deps: [ModuleConfig],
+            useValue: config.storeUrl,
             scope: Scope.Singleton,
         },
         {
@@ -34,7 +31,6 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ApiClient,
             provide: ApiClient,
-            deps: [StoreUrl, Auth],
             scope: Scope.Operation,
         },
         {
