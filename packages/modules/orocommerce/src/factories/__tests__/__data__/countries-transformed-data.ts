@@ -1,53 +1,72 @@
-import { Country as AcCountry } from '@aligent/orocommerce-resolvers';
+import { Country as AcCountry, Region as AcRegion } from '@aligent/orocommerce-resolvers';
 
-export const transformedStates = [
-    {
-        code: 'ACT',
-        id: 208,
-        name: 'Australian Capital Territory',
-    },
+export const transformedRegionsAU: AcRegion[] = [
     {
         code: 'NSW',
-        id: 209,
+        id: 'AU-NSW',
         name: 'New South Wales',
     },
     {
-        code: 'NT',
-        id: 210,
-        name: 'Northern Territory',
-    },
-    {
         code: 'QLD',
-        id: 211,
+        id: 'AU-QLD',
         name: 'Queensland',
     },
     {
         code: 'SA',
-        id: 212,
+        id: 'AU-SA',
         name: 'South Australia',
     },
     {
         code: 'TAS',
-        id: 213,
+        id: 'AU-TAS',
         name: 'Tasmania',
     },
     {
         code: 'VIC',
-        id: 214,
+        id: 'AU-VIC',
         name: 'Victoria',
     },
     {
         code: 'WA',
-        id: 215,
+        id: 'AU-WA',
         name: 'Western Australia',
     },
 ];
 
-export const transformedCountries: AcCountry[] = [{
-    full_name_english: 'Australia',
-    full_name_locale: null,
-    id: '13',
-    two_letter_abbreviation: 'AU',
-    three_letter_abbreviation: 'AUS',
-    available_regions: transformedStates,
-}];
+export const transformedRegionsNZ = [
+    {
+        code: "AUK",
+        id: "NZ-AUK",
+        name: "Auckland",
+    },
+    {
+        code: "BOP",
+        id: "NZ-BOP",
+        name: "Bay of Plenty",
+    },
+    {
+        code: "CAN",
+        id: "NZ-CAN",
+        name: "Canterbury",
+    },
+]
+
+export const transformedCountries: AcCountry[] =
+    [
+        {
+            full_name_english: 'Australia',
+            full_name_locale: null,
+            id: 'AU',
+            two_letter_abbreviation: 'AU',
+            three_letter_abbreviation: 'AUS',
+            available_regions: transformedRegionsAU,
+        },
+        {
+            full_name_english: 'New Zealand',
+            full_name_locale: null,
+            id: 'NZ',
+            two_letter_abbreviation: 'NZ',
+            three_letter_abbreviation: 'NZL',
+            available_regions: transformedRegionsNZ,
+        },
+    ];

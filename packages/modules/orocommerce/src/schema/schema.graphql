@@ -10424,7 +10424,7 @@ type Region {
     """
     The unique ID for a `Region` object.
     """
-    id: Int
+    id: String
     """
     The name of the region, such as Texas.
     """

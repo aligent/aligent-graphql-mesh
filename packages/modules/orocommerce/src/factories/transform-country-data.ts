@@ -8,10 +8,12 @@ export const transformCountriesAndRegions = (
     return oroCountries.map((country) => {
         const available_regions = country.relationships?.regions.data?.map((countryRegion) => {
             const region = oroRegions.filter((region) => region.id === countryRegion.id);
-            return {
-                code: region[0].attributes.code,
-                id: region[0].id,
-                name: region[0].attributes.name,
+            if (region[0]) {
+                return {
+                    code: region[0].attributes.code,
+                    id: region[0].id,
+                    name: region[0].attributes.name,
+                }
             }
         })
         return {
@@ -19,7 +21,7 @@ export const transformCountriesAndRegions = (
             full_name_locale: null,
             id: String(country.id),
             two_letter_abbreviation: country.id,
-            three_letter_abbreviation: country.attributes.country_iso3,
+            three_letter_abbreviation: country.attributes.iso3Code,
             available_regions,
         };
     });
