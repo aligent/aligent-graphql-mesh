@@ -95,7 +95,7 @@ export const getTransformedProductData = (
         });
 
         return {
-            ...(availabilityV2.status === 'Preorder' && { availability: availabilityV2 }),
+            ...(availabilityV2?.status === 'Preorder' && { availability: availabilityV2 }),
             categories: getTransformedCategoriesData(categories),
             configurable_options: getTransformedConfigurableOptions(productOptions),
             description: {
