@@ -4,6 +4,7 @@ import {
     getPercentOff,
     getTransformedPriceRange,
     getTransformedPrices,
+    getTransformedPriceTiers,
 } from '../transform-product-prices';
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
 import { PageInfo } from '@aligent/bigcommerce-operations';
@@ -101,5 +102,147 @@ describe('transform-product-prices', () => {
             salePrice: { currencyCode: 'AUD', value: 30 },
             saved: null,
         });
+    });
+});
+
+const fixedBulkPrices = {
+    price: {
+        value: 34.95,
+        currencyCode: 'AUD',
+    },
+    bulkPricing: [
+        {
+            minimumQuantity: 2,
+            price: 30,
+        },
+        {
+            minimumQuantity: 3,
+            price: 25,
+        },
+        {
+            minimumQuantity: 4,
+            price: 20,
+        },
+    ],
+};
+
+const percentBulkPrices = {
+    bulkPricing: [
+        {
+            percentOff: 30,
+            minimumQuantity: 2,
+        },
+        {
+            percentOff: 25,
+            minimumQuantity: 3,
+        },
+        {
+            percentOff: 20,
+            minimumQuantity: 4,
+        },
+    ],
+    price: {
+        value: 32,
+        currencyCode: 'AUD',
+    },
+};
+
+const unitOffBulkPrices = {
+    bulkPricing: [
+        {
+            priceAdjustment: 2,
+            minimumQuantity: 2,
+        },
+        {
+            priceAdjustment: 4,
+            minimumQuantity: 3,
+        },
+        {
+            priceAdjustment: 6,
+            minimumQuantity: 4,
+        },
+    ],
+    price: {
+        value: 32,
+        currencyCode: 'AUD',
+    },
+};
+
+describe('getTransformedPriceTiers', () => {
+    it(`returns "null" is there's no prices or price`, () => {
+        const transformedData = getTransformedPriceTiers(null);
+
+        expect(transformedData).toEqual(null);
+    });
+
+    it(`transforms fixed bulk prices into a structure the PWA is expecting`, () => {
+        const transformedData = getTransformedPriceTiers(fixedBulkPrices);
+
+        const expectedResult = [
+            {
+                discount: { amount_off: 4.950000000000003, percent_off: 14.163090128755371 },
+                final_price: { currencyCode: 'AUD', value: 30 },
+                quantity: 2,
+            },
+            {
+                discount: { amount_off: 9.950000000000003, percent_off: 28.46924177396281 },
+                final_price: { currencyCode: 'AUD', value: 25 },
+                quantity: 3,
+            },
+            {
+                discount: { amount_off: 14.950000000000003, percent_off: 42.77539341917025 },
+                final_price: { currencyCode: 'AUD', value: 20 },
+                quantity: 4,
+            },
+        ];
+
+        expect(transformedData).toEqual(expectedResult);
+    });
+
+    it(`transforms percentage bulk prices into a structure the PWA is expecting`, () => {
+        const transformedData = getTransformedPriceTiers(percentBulkPrices);
+
+        const expectedResult = [
+            {
+                discount: { amount_off: 9.600000000000001, percent_off: 30 },
+                final_price: { currencyCode: 'AUD', value: 22.4 },
+                quantity: 2,
+            },
+            {
+                discount: { amount_off: 8, percent_off: 25 },
+                final_price: { currencyCode: 'AUD', value: 24 },
+                quantity: 3,
+            },
+            {
+                discount: { amount_off: 6.399999999999999, percent_off: 20 },
+                final_price: { currencyCode: 'AUD', value: 25.6 },
+                quantity: 4,
+            },
+        ];
+
+        expect(transformedData).toEqual(expectedResult);
+    });
+
+    it(`transforms unit off bulk prices into a structure the PWA is expecting`, () => {
+        const transformedData = getTransformedPriceTiers(unitOffBulkPrices);
+
+        const expectedResult = [
+            {
+                discount: { amount_off: 2, percent_off: 6.25 },
+                final_price: { currencyCode: 'AUD', value: 30 },
+                quantity: 2,
+            },
+            {
+                discount: { amount_off: 4, percent_off: 12.5 },
+                final_price: { currencyCode: 'AUD', value: 28 },
+                quantity: 3,
+            },
+            {
+                discount: { amount_off: 6, percent_off: 18.75 },
+                final_price: { currencyCode: 'AUD', value: 26 },
+                quantity: 4,
+            },
+        ];
+        expect(transformedData).toEqual(expectedResult);
     });
 });

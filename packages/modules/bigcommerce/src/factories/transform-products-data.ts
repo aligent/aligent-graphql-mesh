@@ -13,7 +13,11 @@ import {
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '@aligent/utils';
 import { getTransformedVariants } from './helpers/transform-variants';
-import { getTransformedPriceRange, getTransformedPrices } from './helpers/transform-product-prices';
+import {
+    getTransformedPriceRange,
+    getTransformedPrices,
+    getTransformedPriceTiers,
+} from './helpers/transform-product-prices';
 import {
     getTransformedMediaGalleryEntries,
     getTransformedSmallImage,
@@ -112,7 +116,7 @@ export const getTransformedProductData = (
             only_x_left_in_stock: getTransformedAvailableStock(inventory),
             price: getTransformedPrices(prices),
             price_range: getTransformedPriceRange(prices, productType, bcVariants),
-            price_tiers: [],
+            price_tiers: getTransformedPriceTiers(prices),
             redirect_code: 0,
             rating_summary: reviewSummary?.summationOfRatings || 0,
             review_count: reviewSummary?.numberOfReviews || 0,
