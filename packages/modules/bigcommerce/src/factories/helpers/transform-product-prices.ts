@@ -142,7 +142,7 @@ export const getTransformedPriceTiers = (
     const { bulkPricing, price } = prices;
 
     const tierPrices = bulkPricing.map((bulkPrice) => {
-        const { minimumQuantity, maximumQuantity, __typename } = bulkPrice;
+        const { minimumQuantity } = bulkPrice;
 
         const currencyCode = price?.currencyCode || '';
 
