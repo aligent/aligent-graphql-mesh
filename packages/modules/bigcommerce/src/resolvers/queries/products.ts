@@ -10,6 +10,7 @@ import { getBcAvailableProductFilters } from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
 import { getTaxSettings } from '../../apis/graphql';
 import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
+import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
@@ -57,8 +58,16 @@ export const productsResolver: QueryResolvers['products'] = {
                 availableBcProductFilters
             );
 
+            const paginationPage = await getProductSearchPagination(
+                { filters: transformedFilterArguments },
+                customerImpersonationToken,
+                pageSize,
+                args?.currentPage
+            );
+
             const bcProducts = await getBcProductSearchGraphql(
                 {
+                    after: paginationPage?.startCursor,
                     includeTax: getIncludesTax(taxSettings?.plp),
                     filters: transformedFilterArguments,
                     pageSize,
@@ -68,7 +77,7 @@ export const productsResolver: QueryResolvers['products'] = {
 
             if (!bcProducts) return null;
 
-            return getTransformedProductsData(bcProducts);
+            return getTransformedProductsData(bcProducts, pageSize, paginationPage.currentPage);
         } catch (error) {
             return logAndThrowError(error);
         }

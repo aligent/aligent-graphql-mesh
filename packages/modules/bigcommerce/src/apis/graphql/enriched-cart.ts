@@ -53,7 +53,7 @@ export const getEnrichedCart = async (
 
     if (!products) return UNDEFINED_CART;
 
-    const transformedProducts = getTransformedProductsData({ products });
+    const transformedProducts = getTransformedProductsData({ products }, 50, 1);
 
     /* Get an array where parent products and variant are their own array item. This helps
      * when mapping additional product data to its corresponding cart item*/

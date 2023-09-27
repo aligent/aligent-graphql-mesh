@@ -96,6 +96,10 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
             transformedSort.direction
         );
 
-        return getTransformedProductsData({ products: { ...bcProducts, edges: sortedProducts } });
+        return getTransformedProductsData(
+            { products: { ...bcProducts, edges: sortedProducts } },
+            args.pageSize,
+            1
+        );
     },
 };
