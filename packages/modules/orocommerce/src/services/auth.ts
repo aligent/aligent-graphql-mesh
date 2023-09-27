@@ -51,12 +51,12 @@ export class Auth {
     }
 
     isLoggedIn(): boolean {
-        return this.context.headers.Authorization?.startsWith('Bearer');
+        return this.context.headers['authorization']?.startsWith('Bearer');
     }
 
     isGuest(): boolean {
         if (this.isLoggedIn()) {
-            const token = this.context.headers.Authorization.split(' ')[1];
+            const token = this.context.headers['authorization'].split(' ')[1];
             const jwt = decode(token);
 
             if (jwt?.sub) {
@@ -69,7 +69,7 @@ export class Auth {
 
     getAuthHeader(): string {
         if (this.isLoggedIn()) {
-            return this.context.headers['Authorization'];
+            return this.context.headers['authorization'];
         }
 
         throw Error('Bearer token is not set on the Authorization header.');

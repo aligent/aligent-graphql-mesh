@@ -12,7 +12,7 @@ export class ApiClient {
     protected client: AxiosInstance;
 
     constructor(
-        @Inject(StoreUrl) protected storeUrl: string,
+        @Inject(forwardRef(() => StoreUrl)) protected storeUrl: string,
         @Inject(forwardRef(() => Auth)) protected auth: Auth
     ) {
         this.client = axios.create({
