@@ -146,7 +146,7 @@ export const getTransformedPriceTiers = (
 
         const currencyCode = price?.currencyCode || '';
 
-        let finalPrice = {
+        const finalPrice = {
             currencyCode: currencyCode,
             value: null,
         } as Money;
