@@ -10,9 +10,7 @@ export interface BcGraphqlTokenData {
 
 export interface GraphQlQuery {
     query: string;
-    // variables could be anything
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    variables?: any;
+    variables?: { [key: string]: unknown };
 }
 export interface BcCustomer {
     id: number;

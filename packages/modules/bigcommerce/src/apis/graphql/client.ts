@@ -35,9 +35,7 @@ export const graphqlPaginate = async (
     graphqlRequest: {
         headers: { Authorization: string };
         query: string;
-        // variables could be anything
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        variables: any;
+        variables: { [key: string]: unknown };
     },
     pathToPaginationData: string,
     pageSize?: number,
@@ -70,9 +68,7 @@ async function* fetchPaginatedGraphQLData(
     graphqlRequest: {
         headers: { Authorization: string };
         query: string;
-        // variables could be anything
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        variables: any;
+        variables: { [key: string]: unknown };
     },
     pathToPaginationData: string,
     pageSize: number = 24,
