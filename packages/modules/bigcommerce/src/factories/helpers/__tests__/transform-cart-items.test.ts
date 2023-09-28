@@ -710,7 +710,7 @@ const expectResult = [
             total_item_discount: { currency: 'AUD', value: 0 },
         },
         product: {
-            id: 513,
+            id: 1034,
             uid: 'NTEz',
             name: 'Mona Pullover Hoodlie',
             media_gallery_entries: [
@@ -767,7 +767,7 @@ const expectResult = [
                 page_info: { current_page: null, page_size: null, total_pages: null },
             },
             staged: false,
-            __typename: 'ConfigurableProduct',
+            __typename: 'SimpleProduct',
         },
         quantity: 2,
         configurable_options: [
