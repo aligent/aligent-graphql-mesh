@@ -1,5 +1,6 @@
 import { Money, Prices, VariantConnection } from '@aligent/bigcommerce-operations';
 import { Maybe, PriceRange, ProductPrices, TierPrice } from '@aligent/bigcommerce-resolvers';
+import { CurrencyEnum, Money as AcMoney } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 
 const noPricesResponse = {
@@ -132,28 +133,32 @@ export const getTransformedPrices = (prices: Maybe<Prices>): Maybe<ProductPrices
     };
 };
 
-type PricesForTieredPricing = Pick<Prices, 'bulkPricing' | 'price'>;
+type PricesForTieredPricing = Pick<Prices, 'bulkPricing' | 'basePrice' | 'price'>;
 
 export const getTransformedPriceTiers = (
     prices: Maybe<PricesForTieredPricing>
 ): Maybe<Array<Maybe<TierPrice>>> => {
-    if (!prices || !prices.price) return null;
+    if (!prices || !prices.price || !prices.basePrice || !prices.bulkPricing?.length) return [];
 
-    const { bulkPricing, price } = prices;
+    const { basePrice, bulkPricing, price } = prices;
+
+    let hasBulkPricingForOneQuantity = false;
 
     const tierPrices = bulkPricing.map((bulkPrice) => {
         const { minimumQuantity } = bulkPrice;
 
+        /* Flag if bulk pricing has a case for a minimum of one quantity */
+        if (minimumQuantity === 1) hasBulkPricingForOneQuantity = true;
+
         const currencyCode = price?.currencyCode || '';
 
         const finalPrice = {
-            currencyCode: currencyCode,
+            currency: currencyCode,
             value: null,
-        } as Money;
+        } as AcMoney;
 
         /* Discounts are calculated on a products "sale_price" if applied or otherwise fallbacks to "base_price". This
-         * is reflected in the "price" property
-         * will  */
+         * is reflected in the "price" property */
         let discount = {
             amount_off: 0,
             percent_off: 0,
@@ -161,11 +166,17 @@ export const getTransformedPriceTiers = (
 
         /* For fixed bulk pricing "BulkPricingFixedPriceDiscount"*/
         if ('price' in bulkPrice) {
-            finalPrice.value = bulkPrice.price;
-            discount = {
-                amount_off: getAmountOff(price, finalPrice),
-                percent_off: getPercentOff(price, finalPrice),
+            const fixedPrice = {
+                value: bulkPrice.price,
+                currencyCode: currencyCode,
             };
+
+            discount = {
+                amount_off: getAmountOff(basePrice, fixedPrice),
+                percent_off: getPercentOff(basePrice, fixedPrice),
+            };
+
+            finalPrice.value = fixedPrice.value;
         }
 
         /* For amount off per-unit pricing "BulkPricingRelativePriceDiscount"*/
@@ -175,26 +186,29 @@ export const getTransformedPriceTiers = (
                 currencyCode: currencyCode,
             };
 
-            finalPrice.value = adjustedPrice.value;
-
             discount = {
-                amount_off: getAmountOff(price, adjustedPrice),
-                percent_off: getPercentOff(price, adjustedPrice),
+                amount_off: getAmountOff(basePrice, adjustedPrice),
+                percent_off: getPercentOff(basePrice, adjustedPrice),
             };
+
+            finalPrice.value = adjustedPrice.value;
         }
 
         /* For percentage off bul pricing "BulkPricingPercentageDiscount"*/
         if ('percentOff' in bulkPrice) {
-            const priceWithPercentageOff = price.value * (1 - bulkPrice.percentOff / 100);
+            const priceWithPercentageOff = {
+                value: price.value * (1 - bulkPrice.percentOff / 100),
+                currencyCode,
+            };
 
-            finalPrice.value = priceWithPercentageOff;
-
-            const amountOff = getAmountOff(price, finalPrice);
+            const amountOff = getAmountOff(basePrice, priceWithPercentageOff);
 
             discount = {
                 amount_off: amountOff,
                 percent_off: bulkPrice.percentOff,
             };
+
+            finalPrice.value = priceWithPercentageOff.value;
         }
 
         return {
@@ -204,5 +218,22 @@ export const getTransformedPriceTiers = (
         };
     });
 
-    return tierPrices;
+    /* Create bulk pricing data for a minimum quantity of "1" if there is none in the "bulkPricing" array */
+    const bulkPriceForOneQty = !hasBulkPricingForOneQuantity
+        ? [
+              {
+                  discount: {
+                      amount_off: getAmountOff(basePrice, price),
+                      percent_off: getPercentOff(basePrice, price),
+                  },
+                  final_price: {
+                      value: price.value,
+                      currency: price.currencyCode as CurrencyEnum,
+                  },
+                  quantity: 1,
+              },
+          ]
+        : [];
+
+    return [...bulkPriceForOneQty, ...tierPrices];
 };
