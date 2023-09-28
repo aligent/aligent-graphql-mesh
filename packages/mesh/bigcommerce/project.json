@@ -1,0 +1,21 @@
+{
+  "name": "bigcommerce-mesh",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/mesh/bigcommerce/src",
+  "projectType": "application",
+  "targets": {
+
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/mesh/bigcommerce/**/*.ts"]
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f packages/mesh/bigcommerce/Dockerfile . -t bigcommerce-mesh"
+    }
+  },
+  "tags": []
+}
