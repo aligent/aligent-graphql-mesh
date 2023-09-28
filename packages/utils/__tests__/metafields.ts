@@ -10,6 +10,7 @@ const propertyTypes = {
     booleanProperties: booleanStoreConfigProperties,
     integerProperties: integerStoreConfigProperties,
     jsonStringProperties: jsonStringStoreConfigProperties,
+    htmlStringProperties: ['short_description'],
 };
 
 describe('findMetafieldValueByKey', () => {
@@ -143,6 +144,25 @@ describe('getAttributesFromMetaAndCustomFields', () => {
 
         const expectedResult = {};
 
+        expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
+    });
+
+    test(`Returns a html string property`, async () => {
+        const data = [
+            {
+                node: {
+                    id: 'TWV0YWZpZWxkczoxODk=',
+                    key: 'short_description',
+                    value: '<div>hello</div>',
+                },
+            },
+        ] as Array<Maybe<MetafieldEdge>>;
+
+        const expectedResult = {
+            short_description: {
+                html: '<div>hello</div>',
+            },
+        };
         expect(getAttributesFromMetaAndCustomFields(data, propertyTypes)).toEqual(expectedResult);
     });
 });
