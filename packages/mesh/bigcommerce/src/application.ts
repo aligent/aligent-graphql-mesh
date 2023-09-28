@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import { createApplication } from 'graphql-modules';
 import { createBigCommerceModule } from '@aligent/bigcommerce-graphql-module';
 
