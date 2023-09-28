@@ -21,7 +21,6 @@
         "main": "packages/modules/bigcommerce/src/index.ts",
         "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
         "assets": [],
-        "generatePackageJson": true,
         "format": ["cjs"],
         "esbuildConfig": "packages/modules/bigcommerce/esbuild.config.js"
       },
