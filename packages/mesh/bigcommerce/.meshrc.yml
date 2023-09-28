@@ -3,14 +3,14 @@ sources:
   - name: TakeFlight
     handler:
       graphql:
-        source: ./application
+        source: ./src/application
 
-additionalEnvelopPlugins: './plugins/additional-plugins'
+additionalEnvelopPlugins: './src/plugins/additional-plugins'
 
 plugins:
   - hive:
       token: '{env.HIVE_TOKEN}'
-      usage: !include '${STAGE}/hive-usage.yml'
+      usage: !include 'src/${STAGE}/hive-usage.yml'
 
-serve: !include '${STAGE}/serve.yml'
-cache: !include '${STAGE}/cache.yml'
+serve: !include 'src/${STAGE}/serve.yml'
+cache: !include 'src/${STAGE}/cache.yml'
