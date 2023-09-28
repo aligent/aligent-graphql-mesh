@@ -7,7 +7,7 @@ import {
     getTransformedPriceTiers,
 } from '../transform-product-prices';
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import { PageInfo } from '@aligent/bigcommerce-operations';
+import { PageInfo, Prices } from '@aligent/bigcommerce-operations';
 
 describe('transform-product-prices', () => {
     it('Transforms BC product prices to a AC priceRange structure', () => {
@@ -106,6 +106,10 @@ describe('transform-product-prices', () => {
 });
 
 const fixedBulkPrices = {
+    basePrice: {
+        value: 34.95,
+        currencyCode: 'AUD',
+    },
     price: {
         value: 34.95,
         currencyCode: 'AUD',
@@ -145,6 +149,10 @@ const percentBulkPrices = {
         value: 32,
         currencyCode: 'AUD',
     },
+    basePrice: {
+        value: 34.95,
+        currencyCode: 'AUD',
+    },
 };
 
 const unitOffBulkPrices = {
@@ -166,13 +174,32 @@ const unitOffBulkPrices = {
         value: 32,
         currencyCode: 'AUD',
     },
+    basePrice: {
+        value: 34.95,
+        currencyCode: 'AUD',
+    },
 };
 
 describe('getTransformedPriceTiers', () => {
-    it(`returns "null" is there's no prices or price`, () => {
+    it(`returns an empty array "[]" when there's no prices object`, () => {
         const transformedData = getTransformedPriceTiers(null);
 
-        expect(transformedData).toEqual(null);
+        expect(transformedData).toEqual([]);
+    });
+
+    it(`returns an empty array "[]" when bulk pricing is not defined`, () => {
+        const transformedData = getTransformedPriceTiers({
+            price: {
+                value: 32,
+                currencyCode: 'AUD',
+            },
+            basePrice: {
+                value: 34.95,
+                currencyCode: 'AUD',
+            },
+        } as Prices);
+
+        expect(transformedData).toEqual([]);
     });
 
     it(`transforms fixed bulk prices into a structure the PWA is expecting`, () => {
@@ -180,18 +207,23 @@ describe('getTransformedPriceTiers', () => {
 
         const expectedResult = [
             {
+                discount: { amount_off: 0, percent_off: 0 },
+                final_price: { value: 34.95, currency: 'AUD' },
+                quantity: 1,
+            },
+            {
                 discount: { amount_off: 4.950000000000003, percent_off: 14.163090128755371 },
-                final_price: { currencyCode: 'AUD', value: 30 },
+                final_price: { currency: 'AUD', value: 30 },
                 quantity: 2,
             },
             {
                 discount: { amount_off: 9.950000000000003, percent_off: 28.46924177396281 },
-                final_price: { currencyCode: 'AUD', value: 25 },
+                final_price: { currency: 'AUD', value: 25 },
                 quantity: 3,
             },
             {
                 discount: { amount_off: 14.950000000000003, percent_off: 42.77539341917025 },
-                final_price: { currencyCode: 'AUD', value: 20 },
+                final_price: { currency: 'AUD', value: 20 },
                 quantity: 4,
             },
         ];
@@ -204,18 +236,23 @@ describe('getTransformedPriceTiers', () => {
 
         const expectedResult = [
             {
-                discount: { amount_off: 9.600000000000001, percent_off: 30 },
-                final_price: { currencyCode: 'AUD', value: 22.4 },
+                discount: { amount_off: 2.950000000000003, percent_off: 8.440629470672397 },
+                final_price: { value: 32, currency: 'AUD' },
+                quantity: 1,
+            },
+            {
+                discount: { amount_off: 12.550000000000004, percent_off: 30 },
+                final_price: { currency: 'AUD', value: 22.4 },
                 quantity: 2,
             },
             {
-                discount: { amount_off: 8, percent_off: 25 },
-                final_price: { currencyCode: 'AUD', value: 24 },
+                discount: { amount_off: 10.950000000000003, percent_off: 25 },
+                final_price: { currency: 'AUD', value: 24 },
                 quantity: 3,
             },
             {
-                discount: { amount_off: 6.399999999999999, percent_off: 20 },
-                final_price: { currencyCode: 'AUD', value: 25.6 },
+                discount: { amount_off: 9.350000000000001, percent_off: 20 },
+                final_price: { currency: 'AUD', value: 25.6 },
                 quantity: 4,
             },
         ];
@@ -228,18 +265,60 @@ describe('getTransformedPriceTiers', () => {
 
         const expectedResult = [
             {
-                discount: { amount_off: 2, percent_off: 6.25 },
-                final_price: { currencyCode: 'AUD', value: 30 },
+                discount: { amount_off: 2.950000000000003, percent_off: 8.440629470672397 },
+                final_price: { value: 32, currency: 'AUD' },
+                quantity: 1,
+            },
+            {
+                discount: { amount_off: 4.950000000000003, percent_off: 14.163090128755371 },
+                final_price: { currency: 'AUD', value: 30 },
                 quantity: 2,
             },
             {
-                discount: { amount_off: 4, percent_off: 12.5 },
-                final_price: { currencyCode: 'AUD', value: 28 },
+                discount: { amount_off: 6.950000000000003, percent_off: 19.885550786838348 },
+                final_price: { currency: 'AUD', value: 28 },
                 quantity: 3,
             },
             {
-                discount: { amount_off: 6, percent_off: 18.75 },
-                final_price: { currencyCode: 'AUD', value: 26 },
+                discount: { amount_off: 8.950000000000003, percent_off: 25.608011444921324 },
+                final_price: { currency: 'AUD', value: 26 },
+                quantity: 4,
+            },
+        ];
+        expect(transformedData).toEqual(expectedResult);
+    });
+
+    it(`Returns the minimum 1 bulk pricing rule if it exists instead of creating one`, () => {
+        const transformedData = getTransformedPriceTiers({
+            ...fixedBulkPrices,
+            bulkPricing: [
+                {
+                    minimumQuantity: 1,
+                    price: 31,
+                },
+                ...fixedBulkPrices.bulkPricing,
+            ],
+        });
+
+        const expectedResult = [
+            {
+                discount: { amount_off: 3.950000000000003, percent_off: 11.301859799713885 },
+                final_price: { currency: 'AUD', value: 31 },
+                quantity: 1,
+            },
+            {
+                discount: { amount_off: 4.950000000000003, percent_off: 14.163090128755371 },
+                final_price: { currency: 'AUD', value: 30 },
+                quantity: 2,
+            },
+            {
+                discount: { amount_off: 9.950000000000003, percent_off: 28.46924177396281 },
+                final_price: { currency: 'AUD', value: 25 },
+                quantity: 3,
+            },
+            {
+                discount: { amount_off: 14.950000000000003, percent_off: 42.77539341917025 },
+                final_price: { currency: 'AUD', value: 20 },
                 quantity: 4,
             },
         ];
