@@ -3,12 +3,14 @@ import {
     transformAcCustomerValidatePassword,
     transformBcCustomerToAcCustomerForMutation,
     transformCustomerForMutation,
+    getTransformedCreateCustomerData,
 } from '../transform-customer-data';
 import {
     acCustomerOutputWithEmail,
     acCustomerOutputWithName,
     acCustomerWithEmail,
     acCustomerWithName,
+    bcCreateCustomerInputData,
     bcCustomerForPasswordChange,
     bcMutationCustomerWithEmail,
     bcMutationCustomerWithName,
@@ -57,6 +59,21 @@ describe('Customer Ac to Bc Transformation', () => {
         );
 
         expect(bcTransformedPasswordRequest).toEqual(bcValidateCustomerPasswordExpected);
+    });
+    test('Transform Ac Customer input to Bc Customer for create customer', () => {
+        const email = 'example@example.com';
+        const firstname = 'example';
+        const lastname = 'customer';
+        const password = 'password';
+
+        const transformedCustomer = getTransformedCreateCustomerData(
+            email,
+            firstname,
+            lastname,
+            password
+        );
+
+        expect(transformedCustomer).toEqual(bcCreateCustomerInputData);
     });
 });
 

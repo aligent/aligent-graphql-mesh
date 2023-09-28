@@ -1,8 +1,15 @@
 import { CustomerResolvers } from '@aligent/bigcommerce-resolvers';
 import { BCOrder } from '../../../types';
-import { getTransformedOrders } from '../../../factories/helpers/transform-customer-orders';
 import { getAllOrders, getOrder } from '../../../apis/rest/order';
 import { getBcCustomerIdFromMeshToken } from '../../../utils';
+import { getTransformedOrders } from '../../../factories/transform-customer-orders';
+
+const EMPTY_ORDER_RESPONSE = {
+    items: [],
+    page_info: {
+        total_pages: 0,
+    },
+};
 
 /**
  * This is a sub-resolver it is executed after customerResolver when orders was specified in the query
@@ -23,7 +30,7 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
         }
         if (bcOrders.length === 0) {
             //no orders found
-            return null;
+            return EMPTY_ORDER_RESPONSE;
         }
 
         const pageSize = args.pageSize ? args.pageSize : 20;

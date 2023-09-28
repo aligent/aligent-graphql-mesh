@@ -11,8 +11,16 @@ export const prices = gql`
             ...Money
         }
         bulkPricing {
-            maximumQuantity
             minimumQuantity
+            ... on BulkPricingPercentageDiscount {
+                percentOff
+            }
+            ... on BulkPricingRelativePriceDiscount {
+                priceAdjustment
+            }
+            ... on BulkPricingFixedPriceDiscount {
+                price
+            }
         }
         mapPrice {
             ...Money

@@ -47,6 +47,18 @@ describe('Customer Address Transformation tests', () => {
                 name: 'Default Shipping',
                 value: ['Yes'],
             },
+            {
+                name: 'region',
+                value: 'South Australia',
+            },
+            {
+                name: 'region_id',
+                value: 212,
+            },
+            {
+                name: 'region_code',
+                value: 'SA',
+            },
         ];
         const transformed = transformBcAddress(addressBillingFalse);
 

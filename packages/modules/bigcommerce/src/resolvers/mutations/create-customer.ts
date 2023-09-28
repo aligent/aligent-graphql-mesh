@@ -2,30 +2,34 @@ import { Customer, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { createCustomer } from '../../apis/rest/customer';
 import { BcCustomer } from '../../types';
 import { logAndThrowError } from '@aligent/utils';
-import { transformCustomerForMutation } from '../../factories/transform-customer-data';
 import { createSubscriber } from '../../apis/rest/subscriber';
+import { getTransformedCreateCustomerData } from '../../factories/transform-customer-data';
 
 /* istanbul ignore next */
 export const createCustomerResolver: MutationResolvers['createCustomer'] = {
-    resolve: async (_root, { input: customerInput }, _context, _info) => {
-        if (
-            !customerInput.email ||
-            !customerInput.firstname ||
-            !customerInput.lastname ||
-            !customerInput.password
-        ) {
-            return logAndThrowError('Missing email or firstname or lastname or password');
-        } else {
-            const bcCustomer = await createCustomer(transformCustomerForMutation(customerInput));
+    resolve: async (_root, args, _context, _info) => {
+        const { email, firstname, lastname, password } = args.input;
 
-            if (customerInput.is_subscribed) {
-                await createSubscriber(customerInput.email);
-            }
-
-            return {
-                customer: transformCustomerData(bcCustomer),
-            };
+        if (!email || !firstname || !lastname || !password) {
+            return logAndThrowError('Did not receive email or firstname or lastname or password');
         }
+
+        const transformedCreateCustomerData = getTransformedCreateCustomerData(
+            email,
+            firstname,
+            lastname,
+            password
+        );
+
+        const bcCustomer = await createCustomer(transformedCreateCustomerData);
+
+        if (args.input.is_subscribed) {
+            await createSubscriber(transformedCreateCustomerData.email as string);
+        }
+
+        return {
+            customer: transformCustomerData(bcCustomer),
+        };
     },
 };
 

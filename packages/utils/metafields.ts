@@ -15,22 +15,25 @@ import { Maybe, MetafieldEdge } from '@aligent/bigcommerce-operations';
  * @property {Array<string>} propertyTypes.booleanProperties - An array of strings for boolean properties.
  * @property {Array<string>} propertyTypes.integerProperties - An array of strings for integer properties.
  * @property {Array<string>} propertyTypes.jsonStringProperties - An array of strings for JSON string properties.
+ * @property {Array<string>} propertyTypes.htmlStringProperties - An array of strings for HTML string properties
  */
 export const getAttributesFromMetaAndCustomFields = (
     fields?: Maybe<Array<Maybe<{ node: { key?: string; name?: string; value?: string } }>>>,
-    propertyTypes?: {
-        booleanProperties: Array<string>;
-        integerProperties: Array<string>;
-        jsonStringProperties: Array<string>;
-    }
+    propertyTypes: {
+        booleanProperties?: Array<string>;
+        integerProperties?: Array<string>;
+        jsonStringProperties?: Array<string>;
+        htmlStringProperties?: Array<string>;
+    } = {}
 ): { [key: string]: boolean | number | string } => {
     if (!fields) return {};
 
-    const { booleanProperties, integerProperties, jsonStringProperties } = propertyTypes || {
-        booleanProperties: [],
-        integerProperties: [],
-        jsonStringProperties: [],
-    };
+    const {
+        booleanProperties = [],
+        integerProperties = [],
+        jsonStringProperties = [],
+        htmlStringProperties = [],
+    } = propertyTypes;
 
     return fields.reduce((carry, field) => {
         /*"metafields" uses "key" and "customFields" uses "name" for the main property name*/
@@ -67,6 +70,12 @@ export const getAttributesFromMetaAndCustomFields = (
             } catch {
                 value = null;
             }
+        }
+
+        if (htmlStringProperties.includes(propertyName)) {
+            value = {
+                html: value,
+            };
         }
 
         return { ...carry, [propertyName]: value };

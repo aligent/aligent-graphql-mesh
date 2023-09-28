@@ -162,3 +162,22 @@ export const getCustomerAttributesFromFormFields = (
 
     return customerAttributes;
 };
+
+export const getTransformedCreateCustomerData = (
+    email: string,
+    firstname: string,
+    lastname: string,
+    password: string
+): BcMutationCustomer => {
+    const transformedCustomer: BcMutationCustomer = {
+        email: email,
+        first_name: firstname,
+        last_name: lastname,
+        authentication: {
+            force_password_reset: false,
+            new_password: password,
+        },
+    };
+
+    return transformedCustomer;
+};

@@ -16,8 +16,8 @@ export const getTransformedCustomerAddresses = (
             postal_code,
             country_code,
             phone,
+            form_fields,
         } = address;
-
         return {
             id: id,
             firstname: first_name,
@@ -27,8 +27,12 @@ export const getTransformedCustomerAddresses = (
             street: [address1],
             region: {
                 region: state_or_province,
-                region_code: null, // BC doesnt return this
-                region_id: null, // BC doesnt return this
+                region_code:
+                    (form_fields.find((field) => field.name === 'region_code')?.value as string) ||
+                    '',
+                region_id:
+                    (form_fields.find((field) => field.name === 'region_id')?.value as number) ||
+                    null,
             },
             postcode: postal_code,
             country_code: country_code as CountryCodeEnum,

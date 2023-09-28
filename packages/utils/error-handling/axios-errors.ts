@@ -1,4 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosGraphqlError } from './index';
 /* istanbul ignore file */
 //TODO: MICRO-142: add tests for this file at later point
 
@@ -16,12 +17,12 @@ export const logAndThrowAxiosError = (
 
     if (!data) {
         logAndThrowUnknownError(functionName, 'No data object on on axiosError.response');
+    } else if (data.errors) {
+        logAndThrowErrorsFromGraphQlResponse(response, functionName);
     } else if (data.title) {
         logAndThrowErrorsFromBCRESTApiResponse(response, functionName);
     } else if (data.data?.errMsg) {
         logAndThrowErrorsFromRESTApiResponse(response, functionName);
-    } else if (data.errors) {
-        logAndThrowErrorsFromGraphQlResponse(response, functionName);
     } else if (data) {
         console.error(
             `Response data: ${JSON.stringify(data)}, statusText: ${
@@ -65,11 +66,11 @@ const logAndThrowErrorsFromGraphQlResponse = (
 
         logErrorAndFunctionName(response.status, functionName, errorResponse.message);
         throw new Error(errorResponse.message);
-    } else if (typeof errorResponse === 'object') {
+    } else if (typeof errorResponse === 'object' && Object.values(errorResponse).length > 0) {
         logErrorAndFunctionName(response.status, functionName, errorResponse.message);
         console.error(`Whole Error: ${JSON.stringify(errorResponse)}`);
 
-        throw new Error(JSON.stringify(errorResponse));
+        throw new AxiosGraphqlError(JSON.stringify(Object.values(errorResponse)[0]));
     }
 
     return logAndThrowUnknownError(
