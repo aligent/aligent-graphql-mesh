@@ -38,6 +38,7 @@ export const getProductSearchPagination = async (
         requestedPage
     );
 
+    /* Bunch all the product cursors into a single array */
     const cursors = responsePages.reduce((carry, responsePage) => {
         const productCursors =
             responsePage?.site?.search?.searchProducts.products.edges.map(
@@ -47,6 +48,7 @@ export const getProductSearchPagination = async (
         return [...carry, ...productCursors];
     }, []) as string[] | never[];
 
+    /* Works out the index of where the first page cursor will begin */
     const cursorIndex = pageSize * requestedPage - (pageSize + 1);
 
     const startCursor = cursors[cursorIndex];

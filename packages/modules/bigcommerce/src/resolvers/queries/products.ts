@@ -58,6 +58,8 @@ export const productsResolver: QueryResolvers['products'] = {
                 availableBcProductFilters
             );
 
+            /* Retrieve the pagination cursor for the next set of products we
+             * want to query */
             const paginationPage = await getProductSearchPagination(
                 { filters: transformedFilterArguments },
                 customerImpersonationToken,
