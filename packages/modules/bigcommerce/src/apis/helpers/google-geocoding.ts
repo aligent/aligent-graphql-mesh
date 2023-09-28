@@ -5,8 +5,8 @@ import { logAndThrowError } from '../../../../../utils/error-handling';
 import { findMetafieldValueByKey } from '../../../../../utils/metafields';
 
 const GOOGLE_GEOCODING_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-const GOOGLE_GEOCODING_API_KEY_MAPPING = 'googleMapsAPIKey';
-const NAMESPACE = 'pwa_config';
+const GOOGLE_GEOCODING_API_KEY_MAPPING = 'googleMapsBackendAPIKey';
+const NAMESPACE = 'store_config';
 
 export const coordinatesLookup = async (
     search_term: string,

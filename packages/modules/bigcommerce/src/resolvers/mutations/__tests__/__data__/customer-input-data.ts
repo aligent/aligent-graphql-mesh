@@ -2,7 +2,10 @@ import { BcCustomer } from '../../../../types';
 
 export const bcCustomerCreated: BcCustomer = {
     id: 19,
-    authentication: { force_password_reset: false },
+    authentication: {
+        force_password_reset: false,
+        new_password: 'password',
+    },
     company: '',
     customer_group_id: 0,
     email: 'jack.mcloughlin+test2@aligent.com.au',

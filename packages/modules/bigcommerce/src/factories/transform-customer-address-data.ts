@@ -24,6 +24,18 @@ export const transformCustomerAddress = (
             name: DEFAULT_SHIPPING_NAME,
             value: shippingValue,
         },
+        {
+            name: 'region',
+            value: state.state,
+        },
+        {
+            name: 'region_id',
+            value: state?.id || '',
+        },
+        {
+            name: 'region_code',
+            value: state?.state_abbreviation || '',
+        },
     ];
 
     const bcAddress: BcAddress = {
@@ -59,8 +71,14 @@ export const transformBcAddress = (address: BcAddress): CustomerAddress => {
         telephone: address.phone,
         postcode: address.postal_code,
         region: {
-            region: address.state_or_province,
-            //TODO: add region_code from bc state.state_abbreviation
+            region:
+                address.state_or_province ||
+                (address.form_fields.find((field) => field.name === 'region')?.value as string),
+            region_id: address.form_fields.find((field) => field.name === 'region_id')?.value as
+                | number
+                | null,
+            region_code: address.form_fields.find((field) => field.name === 'region_code')
+                ?.value as string,
         },
         default_billing: checkIfDefaultAddress(address.form_fields, DEFAULT_BILLING_NAME),
         default_shipping: checkIfDefaultAddress(address.form_fields, DEFAULT_SHIPPING_NAME),

@@ -11,6 +11,7 @@ export const relatedProducts = gql`
     fragment RelatedProducts on RelatedProductsConnection {
         edges {
             node {
+                id
                 entityId
                 name
                 sku
@@ -36,6 +37,14 @@ export const relatedProducts = gql`
                     }
                 }
                 path
+                metafields(namespace: "custom_attributes", first: 20) {
+                    edges {
+                        node {
+                            key
+                            value
+                        }
+                    }
+                }
             }
         }
     }

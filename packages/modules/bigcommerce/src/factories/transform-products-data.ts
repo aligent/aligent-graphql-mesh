@@ -13,7 +13,11 @@ import {
 import { getTransformedCategoriesData } from './transform-category-data';
 import { slashAtStartOrEnd } from '@aligent/utils';
 import { getTransformedVariants } from './helpers/transform-variants';
-import { getTransformedPriceRange, getTransformedPrices } from './helpers/transform-product-prices';
+import {
+    getTransformedPriceRange,
+    getTransformedPrices,
+    getTransformedPriceTiers,
+} from './helpers/transform-product-prices';
 import {
     getTransformedMediaGalleryEntries,
     getTransformedSmallImage,
@@ -90,9 +94,12 @@ export const getTransformedProductData = (
         /* Retrieved product meta or custom field defined in the admin.
          * NOTE: Make sure to add new product meta or custom fields coming from the admin to schema.json
          * */
-        const attributesFromCustomAndMetaFields = getAttributesFromMetaAndCustomFields(fields);
+        const attributesFromCustomAndMetaFields = getAttributesFromMetaAndCustomFields(fields, {
+            htmlStringProperties: ['short_description'],
+        });
 
         return {
+            ...(availabilityV2?.status === 'Preorder' && { availability: availabilityV2 }),
             categories: getTransformedCategoriesData(categories),
             configurable_options: getTransformedConfigurableOptions(productOptions),
             description: {
@@ -110,7 +117,7 @@ export const getTransformedProductData = (
             only_x_left_in_stock: getTransformedAvailableStock(inventory),
             price: getTransformedPrices(prices),
             price_range: getTransformedPriceRange(prices, productType, bcVariants),
-            price_tiers: [],
+            price_tiers: getTransformedPriceTiers(prices),
             redirect_code: 0,
             rating_summary: reviewSummary?.summationOfRatings || 0,
             review_count: reviewSummary?.numberOfReviews || 0,

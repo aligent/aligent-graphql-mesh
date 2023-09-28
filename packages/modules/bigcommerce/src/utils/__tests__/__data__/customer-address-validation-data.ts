@@ -23,6 +23,7 @@ export const customerAddressWithUpdateId = {
     city: 'Adelaide',
     street: ['Level 1', '212 pirie st'],
     region: {
+        region: 'South Australia',
         region_id: 212,
     },
     postcode: '5000',

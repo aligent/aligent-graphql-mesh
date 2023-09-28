@@ -85,3 +85,20 @@ export class AuthorizationError extends Error {
         };
     }
 }
+
+/**
+ * The error returned to the PWA when axios errors
+ */
+export class AxiosGraphqlError extends Error {
+    extensions: {
+        category: string;
+    };
+
+    constructor(message: string) {
+        super(message);
+
+        this.extensions = {
+            category: 'graphql-input',
+        };
+    }
+}

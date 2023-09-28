@@ -1,3 +1,5 @@
+import { Category } from '../../../../types';
+
 export const BcBreadCrumbEdges = {
     edges: [
         {
@@ -33,6 +35,11 @@ export const BcBreadCrumbEdges = {
     },
 };
 
+export const BcCategoriesWithBreadcrumbUrlOnly = {
+    name: 'Hoodies & Sweatshirts',
+    path: '/women/tops-women/hoodies-and-sweatshirts-women/',
+} as Category;
+
 export const transformedBreadcrumbs = [
     {
         category_level: 0,
@@ -47,12 +54,5 @@ export const transformedBreadcrumbs = [
         category_uid: '',
         category_url_key: null,
         category_url_path: '/women/women-tops/',
-    },
-    {
-        category_level: 2,
-        category_name: 'Hoodies & Sweatshirts',
-        category_uid: '',
-        category_url_key: null,
-        category_url_path: '/women/tops-women/hoodies-and-sweatshirts-women/',
     },
 ];

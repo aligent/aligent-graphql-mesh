@@ -344,6 +344,23 @@ type Query {
         sort: ProductAttributeSortInput
     ): Products
     """
+    Search for products that match the criteria specified in the `search` and `filter` attributes.
+    """
+    productsBySku(
+        """
+        The product attributes to search for and return.
+        """
+        filter: ProductsBySkusInput!
+        """
+        The maximum number of results to return at once. The default value is 20 and max allowed is 50
+        """
+        pageSize: Int = 20
+        """
+        Specifies which attributes to sort on, and whether to return the results in ascending or descending order.
+        """
+        sort: ProductsBySkusSortInput
+    ): Products
+    """
     Returns details about Google reCAPTCHA V3-Invisible configuration.
     """
     recaptchaV3Config: ReCaptchaConfigurationV3
@@ -2747,10 +2764,49 @@ type Website {
 }
 
 """
+Product availability status
+"""
+enum ProductAvailabilityStatus {
+    Available
+    Preorder
+    Unavailable
+}
+
+"""
+Release date for preorder products
+"""
+type ReleaseDate {
+    utc: String
+}
+
+type ProductAvailability {
+    """
+    A few words telling the customer how long it will normally take to ship this product, such as 'Usually ships in 24 hours'.
+    """
+    description: String
+    """
+    The message to be shown in the store when a product is put into the pre-order availability state, e.g. "Expected release date is %%DATE%%"
+    """
+    message: String
+    """
+    The availability state of the product.
+    """
+    status: ProductAvailabilityStatus
+    """
+    Product release date
+    """
+    willBeReleasedAt: ReleaseDate
+}
+
+"""
 Contains fields that are common to all types of products.
 """
 interface ProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
     """
     The attribute set assigned to the product.
     """
@@ -4110,6 +4166,10 @@ Defines a virtual product, which is a non-tangible product that does not require
 type VirtualProduct implements ProductInterface & RoutableInterface & CustomizableProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
+    """
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
@@ -4370,6 +4430,10 @@ Defines a simple product, which is tangible and is usually sold in single units 
 """
 type SimpleProduct implements ProductInterface & RoutableInterface & PhysicalProductInterface & CustomizableProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
     """
     The attribute set assigned to the product.
     """
@@ -4872,6 +4936,31 @@ input CategoryFilterInput {
     Filter by the URL path for the category.
     """
     url_path: FilterEqualTypeInput
+}
+
+input ProductsBySkusInput {
+    """
+    A number or code assigned to a product to identify the product, options, price, and manufacturer.
+    """
+    sku: FilterTypeInput!
+}
+
+"""
+Specifies the attribute to use for sorting search results and indicates whether the results are sorted in ascending or descending order. It's possible to sort products using searchable attributes with enabled 'Use in Filter Options' option
+"""
+input ProductsBySkusSortInput {
+    """
+    Attribute label: Product Name
+    """
+    name: SortEnum
+    """
+    Sort by the position of the sku items.
+    """
+    position: SortEnum
+    """
+    Attribute label: Price
+    """
+    price: SortEnum
 }
 
 """
@@ -7517,6 +7606,10 @@ Defines a product that the shopper downloads.
 type DownloadableProduct implements ProductInterface & RoutableInterface & CustomizableProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
+    """
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
@@ -9754,6 +9847,10 @@ Defines basic features of a bundle product and contains multiple BundleItems.
 """
 type BundleProduct implements ProductInterface & RoutableInterface & PhysicalProductInterface & CustomizableProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
     """
     The attribute set assigned to the product.
     """
@@ -12145,6 +12242,10 @@ Defines a grouped product, which consists of simple standalone products that are
 type GroupedProduct implements ProductInterface & RoutableInterface & PhysicalProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
+    """
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
@@ -12457,6 +12558,10 @@ Defines basic features of a configurable product and its simple product variants
 """
 type ConfigurableProduct implements ProductInterface & RoutableInterface & PhysicalProductInterface & CustomizableProductInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
     """
     The attribute set assigned to the product.
     """
@@ -15731,6 +15836,10 @@ Defines properties of a gift card.
 """
 type GiftCardProduct implements ProductInterface & PhysicalProductInterface & CustomizableProductInterface & RoutableInterface {
     activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    """
+    The availability state of the product.
+    """
+    availability: ProductAvailability
     """
     Indicates whether the customer can provide a message to accompany the gift card.
     """

@@ -56,6 +56,16 @@ export const acCustomerOutputWithName: CustomerOutput = {
     },
 };
 
+export const bcCreateCustomerInputData: BcMutationCustomer = {
+    email: 'example@example.com',
+    first_name: 'example',
+    last_name: 'customer',
+    authentication: {
+        force_password_reset: false,
+        new_password: 'password',
+    },
+};
+
 export const bcMutationCustomerWithName: BcMutationCustomer = {
     id: 1,
     first_name: 'example',

@@ -57,6 +57,14 @@ export const ProductsDetails: DocumentNode = gql`
         }
         availabilityV2 {
             status
+            ... on ProductPreOrder {
+                message
+                description
+                status
+                willBeReleasedAt {
+                    utc
+                }
+            }
         }
         reviewSummary {
             numberOfReviews
