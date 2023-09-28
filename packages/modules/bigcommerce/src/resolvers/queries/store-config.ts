@@ -1,7 +1,7 @@
 import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { QueryResolvers, StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getChannelMetafields } from '../../apis/graphql/channel';
-import { getAttributesFromMetaAndCustomFields } from '../../../../../utils/metafields';
+import { getAttributesFromMetaAndCustomFields } from '@aligent/utils';
 import {
     booleanStoreConfigProperties,
     integerStoreConfigProperties,

@@ -1,8 +1,7 @@
 /* istanbul ignore file */
 import axios from 'axios';
 import { getChannelMetafields } from '../graphql/channel';
-import { logAndThrowError } from '../../../../../utils/error-handling';
-import { findMetafieldValueByKey } from '../../../../../utils/metafields';
+import { logAndThrowError, findMetafieldValueByKey } from '@aligent/utils';
 
 const GOOGLE_GEOCODING_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const GOOGLE_GEOCODING_API_KEY_MAPPING = 'googleMapsBackendAPIKey';
