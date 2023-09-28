@@ -4,13 +4,14 @@
   "sourceRoot": "packages/modules/bigcommerce/src",
   "projectType": "library",
   "targets": {
-    "generate": {
+    "codegen": {
       "executor": "nx:run-commands",
       "inputs": ["codegen"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/generated/bigcommerce",
-        "command": "graphql-codegen --config {projectRoot}/codegen.ts" 
+        "command": "graphql-codegen --config {projectRoot}/codegen.ts",
+        "envFile": "packages/mesh/bigcommerce/.env"
       }
     },
     "build": {
@@ -24,7 +25,7 @@
         "format": ["cjs"],
         "esbuildConfig": "packages/modules/bigcommerce/esbuild.config.js"
       },
-      "dependsOn": ["generate"]
+      "dependsOn": ["codegen"]
     },
     "publish": {
       "command": "node tools/scripts/publish.mjs bigcommerce-graphql-module {args.ver} {args.tag}",
