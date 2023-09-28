@@ -4,7 +4,22 @@
   "sourceRoot": "packages/mesh/bigcommerce/src",
   "projectType": "application",
   "targets": {
-
+    "serve": {
+      "executor": "nx:run-commands",
+      "inputs": [],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "mesh dev",
+        "runBuildTargetDependencies": true
+      },
+      "dependsOn": [
+        {
+          "projects": ["bigcommerce-graphql-module"],
+          "target": "build"
+        }
+      ]
+    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
