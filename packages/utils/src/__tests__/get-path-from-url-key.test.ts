@@ -1,4 +1,4 @@
-import { getPathFromUrlKey } from '../get-path-from-url-key';
+import { getPathFromUrlKey } from '../../get-path-from-url-key';
 
 const pdpUrlKeys = [
     '/mona-pullover-hoodlie',

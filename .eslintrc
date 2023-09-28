@@ -1,16 +1,10 @@
 {
-    "root": true,
+    "ignorePatterns": ["**/*"],
     "parser": "@typescript-eslint/parser",
+    "plugins": ["@nx", "@typescript-eslint"],
     "parserOptions": {
         "project": ["./tsconfig.json"]
     },
-    "plugins": ["@typescript-eslint"],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier"
-    ],
     "rules": {
         "@typescript-eslint/ban-ts-comment": [
             "error",
@@ -19,5 +13,43 @@
         "no-return-await": "off",
         "@typescript-eslint/return-await": "error",
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
-    }
-}
+    },
+    "overrides": [
+      {
+        "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+        "rules": {
+          "@nx/enforce-module-boundaries": [
+            "error",
+            {
+              "enforceBuildableLibDependency": true,
+              "allow": [],
+              "depConstraints": [
+                {
+                  "sourceTag": "*",
+                  "onlyDependOnLibsWithTags": ["*"]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "files": ["*.ts", "*.tsx"],
+        "extends": ["plugin:@nx/typescript"],
+        "rules": {}
+      },
+      {
+        "files": ["*.js", "*.jsx"],
+        "extends": ["plugin:@nx/javascript"],
+        "rules": {}
+      },
+      {
+        "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+        "env": {
+          "jest": true
+        },
+        "rules": {}
+      }
+    ]
+  }
+  

@@ -1,0 +1,63 @@
+{
+  "name": "orocommerce-graphql-module",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/modules/orocommerce/src",
+  "projectType": "library",
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "inputs": ["codegen"],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/generated/orocommerce",
+        "command": "graphql-codegen --config {projectRoot}/codegen.ts" 
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/modules/orocommerce",
+        "main": "packages/modules/orocommerce/src/index.ts",
+        "tsConfig": "packages/modules/orocommerce/tsconfig.lib.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "format": ["cjs"],
+        "esbuildConfig": "packages/modules/orocommerce/esbuild.config.js"
+      },
+      "dependsOn": ["generate"]
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs orocommerce-graphql-module {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/modules/orocommerce/**/*.ts",
+          "packages/modules/orocommerce/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/modules/orocommerce/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": [],
+  "namedInputs": {
+    "codegen": ["{projectRoot}/codegen.ts"]
+  }
+}
