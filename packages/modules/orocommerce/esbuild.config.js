@@ -2,11 +2,10 @@ const graphqlLoaderPlugin = require('@luckycatfactory/esbuild-graphql-loader').d
 const optimizer = require('@graphql-tools/optimize');
 
 module.exports = {
-  plugins: [
-    graphqlLoaderPlugin({
-      mapDocumentNode: (documentNode) =>
-        optimizer.optimizeDocumentNode(documentNode),
-    }),
-  ],
-  sourcemap: true
-}
+    plugins: [
+        graphqlLoaderPlugin({
+            mapDocumentNode: (documentNode) => optimizer.optimizeDocumentNode(documentNode),
+        }),
+    ],
+    sourcemap: true,
+};

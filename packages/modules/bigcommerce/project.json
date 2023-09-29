@@ -1,63 +1,63 @@
 {
-  "name": "bigcommerce-graphql-module",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/modules/bigcommerce/src",
-  "projectType": "library",
-  "targets": {
-    "codegen": {
-      "executor": "nx:run-commands",
-      "inputs": ["codegen"],
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/generated/bigcommerce",
-        "command": "graphql-codegen --config {projectRoot}/codegen.ts",
-        "envFile": "packages/mesh/bigcommerce/.env"
-      }
-    },
-    "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/modules/bigcommerce",
-        "main": "packages/modules/bigcommerce/src/index.ts",
-        "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
-        "assets": [],
-        "format": ["cjs"],
-        "esbuildConfig": "packages/modules/bigcommerce/esbuild.config.js"
-      },
-      "dependsOn": ["codegen"]
-    },
-    "publish": {
-      "command": "node tools/scripts/publish.mjs bigcommerce-graphql-module {args.ver} {args.tag}",
-      "dependsOn": ["build"]
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/modules/bigcommerce/**/*.ts",
-          "packages/modules/bigcommerce/package.json"
-        ]
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/modules/bigcommerce/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
+    "name": "bigcommerce-graphql-module",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/modules/bigcommerce/src",
+    "projectType": "library",
+    "targets": {
+        "codegen": {
+            "executor": "nx:run-commands",
+            "inputs": ["codegen"],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/generated/bigcommerce",
+                "command": "graphql-codegen --config {projectRoot}/codegen.ts",
+                "envFile": "packages/mesh/bigcommerce/.env"
+            }
+        },
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/modules/bigcommerce",
+                "main": "packages/modules/bigcommerce/src/index.ts",
+                "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
+                "assets": [],
+                "format": ["cjs"],
+                "esbuildConfig": "packages/modules/bigcommerce/esbuild.config.js"
+            },
+            "dependsOn": ["codegen"]
+        },
+        "publish": {
+            "command": "node tools/scripts/publish.mjs bigcommerce-graphql-module {args.ver} {args.tag}",
+            "dependsOn": ["build"]
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/modules/bigcommerce/**/*.ts",
+                    "packages/modules/bigcommerce/package.json"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/modules/bigcommerce/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
         }
-      }
+    },
+    "tags": [],
+    "namedInputs": {
+        "codegen": ["{projectRoot}/codegen.ts"]
     }
-  },
-  "tags": [],
-  "namedInputs": {
-    "codegen": ["{projectRoot}/codegen.ts"]
-  }
 }
