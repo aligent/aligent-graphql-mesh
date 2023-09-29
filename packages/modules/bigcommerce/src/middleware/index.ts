@@ -6,8 +6,11 @@ const middlewareMap: MiddlewareMap = {
         '*': [
             (context, next) => {
                 // Copy the x-forwarded-for header and send it with all axios requests
-                const forwardedIp = context.context.headers['x-forwarded-for'].split(',').shift();
-                axios.defaults.headers.common['x-forwarded-for'] = forwardedIp;
+                const forwardedIps = context.context.headers['x-forwarded-for'];
+                if (forwardedIps) {
+                    const clientIp = forwardedIps.split(',').shift() || '';
+                    axios.defaults.headers.common['x-forwarded-for'] = clientIp;
+                }
                 return next();
             },
         ],
