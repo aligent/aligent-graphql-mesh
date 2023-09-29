@@ -1,6 +1,4 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
-const BC_GRAPHQL_TOKEN = process.env.BC_GRAPHQL_TOKEN as string;
 
 const config: CodegenConfig = {
     overwrite: true,
