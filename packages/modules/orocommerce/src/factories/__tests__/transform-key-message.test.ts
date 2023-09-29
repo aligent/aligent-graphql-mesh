@@ -1,5 +1,5 @@
 import { getMockKeyMessages } from '../../apis/rest/mocks/key-messages';
-import { transformKeyMessages } from '../transform-key-message';
+import { transformKeyMessages } from '../transform-key-messages';
 
 describe('Key Messages data transformation tests', () => {
     const mockMessages = getMockKeyMessages();
