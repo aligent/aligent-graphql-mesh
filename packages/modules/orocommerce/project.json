@@ -4,7 +4,7 @@
   "sourceRoot": "packages/modules/orocommerce/src",
   "projectType": "library",
   "targets": {
-    "generate": {
+    "codegen": {
       "executor": "nx:run-commands",
       "inputs": ["codegen"],
       "outputs": ["{options.outputPath}"],
@@ -21,11 +21,10 @@
         "main": "packages/modules/orocommerce/src/index.ts",
         "tsConfig": "packages/modules/orocommerce/tsconfig.lib.json",
         "assets": [],
-        "generatePackageJson": true,
         "format": ["cjs"],
         "esbuildConfig": "packages/modules/orocommerce/esbuild.config.js"
       },
-      "dependsOn": ["generate"]
+      "dependsOn": ["codegen"]
     },
     "publish": {
       "command": "node tools/scripts/publish.mjs orocommerce-graphql-module {args.ver} {args.tag}",

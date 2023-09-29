@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { CONTEXT, forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ModuleConfig } from '../providers';
 import { USER_AGENT } from '../apis/rest/client';
-import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
+import { OroCommerceModuleConfig } from '../index';
 import { Token } from '../types/auth';
 import { decode } from 'jsonwebtoken';
 

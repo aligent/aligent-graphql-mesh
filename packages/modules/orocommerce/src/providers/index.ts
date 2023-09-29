@@ -1,5 +1,5 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
+import { OroCommerceModuleConfig } from '../index';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { Auth } from '../services/auth';
