@@ -6,8 +6,7 @@
         "strict": true,
         "noImplicitOverride": true,
         "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "composite": true
+        "noFallthroughCasesInSwitch": true
     },
     "files": [],
     "include": [],

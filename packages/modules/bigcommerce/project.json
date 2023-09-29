@@ -4,6 +4,16 @@
     "sourceRoot": "packages/modules/bigcommerce/src",
     "projectType": "library",
     "targets": {
+        "check-types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    {
+                        "command": "tsc --noEmit --pretty -p {projectRoot}/tsconfig.json"
+                    }
+                ]
+            }
+        },
         "codegen": {
             "executor": "nx:run-commands",
             "inputs": ["codegen"],

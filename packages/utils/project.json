@@ -4,6 +4,16 @@
     "sourceRoot": "packages/utils/src",
     "projectType": "library",
     "targets": {
+        "check-types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    {
+                        "command": "tsc --noEmit --pretty -p {projectRoot}/tsconfig.json"
+                    }
+                ]
+            }
+        },
         "build": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
