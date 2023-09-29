@@ -10,6 +10,7 @@ export interface BcGraphqlTokenData {
 
 export interface GraphQlQuery {
     query: string;
+    variables?: { [key: string]: unknown };
 }
 export interface BcCustomer {
     id: number;

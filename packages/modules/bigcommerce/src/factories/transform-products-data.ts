@@ -138,10 +138,14 @@ export const getTransformedProductData = (
     }
 };
 
-export const getTransformedProductsData = (bcProducts: {
-    products: ProductConnection;
-    filters?: SearchProductFilterConnection;
-}): Maybe<Products & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }> => {
+export const getTransformedProductsData = (
+    bcProducts: {
+        products: ProductConnection;
+        filters?: SearchProductFilterConnection;
+    },
+    pageSize: number,
+    currentPage: number
+): Maybe<Products & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;
 
@@ -155,9 +159,9 @@ export const getTransformedProductsData = (bcProducts: {
             : null,
         // @todo add pagination for category products
         page_info: {
-            current_page: 0,
-            page_size: 0,
-            total_pages: 0,
+            current_page: currentPage,
+            page_size: pageSize,
+            total_pages: Math.ceil(products.collectionInfo?.totalItems / pageSize),
         },
         total_count: collectionInfo?.totalItems,
     };

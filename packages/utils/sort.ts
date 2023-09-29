@@ -15,12 +15,12 @@ export const transformGQLSortArgsToRestSortArgs = (
     sort?: ProductAttributeSortInput | null,
     sortKeyMapping: { [key: string]: string } = {}
 ): { sort: string; direction: string } => {
-    if (!sort || Object.keys(sort || {}).length === 0) {
+    if (!sort || Object.keys(sort).length === 0) {
         return { sort: '', direction: '' };
     }
 
     /* We can only sort by one option so grab the first key/value pair option from the sort object */
-    const [key, value] = Object.entries(sort || {})[0] || null;
+    const [key, value] = Object.entries(sort)[0];
 
     const direction = value !== 'DESC' ? 'asc' : 'desc';
 
