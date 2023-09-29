@@ -9,8 +9,11 @@
     }
   },
   "targetDefaults": {
+    "codegen": {
+      "inputs": ["^production"]
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^codegen"],
       "inputs": ["production", "^production"]
     },
     "test": {
