@@ -9,7 +9,7 @@ import {
 } from '@aligent/bigcommerce-operations';
 import { getIncludesTax } from '@aligent/utils';
 import { Sdk } from '@aligent/bigcommerce-operations';
-import { BigCommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
+import { BigCommerceModuleConfig } from '../../index';
 import { BigCommerceSdk, ModuleConfig } from '../../providers';
 import { getCdnUrl, getRoute, getTaxSettings } from '../../apis/graphql';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
