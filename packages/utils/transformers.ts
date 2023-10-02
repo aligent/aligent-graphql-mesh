@@ -1,7 +1,7 @@
 export interface TransformerContext<T, D> {
     data: T;
     result?: D;
-    stopExecution?: boolean
+    stopExecution?: boolean;
 }
 
 export interface Transformer<T, D> {
@@ -21,7 +21,7 @@ export class ChainTransformer<T, D> {
                 break;
             }
 
-            context.result = transformer.transform(context); 
+            context.result = transformer.transform(context);
         }
 
         if (context.result) {
