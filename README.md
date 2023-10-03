@@ -17,6 +17,12 @@ Reference: https://the-guild.dev/graphql/mesh
 $ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
 ```
 
+2. Install yarn
+
+```shell
+npm install --global yarn
+```
+
 2. Run `yarn install`
 
 3. Duplicate the `.env.template` file as `.env` and fill in the values and place it in `packages/mesh/.env` directory.
@@ -25,9 +31,13 @@ $ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
 $ cp .env.template packages/mesh/.env
 ```
 
-4. Add environment configuration to .env file (see section below: Environment configuration)
+4. Navigate to packages/mesh/.env and add environment configuration to .env file (see section below: Environment configuration)
 
-5. Generate SSL certificate (see section below: Generating an SSL Certificate)
+5. Generate SSL certificate (more details see section below: Generating an SSL Certificate)
+
+```shell
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.crt
+```
 
 6. Add custom domain, `mesh.local.pwadev` to `/etc/hosts` file
 
@@ -41,7 +51,7 @@ Adding the entry:
 127.0.0.1 mesh.local.pwadev
 ```
 
-7. Start the mesh server from project root (see section below: Using the Mesh)
+7. Start the mesh server from project root by running `yarn dev` (More details see section below: Using the Mesh)
 
 You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 
@@ -57,6 +67,15 @@ You can now send queries to `https://localhost:4000/graphql` to hit the mesh.
 `ORO_CLIENT_SECRET` - Storefront OAuth application client secret
 
 To generate a client id and client secret head here: `${ORO_STORE_URL}/admin/oauth2/frontend` and create a Password grant type application by following these instructions: https://doc.oroinc.com/user/back-office/system/user-management/oauth-app/#oauth-applications
+
+#### Creating OAuth Oro App
+
+- Visit https://{SOME_DOMAIN}/admin/oauth2/frontend
+- Click on Create OAuth Application
+- Name the new application following the pattern: GraphQLMesh-{FirstName}{LastNameInitial}
+- Select Password as the Grant Type
+- Click Save and Close
+- Copy the ID and Secret displayed into your local .env file
 
 ### BigCommerce
 
