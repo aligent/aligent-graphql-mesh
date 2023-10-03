@@ -30,8 +30,6 @@ export const getTransformCartItems = (
             salePrice,
             // This is the accumulated items final price including or excluding gst depending on admin configuration
             extendedSalePrice,
-            // "originalPrice" is the default price plus gst
-            originalPrice: originalPriceIncGst, // RRP price
             quantity,
             selectedOptions,
         } = item;
