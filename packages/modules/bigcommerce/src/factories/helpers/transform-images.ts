@@ -53,5 +53,6 @@ export const getTransformedMediaGalleryEntries = (images: {
 };
 
 export const getTransformedSmallImage = (defaultImage?: Maybe<Image>): Maybe<ProductImage> => ({
+    label: defaultImage?.altText || '',
     url: defaultImage?.url || DEFAULT_IMAGE,
 });
