@@ -1,6 +1,7 @@
 import { Money, Prices, VariantConnection } from '@aligent/bigcommerce-operations';
 import { Maybe, PriceRange, ProductPrices } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
+import { SupportedProductTypes } from '../../types';
 
 const noPricesResponse = {
     maximum_price: {
@@ -20,6 +21,8 @@ const noPricesResponse = {
         regular_price: { currency: null, value: null },
     },
 };
+
+const roundAmount = (amount: number): number => parseFloat(amount.toFixed(2));
 
 /**
  * Get if the products sale price has been applied as the final price.
@@ -44,7 +47,7 @@ export const getAmountOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) => 
 
     if (!isSalePriceTheFinalPrice) return 0;
 
-    return basePrice.value - price.value;
+    return roundAmount(basePrice.value - price.value);
 };
 
 export const getPercentOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) => {
@@ -54,7 +57,7 @@ export const getPercentOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) =>
 
     if (!isSalePriceTheFinalPrice) return 0;
 
-    return ((basePrice.value - price.value) / basePrice.value) * 100;
+    return roundAmount(((basePrice.value - price.value) / basePrice.value) * 100);
 };
 
 export const getMostExpensiveVariant = (
@@ -76,7 +79,7 @@ export const getMostExpensiveVariant = (
 
 export const getTransformedPriceRange = (
     prices: Maybe<Prices>,
-    productType: 'SimpleProduct' | 'ConfigurableProduct',
+    productType: SupportedProductTypes,
     variants?: Maybe<VariantConnection>
 ): PriceRange => {
     if (!prices) return noPricesResponse;

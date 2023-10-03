@@ -450,3 +450,5 @@ export interface BCShipping {
     shipping_zone_name: string;
     shipping_quotes: Resource;
 }
+
+export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';

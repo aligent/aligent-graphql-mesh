@@ -6,6 +6,7 @@ import {
     ContactPage,
     NormalPage,
     Product,
+    TaxDisplaySettings,
 } from '@aligent/bigcommerce-operations';
 import { getIncludesTax } from '@aligent/utils';
 import { Sdk } from '@aligent/bigcommerce-operations';
@@ -18,13 +19,23 @@ import { getTransformedNormalPageData } from '../../factories/get-transformed-no
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
+import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
-const getTransformedRouteData = async (
-    data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product,
-    sdk: Sdk,
-    config: BigCommerceModuleConfig,
-    customerImpersonationToken: string
-): Promise<RoutableInterface> => {
+interface TransformedRouteDta {
+    data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product;
+    sdk: Sdk;
+    config: BigCommerceModuleConfig;
+    customerImpersonationToken: string;
+    taxSettings: TaxDisplaySettings | null;
+}
+
+const getTransformedRouteData = async ({
+    data,
+    sdk,
+    config,
+    customerImpersonationToken,
+    taxSettings,
+}: TransformedRouteDta): Promise<RoutableInterface> => {
     const { __typename } = data;
     if (__typename === 'Brand') {
         const transformedBrandData = productsMock.items[0];
@@ -63,7 +74,16 @@ const getTransformedRouteData = async (
     }
 
     if (__typename === 'Product') {
-        const transformedProductData = getTransformedProductData(data as unknown as Product);
+        const bcProduct = data as unknown as Product;
+        const bundleItemProducts = await getBundleItemProducts(
+            bcProduct,
+            taxSettings,
+            customerImpersonationToken
+        );
+        const transformedProductData = getTransformedProductData(
+            bcProduct,
+            bundleItemProducts?.items
+        );
         return {
             type: 'PRODUCT',
             redirect_code: 0,
@@ -106,12 +126,13 @@ export const routeResolver = {
 
         const { path } = data;
 
-        const transformedRouteData = await getTransformedRouteData(
+        const transformedRouteData = await getTransformedRouteData({
             data,
             sdk,
             config,
-            customerImpersonationToken
-        );
+            customerImpersonationToken,
+            taxSettings,
+        });
 
         return {
             relative_url: path.replace(/^\//, ''),
