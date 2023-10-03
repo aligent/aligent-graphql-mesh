@@ -95,6 +95,10 @@ export interface BcCategory {
         pageTitle: string;
     };
     breadcrumbs?: BreadcrumbConnection;
+    defaultImage?: {
+        urlOriginal?: string;
+        altText?: string;
+    } | null;
 }
 
 export interface BcAddress {
