@@ -1,5 +1,6 @@
 import { Money, Prices, VariantConnection } from '@aligent/bigcommerce-operations';
-import { Maybe, PriceRange, ProductPrices } from '@aligent/bigcommerce-resolvers';
+import { Maybe, PriceRange, ProductPrices, TierPrice } from '@aligent/bigcommerce-resolvers';
+import { CurrencyEnum, Money as AcMoney } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 import { SupportedProductTypes } from '../../types';
 
@@ -133,4 +134,109 @@ export const getTransformedPrices = (prices: Maybe<Prices>): Maybe<ProductPrices
             amount: prices ? getTransformedPrice(prices.price) : null,
         },
     };
+};
+
+type PricesForTieredPricing = Pick<Prices, 'bulkPricing' | 'basePrice' | 'price'>;
+
+export const getTransformedPriceTiers = (
+    prices: Maybe<PricesForTieredPricing>
+): Maybe<Array<Maybe<TierPrice>>> => {
+    if (!prices || !prices.price || !prices.basePrice || !prices.bulkPricing?.length) return [];
+
+    const { basePrice, bulkPricing, price } = prices;
+
+    let hasBulkPricingForOneQuantity = false;
+
+    const tierPrices = bulkPricing.map((bulkPrice) => {
+        const { minimumQuantity } = bulkPrice;
+
+        /* Flag if bulk pricing has a case for a minimum of one quantity */
+        if (minimumQuantity === 1) hasBulkPricingForOneQuantity = true;
+
+        const currencyCode = price?.currencyCode || '';
+
+        const finalPrice = {
+            currency: currencyCode,
+            value: null,
+        } as AcMoney;
+
+        /* Discounts are calculated on a products "sale_price" if applied or otherwise fallbacks to "base_price". This
+         * is reflected in the "price" property */
+        let discount = {
+            amount_off: 0,
+            percent_off: 0,
+        };
+
+        /* For fixed bulk pricing "BulkPricingFixedPriceDiscount"*/
+        if ('price' in bulkPrice) {
+            const fixedPrice = {
+                value: bulkPrice.price,
+                currencyCode: currencyCode,
+            };
+
+            discount = {
+                amount_off: getAmountOff(basePrice, fixedPrice),
+                percent_off: getPercentOff(basePrice, fixedPrice),
+            };
+
+            finalPrice.value = fixedPrice.value;
+        }
+
+        /* For amount off per-unit pricing "BulkPricingRelativePriceDiscount"*/
+        if ('priceAdjustment' in bulkPrice) {
+            const adjustedPrice = {
+                value: price.value - bulkPrice.priceAdjustment,
+                currencyCode: currencyCode,
+            };
+
+            discount = {
+                amount_off: getAmountOff(basePrice, adjustedPrice),
+                percent_off: getPercentOff(basePrice, adjustedPrice),
+            };
+
+            finalPrice.value = adjustedPrice.value;
+        }
+
+        /* For percentage off bul pricing "BulkPricingPercentageDiscount"*/
+        if ('percentOff' in bulkPrice) {
+            const priceWithPercentageOff = {
+                value: price.value * (1 - bulkPrice.percentOff / 100),
+                currencyCode,
+            };
+
+            const amountOff = getAmountOff(basePrice, priceWithPercentageOff);
+
+            discount = {
+                amount_off: amountOff,
+                percent_off: bulkPrice.percentOff,
+            };
+
+            finalPrice.value = priceWithPercentageOff.value;
+        }
+
+        return {
+            discount,
+            final_price: finalPrice,
+            quantity: minimumQuantity,
+        };
+    });
+
+    /* Create bulk pricing data for a minimum quantity of "1" if there is none in the "bulkPricing" array */
+    const bulkPriceForOneQty = !hasBulkPricingForOneQuantity
+        ? [
+              {
+                  discount: {
+                      amount_off: getAmountOff(basePrice, price),
+                      percent_off: getPercentOff(basePrice, price),
+                  },
+                  final_price: {
+                      value: price.value,
+                      currency: price.currencyCode as CurrencyEnum,
+                  },
+                  quantity: 1,
+              },
+          ]
+        : [];
+
+    return [...bulkPriceForOneQty, ...tierPrices];
 };

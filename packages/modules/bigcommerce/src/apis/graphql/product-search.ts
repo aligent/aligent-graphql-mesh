@@ -9,6 +9,7 @@ import { getProductsSearchQuery } from './requests';
 
 export const getBcProductSearchGraphql = async (
     variables: {
+        after?: string | null;
         filters: SearchProductsFiltersInput;
         includeTax?: boolean;
         pageSize: number;

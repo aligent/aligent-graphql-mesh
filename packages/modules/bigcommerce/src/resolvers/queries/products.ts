@@ -10,6 +10,7 @@ import { getBcProductSearchGraphql } from '../../apis/graphql';
 import { getBcAvailableProductFilters } from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
 import { getTaxSettings } from '../../apis/graphql';
+import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
 export const productsResolver: QueryResolvers['products'] = {
@@ -65,8 +66,18 @@ export const productsResolver: QueryResolvers['products'] = {
                 availableBcProductFilters
             );
 
+            /* Retrieve the pagination cursor for the next set of products we
+             * want to query */
+            const paginationPage = await getProductSearchPagination(
+                { filters: transformedFilterArguments },
+                customerImpersonationToken,
+                pageSize,
+                args?.currentPage
+            );
+
             const bcProducts = await getBcProductSearchGraphql(
                 {
+                    after: paginationPage?.startCursor,
                     includeTax: getIncludesTax(taxSettings?.plp),
                     filters: transformedFilterArguments,
                     pageSize,
@@ -76,7 +87,7 @@ export const productsResolver: QueryResolvers['products'] = {
 
             if (!bcProducts) return null;
 
-            return getTransformedProductsData(bcProducts);
+            return getTransformedProductsData(bcProducts, pageSize, paginationPage.currentPage);
         } catch (error) {
             return logAndThrowError(error);
         }

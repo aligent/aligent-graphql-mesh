@@ -10,6 +10,7 @@ export interface BcGraphqlTokenData {
 
 export interface GraphQlQuery {
     query: string;
+    variables?: { [key: string]: unknown };
 }
 export interface BcCustomer {
     id: number;
@@ -94,6 +95,10 @@ export interface BcCategory {
         pageTitle: string;
     };
     breadcrumbs?: BreadcrumbConnection;
+    defaultImage?: {
+        urlOriginal?: string;
+        altText?: string;
+    } | null;
 }
 
 export interface BcAddress {

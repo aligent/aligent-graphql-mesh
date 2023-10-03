@@ -105,8 +105,8 @@ export const getTransformCartItems = (
             },
             product: {
                 ...matchingEnrichedData,
-                id: variantEntityId,
-                uid: btoa(String(variantEntityId)),
+                id: matchingEnrichedData?.id || variantEntityId,
+                uid: matchingEnrichedData?.uid || btoa(String(variantEntityId)),
                 name: name,
                 sku: sku,
                 small_image: {
@@ -137,7 +137,7 @@ export const getTransformCartItems = (
                     },
                 },
                 staged: false,
-                __typename: 'ConfigurableProduct',
+                __typename: 'SimpleProduct',
             },
             quantity: quantity,
             configurable_options,
