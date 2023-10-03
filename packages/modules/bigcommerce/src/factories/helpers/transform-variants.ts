@@ -1,6 +1,6 @@
 import { VariantConnection } from '@aligent/bigcommerce-operations';
 import { ConfigurableVariant, Maybe } from '@aligent/bigcommerce-resolvers';
-import { getTransformedImage } from './transform-images';
+import { getTransformedImage, getTransformedSmallImage } from './transform-images';
 import { getTransformedPriceRange, getTransformedPriceTiers } from './transform-product-prices';
 import { getTransformedProductsAttributes } from './transform-product-attributes';
 import { getTransformedAvailableStock, getTransformedVariantStockStatus } from './transform-stock';
@@ -37,6 +37,7 @@ export const getTransformedVariants = (
                     },
                     review_count: 0,
                     sku,
+                    small_image: getTransformedSmallImage(defaultImage),
                     staged: false,
                     stock_status: getTransformedVariantStockStatus(inventory, isPurchasable),
                     uid: id,

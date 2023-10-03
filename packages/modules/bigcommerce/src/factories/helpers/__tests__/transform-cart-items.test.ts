@@ -699,9 +699,13 @@ export const mockFlattenedProducts = [
 
 const expectResult = [
     {
-        id: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
-        uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzQ5Mi81MTM=',
+        __typename: 'ConfigurableCartItem',
+        configurable_options: [
+            { id: 148, option_label: 'Color', value_id: 182, value_label: 'Green' },
+            { id: 149, option_label: 'Size', value_id: 184, value_label: 'S' },
+        ],
         errors: null,
+        id: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
         prices: {
             price: { currency: 'AUD', value: 30 },
             price_including_tax: { currency: 'AUD', value: 30 },
@@ -710,74 +714,55 @@ const expectResult = [
             total_item_discount: { currency: 'AUD', value: 0 },
         },
         product: {
+            __typename: 'SimpleProduct',
             id: 1034,
-            uid: 'NTEz',
-            name: 'Mona Pullover Hoodlie',
             media_gallery_entries: [
                 {
-                    id: 1742,
+                    __typename: 'MediaGalleryEntry',
                     disabled: false,
                     file: '/w/h/wh01-green_main.jpg',
+                    id: 1742,
                     label: '',
                     position: 1,
                     uid: 'OA==',
-                    __typename: 'MediaGalleryEntry',
                 },
                 {
-                    id: 1743,
+                    __typename: 'MediaGalleryEntry',
                     disabled: false,
                     file: '/w/h/wh01-green_alt1.jpg',
+                    id: 1743,
                     label: '',
                     position: 2,
                     uid: 'OA==',
-                    __typename: 'MediaGalleryEntry',
                 },
                 {
-                    id: 1744,
+                    __typename: 'MediaGalleryEntry',
                     disabled: false,
                     file: '/w/h/wh01-green_back.jpg',
+                    id: 1744,
                     label: '',
                     position: 3,
                     uid: 'OA==',
-                    __typename: 'MediaGalleryEntry',
                 },
             ],
             only_x_left_in_stock: 11,
-            sku: 'WH01-S-Green',
-            small_image: {
-                url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/product_images/attribute_rule_images/54_thumb_1690452039.jpg',
-                label: 'Mona Pullover Hoodlie',
-            },
-            categories: [],
-            stock_status: 'IN_STOCK',
             price_range: {
+                __typename: 'PriceRange',
                 minimum_price: {
-                    discount: { amount_off: 40 },
-                    final_price: { currency: 'AUD', value: 30 },
-                    regular_price: { currency: 'AUD', value: 70 },
+                    __typename: 'ProductPrice',
+                    discount: { __typename: 'ProductDiscount', amount_off: 27, percent_off: 47.37 },
+                    final_price: { __typename: 'Money', currency: 'AUD', value: 30 },
+                    regular_price: { __typename: 'Money', currency: 'AUD', value: 57 },
                 },
             },
-            rating_summary: 0,
-            review_count: 0,
-            url_key: 'mona-pullover-hoodlie',
-            url_suffix: '',
-            custom_attributes: [],
-            reviews: {
-                items: [],
-                page_info: { current_page: null, page_size: null, total_pages: null },
-            },
+            sku: 'WH01-S-Green',
             staged: false,
-            __typename: 'SimpleProduct',
+            stock_status: 'IN_STOCK',
         },
         quantity: 2,
-        configurable_options: [
-            { id: 148, option_label: 'Color', value_id: 182, value_label: 'Green' },
-            { id: 149, option_label: 'Size', value_id: 184, value_label: 'S' },
-        ],
-        __typename: 'ConfigurableCartItem',
+        uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzQ5Mi81MTM=',
     },
 ];
-
 describe('transform-cart-items', () => {
     it(`transforms cart item`, () => {
         expect(

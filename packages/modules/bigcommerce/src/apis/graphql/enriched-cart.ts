@@ -2,8 +2,10 @@ import { getCheckout } from './checkout';
 import { getBcProductsGraphql } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 import { getFlattenedProducts } from '../../utils';
+import { getTaxSettings } from './settings';
+import { getIncludesTax } from '@aligent/utils';
+import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -30,11 +32,14 @@ export const getEnrichedCart = async (
     bcCustomerId: number | null,
     customerImpersonationToken: string
 ): Promise<Cart> => {
-    const checkoutResponse = await getCheckout(
-        args.cart_id,
-        bcCustomerId,
-        customerImpersonationToken
-    );
+    const checkoutQuery = getCheckout(args.cart_id, bcCustomerId, customerImpersonationToken);
+
+    const taxSettingsQuery = getTaxSettings(customerImpersonationToken);
+
+    const [checkoutResponse, taxSettingsResponse] = await Promise.all([
+        checkoutQuery,
+        taxSettingsQuery,
+    ]);
 
     if (!checkoutResponse?.entityId) return UNDEFINED_CART;
 
@@ -47,7 +52,7 @@ export const getEnrichedCart = async (
     const uniqueEntityIds = [...new Set(cartItemEntityIds)];
 
     const products = await getBcProductsGraphql(
-        { entityIds: uniqueEntityIds },
+        { entityIds: uniqueEntityIds, includeTax: getIncludesTax(taxSettingsResponse?.pdp) },
         customerImpersonationToken
     );
 
