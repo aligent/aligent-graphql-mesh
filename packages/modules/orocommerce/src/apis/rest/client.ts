@@ -42,7 +42,7 @@ export class ApiClient {
         );
     }
 
-    async get<T, D>(url: string, config?: AxiosRequestConfig) {
+    async get<T, D = undefined>(url: string, config?: AxiosRequestConfig) {
         const response = await this.client.get<{ data: T, included?: D }>(url, config);
         return response.data;
     }
