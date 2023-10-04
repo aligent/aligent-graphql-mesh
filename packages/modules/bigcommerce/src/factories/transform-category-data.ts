@@ -3,7 +3,7 @@ import { btoa, slashAtStartOrEnd } from '@aligent/utils';
 import { CategoryConnection } from '@aligent/bigcommerce-operations';
 import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
-import { getAttributesFromMetaAndCustomFields } from '@aligent/utils';
+import { getAttributesFromMetaAndCustomFields } from '../utils/metafields';
 
 export const getTransformedCategoryData = (category: Category): CategoryTree => {
     const {

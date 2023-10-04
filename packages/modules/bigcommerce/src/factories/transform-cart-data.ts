@@ -1,10 +1,10 @@
-import { getIsVirtualCart } from '@aligent/utils';
 import { Checkout } from '@aligent/bigcommerce-operations';
 import { Cart, ProductInterface } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
+import { getIsVirtualCart } from '../utils/get-is-virtual-cart';
 
 export const getTransformedCartData = (
     checkoutData: Checkout,

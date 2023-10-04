@@ -9,7 +9,8 @@ import { getBcProductSearchGraphql } from '../../apis/graphql';
 import { getBcAvailableProductFilters } from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
 import { getTaxSettings } from '../../apis/graphql';
-import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
+import { logAndThrowError, atob, getPathFromUrlKey } from '@aligent/utils';
+import { getIncludesTax } from '../../utils/get-tax';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {

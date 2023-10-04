@@ -1,12 +1,12 @@
 import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { QueryResolvers, StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getChannelMetafields } from '../../apis/graphql/channel';
-import { getAttributesFromMetaAndCustomFields } from '@aligent/utils';
 import {
     booleanStoreConfigProperties,
     integerStoreConfigProperties,
     jsonStringStoreConfigProperties,
 } from './constants';
+import { getAttributesFromMetaAndCustomFields } from '../../utils/metafields';
 
 const NAMESPACE: string = 'pwa_config';
 

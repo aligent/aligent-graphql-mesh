@@ -7,7 +7,6 @@ import {
     NormalPage,
     Product,
 } from '@aligent/bigcommerce-operations';
-import { getIncludesTax } from '@aligent/utils';
 import { Sdk } from '@aligent/bigcommerce-operations';
 import { BigCommerceModuleConfig } from '../../index';
 import { BigCommerceSdk, ModuleConfig } from '../../providers';
@@ -18,6 +17,7 @@ import { getTransformedNormalPageData } from '../../factories/get-transformed-no
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
+import { getIncludesTax } from '../../utils/get-tax';
 
 const getTransformedRouteData = async (
     data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product,

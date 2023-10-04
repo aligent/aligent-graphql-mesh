@@ -31,7 +31,7 @@ import {
     getTransformedAvailableStock,
     getTransformedSimpleStockStatus,
 } from './helpers/transform-stock';
-import { getAttributesFromMetaAndCustomFields } from '@aligent/utils';
+import { getAttributesFromMetaAndCustomFields } from '../utils/metafields';
 
 const getHasVariantOptions = (productOptions: ProductOptionConnection): boolean => {
     if (!productOptions?.edges || productOptions?.edges.length === 0) return false;

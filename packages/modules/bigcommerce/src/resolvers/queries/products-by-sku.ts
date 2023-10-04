@@ -3,12 +3,9 @@ import { getTransformedProductsData } from '../../factories/transform-products-d
 import { getTaxSettings } from '../../apis/graphql';
 import { getProducts } from '../../apis/rest/products';
 import { getBcProductsGraphql } from '../../apis/graphql';
-import {
-    AxiosGraphqlError,
-    getIncludesTax,
-    getSortedProducts,
-    transformGQLSortArgsToRestSortArgs,
-} from '@aligent/utils';
+import { AxiosGraphqlError } from '@aligent/utils';
+import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../utils/sort';
+import { getIncludesTax } from '../../utils/get-tax';
 
 /* This is the maximum page size we're allowing for a products by sku look up */
 const MAX_SKU_QUERY_LIMIT = 50;
