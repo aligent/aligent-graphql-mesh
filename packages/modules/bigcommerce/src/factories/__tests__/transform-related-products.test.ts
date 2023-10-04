@@ -24,6 +24,7 @@ const transformedRelatedProduct = [
                 children_count: '0',
                 description: '',
                 id: 54,
+                image: undefined,
                 include_in_menu: 1,
                 meta_description: '',
                 meta_title: '',
@@ -58,6 +59,7 @@ const transformedRelatedProduct = [
                 children_count: '0',
                 description: '',
                 id: 55,
+                image: undefined,
                 include_in_menu: 1,
                 meta_description: '',
                 meta_title: '',
@@ -99,6 +101,7 @@ const transformedRelatedProduct = [
                 children_count: '0',
                 description: '',
                 id: 56,
+                image: undefined,
                 include_in_menu: 1,
                 meta_description: '',
                 meta_title: '',
@@ -116,6 +119,7 @@ const transformedRelatedProduct = [
         custom_attributes: [],
         description: { html: undefined },
         id: 491,
+        items: [],
         media_gallery_entries: [
             {
                 disabled: false,

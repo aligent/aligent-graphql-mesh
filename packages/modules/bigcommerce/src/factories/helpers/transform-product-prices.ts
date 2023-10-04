@@ -23,8 +23,6 @@ const noPricesResponse = {
     },
 };
 
-const roundAmount = (amount: number): number => parseFloat(amount.toFixed(2));
-
 /**
  * Get if the products sale price has been applied as the final price.
  *
@@ -48,7 +46,7 @@ export const getAmountOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) => 
 
     if (!isSalePriceTheFinalPrice) return 0;
 
-    return roundAmount(basePrice.value - price.value);
+    return basePrice.value - price.value;
 };
 
 export const getPercentOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) => {
@@ -58,7 +56,7 @@ export const getPercentOff = (basePrice?: Maybe<Money>, price?: Maybe<Money>) =>
 
     if (!isSalePriceTheFinalPrice) return 0;
 
-    return roundAmount(((basePrice.value - price.value) / basePrice.value) * 100);
+    return ((basePrice.value - price.value) / basePrice.value) * 100;
 };
 
 export const getMostExpensiveVariant = (
