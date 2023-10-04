@@ -8,7 +8,15 @@ const config: CodegenConfig = {
     generates: {
         'dist/packages/generated/orocommerce/resolvers/index.ts': {
             schema: 'packages/modules/orocommerce/src/schema/*.graphql',
-            plugins: ['typescript', 'typescript-resolvers'],
+            plugins: [
+                {
+                    add: {
+                        content: 'import * as gm from "graphql-modules";'
+                    }
+                },
+                'typescript',
+                'typescript-resolvers',
+            ],
             config: {
                 contextType: 'GraphQLModules.ModuleContext',
             },
