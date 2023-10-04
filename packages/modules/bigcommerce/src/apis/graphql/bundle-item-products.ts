@@ -17,11 +17,17 @@ import { ProductRule } from '../../types/rest-prop-types';
 
 type PickListEntityIdMap = { [key: number]: number };
 
-const getModifiedProductPriceBasedOnPriceRules = (
-    bcPickListProduct: Product,
-    productRules: ProductRule[] | null,
-    pickListEntityIdMap: PickListEntityIdMap
-): Product => {
+interface ModifiedProductPriceBasedOnPriceRules {
+    bcPickListProduct: Product;
+    productRules: ProductRule[] | null;
+    pickListEntityIdMap: PickListEntityIdMap;
+}
+
+const getModifiedProductPriceBasedOnPriceRules = ({
+    bcPickListProduct,
+    productRules,
+    pickListEntityIdMap,
+}: ModifiedProductPriceBasedOnPriceRules): Product => {
     if (!productRules) {
         return bcPickListProduct;
     }
@@ -108,6 +114,8 @@ export const getBundleItemProducts = async (
         .flat()
         .filter(isNotNull);
 
+    // Here we fetch full product payload from BC as Adobe commerce schema expose all
+    // the product data which product interface supports
     const bcPickListProducts = (await getBcProductsGraphql(
         {
             entityIds: pickListProductIds,
@@ -129,11 +137,11 @@ export const getBundleItemProducts = async (
         items: bcPickListProducts?.edges
             ?.map((product) => {
                 if (!product) return null;
-                const priceModifiedPickListProduct = getModifiedProductPriceBasedOnPriceRules(
-                    product.node,
-                    validProductRules,
-                    pickListEntityIdMap
-                );
+                const priceModifiedPickListProduct = getModifiedProductPriceBasedOnPriceRules({
+                    bcPickListProduct: product.node,
+                    productRules: validProductRules,
+                    pickListEntityIdMap,
+                });
                 return getTransformedProductData(priceModifiedPickListProduct);
             })
             .filter(isNotNull),
