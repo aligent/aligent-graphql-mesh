@@ -1,5 +1,3 @@
-import { isNumber } from 'lodash';
-
 export type ProductsArgsRest = {
     is_visible?: boolean;
     brand_id?: number;

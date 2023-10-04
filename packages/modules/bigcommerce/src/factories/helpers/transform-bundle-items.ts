@@ -18,14 +18,14 @@ interface TransformBundleItems {
     bundleItemProducts?: Maybe<Maybe<Maybe<ProductInterface>[]> | undefined>;
 }
 
-// TODO: Write test cases
 export const getTransformBundleItems = ({
     productOptions,
     productType,
     bcVariants,
     bundleItemProducts,
 }: TransformBundleItems): Array<Maybe<BundleItem>> => {
-    if (!productOptions || !productOptions?.edges || productType !== 'BundleProduct') return [];
+    if (!productOptions || !productOptions?.edges?.length || productType !== 'BundleProduct')
+        return [];
 
     const bundleProductItemsByProductId = keyBy(bundleItemProducts, 'id');
 
