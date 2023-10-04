@@ -1,4 +1,4 @@
-import { Country, Region } from '../../../types';
+import { Country, Region } from '../../../../types';
 
 export const oroCountries: Country[] =
 [

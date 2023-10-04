@@ -1,17 +1,17 @@
-import { Injectable } from 'graphql-modules';
+import {forwardRef, Inject, Injectable} from 'graphql-modules';
 import { ApiClient } from './client';
 import {Country, Region} from '../../types';
 
 /* istanbul ignore file */
 @Injectable()
 export class CountryClient {
-    protected apiClient: ApiClient;
-    constructor(apiClient: ApiClient) {
-        this.apiClient = apiClient;
+    constructor(
+        @Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient,
+    ) {
     }
 
-    async getCountriesWithRegions(): Promise<[Country[], Region[]]> {
-        const path = `/api/countries`;
+    async getCountriesWithRegions(): Promise<{ data: Country[], included?: Region[]}> {
+        const path = `/countries`;
         const params = {
             include: 'regions',
             page: {
@@ -20,6 +20,6 @@ export class CountryClient {
             },
             sort: 'id'
         };
-        return this.apiClient.get<{data: Country[], included: Region[]}>(path, {params});
+        return this.apiClient.get<Country[], Region[]>(path, {params});
     }
 }

@@ -42,8 +42,8 @@ export class ApiClient {
         );
     }
 
-    async get<T>(url: string, config?: AxiosRequestConfig) {
-        const response = await this.client.get<{ data: T }>(url, config);
+    async get<T, D>(url: string, config?: AxiosRequestConfig) {
+        const response = await this.client.get<{ data: T, included?: D }>(url, config);
         return response.data;
     }
     async post<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
@@ -61,7 +61,7 @@ export class ApiClient {
             data,
             config
         );
-        return response.data.data;
+        return response.data;
     }
 
     async put<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
@@ -70,7 +70,7 @@ export class ApiClient {
             data,
             config
         );
-        return response.data.data;
+        return response.data;
     }
 
     async delete(url: string, config?: AxiosRequestConfig) {
@@ -78,4 +78,31 @@ export class ApiClient {
         // No body is returned for a delete, if the status code is 204 then it succeeded
         return response.status == 204;
     }
+
+    // /**
+    //  * Generator function to iterate over a paginated API result
+    //  * @param path
+    //  * @param page
+    //  * @param limit
+    //  */
+    // async paginate (
+    //     path: string,
+    //     page: number = 1,
+    //     limit: number = 50
+    // ): AsyncGenerator<AxiosResponse['data']> {
+    //     const url = `${BC_REST_API}${path}`;
+    //
+    //     while (page >= 1) {
+    //         const response = await axios.get(url, { headers, params: { page, limit } });
+    //         const items = response.data;
+    //         if (items.length === 0) {
+    //             break;
+    //         }
+    //         for (const item of items) {
+    //             yield item;
+    //         }
+    //         page++;
+    //     }
+    // };
+
 }

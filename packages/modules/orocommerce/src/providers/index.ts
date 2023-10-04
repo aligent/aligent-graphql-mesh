@@ -3,6 +3,7 @@ import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
+import { CountryTransformer } from '../transformers/country/country-transformer';
 import { Auth } from '../services/auth';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
@@ -44,6 +45,11 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             useClass: CountryClient,
             provide: CountryClient,
             deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CountryTransformer,
+            provide: CountryTransformer,
             scope: Scope.Operation,
         },
     ];

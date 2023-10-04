@@ -55,7 +55,7 @@ export const transformedCountries: AcCountry[] =
     [
         {
             full_name_english: 'Australia',
-            full_name_locale: null,
+            full_name_locale: 'Australia',
             id: 'AU',
             two_letter_abbreviation: 'AU',
             three_letter_abbreviation: 'AUS',
@@ -63,7 +63,7 @@ export const transformedCountries: AcCountry[] =
         },
         {
             full_name_english: 'New Zealand',
-            full_name_locale: null,
+            full_name_locale: 'New Zealand',
             id: 'NZ',
             two_letter_abbreviation: 'NZ',
             three_letter_abbreviation: 'NZL',
