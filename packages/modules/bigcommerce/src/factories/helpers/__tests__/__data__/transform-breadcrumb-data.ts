@@ -58,3 +58,107 @@ export const transformedBreadcrumbs = [
         category_uid: 'NTk=',
     },
 ];
+
+export const parentCategories = [
+    {
+        id: 'MA==',
+        entityId: 0,
+        name: 'Big Commerce categories',
+        path: '',
+        description: '',
+    },
+    {
+        description: '<p>This is the "Women" category description</p>',
+        entityId: 58,
+        name: 'Women',
+        path: '/women/',
+        productCount: 1,
+        image: null,
+        children: [
+            {
+                description: '',
+                entityId: 59,
+                name: 'Tops',
+                path: '/women/tops-women/',
+                productCount: 1,
+                image: null,
+                children: [
+                    {
+                        description: '',
+                        entityId: 60,
+                        name: 'Hoodies & Sweatshirts',
+                        path: '/women/tops-women/hoodies-and-sweatshirts-women/',
+                        productCount: 1,
+                        image: null,
+                    },
+                ],
+            },
+        ],
+        __typename: 'Category',
+        id: 'Q2F0ZWdvcnk6NTg=',
+        defaultImage: null,
+        breadcrumbs: {
+            edges: [
+                {
+                    node: {
+                        name: 'Women',
+                        path: '/women/',
+                        entityId: 58,
+                    },
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                },
+            ],
+            pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false,
+                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+            },
+        },
+        metafields: {
+            edges: [
+                {
+                    node: {
+                        key: 'is_women_category',
+                        value: 'true',
+                    },
+                },
+            ],
+        },
+        products: {
+            collectionInfo: {
+                totalItems: 1,
+            },
+            pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false,
+                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+            },
+        },
+        seo: {
+            pageTitle: 'Women',
+            metaDescription: 'This is the "Women" meta_description',
+            metaKeywords: 'women',
+        },
+        defaultProductSort: 'NEWEST',
+    },
+    {
+        description: '',
+        entityId: 59,
+        name: 'Tops',
+        path: '/women/tops-women/',
+        productCount: 1,
+        image: null,
+        children: [
+            {
+                description: '',
+                entityId: 60,
+                name: 'Hoodies & Sweatshirts',
+                path: '/women/tops-women/hoodies-and-sweatshirts-women/',
+                productCount: 1,
+                image: null,
+            },
+        ],
+    },
+] as Category[];
