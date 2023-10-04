@@ -1,8 +1,7 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 import { oroCountries, oroRegions } from './__data__/countries-input-data';
 import { transformedCountries } from './__data__/countries-transformed-data';
 import { CountryTransformer } from '../country-transformer';
-
 
 describe('Countries data transform tests', () => {
     test('return empty array when no states for a country', () => {

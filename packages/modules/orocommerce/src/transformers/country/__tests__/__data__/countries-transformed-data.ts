@@ -35,38 +35,37 @@ export const transformedRegionsAU: AcRegion[] = [
 
 export const transformedRegionsNZ = [
     {
-        code: "AUK",
-        id: "NZ-AUK",
-        name: "Auckland",
+        code: 'AUK',
+        id: 'NZ-AUK',
+        name: 'Auckland',
     },
     {
-        code: "BOP",
-        id: "NZ-BOP",
-        name: "Bay of Plenty",
+        code: 'BOP',
+        id: 'NZ-BOP',
+        name: 'Bay of Plenty',
     },
     {
-        code: "CAN",
-        id: "NZ-CAN",
-        name: "Canterbury",
+        code: 'CAN',
+        id: 'NZ-CAN',
+        name: 'Canterbury',
     },
-]
+];
 
-export const transformedCountries: AcCountry[] =
-    [
-        {
-            full_name_english: 'Australia',
-            full_name_locale: 'Australia',
-            id: 'AU',
-            two_letter_abbreviation: 'AU',
-            three_letter_abbreviation: 'AUS',
-            available_regions: transformedRegionsAU,
-        },
-        {
-            full_name_english: 'New Zealand',
-            full_name_locale: 'New Zealand',
-            id: 'NZ',
-            two_letter_abbreviation: 'NZ',
-            three_letter_abbreviation: 'NZL',
-            available_regions: transformedRegionsNZ,
-        },
-    ];
+export const transformedCountries: AcCountry[] = [
+    {
+        full_name_english: 'Australia',
+        full_name_locale: 'Australia',
+        id: 'AU',
+        two_letter_abbreviation: 'AU',
+        three_letter_abbreviation: 'AUS',
+        available_regions: transformedRegionsAU,
+    },
+    {
+        full_name_english: 'New Zealand',
+        full_name_locale: 'New Zealand',
+        id: 'NZ',
+        two_letter_abbreviation: 'NZ',
+        three_letter_abbreviation: 'NZL',
+        available_regions: transformedRegionsNZ,
+    },
+];

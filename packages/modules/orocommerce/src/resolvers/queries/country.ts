@@ -5,7 +5,7 @@ import { CountryTransformer } from '../../transformers/country/country-transform
 export const countriesResolver: QueryResolvers['countries'] = {
     resolve: async (_root, _args, context, _info) => {
         const countryClient: CountryClient = context.injector.get(CountryClient);
-        const getCountriesResponse = await countryClient.getCountriesWithRegions()
+        const getCountriesResponse = await countryClient.getCountriesWithRegions();
         const oroCountries = getCountriesResponse.data;
         const oroRegions = getCountriesResponse.included;
 

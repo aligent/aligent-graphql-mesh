@@ -6,7 +6,7 @@ import { generateCustomerTokenMutation } from './mutations/generate-customer-tok
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
-        countries: countriesResolver
+        countries: countriesResolver,
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,

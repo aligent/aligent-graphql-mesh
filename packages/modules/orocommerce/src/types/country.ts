@@ -28,4 +28,3 @@ export interface RegionAttributes extends Attributes {
     code: string;
     name: string;
 }
-
