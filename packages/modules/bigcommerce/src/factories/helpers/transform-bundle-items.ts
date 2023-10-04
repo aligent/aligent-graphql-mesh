@@ -15,7 +15,7 @@ interface TransformBundleItems {
     productOptions: ProductOptionConnection;
     productType: SupportedProductTypes;
     bcVariants: VariantConnection;
-    bundleItemProducts?: Maybe<Maybe<Maybe<ProductInterface>[]> | undefined>;
+    bundleItemProducts?: ProductInterface[];
 }
 
 export const getTransformBundleItems = ({

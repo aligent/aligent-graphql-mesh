@@ -79,7 +79,7 @@ export const getTypeName = (
 
 export const getTransformedProductData = (
     bcProduct: Product,
-    bundleItemProducts?: Maybe<Maybe<Maybe<ProductInterface>[]> | undefined>
+    bundleItemProducts?: ProductInterface[] | undefined
 ): Maybe<ProductInterface & ConfigurableProduct & BundleProduct> => {
     if (!bcProduct) return null;
 

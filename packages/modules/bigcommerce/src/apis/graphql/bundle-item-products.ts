@@ -89,7 +89,7 @@ export const getBundleItemProducts = async (
     bcProduct: Product,
     taxSettings: TaxDisplaySettings | null,
     customerImpersonationToken: string
-): Promise<Maybe<{ items?: Maybe<Array<Maybe<ProductInterface>>> }>> => {
+): Promise<Maybe<{ items?: ProductInterface[] }>> => {
     const hasPickListItems = getHasPickListItems(bcProduct.productOptions);
 
     if (!hasPickListItems) {
