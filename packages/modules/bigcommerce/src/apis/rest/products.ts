@@ -23,10 +23,8 @@ export const getProducts = async (searchParams: ProductsArgsRest): Promise<Produ
     return response;
 };
 
-// Get product rules for a product which has picklist items. These rules will later use to calculate
-// discounts for each individual bundle item. And this is a deprecated API but still we have to use
-// it as complex-rule API doesn't return product rules properly yet
-// ref: https://developer.bigcommerce.com/legacy/v2-catalog-products/v2-product-rules
+// This is a deprecated API but still we have to use it as complex-rule API doesn't return product
+// rules properly yet. ref: https://developer.bigcommerce.com/legacy/v2-catalog-products/v2-product-rules
 export const getProductRules = async (productId: number): Promise<ProductRule[]> => {
     const url = `${PRODUCTS_API_V2}/${productId}/rules`;
     const response = await bcGet(url);

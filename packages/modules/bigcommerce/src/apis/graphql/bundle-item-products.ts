@@ -124,6 +124,9 @@ export const getBundleItemProducts = async (
         customerImpersonationToken
     )) as ProductConnection;
 
+    // Now we need to fetch product rules for the parent product from REST API
+    // Get product rules for a product which has picklist items. These rules will later use to calculate
+    // discounts for each individual bundle item.
     let validProductRules: ProductRule[] | null = null;
     // Adding a try catch block as if main product has no rules API returns 204 no content error
     try {
