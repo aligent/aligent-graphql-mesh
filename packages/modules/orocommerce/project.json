@@ -9,7 +9,7 @@
             "options": {
                 "commands": [
                     {
-                        "command": "tsc --noEmit --pretty -p {projectRoot}/tsconfig.json"
+                        "command": "tsc --noEmit --pretty -p {projectRoot}/tsconfig.lib.json"
                     }
                 ]
             }
