@@ -13,7 +13,10 @@ export interface GraphQlQuery {
 }
 export interface BcCustomer {
     id: number;
-    authentication: { force_password_reset: boolean };
+    authentication: {
+        force_password_reset: boolean;
+        new_password: string;
+    };
     company: string;
     customer_group_id: number;
     email: string;
@@ -67,6 +70,9 @@ export interface BcCategoryTree {
     name: string;
     path: string;
     productCount?: number;
+    image?: {
+        urlOriginal: string;
+    };
 }
 
 export interface BcCategory {
@@ -184,7 +190,7 @@ export interface BcSubscriber {
 }
 
 export interface BcState {
-    id: number;
+    id: number | null;
     state: string;
     state_abbreviation: string;
     country_id: number;
@@ -197,6 +203,7 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
     country_code: CountryCodeEnum;
     street: string[];
     region: {
+        region: string;
         region_id: number;
     };
     postcode: string;
@@ -405,3 +412,41 @@ export type BCCustomerFormFields = {
     value: string | string[];
     customer_id: number;
 }[];
+
+export interface BCConsignment {
+    shipping: BCShipping[];
+}
+
+export interface BCShipping {
+    id: number;
+    first_name: string;
+    last_name: string;
+    company: string;
+    street_1: string;
+    street_2: string;
+    city: string;
+    zip: string;
+    country: string;
+    country_iso2: string;
+    state: string;
+    email: string;
+    phone: string;
+    form_fields: FormField[];
+    line_items: Resource[];
+    items_total: number;
+    items_shipped: number;
+    shipping_method: string;
+    base_cost: number;
+    cost_ex_tax: number;
+    cost_inc_tax: number;
+    cost_tax: number;
+    cost_tax_class_id: number;
+    base_handling_cost: number;
+    handling_cost_ex_tax: number;
+    handling_cost_inc_tax: number;
+    handling_cost_tax: number;
+    handling_cost_tax_class_id: number;
+    shipping_zone_id: number;
+    shipping_zone_name: string;
+    shipping_quotes: Resource;
+}

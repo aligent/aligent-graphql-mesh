@@ -1,7 +1,7 @@
 import { VariantConnection } from '@aligent/bigcommerce-operations';
 import { ConfigurableVariant, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedImage } from './transform-images';
-import { getTransformedPriceRange } from './transform-product-prices';
+import { getTransformedPriceRange, getTransformedPriceTiers } from './transform-product-prices';
 import { getTransformedProductsAttributes } from './transform-product-attributes';
 import { getTransformedAvailableStock, getTransformedVariantStockStatus } from './transform-stock';
 
@@ -24,6 +24,7 @@ export const getTransformedVariants = (
                     media_gallery_entries: [getTransformedImage(defaultImage)].filter(Boolean),
                     only_x_left_in_stock: getTransformedAvailableStock(inventory),
                     price_range: getTransformedPriceRange(prices || null, 'SimpleProduct', null),
+                    price_tiers: getTransformedPriceTiers(prices || null),
                     rating_summary: 0,
                     redirect_code: 0,
                     reviews: {

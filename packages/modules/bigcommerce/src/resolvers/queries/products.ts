@@ -3,12 +3,12 @@ import {
     getTransformedProductData,
     getTransformedProductsData,
 } from '../../factories/transform-products-data';
-import { getBcProductByPathGraphql } from '../../apis/graphql/pdp-product';
-import { getBcProductSearchGraphql } from '../../apis/graphql/product-search';
+import { getBcProductByPathGraphql } from '../../apis/graphql';
+import { getBcProductSearchGraphql } from '../../apis/graphql';
 
-import { getBcAvailableProductFilters } from '../../apis/graphql/available-product-search-filters';
+import { getBcAvailableProductFilters } from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
-import { getTaxSettings } from '../../apis/graphql/settings';
+import { getTaxSettings } from '../../apis/graphql';
 import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
 
 export const productsResolver: QueryResolvers['products'] = {
@@ -38,6 +38,7 @@ export const productsResolver: QueryResolvers['products'] = {
 
             const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
             const searchTerm = args?.search || '';
+            const pageSize = args?.pageSize || 24;
 
             /* These base filters will help the "getBcAvailableProductFilters" get the available filters for search and
              * category pages
@@ -60,6 +61,7 @@ export const productsResolver: QueryResolvers['products'] = {
                 {
                     includeTax: getIncludesTax(taxSettings?.plp),
                     filters: transformedFilterArguments,
+                    pageSize,
                 },
                 customerImpersonationToken
             );

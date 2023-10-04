@@ -1,5 +1,5 @@
-import { BCOrder } from '../../../../types';
 import { CustomerOrders } from '@aligent/bigcommerce-resolvers';
+import { BCOrder } from '../../../types';
 
 export const bcOrders: BCOrder[] = [
     {
@@ -62,7 +62,7 @@ export const bcOrders: BCOrder[] = [
             last_name: 'mcloughlin',
             company: '',
             street_1: '212 pirie st',
-            street_2: '',
+            street_2: 'Level 1',
             city: 'Adelaide',
             state: 'South Australia',
             zip: '5000',
@@ -170,7 +170,7 @@ export const bcOrders: BCOrder[] = [
             last_name: 'mcloughlin',
             company: '',
             street_1: '212 pirie st',
-            street_2: '',
+            street_2: 'Level 1',
             city: 'Adelaide',
             state: 'South Australia',
             zip: '5000',
@@ -223,6 +223,17 @@ export const bcOrders: BCOrder[] = [
 export const acOrders: CustomerOrders = {
     items: [
         {
+            billing_address: {
+                city: 'Adelaide',
+                company: '',
+                country_code: 'AU',
+                firstname: 'jack',
+                lastname: 'mcloughlin',
+                postcode: '5000',
+                street: ['212 pirie st Level 1'],
+                telephone: '0432471111',
+                region: 'South Australia',
+            },
             number: '130',
             id: 'MTMw',
             order_date: '2023-08-29 02:26:57',
@@ -230,35 +241,130 @@ export const acOrders: CustomerOrders = {
             total: {
                 grand_total: { currency: 'AUD', value: 62.62 },
                 base_grand_total: { currency: 'AUD', value: null },
+                discounts: [],
+                shipping_handling: {
+                    amount_including_tax: {
+                        currency: 'AUD',
+                        value: 0,
+                    },
+                    total_amount: { currency: 'AUD', value: 62.62 },
+                },
                 subtotal: { currency: 'AUD', value: 62.62 },
+                subtotal_incl_tax: {
+                    currency: 'AUD',
+                    value: 62.62,
+                },
+                taxes: [
+                    {
+                        amount: {
+                            currency: 'AUD',
+                            value: 5.7,
+                        },
+                        rate: 10,
+                        title: 'GST',
+                    },
+                ],
+                total_giftcard: {
+                    currency: 'AUD',
+                    value: 0,
+                },
                 total_shipping: { currency: 'AUD', value: 0 },
                 total_tax: { currency: 'AUD', value: 5.7 },
             },
             gift_receipt_included: false,
             order_number: '130',
+            payment_methods: [
+                {
+                    additional_data: null,
+                    name: 'Bank Deposit',
+                    type: 'Bank Deposit',
+                },
+            ],
             printed_card_included: false,
             state: '7',
             invoices: [],
             currency_code: 'AUD',
         },
         {
-            number: '129',
-            id: 'MTI5',
-            order_date: '2023-08-29 02:22:35',
-            status: 'Completed',
-            total: {
-                grand_total: { currency: 'AUD', value: 368 },
-                base_grand_total: { currency: 'AUD', value: null },
-                subtotal: { currency: 'AUD', value: 368 },
-                total_shipping: { currency: 'AUD', value: 0 },
-                total_tax: { currency: 'AUD', value: 33.45 },
+            billing_address: {
+                city: 'Adelaide',
+                company: '',
+                country_code: 'AU',
+                firstname: 'jack',
+                lastname: 'mcloughlin',
+                postcode: '5000',
+                region: 'South Australia',
+                street: ['212 pirie st Level 1'],
+                telephone: '0432471111',
             },
+            currency_code: 'AUD',
             gift_receipt_included: false,
+            id: 'MTI5',
+            invoices: [],
+            number: '129',
+            order_date: '2023-08-29 02:22:35',
             order_number: '129',
+            payment_methods: [
+                {
+                    additional_data: null,
+                    name: 'Bank Deposit',
+                    type: 'Bank Deposit',
+                },
+            ],
             printed_card_included: false,
             state: '10',
-            invoices: [],
-            currency_code: 'AUD',
+            status: 'Completed',
+            total: {
+                base_grand_total: {
+                    currency: 'AUD',
+                    value: null,
+                },
+                discounts: [],
+                grand_total: {
+                    currency: 'AUD',
+                    value: 368,
+                },
+                shipping_handling: {
+                    amount_including_tax: {
+                        currency: 'AUD',
+                        value: 0,
+                    },
+                    total_amount: {
+                        currency: 'AUD',
+                        value: 368,
+                    },
+                },
+                subtotal: {
+                    currency: 'AUD',
+                    value: 368,
+                },
+                subtotal_incl_tax: {
+                    currency: 'AUD',
+                    value: 368,
+                },
+                taxes: [
+                    {
+                        amount: {
+                            currency: 'AUD',
+                            value: 33.45,
+                        },
+                        rate: 10,
+                        title: 'GST',
+                    },
+                ],
+                total_giftcard: {
+                    currency: 'AUD',
+                    value: 0,
+                },
+                total_shipping: {
+                    currency: 'AUD',
+                    value: 0,
+                },
+                total_tax: {
+                    currency: 'AUD',
+                    value: 33.45,
+                },
+            },
         },
     ],
     page_info: {

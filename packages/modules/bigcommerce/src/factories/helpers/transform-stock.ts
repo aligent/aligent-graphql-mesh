@@ -16,7 +16,7 @@ export const getTransformedSimpleStockStatus = (
     } = {},
     inventory?: Maybe<ProductInventory>
 ): ProductStockStatus => {
-    return availabilityV2.status === 'Available' && inventory?.isInStock
+    return availabilityV2.status !== 'Unavailable' && inventory?.isInStock
         ? 'IN_STOCK'
         : 'OUT_OF_STOCK';
 };

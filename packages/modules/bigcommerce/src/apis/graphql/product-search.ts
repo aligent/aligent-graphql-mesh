@@ -5,12 +5,13 @@ import {
     SearchProductFilterConnection,
     SearchProductsFiltersInput,
 } from '@aligent/bigcommerce-operations';
-import { getProductsSearchQuery } from './requests/product-search';
+import { getProductsSearchQuery } from './requests';
 
 export const getBcProductSearchGraphql = async (
     variables: {
         filters: SearchProductsFiltersInput;
         includeTax?: boolean;
+        pageSize: number;
     },
     customerImpersonationToken: string
 ): Promise<{

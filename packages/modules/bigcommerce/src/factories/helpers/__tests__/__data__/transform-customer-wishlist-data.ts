@@ -559,15 +559,7 @@ export const transformedWishlist = [
                                 url_path: 'shop-all',
                                 url_suffix: '',
                                 staged: false,
-                                breadcrumbs: [
-                                    {
-                                        category_level: 0,
-                                        category_name: 'Shop All',
-                                        category_uid: '',
-                                        category_url_key: null,
-                                        category_url_path: '/shop-all/',
-                                    },
-                                ],
+                                breadcrumbs: [],
                                 __typename: 'CategoryTree',
                             },
                             {
@@ -586,15 +578,7 @@ export const transformedWishlist = [
                                 url_path: 'women',
                                 url_suffix: '',
                                 staged: false,
-                                breadcrumbs: [
-                                    {
-                                        category_level: 0,
-                                        category_name: 'Women',
-                                        category_uid: '',
-                                        category_url_key: null,
-                                        category_url_path: '/women/',
-                                    },
-                                ],
+                                breadcrumbs: [],
                                 __typename: 'CategoryTree',
                             },
                             {
@@ -793,15 +777,7 @@ export const transformedWishlistItems = [
                     url_path: 'shop-all',
                     url_suffix: '',
                     staged: false,
-                    breadcrumbs: [
-                        {
-                            category_level: 0,
-                            category_name: 'Shop All',
-                            category_uid: '',
-                            category_url_key: null,
-                            category_url_path: '/shop-all/',
-                        },
-                    ],
+                    breadcrumbs: [],
                     __typename: 'CategoryTree',
                 },
                 {
@@ -820,15 +796,7 @@ export const transformedWishlistItems = [
                     url_path: 'women',
                     url_suffix: '',
                     staged: false,
-                    breadcrumbs: [
-                        {
-                            category_level: 0,
-                            category_name: 'Women',
-                            category_uid: '',
-                            category_url_key: null,
-                            category_url_path: '/women/',
-                        },
-                    ],
+                    breadcrumbs: [],
                     __typename: 'CategoryTree',
                 },
                 {
