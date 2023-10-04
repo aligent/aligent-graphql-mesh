@@ -53,7 +53,7 @@ export const mockBcProducts = [
                         id: 'Q2F0ZWdvcnk6NjA=',
                         entityId: 60,
                         name: 'Hoodies & Sweatshirts',
-                        path: '/hoodies-and-sweatshirts-women',
+                        path: '/women/tops-women/hoodies-and-sweatshirts-women/',
                         defaultImage: null,
                         description: '',
                         breadcrumbs: {
@@ -62,19 +62,25 @@ export const mockBcProducts = [
                                     node: {
                                         name: 'Women',
                                         entityId: 58,
+                                        path: '/women/',
                                     },
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                 },
                                 {
                                     node: {
                                         name: 'Tops',
                                         entityId: 59,
+                                        path: '/women/tops-women/',
                                     },
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                 },
                                 {
                                     node: {
                                         name: 'Hoodies & Sweatshirts',
                                         entityId: 60,
+                                        path: '/women/tops-women/hoodies-and-sweatshirts-women/',
                                     },
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                                 },
                             ],
                             pageInfo: {
@@ -88,6 +94,12 @@ export const mockBcProducts = [
                             collectionInfo: {
                                 totalItems: 1,
                             },
+                            pageInfo: {
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         seo: {
                             pageTitle: '',
@@ -96,6 +108,7 @@ export const mockBcProducts = [
                         },
                         defaultProductSort: 'FEATURED',
                     },
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
                 },
             ],
         },

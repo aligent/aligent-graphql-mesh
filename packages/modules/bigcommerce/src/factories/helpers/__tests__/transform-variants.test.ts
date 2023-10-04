@@ -40,6 +40,10 @@ const expectResult = [
             reviews: { items: [], page_info: { current_page: 0, page_size: 0, total_pages: 0 } },
             review_count: 0,
             sku: 'WH01-S-Green',
+            small_image: {
+                label: '',
+                url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg',
+            },
             staged: false,
             stock_status: 'IN_STOCK',
             uid: 'VmFyaWFudDo1MTM=',
@@ -82,6 +86,10 @@ const expectResult = [
             reviews: { items: [], page_info: { current_page: 0, page_size: 0, total_pages: 0 } },
             review_count: 0,
             sku: 'WH01-M-Green',
+            small_image: {
+                label: '',
+                url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/57_source_1690452040.jpg',
+            },
             staged: false,
             stock_status: 'IN_STOCK',
             uid: 'VmFyaWFudDo1MTQ=',
@@ -124,6 +132,10 @@ const expectResult = [
             reviews: { items: [], page_info: { current_page: 0, page_size: 0, total_pages: 0 } },
             review_count: 0,
             sku: 'WH01-S-Purple',
+            small_image: {
+                label: '',
+                url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/58_source_1690452040.jpg',
+            },
             staged: false,
             stock_status: 'IN_STOCK',
             uid: 'VmFyaWFudDo1MTU=',
@@ -166,6 +178,10 @@ const expectResult = [
             reviews: { items: [], page_info: { current_page: 0, page_size: 0, total_pages: 0 } },
             review_count: 0,
             sku: 'WH01-M-Purple',
+            small_image: {
+                label: '',
+                url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/56_source_1690452040.jpg',
+            },
             staged: false,
             stock_status: 'IN_STOCK',
             uid: 'VmFyaWFudDo1MTY=',
