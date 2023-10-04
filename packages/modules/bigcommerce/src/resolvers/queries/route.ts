@@ -21,7 +21,7 @@ import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
-interface TransformedRouteDta {
+interface TransformedRouteData {
     data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product;
     sdk: Sdk;
     config: BigCommerceModuleConfig;
@@ -35,7 +35,7 @@ const getTransformedRouteData = async ({
     config,
     customerImpersonationToken,
     taxSettings,
-}: TransformedRouteDta): Promise<RoutableInterface> => {
+}: TransformedRouteData): Promise<RoutableInterface> => {
     const { __typename } = data;
     if (__typename === 'Brand') {
         const transformedBrandData = productsMock.items[0];
