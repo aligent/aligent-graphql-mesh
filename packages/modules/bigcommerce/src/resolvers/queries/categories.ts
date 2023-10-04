@@ -1,6 +1,9 @@
 import { atob } from '@aligent/utils';
 import { getCategories } from '../../apis/graphql/categories';
-import { getTransformedCategoryData } from '../../factories/transform-category-data';
+import {
+    getTransformedCategoryData,
+    ROOT_PWA_CATEGORY,
+} from '../../factories/transform-category-data';
 import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 
 export const categoriesResolver: QueryResolvers['categories'] = {
@@ -24,7 +27,7 @@ export const categoriesResolver: QueryResolvers['categories'] = {
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,
         // the data returned will correspond to the first "categoryTree" item so merge them together.
         categoryTree[0] = { ...categoryTree[0], ...category };
-        const transformedData = categoryTree.map(getTransformedCategoryData);
+        const transformedData = categoryTree.map((child) => getTransformedCategoryData(child));
 
         /* If there's no "rootEntityId" then the PWA is most likely asking for the mega menu category tree
          * which doesn't require an id.*/
@@ -32,10 +35,8 @@ export const categoriesResolver: QueryResolvers['categories'] = {
             ? {
                   items: [
                       {
+                          ...ROOT_PWA_CATEGORY,
                           children: transformedData,
-                          redirect_code: 0,
-                          staged: false,
-                          uid: 'null',
                       },
                   ],
               }

@@ -3,9 +3,11 @@ import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters
 import { print } from 'graphql/index';
 import { ProductsDetails } from '../fragments/productDetails';
 import { seoDetails } from '../fragments/seoDetails';
+import { categoryDetails } from '../fragments/categoryDetails';
 
 export const getRouteQuery = stripIgnoredCharacters(
     print(gql`
+        ${categoryDetails}
         ${ProductsDetails}
         ${seoDetails}
 
@@ -34,19 +36,7 @@ export const getRouteQuery = stripIgnoredCharacters(
                             ...ProductDetails
                         }
                         ... on Category {
-                            __typename
-                            description
-                            id
-                            entityId
-                            name
-                            defaultImage {
-                                altText
-                                urlOriginal
-                            }
-                            seo {
-                                ...SeoDetails
-                            }
-                            path
+                            ...CategoryDetails
                         }
                         ... on Brand {
                             id

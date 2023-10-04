@@ -11,6 +11,7 @@ export const categoryDetails = gql`
     ${pageInfo}
 
     fragment CategoryDetails on Category {
+        __typename
         id
         entityId
         name
