@@ -29,14 +29,14 @@
         "paths": {
             "@aligent/bigcommerce-graphql-module": ["packages/modules/bigcommerce/src/index.ts"],
             "@aligent/bigcommerce-operations": [
-                "dist/packages/generated/bigcommerce/operations/index"
+                "packages/generated/bigcommerce-operations/index.ts"
             ],
             "@aligent/bigcommerce-resolvers": [
-                "dist/packages/generated/bigcommerce/resolvers/index"
+                "packages/generated/bigcommerce-generated/resolvers/index.ts"
             ],
             "@aligent/orocommerce-graphql-module": ["packages/modules/orocommerce/src/index.ts"],
             "@aligent/orocommerce-resolvers": [
-                "dist/packages/generated/orocommerce/resolvers/index"
+                "packages/generated/orocommerce-resolvers/index.ts"
             ],
             "@aligent/utils": ["packages/utils/src/index.ts"]
         }
