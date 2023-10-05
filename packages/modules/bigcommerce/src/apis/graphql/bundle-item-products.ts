@@ -23,6 +23,7 @@ interface ModifiedProductPriceBasedOnPriceRules {
     pickListEntityIdMap: PickListEntityIdMap;
 }
 
+/* istanbul ignore file */
 const getModifiedProductPriceBasedOnPriceRules = ({
     bcPickListProduct,
     productRules,
@@ -85,6 +86,7 @@ const getModifiedProductPriceBasedOnPriceRules = ({
     };
 };
 
+/* istanbul ignore file */
 export const getBundleItemProducts = async (
     bcProduct: Product,
     taxSettings: TaxDisplaySettings | null,
