@@ -1,27 +1,27 @@
 import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
-import { transformChannelMetafieldsToStoreConfig } from '../store-config';
+import { getTransformedChannelMetafieldsToStoreConfig } from '../transform-store-configs';
 
 describe('Transform StoreConfig tests', () => {
-    test('Mandatory StoreConfig exits', async () => {
+    test('Mandatory StoreConfig exits', () => {
         const transformedConfig: StoreConfig =
-            await transformChannelMetafieldsToStoreConfig(bcStoreConfigData);
+            getTransformedChannelMetafieldsToStoreConfig(bcStoreConfigData);
 
         expect(transformedConfig.contact_enabled).toEqual(false);
         expect(transformedConfig.newsletter_enabled).toEqual(false);
         expect(transformedConfig.pwa_base_url).toEqual('');
         expect(transformedConfig.returns_enabled).toEqual('');
     });
-    test('Specified StoreConfig exits', async () => {
+    test('Specified StoreConfig exits', () => {
         const transformedConfig: StoreConfig =
-            await transformChannelMetafieldsToStoreConfig(bcStoreConfigData);
+            getTransformedChannelMetafieldsToStoreConfig(bcStoreConfigData);
 
         expect(transformedConfig.category_url_suffix).toEqual('.html');
         expect(transformedConfig.grid_per_page).toEqual(24);
     });
-    test('Bad metafield data given', async () => {
+    test('Bad metafield data given', () => {
         const transformedConfig: StoreConfig =
-            await transformChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
+            getTransformedChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
 
         expect(transformedConfig.category_url_suffix).toEqual('');
     });
