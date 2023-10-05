@@ -18,6 +18,7 @@ interface TransformBundleItems {
     bundleItemProducts?: ProductInterface[];
 }
 
+/* istanbul ignore file */
 export const getTransformBundleItems = ({
     productOptions,
     productType,

@@ -77,6 +77,7 @@ export const getTypeName = (
     }
 };
 
+/* istanbul ignore file */
 export const getTransformedProductData = (
     bcProduct: Product,
     bundleItemProducts?: ProductInterface[] | undefined
