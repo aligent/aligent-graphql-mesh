@@ -1,6 +1,6 @@
 import { QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { KeyMessagesClient } from '../../apis/rest/key-messages-api-client';
-import { transformKeyMessages } from '../../transformers/countries/key-messages-transformer';
+import { transformKeyMessages } from '../../transformers/key-messages/key-messages-transformer';
 
 export const keyMessagesResolver: QueryResolvers['keyMessages'] = {
     resolve: async (_root, _args, context, _info) => {

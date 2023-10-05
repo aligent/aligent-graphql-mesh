@@ -1,4 +1,4 @@
-import { KeyMessage } from '../../../types/key-messages';
+import { KeyMessage } from '../../../../types/key-messages';
 
 const mockNewMessage = (): KeyMessage => {
     const id = Math.floor(Math.random() * 999) + 1;
