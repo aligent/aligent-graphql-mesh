@@ -31,7 +31,7 @@ export const getTransformBundleItems = ({
     const bundleProductItemsByProductId = keyBy(bundleItemProducts, 'id');
 
     const items = productOptions.edges
-        .map((option) => {
+        .map((option, itemPosition) => {
             if (!option?.node) return null;
 
             // At this point we know option node is a MultipleChoiceOption as picklists
@@ -50,7 +50,7 @@ export const getTransformBundleItems = ({
             // same amount all the bundle items
             const prices = bcVariants.edges?.[0]?.node.prices as Prices;
 
-            const options = values.edges.map((value, index) => {
+            const options = values.edges.map((value, optionPosition) => {
                 if (!value?.node) return null;
                 const {
                     entityId: optionValueId,
@@ -65,7 +65,7 @@ export const getTransformBundleItems = ({
                     can_change_quantity: false, // In BC picklist products you can't control the qty
                     id: optionValueId,
                     label,
-                    position: index,
+                    position: optionPosition + 1,
                     product: bundleProductItemsByProductId[productId],
                     quantity: 1, // In BC picklist products bundle item qty will be always 1
                     uid,
@@ -78,6 +78,7 @@ export const getTransformBundleItems = ({
                 id: optionId,
                 option_id: optionId,
                 options,
+                position: itemPosition + 1,
                 price_range: getTransformedPriceRange(prices, 'SimpleProduct', null),
                 required: isRequired,
                 title: displayName,
