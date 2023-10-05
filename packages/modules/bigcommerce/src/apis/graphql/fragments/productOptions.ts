@@ -24,9 +24,6 @@ export const productOptions = gql`
                                     __typename
                                     productId
                                     label
-                                    defaultImage {
-                                        ...Image
-                                    }
                                 }
                                 ... on SwatchOptionValue {
                                     hexColors
