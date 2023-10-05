@@ -7,8 +7,13 @@ export const checkIfAddressbookHasDefaultAddress = (bcAddresses: BcAddressRest[]
     let hasDefaultBilling = false;
 
     addresses.forEach((address) => {
-        hasDefaultShipping = !!address.default_shipping;
-        hasDefaultBilling = !!address.default_billing;
+        if (address.default_shipping) {
+            hasDefaultShipping = true;
+        }
+
+        if (address.default_billing) {
+            hasDefaultBilling = true;
+        }
     });
 
     return {
