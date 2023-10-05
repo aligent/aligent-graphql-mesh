@@ -53,6 +53,5 @@ Thumbs.db
 graphql.d.ts
 graphql.schema.json
 packages/base/codegen.yml
-generated/
 .tsc
 *.scss.d.ts
