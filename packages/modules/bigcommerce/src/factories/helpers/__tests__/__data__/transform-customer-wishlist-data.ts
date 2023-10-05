@@ -174,6 +174,7 @@ export const transformedWishlistItems = [
             uid: 'UHJvZHVjdDo0OTI=',
             custom_attributes: [],
             id: 492,
+            items: [],
             media_gallery_entries: [
                 {
                     disabled: false,

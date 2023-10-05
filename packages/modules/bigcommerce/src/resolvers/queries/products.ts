@@ -1,4 +1,5 @@
 import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
+import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
 import {
     getTransformedProductData,
     getTransformedProductsData,
@@ -9,8 +10,8 @@ import { getBcProductSearchGraphql } from '../../apis/graphql';
 import { getBcAvailableProductFilters } from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
 import { getTaxSettings } from '../../apis/graphql';
-import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
 import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
+import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
@@ -34,7 +35,14 @@ export const productsResolver: QueryResolvers['products'] = {
                 );
 
                 if (!bcProduct) return null;
-                return { items: [getTransformedProductData(bcProduct)] };
+
+                const bundleItemProducts = await getBundleItemProducts(
+                    bcProduct,
+                    taxSettings,
+                    customerImpersonationToken
+                );
+
+                return { items: [getTransformedProductData(bcProduct, bundleItemProducts?.items)] };
             }
 
             const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');

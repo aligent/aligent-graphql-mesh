@@ -5,11 +5,14 @@ import {
 } from '@aligent/bigcommerce-operations';
 import { ConfigurableProductOptions, Maybe } from '@aligent/bigcommerce-resolvers';
 import { btoa } from '@aligent/utils';
+import { SupportedProductTypes } from '../../types';
 
 export const getTransformedConfigurableOptions = (
-    productOptions: ProductOptionConnection
+    productOptions: ProductOptionConnection,
+    productType: SupportedProductTypes
 ): Array<Maybe<ConfigurableProductOptions>> => {
-    if (!productOptions || !productOptions?.edges) return [];
+    if (!productOptions || !productOptions?.edges || productType !== 'ConfigurableProduct')
+        return [];
 
     const options = productOptions.edges
         .map((option) => {

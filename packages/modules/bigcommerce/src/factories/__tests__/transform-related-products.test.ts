@@ -117,6 +117,7 @@ const transformedRelatedProduct = [
         uid: '10',
         custom_attributes: [],
         id: 491,
+        items: [],
         media_gallery_entries: [
             {
                 disabled: false,
