@@ -14,8 +14,10 @@
     "@graphql-mesh/types": "^0.95.4",
     "jsonwebtoken": "^9.0.0",
     "uuid": "^9.0.0",
-    "@aligent/utils": "*"
+    "@aligent/utils": "*",
+    "@aligent/bigcommerce-resolvers": "*",
+    "@aligent/bigcommerce-operations": "*"
   },
   "type": "commonjs",
-  "main": "./index.cjs"
+  "main": "./index.js"
 }

@@ -14,16 +14,6 @@
                 ]
             }
         },
-        "codegen": {
-            "executor": "nx:run-commands",
-            "inputs": ["codegen"],
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "outputPath": "dist/packages/generated/bigcommerce",
-                "command": "graphql-codegen --config {projectRoot}/codegen.ts",
-                "envFile": "packages/mesh/bigcommerce/.env"
-            }
-        },
         "build": {
             "executor": "@nx/esbuild:esbuild",
             "outputs": ["{options.outputPath}"],
