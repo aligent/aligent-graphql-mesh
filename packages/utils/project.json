@@ -20,8 +20,8 @@
             "options": {
                 "outputPath": "dist/packages/utils",
                 "tsConfig": "packages/utils/tsconfig.lib.json",
-              "packageJson": "packages/utils/package.json",
-              "main": "packages/utils/src/index.ts"
+                "packageJson": "packages/utils/package.json",
+                "main": "packages/utils/src/index.ts"
             }
         },
         "lint": {
