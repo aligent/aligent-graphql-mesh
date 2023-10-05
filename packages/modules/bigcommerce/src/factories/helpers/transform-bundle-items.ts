@@ -31,13 +31,14 @@ export const getTransformBundleItems = ({
     const bundleProductItemsByProductId = keyBy(bundleItemProducts, 'id');
 
     const items = productOptions.edges
-        .map((option) => {
+        .map((option, itemPosition) => {
             if (!option?.node) return null;
 
             // At this point we know option node is a MultipleChoiceOption as picklists
             // can only create using MultipleChoiceOption
             const {
                 displayName,
+                displayStyle,
                 values,
                 entityId: optionId,
                 isRequired,
@@ -49,7 +50,7 @@ export const getTransformBundleItems = ({
             // same amount all the bundle items
             const prices = bcVariants.edges?.[0]?.node.prices as Prices;
 
-            const options = values.edges.map((value) => {
+            const options = values.edges.map((value, optionPosition) => {
                 if (!value?.node) return null;
                 const {
                     entityId: optionValueId,
@@ -61,21 +62,27 @@ export const getTransformBundleItems = ({
 
                 return {
                     __typename: 'BundleItemOption' as const,
+                    can_change_quantity: false, // In BC picklist products you can't control the qty
                     id: optionValueId,
                     label,
+                    position: optionPosition + 1,
                     product: bundleProductItemsByProductId[productId],
+                    quantity: 1, // In BC picklist products bundle item qty will be always 1
                     uid,
                 };
             });
 
             return {
                 __typename: 'BundleItem' as const,
+
                 id: optionId,
                 option_id: optionId,
                 options,
+                position: itemPosition + 1,
                 price_range: getTransformedPriceRange(prices, 'SimpleProduct', null),
                 required: isRequired,
                 title: displayName,
+                type: displayStyle === 'ProductPickListWithImages' ? 'radio' : null,
                 uid: btoa(String(optionId)),
             };
         })
