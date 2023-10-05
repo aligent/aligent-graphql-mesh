@@ -43,9 +43,7 @@ export const checkMaintenanceMode = async (
 
     /* Works out if an ip address in the request headers matches an ip address
      * in the list of ip address from the "allowed_ip_addresses" metafield */
-    const isAllowedAccess = splitForwardedIps.some((forwardedIp) =>
-        splitAllowedIpAddresses.includes(forwardedIp)
-    );
+    const isAllowedAccess = splitAllowedIpAddresses.includes(splitForwardedIps[0]);
 
     /* If an ip address in the 'allowed_ip_addresses' metafield doesn't match the
      * ip address in the incoming request, throw an error.
