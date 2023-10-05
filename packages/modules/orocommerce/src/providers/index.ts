@@ -3,7 +3,7 @@ import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { Auth } from '../services/auth';
-import { KeyMessagesClient } from '../apis/rest/key-messages';
+import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'

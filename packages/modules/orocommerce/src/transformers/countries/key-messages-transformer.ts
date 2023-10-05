@@ -1,5 +1,5 @@
 import { KeyMessage, KeyMessageResult } from '@aligent/orocommerce-resolvers';
-import { KeyMessage as OroKeyMessage } from '../types/key-messages';
+import { KeyMessage as OroKeyMessage } from '../../types/key-messages';
 
 export const transformKeyMessages = (keyMessages: OroKeyMessage[]): KeyMessageResult => {
     return {

@@ -1,4 +1,4 @@
-import { transformKeyMessages } from '../transform-key-messages';
+import { transformKeyMessages } from '../countries/key-messages-transformer';
 import { getMockKeyMessages } from './__data__/key-messages-data';
 
 describe('Key Messages data transformation tests', () => {
