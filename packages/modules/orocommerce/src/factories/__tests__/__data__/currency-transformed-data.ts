@@ -1,19 +1,10 @@
 import {Currency as AcCurrency} from '@aligent/orocommerce-resolvers';
 
-export const transformedExchangeRates = [
-    {
-        currency_to: "AUD",
-        rate: 1,
-        id: 'AUD'
-    }
-]
-export const transformedCurrency: AcCurrency[] = [
-    {
-        base_currency_code: "AUD",
-        base_currency_symbol: "A$",
-        default_display_currency_code: "AUD",
-        default_display_currency_symbol: "A$",
-        available_currency_codes: "AUD",
-        exchange_rates: transformedExchangeRates,
-    }
-];
+export const transformedCurrency: AcCurrency = {
+    base_currency_code: "NZD",
+    base_currency_symbol: "NZ$",
+    default_display_currency_code: "NZD",
+    default_display_currency_symbol: "NZ$",
+    available_currency_codes: ["NZD"],
+    exchange_rates: [],
+};
