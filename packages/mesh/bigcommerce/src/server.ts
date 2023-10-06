@@ -1,5 +1,5 @@
 import 'module-alias/register';
-import { createBuiltMeshHTTPHandler } from '../.mesh';
+import { createBuiltMeshHTTPHandler } from './../.mesh';
 import express from 'express';
 import cors from 'cors';
 

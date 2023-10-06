@@ -9,8 +9,7 @@
             "inputs": [],
             "outputs": ["{options.outputPath}"],
             "options": {
-                "cwd": "{projectRoot}",
-                "command": "mesh build --throwOnInvalidConfiguration",
+                "command": "mesh build --throwOnInvalidConfiguration --dir packages/mesh/bigcommerce",
                 "runBuildTargetDependencies": true
             },
             "dependsOn": [
@@ -19,6 +18,21 @@
                     "target": "build"
                 }
             ]
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/packages/mesh/bigcommerce",
+              "tsConfig": "packages/mesh/bigcommerce/tsconfig.app.json",
+              "packageJson": "packages/mesh/bigcommerce/package.json",
+              "main": "packages/mesh/bigcommerce/src/server.ts",
+              "assets": ["packages/mesh/bigcommerce/.mesh/**/*.graphql"],
+              "external": "none",
+              "generateExportsField": true,
+              "generateLockfile": true
+            },
+            "dependsOn": ["mesh-build"]
         },
         "serve": {
             "executor": "nx:run-commands",
