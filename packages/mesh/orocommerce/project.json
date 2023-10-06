@@ -1,0 +1,89 @@
+{
+    "name": "orocommerce-mesh",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/mesh/orocommerce/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/packages/mesh/orocommerce",
+                "format": ["cjs"],
+                "bundle": false,
+                "main": "packages/mesh/orocommerce/src/main.ts",
+                "tsConfig": "packages/mesh/orocommerce/tsconfig.app.json",
+                "assets": [
+                    "packages/modules/orocommerce/src/schema/**/*.graphql"
+                ],
+                "generatePackageJson": true,
+                "runBuildTargetDependencies": true,
+                "sourcemap": true,
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "sourcesContent": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
+            },
+            "configurations": {
+                "development": {},
+                "production": {
+                    "generateLockfile": true,
+                    "esbuildOptions": {
+                        "sourcemap": false,
+                        "outExtension": {
+                            ".js": ".js"
+                        }
+                    }
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nx/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "orocommerce-mesh:build",
+                "runBuildTargetDependencies": true,
+                "debounce": 500
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "orocommerce-mesh:build:development"
+                },
+                "production": {
+                    "buildTarget": "orocommerce-mesh:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/mesh/orocommerce/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/mesh/orocommerce/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        },
+        "docker-build": {
+            "dependsOn": ["build"],
+            "command": "docker build -f packages/mesh/orocommerce/Dockerfile . -t orocommerce-mesh"
+        }
+    },
+    "tags": []
+}
