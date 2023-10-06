@@ -15,17 +15,22 @@
             }
         },
         "build": {
-            "executor": "@nx/esbuild:esbuild",
+            "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/packages/modules/bigcommerce",
-                "main": "packages/modules/bigcommerce/src/index.ts",
-                "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
-                "assets": [],
-                "format": ["cjs"],
-                "esbuildConfig": "packages/modules/bigcommerce/esbuild.config.js"
+              "outputPath": "dist/packages/modules/bigcommerce",
+              "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
+              "packageJson": "packages/modules/bigcommerce/package.json",
+              "main": "packages/modules/bigcommerce/src/index.ts",
+              "assets": ["packages/modules/bigcommerce/*.md", "packages/modules/bigcommerce/src/schema/*.graphql"],
+              "external": "none"
             },
-            "dependsOn": ["codegen"]
+            "dependsOn": [
+                {
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations"],
+                    "target": "codegen"
+                }
+            ]
         },
         "publish": {
             "command": "node tools/scripts/publish.mjs bigcommerce-graphql-module {args.ver} {args.tag}",
@@ -56,8 +61,5 @@
             }
         }
     },
-    "tags": [],
-    "namedInputs": {
-        "codegen": ["{projectRoot}/codegen.ts"]
-    }
+    "tags": []
 }
