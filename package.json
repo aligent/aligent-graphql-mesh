@@ -5,8 +5,8 @@
   "license": "UNLICENSED",
   "_moduleAliases": {
     "@aligent/bigcommerce-graphql-module": "./packages/modules/bigcommerce/src/index",
-    "@aligent/bigcommerce-operations": "dist/packages/generated/bigcommerce/operations/index",
-    "@aligent/bigcommerce-resolvers": "dist/packages/generated/bigcommerce/resolvers/index",
+    "@aligent/bigcommerce-operations": "./packages/generated/bigcommerce-operations/src/index",
+    "@aligent/bigcommerce-resolvers": "./packages/generated/bigcommerce-resolvers/src/index",
     "@aligent/utils": "./packages/utils/src/index"
   },
   "devDependencies": {
