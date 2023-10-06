@@ -7,8 +7,7 @@
     "graphql-modules": "^2.2.0",
     "reflect-metadata": "^0.1.13",
     "@graphql-tools/load-files": "^7.0.0",
-    "jsonwebtoken": "^9.0.0",
-    "@aligent/utils": "*"
+    "jsonwebtoken": "^9.0.0"
   },
   "type": "commonjs",
   "main": "./index.cjs"
