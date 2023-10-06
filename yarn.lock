@@ -1949,7 +1949,14 @@
     object-inspect "1.12.3"
     tslib "2.6.0"
 
-"@graphql-mesh/cache-localforage@^0.95.0", "@graphql-mesh/cache-localforage@^0.95.5":
+"@graphql-mesh/cache-localforage@^0.95.0":
+  version "0.95.6"
+  resolved "https://npm.corp.aligent.consulting/@graphql-mesh/cache-localforage/-/cache-localforage-0.95.6.tgz#ba3b0ddde6078e42a73884d964d751855b812fab"
+  integrity sha512-kclWNz+Dz3JsIl+oKkmwmCOAA3qhG0UhjQrOsyOi782foWOFMo4LynV7t8itzwc3dMJmw9gBKLe6UBkOvPCvuw==
+  dependencies:
+    localforage "1.10.0"
+
+"@graphql-mesh/cache-localforage@^0.95.5":
   version "0.95.5"
   resolved "https://registry.yarnpkg.com/@graphql-mesh/cache-localforage/-/cache-localforage-0.95.5.tgz#e4202247b381b2efd198a942aac18b28b6e1ec2d"
   integrity sha512-f8c2h7BNullXtOluj6HtIGazW/mRJ/cLBLB+kTWnm5sljpDa4lP/OXigLo5iIO4d9D3abK6XvtFx7Z+pe3sqVA==
