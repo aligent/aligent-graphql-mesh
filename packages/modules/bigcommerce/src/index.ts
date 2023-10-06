@@ -1,9 +1,12 @@
 import 'reflect-metadata';
 import { createModule } from 'graphql-modules';
+import { loadFilesSync } from '@graphql-tools/load-files';
+import { resolve } from 'node:path';
 import resolvers from './resolvers';
 import middlewares from './middleware';
 import { getProviders } from './providers';
-import schema from './schema/schema.graphql';
+
+const loadGraphQlFiles = () => loadFilesSync(resolve(__dirname, './schema/*.graphql'));
 
 export interface BigCommerceModuleConfig {
     graphqlEndpoint: string;
@@ -18,7 +21,7 @@ export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
     return createModule({
         id: 'bigcommerce',
         dirname: __dirname,
-        typeDefs: schema,
+        typeDefs: loadGraphQlFiles(),
         resolvers,
         middlewares,
         providers: getProviders(config),
