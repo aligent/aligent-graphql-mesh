@@ -21,7 +21,12 @@
                 "@nx/dependency-checks": [
                     "error",
                     {
-                        "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
+                        "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"],
+                        "ignoredDependencies": [
+                            "@aligent/utils",
+                            "@aligent/bigcommerce-operations",
+                            "@aligent/bigcommerce-resolvers"
+                        ]
                     }
                 ]
             }

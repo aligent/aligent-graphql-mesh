@@ -2,7 +2,6 @@
   "name": "@aligent/bigcommerce-graphql-module",
   "version": "0.0.1",
   "dependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
     "axios": "^1.4.0",
     "graphql-tag": "^2.12.0",
     "graphql": "^16.7.0",
@@ -13,7 +12,9 @@
     "graphql-request": "^6.1.0",
     "@graphql-mesh/types": "^0.95.4",
     "jsonwebtoken": "^9.0.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "reflect-metadata": "^0.1.13",
+    "tslib": "^2.3.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",

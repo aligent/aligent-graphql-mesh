@@ -2,13 +2,14 @@
   "name": "@aligent/orocommerce-graphql-module",
   "version": "0.0.1",
   "dependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
     "axios": "^1.4.0",
     "graphql-modules": "^2.2.0",
     "reflect-metadata": "^0.1.13",
     "@graphql-tools/load-files": "^7.0.0",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "tslib": "^2.3.0"
   },
   "type": "commonjs",
-  "main": "./index.cjs"
+  "main": "./src/index.js",
+  "types": "./src/index.ts"
 }
