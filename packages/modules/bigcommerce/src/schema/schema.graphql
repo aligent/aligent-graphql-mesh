@@ -8294,6 +8294,10 @@ An input object that assigns or updates customer attributes.
 """
 input CustomerInput {
     """
+    Indicates whether the customer has enabled remote shopping assistance.
+    """
+    allow_remote_shopping_assistance: Boolean
+    """
     The customer's date of birth.
     """
     date_of_birth: String

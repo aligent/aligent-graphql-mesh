@@ -77,8 +77,18 @@ export const transformCustomerForMutation = (
     customerId?: number
 ): BcMutationCustomer => {
     const bcCustomer: BcMutationCustomer = {
-        ...(customerId && { id: customerId }),
+        ...(customerId && {
+            id: customerId,
+            form_fields: [
+                {
+                    id: customerId,
+                    name: 'allow_remote_shopping_assistance',
+                    value: false,
+                },
+            ],
+        }),
     };
+
     if (customer.email) {
         bcCustomer.email = customer.email;
     }
@@ -87,6 +97,14 @@ export const transformCustomerForMutation = (
     }
     if (customer.lastname) {
         bcCustomer.last_name = customer.lastname;
+    }
+    if (customer.allow_remote_shopping_assistance) {
+        const remoteAssistanceField = bcCustomer?.form_fields?.find(
+            (field) => field.name === 'allow_remote_shopping_assistance'
+        );
+        if (remoteAssistanceField) {
+            remoteAssistanceField.value = customer.allow_remote_shopping_assistance;
+        }
     }
 
     return bcCustomer;

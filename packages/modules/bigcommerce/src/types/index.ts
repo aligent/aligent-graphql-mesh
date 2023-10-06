@@ -33,6 +33,15 @@ export interface BcCustomer {
     store_credit_amounts: [{ amount: number }];
     origin_channel_id: number;
     channel_ids: number[] | null;
+    form_fields?:
+        | [
+              {
+                  id: number;
+                  name: string;
+                  value: boolean;
+              },
+          ]
+        | null;
 }
 
 export interface BcMutationCustomer {
@@ -44,6 +53,13 @@ export interface BcMutationCustomer {
         force_password_reset: boolean;
         new_password: string;
     };
+    form_fields?: [
+        {
+            id: number;
+            name: string;
+            value: string | boolean;
+        },
+    ];
 }
 
 export interface Country {
