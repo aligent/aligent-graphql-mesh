@@ -24,7 +24,7 @@
             "executor": "nx:run-commands",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "command": "mesh dev --dir packages/mesh/bigcommerce",
+                "command": "STAGE=dev mesh dev --dir packages/mesh/bigcommerce",
                 "runBuildTargetDependencies": true
             },
             "dependsOn": [
