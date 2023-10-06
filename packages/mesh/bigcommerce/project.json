@@ -4,19 +4,33 @@
     "sourceRoot": "packages/mesh/bigcommerce/src",
     "projectType": "application",
     "targets": {
-        "serve": {
+        "mesh-build": {
             "executor": "nx:run-commands",
             "inputs": [],
             "outputs": ["{options.outputPath}"],
             "options": {
                 "cwd": "{projectRoot}",
-                "command": "mesh dev",
+                "command": "mesh build --throwOnInvalidConfiguration",
                 "runBuildTargetDependencies": true
             },
             "dependsOn": [
                 {
-                    "projects": ["bigcommerce-graphql-module"],
+                    "projects": ["bigcommerce-graphql-module", "bigcommerce-resolvers", "bigcommerce-operations"],
                     "target": "build"
+                }
+            ]
+        },
+        "serve": {
+            "executor": "nx:run-commands",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "command": "mesh dev --dir packages/mesh/bigcommerce",
+                "runBuildTargetDependencies": true
+            },
+            "dependsOn": [
+                {
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations"],
+                    "target": "codegen"
                 }
             ]
         },
