@@ -14,7 +14,11 @@
             },
             "dependsOn": [
                 {
-                    "projects": ["bigcommerce-graphql-module", "bigcommerce-resolvers", "bigcommerce-operations"],
+                    "projects": [
+                        "bigcommerce-graphql-module",
+                        "bigcommerce-resolvers",
+                        "bigcommerce-operations"
+                    ],
                     "target": "build"
                 }
             ]
@@ -23,14 +27,14 @@
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-              "outputPath": "dist/packages/mesh/bigcommerce",
-              "tsConfig": "packages/mesh/bigcommerce/tsconfig.app.json",
-              "packageJson": "packages/mesh/bigcommerce/package.json",
-              "main": "packages/mesh/bigcommerce/src/server.ts",
-              "assets": ["packages/mesh/bigcommerce/.mesh/**/*.graphql"],
-              "external": "none",
-              "generateExportsField": true,
-              "generateLockfile": true
+                "outputPath": "dist/packages/mesh/bigcommerce",
+                "tsConfig": "packages/mesh/bigcommerce/tsconfig.app.json",
+                "packageJson": "packages/mesh/bigcommerce/package.json",
+                "main": "packages/mesh/bigcommerce/src/server.ts",
+                "assets": ["packages/mesh/bigcommerce/.mesh/**/*.graphql"],
+                "external": "none",
+                "generateExportsField": true,
+                "generateLockfile": true
             },
             "dependsOn": ["mesh-build"]
         },

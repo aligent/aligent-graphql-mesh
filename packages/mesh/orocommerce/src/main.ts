@@ -6,13 +6,13 @@ import { useGraphQLModules } from '@envelop/graphql-modules';
 import application from './application';
 import { readFileSync } from 'node:fs';
 
-const DEV_MODE = process.env?.NODE_ENV == 'development'; 
+const DEV_MODE = process.env?.NODE_ENV == 'development';
 
-const yoga = createYoga({ 
-    plugins: [useGraphQLModules(application)], 
+const yoga = createYoga({
+    plugins: [useGraphQLModules(application)],
     graphiql: DEV_MODE,
     logging: DEV_MODE ? 'info' : 'warn',
-    landingPage: false
+    landingPage: false,
 });
 
 const app = express();
@@ -33,13 +33,7 @@ if (process.env.ORIGINS) {
 const corsConfiguration: cors.CorsOptions = {
     origin: allowedOrigins,
     credentials: true,
-    allowedHeaders: [
-        'Content-Type',
-        'Authorization',
-        'preview-version',
-        'x-recaptcha',
-        'store',
-    ],
+    allowedHeaders: ['Content-Type', 'Authorization', 'preview-version', 'x-recaptcha', 'store'],
 };
 app.use(cors(corsConfiguration));
 
@@ -61,18 +55,18 @@ app.use('/healthcheck', (_req, res) => {
 });
 
 // Disable powered by header
-app.disable('x-powered-by')
+app.disable('x-powered-by');
 
 const port = 4000 || process.env.PORT;
 if (DEV_MODE) {
     const server = https.createServer(
         {
             key: readFileSync('./certificates/cert.key'),
-            cert: readFileSync('./certificates/cert.crt')
-        }, 
+            cert: readFileSync('./certificates/cert.crt'),
+        },
         app
     );
-    
+
     server.listen(port, () => {
         console.log(`Mesh listening at https://localhost:${port}/graphql`);
     });

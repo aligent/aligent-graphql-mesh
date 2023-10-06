@@ -18,12 +18,15 @@
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-              "outputPath": "dist/packages/modules/orocommerce",
-              "tsConfig": "packages/modules/orocommerce/tsconfig.lib.json",
-              "packageJson": "packages/modules/orocommerce/package.json",
-              "main": "packages/modules/orocommerce/src/index.ts",
-              "assets": ["packages/modules/orocommerce/*.md", "packages/modules/orocommerce/src/schema/*.graphql"],
-              "external": "none"
+                "outputPath": "dist/packages/modules/orocommerce",
+                "tsConfig": "packages/modules/orocommerce/tsconfig.lib.json",
+                "packageJson": "packages/modules/orocommerce/package.json",
+                "main": "packages/modules/orocommerce/src/index.ts",
+                "assets": [
+                    "packages/modules/orocommerce/*.md",
+                    "packages/modules/orocommerce/src/schema/*.graphql"
+                ],
+                "external": "none"
             },
             "dependsOn": [
                 {

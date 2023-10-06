@@ -18,12 +18,15 @@
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-              "outputPath": "dist/packages/modules/bigcommerce",
-              "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
-              "packageJson": "packages/modules/bigcommerce/package.json",
-              "main": "packages/modules/bigcommerce/src/index.ts",
-              "assets": ["packages/modules/bigcommerce/*.md", "packages/modules/bigcommerce/src/schema/*.graphql"],
-              "external": "none"
+                "outputPath": "dist/packages/modules/bigcommerce",
+                "tsConfig": "packages/modules/bigcommerce/tsconfig.lib.json",
+                "packageJson": "packages/modules/bigcommerce/package.json",
+                "main": "packages/modules/bigcommerce/src/index.ts",
+                "assets": [
+                    "packages/modules/bigcommerce/*.md",
+                    "packages/modules/bigcommerce/src/schema/*.graphql"
+                ],
+                "external": "none"
             },
             "dependsOn": [
                 {
