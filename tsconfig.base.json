@@ -38,7 +38,7 @@
             ],
             "@aligent/orocommerce-graphql-module": ["packages/modules/orocommerce/src/index.ts"],
             "@aligent/orocommerce-resolvers": [
-                "packages/generated/orocommerce-resolvers/index.ts"
+                "packages/generated/orocommerce-resolvers/src/index.ts"
             ],
             "@aligent/utils": ["packages/utils/src/index.ts"]
         }
