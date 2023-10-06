@@ -1,4 +1,4 @@
-import {Entity, Attributes} from '.';
+import { Entity, Attributes } from '.';
 
 export interface Currency extends Entity {
     type: 'currencies';

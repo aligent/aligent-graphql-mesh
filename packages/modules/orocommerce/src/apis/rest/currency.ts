@@ -12,5 +12,4 @@ export class CurrencyClient {
     async getCurrency(id: string): Promise<Currency> {
         return this.apiClient.get<Currency>(`/currencies/${id}`);
     }
-
 }
