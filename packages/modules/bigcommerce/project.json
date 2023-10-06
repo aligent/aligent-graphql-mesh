@@ -27,8 +27,8 @@
             },
             "dependsOn": [
                 {
-                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations"],
-                    "target": "codegen"
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations", "utils"],
+                    "target": "build"
                 }
             ]
         },
