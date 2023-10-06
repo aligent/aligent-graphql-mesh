@@ -247,7 +247,7 @@ export const acOrders: CustomerOrders = {
                         currency: 'AUD',
                         value: 0,
                     },
-                    total_amount: { currency: 'AUD', value: 62.62 },
+                    total_amount: { currency: 'AUD', value: 0 },
                 },
                 subtotal: { currency: 'AUD', value: 62.62 },
                 subtotal_incl_tax: {
@@ -331,7 +331,7 @@ export const acOrders: CustomerOrders = {
                     },
                     total_amount: {
                         currency: 'AUD',
-                        value: 368,
+                        value: 0,
                     },
                 },
                 subtotal: {
