@@ -1,6 +1,6 @@
 sslCredentials:
-  key: 'packages/mesh/bigcommerce/cert.key'
-  cert: 'packages/mesh/bigcommerce/cert.crt'
+  key: 'certificates/cert.key'
+  cert: 'certificates/cert.crt'
 port: 4000
 hostname: 0.0.0.0
 browser: false
