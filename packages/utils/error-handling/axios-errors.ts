@@ -12,7 +12,7 @@ export const logAndThrowAxiosError = (
     message?: string
 ): never => {
     const response = axiosError.response as AxiosResponse;
-    const data = response.data;
+    const data = response?.data;
     if (message) console.error({ message });
 
     if (!data) {
