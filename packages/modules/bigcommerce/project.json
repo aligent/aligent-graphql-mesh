@@ -12,7 +12,13 @@
                         "command": "tsc --noEmit --pretty -p {projectRoot}/tsconfig.lib.json"
                     }
                 ]
-            }
+            },
+            "dependsOn": [
+                {
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations", "utils"],
+                    "target": "build"
+                }
+            ]
         },
         "build": {
             "executor": "@nx/js:tsc",
