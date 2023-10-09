@@ -14,8 +14,15 @@ export const storeConfigResolver: QueryResolvers['storeConfig'] = {
         /* Check if maintenance mode has been raised. If it has, an error will be thrown.
          * The PWA calls the storeConfig query on page load and if the response is an error, it will
          * raise the maintenance page. */
-        await checkMaintenanceMode(customerImpersonationToken, context);
+        const checkMaintenanceModeQuery = await checkMaintenanceMode(
+            customerImpersonationToken,
+            context
+        );
 
-        return retrieveStoreConfigsFromCache(context);
+        const storeConfigsQuery = retrieveStoreConfigsFromCache(context);
+
+        const [, storeConfigs] = await Promise.all([checkMaintenanceModeQuery, storeConfigsQuery]);
+
+        return storeConfigs;
     },
 };
