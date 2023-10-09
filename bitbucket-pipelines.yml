@@ -89,11 +89,11 @@ pipelines:
           - step: *code-quality
           - step: *test
   tags:
-    'bigcommerce-*.*.*':
+    'bigcommerce-graphql-module-*.*.*':
       # - step: *install
       # - step: *build
       - step: *publish
-    'orocommerce-*.*.*':
+    'orocommerce-graphql-module-*.*.*':
       # - step: *install
       # - step: *build
       - step: *publish
