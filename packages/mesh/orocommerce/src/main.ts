@@ -29,7 +29,11 @@ const yoga = createYoga({
     },
     plugins: [
         useGraphQLModules(application),
-        EnvelopArmorPlugin(),
+        EnvelopArmorPlugin({
+            maxAliases: {
+                n: 70
+            }
+        }),
         useResponseCache({
             session: () => null,
             cache: DEV_MODE
