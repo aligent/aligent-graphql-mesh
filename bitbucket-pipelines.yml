@@ -26,7 +26,7 @@ definitions:
           - yarn nx format:check --base=$DESTINATION_BRANCH # Runs prettier against the project
           - yarn nx affected:check-types --base=$DESTINATION_BRANCH
 
-    # Temporarily remove hive until we can generate a final schema from mesh application instance 
+    # Temporarily remove hive until we can generate a final schema from mesh application instance
     # - step: &hive-check
     #     name: 🐝 Hive Schema Check
     #     script:
@@ -59,7 +59,7 @@ definitions:
           - yarn nx docker-build ${APPLICATION}
           - docker save mesh:latest | gzip > ${APPLICATION}_latest.tar.gz
         artifacts:
-          - "*.tar.gz"
+          - '*.tar.gz'
 
     - step: &deploy
         name: 📦 Push to ECR
