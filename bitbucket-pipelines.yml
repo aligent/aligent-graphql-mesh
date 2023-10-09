@@ -24,7 +24,7 @@ definitions:
           - yarn nx workspace-lint --base=$DESTINATION_BRANCH # Runs linting on nx specific files
           - yarn nx affected:lint --base=$DESTINATION_BRANCH # Executes linting on affected projects/libs
           - yarn nx format:check --base=$DESTINATION_BRANCH # Runs prettier against the project
-          - yarn nx affected:check-types --base=$DESTINATION_BRANCH
+          - yarn nx affected -t check-types --base=$DESTINATION_BRANCH
 
     # Temporarily remove hive until we can generate a final schema from mesh application instance
     # - step: &hive-check
