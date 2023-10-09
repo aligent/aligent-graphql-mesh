@@ -1516,6 +1516,26 @@
   dependencies:
     tslib "^2.5.0"
 
+"@envelop/response-cache-redis@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@envelop/response-cache-redis/-/response-cache-redis-3.3.2.tgz#d1530f00c9eacda52aabc0ebf484c453b8d19c1a"
+  integrity sha512-rYBgAJF10CdiI71XGZb+M2YHn1SWUfRIfxPkIIDcIM3Es779S3uNtVQgHNc3AS+lgqBZv4PPSJlerD5XkqPSRA==
+  dependencies:
+    "@envelop/response-cache" "^5.3.2"
+    ioredis "^4.27.9"
+    tslib "^2.5.0"
+
+"@envelop/response-cache@^5.3.2":
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/@envelop/response-cache/-/response-cache-5.3.2.tgz#ae6d06f74bcf6cd067128ef9fa9de928d7e2d12d"
+  integrity sha512-q9mX4S2ylU9jj6G4gSUvm8BfD5wc90RVZ8PGgvyiDPXrFc+z3Wp4XgJ3iIm3j9u2DTDYRYOmBNZR4GcB2AZ4QA==
+  dependencies:
+    "@graphql-tools/utils" "^10.0.3"
+    "@whatwg-node/fetch" "^0.9.0"
+    fast-json-stable-stringify "^2.1.0"
+    lru-cache "^10.0.0"
+    tslib "^2.5.0"
+
 "@envelop/sentry@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@envelop/sentry/-/sentry-6.0.0.tgz#4b9e64c268fee359a636f9d0083e66245c0d86d1"
@@ -1639,6 +1659,85 @@
   version "0.17.19"
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.17.19.tgz#8cfaf2ff603e9aabb910e9c0558c26cf32744061"
   integrity sha512-lAhycmKnVOuRYNtRtatQR1LPQf2oYCkRGkSFnseDAKPl8lu5SOsK/e1sXe5a0Pc5kHIHe6P2I/ilntNv2xf3cA==
+
+"@escape.tech/graphql-armor-block-field-suggestions@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-block-field-suggestions/-/graphql-armor-block-field-suggestions-2.1.0.tgz#100a24ad5e5f672273c6bf795f8ca9983dbe9214"
+  integrity sha512-Sna+jK02oUDJMWSfA7ica69HdtBroP3VakeMUK0+QgWlAEBEphT+SzKGDX5vn6sS7sAsEoY50gUAIgtTG+2qVw==
+  dependencies:
+    graphql "^16.0.0"
+  optionalDependencies:
+    "@envelop/core" "^4.0.0"
+
+"@escape.tech/graphql-armor-cost-limit@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-cost-limit/-/graphql-armor-cost-limit-2.1.0.tgz#dace6ab7808509c228446b78adbe5d108383ddc7"
+  integrity sha512-zejjLm3vn4MQDpXRaPGXclo1Tq1lc93Ltoh3UoqUDiFV29ZUAnSnuuEw/AdbkK+YFrSIfZYMAGDV8AZ2Xz76RQ==
+  dependencies:
+    graphql "^16.0.0"
+  optionalDependencies:
+    "@envelop/core" "^4.0.0"
+    "@escape.tech/graphql-armor-types" "0.5.0"
+
+"@escape.tech/graphql-armor-max-aliases@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-max-aliases/-/graphql-armor-max-aliases-2.1.0.tgz#9a8e46625d15bc44281ac23c7d10d79a63a04cc9"
+  integrity sha512-jaqB8YWIpfDSNrbiGEt301MQqSH7cLu+ZYZjEQ/irL5rqbSN1c9zE+nqEP1cXxB8jB6D+vp8jU30rrZWS9goAQ==
+  dependencies:
+    graphql "^16.0.0"
+  optionalDependencies:
+    "@envelop/core" "^4.0.0"
+    "@escape.tech/graphql-armor-types" "0.5.0"
+
+"@escape.tech/graphql-armor-max-depth@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-max-depth/-/graphql-armor-max-depth-2.2.0.tgz#415402a72c714b960106655be12fd5dc568f2805"
+  integrity sha512-v0z2yelQL614mYFpYL/iRkieq/7H2XKbvJ6RvbGMFFSqo3eSIz8fyX0f6pyswR7myQxki4ur0MFxSn8S5jjfqw==
+  dependencies:
+    graphql "^16.0.0"
+  optionalDependencies:
+    "@envelop/core" "^4.0.0"
+    "@escape.tech/graphql-armor-types" "0.5.0"
+
+"@escape.tech/graphql-armor-max-directives@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-max-directives/-/graphql-armor-max-directives-2.1.0.tgz#d956db28e86b7fbfa3e5ff8492dbfdc5f23912dc"
+  integrity sha512-0OuvWBbOVdphyLPafqTknM4EIrFsGHjv9DcSw8mM7Ol0kKLwYG7tGuBmEzwopRntkqW3utID5tMtf/B6px/Eyw==
+  dependencies:
+    graphql "^16.0.0"
+  optionalDependencies:
+    "@envelop/core" "^4.0.0"
+    "@escape.tech/graphql-armor-types" "0.5.0"
+
+"@escape.tech/graphql-armor-max-tokens@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-max-tokens/-/graphql-armor-max-tokens-2.2.0.tgz#9672fb32dc83236662f004ba16c8fc7e0ecf2827"
+  integrity sha512-s6IBS8R4fxQ9cVX1USf4dUOWEDbVVrlcGmVOuTCyW1LnpFJQ5vWCs0n93Lsw2ge/MlRIkZEtGuiXdr0YmLU4Pg==
+  dependencies:
+    graphql "^16.0.0"
+  optionalDependencies:
+    "@envelop/core" "^4.0.0"
+    "@escape.tech/graphql-armor-types" "0.5.0"
+
+"@escape.tech/graphql-armor-types@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor-types/-/graphql-armor-types-0.5.0.tgz#bc8452443fef533b118a9e807782f5da95780148"
+  integrity sha512-a7KMhb1qVHFFWw4bvGYQI637YaIZRozbfc+Fj1Vv/pwnTCJOzOgnvKO8+WBXJsFFGJ2Kj+fRORmSpz7J+lJF1w==
+  dependencies:
+    graphql "^16.0.0"
+
+"@escape.tech/graphql-armor@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@escape.tech/graphql-armor/-/graphql-armor-2.3.1.tgz#e68a382a1c75a7b7fbac1ce604170f05c814f02e"
+  integrity sha512-2HV6ApCeb52eVTeXjgpo00VLDZkiQfxeMi9KTPHsK8/1f3X60gx51szHwTRYhPUeimUquRcxqlO36Iq3rbhywQ==
+  dependencies:
+    "@escape.tech/graphql-armor-block-field-suggestions" "2.1.0"
+    "@escape.tech/graphql-armor-cost-limit" "2.1.0"
+    "@escape.tech/graphql-armor-max-aliases" "2.1.0"
+    "@escape.tech/graphql-armor-max-depth" "2.2.0"
+    "@escape.tech/graphql-armor-max-directives" "2.1.0"
+    "@escape.tech/graphql-armor-max-tokens" "2.2.0"
+    graphql "^16.0.0"
 
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
   version "4.4.0"
@@ -2518,7 +2617,7 @@
     dset "^3.1.2"
     tslib "^2.4.0"
 
-"@graphql-tools/utils@^10.0.1":
+"@graphql-tools/utils@^10.0.1", "@graphql-tools/utils@^10.0.3":
   version "10.0.6"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-10.0.6.tgz#8a809d6bc0df27ffe8964696f182af2383b5974b"
   integrity sha512-hZMjl/BbX10iagovakgf3IiqArx8TPsotq5pwBld37uIX1JiZoSbgbCIFol7u55bh32o6cfDEiiJgfAD5fbeyQ==
@@ -2569,6 +2668,13 @@
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@graphql-yoga/plugin-persisted-operations/-/plugin-persisted-operations-2.0.4.tgz#eec7e3fd772a24a9930ff748784d5bf64bfd1381"
   integrity sha512-iPMSOpa+SiY88r7Hzt/JTNhMt7PDghFsMBBeEaRWtUaTo4oPbrqUSJyG21cPB6EJP5s+TBIza0ZCfgQZSh7mnw==
+
+"@graphql-yoga/plugin-response-cache@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@graphql-yoga/plugin-response-cache/-/plugin-response-cache-2.2.0.tgz#1d3e350e184e7fd0ec863ae2fa76c4bd49bf9b0e"
+  integrity sha512-1a3KvvRYCHhHuUgddkH3mg+vOuVC7eEWSmS+tJuIUwVoS2JYtSsAJ+boCRfwbU/ATFjzeMNcOpTmX60YahjJ6w==
+  dependencies:
+    "@envelop/response-cache" "^5.3.2"
 
 "@graphql-yoga/subscription@^4.0.0":
   version "4.0.0"
@@ -2912,6 +3018,13 @@
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@json-schema-tools/meta-schema/-/meta-schema-1.7.0.tgz#ce3e3a490a6499c44251d6203a40ed96bde8ac4b"
   integrity sha512-3pDzVUssW3hVnf8gvSu1sKaVIpLyvmpbxgGfkUoaBiErFKRS2CZOufHD0pUFoa5e6Cd5oa72s402nJbnDz76CA==
+
+"@keyv/redis@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@keyv/redis/-/redis-2.8.0.tgz#e0b8348a5b1bc0765ab2d085cfe6651670987c40"
+  integrity sha512-6k7wG/KKSIGpruKlsEB4sFjECJEyQsuJbWoWdoq9Uv2L6Mm/SEqEidekRZI/QljE1A4WQkFsIE8hHl1Oc3UNGg==
+  dependencies:
+    ioredis "^5.3.2"
 
 "@luckycatfactory/esbuild-graphql-loader@^3.8.1":
   version "3.8.1"
@@ -5078,6 +5191,11 @@ delegates@^1.0.0:
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
   integrity sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==
 
+denque@^1.1.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/denque/-/denque-1.5.1.tgz#07f670e29c9a78f8faecb2566a1e2c11929c5cbf"
+  integrity sha512-XwE+iZ4D6ZUB7mfYRMb5wByE8L74HCn30FBN7sWnXksWc1LO1bPDl67pBR9o/kC4z/xSNAwkMYcGgqDV3BE3Hw==
+
 denque@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/denque/-/denque-2.1.0.tgz#e93e1a6569fb5e66f16a3c2a2964617d349d6ab1"
@@ -6141,6 +6259,23 @@ graphql-yoga@^4.0.0:
     lru-cache "^10.0.0"
     tslib "^2.5.2"
 
+graphql-yoga@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/graphql-yoga/-/graphql-yoga-4.0.5.tgz#7545f430d2e83998d22427b63fd511976dba47c4"
+  integrity sha512-vIbJU9QX5RP4PoxbMCHcfOlt/3EsC/0uLdAOlKaiUvlwJDTFCaIHo2X10vL4i/27Gw8g90ECIwm2YbmeLDwcqg==
+  dependencies:
+    "@envelop/core" "^4.0.0"
+    "@graphql-tools/executor" "^1.0.0"
+    "@graphql-tools/schema" "^10.0.0"
+    "@graphql-tools/utils" "^10.0.0"
+    "@graphql-yoga/logger" "^1.0.0"
+    "@graphql-yoga/subscription" "^4.0.0"
+    "@whatwg-node/fetch" "^0.9.7"
+    "@whatwg-node/server" "^0.9.1"
+    dset "^3.1.1"
+    lru-cache "^10.0.0"
+    tslib "^2.5.2"
+
 graphql@^16.0.0, graphql@^16.7.0:
   version "16.8.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.0.tgz#374478b7f27b2dc6153c8f42c1b80157f79d79d4"
@@ -6416,6 +6551,23 @@ ioredis-mock@^8.8.3:
     fengari "^0.1.4"
     fengari-interop "^0.1.3"
     semver "^7.5.4"
+
+ioredis@^4.27.9:
+  version "4.28.5"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.28.5.tgz#5c149e6a8d76a7f8fa8a504ffc85b7d5b6797f9f"
+  integrity sha512-3GYo0GJtLqgNXj4YhrisLaNNvWSNwSS2wS4OELGfGxH8I69+XfNdnmV1AyN+ZqMh0i7eX+SWjrwFKDBDgfBC1A==
+  dependencies:
+    cluster-key-slot "^1.1.0"
+    debug "^4.3.1"
+    denque "^1.1.0"
+    lodash.defaults "^4.2.0"
+    lodash.flatten "^4.4.0"
+    lodash.isarguments "^3.1.0"
+    p-map "^2.1.0"
+    redis-commands "1.7.0"
+    redis-errors "^1.2.0"
+    redis-parser "^3.0.0"
+    standard-as-callback "^2.1.0"
 
 ioredis@^5.3.2:
   version "5.3.2"
@@ -7111,6 +7263,11 @@ json-bigint-patch@^0.0.8:
   resolved "https://registry.yarnpkg.com/json-bigint-patch/-/json-bigint-patch-0.0.8.tgz#45d954da1f21c6d4f3ae9ef64c9ac227cd0ab0fe"
   integrity sha512-xa0LTQsyaq8awYyZyuUsporWisZFiyqzxGW8CKM3t7oouf0GFAKYJnqAm6e9NLNBQOCtOLvy614DEiRX/rPbnA==
 
+json-buffer@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/json-buffer/-/json-buffer-3.0.1.tgz#9338802a30d3b6605fbe0613e094008ca8c05a13"
+  integrity sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==
+
 json-machete@0.95.2:
   version "0.95.2"
   resolved "https://registry.yarnpkg.com/json-machete/-/json-machete-0.95.2.tgz#47632a83100221d149ff798cc84e673b1b82feb6"
@@ -7235,6 +7392,13 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
+keyv@^4.5.4:
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.5.4.tgz#a879a99e29452f942439f2a405e3af8b31d4de93"
+  integrity sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==
+  dependencies:
+    json-buffer "3.0.1"
+
 kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
@@ -7314,6 +7478,11 @@ lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
   integrity sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==
+
+lodash.flatten@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
+  integrity sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==
 
 lodash.get@4.4.2, lodash.get@^4.4.2:
   version "4.4.2"
@@ -8097,6 +8266,11 @@ p-locate@^5.0.0:
   dependencies:
     p-limit "^3.0.2"
 
+p-map@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/p-map/-/p-map-2.1.0.tgz#310928feef9c9ecc65b68b17693018a665cea175"
+  integrity sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==
+
 p-map@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-4.0.0.tgz#bb2f95a5eda2ec168ec9274e06a747c3e2904d2b"
@@ -8454,6 +8628,11 @@ redeyed@~2.1.0:
   integrity sha512-FNpGGo1DycYAdnrKFxCMmKYgo/mILAqtRYbkdQD8Ep/Hk2PQ5+aEAEx+IU713RTDmuBaH0c8P5ZozurNu5ObRQ==
   dependencies:
     esprima "~4.0.0"
+
+redis-commands@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
+  integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
 
 redis-errors@^1.0.0, redis-errors@^1.2.0:
   version "1.2.0"

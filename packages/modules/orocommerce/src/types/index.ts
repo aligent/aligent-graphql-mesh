@@ -1,4 +1,5 @@
 import { ReflectiveInjector } from 'graphql-modules/di';
+import Keyv from 'keyv';
 
 export interface Resource {
     readonly type: string;
@@ -27,8 +28,10 @@ declare global {
         interface GlobalContext {
             headers: Record<string, string>;
             injector: ReflectiveInjector;
+            cache: Keyv;
         }
     }
 }
+/* eslint-enable */
 
 export * from './customer';

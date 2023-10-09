@@ -5,14 +5,41 @@ import { createYoga } from 'graphql-yoga';
 import { useGraphQLModules } from '@envelop/graphql-modules';
 import application from './application';
 import { readFileSync } from 'node:fs';
+import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
+import {
+    useResponseCache,
+    createInMemoryCache,
+    UseResponseCacheParameter,
+} from '@graphql-yoga/plugin-response-cache';
+import { createRedisCache } from '@envelop/response-cache-redis';
+import { Redis } from 'ioredis';
+import Keyv from 'keyv';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
+const redisUri = `redis://:${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}`;
 
 const yoga = createYoga({
-    plugins: [useGraphQLModules(application)],
     graphiql: DEV_MODE,
     logging: DEV_MODE ? 'info' : 'warn',
     landingPage: false,
+    context: {
+        cache: DEV_MODE
+            ? new Keyv({ namespace: 'application' })
+            : new Keyv(redisUri, { namespace: 'application' }),
+    },
+    plugins: [
+        useGraphQLModules(application),
+        EnvelopArmorPlugin(),
+        useResponseCache({
+            session: () => null,
+            cache: DEV_MODE
+                ? createInMemoryCache()
+                : // @TODO: Remove UseResponseCacheParameter once issue is resolved: https://github.com/dotansimha/graphql-yoga/issues/3048
+                  (createRedisCache({
+                      redis: new Redis(redisUri),
+                  }) as UseResponseCacheParameter['cache']),
+        }),
+    ],
 });
 
 const app = express();
