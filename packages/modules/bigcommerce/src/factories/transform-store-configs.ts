@@ -1,4 +1,4 @@
-import { MetafieldConnection } from '@aligent/bigcommerce-operations';
+import { Maybe, MetafieldEdge } from '@aligent/bigcommerce-operations';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
 import {
@@ -27,9 +27,9 @@ const MANDATORY_STORE_CONFIGS = {
  * API endpoint:  https://api.bigcommerce.com/stores/{{store_hash}}/v3/channels/1/metafields
  * Docs: https://developer.bigcommerce.com/docs/rest-management/channels/channel-metafields#create-a-channel-metafield
  */
-export function getTransformedChannelMetafieldsToStoreConfig(
-    bcStoreConfig: MetafieldConnection
-): StoreConfig {
+export function getTransformedChannelMetafieldsToStoreConfig(bcStoreConfig: {
+    edges?: Maybe<Array<Maybe<MetafieldEdge>>>;
+}): StoreConfig {
     const metafields = bcStoreConfig.edges;
 
     //The metafields data has this ane extra node attribute and needs to be accessed via node.node

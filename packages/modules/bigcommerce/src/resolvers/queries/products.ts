@@ -4,21 +4,24 @@ import {
     getTransformedProductData,
     getTransformedProductsData,
 } from '../../factories/transform-products-data';
-import { getBcProductByPathGraphql } from '../../apis/graphql';
-import { getBcProductSearchGraphql } from '../../apis/graphql';
-
-import { getBcAvailableProductFilters } from '../../apis/graphql';
+import {
+    getBcAvailableProductFilters,
+    getBcProductByPathGraphql,
+    getBcProductSearchGraphql,
+    retrieveStoreConfigsFromCache,
+} from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
-import { getTaxSettings } from '../../apis/graphql';
 import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (_root, args, context, _info): Promise<Products | null> => {
+    resolve: async (root, args, context, _info): Promise<Products | null> => {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const taxSettings = await getTaxSettings(customerImpersonationToken);
+
+        const storeConfig = await retrieveStoreConfigsFromCache(context);
+        const { tax: taxSettings } = storeConfig;
 
         try {
             const url_key = getPathFromUrlKey(args.filter?.url_key?.eq || null);
@@ -38,8 +41,8 @@ export const productsResolver: QueryResolvers['products'] = {
 
                 const bundleItemProducts = await getBundleItemProducts(
                     bcProduct,
-                    taxSettings,
-                    customerImpersonationToken
+                    customerImpersonationToken,
+                    taxSettings
                 );
 
                 return { items: [getTransformedProductData(bcProduct, bundleItemProducts?.items)] };

@@ -2,8 +2,8 @@ import { getCheckout } from './checkout';
 import { getBcProductsGraphql } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { getFlattenedProducts } from '../../utils';
-import { getTaxSettings } from './settings';
+import { getBcCustomerId, getFlattenedProducts } from '../../utils';
+import { retrieveStoreConfigsFromCache } from './store-configs';
 import { getIncludesTax } from '@aligent/utils';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 
@@ -24,22 +24,24 @@ export const UNDEFINED_CART = {
  * Take Flight, so we need to supplement this with an additional product query.
  *
  * @param args
- * @param bcCustomerId
- * @param customerImpersonationToken
+ * @param context
  */
 export const getEnrichedCart = async (
     args: QueryCartArgs,
-    bcCustomerId: number | null,
-    customerImpersonationToken: string
+    context: GraphQLModules.ModuleContext
 ): Promise<Cart> => {
+    const bcCustomerId = getBcCustomerId(context);
+    const customerImpersonationToken = (await context.cache.get(
+        'customerImpersonationToken'
+    )) as string;
+
     const checkoutQuery = getCheckout(args.cart_id, bcCustomerId, customerImpersonationToken);
 
-    const taxSettingsQuery = getTaxSettings(customerImpersonationToken);
+    const storeConfigRequest = await retrieveStoreConfigsFromCache(context);
 
-    const [checkoutResponse, taxSettingsResponse] = await Promise.all([
-        checkoutQuery,
-        taxSettingsQuery,
-    ]);
+    const [checkoutResponse, storeConfig] = await Promise.all([checkoutQuery, storeConfigRequest]);
+
+    const { tax: taxSettingsResponse } = storeConfig;
 
     if (!checkoutResponse?.entityId) return UNDEFINED_CART;
 

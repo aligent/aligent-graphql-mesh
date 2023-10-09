@@ -89,8 +89,8 @@ const getModifiedProductPriceBasedOnPriceRules = ({
 /* istanbul ignore file */
 export const getBundleItemProducts = async (
     bcProduct: Product,
-    taxSettings: TaxDisplaySettings | null,
-    customerImpersonationToken: string
+    customerImpersonationToken: string,
+    taxSettings?: TaxDisplaySettings | null
 ): Promise<Maybe<{ items?: ProductInterface[] }>> => {
     const hasPickListItems = getHasPickListItems(bcProduct.productOptions);
 

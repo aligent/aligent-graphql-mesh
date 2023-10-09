@@ -1,4 +1,4 @@
-import { QueryResolvers, RoutableInterface } from '@aligent/bigcommerce-resolvers';
+import { QueryResolvers, RoutableInterface, StoreConfig } from '@aligent/bigcommerce-resolvers';
 import {
     Blog,
     BlogPost,
@@ -6,13 +6,11 @@ import {
     ContactPage,
     NormalPage,
     Product,
+    Settings,
     TaxDisplaySettings,
 } from '@aligent/bigcommerce-operations';
 import { getIncludesTax } from '@aligent/utils';
-import { Sdk } from '@aligent/bigcommerce-operations';
-import { BigCommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
-import { BigCommerceSdk, ModuleConfig } from '../../providers';
-import { getCdnUrl, getRoute, getTaxSettings } from '../../apis/graphql';
+import { getRoute, retrieveStoreConfigsFromCache } from '../../apis/graphql';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
 import { getTransformedNormalPageData } from '../../factories/get-transformed-normal-page-data';
@@ -23,16 +21,14 @@ import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
 interface TransformedRouteData {
     data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product;
-    sdk: Sdk;
-    config: BigCommerceModuleConfig;
+    storeConfig: StoreConfig & Settings;
     customerImpersonationToken: string;
-    taxSettings: TaxDisplaySettings | null;
+    taxSettings?: TaxDisplaySettings | null;
 }
 
 const getTransformedRouteData = async ({
     data,
-    sdk,
-    config,
+    storeConfig,
     customerImpersonationToken,
     taxSettings,
 }: TransformedRouteData): Promise<RoutableInterface> => {
@@ -66,7 +62,7 @@ const getTransformedRouteData = async ({
     }
 
     if (__typename === 'NormalPage') {
-        const cdnUrl = await getCdnUrl(sdk, config, customerImpersonationToken);
+        const cdnUrl = storeConfig.url.cdnUrl;
         return {
             ...getTransformedNormalPageData(data as NormalPage, cdnUrl),
             type: 'CMS_PAGE',
@@ -77,8 +73,8 @@ const getTransformedRouteData = async ({
         const bcProduct = data as unknown as Product;
         const bundleItemProducts = await getBundleItemProducts(
             bcProduct,
-            taxSettings,
-            customerImpersonationToken
+            customerImpersonationToken,
+            taxSettings
         );
         const transformedProductData = getTransformedProductData(
             bcProduct,
@@ -108,10 +104,9 @@ export const routeResolver = {
             'customerImpersonationToken'
         )) as string;
 
-        const sdk: Sdk = context.injector.get(BigCommerceSdk);
-        const config = context.injector.get(ModuleConfig);
+        const storeConfig = await retrieveStoreConfigsFromCache(context);
+        const { tax: taxSettings } = storeConfig;
 
-        const taxSettings = await getTaxSettings(customerImpersonationToken);
         const data = await getRoute(
             {
                 includeTax: getIncludesTax(taxSettings?.pdp),
@@ -128,8 +123,7 @@ export const routeResolver = {
 
         const transformedRouteData = await getTransformedRouteData({
             data,
-            sdk,
-            config,
+            storeConfig,
             customerImpersonationToken,
             taxSettings,
         });
