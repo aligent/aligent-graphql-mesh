@@ -67,6 +67,7 @@ definitions:
           - VERSION=$(echo $BITBUCKET_TAG | sed 's/^.*[A-Za-z]-//g')
           - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
           - echo "Publishing $PACKAGE @ $VERSION"
+          - yarn nx publish $PACKAGE --ver=$VERSION
 
     - step: &deploy
         name: 📦 Push to ECR
