@@ -45,7 +45,7 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             useClass: KeyMessagesClient,
             provide: KeyMessagesClient,
             deps: [ApiClient],
-            scope: Scope.Operation
+            scope: Scope.Operation,
         },
         {
             useClass: ShoppingListsClient,
