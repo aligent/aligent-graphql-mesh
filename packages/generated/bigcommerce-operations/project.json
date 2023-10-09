@@ -10,8 +10,7 @@
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "packages/generated/bigcommerce-operations/src",
-                "command": "graphql-codegen --config {projectRoot}/codegen.ts",
-                "envFile": "packages/mesh/bigcommerce/.env"
+                "command": "env-cmd -f packages/mesh/bigcommerce/.env --silent graphql-codegen --config {projectRoot}/codegen.ts"
             }
         },
         "build": {
