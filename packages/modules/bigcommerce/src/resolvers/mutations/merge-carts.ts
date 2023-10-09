@@ -34,11 +34,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             return getTransformedCartData(guestCheckout);
         }
 
-        const customerCheckout = getEnrichedCart(
-            { cart_id: customerCartId },
-            bcCustomerId,
-            customerImpersonationToken
-        );
+        const customerCheckout = getEnrichedCart({ cart_id: customerCartId }, context);
 
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart -> return customer cart
         if (!guestCheckout.cart) {
@@ -57,10 +53,6 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             bcCustomerId
         );
 
-        return getEnrichedCart(
-            { cart_id: updatedCustomerCartResponse.entityId },
-            bcCustomerId,
-            customerImpersonationToken
-        );
+        return getEnrichedCart({ cart_id: updatedCustomerCartResponse.entityId }, context);
     },
 };

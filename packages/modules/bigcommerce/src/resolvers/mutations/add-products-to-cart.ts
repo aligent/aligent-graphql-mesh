@@ -47,8 +47,7 @@ export const addProductsToCartResolver = {
         // We’re not actually querying site.cart but site.checkout instead.
         const checkoutResponse = await getEnrichedCart(
             { cart_id: addToCartResponse.entityId },
-            bcCustomerId,
-            customerImpersonationToken
+            context
         );
         return {
             cart: checkoutResponse,
