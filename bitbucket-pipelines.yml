@@ -61,6 +61,13 @@ definitions:
         artifacts:
           - '*.tar.gz'
 
+    - step: &publish
+        name: 📦 Publish package to the Aligent Repository
+        script:
+          - VERSION=$(echo $BITBUCKET_TAG | sed 's/^.*[A-Za-z]-//g')
+          - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
+          - echo "Publishing $PACKAGE @ $VERSION"
+
     - step: &deploy
         name: 📦 Push to ECR
         services:
@@ -81,6 +88,15 @@ pipelines:
           - step: *build-all-containers
           - step: *code-quality
           - step: *test
+  tags:
+    'bigcommerce-*.*.*':
+      # - step: *install
+      # - step: *build
+      - step: *publish
+    'orocommerce-*.*.*':
+      # - step: *install
+      # - step: *build
+      - step: *publish
 
   branches:
     # @TODO: Remove once epic is merged to main
