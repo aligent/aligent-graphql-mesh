@@ -91,12 +91,12 @@ pipelines:
           - step: *test
   tags:
     'bigcommerce-graphql-module-*.*.*':
-      # - step: *install
-      # - step: *build
+      - step: *install
+      - step: *build
       - step: *publish
     'orocommerce-graphql-module-*.*.*':
-      # - step: *install
-      # - step: *build
+      - step: *install
+      - step: *build
       - step: *publish
 
   branches:
