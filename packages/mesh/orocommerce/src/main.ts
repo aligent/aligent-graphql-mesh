@@ -31,8 +31,8 @@ const yoga = createYoga({
         useGraphQLModules(application),
         EnvelopArmorPlugin({
             maxAliases: {
-                n: 70
-            }
+                n: 70,
+            },
         }),
         useResponseCache({
             session: () => null,

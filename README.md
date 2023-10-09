@@ -28,10 +28,13 @@ npm install --global yarn
 3. Duplicate the `.env.template` file as `.env` for the mesh you are working on, fill in the values and place it in the corrosponding mesh directory.
 
 BigCommerce:
+
 ```shell
 $ cp .env.template packages/mesh/bigcommerce/.env
 ```
+
 OroCommerce:
+
 ```shell
 $ cp .env.template packages/mesh/orocommerce/.env
 ```
@@ -57,14 +60,18 @@ Adding the entry:
 ```
 
 7. Start the mesh server from project root by running `yarn nx serve`
-BigCommerce:
+   BigCommerce:
+
 ```shell
 $  yarn nx serve bigcommerce-mesh
 ```
+
 OroCommerce:
+
 ```shell
 $ yarn nx serve orocommerce-mesh
 ```
+
 You can now send queries to `https://mesh.local.pwadev:4000/graphql` to hit the mesh.
 
 ## Environment configuration
@@ -225,11 +232,12 @@ SDKs
 TBA
 
 #### Adding a new module
+
 1. Copy an existing module e.g. `cp packages/modules/orocommerce packages/modules/<new module>`
 2. Remove exisiting platform specific code and rename references to orocommerce to your new modules name
 3. Copy an existing resolvers codegen project e.g. `cp packages/generated/orocommerce-resolvers packages/generated/<new module>-resolvers`
 4. Update all references to orocommerce
-6. Update the tsconfig.base.json to include the two new packages alias in the paths section 
+5. Update the tsconfig.base.json to include the two new packages alias in the paths section
 
 In the future we will hopefully have a generator https://nx.dev/extending-nx/recipes/local-generators to do this
 
