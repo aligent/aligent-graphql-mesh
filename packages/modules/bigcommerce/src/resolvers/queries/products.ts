@@ -15,7 +15,7 @@ import { getProductSearchPagination } from '../../apis/graphql/helpers/products-
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (root, args, context, info): Promise<Products | null> => {
+    resolve: async (root, args, context, _info): Promise<Products | null> => {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;

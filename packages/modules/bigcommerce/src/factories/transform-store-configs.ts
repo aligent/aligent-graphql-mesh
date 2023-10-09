@@ -1,4 +1,4 @@
-import { Maybe, MetafieldConnection, MetafieldEdge } from '@aligent/bigcommerce-operations';
+import { Maybe, MetafieldEdge } from '@aligent/bigcommerce-operations';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
 import {

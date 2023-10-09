@@ -1,6 +1,6 @@
 import { bcGraphQlRequest } from './client';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
-import { Maybe, MetafieldEdge, Settings } from '@aligent/bigcommerce-operations';
+import { Settings } from '@aligent/bigcommerce-operations';
 import { getDataFromMeshCache, logAndThrowError } from '@aligent/utils';
 import { storeConfigsQuery } from './requests/store-configs';
 import { STORE_CONFIG_PWA, STORE_CONFIG_ADMIN } from '../../resolvers/queries/store-config';
