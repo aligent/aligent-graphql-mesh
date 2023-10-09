@@ -23,11 +23,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             'customerImpersonationToken'
         )) as string;
 
-        const guestCheckout = await getEnrichedCart(
-            { cart_id: guestCartId },
-            null,
-            customerImpersonationToken
-        );
+        const guestCheckout = await getEnrichedCart({ cart_id: guestCartId }, context);
 
         // There may be a cart to merge provided by the FE or already attached to the customer
         const customerCartId =
