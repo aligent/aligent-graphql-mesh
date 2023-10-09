@@ -67,6 +67,7 @@ definitions:
           - VERSION=$(echo $BITBUCKET_TAG | sed 's/^.*[A-Za-z]-//g')
           - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
           - echo "Publishing $PACKAGE @ $VERSION"
+          - npm config set //npm.corp.aligent.consulting/:_authToken $NPM_PUBLISH_TOKEN
           - yarn nx publish $PACKAGE --ver=$VERSION
 
     - step: &deploy
@@ -92,11 +93,9 @@ pipelines:
   tags:
     'bigcommerce-graphql-module-*.*.*':
       - step: *install
-      - step: *build
       - step: *publish
     'orocommerce-graphql-module-*.*.*':
       - step: *install
-      - step: *build
       - step: *publish
 
   branches:
