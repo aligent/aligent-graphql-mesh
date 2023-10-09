@@ -44,6 +44,13 @@ definitions:
         artifacts:
           - dist/**
 
+    - step: &build-all-containers
+        name: 🏗️ Build All Docker Containers
+        services:
+          - docker
+        script:
+          - STAGE=prod yarn nx run-many -t docker-build
+
     - step: &build-container
         name: 🏗️ Build Docker Container
         services:
@@ -71,7 +78,7 @@ pipelines:
       - step: *install
       - step: *build
       - parallel:
-          - step: *build-container
+          - step: *build-all-containers
           - step: *code-quality
           - step: *test
 
