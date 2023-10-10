@@ -17,7 +17,6 @@ export class CurrencyTransformer implements Transformer<CurrencyTransformerInput
     public transform(
         context: TransformerContext<CurrencyTransformerInput, AcCurrency>
     ): AcCurrency {
-
         // TODO: use context.data for correct get data from api
         const oroCurrency = context.data.currency;
 

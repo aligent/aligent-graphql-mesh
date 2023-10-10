@@ -1,15 +1,15 @@
 import { Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
-import { Currency } from '../../types';
+import { KeyMessage } from '../../types/key-messages';
 
 @Injectable()
-export class CurrencyClient {
+export class KeyMessagesClient {
     protected apiClient: ApiClient;
     constructor(apiClient: ApiClient) {
         this.apiClient = apiClient;
     }
 
-    async getCurrency(id: string): Promise<{ data: Currency; included?: null }> {
-        return this.apiClient.get<Currency>(`/currencies/${id}`);
+    async getKeyMessages(): Promise<KeyMessage[]> {
+        return new Promise((resolve, _) => resolve([]));
     }
 }
