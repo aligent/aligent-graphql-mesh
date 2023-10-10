@@ -23,11 +23,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             'customerImpersonationToken'
         )) as string;
 
-        const guestCheckout = await getEnrichedCart(
-            { cart_id: guestCartId },
-            null,
-            customerImpersonationToken
-        );
+        const guestCheckout = await getEnrichedCart({ cart_id: guestCartId }, context, null);
 
         // There may be a cart to merge provided by the FE or already attached to the customer
         const customerCartId =
@@ -39,7 +35,11 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             return guestCheckout;
         }
 
-        const customerCheckout = getEnrichedCart({ cart_id: customerCartId }, context);
+        const customerCheckout = getEnrichedCart(
+            { cart_id: customerCartId },
+            context,
+            bcCustomerId
+        );
 
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart -> return customer cart
         if (!guestCheckout.items) {
@@ -58,6 +58,10 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
             bcCustomerId
         );
 
-        return getEnrichedCart({ cart_id: updatedCustomerCartResponse.entityId }, context);
+        return getEnrichedCart(
+            { cart_id: updatedCustomerCartResponse.entityId },
+            context,
+            bcCustomerId
+        );
     },
 };

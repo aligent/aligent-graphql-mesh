@@ -1,10 +1,3 @@
-enum CacheControlScope {
-    PUBLIC
-    PRIVATE
-}
-
-directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT
-
 schema {
     query: Query
     mutation: Mutation
@@ -1662,7 +1655,7 @@ type InternalError implements ErrorInterface {
 """
 The type contains information about a store config
 """
-type StoreConfig @cacheControl(maxAge: 1800) {
+type StoreConfig {
     """
     Contains scripts that must be included in the HTML before the closing `<body>` tag.
     """
@@ -10493,7 +10486,7 @@ type ExchangeRate {
     rate: Float
 }
 
-type Country @cacheControl(maxAge: 1800) {
+type Country {
     """
     An array of regions within a particular country.
     """
@@ -10520,7 +10513,7 @@ type Country @cacheControl(maxAge: 1800) {
     two_letter_abbreviation: String
 }
 
-type Region @cacheControl(maxAge: 1800) {
+type Region {
     """
     The two-letter code for the region, such as TX for Texas.
     """
@@ -17008,7 +17001,7 @@ type ItemMap {
     value: String
 }
 
-type SocialLink @cacheControl(maxAge: 1800) {
+type SocialLink {
     destination: String!
     name: String!
 }
@@ -17067,7 +17060,7 @@ type StoreInformation {
 """
 Top level object returned in a pickup locations search.
 """
-type StoreLocations @cacheControl(maxAge: 1800) {
+type StoreLocations {
     """
     An array of pickup locations that match the specific search request.
     """
