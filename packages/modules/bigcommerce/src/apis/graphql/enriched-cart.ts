@@ -2,7 +2,7 @@ import { getCheckout } from './checkout';
 import { getBcProductsGraphql } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { getBcCustomerId, getFlattenedProducts } from '../../utils';
+import { getFlattenedProducts } from '../../utils';
 import { retrieveStoreConfigsFromCache } from './store-configs';
 import { getIncludesTax } from '@aligent/utils';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
