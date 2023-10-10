@@ -1,16 +1,16 @@
 import { gql } from 'graphql-tag';
 import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters';
 import { print } from 'graphql/index';
-import { categoryDetails } from '../fragments/categoryDetails';
+import { categoryDetailsWithProducts } from '../fragments/CategoryDetailsWithProducts';
 
 export const getCategoryQuery = stripIgnoredCharacters(
     print(gql`
-        ${categoryDetails}
+        ${categoryDetailsWithProducts}
 
-        query category($entityId: Int!) {
+        query category($entityId: Int!, $first: Int = 24, $includeTax: Boolean) {
             site {
                 category(entityId: $entityId) {
-                    ...CategoryDetails
+                    ...CategoryDetailsWithProducts
                 }
             }
         }

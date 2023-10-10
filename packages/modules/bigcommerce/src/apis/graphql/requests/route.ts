@@ -3,15 +3,15 @@ import { stripIgnoredCharacters } from 'graphql/utilities/stripIgnoredCharacters
 import { print } from 'graphql/index';
 import { ProductsDetails } from '../fragments/productDetails';
 import { seoDetails } from '../fragments/seoDetails';
-import { categoryDetails } from '../fragments/categoryDetails';
+import { categoryDetailsWithProducts } from '../fragments/CategoryDetailsWithProducts';
 
 export const getRouteQuery = stripIgnoredCharacters(
     print(gql`
-        ${categoryDetails}
+        ${categoryDetailsWithProducts}
         ${ProductsDetails}
         ${seoDetails}
 
-        query getRoute($path: String!, $includeTax: Boolean) {
+        query getRoute($path: String!, $first: Int = 24, $includeTax: Boolean) {
             site {
                 route(path: $path) {
                     node {
@@ -36,7 +36,7 @@ export const getRouteQuery = stripIgnoredCharacters(
                             ...ProductDetails
                         }
                         ... on Category {
-                            ...CategoryDetails
+                            ...CategoryDetailsWithProducts
                         }
                         ... on Brand {
                             id

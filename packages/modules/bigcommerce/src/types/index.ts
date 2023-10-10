@@ -1,4 +1,8 @@
-import { BreadcrumbConnection, MetafieldConnection } from '@aligent/bigcommerce-operations';
+import {
+    BreadcrumbConnection,
+    MetafieldConnection,
+    ProductConnection,
+} from '@aligent/bigcommerce-operations';
 import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
 import { ReflectiveInjector } from 'graphql-modules/di';
@@ -83,14 +87,7 @@ export interface BcCategory {
     metaDescription?: string;
     metafields?: MetafieldConnection;
     pageTitle?: string;
-    products?: {
-        collectionInfo?:
-            | {
-                  totalItems?: number;
-              }
-            | undefined
-            | null;
-    };
+    products?: ProductConnection;
     seo?: {
         metaDescription: string;
         pageTitle: string;
