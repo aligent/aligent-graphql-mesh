@@ -1662,7 +1662,7 @@ type InternalError implements ErrorInterface {
 """
 The type contains information about a store config
 """
-type StoreConfig @cacheControl(maxAge: 1800) {
+type StoreConfig @cacheControl(maxAge: 30) {
     """
     Contains scripts that must be included in the HTML before the closing `<body>` tag.
     """
