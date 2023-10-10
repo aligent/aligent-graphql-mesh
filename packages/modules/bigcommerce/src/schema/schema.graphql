@@ -1662,7 +1662,7 @@ type InternalError implements ErrorInterface {
 """
 The type contains information about a store config
 """
-type StoreConfig @cacheControl(maxAge: 1800) {
+type StoreConfig @cacheControl(maxAge: 30) {
     """
     Contains scripts that must be included in the HTML before the closing `<body>` tag.
     """
@@ -3332,7 +3332,7 @@ type CustomizableAreaValue {
 """
 Contains the hierarchy of categories.
 """
-type CategoryTree implements CategoryInterface & RoutableInterface {
+type CategoryTree implements CategoryInterface & RoutableInterface @cacheControl(maxAge: 600) {
     automatic_sorting: String
     available_sort_by: [String]
     """
@@ -4012,7 +4012,7 @@ interface CategoryInterface {
 """
 Contains details about an individual category that comprises a breadcrumb.
 """
-type Breadcrumb {
+type Breadcrumb @cacheControl(maxAge: 600) {
     """
     The ID of the category.
     """
@@ -10493,7 +10493,7 @@ type ExchangeRate {
     rate: Float
 }
 
-type Country @cacheControl(maxAge: 1800) {
+type Country @cacheControl(maxAge: 86400) {
     """
     An array of regions within a particular country.
     """
@@ -10520,7 +10520,7 @@ type Country @cacheControl(maxAge: 1800) {
     two_letter_abbreviation: String
 }
 
-type Region @cacheControl(maxAge: 1800) {
+type Region @cacheControl(maxAge: 86400) {
     """
     The two-letter code for the region, such as TX for Texas.
     """
