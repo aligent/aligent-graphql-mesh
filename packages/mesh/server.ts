@@ -25,6 +25,7 @@ const corsConfiguration: cors.CorsOptions = {
     allowedHeaders: [
         'Content-Type',
         'Authorization',
+        'Content-Currency',
         'preview-version',
         'x-recaptcha',
         'mesh-token',
@@ -39,7 +40,14 @@ app.use(cors(corsConfiguration));
 app.options('*', cors(corsConfiguration));
 
 app.use((req, res, next) => {
-    if (req.method == 'GET' && /^\/graphql/.test(req.path)) {
+    res.setHeader(
+        'Vary',
+        `Origin,Accept-Encoding,Store,Content-Currency,Authorization`
+    );
+
+    if (req.method == 'GET' 
+        && /^\/graphql/.test(req.path)
+        && !req.header('Authorization')) {
         if (
             typeof req.query.operationName === 'string' &&
             Object.prototype.hasOwnProperty.call(
