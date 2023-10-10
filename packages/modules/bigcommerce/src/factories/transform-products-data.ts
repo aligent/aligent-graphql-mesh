@@ -186,7 +186,6 @@ export const getTransformedProductsData = (
                   return getTransformedProductData(product.node);
               })
             : null,
-        // @todo add pagination for category products
         page_info: {
             current_page: currentPage,
             page_size: pageSize,
