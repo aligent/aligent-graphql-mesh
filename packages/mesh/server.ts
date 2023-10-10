@@ -39,26 +39,23 @@ app.use(cors(corsConfiguration));
 app.options('*', cors(corsConfiguration));
 
 app.use((req, res, next) => {
-    console.log(req);
     if (req.method == 'GET' && /^\/graphql/.test(req.path)) {
         if (typeof req.query.operationName === 'string'
             && Object.prototype.hasOwnProperty.call(cachableObjects.operations, req.query.operationName)) {
 
-            res.setHeader('Cache-Control', `max-age=${cachableObjects.operations[req.query.operationName]}`);
+            res.setHeader('Cache-Control', `s-maxage=${cachableObjects.operations[req.query.operationName]}`);
             return next();
         }
 
         for (const rule of cachableObjects.rules) {
             if (rule.pattern.test(req.url)) {
                 console.log('rule matched');
-                res.setHeader('Cache-Control', `max-age=${rule.maxAge}`);
+                res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
                 return next();
             }
         }
     }
 
-    // Don't cache anything by default
-    res.setHeader('Cache-Control', `no-cache`);
     return next();
 });
 
