@@ -21,6 +21,7 @@ import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
 import { removeProductsFromWishlistResolver } from './mutations/remove-products-from-wishlist';
 import { reorderItemsResolver } from './mutations/reorder-items';
 import { requestPasswordResetEmailResolver } from './mutations/request-password-reset-email';
+import { resetPasswordResolver } from './mutations/reset-password';
 import { setBillingAddressOnCartResolver } from './mutations/set-billing-address-on-cart';
 import { setGuestEmailOnCartResolver } from './mutations/set-guest-email-on-cart';
 import { setPaymentMethodOnCartResolver } from './mutations/set-payment-method-on-cart';
@@ -99,6 +100,7 @@ export const resolvers: Resolvers = {
         removeProductsFromWishlist: removeProductsFromWishlistResolver,
         reorderItems: reorderItemsResolver,
         requestPasswordResetEmail: requestPasswordResetEmailResolver,
+        resetPassword: resetPasswordResolver,
         setBillingAddressOnCart: setBillingAddressOnCartResolver,
         setGuestEmailOnCart: setGuestEmailOnCartResolver,
         setPaymentMethodOnCart: setPaymentMethodOnCartResolver,
