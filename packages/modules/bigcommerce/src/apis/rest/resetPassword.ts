@@ -1,4 +1,20 @@
+import axios from "axios";
+import { logAndThrowError } from "../../../../../utils/error-handling";
+
 export const requestPasswordResetEmail = async ( email: string ): Promise<boolean> => {
-    //Send request using BC native url  
-    //return response;
-}
+    const BC_STENCIL_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');
+    const url = `${BC_STENCIL_URL}/login.php?action=send_password_email`;
+    const variables = {
+        email
+    };
+    const headers = {
+        'content-type': 'application/x-www-form-urlencoded'
+    };
+    
+    try {
+        const response = await axios.post(url, variables, { headers });
+        return !!response;
+    } catch (error) {
+        return logAndThrowError(error);
+    }
+};
