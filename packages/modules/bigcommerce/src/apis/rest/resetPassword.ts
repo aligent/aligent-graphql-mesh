@@ -18,3 +18,5 @@ export const requestPasswordResetEmail = async ( email: string ): Promise<boolea
         return logAndThrowError(error);
     }
 };
+
+export const resetPassword = async ( email: string, resetPasswordToken: string, newPassword: string ) => {};
