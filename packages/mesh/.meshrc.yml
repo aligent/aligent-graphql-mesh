@@ -8,8 +8,6 @@ sources:
 additionalEnvelopPlugins: './plugins/additional-plugins'
 
 plugins:
-  - responseCache:
-      ttl: 0
   - hive:
       token: '{env.HIVE_TOKEN}'
       usage: !include '${STAGE}/hive-usage.yml'
