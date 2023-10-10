@@ -786,17 +786,6 @@
   dependencies:
     tslib "^2.5.0"
 
-"@envelop/response-cache@^5.3.2":
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/@envelop/response-cache/-/response-cache-5.3.2.tgz#ae6d06f74bcf6cd067128ef9fa9de928d7e2d12d"
-  integrity sha512-q9mX4S2ylU9jj6G4gSUvm8BfD5wc90RVZ8PGgvyiDPXrFc+z3Wp4XgJ3iIm3j9u2DTDYRYOmBNZR4GcB2AZ4QA==
-  dependencies:
-    "@graphql-tools/utils" "^10.0.3"
-    "@whatwg-node/fetch" "^0.9.0"
-    fast-json-stable-stringify "^2.1.0"
-    lru-cache "^10.0.0"
-    tslib "^2.5.0"
-
 "@envelop/sentry@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@envelop/sentry/-/sentry-6.0.0.tgz#4b9e64c268fee359a636f9d0083e66245c0d86d1"
@@ -1299,15 +1288,6 @@
     "@graphql-hive/client" "0.24.1"
     "@graphql-mesh/string-interpolation" "0.5.1"
 
-"@graphql-mesh/plugin-response-cache@^0.95.8":
-  version "0.95.8"
-  resolved "https://registry.yarnpkg.com/@graphql-mesh/plugin-response-cache/-/plugin-response-cache-0.95.8.tgz#2340d256a014c6076e0f8264e47cbd587a1f5549"
-  integrity sha512-218dAxj6DWADqQkvheYqlgflyavEzvcs0q53r0gZON80kVHYryirvAyr4wMAZ3ZUG7f+kUAunIKyo6CritdQEQ==
-  dependencies:
-    "@envelop/core" "^4.0.0"
-    "@graphql-mesh/string-interpolation" "0.5.2"
-    "@graphql-yoga/plugin-response-cache" "2.2.0"
-
 "@graphql-mesh/runtime@^0.93.1":
   version "0.93.2"
   resolved "https://registry.yarnpkg.com/@graphql-mesh/runtime/-/runtime-0.93.2.tgz#1400cd1cf0378dc9b22c2e340be0c20f7ca5c4f9"
@@ -1349,15 +1329,6 @@
   integrity sha512-xrShpJ4silpWekpeVntDNt6NY6RxEMMbZ1CenIkLsl/QN3mMjxWa3rQX0qrByBeyDn7SorSN3lrClCCsPvmWZw==
   dependencies:
     dayjs "1.11.9"
-    json-pointer "0.6.2"
-    lodash.get "4.4.2"
-
-"@graphql-mesh/string-interpolation@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@graphql-mesh/string-interpolation/-/string-interpolation-0.5.2.tgz#af89cd63b27e7c2c85e994872be2ed18eaad07e1"
-  integrity sha512-TkSAJ9pj1zesQyDlHrEUevVGOc1s/z9IQC0AONcpMHAunb8uYGO4Yryl8JIRIvDl5DlexHt3z8kLDNCInRGWNQ==
-  dependencies:
-    dayjs "1.11.10"
     json-pointer "0.6.2"
     lodash.get "4.4.2"
 
@@ -1859,15 +1830,6 @@
     dset "^3.1.2"
     tslib "^2.4.0"
 
-"@graphql-tools/utils@^10.0.3":
-  version "10.0.6"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-10.0.6.tgz#8a809d6bc0df27ffe8964696f182af2383b5974b"
-  integrity sha512-hZMjl/BbX10iagovakgf3IiqArx8TPsotq5pwBld37uIX1JiZoSbgbCIFol7u55bh32o6cfDEiiJgfAD5fbeyQ==
-  dependencies:
-    "@graphql-typed-document-node/core" "^3.1.1"
-    dset "^3.1.2"
-    tslib "^2.4.0"
-
 "@graphql-tools/utils@^8.8.0":
   version "8.13.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.13.1.tgz#b247607e400365c2cd87ff54654d4ad25a7ac491"
@@ -1916,13 +1878,6 @@
   integrity sha512-6npFz7eZz33mXgSm1waBLMjUNG0D5hTc/p5Hcs1mojkT3KsLpCOFokzTEKboNsBhKevYcaVa/xeA7WBj4UYMLg==
   dependencies:
     tslib "^2.3.1"
-
-"@graphql-yoga/plugin-response-cache@2.2.0", "@graphql-yoga/plugin-response-cache@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@graphql-yoga/plugin-response-cache/-/plugin-response-cache-2.2.0.tgz#1d3e350e184e7fd0ec863ae2fa76c4bd49bf9b0e"
-  integrity sha512-1a3KvvRYCHhHuUgddkH3mg+vOuVC7eEWSmS+tJuIUwVoS2JYtSsAJ+boCRfwbU/ATFjzeMNcOpTmX60YahjJ6w==
-  dependencies:
-    "@envelop/response-cache" "^5.3.2"
 
 "@graphql-yoga/subscription@^3.1.0":
   version "3.1.0"
@@ -3688,11 +3643,6 @@ dataloader@2.2.2, dataloader@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-2.2.2.tgz#216dc509b5abe39d43a9b9d97e6e5e473dfbe3e0"
   integrity sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==
-
-dayjs@1.11.10:
-  version "1.11.10"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.10.tgz#68acea85317a6e164457d6d6947564029a6a16a0"
-  integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
 
 dayjs@1.11.7:
   version "1.11.7"
@@ -5723,11 +5673,6 @@ lower-case@^2.0.2:
   dependencies:
     tslib "^2.0.3"
 
-lru-cache@^10.0.0, "lru-cache@^9.1.1 || ^10.0.0":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.0.1.tgz#0a3be479df549cca0e5d693ac402ff19537a6b7a"
-  integrity sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==
-
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -5746,6 +5691,11 @@ lru-cache@^7.10.1, lru-cache@^7.14.1:
   version "7.18.3"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.18.3.tgz#f793896e0fd0e954a59dfdd82f0773808df6aa89"
   integrity sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==
+
+"lru-cache@^9.1.1 || ^10.0.0":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.0.1.tgz#0a3be479df549cca0e5d693ac402ff19537a6b7a"
+  integrity sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==
 
 make-dir@^4.0.0:
   version "4.0.0"
