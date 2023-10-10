@@ -25,7 +25,7 @@ export default {
     rules: [
         {
             pattern: /ResolveURL/,
-            maxAge: 120
-        }
+            maxAge: 120,
+        },
     ],
 } as CachableObjects;

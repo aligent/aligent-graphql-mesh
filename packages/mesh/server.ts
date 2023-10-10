@@ -40,14 +40,9 @@ app.use(cors(corsConfiguration));
 app.options('*', cors(corsConfiguration));
 
 app.use((req, res, next) => {
-    res.setHeader(
-        'Vary',
-        `Origin,Accept-Encoding,Store,Content-Currency,Authorization`
-    );
+    res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
 
-    if (req.method == 'GET' 
-        && /^\/graphql/.test(req.path)
-        && !req.header('Authorization')) {
+    if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
         if (
             typeof req.query.operationName === 'string' &&
             Object.prototype.hasOwnProperty.call(
