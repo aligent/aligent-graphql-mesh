@@ -19,4 +19,22 @@ export const requestPasswordResetEmail = async ( email: string ): Promise<boolea
     }
 };
 
-export const resetPassword = async ( email: string, resetPasswordToken: string, newPassword: string ) => {};
+export const resetPassword = 
+    async ( resetPasswordToken: string, newPassword: string ) => {
+        const BC_STENCIL_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');
+        const url = `${BC_STENCIL_URL}/login.php?action=save_new_password&c=67&t=${resetPasswordToken}`;
+        const variables = {
+            password: newPassword,
+            passwordConfirm: newPassword
+        };
+        const headers = {
+            'content-type': 'application/x-www-form-urlencoded'
+        };
+
+    try {
+        const response = await axios.post(url, variables, { headers });
+        return !!response;
+    } catch (error) {
+        return logAndThrowError(error);
+    }
+};
