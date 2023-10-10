@@ -25,12 +25,13 @@ export const UNDEFINED_CART = {
  *
  * @param args
  * @param context
+ * @param bcCustomerId
  */
 export const getEnrichedCart = async (
     args: QueryCartArgs,
-    context: GraphQLModules.ModuleContext
+    context: GraphQLModules.ModuleContext,
+    bcCustomerId: number | null
 ): Promise<Cart> => {
-    const bcCustomerId = getBcCustomerId(context);
     const customerImpersonationToken = (await context.cache.get(
         'customerImpersonationToken'
     )) as string;
