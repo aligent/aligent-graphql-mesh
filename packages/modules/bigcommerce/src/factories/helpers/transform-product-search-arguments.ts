@@ -41,7 +41,7 @@ export const getTransformedProductArgs = (
     availableBcProductFilters: SearchProductFilterConnection | null
 ): SearchProductsFiltersInput => {
     /* These are base filters we can send to the bc productsSearch query without affecting the results.
-     * If we have other filters like "categoryEntityId: []" pre added, this will skew the results
+     * If we have other filters like "categoryEntityId: []" pre adding this will skew the results
      * or even return no products */
     const bcProductFilters: {
         brandEntityIds: number[];
@@ -97,6 +97,22 @@ export const getTransformedProductArgs = (
         if (!filterMapping) continue;
 
         const { filterName, __typename: filterType } = filterMapping[key.toLowerCase()] || {};
+
+        if (filterType === 'CategorySearchFilter') {
+            if (eqValue) {
+                bcProductFilters.categoryEntityId = Number(eqValue);
+            }
+
+            if (inArray) {
+                inArray.forEach((id) => {
+                    bcProductFilters.categoryEntityIds = [
+                        ...(bcProductFilters.categoryEntityIds || []),
+                    ];
+                    bcProductFilters.categoryEntityIds.push(Number(id));
+                });
+            }
+            continue;
+        }
 
         if (filterType === 'BrandSearchFilter') {
             if (eqValue) {
