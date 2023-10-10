@@ -40,10 +40,17 @@ app.options('*', cors(corsConfiguration));
 
 app.use((req, res, next) => {
     if (req.method == 'GET' && /^\/graphql/.test(req.path)) {
-        if (typeof req.query.operationName === 'string'
-            && Object.prototype.hasOwnProperty.call(cachableObjects.operations, req.query.operationName)) {
-
-            res.setHeader('Cache-Control', `s-maxage=${cachableObjects.operations[req.query.operationName]}`);
+        if (
+            typeof req.query.operationName === 'string' &&
+            Object.prototype.hasOwnProperty.call(
+                cachableObjects.operations,
+                req.query.operationName
+            )
+        ) {
+            res.setHeader(
+                'Cache-Control',
+                `s-maxage=${cachableObjects.operations[req.query.operationName]}`
+            );
             return next();
         }
 

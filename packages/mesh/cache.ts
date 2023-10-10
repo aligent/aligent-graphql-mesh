@@ -1,11 +1,11 @@
 interface CachableObjects {
     operations: {
-        [key: string]: number
-    },
+        [key: string]: number;
+    };
     rules: Array<{
-        pattern: RegExp,
-        maxAge: number
-    }>
+        pattern: RegExp;
+        maxAge: number;
+    }>;
 }
 
 export default {
@@ -27,5 +27,5 @@ export default {
         //     pattern: /ResolveURL/,
         //     maxAge: 300
         // }
-    ] 
+    ],
 } as CachableObjects;
