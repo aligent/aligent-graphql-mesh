@@ -2,6 +2,7 @@ import { InjectionToken, Provider, Scope } from 'graphql-modules';
 import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
+import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 
@@ -43,6 +44,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: KeyMessagesClient,
             provide: KeyMessagesClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: ShoppingListsClient,
+            provide: ShoppingListsClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
