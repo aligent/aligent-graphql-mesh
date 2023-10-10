@@ -2,6 +2,7 @@ import 'module-alias/register';
 import { createBuiltMeshHTTPHandler } from './.mesh';
 import express from 'express';
 import cors from 'cors';
+import cachableObjects from './cache';
 
 const app = express();
 
@@ -36,6 +37,30 @@ app.use(cors(corsConfiguration));
  * Respond to all OPTIONS requests with CORS headers
  */
 app.options('*', cors(corsConfiguration));
+
+app.use((req, res, next) => {
+    console.log(req);
+    if (req.method == 'GET' && /^\/graphql/.test(req.path)) {
+        if (typeof req.query.operationName === 'string'
+            && Object.prototype.hasOwnProperty.call(cachableObjects.operations, req.query.operationName)) {
+
+            res.setHeader('Cache-Control', `max-age=${cachableObjects.operations[req.query.operationName]}`);
+            return next();
+        }
+
+        for (const rule of cachableObjects.rules) {
+            if (rule.pattern.test(req.url)) {
+                console.log('rule matched');
+                res.setHeader('Cache-Control', `max-age=${rule.maxAge}`);
+                return next();
+            }
+        }
+    }
+
+    // Don't cache anything by default
+    res.setHeader('Cache-Control', `no-cache`);
+    return next();
+});
 
 /**
  * Add GraphQL Mesh route
