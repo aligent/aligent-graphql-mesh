@@ -4,6 +4,7 @@ export interface TransformerContext<T, D> {
     result?: D;
     stopExecution?: boolean;
 }
+
 export interface Transformer<T, D> {
     transform(context: TransformerContext<T, D>): D;
 }
