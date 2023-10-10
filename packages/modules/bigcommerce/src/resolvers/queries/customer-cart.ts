@@ -38,6 +38,6 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
 
         if (!cartId) return UNDEFINED_CART;
 
-        return getEnrichedCart({ cart_id: cartId }, context);
+        return getEnrichedCart({ cart_id: cartId }, context, bcCustomerId);
     },
 };
