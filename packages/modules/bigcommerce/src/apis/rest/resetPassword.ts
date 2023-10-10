@@ -25,7 +25,7 @@ export const resetPassword =
         const url = `${BC_STENCIL_URL}/login.php?action=save_new_password&c=67&t=${resetPasswordToken}`;
         const variables = {
             password: newPassword,
-            passwordConfirm: newPassword
+            password_confirm: newPassword
         };
         const headers = {
             'content-type': 'application/x-www-form-urlencoded'
