@@ -1,4 +1,4 @@
-import { snakeCase } from 'lodash';
+import { isBoolean, snakeCase } from 'lodash';
 
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 
@@ -91,13 +91,14 @@ export const transformCustomerForMutation = (
     if (customer.lastname) {
         bcCustomer.last_name = customer.lastname;
     }
-    if (customer.allow_remote_shopping_assistance) {
-        const remoteAssistanceField = bcCustomer?.form_fields?.find(
-            (field) => field.name === 'allow_remote_shopping_assistance'
-        );
-        if (remoteAssistanceField && customer.allow_remote_shopping_assistance) {
-            remoteAssistanceField.value = customer.allow_remote_shopping_assistance ? ['Yes'] : [];
-        }
+    if (isBoolean(customer.allow_remote_shopping_assistance)) {
+            bcCustomer.form_fields = [
+                {
+                    id: customerId as number,
+                    name: 'allow_remote_shopping_assistance',
+                    value: customer.allow_remote_shopping_assistance ? ['Yes'] : []
+                }
+            ]
     }
 
     return bcCustomer;
