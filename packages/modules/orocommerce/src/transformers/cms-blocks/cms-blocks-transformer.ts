@@ -21,11 +21,13 @@ export class CmsBlocksTransformerChain extends ChainTransformer<
 export class CmsBlocksTransformer implements Transformer<CmsBlocksTransformerInput, CmsBlocks> {
     public transform(context: TransformerContext<CmsBlocksTransformerInput, CmsBlocks>): CmsBlocks {
         return {
+            __typename: 'CmsBlocks',
             items: context.data.blocks.map((oroBlock: OroCmsBlock): CmsBlock => {
                 const attrs = oroBlock.attributes;
                 return {
+                    __typename: 'CmsBlock',
                     content: attrs.content,
-                    identifier: attrs.content,
+                    identifier: attrs.identifier,
                     title: attrs.title,
                 };
             }),
