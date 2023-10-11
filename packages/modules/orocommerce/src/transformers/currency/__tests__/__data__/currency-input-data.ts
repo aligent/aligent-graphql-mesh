@@ -1,4 +1,4 @@
-import { Currency } from '../../../types';
+import { Currency } from '../../../../types';
 
 export const oroCurrency: Currency = {
     id: 'NZD',

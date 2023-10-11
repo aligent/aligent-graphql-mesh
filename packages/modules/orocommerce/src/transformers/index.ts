@@ -1,5 +1,5 @@
 import { Provider } from 'graphql-modules';
-import { CurrencyTransformer, CurrencyTransformerChain } from './transform-currency-data';
+import { CurrencyTransformer, CurrencyTransformerChain } from './currency/transform-currency-data';
 
 export const getTransformers = (): Array<Provider> => {
     return [

@@ -1,5 +1,5 @@
 import { Currency as AcCurrency } from '@aligent/orocommerce-resolvers';
-import { Currency } from '../types';
+import { Currency } from '../../types';
 import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 
