@@ -79,13 +79,6 @@ export const transformCustomerForMutation = (
     const bcCustomer: BcMutationCustomer = {
         ...(customerId && {
             id: customerId,
-            form_fields: [
-                {
-                    id: customerId,
-                    name: 'allow_remote_shopping_assistance',
-                    value: [],
-                },
-            ],
         }),
     };
 
