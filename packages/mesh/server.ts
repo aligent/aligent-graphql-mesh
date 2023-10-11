@@ -59,7 +59,6 @@ app.use((req, res, next) => {
 
         for (const rule of cachableObjects.rules) {
             if (rule.pattern.test(req.url)) {
-                console.log('rule matched');
                 res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
                 return next();
             }
