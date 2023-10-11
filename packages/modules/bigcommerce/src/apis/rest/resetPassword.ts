@@ -20,9 +20,9 @@ export const requestPasswordResetEmail = async ( email: string ): Promise<boolea
 };
 
 export const resetPassword = 
-    async ( resetPasswordToken: string, newPassword: string ) => {
+    async ( code: string, resetPasswordToken: string, newPassword: string ) => {
         const BC_STENCIL_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');
-        const url = `${BC_STENCIL_URL}/login.php?action=save_new_password&c=67&t=${resetPasswordToken}`;
+        const url = `${BC_STENCIL_URL}/login.php?action=save_new_password&c=${code}&t=${resetPasswordToken}`;
         const variables = {
             password: newPassword,
             password_confirm: newPassword
