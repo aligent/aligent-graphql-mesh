@@ -103,10 +103,7 @@ export const transformCustomerForMutation = (
             (field) => field.name === 'allow_remote_shopping_assistance'
         );
         if (remoteAssistanceField && customer.allow_remote_shopping_assistance) {
-            remoteAssistanceField.value = ['Yes'];
-        } 
-        if (remoteAssistanceField && !customer.allow_remote_shopping_assistance) {
-            remoteAssistanceField.value = [];
+            remoteAssistanceField.value = customer.allow_remote_shopping_assistance ? ['Yes'] : [];
         }
     }
 
