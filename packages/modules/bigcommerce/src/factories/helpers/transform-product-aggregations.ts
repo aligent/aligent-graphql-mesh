@@ -86,7 +86,7 @@ export const getAggregationsFromBrandFilter = (filter: BrandSearchFilter): Maybe
 
     return {
         attribute_code: name.toLowerCase(),
-        count: 0,
+        count: options.length,
         label: name,
         options,
         filterType: getFilterInputType(filter.__typename),
