@@ -25,7 +25,7 @@ export const transformBcCustomer = (
         firstname: firstName,
         lastname: lastName,
         is_subscribed: isSubscriber,
-        allow_remote_shopping_assistance: false, // Cant see equivalent BC value
+        allow_remote_shopping_assistance: false, // this will be overridden by form fields in customerResolver
         wishlists: getTransformedWishlists(bcCustomer.wishlists),
         wishlist: {
             // Types say wishlist is deprecated, but is required and needs to have visibility
