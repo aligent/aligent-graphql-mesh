@@ -1,4 +1,4 @@
-import { snakeCase } from 'lodash';
+import { isBoolean, snakeCase } from 'lodash';
 
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 
@@ -25,7 +25,7 @@ export const transformBcCustomer = (
         firstname: firstName,
         lastname: lastName,
         is_subscribed: isSubscriber,
-        allow_remote_shopping_assistance: false, // Cant see equivalent BC value
+        allow_remote_shopping_assistance: false, // this will be overridden by form fields in customerResolver
         wishlists: getTransformedWishlists(bcCustomer.wishlists),
         wishlist: {
             // Types say wishlist is deprecated, but is required and needs to have visibility
@@ -77,8 +77,11 @@ export const transformCustomerForMutation = (
     customerId?: number
 ): BcMutationCustomer => {
     const bcCustomer: BcMutationCustomer = {
-        ...(customerId && { id: customerId }),
+        ...(customerId && {
+            id: customerId,
+        }),
     };
+
     if (customer.email) {
         bcCustomer.email = customer.email;
     }
@@ -87,6 +90,15 @@ export const transformCustomerForMutation = (
     }
     if (customer.lastname) {
         bcCustomer.last_name = customer.lastname;
+    }
+    if (isBoolean(customer.allow_remote_shopping_assistance)) {
+        bcCustomer.form_fields = [
+            {
+                id: customerId as number,
+                name: 'allow_remote_shopping_assistance',
+                value: customer.allow_remote_shopping_assistance ? ['Yes'] : [],
+            },
+        ];
     }
 
     return bcCustomer;

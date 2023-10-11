@@ -37,6 +37,15 @@ export interface BcCustomer {
     store_credit_amounts: [{ amount: number }];
     origin_channel_id: number;
     channel_ids: number[] | null;
+    form_fields?:
+        | [
+              {
+                  id: number;
+                  name: string;
+                  value: boolean;
+              },
+          ]
+        | null;
 }
 
 export interface BcMutationCustomer {
@@ -48,6 +57,13 @@ export interface BcMutationCustomer {
         force_password_reset: boolean;
         new_password: string;
     };
+    form_fields?: [
+        {
+            id: number;
+            name: string;
+            value: string | string[];
+        },
+    ];
 }
 
 export interface Country {
@@ -166,7 +182,7 @@ export interface BcAddressRest {
     phone: string;
     postal_code: string;
     state_or_province: string;
-    form_fields: FormField[] | [DefaultBillingOrShippingField];
+    form_fields: FormField[] | [DefaultBillingOrShippingField] | [AllowRemoteAssistanceField];
 }
 
 export interface FormField {
@@ -176,6 +192,11 @@ export interface FormField {
 
 export interface DefaultBillingOrShippingField extends FormField {
     name: 'Default Billing' | 'Default Shipping';
+    value: ['Yes'] | [];
+}
+
+export interface AllowRemoteAssistanceField extends FormField {
+    name: 'allow_remote_shopping_assistance';
     value: ['Yes'] | [];
 }
 

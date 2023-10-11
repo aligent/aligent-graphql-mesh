@@ -12,6 +12,16 @@ export const acCustomerWithEmail: Customer = {
     email: 'customer@example.com',
 };
 
+// @ts-expect-error: ignore bad non-nullable fields
+export const acCustomerWithRemoteAssistance: Customer = {
+    allow_remote_shopping_assistance: true,
+};
+
+// @ts-expect-error: ignore bad non-nullable fields
+export const acCustomerWithNoRemoteAssistance: Customer = {
+    allow_remote_shopping_assistance: false,
+};
+
 export const acCustomerOutputWithEmail: CustomerOutput = {
     customer: {
         email: 'customer@example.com',
@@ -89,4 +99,26 @@ export const bcValidatePasswordRequest: ValidatePasswordRequest = {
     email: 'example@example.com',
     password: 'Password1',
     channel_id: 1,
+};
+
+export const bcMutationCustomerWithRemoteAssistanceSetToTrue: BcMutationCustomer = {
+    id: 1,
+    form_fields: [
+        {
+            id: 1,
+            name: 'allow_remote_shopping_assistance',
+            value: ['Yes'],
+        },
+    ],
+};
+
+export const bcMutationCustomerWithRemoteAssistanceSetToFalse: BcMutationCustomer = {
+    id: 1,
+    form_fields: [
+        {
+            id: 1,
+            name: 'allow_remote_shopping_assistance',
+            value: [],
+        },
+    ],
 };
