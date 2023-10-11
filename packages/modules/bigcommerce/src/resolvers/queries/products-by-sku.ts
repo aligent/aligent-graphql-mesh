@@ -1,8 +1,7 @@
 import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
-import { getTaxSettings } from '../../apis/graphql';
 import { getProducts } from '../../apis/rest/products';
-import { getBcProductsGraphql } from '../../apis/graphql';
+import { getBcProductsGraphql, retrieveStoreConfigsFromCache } from '../../apis/graphql';
 import { AxiosGraphqlError, getIncludesTax } from '@aligent/utils';
 import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../../../../utils/sort';
 
@@ -21,7 +20,8 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const taxSettings = await getTaxSettings(customerImpersonationToken);
+        const storeConfig = await retrieveStoreConfigsFromCache(context);
+        const { tax: taxSettings } = storeConfig;
 
         /* Convert sort args coming from the FE to a sort structure the rest products query will accept */
         const transformedSort = transformGQLSortArgsToRestSortArgs(args.sort, sortKeyMapping);

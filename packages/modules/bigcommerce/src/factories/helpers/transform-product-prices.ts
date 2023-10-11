@@ -2,6 +2,7 @@ import { Money, Prices, VariantConnection } from '@aligent/bigcommerce-operation
 import { Maybe, PriceRange, ProductPrices, TierPrice } from '@aligent/bigcommerce-resolvers';
 import { CurrencyEnum, Money as AcMoney } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
+import { SupportedProductTypes } from '../../types';
 
 const noPricesResponse = {
     maximum_price: {
@@ -77,7 +78,7 @@ export const getMostExpensiveVariant = (
 
 export const getTransformedPriceRange = (
     prices: Maybe<Prices>,
-    productType: 'SimpleProduct' | 'ConfigurableProduct',
+    productType: SupportedProductTypes,
     variants?: Maybe<VariantConnection>
 ): PriceRange => {
     if (!prices) return noPricesResponse;

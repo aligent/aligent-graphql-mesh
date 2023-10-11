@@ -83,7 +83,8 @@ export interface BcCategoryTree {
     children?: BcCategoryTree[];
     description?: string;
     entityId: number;
-    metafields: MetafieldConnection;
+    id: string;
+    metafields?: MetafieldConnection;
     name: string;
     path: string;
     productCount?: number;
@@ -96,7 +97,7 @@ export interface BcCategory {
     __typename?: string;
     description?: string;
     metaDescription?: string;
-    metafields: MetafieldConnection;
+    metafields?: MetafieldConnection;
     pageTitle?: string;
     products?: {
         collectionInfo?:
@@ -471,3 +472,5 @@ export interface BCShipping {
     shipping_zone_name: string;
     shipping_quotes: Resource;
 }
+
+export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';

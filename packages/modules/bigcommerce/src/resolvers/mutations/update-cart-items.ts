@@ -58,8 +58,8 @@ export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
          * so we have to follow up with a getCheckout query to get more enriched data. */
         const checkoutResponse = await getEnrichedCart(
             { cart_id: updateCartResponse.entityId },
-            bcCustomerId,
-            customerImpersonationToken
+            context,
+            bcCustomerId
         );
 
         return {
