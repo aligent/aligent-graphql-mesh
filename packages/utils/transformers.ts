@@ -8,7 +8,7 @@ export interface Transformer<T, D> {
     transform(context: TransformerContext<T, D>): D;
 }
 
-export class ChainTransformer<T, D> {
+export class ChainTransformer<T, D> implements Transformer<T, D> {
     private transformers: Array<Transformer<T, D>>;
 
     constructor() {
