@@ -83,7 +83,7 @@ export const transformCustomerForMutation = (
                 {
                     id: customerId,
                     name: 'allow_remote_shopping_assistance',
-                    value: false,
+                    value: [],
                 },
             ],
         }),
@@ -102,8 +102,11 @@ export const transformCustomerForMutation = (
         const remoteAssistanceField = bcCustomer?.form_fields?.find(
             (field) => field.name === 'allow_remote_shopping_assistance'
         );
-        if (remoteAssistanceField) {
-            remoteAssistanceField.value = customer.allow_remote_shopping_assistance;
+        if (remoteAssistanceField && customer.allow_remote_shopping_assistance) {
+            remoteAssistanceField.value = ['Yes'];
+        } 
+        if (remoteAssistanceField && !customer.allow_remote_shopping_assistance) {
+            remoteAssistanceField.value = [];
         }
     }
 

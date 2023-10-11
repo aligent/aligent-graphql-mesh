@@ -57,7 +57,7 @@ export interface BcMutationCustomer {
         {
             id: number;
             name: string;
-            value: string | boolean;
+            value: string | string[];
         },
     ];
 }
