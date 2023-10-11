@@ -5,13 +5,18 @@ import {
     ROOT_PWA_CATEGORY,
 } from '../../factories/transform-category-data';
 import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
-
+import { retrieveStoreConfigsFromCache } from '../../apis/graphql';
+import { STORE_CONFIG__GRID_PER_PAGE } from './constants';
 export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, context, _info) => {
         const categoryUid = args?.filters?.category_uid?.eq;
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
+
+        const storeConfig = await retrieveStoreConfigsFromCache(context);
+
+        const { grid_per_page } = storeConfig;
 
         /* The PWA sets a "root_category_uid" as an environment variable when it builds. This "root_category_uid"
          * is used when querying for category tree/mega menu data. This is something TF Adobe Commerce relies on which
@@ -21,7 +26,8 @@ export const categoriesResolver: QueryResolvers['categories'] = {
             categoryUid && categoryUid !== 'null' ? Number(atob(categoryUid)) : null;
         const { category, categoryTree } = await getCategories(
             customerImpersonationToken,
-            rootEntityId
+            rootEntityId,
+            { productsPageSize: grid_per_page || STORE_CONFIG__GRID_PER_PAGE }
         );
 
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,

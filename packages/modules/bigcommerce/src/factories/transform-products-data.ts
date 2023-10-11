@@ -6,6 +6,7 @@ import {
 } from '@aligent/bigcommerce-operations';
 import {
     BundleProduct,
+    CategoryProducts,
     ConfigurableProduct,
     Maybe,
     ProductInterface,
@@ -170,7 +171,10 @@ export const getTransformedProductsData = (
     },
     pageSize: number,
     currentPage: number
-): Maybe<Products & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }> => {
+): Maybe<
+    Products &
+        CategoryProducts & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }
+> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;
 
@@ -182,7 +186,6 @@ export const getTransformedProductsData = (
                   return getTransformedProductData(product.node);
               })
             : null,
-        // @todo add pagination for category products
         page_info: {
             current_page: currentPage,
             page_size: pageSize,

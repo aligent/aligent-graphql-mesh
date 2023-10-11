@@ -6,6 +6,7 @@ import {
     RatingSearchFilter,
     ProductAttributeSearchFilterItemConnection,
     SearchProductFilterConnection,
+    CategorySearchFilter,
 } from '@aligent/bigcommerce-operations';
 import { Aggregation, FilterTypeEnum, AggregationOption } from '@aligent/bigcommerce-resolvers';
 
@@ -85,7 +86,7 @@ export const getAggregationsFromBrandFilter = (filter: BrandSearchFilter): Maybe
 
     return {
         attribute_code: name.toLowerCase(),
-        count: 0,
+        count: options.length,
         label: name,
         options,
         filterType: getFilterInputType(filter.__typename),
@@ -106,6 +107,34 @@ const getAggregationsFromPriceFilter = (filter: PriceSearchFilter): Maybe<Aggreg
         count: null,
         label: name,
         options: [],
+        filterType: getFilterInputType(filter.__typename),
+    };
+};
+
+const getAggregationsFromCategoryFilter = (filter: CategorySearchFilter): Maybe<Aggregation> => {
+    const { categories, name } = filter;
+
+    const options = categories?.edges
+        ? categories.edges
+              .map((category) => {
+                  if (!category?.node) return null;
+
+                  const { entityId, productCount, name } = category.node;
+
+                  return {
+                      count: productCount,
+                      label: name,
+                      value: String(entityId),
+                  };
+              })
+              .filter(Boolean)
+        : [];
+
+    return {
+        attribute_code: 'category_uid',
+        count: categories?.edges ? categories.edges.length : 0,
+        label: name,
+        options: options,
         filterType: getFilterInputType(filter.__typename),
     };
 };
@@ -148,6 +177,10 @@ export const getTransformedProductAggregations = (
 
             if (typename === 'BrandSearchFilter') {
                 return getAggregationsFromBrandFilter(filter.node);
+            }
+
+            if (typename === 'CategorySearchFilter') {
+                return getAggregationsFromCategoryFilter(filter.node);
             }
 
             if (typename === 'PriceSearchFilter') {

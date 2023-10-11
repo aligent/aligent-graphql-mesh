@@ -4,6 +4,7 @@ import { CategoryConnection } from '@aligent/bigcommerce-operations';
 import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
 import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
+import { getTransformedProductsData } from './transform-products-data';
 
 export const ROOT_BIGCOMMERCE_CATEGORY = {
     id: btoa('0'),
@@ -44,7 +45,7 @@ export const getTransformedCategoryData = (
     const { children, description, entityId, image, metafields, name, path, products, seo } =
         category;
 
-    const productCount = category.productCount || products?.collectionInfo?.totalItems;
+    const productCount = products?.collectionInfo?.totalItems || category.productCount;
     const { metaDescription, pageTitle } = seo || {};
 
     /* Retrieved category metafield defined in the admin.
@@ -91,6 +92,7 @@ export const getTransformedCategoryData = (
         path: categoryIdPathToString,
         position: 0,
         product_count: productCount,
+        products: products ? getTransformedProductsData({ products }, 24, 1) : null,
         redirect_code: 0,
         uid: btoa(entityId.toString()),
         url_path: urlPath,

@@ -5,6 +5,7 @@ import {
     booleanStoreConfigProperties,
     integerStoreConfigProperties,
     jsonStringStoreConfigProperties,
+    STORE_CONFIG__GRID_PER_PAGE,
 } from '../resolvers/queries/constants';
 
 /* Mandatory fields, always returned with no value assigned but configs specified via "store_config" metafields
@@ -17,7 +18,7 @@ const MANDATORY_STORE_CONFIGS = {
     root_category_uid: 'null',
     locale: 'en-AU',
     category_url_suffix: '',
-    grid_per_page: 24,
+    grid_per_page: STORE_CONFIG__GRID_PER_PAGE,
 };
 
 /*
