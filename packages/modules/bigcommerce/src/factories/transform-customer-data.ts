@@ -92,13 +92,13 @@ export const transformCustomerForMutation = (
         bcCustomer.last_name = customer.lastname;
     }
     if (isBoolean(customer.allow_remote_shopping_assistance)) {
-            bcCustomer.form_fields = [
-                {
-                    id: customerId as number,
-                    name: 'allow_remote_shopping_assistance',
-                    value: customer.allow_remote_shopping_assistance ? ['Yes'] : []
-                }
-            ]
+        bcCustomer.form_fields = [
+            {
+                id: customerId as number,
+                name: 'allow_remote_shopping_assistance',
+                value: customer.allow_remote_shopping_assistance ? ['Yes'] : [],
+            },
+        ];
     }
 
     return bcCustomer;
