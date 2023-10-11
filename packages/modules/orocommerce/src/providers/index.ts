@@ -5,6 +5,7 @@ import { CustomerClient } from '../apis/rest/customer';
 import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
+import { ContactClient } from '../apis/rest/contact';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -50,6 +51,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ShoppingListsClient,
             provide: ShoppingListsClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: ContactClient,
+            provide: ContactClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
