@@ -14,7 +14,7 @@ export const categoryDetailsWithProducts = gql`
 
     fragment CategoryDetailsWithProducts on Category {
         ...CategoryDetails
-        products(first: $first) {
+        products(first: $productsPageSize) {
             edges {
                 node {
                     ...ProductDetails

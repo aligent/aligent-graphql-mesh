@@ -11,7 +11,7 @@ export const getRouteQuery = stripIgnoredCharacters(
         ${ProductsDetails}
         ${seoDetails}
 
-        query getRoute($path: String!, $first: Int = 24, $includeTax: Boolean) {
+        query getRoute($path: String!, $productsPageSize: Int = 24, $includeTax: Boolean) {
             site {
                 route(path: $path) {
                     node {
