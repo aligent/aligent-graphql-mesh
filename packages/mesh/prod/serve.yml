@@ -2,3 +2,4 @@ port: 4000
 hostname: api.bigcommerce.aligent.com.au
 browser: false
 playground: false
+cors: false
