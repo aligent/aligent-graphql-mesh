@@ -98,22 +98,6 @@ export const getTransformedProductArgs = (
 
         const { filterName, __typename: filterType } = filterMapping[key.toLowerCase()] || {};
 
-        if (filterType === 'CategorySearchFilter') {
-            if (eqValue) {
-                bcProductFilters.categoryEntityId = Number(eqValue);
-            }
-
-            if (inArray) {
-                inArray.forEach((id) => {
-                    bcProductFilters.categoryEntityIds = [
-                        ...(bcProductFilters.categoryEntityIds || []),
-                    ];
-                    bcProductFilters.categoryEntityIds.push(Number(id));
-                });
-            }
-            continue;
-        }
-
         if (filterType === 'BrandSearchFilter') {
             if (eqValue) {
                 bcProductFilters.brandEntityIds = [Number(eqValue)];
