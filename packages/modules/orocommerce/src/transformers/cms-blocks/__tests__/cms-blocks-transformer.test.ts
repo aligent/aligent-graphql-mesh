@@ -9,7 +9,7 @@ describe('Cms Blocks data transformation tests', () => {
     const chain = new CmsBlocksTransformerChain();
     chain.addTransformer(new CmsBlocksTransformer());
 
-    const output = chain.transform({ data: { blocks: mockBlocks } });
+    const output = chain.transform({ data: mockBlocks });
 
     test('Check whether the transformed cms blocks contain the expected properties', () => {
         expect(output).toHaveProperty('__typename');

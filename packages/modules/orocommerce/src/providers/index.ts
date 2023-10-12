@@ -5,7 +5,7 @@ import { CustomerClient } from '../apis/rest/customer';
 import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
-import { CmsBlocksClient } from '../apis/rest/cms-blocks-api-client';
+import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { getOroTransformers } from '../transformers';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
@@ -56,8 +56,8 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         {
-            useClass: CmsBlocksClient,
-            provide: CmsBlocksClient,
+            useClass: CmsBlockClient,
+            provide: CmsBlockClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
