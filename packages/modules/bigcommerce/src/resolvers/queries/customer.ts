@@ -33,7 +33,7 @@ export const customerResolver = {
          * */
         const customerAttributesFromFormFields = getCustomerAttributesFromFormFields(bcFormFields);
         const allowRemoteShoppingAssistance =
-            customerAttributesFromFormFields.allow_remote_shopping_assistance[0];
+            customerAttributesFromFormFields.allow_remote_shopping_assistance?.[0];
         const allowRemoteAssist = {
             allow_remote_shopping_assistance:
                 allowRemoteShoppingAssistance === 'Yes' ? true : false,
