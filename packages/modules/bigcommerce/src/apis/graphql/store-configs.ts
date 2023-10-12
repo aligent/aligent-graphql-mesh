@@ -39,8 +39,9 @@ export const getStoreConfigs = async (
     const { pwaMetafields, storeConfigMetafields } = channel;
 
     return {
-        ...getTransformedChannelMetafieldsToStoreConfig(pwaMetafields),
-        ...getTransformedChannelMetafieldsToStoreConfig(storeConfigMetafields),
+        ...getTransformedChannelMetafieldsToStoreConfig({
+            edges: [...(pwaMetafields?.edges || []), ...(storeConfigMetafields?.edges || [])],
+        }),
         ...site.settings,
     };
 };
