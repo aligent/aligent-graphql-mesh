@@ -4,8 +4,6 @@ import { CurrencyEnum, Money as AcMoney } from '@aligent/bigcommerce-resolvers';
 import { getTransformedPrice } from './transform-price';
 import { SupportedProductTypes } from '../../types';
 
-/* istanbul ignore file */
-
 const noPricesResponse = {
     maximum_price: {
         discount: {
