@@ -1,5 +1,4 @@
-import { Maybe } from '@aligent/bigcommerce-resolvers';
-import { InventoryByLocations, VariantInventory } from '@aligent/bigcommerce-operations';
+import { VariantInventory } from '@aligent/bigcommerce-operations';
 
 export const productInventoryLocation: VariantInventory = {
     isInStock: true,
