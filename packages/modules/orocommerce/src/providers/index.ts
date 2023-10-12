@@ -7,6 +7,7 @@ import { Auth } from '../services/auth';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { getOroTransformers } from '../transformers';
+import {CmsPageClient} from "../apis/rest/cms-page";
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -58,6 +59,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: CmsBlockClient,
             provide: CmsBlockClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CmsPageClient,
+            provide: CmsPageClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },

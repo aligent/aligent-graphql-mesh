@@ -4,12 +4,14 @@ import { generateCustomerTokenMutation } from './mutations/generate-customer-tok
 import { keyMessagesResolver } from './queries/key-messages';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { cmsBlocksResolver } from './queries/cms-blocks';
+import {cmsPageResolver} from "./queries/cms-page";
 
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
         keyMessages: keyMessagesResolver,
         cmsBlocks: cmsBlocksResolver,
+        cmsPage: cmsPageResolver,
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
