@@ -1,4 +1,3 @@
-import _ from 'lodash';
 export interface TransformerContext<T, D> {
     data: T;
     result?: D;
@@ -10,21 +9,14 @@ export interface Transformer<T, D> {
 }
 
 export class ChainTransformer<T, D> {
-    private transformers: Array<{
-        instance: Transformer<T, D>;
-        priority: number;
-    }>;
+    private transformers: Array<Transformer<T, D>>;
 
     constructor() {
         this.transformers = [];
     }
 
     public transform(context: TransformerContext<T, D>): D {
-        const transformers = _.sortBy(this.transformers, ['priority']).map(
-            (transformer) => transformer.instance
-        );
-
-        for (const transformer of transformers) {
+        for (const transformer of this.transformers) {
             if (context.stopExecution) {
                 break;
             }
@@ -39,7 +31,7 @@ export class ChainTransformer<T, D> {
         throw new Error(`Transformer chain failed to return a result.`);
     }
 
-    public addTransformer(instance: Transformer<T, D>, priority = 0) {
-        this.transformers.push({ instance, priority });
+    public addTransformer(transformer: Transformer<T, D>) {
+        this.transformers.push(transformer);
     }
 }
