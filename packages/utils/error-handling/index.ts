@@ -66,6 +66,23 @@ export const handleCartItemErrors = (
     }
 };
 
+export class GraphqlError extends Error {
+    extensions: {
+        category: string;
+    };
+
+    constructor(category: 'authentication' | 'authorization' | 'input', message: string) {
+        super(message);
+
+        /* Adding this "extensions" object tells the PWA that the users authorization token
+         * has expired. Actions will follow in the PWA to log the user out and remove
+         * session related data from browser storage. */
+        this.extensions = {
+            category: `graphql-${category}`,
+        };
+    }
+}
+
 /**
  * A specific error when decrypting the meshToken fails
  */
