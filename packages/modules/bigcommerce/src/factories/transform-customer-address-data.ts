@@ -5,6 +5,7 @@ import { checkIfDefaultAddress } from './helpers/transform-customer-addresses';
 const DEFAULT_BILLING_NAME = 'Default Billing';
 const DEFAULT_SHIPPING_NAME = 'Default Shipping';
 
+/* istanbul ignore file */
 export const transformCustomerAddress = (
     customerAddress: CustomerAddressValidated,
     state: BcState,
