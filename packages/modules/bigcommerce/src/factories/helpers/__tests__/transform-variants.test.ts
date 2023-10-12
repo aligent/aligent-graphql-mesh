@@ -9,6 +9,7 @@ const expectResult = [
             { code: 'size', label: 'S', value_index: 184, uid: 'MTg0' },
         ],
         product: {
+            by_location: [],
             custom_attributes: [],
             id: 513,
             media_gallery_entries: [
@@ -55,6 +56,7 @@ const expectResult = [
             { code: 'size', label: 'M', value_index: 185, uid: 'MTg1' },
         ],
         product: {
+            by_location: [],
             custom_attributes: [],
             id: 514,
             media_gallery_entries: [
@@ -101,6 +103,7 @@ const expectResult = [
             { code: 'size', label: 'S', value_index: 184, uid: 'MTg0' },
         ],
         product: {
+            by_location: [],
             custom_attributes: [],
             id: 515,
             media_gallery_entries: [
@@ -147,6 +150,7 @@ const expectResult = [
             { code: 'size', label: 'M', value_index: 185, uid: 'MTg1' },
         ],
         product: {
+            by_location: [],
             custom_attributes: [],
             id: 516,
             media_gallery_entries: [

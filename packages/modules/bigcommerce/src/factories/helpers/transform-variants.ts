@@ -4,6 +4,7 @@ import { getTransformedImage, getTransformedSmallImage } from './transform-image
 import { getTransformedPriceRange, getTransformedPriceTiers } from './transform-product-prices';
 import { getTransformedProductsAttributes } from './transform-product-attributes';
 import { getTransformedAvailableStock, getTransformedVariantStockStatus } from './transform-stock';
+import { getTransformProductLocations } from './transform-product-locations';
 
 export const getTransformedVariants = (
     variants: Maybe<VariantConnection>
@@ -19,6 +20,7 @@ export const getTransformedVariants = (
             return {
                 attributes: getTransformedProductsAttributes(options),
                 product: {
+                    by_location: getTransformProductLocations(inventory),
                     custom_attributes: [],
                     id: entityId,
                     media_gallery_entries: [getTransformedImage(defaultImage)].filter(Boolean),

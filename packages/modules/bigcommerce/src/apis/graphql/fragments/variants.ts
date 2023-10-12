@@ -52,6 +52,22 @@ export const variants = gql`
                 availableToSell
                 warningLevel
             }
+            byLocation {
+                edges {
+                    node {
+                        locationEntityId
+                        locationEntityCode
+                        locationEntityTypeId
+                        locationDistance {
+                            value
+                            lengthUnit
+                        }
+                        availableToSell
+                        warningLevel
+                        isInStock
+                    }
+                }
+            }
         }
         isPurchasable
     }
