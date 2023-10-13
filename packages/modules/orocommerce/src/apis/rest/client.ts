@@ -61,7 +61,7 @@ export class ApiClient {
             data,
             config
         );
-        return response.data.data;
+        return response.data;
     }
 
     async put<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
@@ -70,7 +70,7 @@ export class ApiClient {
             data,
             config
         );
-        return response.data.data;
+        return response.data;
     }
 
     async delete(url: string, config?: AxiosRequestConfig) {
