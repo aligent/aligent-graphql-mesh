@@ -71,12 +71,22 @@ export class GraphqlError extends Error {
         category: string;
     };
 
-    constructor(category: 'authentication' | 'authorization' | 'input', message: string) {
+    constructor(
+        category:
+            | 'already-exists'
+            // When user authentication fails. e.g. Attempting to log in
+            | 'authentication'
+            /* When user authorization fails. This tells the PWA to clear the cache and kill the user session.
+             * E.g. A user is current logged in and input an incorrect password when attempting to update their
+             * current password*/
+            | 'authorization'
+            /* When a query contains invalid input*/
+            | 'input'
+            /* When an expected resource doesn't exist*/
+            | 'no-such-entity',
+        message: string
+    ) {
         super(message);
-
-        /* Adding this "extensions" object tells the PWA that the users authorization token
-         * has expired. Actions will follow in the PWA to log the user out and remove
-         * session related data from browser storage. */
         this.extensions = {
             category: `graphql-${category}`,
         };
