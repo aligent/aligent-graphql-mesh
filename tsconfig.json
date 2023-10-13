@@ -29,7 +29,8 @@
             ],
             "@aligent/bigcommerce-resolvers": ["./packages/generated/bigcommerce/resolvers/index"],
             "@aligent/orocommerce-resolvers": ["./packages/generated/orocommerce/resolvers/index"],
-            "@aligent/utils": ["./packages/utils/index"]
+            "@aligent/utils": ["./packages/utils/index"],
+            "@orocommerce/*": ["./packages/modules/orocommerce/src/*"]
         }
     },
     "exclude": ["node_modules/**/*", "docker/**/*", "lambda/**/*"]

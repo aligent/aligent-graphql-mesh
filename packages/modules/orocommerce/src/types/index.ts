@@ -9,8 +9,25 @@ export interface Relationships {
     };
 }
 
+export interface EntityAttributes {
+    [name: string]: EntityAttribute | EntityAttribute[];
+}
+
+export interface EntityAttribute {
+    id: string;
+    targetValue: string;
+}
+
 export interface Attributes {
-    [name: string]: boolean | number | string | null;
+    [name: string]:
+        | boolean
+        | number
+        | string
+        | null
+        | Array<number>
+        | Array<string>
+        | Array<object>
+        | EntityAttributes;
 }
 
 export interface Entity extends Resource {
@@ -20,3 +37,4 @@ export interface Entity extends Resource {
 
 export * from './customer';
 export * from './shopping-list';
+export * from './web-catalog-tree';
