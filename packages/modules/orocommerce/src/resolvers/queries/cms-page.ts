@@ -6,7 +6,8 @@ export const cmsPageResolver: QueryResolvers['cmsPage'] = {
     resolve: async (_root, _args, context, _info) => {
         const cmsPageClient: CmsPageClient = context.injector.get(CmsPageClient);
 
-        const oroLandingPage = await cmsPageClient.getLandingPage('1');
+        const id = String(_args.id)
+        const oroLandingPage = await cmsPageClient.getLandingPage(id);
 
         const cmsPageTransformerChain: CmsPageTransformerChain =
             context.injector.get(CmsPageTransformerChain);
