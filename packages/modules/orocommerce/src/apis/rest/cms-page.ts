@@ -1,6 +1,6 @@
 import { Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
-import { LandingPage } from '../../types';
+import { OroLandingPage } from '../../types';
 
 @Injectable()
 export class CmsPageClient {
@@ -9,8 +9,8 @@ export class CmsPageClient {
         this.apiClient = apiClient;
     }
 
-    async getLandingPage(id: string): Promise<LandingPage> {
-        const response = await this.apiClient.get<LandingPage>(`/landingpages/${id}`);
+    async getLandingPage(id: string): Promise<OroLandingPage> {
+        const response = await this.apiClient.get<OroLandingPage>(`/landingpages/${id}`);
         return response.data;
     }
 }

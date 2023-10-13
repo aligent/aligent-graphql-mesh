@@ -1,12 +1,12 @@
 import { Entity, Attributes } from '.';
 
-export interface LandingPage extends Entity {
+export interface OroLandingPage extends Entity {
     type: 'landingpages';
     id: string;
-    attributes: LandingPageAttributes;
+    attributes: OroLandingPageAttributes;
 }
 
-export interface LandingPageAttributes extends Attributes {
+export interface OroLandingPageAttributes extends Attributes {
     title: string;
     createdAt: string;
     url: string;
