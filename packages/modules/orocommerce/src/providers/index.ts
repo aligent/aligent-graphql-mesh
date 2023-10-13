@@ -48,13 +48,14 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         {
-<<<<<<< HEAD
-            useClass: CurrencyClient,
-            provide: CurrencyClient,
-=======
             useClass: CountryClient,
             provide: CountryClient,
->>>>>>> 3c3b473d8e42f244eb0d150d97bad54cd169ecc0
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CurrencyClient,
+            provide: CurrencyClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
