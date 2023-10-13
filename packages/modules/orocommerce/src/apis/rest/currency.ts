@@ -1,6 +1,6 @@
 import { Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
-import { Currency } from '../../types';
+import { OroCurrency } from '../../types';
 
 @Injectable()
 export class CurrencyClient {
@@ -9,8 +9,8 @@ export class CurrencyClient {
         this.apiClient = apiClient;
     }
 
-    async getCurrency(id: string): Promise<Currency> {
-        const response = await this.apiClient.get<Currency>(`/currencies/${id}`);
+    async getCurrency(id: string): Promise<OroCurrency> {
+        const response = await this.apiClient.get<OroCurrency>(`/currencies/${id}`);
         return response.data;
     }
 }

@@ -1,6 +1,6 @@
-import { Currency } from '../../../../types';
+import { OroCurrency } from '../../../../types';
 
-export const oroCurrency: Currency = {
+export const oroCurrency: OroCurrency = {
     id: 'NZD',
     type: 'currencies',
     attributes: {

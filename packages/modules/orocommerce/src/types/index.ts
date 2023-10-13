@@ -19,5 +19,5 @@ export interface Entity extends Resource {
 }
 
 export * from './customer';
-export * from './currency';
+export * from './oroCurrency';
 export * from './shopping-list';

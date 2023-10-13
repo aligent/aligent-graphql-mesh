@@ -1,12 +1,12 @@
 import { Entity, Attributes } from '.';
 
-export interface Currency extends Entity {
+export interface OroCurrency extends Entity {
     type: 'currencies';
     id: string;
-    attributes: CurrencyAttributes;
+    attributes: OroCurrencyAttributes;
 }
 
-export interface CurrencyAttributes extends Attributes {
+export interface OroCurrencyAttributes extends Attributes {
     title: string;
     symbol: string;
     default: boolean;

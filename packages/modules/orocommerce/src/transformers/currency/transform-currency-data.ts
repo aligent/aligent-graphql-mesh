@@ -1,24 +1,15 @@
 import { Currency as AcCurrency } from '@aligent/orocommerce-resolvers';
-import { Currency } from '../../types';
+import { OroCurrency } from '../../types';
 import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 
-export interface CurrencyTransformerInput {
-    currency: Currency;
-}
 @Injectable()
-export class CurrencyTransformerChain extends ChainTransformer<
-    CurrencyTransformerInput,
-    AcCurrency
-> {}
+export class CurrencyTransformerChain extends ChainTransformer<OroCurrency, AcCurrency> {}
 
 @Injectable()
-export class CurrencyTransformer implements Transformer<CurrencyTransformerInput, AcCurrency> {
-    public transform(
-        context: TransformerContext<CurrencyTransformerInput, AcCurrency>
-    ): AcCurrency {
-        // TODO: use context.data for correct get data from api
-        const oroCurrency = context.data.currency;
+export class CurrencyTransformer implements Transformer<OroCurrency, AcCurrency> {
+    public transform(context: TransformerContext<OroCurrency, AcCurrency>): AcCurrency {
+        const oroCurrency = context.data;
 
         return {
             base_currency_code: oroCurrency.id,

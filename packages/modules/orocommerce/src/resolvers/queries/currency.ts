@@ -13,6 +13,6 @@ export const currencyResolver: QueryResolvers['currency'] = {
         const currencyTransformerChain: CurrencyTransformerChain =
             context.injector.get(CurrencyTransformerChain);
 
-        return currencyTransformerChain.transform({ data: { currency: oroCurrency } });
+        return currencyTransformerChain.transform({ data: oroCurrency });
     },
 };
