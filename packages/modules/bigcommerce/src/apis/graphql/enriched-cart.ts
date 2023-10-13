@@ -1,5 +1,5 @@
 import { getCheckout } from './checkout';
-import { getBcProductsGraphql } from './products';
+import { getAllBcGraphqlProductsPages } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getFlattenedProducts } from '../../utils';
@@ -54,9 +54,14 @@ export const getEnrichedCart = async (
      * from the same parent product*/
     const uniqueEntityIds = [...new Set(cartItemEntityIds)];
 
-    const products = await getBcProductsGraphql(
+    /* Since cart items don't have enough data to fulfil what the PWA is expecting, we need to query
+     * for extra data from the "site.products" query. We also need to keep in mind the "products" query
+     * has a default page size of 10 and a maximum page size of 50, so if there's 51 separate items
+     * in the cart, we need to paginate for all product pages. */
+    const products = await getAllBcGraphqlProductsPages(
         { entityIds: uniqueEntityIds, includeTax: getIncludesTax(taxSettingsResponse?.pdp) },
-        customerImpersonationToken
+        customerImpersonationToken,
+        50
     );
 
     if (!products) return UNDEFINED_CART;
