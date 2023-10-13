@@ -5,6 +5,10 @@ import {
     CmsBlocksTransformer,
     CmsBlocksTransformerChain,
 } from './cms-blocks/cms-blocks-transformer';
+import {
+    StoreLocationsTransformer,
+    StoreLocationsTransformerChain,
+} from './store-locations/store-locations-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
@@ -14,17 +18,27 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: CmsBlocksTransformerChain,
             global: true,
         },
-
+        {
+            provide: StoreLocationsTransformerChain,
+            useClass: StoreLocationsTransformerChain,
+            global: true,
+        },
         // Create default transformers and register them with their chain transformers
+        {
+            provide: StoreLocationsTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new StoreLocationsTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [StoreLocationsTransformerChain],
+        },
         {
             provide: CmsBlocksTransformer,
             useFactory: (transformerChain) => {
-                const cmsBlocksTransformer = new CmsBlocksTransformer();
-
-                // Add to the chain transformer
-                transformerChain.addTransformer(cmsBlocksTransformer);
-
-                return cmsBlocksTransformer;
+                const transformer = new CmsBlocksTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
             },
             deps: [CmsBlocksTransformerChain],
         },
