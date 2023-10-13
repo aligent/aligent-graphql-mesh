@@ -4,7 +4,11 @@ import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
 import { CountryTransformer } from '../transformers/country/country-transformer';
+import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
+import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
+import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
+import { getOroTransformers } from '../transformers';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -48,9 +52,28 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         {
+            useClass: KeyMessagesClient,
+            provide: KeyMessagesClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
             useClass: CountryTransformer,
             provide: CountryTransformer,
             scope: Scope.Operation,
         },
+        {
+            useClass: ShoppingListsClient,
+            provide: ShoppingListsClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CmsBlockClient,
+            provide: CmsBlockClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        ...getOroTransformers(),
     ];
 };

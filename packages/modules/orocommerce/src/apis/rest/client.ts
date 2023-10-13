@@ -78,4 +78,38 @@ export class ApiClient {
         // No body is returned for a delete, if the status code is 204 then it succeeded
         return response.status == 204;
     }
+
+    /**
+     * Generator function to iterate over a paginated API result
+     * @param url
+     * @param config
+     */
+    async *paginate(
+        url: string,
+        config?: AxiosRequestConfig
+    ): AsyncGenerator<AxiosResponse['data']> {
+        let configPaginated = config;
+        if (!configPaginated) {
+            configPaginated = {
+                params: {
+                    page: {
+                        number: 1,
+                        size: 50,
+                    },
+                },
+            };
+        }
+
+        while (configPaginated.params.page.number >= 1) {
+            const response = await this.client.get(url, configPaginated);
+            const items = response.data.data;
+            if (items.length === 0) {
+                break;
+            }
+            for (const item of items) {
+                yield item;
+            }
+            configPaginated.params.page.number++;
+        }
+    }
 }
