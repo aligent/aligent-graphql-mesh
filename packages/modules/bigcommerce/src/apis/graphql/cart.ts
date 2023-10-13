@@ -5,6 +5,7 @@ import {
     Cart,
     CartLineItemInput,
     InputMaybe,
+    CustomerAttributes,
 } from '@aligent/bigcommerce-operations';
 import {
     addProductsToCartMutation,
@@ -13,7 +14,7 @@ import {
     getCartEntityIdQuery,
     updateCartLineItemQuery,
 } from './requests';
-import { handleCartItemErrors, logAndThrowError } from '@aligent/utils';
+import { GraphqlError, handleCartItemErrors, logAndThrowError } from '@aligent/utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 import { assignCartToCustomerMutation } from './requests/assign-cart';
 
@@ -167,19 +168,16 @@ export const updateCartLineItem = async (
 export const updateCartIdAttribute = async (variables: {
     cartId: string | null;
     customerId: number | null;
-}) => {
+}): Promise<CustomerAttributes | undefined> => {
     const { cartId, customerId } = variables;
     /* If we're not dealing with a logged-in customer don't worry about trying to
      * store a cart id on a customer attribute.*/
-    if (!customerId) {
-        return;
-    }
+    if (!customerId) return;
 
     const attributeId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
 
-    if (attributeId && cartId) {
-        await upsertCustomerAttributeValue(attributeId, cartId, customerId);
-    }
+    if (!attributeId || !cartId) return;
+    return upsertCustomerAttributeValue(attributeId, cartId, customerId);
 };
 
 export const verifyCartEntityId = async (
@@ -206,4 +204,41 @@ export const verifyCartEntityId = async (
     }
 
     return response.data.site.cart;
+};
+
+/**
+ * Handles assigning a guest cart to a new user account and updates the customer
+ * account "cart_id" attribute with the cart id.
+ *
+ * @param cartId
+ * @param bcCustomerId
+ * @param customerImpersonationToken
+ */
+export const assignGuestCartToNewUserAccount = async (
+    cartId: string,
+    bcCustomerId: number,
+    customerImpersonationToken: string
+) => {
+    const assignCartToCustomerQuery = assignCartToCustomer(
+        cartId,
+        bcCustomerId,
+        customerImpersonationToken
+    );
+
+    const storeCartIdOnUserAccountQuery = updateCartIdAttribute({
+        cartId,
+        customerId: bcCustomerId,
+    });
+
+    const [assignedCartResponse, storedCartIdResponse] = await Promise.all([
+        assignCartToCustomerQuery,
+        storeCartIdOnUserAccountQuery,
+    ]);
+
+    if (assignedCartResponse.entityId !== cartId || !storedCartIdResponse) {
+        throw new GraphqlError(
+            'no-such-entity',
+            "The guest cart couldn't properly be assigned to the new user account"
+        );
+    }
 };

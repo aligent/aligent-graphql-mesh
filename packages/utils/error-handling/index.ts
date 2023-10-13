@@ -66,6 +66,33 @@ export const handleCartItemErrors = (
     }
 };
 
+export class GraphqlError extends Error {
+    extensions: {
+        category: string;
+    };
+
+    constructor(
+        category:
+            | 'already-exists'
+            // When user authentication fails. e.g. Attempting to log in
+            | 'authentication'
+            /* When user authorization fails. This tells the PWA to clear the cache and kill the user session.
+             * E.g. A user is current logged in and input an incorrect password when attempting to update their
+             * current password*/
+            | 'authorization'
+            /* When a query contains invalid input*/
+            | 'input'
+            /* When an expected resource doesn't exist*/
+            | 'no-such-entity',
+        message: string
+    ) {
+        super(message);
+        this.extensions = {
+            category: `graphql-${category}`,
+        };
+    }
+}
+
 /**
  * A specific error when decrypting the meshToken fails
  */
