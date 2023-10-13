@@ -1,13 +1,10 @@
-import { Injectable } from 'graphql-modules';
+import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
 import { ContactUsInput, ContactUsOutput } from '@aligent/orocommerce-resolvers';
 
 @Injectable()
 export class ContactClient {
-    protected apiClient: ApiClient;
-    constructor(apiClient: ApiClient) {
-        this.apiClient = apiClient;
-    }
+    constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
     async postContact(contactUsInput: ContactUsInput): Promise<ContactUsOutput> {
         // TODO: contact doesn't has an API for contact
