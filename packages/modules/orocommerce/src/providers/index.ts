@@ -7,6 +7,7 @@ import { CountryTransformer } from '../transformers/country/country-transformer'
 import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
+import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { getOroTransformers } from '../transformers';
 
@@ -65,6 +66,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ShoppingListsClient,
             provide: ShoppingListsClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: StoreLocationClient,
+            provide: StoreLocationClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
