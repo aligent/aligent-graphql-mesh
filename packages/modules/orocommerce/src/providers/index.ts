@@ -10,7 +10,7 @@ import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { getOroTransformers } from '../transformers';
-import {CategoriesClient} from "@orocommerce/apis/rest/category-client";
+import { CategoriesClient } from '@orocommerce/apis/rest/category-client';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
