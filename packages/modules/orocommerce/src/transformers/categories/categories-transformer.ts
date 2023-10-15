@@ -1,18 +1,18 @@
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
 import { WebCatalogTree as OroCategory } from '@orocommerce/types';
+import { btoa } from '@aligent/utils';
 
 /**
- * Transforms category data into a shape the TT PWA is expecting
+ * Transforms category data into a shape the PWA is expecting
  * @param categories - The current category object
- * @param categoryIdPath - The category id path leading up to the current category
- * @param parentIncludedInMenu - Whether the parent item is included in the menu
  */
 export const getTransformedCategoryData = (categories: OroCategory[]): CategoryTree[] => {
     const hashTable = Object.create(null);
     categories.forEach(
         (category) =>
             (hashTable[category.id] = {
-                uid: category.id.toString(),
+                id: Number(category.id),
+                uid: btoa(category.id.toString()),
                 position: category.attributes.order,
                 level: category.attributes.level,
                 name: category.attributes.title,

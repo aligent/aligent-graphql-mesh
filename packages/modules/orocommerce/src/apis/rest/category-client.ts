@@ -7,7 +7,7 @@ export class CategoriesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
     async getCategories(rootEntityId: number | null): Promise<OroCategory[]> {
-        const path = `/webcatalogtree/${rootEntityId}`;
+        const path = `/webcatalogtree`;
         const params = {
             'filter[root][gte]': rootEntityId,
         };
