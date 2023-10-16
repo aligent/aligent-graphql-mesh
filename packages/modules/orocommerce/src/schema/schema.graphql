@@ -5653,7 +5653,7 @@ type Customer {
     """
     Indicates whether the customer has enabled remote shopping assistance.
     """
-    allow_remote_shopping_assistance: Boolean!
+    allow_remote_shopping_assistance: Boolean
     """
     The contents of the customer's compare list.
     """
@@ -5774,7 +5774,7 @@ type Customer {
         The page of results to return. The default value is 1.
         """
         currentPage: Int = 1
-    ): ProductReviews!
+    ): ProductReviews
     """
     Customer reward points details.
     """
@@ -5794,7 +5794,7 @@ type Customer {
     """
     Return a customer's wish lists.
     """
-    wishlist: Wishlist!
+    wishlist: Wishlist
         @deprecated(reason: "Use `Customer.wishlists` or `Customer.wishlist_v2` instead.")
     """
     Retrieve the wish list identified by the unique ID for a `Wishlist` object.
@@ -5812,7 +5812,7 @@ type Customer {
         Specifies which page of results to return. The default value is 1.
         """
         currentPage: Int = 1
-    ): [Wishlist]!
+    ): [Wishlist]
 }
 
 """
