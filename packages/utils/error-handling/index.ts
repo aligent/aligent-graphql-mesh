@@ -49,6 +49,10 @@ export const getCartUserErrors = (
 ): CartUserErrors => {
     if (!errors) return [];
 
+    /*
+     * Error messages
+     * message: "message":"Not enough stock: Item (76331ce2-ba7e-4d89-9e41-550f45ef6edc) Mona Pullover Hoodlie is out of stock and can't be added to the cart."
+     * */
     const hasInsufficientStockError = errors.some(
         (error) => error?.message?.toLowerCase().includes('not enough stock')
     );
@@ -73,15 +77,16 @@ export const getCartUserErrors = (
         ];
     }
 
-    const isNotPurchasableError = errors.some(
-        (error) =>
-            error?.message
-                ?.toLowerCase()
-                .includes('the requested item is no longer available in the cart')
+    /*
+     * Error messages
+     * message: "Product is not purchasable: The following product cannot be ordered online, so we could not proceed with the checkout: [Sample] Dustpan & Brush"
+     * */
+    const isNotPurchasableOnline = errors.some(
+        (error) => error?.message?.toLowerCase().includes('cannot be ordered online')
     );
 
-    if (isNotPurchasableError) {
-        const notPurchasableError = 'Some of the products are out of stock.';
+    if (isNotPurchasableOnline) {
+        const notPurchasableError = 'Some of the products can not be ordered online';
 
         console.error(JSON.stringify(errors));
 
@@ -95,6 +100,32 @@ export const getCartUserErrors = (
             {
                 message: notPurchasableError,
                 code: 'NOT_SALABLE',
+                path: errors[0].path,
+            },
+        ];
+    }
+
+    /*
+     * Error messages
+     * message:"Not Found: The requested item is no longer available in the cart"
+     * */
+    const isProductNotFoundError = errors.some(
+        (error) => error?.message?.toLowerCase().includes('not found')
+    );
+
+    if (isProductNotFoundError) {
+        const notPurchasableError = 'Some of the products are no longer available';
+
+        /* Used in "update" cart flows where there's stock issues. The PWA is expecting a
+         * thrown error over "user_errors" */
+        if (shouldThrowError) {
+            throw new GraphqlError('input', notPurchasableError);
+        }
+
+        return [
+            {
+                message: notPurchasableError,
+                code: 'PRODUCT_NOT_FOUND',
                 path: errors[0].path,
             },
         ];
