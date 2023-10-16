@@ -38,6 +38,5 @@ export const getTransformedCategoryData = (categories: OroCategory[]): CategoryT
             ).toString();
         } else categoryTreeArray.push(hashTable[category.id]);
     });
-    console.log(categoryTreeArray);
     return categoryTreeArray;
 };
