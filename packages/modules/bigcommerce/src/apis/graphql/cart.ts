@@ -6,7 +6,9 @@ import {
     CartLineItemInput,
     InputMaybe,
     CustomerAttributes,
+    Maybe,
 } from '@aligent/bigcommerce-operations';
+import { CartUserErrors } from '../../types';
 import {
     addProductsToCartMutation,
     createCartMutation,
@@ -14,7 +16,7 @@ import {
     getCartEntityIdQuery,
     updateCartLineItemQuery,
 } from './requests';
-import { GraphqlError, handleCartItemErrors, logAndThrowError } from '@aligent/utils';
+import { GraphqlError, getCartUserErrors, logAndThrowError } from '@aligent/utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 import { assignCartToCustomerMutation } from './requests/assign-cart';
 
@@ -25,7 +27,10 @@ export const addProductsToCart = async (
     cartItems: AddCartLineItemsDataInput,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<Cart> => {
+): Promise<{
+    cart: Maybe<Cart>;
+    userErrors: CartUserErrors;
+}> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -41,19 +46,26 @@ export const addProductsToCart = async (
 
     const response = await bcGraphQlRequest(addToCartQuery, cartHeader);
 
-    if (response.errors) {
-        handleCartItemErrors(response.errors);
+    const userErrors = getCartUserErrors(response.errors);
+
+    if (response.errors && userErrors.length === 0) {
         logAndThrowError(response.errors);
     }
 
-    return response.data.cart.addCartLineItems.cart;
+    return {
+        cart: response.data.cart.addCartLineItems?.cart || null,
+        userErrors,
+    };
 };
 
 export const createCart = async (
     lineItems: InputMaybe<Array<CartLineItemInput>>,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<Cart> => {
+): Promise<{
+    cart: Cart;
+    userErrors: CartUserErrors;
+}> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -68,19 +80,26 @@ export const createCart = async (
 
     const response = await bcGraphQlRequest(createCartQuery, cartHeader);
 
-    if (response.errors) {
-        handleCartItemErrors(response.errors);
+    const userErrors = getCartUserErrors(response.errors);
+
+    if (response.errors && userErrors.length === 0) {
         logAndThrowError(response.errors);
     }
 
-    // Save cart_id in customer attribute field for logged in users
-    const { entityId } = response.data.cart.createCart.cart;
-    await updateCartIdAttribute({
-        cartId: entityId,
-        customerId: bcCustomerId,
-    });
+    const { cart } = response.data.cart.createCart || {};
 
-    return response.data.cart.createCart.cart;
+    // Save cart_id in customer attribute field for logged in users
+    if (cart?.entityId) {
+        await updateCartIdAttribute({
+            cartId: cart.entityId,
+            customerId: bcCustomerId,
+        });
+    }
+
+    return {
+        cart: cart?.entityId ? cart : null,
+        userErrors,
+    };
 };
 
 export const assignCartToCustomer = async (
@@ -143,7 +162,10 @@ export const updateCartLineItem = async (
     variables: UpdateCartLineItemInput,
     bcCustomerId: number | null,
     customerImpersonationToken: string
-): Promise<Cart> => {
+): Promise<{
+    cart: Cart;
+    userErrors: CartUserErrors;
+}> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -156,8 +178,12 @@ export const updateCartLineItem = async (
 
     const response = await bcGraphQlRequest(updateCartItemQuery, cartHeader);
 
+    /* Update cart throws an error and returns a "null" cart when there's a stock issue
+     * instead of returning "user_errors" and the current cart like the
+     *  create cart and add to cart methods do.  */
+    getCartUserErrors(response.errors, true);
+
     if (response.errors) {
-        handleCartItemErrors(response.errors);
         return logAndThrowError(response.errors);
     }
 

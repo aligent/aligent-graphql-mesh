@@ -2,7 +2,7 @@ import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { addProductsToCart, createCart } from '../../apis/graphql';
 import { transformSelectedOptions } from '../../factories/transform-selected-options';
 import { atob } from '@aligent/utils';
-import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
+import { getEnrichedCart, UNDEFINED_CART } from '../../apis/graphql/enriched-cart';
 import { getBcCustomerId } from '../../utils';
 
 export const addProductsToCartResolver = {
@@ -28,7 +28,7 @@ export const addProductsToCartResolver = {
         });
 
         const bcCustomerId = getBcCustomerId(context);
-        const addToCartResponse = cartId
+        const { cart: cartMutationResponse, userErrors } = cartId
             ? await addProductsToCart(
                   cartId,
                   { lineItems },
@@ -37,7 +37,19 @@ export const addProductsToCartResolver = {
               )
             : await createCart(lineItems, customerImpersonationToken, bcCustomerId);
 
-        if (!addToCartResponse?.entityId) return null;
+        const hasFailedCreatingCart = !cartId && !cartMutationResponse?.entityId;
+
+        if (hasFailedCreatingCart) {
+            return {
+                cart: UNDEFINED_CART,
+                user_errors: userErrors,
+            };
+        }
+
+        /* We fall back to using the "cartId" arg when the "addProductsToCart" errors
+         * due to "user_errors", This way we can query for the user existing
+         * cart and return it to them along with the user_error */
+        const cartIdToQuery = cartMutationResponse?.entityId || cartId;
 
         // Even though add to cart mutations return cart details, Big Commerce site.cart query doesn't
         // return all the same information to satisfy the Adobe commerce cart response.
@@ -46,13 +58,13 @@ export const addProductsToCartResolver = {
         // query comes in which is called when the above getCheckout is invoked.
         // We’re not actually querying site.cart but site.checkout instead.
         const checkoutResponse = await getEnrichedCart(
-            { cart_id: addToCartResponse.entityId },
+            { cart_id: cartIdToQuery },
             context,
             bcCustomerId
         );
         return {
             cart: checkoutResponse,
-            user_errors: [], // TODO: Decide what are the user errors which we can return
+            user_errors: userErrors,
         };
     },
 } satisfies MutationResolvers['addProductsToCart'];

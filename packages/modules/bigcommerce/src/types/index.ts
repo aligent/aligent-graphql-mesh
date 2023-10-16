@@ -3,7 +3,13 @@ import {
     MetafieldConnection,
     ProductConnection,
 } from '@aligent/bigcommerce-operations';
-import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
+import {
+    CartUserInputError,
+    CheckoutUserInputError,
+    CountryCodeEnum,
+    CustomerAddressInput,
+    Maybe,
+} from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
 import { ReflectiveInjector } from 'graphql-modules/di';
 export interface BcGraphqlTokenData {
@@ -476,3 +482,5 @@ export interface BCShipping {
 }
 
 export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';
+
+export type CartUserErrors = Array<Maybe<CartUserInputError & CheckoutUserInputError>>;

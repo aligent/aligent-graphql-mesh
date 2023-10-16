@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { logAndThrowAxiosError, logAndThrowUnknownError } from './axios-errors';
+import { CartUserErrors } from '../../modules/bigcommerce/src/types';
 /* istanbul ignore file */
 
 /**
@@ -36,21 +37,40 @@ export const logAndThrowError = (
  * }]
  *
  * @param errors
+ * @param shouldThrowError
  */
-export const handleCartItemErrors = (
+export const getCartUserErrors = (
     errors: Array<{
         message: string;
         path: Array<string>;
         locations: Array<{ line: number; column: number }>;
-    }>
-) => {
+    }>,
+    shouldThrowError: boolean = false
+): CartUserErrors => {
+    if (!errors) return [];
+
     const hasInsufficientStockError = errors.some(
         (error) => error?.message?.toLowerCase().includes('not enough stock')
     );
 
     if (hasInsufficientStockError) {
+        const insufficientStockError = 'The requested qty is not available';
+
         console.error(JSON.stringify(errors));
-        throw new Error('Not enough stock');
+
+        /* Used in "update" cart flows where there's stock issues. The PWA is expecting a
+         * thrown error over "user_errors" */
+        if (shouldThrowError) {
+            throw new GraphqlError('input', insufficientStockError);
+        }
+
+        return [
+            {
+                message: insufficientStockError,
+                code: 'INSUFFICIENT_STOCK',
+                path: errors[0].path,
+            },
+        ];
     }
 
     const isNotPurchasableError = errors.some(
@@ -61,9 +81,26 @@ export const handleCartItemErrors = (
     );
 
     if (isNotPurchasableError) {
+        const notPurchasableError = 'Some of the products are out of stock.';
+
         console.error(JSON.stringify(errors));
-        throw new Error('Item is not purchasable');
+
+        /* Used in "update" cart flows where there's stock issues. The PWA is expecting a
+         * thrown error over "user_errors" */
+        if (shouldThrowError) {
+            throw new GraphqlError('input', notPurchasableError);
+        }
+
+        return [
+            {
+                message: notPurchasableError,
+                code: 'NOT_SALABLE',
+                path: errors[0].path,
+            },
+        ];
     }
+
+    return [];
 };
 
 export class GraphqlError extends Error {

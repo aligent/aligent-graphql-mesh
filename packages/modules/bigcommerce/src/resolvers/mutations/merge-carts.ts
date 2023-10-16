@@ -72,17 +72,18 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
         );
 
         // Merge the guest and customer cart by adding line items of guest cart to customer cart
-        const updatedCustomerCartResponse = await addProductsToCart(
+        const cartMutationResponse = await addProductsToCart(
             customerCartId,
             { lineItems: guestCartLineItems },
             customerImpersonationToken,
             bcCustomerId
         );
 
-        return getEnrichedCart(
-            { cart_id: updatedCustomerCartResponse.entityId },
-            context,
-            bcCustomerId
-        );
+        /* We fall back to using the "customerCartId" arg when the "addProductsToCart" errors
+         * due to "user_errors", This way we can query for the user existing
+         * cart and return it to them along with the user_error */
+        const cartIdToQuery = cartMutationResponse.cart?.entityId || customerCartId;
+
+        return getEnrichedCart({ cart_id: cartIdToQuery }, context, bcCustomerId);
     },
 };
