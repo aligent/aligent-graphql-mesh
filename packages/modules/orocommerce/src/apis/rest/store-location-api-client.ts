@@ -1,4 +1,4 @@
-import { Injectable } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { OroStoreLocation } from '../../types/store-location';
 import { QueryStoreLocationsArgs } from '@aligent/orocommerce-resolvers';
@@ -6,10 +6,7 @@ import { StoreLocationClientArgs } from '../../types/store-location-api-client-a
 
 @Injectable()
 export class StoreLocationClient {
-    protected apiClient: ApiClient;
-    constructor(apiClient: ApiClient) {
-        this.apiClient = apiClient;
-    }
+    constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
     async getStoreLocations(_params?: StoreLocationClientArgs): Promise<OroStoreLocation[]> {
         return new Promise((resolve, _) => resolve([]));

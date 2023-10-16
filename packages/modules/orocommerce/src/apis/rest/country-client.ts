@@ -1,8 +1,6 @@
-import { forwardRef, Inject, Injectable } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { Country, Region } from '../../types';
-
-/* istanbul ignore file */
 @Injectable()
 export class CountryClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
