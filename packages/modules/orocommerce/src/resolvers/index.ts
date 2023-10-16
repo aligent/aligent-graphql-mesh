@@ -20,6 +20,7 @@ export const resolvers: Resolvers = {
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
+        createEmptyCart: createEmptyCartMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {
