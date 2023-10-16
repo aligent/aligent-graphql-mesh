@@ -31,6 +31,6 @@ export const createCustomerMutation: MutationResolvers['createCustomer'] = {
 
 export const transformCustomerData = (customer: CustomerUser): Customer => {
     return {
-        id: parseInt(customer.id)
+        id: parseInt(customer.id),
     };
 };

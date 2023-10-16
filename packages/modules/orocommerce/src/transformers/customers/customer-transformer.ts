@@ -7,7 +7,7 @@ export const getTransformedCreateCustomerData = (
     password: string
 ): CustomerUser => {
     const transformedCustomer: CustomerUser = {
-        id: "0",
+        id: '0',
         type: 'customerusers',
         attributes: {
             email,

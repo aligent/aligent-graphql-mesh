@@ -22,4 +22,3 @@ export * from './customer';
 export * from './country';
 export * from './shopping-list';
 export * from './customer-user';
-

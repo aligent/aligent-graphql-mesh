@@ -7,11 +7,8 @@ export interface CustomerUser extends Entity {
 }
 
 interface CustomerUserAttributes extends Attributes {
-   email: string,
-   firstName: string,
-   lastName: string,
-   password: string
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
 }
-
-
-

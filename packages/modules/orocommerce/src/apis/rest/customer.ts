@@ -4,7 +4,6 @@ import { Customer, CustomerUser } from '../../types';
 
 @Injectable()
 export class CustomerClient {
-    
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
     async getCustomer(id: string): Promise<Customer> {
@@ -13,7 +12,10 @@ export class CustomerClient {
     }
 
     async createCustomerUser(customerUser: CustomerUser): Promise<CustomerUser> {
-        const response = await this.apiClient.post<CustomerUser, {data:CustomerUser}>(`/customerusers`, {data: customerUser});
+        const response = await this.apiClient.post<CustomerUser, { data: CustomerUser }>(
+            `/customerusers`,
+            { data: customerUser }
+        );
         return response;
     }
 }
