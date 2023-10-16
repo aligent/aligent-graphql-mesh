@@ -7,6 +7,7 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { storeLocationsResolver } from './queries/store-locations';
+import { createCustomerMutation } from './mutations/create-customer';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -20,6 +21,7 @@ export const resolvers: Resolvers = {
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
+        createCustomer: createCustomerMutation,
     },
 };
 
