@@ -1,13 +1,10 @@
-import { Injectable } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { ShoppingList } from '../../types';
 
 @Injectable()
 export class ShoppingListsClient {
-    protected apiClient: ApiClient;
-    constructor(apiClient: ApiClient) {
-        this.apiClient = apiClient;
-    }
+    constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
     async getShoppingLists() {
         return this.apiClient.get<ShoppingList[]>('/shoppinglists');
