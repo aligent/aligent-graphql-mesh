@@ -7,7 +7,7 @@ export const storeConfigsQuery = stripIgnoredCharacters(
         query storeConfigs($pwaConfigNamespace: String!, $storeConfigNamespace: String!) {
             channel {
                 entityId
-                pwaMetafields: metafields(namespace: $pwaConfigNamespace) {
+                pwaMetafields: metafields(namespace: $pwaConfigNamespace, first: 20) {
                     edges {
                         node {
                             id
@@ -16,7 +16,7 @@ export const storeConfigsQuery = stripIgnoredCharacters(
                         }
                     }
                 }
-                storeConfigMetafields: metafields(namespace: $storeConfigNamespace) {
+                storeConfigMetafields: metafields(namespace: $storeConfigNamespace, first: 20) {
                     edges {
                         node {
                             id
