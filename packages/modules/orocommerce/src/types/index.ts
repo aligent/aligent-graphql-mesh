@@ -36,6 +36,7 @@ export interface Entity extends Resource {
 }
 
 export * from './customer';
+export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
 export * from './web-catalog-tree';
