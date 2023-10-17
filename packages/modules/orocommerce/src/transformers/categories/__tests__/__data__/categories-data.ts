@@ -1,4 +1,4 @@
-import { WebCatalogTree } from '@orocommerce/types';
+import { WebCatalogTree } from '../../../../types';
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
 
 export const inputCategories: Array<WebCatalogTree> = [

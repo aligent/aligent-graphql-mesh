@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
-import { WebCatalogTree as OroCategory } from '@orocommerce/types';
+import { WebCatalogTree as OroCategory } from '../../types';
 
 @Injectable()
 export class CategoriesClient {
@@ -15,7 +15,7 @@ export class CategoriesClient {
         return response.data;
     }
 
-    async getBreadcrumbs(nodeEntityId: number) {
+    async getBreadcrumbs(nodeEntityId: number): Promise<OroCategory[]> {
         const path = `/webcatalogtree/${nodeEntityId}/path`;
         const response = await this.apiClient.get<OroCategory[]>(path);
         return response.data;
