@@ -8,7 +8,8 @@
     "@graphql-tools/load-files": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "tslib": "^2.3.0",
-    "keyv": "^4.5.4"
+    "keyv": "^4.5.4",
+    "lodash": "^4.17.21"
   },
   "type": "commonjs",
   "main": "./src/index.js",

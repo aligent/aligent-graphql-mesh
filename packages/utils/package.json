@@ -5,7 +5,8 @@
     "tslib": "^2.3.0",
     "buffer": "5.7.1",
     "axios": "^1.4.0",
-    "moment-timezone": "^0.5.43"
+    "moment-timezone": "^0.5.43",
+    "lodash": "^4.17.21"
   },
   "type": "commonjs",
   "main": "./src/index.js",
