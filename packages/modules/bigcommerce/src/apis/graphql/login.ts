@@ -1,4 +1,4 @@
-import { AuthorizationError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 import { bcGraphQlRequest } from './client';
 import { loginMutation } from './requests/login';
 
@@ -25,7 +25,8 @@ export const bcLogin = async (
     const result = response.data?.login.result;
 
     if (!entityId || result !== 'success') {
-        throw new AuthorizationError(
+        throw new GraphqlError(
+            'authentication',
             `The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.`
         );
     }

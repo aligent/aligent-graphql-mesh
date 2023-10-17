@@ -32,10 +32,17 @@ export const customerResolver = {
          * NOTE: Make sure to add new customer properties coming from the admin to schema.json
          * */
         const customerAttributesFromFormFields = getCustomerAttributesFromFormFields(bcFormFields);
+        const allowRemoteShoppingAssistance =
+            customerAttributesFromFormFields.allow_remote_shopping_assistance?.[0];
+        const allowRemoteAssist = {
+            allow_remote_shopping_assistance:
+                allowRemoteShoppingAssistance === 'Yes' ? true : false,
+        };
 
         return {
             ...transformBcCustomer(bcCustomer, bcAddresses, isSubscriber),
             ...customerAttributesFromFormFields,
+            ...allowRemoteAssist,
         };
         //sub-resolver customerOrdersResolver is called after this if orders is specified in query
     },

@@ -5,6 +5,8 @@ import {
     SearchProductFilterConnection,
 } from '@aligent/bigcommerce-operations';
 import {
+    BundleProduct,
+    CategoryProducts,
     ConfigurableProduct,
     Maybe,
     ProductInterface,
@@ -32,6 +34,8 @@ import {
     getTransformedSimpleStockStatus,
 } from './helpers/transform-stock';
 import { getAttributesFromMetaAndCustomFields } from '../utils/metafields';
+import { SupportedProductTypes } from '../types';
+import { getTransformBundleItems } from './helpers/transform-bundle-items';
 
 const getHasVariantOptions = (productOptions: ProductOptionConnection): boolean => {
     if (!productOptions?.edges || productOptions?.edges.length === 0) return false;
@@ -41,13 +45,25 @@ const getHasVariantOptions = (productOptions: ProductOptionConnection): boolean 
     });
 };
 
+export const getHasPickListItems = (productOptions: ProductOptionConnection): boolean => {
+    if (!productOptions?.edges || productOptions.edges.length === 0) return false;
+
+    return productOptions.edges.some((productOption) => {
+        const node = productOption?.node;
+        return node && 'displayStyle' in node && node.displayStyle.includes('ProductPickList');
+    });
+};
+
 export const getTypeName = (
     bcProduct: Product,
     productOptions: ProductOptionConnection
-): 'SimpleProduct' | 'ConfigurableProduct' => {
+): SupportedProductTypes => {
     const { variants } = bcProduct;
 
     const hasProductOptions = getHasVariantOptions(productOptions);
+    // If BC product has picklist items we consider it as a bundle product
+    // ref: https://support.bigcommerce.com/s/article/Product-Options-v3?language=en_US#picklist
+    const hasPickListItems = getHasPickListItems(productOptions);
 
     /* Checks the combination of having both variants and product options. It's possible for a simple product
      * to have a variant option without configurable options*/
@@ -55,14 +71,18 @@ export const getTypeName = (
 
     if (hasVariantOptions) {
         return 'ConfigurableProduct';
+    } else if (hasPickListItems) {
+        return 'BundleProduct';
     } else {
         return 'SimpleProduct';
     }
 };
 
+/* istanbul ignore file */
 export const getTransformedProductData = (
-    bcProduct: Product
-): Maybe<ProductInterface & ConfigurableProduct> => {
+    bcProduct: Product,
+    bundleItemProducts?: ProductInterface[] | undefined
+): Maybe<ProductInterface & ConfigurableProduct & BundleProduct> => {
     if (!bcProduct) return null;
 
     try {
@@ -101,7 +121,7 @@ export const getTransformedProductData = (
         return {
             ...(availabilityV2?.status === 'Preorder' && { availability: availabilityV2 }),
             categories: getTransformedCategoriesData(categories),
-            configurable_options: getTransformedConfigurableOptions(productOptions),
+            configurable_options: getTransformedConfigurableOptions(productOptions, productType),
             description: {
                 html: bcProduct.description,
             },
@@ -109,6 +129,12 @@ export const getTransformedProductData = (
             uid: id, // The BC "id" comes through as an uid format e.g. "UHJvZHVjdDo0OTI=" = Product:492
             custom_attributes: [],
             id: entityId,
+            items: getTransformBundleItems({
+                productOptions,
+                productType,
+                bcVariants,
+                bundleItemProducts,
+            }),
             media_gallery_entries: getTransformedMediaGalleryEntries(bcProduct.images),
             meta_title: seo?.pageTitle || '',
             meta_keyword: seo?.metaKeywords || '',
@@ -138,10 +164,17 @@ export const getTransformedProductData = (
     }
 };
 
-export const getTransformedProductsData = (bcProducts: {
-    products: ProductConnection;
-    filters?: SearchProductFilterConnection;
-}): Maybe<Products & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }> => {
+export const getTransformedProductsData = (
+    bcProducts: {
+        products: ProductConnection;
+        filters?: SearchProductFilterConnection;
+    },
+    pageSize: number,
+    currentPage: number
+): Maybe<
+    Products &
+        CategoryProducts & { items?: Maybe<Array<Maybe<ProductInterface & ConfigurableProduct>>> }
+> => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;
 
@@ -153,11 +186,10 @@ export const getTransformedProductsData = (bcProducts: {
                   return getTransformedProductData(product.node);
               })
             : null,
-        // @todo add pagination for category products
         page_info: {
-            current_page: 0,
-            page_size: 0,
-            total_pages: 0,
+            current_page: currentPage,
+            page_size: pageSize,
+            total_pages: Math.ceil(products.collectionInfo?.totalItems / pageSize),
         },
         total_count: collectionInfo?.totalItems,
     };

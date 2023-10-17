@@ -20,51 +20,32 @@ export const logAndThrowError = (
     }
 };
 
-/**
- * Checks cart related errors and throws an error if any are a match
- *
- * [{
- *    "message":"Not enough stock: Item (76331ce2-ba7e-4d89-9e41-550f45ef6edc) Mona Pullover Hoodlie is out of stock and can't be added to the cart.",
- *    "path":["cart","updateCartLineItem"],
- *    "locations":[{"line":1,"column":116}]
- * }]
- *
- * [{
- *     "message":"Not Found: The requested item is no longer available in the cart",
- *     "path":["cart","addCartLineItems"],
- *     "locations":[{"line":1,"column":87}]
- * }]
- *
- * @param errors
- */
-export const handleCartItemErrors = (
-    errors: Array<{
-        message: string;
-        path: Array<string>;
-        locations: Array<{ line: number; column: number }>;
-    }>
-) => {
-    const hasInsufficientStockError = errors.some(
-        (error) => error?.message?.toLowerCase().includes('not enough stock')
-    );
+export class GraphqlError extends Error {
+    extensions: {
+        category: string;
+    };
 
-    if (hasInsufficientStockError) {
-        console.error(JSON.stringify(errors));
-        throw new Error('Not enough stock');
+    constructor(
+        category:
+            | 'already-exists'
+            // When user authentication fails. e.g. Attempting to log in
+            | 'authentication'
+            /* When user authorization fails. This tells the PWA to clear the cache and kill the user session.
+             * E.g. A user is current logged in and input an incorrect password when attempting to update their
+             * current password*/
+            | 'authorization'
+            /* When a query contains invalid input*/
+            | 'input'
+            /* When an expected resource doesn't exist*/
+            | 'no-such-entity',
+        message: string
+    ) {
+        super(message);
+        this.extensions = {
+            category: `graphql-${category}`,
+        };
     }
-
-    const isNotPurchasableError = errors.some(
-        (error) =>
-            error?.message
-                ?.toLowerCase()
-                .includes('the requested item is no longer available in the cart')
-    );
-
-    if (isNotPurchasableError) {
-        console.error(JSON.stringify(errors));
-        throw new Error('Item is not purchasable');
-    }
-};
+}
 
 /**
  * A specific error when decrypting the meshToken fails

@@ -53,7 +53,7 @@ export const mockBcProducts = [
                         id: 'Q2F0ZWdvcnk6NjA=',
                         entityId: 60,
                         name: 'Hoodies & Sweatshirts',
-                        path: '/hoodies-and-sweatshirts-women',
+                        path: '/women/tops-women/hoodies-and-sweatshirts-women/',
                         defaultImage: null,
                         description: '',
                         breadcrumbs: {
@@ -62,19 +62,25 @@ export const mockBcProducts = [
                                     node: {
                                         name: 'Women',
                                         entityId: 58,
+                                        path: '/women/',
                                     },
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                 },
                                 {
                                     node: {
                                         name: 'Tops',
                                         entityId: 59,
+                                        path: '/women/tops-women/',
                                     },
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                 },
                                 {
                                     node: {
                                         name: 'Hoodies & Sweatshirts',
                                         entityId: 60,
+                                        path: '/women/tops-women/hoodies-and-sweatshirts-women/',
                                     },
+                                    cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                                 },
                             ],
                             pageInfo: {
@@ -88,6 +94,12 @@ export const mockBcProducts = [
                             collectionInfo: {
                                 totalItems: 1,
                             },
+                            pageInfo: {
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            },
                         },
                         seo: {
                             pageTitle: '',
@@ -96,6 +108,7 @@ export const mockBcProducts = [
                         },
                         defaultProductSort: 'FEATURED',
                     },
+                    cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
                 },
             ],
         },
@@ -302,6 +315,7 @@ export const mockBcProducts = [
                                                     node: {
                                                         name: 'Hand Tools',
                                                         entityId: 54,
+                                                        path: '/hand-tools/',
                                                     },
                                                 },
                                             ],
@@ -310,11 +324,6 @@ export const mockBcProducts = [
                                                 hasPreviousPage: false,
                                                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                 endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                            },
-                                        },
-                                        products: {
-                                            collectionInfo: {
-                                                totalItems: 1,
                                             },
                                         },
                                         seo: {
@@ -339,12 +348,14 @@ export const mockBcProducts = [
                                                     node: {
                                                         name: 'Hand Tools',
                                                         entityId: 54,
+                                                        path: '/hand-tools/',
                                                     },
                                                 },
                                                 {
                                                     node: {
                                                         name: 'Striking Tools',
                                                         entityId: 55,
+                                                        path: '/hand-tools/striking-tools/',
                                                     },
                                                 },
                                             ],
@@ -353,11 +364,6 @@ export const mockBcProducts = [
                                                 hasPreviousPage: false,
                                                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                 endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-                                            },
-                                        },
-                                        products: {
-                                            collectionInfo: {
-                                                totalItems: 1,
                                             },
                                         },
                                         seo: {
@@ -382,18 +388,21 @@ export const mockBcProducts = [
                                                     node: {
                                                         name: 'Hand Tools',
                                                         entityId: 54,
+                                                        path: '/hand-tools/',
                                                     },
                                                 },
                                                 {
                                                     node: {
                                                         name: 'Striking Tools',
                                                         entityId: 55,
+                                                        path: '/hand-tools/striking-tools/',
                                                     },
                                                 },
                                                 {
                                                     node: {
                                                         name: 'Cold Chisels and Sets',
                                                         entityId: 56,
+                                                        path: '/hand-tools/striking-tools/cold-chisels-and-sets/',
                                                     },
                                                 },
                                             ],
@@ -402,11 +411,6 @@ export const mockBcProducts = [
                                                 hasPreviousPage: false,
                                                 startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                                                 endCursor: 'YXJyYXljb25uZWN0aW9uOjI=',
-                                            },
-                                        },
-                                        products: {
-                                            collectionInfo: {
-                                                totalItems: 1,
                                             },
                                         },
                                         seo: {
