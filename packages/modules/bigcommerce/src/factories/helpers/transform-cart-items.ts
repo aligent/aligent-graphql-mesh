@@ -5,15 +5,10 @@ import {
     Maybe,
     ProductInterface,
 } from '@aligent/bigcommerce-resolvers';
-import {
-    btoa,
-    createCartItemUid,
-    getCartItemOriginalPrice,
-    getGstPercentBetweenPrices,
-    getNewUrl,
-} from '@aligent/utils';
+import { btoa, createCartItemUid, getNewUrl } from '@aligent/utils';
 import { getTransformedPrice } from './transform-price';
 import { getTransformedCartItemErrors } from './transform-cart-item-errors';
+import { getCartItemOriginalPrice, getGstPercentBetweenPrices } from '../../utils/get-tax';
 
 export const getTransformCartItems = (
     cartItems?: Maybe<Cart>,

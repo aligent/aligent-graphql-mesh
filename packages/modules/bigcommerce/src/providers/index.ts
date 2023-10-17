@@ -1,5 +1,5 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { BigCommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
+import { BigCommerceModuleConfig } from '../index';
 import { Sdk, getSdk } from '@aligent/bigcommerce-operations';
 import { GraphQLClient } from 'graphql-request';
 

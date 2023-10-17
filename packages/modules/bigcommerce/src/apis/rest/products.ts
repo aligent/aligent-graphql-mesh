@@ -1,6 +1,6 @@
 import { bcGet } from './client';
 import { ProductsArgsRest, ProductsRest } from '../../types/rest-prop-types';
-import { getSearchParamStringFromSearchParams } from '../../../../../utils/search-params';
+import { getSearchParamStringFromSearchParams } from '@aligent/utils';
 
 const PRODUCTS_API = '/v3/catalog/products';
 
