@@ -1,4 +1,6 @@
 import { Provider } from 'graphql-modules';
+import { CurrencyTransformer, CurrencyTransformerChain } from './currency/transform-currency-data';
+
 import {
     CmsBlocksTransformer,
     CmsBlocksTransformerChain,
@@ -75,6 +77,22 @@ export const getOroTransformers = (): Array<Provider> => {
                 return transformer;
             },
             deps: [BreadcrumbsTransformerChain],
+        },
+        // Currency Register Chain transformers
+        {
+            provide: CurrencyTransformerChain,
+            useClass: CurrencyTransformerChain,
+            global: true,
+        },
+        {
+            provide: CurrencyTransformer,
+            useFactory: (transformerChain) => {
+                const currencyTransformer = new CurrencyTransformer();
+                // Add to the chain transformer
+                transformerChain.addTransformer(currencyTransformer);
+                return currencyTransformer;
+            },
+            deps: [CurrencyTransformerChain],
         },
     ];
 };

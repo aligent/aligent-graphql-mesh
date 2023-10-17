@@ -1,11 +1,12 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
+import { OroCommerceModuleConfig } from '../index';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
 import { CountryTransformer } from '../transformers/country/country-transformer';
 import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
+import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
@@ -50,6 +51,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: CountryClient,
             provide: CountryClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CurrencyClient,
+            provide: CurrencyClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },

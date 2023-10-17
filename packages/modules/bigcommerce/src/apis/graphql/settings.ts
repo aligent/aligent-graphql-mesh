@@ -2,7 +2,7 @@ import { bcGraphQlRequest } from './client';
 import { Sdk, TaxDisplaySettings } from '@aligent/bigcommerce-operations';
 import { taxSettings } from './requests';
 import { logAndThrowError } from '@aligent/utils';
-import { BigCommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
+import { BigCommerceModuleConfig } from '../../index';
 
 /**
  * Gets the PDP and PLP including or excluding price display configuration.

@@ -1,3 +1,6 @@
+import { ReflectiveInjector } from 'graphql-modules/di';
+import Keyv from 'keyv';
+
 export interface Resource {
     readonly type: string;
     id: string;
@@ -35,7 +38,22 @@ export interface Entity extends Resource {
     relationships?: Relationships;
 }
 
+// Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
+/* eslint-disable */
+declare global {
+    namespace GraphQLModules {
+        interface GlobalContext {
+            headers: Record<string, string>;
+            injector: ReflectiveInjector;
+            cache: Keyv;
+        }
+    }
+}
+/* eslint-enable */
+
 export * from './customer';
+export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
 export * from './web-catalog-tree';
+export * from './customer-user';

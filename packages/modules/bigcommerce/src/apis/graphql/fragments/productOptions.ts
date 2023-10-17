@@ -1,6 +1,9 @@
 import { gql } from 'graphql-tag';
+import { image } from './image';
 
 export const productOptions = gql`
+    ${image}
+
     fragment ProductOptions on ProductOptionConnection {
         edges {
             node {
@@ -9,6 +12,7 @@ export const productOptions = gql`
                 isRequired
                 isVariantOption
                 ... on MultipleChoiceOption {
+                    displayName
                     displayStyle
                     values {
                         edges {
@@ -16,6 +20,11 @@ export const productOptions = gql`
                                 entityId
                                 label
                                 isDefault
+                                ... on ProductPickListOptionValue {
+                                    __typename
+                                    productId
+                                    label
+                                }
                                 ... on SwatchOptionValue {
                                     hexColors
                                 }

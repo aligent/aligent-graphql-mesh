@@ -2,10 +2,8 @@
 .vscode
 coverage
 node_modules
-storybook-dist
 test-results
 dist
-dist-storybook
 .DS_Store
 .env
 build-stats.json
@@ -19,3 +17,4 @@ graphql.d.ts
 graphql.schema.json
 generated/
 additional-type-defs
+/coverage
