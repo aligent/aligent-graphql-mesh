@@ -1,7 +1,7 @@
 import { QueryResolvers, Country as AcCountry } from '@aligent/bigcommerce-resolvers';
 import { getAllStates, getCountries } from '../../apis/rest/countries';
 import { Country, BcState } from '../../types';
-import { getDataFromMeshCache } from '../../../../../utils/mesh-cache';
+import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
 const CACHE_KEY__COUNTRIES = 'countries';
 

@@ -1,4 +1,4 @@
-import { getDataFromMeshCache, TTL_IN_SECONDS } from '@aligent/utils';
+import { getDataFromMeshCache, TTL_IN_SECONDS } from '../mesh-cache';
 
 const cache: {
     [key: string]: string;
