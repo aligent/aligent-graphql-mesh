@@ -4,6 +4,8 @@ definitions:
   steps:
     - step: &install
         name: 🧶 Install
+        caches:
+          - node
         script:
           - yarn install
         artifacts:
@@ -11,20 +13,24 @@ definitions:
 
     - step: &test
         name: ⚙️ Test
+        caches:
+          - node
         script:
           - FORCE_COLOR=true
           - DESTINATION_BRANCH=origin/${DESTINATION_BRANCH:-$BITBUCKET_PR_DESTINATION_BRANCH} # Set DESTINATION_BRANCH to the PR destination branch if it is not already set
-          - yarn nx affected:test --base=$DESTINATION_BRANCH --ci --code-coverage # Executes tests on affected projects/libs
+          - yarn nx affected:test --base=$DESTINATION_BRANCH --ci --code-coverage --parallel --max-parallel=3 # Executes tests on affected projects/libs
 
     - step: &code-quality
         name: 🕵️‍♀️ Code Quality
+        caches:
+          - node
         script:
           - FORCE_COLOR=true
           - DESTINATION_BRANCH=origin/${DESTINATION_BRANCH:-$BITBUCKET_PR_DESTINATION_BRANCH} # Set DESTINATION_BRANCH to the PR destination branch if it is not already set
-          - yarn nx workspace-lint --base=$DESTINATION_BRANCH # Runs linting on nx specific files
-          - yarn nx affected:lint --base=$DESTINATION_BRANCH # Executes linting on affected projects/libs
-          - yarn nx format:check --base=$DESTINATION_BRANCH # Runs prettier against the project
-          - yarn nx affected -t check-types --base=$DESTINATION_BRANCH
+          - yarn nx workspace-lint --base=$DESTINATION_BRANCH --parallel --max-parallel=3 # Runs linting on nx specific files
+          - yarn nx affected:lint --base=$DESTINATION_BRANCH --parallel --max-parallel=3 # Executes linting on affected projects/libs
+          - yarn nx format:check --base=$DESTINATION_BRANCH --parallel --max-parallel=3 # Runs prettier against the project
+          - yarn nx affected -t check-types --base=$DESTINATION_BRANCH --parallel --max-parallel=3
 
     # Temporarily remove hive until we can generate a final schema from mesh application instance
     # - step: &hive-check
@@ -39,6 +45,8 @@ definitions:
 
     - step: &build
         name: 🏭 Build all packages
+        caches:
+          - node
         script:
           - STAGE=prod yarn nx run-many -t build
         artifacts:
@@ -63,6 +71,8 @@ definitions:
 
     - step: &publish
         name: 📦 Publish package to the Aligent Repository
+        caches:
+          - node
         script:
           - VERSION=$(echo $BITBUCKET_TAG | sed 's/^.*[A-Za-z]-//g')
           - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
