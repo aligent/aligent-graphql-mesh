@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { logAndThrowAxiosError, logAndThrowUnknownError } from './axios-errors';
-import { CartUserErrors } from '../../modules/bigcommerce/src/types';
 /* istanbul ignore file */
 
 /**
