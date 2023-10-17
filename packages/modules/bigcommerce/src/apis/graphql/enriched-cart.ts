@@ -1,9 +1,11 @@
 import { getCheckout } from './checkout';
-import { getBcProductsGraphql } from './products';
+import { getAllBcGraphqlProductsPages } from './products';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getTransformedCartData } from '../../factories/transform-cart-data';
-import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 import { getFlattenedProducts } from '../../utils';
+import { retrieveStoreConfigsFromCache } from './store-configs';
+import { getIncludesTax } from '@aligent/utils';
+import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -22,19 +24,25 @@ export const UNDEFINED_CART = {
  * Take Flight, so we need to supplement this with an additional product query.
  *
  * @param args
+ * @param context
  * @param bcCustomerId
- * @param customerImpersonationToken
  */
 export const getEnrichedCart = async (
     args: QueryCartArgs,
-    bcCustomerId: number | null,
-    customerImpersonationToken: string
+    context: GraphQLModules.ModuleContext,
+    bcCustomerId: number | null
 ): Promise<Cart> => {
-    const checkoutResponse = await getCheckout(
-        args.cart_id,
-        bcCustomerId,
-        customerImpersonationToken
-    );
+    const customerImpersonationToken = (await context.cache.get(
+        'customerImpersonationToken'
+    )) as string;
+
+    const checkoutQuery = getCheckout(args.cart_id, bcCustomerId, customerImpersonationToken);
+
+    const storeConfigRequest = await retrieveStoreConfigsFromCache(context);
+
+    const [checkoutResponse, storeConfig] = await Promise.all([checkoutQuery, storeConfigRequest]);
+
+    const { tax: taxSettingsResponse } = storeConfig;
 
     if (!checkoutResponse?.entityId) return UNDEFINED_CART;
 
@@ -46,14 +54,19 @@ export const getEnrichedCart = async (
      * from the same parent product*/
     const uniqueEntityIds = [...new Set(cartItemEntityIds)];
 
-    const products = await getBcProductsGraphql(
-        { entityIds: uniqueEntityIds },
-        customerImpersonationToken
+    /* Since cart items don't have enough data to fulfil what the PWA is expecting, we need to query
+     * for extra data from the "site.products" query. We also need to keep in mind the "products" query
+     * has a default page size of 10 and a maximum page size of 50, so if there's 51 separate items
+     * in the cart, we need to paginate for all product pages. */
+    const products = await getAllBcGraphqlProductsPages(
+        { entityIds: uniqueEntityIds, includeTax: getIncludesTax(taxSettingsResponse?.pdp) },
+        customerImpersonationToken,
+        50
     );
 
     if (!products) return UNDEFINED_CART;
 
-    const transformedProducts = getTransformedProductsData({ products });
+    const transformedProducts = getTransformedProductsData({ products }, 50, 1);
 
     /* Get an array where parent products and variant are their own array item. This helps
      * when mapping additional product data to its corresponding cart item*/

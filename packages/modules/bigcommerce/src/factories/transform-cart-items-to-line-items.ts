@@ -1,52 +1,23 @@
+import { CartLineItemInput } from '@aligent/bigcommerce-operations';
 import {
-    CartLineItemInput,
-    CartPhysicalItem,
-    CartSelectedCheckboxOption,
-    CartSelectedDateFieldOption,
-    CartSelectedFileUploadOption,
-    CartSelectedMultiLineTextFieldOption,
-    CartSelectedMultipleChoiceOption,
-    CartSelectedMultipleChoiceOptionInput,
-    CartSelectedNumberFieldOption,
-    CartSelectedTextFieldOption,
-} from '@aligent/bigcommerce-operations';
-
-const isMultipleChoiceOption = (
-    option:
-        | CartSelectedCheckboxOption
-        | CartSelectedDateFieldOption
-        | CartSelectedFileUploadOption
-        | CartSelectedMultiLineTextFieldOption
-        | CartSelectedMultipleChoiceOption
-        | CartSelectedNumberFieldOption
-        | CartSelectedTextFieldOption
-): option is CartSelectedMultipleChoiceOption => {
-    return option.__typename === 'CartSelectedMultipleChoiceOption';
-};
-
-const getSelectedOptions = (
-    selectedOptions: Array<CartSelectedMultipleChoiceOption>
-): Array<CartSelectedMultipleChoiceOptionInput> => {
-    return selectedOptions.map(({ __typename, entityId, valueEntityId }) => {
-        return {
-            optionEntityId: entityId,
-            optionValueEntityId: valueEntityId,
-        };
-    });
-};
+    BundleCartItem,
+    ConfigurableCartItem,
+    SimpleCartItem,
+} from '@aligent/bigcommerce-resolvers';
 
 export const transformCartItemsToLineItems = (
-    cartItems: Array<CartPhysicalItem>
+    cartItems: Array<ConfigurableCartItem | BundleCartItem | SimpleCartItem>
 ): CartLineItemInput[] => {
-    return cartItems.map(({ quantity, productEntityId, selectedOptions }) => {
-        const multipleChoiceOptions = selectedOptions.filter(isMultipleChoiceOption);
-        return {
-            quantity,
-            productEntityId,
-            // TODO: At the moment we only supports multiple choice options but in future consider other types too
-            ...(multipleChoiceOptions.length && {
-                selectedOptions: { multipleChoices: getSelectedOptions(multipleChoiceOptions) },
-            }),
-        };
-    });
+    return cartItems.map((item) => ({
+        quantity: item.quantity,
+        productEntityId: parseInt(atob(item.uid).split('/')[1]),
+        ...(item.__typename === 'ConfigurableCartItem' && {
+            selectedOptions: {
+                multipleChoices: item.configurable_options.map((option) => ({
+                    optionEntityId: option?.id as number,
+                    optionValueEntityId: option?.value_id as number,
+                })),
+            },
+        }),
+    }));
 };

@@ -5,7 +5,10 @@ import {
     Cart,
     CartLineItemInput,
     InputMaybe,
+    CustomerAttributes,
+    Maybe,
 } from '@aligent/bigcommerce-operations';
+import { CartUserErrors } from '../../types';
 import {
     addProductsToCartMutation,
     createCartMutation,
@@ -13,9 +16,10 @@ import {
     getCartEntityIdQuery,
     updateCartLineItemQuery,
 } from './requests';
-import { handleCartItemErrors, logAndThrowError } from '@aligent/utils';
+import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 import { assignCartToCustomerMutation } from './requests/assign-cart';
+import { getCartUserErrors } from '../../utils/error-handling';
 
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
@@ -24,7 +28,10 @@ export const addProductsToCart = async (
     cartItems: AddCartLineItemsDataInput,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<Cart> => {
+): Promise<{
+    cart: Maybe<Cart>;
+    userErrors: CartUserErrors;
+}> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -40,19 +47,26 @@ export const addProductsToCart = async (
 
     const response = await bcGraphQlRequest(addToCartQuery, cartHeader);
 
-    if (response.errors) {
-        handleCartItemErrors(response.errors);
+    const userErrors = getCartUserErrors(response.errors);
+
+    if (response.errors && userErrors.length === 0) {
         logAndThrowError(response.errors);
     }
 
-    return response.data.cart.addCartLineItems.cart;
+    return {
+        cart: response.data.cart.addCartLineItems?.cart || null,
+        userErrors,
+    };
 };
 
 export const createCart = async (
     lineItems: InputMaybe<Array<CartLineItemInput>>,
     customerImpersonationToken: string,
     bcCustomerId: number | null
-): Promise<Cart> => {
+): Promise<{
+    cart: Cart;
+    userErrors: CartUserErrors;
+}> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -67,19 +81,26 @@ export const createCart = async (
 
     const response = await bcGraphQlRequest(createCartQuery, cartHeader);
 
-    if (response.errors) {
-        handleCartItemErrors(response.errors);
+    const userErrors = getCartUserErrors(response.errors);
+
+    if (response.errors && userErrors.length === 0) {
         logAndThrowError(response.errors);
     }
 
-    // Save cart_id in customer attribute field for logged in users
-    const { entityId } = response.data.cart.createCart.cart;
-    await updateCartIdAttribute({
-        cartId: entityId,
-        customerId: bcCustomerId,
-    });
+    const { cart } = response.data.cart.createCart || {};
 
-    return response.data.cart.createCart.cart;
+    // Save cart_id in customer attribute field for logged in users
+    if (cart?.entityId) {
+        await updateCartIdAttribute({
+            cartId: cart.entityId,
+            customerId: bcCustomerId,
+        });
+    }
+
+    return {
+        cart: cart?.entityId ? cart : null,
+        userErrors,
+    };
 };
 
 export const assignCartToCustomer = async (
@@ -142,7 +163,10 @@ export const updateCartLineItem = async (
     variables: UpdateCartLineItemInput,
     bcCustomerId: number | null,
     customerImpersonationToken: string
-): Promise<Cart> => {
+): Promise<{
+    cart: Cart;
+    userErrors: CartUserErrors;
+}> => {
     const cartHeader = {
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
@@ -155,8 +179,12 @@ export const updateCartLineItem = async (
 
     const response = await bcGraphQlRequest(updateCartItemQuery, cartHeader);
 
+    /* Update cart throws an error and returns a "null" cart when there's a stock issue
+     * instead of returning "user_errors" and the current cart like the
+     *  create cart and add to cart methods do.  */
+    getCartUserErrors(response.errors, true);
+
     if (response.errors) {
-        handleCartItemErrors(response.errors);
         return logAndThrowError(response.errors);
     }
 
@@ -167,19 +195,16 @@ export const updateCartLineItem = async (
 export const updateCartIdAttribute = async (variables: {
     cartId: string | null;
     customerId: number | null;
-}) => {
+}): Promise<CustomerAttributes | undefined> => {
     const { cartId, customerId } = variables;
     /* If we're not dealing with a logged-in customer don't worry about trying to
      * store a cart id on a customer attribute.*/
-    if (!customerId) {
-        return;
-    }
+    if (!customerId) return;
 
     const attributeId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
 
-    if (attributeId && cartId) {
-        await upsertCustomerAttributeValue(attributeId, cartId, customerId);
-    }
+    if (!attributeId || !cartId) return;
+    return upsertCustomerAttributeValue(attributeId, cartId, customerId);
 };
 
 export const verifyCartEntityId = async (
@@ -206,4 +231,41 @@ export const verifyCartEntityId = async (
     }
 
     return response.data.site.cart;
+};
+
+/**
+ * Handles assigning a guest cart to a new user account and updates the customer
+ * account "cart_id" attribute with the cart id.
+ *
+ * @param cartId
+ * @param bcCustomerId
+ * @param customerImpersonationToken
+ */
+export const assignGuestCartToNewUserAccount = async (
+    cartId: string,
+    bcCustomerId: number,
+    customerImpersonationToken: string
+) => {
+    const assignCartToCustomerQuery = assignCartToCustomer(
+        cartId,
+        bcCustomerId,
+        customerImpersonationToken
+    );
+
+    const storeCartIdOnUserAccountQuery = updateCartIdAttribute({
+        cartId,
+        customerId: bcCustomerId,
+    });
+
+    const [assignedCartResponse, storedCartIdResponse] = await Promise.all([
+        assignCartToCustomerQuery,
+        storeCartIdOnUserAccountQuery,
+    ]);
+
+    if (assignedCartResponse.entityId !== cartId || !storedCartIdResponse) {
+        throw new GraphqlError(
+            'no-such-entity',
+            "The guest cart couldn't properly be assigned to the new user account"
+        );
+    }
 };

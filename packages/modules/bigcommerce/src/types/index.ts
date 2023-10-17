@@ -1,5 +1,15 @@
-import { BreadcrumbConnection, MetafieldConnection } from '@aligent/bigcommerce-operations';
-import { CountryCodeEnum, CustomerAddressInput } from '@aligent/bigcommerce-resolvers';
+import {
+    BreadcrumbConnection,
+    MetafieldConnection,
+    ProductConnection,
+} from '@aligent/bigcommerce-operations';
+import {
+    CartUserInputError,
+    CheckoutUserInputError,
+    CountryCodeEnum,
+    CustomerAddressInput,
+    Maybe,
+} from '@aligent/bigcommerce-resolvers';
 import { KeyValueCache, Logger } from '@graphql-mesh/types';
 import { ReflectiveInjector } from 'graphql-modules/di';
 export interface BcGraphqlTokenData {
@@ -10,6 +20,7 @@ export interface BcGraphqlTokenData {
 
 export interface GraphQlQuery {
     query: string;
+    variables?: { [key: string]: unknown };
 }
 export interface BcCustomer {
     id: number;
@@ -32,6 +43,15 @@ export interface BcCustomer {
     store_credit_amounts: [{ amount: number }];
     origin_channel_id: number;
     channel_ids: number[] | null;
+    form_fields?:
+        | [
+              {
+                  id: number;
+                  name: string;
+                  value: boolean;
+              },
+          ]
+        | null;
 }
 
 export interface BcMutationCustomer {
@@ -43,6 +63,13 @@ export interface BcMutationCustomer {
         force_password_reset: boolean;
         new_password: string;
     };
+    form_fields?: [
+        {
+            id: number;
+            name: string;
+            value: string | string[];
+        },
+    ];
 }
 
 export interface Country {
@@ -66,7 +93,8 @@ export interface BcCategoryTree {
     children?: BcCategoryTree[];
     description?: string;
     entityId: number;
-    metafields: MetafieldConnection;
+    id: string;
+    metafields?: MetafieldConnection;
     name: string;
     path: string;
     productCount?: number;
@@ -79,21 +107,18 @@ export interface BcCategory {
     __typename?: string;
     description?: string;
     metaDescription?: string;
-    metafields: MetafieldConnection;
+    metafields?: MetafieldConnection;
     pageTitle?: string;
-    products?: {
-        collectionInfo?:
-            | {
-                  totalItems?: number;
-              }
-            | undefined
-            | null;
-    };
+    products?: ProductConnection;
     seo?: {
         metaDescription: string;
         pageTitle: string;
     };
     breadcrumbs?: BreadcrumbConnection;
+    defaultImage?: {
+        urlOriginal?: string;
+        altText?: string;
+    } | null;
 }
 
 export interface BcAddress {
@@ -163,7 +188,7 @@ export interface BcAddressRest {
     phone: string;
     postal_code: string;
     state_or_province: string;
-    form_fields: FormField[] | [DefaultBillingOrShippingField];
+    form_fields: FormField[] | [DefaultBillingOrShippingField] | [AllowRemoteAssistanceField];
 }
 
 export interface FormField {
@@ -173,6 +198,11 @@ export interface FormField {
 
 export interface DefaultBillingOrShippingField extends FormField {
     name: 'Default Billing' | 'Default Shipping';
+    value: ['Yes'] | [];
+}
+
+export interface AllowRemoteAssistanceField extends FormField {
+    name: 'allow_remote_shopping_assistance';
     value: ['Yes'] | [];
 }
 
@@ -450,3 +480,7 @@ export interface BCShipping {
     shipping_zone_name: string;
     shipping_quotes: Resource;
 }
+
+export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';
+
+export type CartUserErrors = Array<Maybe<CartUserInputError & CheckoutUserInputError>>;

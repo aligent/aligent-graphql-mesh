@@ -10,10 +10,14 @@ import {
     acCustomerOutputWithName,
     acCustomerWithEmail,
     acCustomerWithName,
+    acCustomerWithNoRemoteAssistance,
+    acCustomerWithRemoteAssistance,
     bcCreateCustomerInputData,
     bcCustomerForPasswordChange,
     bcMutationCustomerWithEmail,
     bcMutationCustomerWithName,
+    bcMutationCustomerWithRemoteAssistanceSetToFalse,
+    bcMutationCustomerWithRemoteAssistanceSetToTrue,
     bcValidatePasswordRequest,
 } from './__data__/customer-data';
 
@@ -42,6 +46,25 @@ describe('Customer Ac to Bc Transformation', () => {
         const bcCustomerExpected = bcCustomerForPasswordChange;
 
         const bcTransformedCustomer = transformAcCustomerPasswordChange(customerId, newPassword);
+
+        expect(bcTransformedCustomer).toEqual(bcCustomerExpected);
+    });
+    test('Transform Ac remote assistance to Bc remote assistance form field for updating remote assistance checkbox to true', () => {
+        const customerId = 1;
+        const allowRemoteAssist = acCustomerWithRemoteAssistance;
+        const bcCustomerExpected = bcMutationCustomerWithRemoteAssistanceSetToTrue;
+
+        // update to true
+        const bcTransformedCustomer = transformCustomerForMutation(allowRemoteAssist, customerId);
+
+        expect(bcTransformedCustomer).toEqual(bcCustomerExpected);
+    });
+    test('Transform Ac remote assistance to Bc remote assistance form field for updating remote assistance checkbox to false', () => {
+        const customerId = 1;
+        const allowRemoteAssist = acCustomerWithNoRemoteAssistance;
+        const bcCustomerExpected = bcMutationCustomerWithRemoteAssistanceSetToFalse;
+
+        const bcTransformedCustomer = transformCustomerForMutation(allowRemoteAssist, customerId);
 
         expect(bcTransformedCustomer).toEqual(bcCustomerExpected);
     });
