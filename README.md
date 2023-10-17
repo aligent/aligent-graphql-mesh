@@ -10,7 +10,8 @@ Current Platforms:
 Reference: https://the-guild.dev/graphql/mesh
 
 ## Commands
-Formatting: 
+
+Formatting:
 `yarn nx format:check` and `yarn nx format:write`
 
 Linting
