@@ -57,7 +57,7 @@ definitions:
           - docker
         script:
           - yarn nx docker-build ${APPLICATION}
-          - docker save mesh:latest | gzip > ${APPLICATION}_latest.tar.gz
+          - docker save ${APPLICATION}:latest | gzip > ${APPLICATION}_latest.tar.gz
         artifacts:
           - '*.tar.gz'
 
@@ -76,7 +76,7 @@ definitions:
           - docker
         script:
           - docker load --input ${APPLICATION}_latest.tar.gz
-          - docker tag mesh:latest ${IMAGE_NAME}:latest
+          - docker tag ${APPLICATION}:latest ${IMAGE_NAME}:latest
           - pipe: atlassian/aws-ecr-push-image:2.0.0
             variables:
               IMAGE_NAME: ${IMAGE_NAME}
@@ -102,7 +102,6 @@ pipelines:
     # @TODO: Remove once epic is merged to main
     'epic/orocommerce':
       - step: *install
-      - step: *build
       - stage:
           name: Deploy OroCommerce Mesh
           deployment: orocommerce
@@ -112,7 +111,6 @@ pipelines:
 
     main:
       - step: *install
-      - step: *build
       - stage:
           name: Deploy OroCommerce Mesh
           deployment: orocommerce
@@ -122,7 +120,6 @@ pipelines:
 
       - stage:
           name: Deploy BigCommerce Mesh
-          deployment: bigcommerce
           steps:
             - step: *build-container
             - step: *deploy

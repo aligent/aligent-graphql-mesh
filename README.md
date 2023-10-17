@@ -9,6 +9,35 @@ Current Platforms:
 
 Reference: https://the-guild.dev/graphql/mesh
 
+## Commands
+Formatting: 
+`yarn nx format:check` and `yarn nx format:write`
+
+Linting
+Single Project: `yarn nx lint project-name`
+Affected Projects: `yarn nx affected -t lint`
+All Projects: `yarn nx run-many -t lint`
+
+Testing
+Single Project: `yarn nx test project-name`
+Affected Projects: `yarn nx affected -t test`
+All Projects: `yarn nx run-many -t test`
+
+Check Types
+Single Project: `yarn nx check-types project-name`
+Affected Projects: `yarn nx affected -t check-types`
+All Projects: `yarn nx run-many -t check-types`
+
+Build
+Single Project: `yarn nx build project-name`
+Affected Projects: `yarn nx affected -t build`
+All Projects: `yarn nx run-many -t build`
+
+Codegen
+Single Project: `yarn nx codegen project-name`
+Affected Projects: `yarn nx affected -t codegen`
+All Projects: `yarn nx run-many -t codegen`
+
 ## Local Dev Setup
 
 1. Clone the repository
