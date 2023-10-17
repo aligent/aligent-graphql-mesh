@@ -29,3 +29,4 @@ export const createOroCommerceModule = (config: OroCommerceModuleConfig) => {
 export * from './services';
 export * from './apis/rest'
 export * from './types';
+export * from './transformers';
