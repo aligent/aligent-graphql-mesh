@@ -16,7 +16,8 @@ import { Redis } from 'ioredis';
 import Keyv from 'keyv';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
-const redisUri = `redis://:${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}`;
+const redisDb = process.env?.REDIS_DATABASE || '0'
+const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
 
 const yoga = createYoga({
     graphiql: DEV_MODE,
