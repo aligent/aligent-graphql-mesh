@@ -1,23 +1,18 @@
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
 import { WebCatalogTree as OroCategory } from '../../types';
-import {btoa, ChainTransformer, Transformer, TransformerContext} from '@aligent/utils';
-import {Injectable} from "graphql-modules";
+import { btoa, ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
+import { Injectable } from 'graphql-modules';
 
 /**
  * Transforms category data into a shape the PWA is expecting
  * @param categories - The current category object
  */
 @Injectable()
-export class CategoriesTransformerChain extends ChainTransformer<
-    OroCategory[],
-    CategoryTree[]
-> {}
+export class CategoriesTransformerChain extends ChainTransformer<OroCategory[], CategoryTree[]> {}
 
 @Injectable()
 export class CategoriesTransformer implements Transformer<OroCategory[], CategoryTree[]> {
-    public transform(
-        context: TransformerContext<OroCategory[], CategoryTree[]>
-    ): CategoryTree[] {
+    public transform(context: TransformerContext<OroCategory[], CategoryTree[]>): CategoryTree[] {
         const categories = context.data;
         const hashTable = Object.create(null);
         categories.forEach(
