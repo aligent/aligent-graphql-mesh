@@ -4,7 +4,7 @@ import { getTransformedProductsData } from '../../factories/transform-products-d
 import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getFlattenedProducts } from '../../utils';
 import { retrieveStoreConfigsFromCache } from './store-configs';
-import { getIncludesTax } from '@aligent/utils';
+import { getIncludesTax } from '../../utils/get-tax';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 
 export const UNDEFINED_CART = {
