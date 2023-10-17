@@ -4,10 +4,10 @@ import { CategoriesClient } from '../../../apis/rest/category-client';
 import { BreadcrumbsTransformerChain } from '../../../transformers/categories/breadcrumbs-transformer';
 
 /**
- * This is a sub-resolver it is executed after customerOrdersResolver when items was specified in the query
+ * This is a sub-resolver it is executed after categoriesResolver when items was specified in the query
  * The sub-resolvers is configured here in the scr/resolves/index.ts
  */
-export const breadcrumbsResolver: CategoryTreeResolvers['breadcrumbs'] = {
+export const breadcrumbsSubResolver: CategoryTreeResolvers['breadcrumbs'] = {
     resolve: async (root, _args, context, _info) => {
         //root.uid contains the categoryId which is base64 encoded by the previously executed categories resolver
         const nodeId = Number(atob(root.uid));
