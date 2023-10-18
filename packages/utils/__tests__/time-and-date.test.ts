@@ -11,7 +11,7 @@ describe('Time and Date tests', () => {
     });
 
     test('return unix time stamp in seconds plus an additional amount of hours', () => {
-        const nowDateObject = new Date('2023-10-18T20:42:16.652Z');
+        const nowDateObject = new Date('2023-10-18T20:42:16.652+00:00');
         const spy = jest.spyOn(Date, 'now').mockImplementation(() => nowDateObject.getTime());
 
         const result = getUnixTimeStampInSeconds({ additionalHours: 24 });
@@ -21,7 +21,7 @@ describe('Time and Date tests', () => {
     });
 
     test('return unix time stamp in seconds for midnight of the current day', () => {
-        const nowDateObject = new Date('2023-10-18T20:42:16.652Z');
+        const nowDateObject = new Date('2023-10-18T20:42:16.652+00:00');
         const spy = jest.spyOn(Date, 'now').mockImplementation(() => nowDateObject.getUTCDate());
 
         const result = getUnixTimeStampInSecondsForMidnightTonight();
