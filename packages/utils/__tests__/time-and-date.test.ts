@@ -22,7 +22,7 @@ describe('Time and Date tests', () => {
 
     test('return unix time stamp in seconds for midnight of the current day', () => {
         const nowDateObject = new Date('2023-10-18T20:42:16.652Z');
-        const spy = jest.spyOn(Date, 'now').mockImplementation(() => nowDateObject.getTime());
+        const spy = jest.spyOn(Date, 'now').mockImplementation(() => nowDateObject.getUTCDate());
 
         const result = getUnixTimeStampInSecondsForMidnightTonight();
         spy.mockRestore();
