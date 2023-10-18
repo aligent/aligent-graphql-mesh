@@ -1,5 +1,4 @@
 import { ReflectiveInjector } from 'graphql-modules/di';
-import { GraphQLParams } from 'graphql-yoga';
 import Keyv from 'keyv';
 
 export interface Resource {
@@ -31,7 +30,6 @@ declare global {
             injector: ReflectiveInjector;
             cache: Keyv;
             request: Request;
-            params: GraphQLParams;
         }
     }
 }
