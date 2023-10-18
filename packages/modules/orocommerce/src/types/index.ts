@@ -29,6 +29,7 @@ declare global {
             headers: Record<string, string>;
             injector: ReflectiveInjector;
             cache: Keyv;
+            request: Request;
         }
     }
 }
