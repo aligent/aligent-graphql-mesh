@@ -1,6 +1,10 @@
 image: node:18
 
 definitions:
+  services:
+    docker-extra-memory:
+      memory: 7168
+      type: docker
   steps:
     - step: &install
         name: 🧶 Install
@@ -92,6 +96,30 @@ definitions:
               IMAGE_NAME: ${IMAGE_NAME}
 
 pipelines:
+  custom:
+    owasp_scan:
+      - step:
+          name: 'OWASP Dependency Check'
+          script:
+            - pipe: docker://aligent/owasp-dependency-check-pipe
+              variables:
+                SCAN_PATH: './yarn.lock'
+                SUPPRESSION_FILE_PATH: './suppression.xml'
+                CVSS_FAIL_LEVEL: '1'
+    renovate:
+      - step:
+          name: 'Run Renovate'
+          size: 2x
+          script:
+            - pipe: docker://aligent/renovate-pipe:latest
+              variables:
+                RENOVATE_PASSWORD: $RENOVATE_PASSWORD
+                RENOVATE_USERNAME: $RENOVATE_USERNAME
+                GITHUB_COM_TOKEN: $GITHUB_COM_TOKEN
+                CONFIG_FILE: 'renovate_config.js'
+          services:
+            - docker-extra-memory
+
   pull-requests:
     '**':
       - step: *install
