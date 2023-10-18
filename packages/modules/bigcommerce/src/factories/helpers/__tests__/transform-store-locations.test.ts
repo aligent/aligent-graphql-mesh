@@ -22,6 +22,7 @@ const expectAcStoreLocations = {
             city: 'Adelaide',
             distance: undefined,
             email: '',
+            id: 1,
             latitude: -34.92396,
             longitude: 138.610467,
             name: 'Aligent BC address 1',
