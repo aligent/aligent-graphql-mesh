@@ -27,6 +27,6 @@ export const createOroCommerceModule = (config: OroCommerceModuleConfig) => {
 
 // Export services, types and API clients so they are usable by client modules
 export * from './services';
-export * from './apis/rest'
+export * from './apis/rest';
 export * from './types';
 export * from './transformers';

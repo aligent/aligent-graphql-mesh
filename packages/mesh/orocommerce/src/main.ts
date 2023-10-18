@@ -29,7 +29,7 @@ const yoga = createYoga({
             maxAliases: {
                 n: 70,
             },
-        })
+        }),
     ],
 });
 
