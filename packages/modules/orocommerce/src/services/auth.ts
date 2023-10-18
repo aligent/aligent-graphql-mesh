@@ -62,7 +62,7 @@ export class Auth {
             if (authHeader && authHeader.startsWith('Bearer')) {
                 const token = authHeader.split(' ')[1];
                 const jwt = decode(token);
-    
+
                 if (jwt?.sub) {
                     return jwt.sub.toString().startsWith('visitor');
                 }
