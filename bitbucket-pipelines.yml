@@ -116,6 +116,7 @@ pipelines:
                 RENOVATE_PASSWORD: $RENOVATE_PASSWORD
                 RENOVATE_USERNAME: $RENOVATE_USERNAME
                 GITHUB_COM_TOKEN: $GITHUB_COM_TOKEN
+                NPM_PUBLISH_TOKEN: $NPM_PUBLISH_TOKEN
                 CONFIG_FILE: 'renovate_config.js'
           services:
             - docker-extra-memory
