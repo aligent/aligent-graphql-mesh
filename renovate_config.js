@@ -1,4 +1,5 @@
 module.exports = {
+    baseBranches: ["epic/orocommerce"],
     secrets: {
         NPM_PUBLISH_TOKEN: process.env.NPM_PUBLISH_TOKEN,
     },
