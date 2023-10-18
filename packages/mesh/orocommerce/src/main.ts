@@ -6,14 +6,8 @@ import { useGraphQLModules } from '@envelop/graphql-modules';
 import application from './application';
 import { readFileSync } from 'node:fs';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
-import {
-    useResponseCache,
-    createInMemoryCache,
-    UseResponseCacheParameter,
-} from '@graphql-yoga/plugin-response-cache';
-import { createRedisCache } from '@envelop/response-cache-redis';
-import { Redis } from 'ioredis';
 import Keyv from 'keyv';
+import cachableObjects from './cache';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -23,6 +17,7 @@ const yoga = createYoga({
     graphiql: DEV_MODE,
     logging: DEV_MODE ? 'info' : 'warn',
     landingPage: false,
+    cors: false,
     context: {
         cache: DEV_MODE
             ? new Keyv({ namespace: 'application' })
@@ -34,15 +29,6 @@ const yoga = createYoga({
             maxAliases: {
                 n: 70,
             },
-        }),
-        useResponseCache({
-            session: () => null,
-            cache: DEV_MODE
-                ? createInMemoryCache()
-                : // @TODO: Remove UseResponseCacheParameter once issue is resolved: https://github.com/dotansimha/graphql-yoga/issues/3048
-                  (createRedisCache({
-                      redis: new Redis(redisUri),
-                  }) as UseResponseCacheParameter['cache']),
         }),
     ],
 });
@@ -73,6 +59,38 @@ app.use(cors(corsConfiguration));
  * Respond to all OPTIONS requests with CORS headers
  */
 app.options('*', cors(corsConfiguration));
+
+/**
+ * Add cache headers for cloudfront
+ */
+app.use((req, res, next) => {
+    res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
+
+    if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
+        if (
+            typeof req.query.operationName === 'string' &&
+            Object.prototype.hasOwnProperty.call(
+                cachableObjects.operations,
+                req.query.operationName
+            )
+        ) {
+            res.setHeader(
+                'Cache-Control',
+                `s-maxage=${cachableObjects.operations[req.query.operationName]}`
+            );
+            return next();
+        }
+
+        for (const rule of cachableObjects.rules) {
+            if (rule.pattern.test(req.url)) {
+                res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
+                return next();
+            }
+        }
+    }
+
+    return next();
+});
 
 /**
  * Add GraphQL Mesh route

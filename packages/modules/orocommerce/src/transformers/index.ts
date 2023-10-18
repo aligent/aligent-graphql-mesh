@@ -10,6 +10,13 @@ import {
     StoreLocationsTransformerChain,
 } from './store-locations/store-locations-transformer';
 
+export * from './cms-blocks/cms-blocks-transformer';
+export * from './country/country-transformer';
+export * from './currency/transform-currency-data';
+export * from './customers/customer-transformer';
+export * from './key-messages/key-messages-transformer';
+export * from './store-locations/store-locations-transformer';
+
 export const getOroTransformers = (): Array<Provider> => {
     return [
         // Register Chain transformers
