@@ -51,16 +51,21 @@ export class Auth {
     }
 
     isLoggedIn(): boolean {
-        return this.context.headers['authorization']?.startsWith('Bearer');
+        const authHeader = this.context.request.headers.get('authorization');
+        return !!(authHeader && authHeader.startsWith('Bearer'));
     }
 
     isGuest(): boolean {
         if (this.isLoggedIn()) {
-            const token = this.context.headers['authorization'].split(' ')[1];
-            const jwt = decode(token);
+            const authHeader = this.context.request.headers.get('authorization');
 
-            if (jwt?.sub) {
-                return jwt.sub.toString().startsWith('visitor');
+            if (authHeader && authHeader.startsWith('Bearer')) {
+                const token = authHeader.split(' ')[1];
+                const jwt = decode(token);
+    
+                if (jwt?.sub) {
+                    return jwt.sub.toString().startsWith('visitor');
+                }
             }
         }
 
@@ -68,8 +73,10 @@ export class Auth {
     }
 
     getAuthHeader(): string {
-        if (this.isLoggedIn()) {
-            return this.context.headers['authorization'];
+        const authHeader = this.context.request.headers.get('authorization');
+
+        if (authHeader && authHeader.startsWith('Bearer')) {
+            return authHeader;
         }
 
         throw Error('Bearer token is not set on the Authorization header.');
