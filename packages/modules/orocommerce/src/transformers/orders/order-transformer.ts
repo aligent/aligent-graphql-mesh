@@ -60,7 +60,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
 
             const orderDiscounts = order.attributes.discounts.reduce(
                 (discounts: Discount[], discount) => {
-                    if (discount.type === 'order' || discount.type === 'promotional.order') {
+                    if (discount.type === 'order' || discount.type === 'promotion.order') {
                         discounts.push({
                             code: discount.description,
                             label: discount.description,
