@@ -11,7 +11,6 @@ import { createCustomerMutation } from './mutations/create-customer';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
 
-
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
@@ -28,8 +27,8 @@ export const resolvers: Resolvers = {
         createCustomer: createCustomerMutation,
     },
     Customer: {
-        orders: customerOrdersResolver
-    }
+        orders: customerOrdersResolver,
+    },
 };
 
 export default resolvers;

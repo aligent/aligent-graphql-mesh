@@ -60,16 +60,16 @@ interface OrderRelationships extends Relationships {
 
 export interface OrderAddress extends Entity {
     attributes: OrderAddressAttributes;
-    relationships: OrderAddressRelationships
+    relationships: OrderAddressRelationships;
 }
 
 interface OrderAddressRelationships extends Relationships {
     country: {
-        data: Resource
-    }
+        data: Resource;
+    };
     region: {
-        data: Resource
-    }
+        data: Resource;
+    };
 }
 
 interface OrderAddressAttributes extends Attributes {

@@ -12,7 +12,7 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
         const orders = await client.getOrders();
 
         return customerOrdersTransfomerChain.transform({
-            data: orders
-        })
+            data: orders,
+        });
     },
 };

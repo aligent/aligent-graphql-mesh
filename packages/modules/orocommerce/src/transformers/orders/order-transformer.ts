@@ -45,12 +45,12 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 return shippingAddress?.relationships.region.data.id === entity.id;
             }) as CountryRegion;
 
-            const paymentMethods = order.attributes.paymentMethod.map(paymentMethod => {
+            const paymentMethods = order.attributes.paymentMethod.map((paymentMethod) => {
                 return {
                     name: paymentMethod.label,
-                    type: paymentMethod.code
-                }
-            })
+                    type: paymentMethod.code,
+                };
+            });
 
             return {
                 id: order.id,
@@ -64,7 +64,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 currency_code: order.attributes.currency,
                 deliveryInstructions: {
                     authorityToLeave: null,
-                    instructions: order.attributes.customerNotes
+                    instructions: order.attributes.customerNotes,
                 },
                 payment_methods: paymentMethods,
                 billing_address: {
