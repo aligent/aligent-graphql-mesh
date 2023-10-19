@@ -1,4 +1,9 @@
-import { CountryCodeEnum, CustomerOrder, CustomerOrders } from '@aligent/orocommerce-resolvers';
+import {
+    CountryCodeEnum,
+    CurrencyEnum,
+    CustomerOrder,
+    CustomerOrders,
+} from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 import { Countries, Entity, Order, OrderAddress } from '../../types';
@@ -51,6 +56,8 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                     type: paymentMethod.code,
                 };
             });
+
+            const currency = order.attributes.currency as CurrencyEnum;
 
             return {
                 id: order.id,
@@ -107,7 +114,37 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 printed_card_included: false,
                 gift_receipt_included: false,
                 carrier: '',
-                total: null,
+                total: {
+                    base_grand_total: {
+                        currency: currency,
+                        value: Number(order.attributes.totalValue),
+                    },
+                    grand_total: {
+                        currency: currency,
+                        value: Number(order.attributes.totalValue),
+                    },
+                    grand_total_excl_tax: {
+                        currency: currency,
+                        value: Number(order.attributes.totalExcludingTax),
+                    },
+                    subtotal: {
+                        currency: currency,
+                        value: Number(order.attributes.subtotalValue),
+                    },
+                    total_shipping: {
+                        currency: currency,
+                        value: Number(order.attributes.shippingCostAmount),
+                    },
+                    total_tax: {
+                        currency: currency,
+                        value: Number(order.attributes.totalTaxAmount),
+                    },
+                    shipping_handling: null,
+                    subtotal_incl_tax: null,
+                    total_giftcard: null,
+                    discounts: [],
+                    taxes: [],
+                },
                 returns: null,
                 gift_message: null,
                 gift_wrapping: null,
