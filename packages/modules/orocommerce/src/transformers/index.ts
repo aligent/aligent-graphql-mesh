@@ -12,6 +12,14 @@ import {
     StoreLocationsTransformer,
     StoreLocationsTransformerChain,
 } from './store-locations/store-locations-transformer';
+import {
+    CategoriesTransformer,
+    CategoriesTransformerChain,
+} from './categories/categories-transformer';
+import {
+    BreadcrumbsTransformer,
+    BreadcrumbsTransformerChain,
+} from './categories/breadcrumbs-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -33,6 +41,16 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: StoreLocationsTransformerChain,
             global: true,
         },
+        {
+            provide: CategoriesTransformerChain,
+            useClass: CategoriesTransformerChain,
+            global: true,
+        },
+        {
+            provide: BreadcrumbsTransformerChain,
+            useClass: BreadcrumbsTransformerChain,
+            global: true,
+        },
         // Create default transformers and register them with their chain transformers
         {
             provide: StoreLocationsTransformer,
@@ -52,7 +70,24 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [CmsBlocksTransformerChain],
         },
-
+        {
+            provide: CategoriesTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new CategoriesTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [CategoriesTransformerChain],
+        },
+        {
+            provide: BreadcrumbsTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new BreadcrumbsTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [BreadcrumbsTransformerChain],
+        },
         // Currency Register Chain transformers
         {
             provide: CurrencyTransformerChain,
