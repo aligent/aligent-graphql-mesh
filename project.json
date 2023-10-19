@@ -1,0 +1,16 @@
+{
+    "name": "aligent-graphql-mesh/source",
+    "$schema": "./node_modules/nx/schemas/project-schema.json",
+    "targets": {
+        "generate-certs": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "mkdir certificates",
+                    "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certificates/cert.key -out certificates/cert.crt -subj \"/C=AU/ST=South Australia/L=Adelaide/O=Aligent/CN=mesh.local.pwadev\""
+                ]
+            }
+        }
+    },
+    "tags": []
+}

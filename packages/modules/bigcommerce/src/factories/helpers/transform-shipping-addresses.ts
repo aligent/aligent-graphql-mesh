@@ -9,7 +9,7 @@ import { getTransformedAddress } from './transform-address';
 
 export const getTransformedShippingAddresses = (
     shippingConsignments?: Maybe<Array<CheckoutShippingConsignment>>,
-    customerMessage?: Maybe<Scalars['String']>
+    customerMessage?: Maybe<Scalars['String']['output']>
 ): Cart['shipping_addresses'] => {
     if (!shippingConsignments) return [];
 

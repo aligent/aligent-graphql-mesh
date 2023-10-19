@@ -1,5 +1,5 @@
 import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { logAndThrowError, atob, getIncludesTax, getPathFromUrlKey } from '@aligent/utils';
+import { logAndThrowError, atob, getPathFromUrlKey } from '@aligent/utils';
 import {
     getTransformedProductData,
     getTransformedProductsData,
@@ -11,6 +11,7 @@ import {
     retrieveStoreConfigsFromCache,
 } from '../../apis/graphql';
 import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
+import { getIncludesTax } from '../../utils/get-tax';
 import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 

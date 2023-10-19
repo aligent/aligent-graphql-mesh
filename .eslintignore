@@ -1,13 +1,11 @@
 # Minified build assets
 dist/
-dist-storybook/
 # Generated coverage pages
 coverage
 **/*.d.ts
 .idea
 .vscode
 node_modules
-storybook-dist
 test-results
 .DS_Store
 .env
@@ -18,8 +16,4 @@ test-report.xml
 test-results.json
 yarn-error.log
 .tsc
-generated/
-packages/generated/
-packages/mesh/.mesh
-lambda
-docker
+packages/mesh/bigcommerce/.mesh
