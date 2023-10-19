@@ -10,7 +10,7 @@ export class OrdersClient {
         return this.apiClient.get<Order[], Entity[]>('/orders', {
             params: {
                 include:
-                    'billingAddress,shippingAddress,billingAddress.country,billingAddress.region,shippingAddress.country,shippingAddress.region,',
+                    'billingAddress,shippingAddress,billingAddress.country,billingAddress.region,shippingAddress.country,shippingAddress.region',
             },
         });
     }

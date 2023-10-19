@@ -51,10 +51,10 @@ interface PaymentMethod {
 
 interface OrderRelationships extends Relationships {
     billingAddress: {
-        data: OrderAddress;
+        data: Resource;
     };
     shippingAddress: {
-        data: OrderAddress;
+        data: Resource;
     };
 }
 
