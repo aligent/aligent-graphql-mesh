@@ -30,7 +30,11 @@ interface OrderAttributes extends Attributes {
     shippingTrackings: ShippingTrackings[];
 }
 
-interface Discounts {}
+interface Discounts {
+    type: string;
+    description: string;
+    amount: string;
+}
 
 interface ShippingTrackings {}
 

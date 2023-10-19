@@ -3,6 +3,7 @@ import {
     CurrencyEnum,
     CustomerOrder,
     CustomerOrders,
+    Discount,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
@@ -57,6 +58,24 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 };
             });
 
+            const orderDiscounts = order.attributes.discounts.reduce(
+                (discounts: Discount[], discount) => {
+                    if (discount.type === 'order' || discount.type === 'promotional.order') {
+                        discounts.push({
+                            code: discount.description,
+                            label: discount.description,
+                            amount: {
+                                value: Number(discount.amount),
+                                currency: currency,
+                            },
+                        });
+                    }
+
+                    return discounts;
+                },
+                []
+            );
+
             const currency = order.attributes.currency as CurrencyEnum;
 
             return {
@@ -108,13 +127,13 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                     vat_id: '',
                     fax: '',
                 },
-
                 state: '', // OTF-86
                 status: '', // OTF-86
                 printed_card_included: false,
                 gift_receipt_included: false,
                 carrier: '',
                 total: {
+                    discounts: orderDiscounts,
                     base_grand_total: {
                         currency: currency,
                         value: Number(order.attributes.totalValue),
@@ -142,7 +161,6 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                     shipping_handling: null,
                     subtotal_incl_tax: null,
                     total_giftcard: null,
-                    discounts: [],
                     taxes: [],
                 },
                 returns: null,
