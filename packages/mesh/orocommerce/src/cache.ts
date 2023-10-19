@@ -10,9 +10,9 @@ interface CachableObjects {
 
 export default {
     operations: {
-        // Store config cannot be cached due to IP whitelisting in maintenance mode
-        // getStoreConfig: 30,
-        // storeConfigData: 30,
+        // Store config TTLs are set low as there is a maintenance flag check here
+        getStoreConfig: 30,
+        storeConfigData: 30,
 
         getCountries: 86400,
         getSocialLinks: 1800,

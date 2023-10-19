@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { OroCurrency } from '../../types';
 

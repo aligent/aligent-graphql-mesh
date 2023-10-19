@@ -10,6 +10,8 @@ import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { storeLocationsResolver } from './queries/store-locations';
 import { createCustomerMutation } from './mutations/create-customer';
+import { customerResolver } from './queries/customer';
+import { customerOrdersResolver } from './queries/customer/orders';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -20,6 +22,7 @@ export const resolvers: Resolvers = {
         categories: categoriesResolver,
         cmsBlocks: cmsBlocksResolver,
         storeLocations: storeLocationsResolver,
+        customer: customerResolver,
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
@@ -29,6 +32,9 @@ export const resolvers: Resolvers = {
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {
         breadcrumbs: breadcrumbsSubResolver,
+    },
+    Customer: {
+        orders: customerOrdersResolver,
     },
 };
 

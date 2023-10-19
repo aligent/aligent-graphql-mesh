@@ -26,6 +26,7 @@ export interface Attributes {
         | boolean
         | number
         | string
+        | object
         | null
         | Array<number>
         | Array<string>
@@ -46,6 +47,7 @@ declare global {
             headers: Record<string, string>;
             injector: ReflectiveInjector;
             cache: Keyv;
+            request: Request;
         }
     }
 }
@@ -57,3 +59,4 @@ export * from './country';
 export * from './shopping-list';
 export * from './web-catalog-tree';
 export * from './customer-user';
+export * from './order';
