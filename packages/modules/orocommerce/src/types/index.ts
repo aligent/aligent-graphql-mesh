@@ -13,7 +13,7 @@ export interface Relationships {
 }
 
 export interface Attributes {
-    [name: string]: boolean | number | string | null;
+    [name: string]: boolean | number | string | object | null;
 }
 
 export interface Entity extends Resource {
@@ -40,3 +40,4 @@ export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
 export * from './customer-user';
+export * from './order';
