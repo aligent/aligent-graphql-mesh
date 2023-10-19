@@ -26,9 +26,13 @@ interface OrderAttributes extends Attributes {
     totalExcludingTax: string;
     totalTaxAmount: string;
     paymentTerm: null;
-    discounts: any[];
-    shippingTrackings: any[];
+    discounts: Discounts[];
+    shippingTrackings: ShippingTrackings[];
 }
+
+interface Discounts {}
+
+interface ShippingTrackings {}
 
 interface ShippingMethod {
     code: string;
