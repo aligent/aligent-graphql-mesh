@@ -11,6 +11,8 @@ const EMPTY_ORDER_RESPONSE = {
     },
 };
 
+const STATUS_ORDERS_TO_REMOVE = ['incomplete'];
+
 /**
  * This is a sub-resolver it is executed after customerResolver when orders was specified in the query
  * The sub-resolvers is configured here in the scr/resolves/index.ts
@@ -28,14 +30,19 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
         if (!orderNumber) {
             bcOrders = await getAllOrders(bcCustomerId);
         }
-        if (bcOrders.length === 0) {
+
+        const filteredOrders = bcOrders.filter(
+            (order) => !STATUS_ORDERS_TO_REMOVE.includes(order.status?.toLowerCase())
+        );
+
+        if (filteredOrders.length === 0) {
             //no orders found
             return EMPTY_ORDER_RESPONSE;
         }
 
         const pageSize = args.pageSize ? args.pageSize : 20;
 
-        return getTransformedOrders(bcOrders, pageSize, args.currentPage);
+        return getTransformedOrders(filteredOrders, pageSize, args.currentPage);
         //sub-resolver customerOrderItemsResolver is called after this if items is specified in query
     },
 };
