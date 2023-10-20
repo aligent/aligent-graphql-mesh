@@ -19,7 +19,7 @@ export const getProductsSearchQuery = stripIgnoredCharacters(
         ) {
             site {
                 search {
-                    searchProducts(filters: $filters) {
+                    searchProducts(filters: $filters, sort: RELEVANCE) {
                         products(first: $pageSize, after: $after) {
                             edges {
                                 node {
