@@ -11,6 +11,9 @@ const EMPTY_ORDER_RESPONSE = {
     },
 };
 
+/* "incomplete" orders are created when navigating to the checkout and attempting to place
+ * an order without filling in the payment details. Without actually placing an order,
+ * these orders can be seen in the customer order history"*/
 const STATUS_ORDERS_TO_REMOVE = ['incomplete'];
 
 /**
