@@ -50,17 +50,16 @@ export const getTransformedProductArgs = (
         price: object;
         productAttributes: { attribute: string; values: string[] }[];
         rating: object;
-        searchTerm: string;
+        searchTerm?: string;
     } = {
         brandEntityIds: [],
         price: {},
         productAttributes: [],
         rating: {},
-        searchTerm: '',
     };
 
     if (acFilterArgs.search) {
-        bcProductFilters.searchTerm = acFilterArgs.search;
+        bcProductFilters['searchTerm'] = acFilterArgs.search;
     }
 
     if (!acFilterArgs.filter) return bcProductFilters;
