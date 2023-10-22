@@ -36,7 +36,10 @@ interface Discounts {
     amount: string;
 }
 
-interface ShippingTrackings {}
+interface ShippingTrackings {
+    method: string;
+    number: string;
+}
 
 interface ShippingMethod {
     code: string;

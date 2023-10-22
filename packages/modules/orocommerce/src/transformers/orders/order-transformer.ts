@@ -58,6 +58,8 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 };
             });
 
+            const carrier = order.attributes.shippingTrackings[0].method;
+
             const orderDiscounts = order.attributes.discounts.reduce(
                 (discounts: Discount[], discount) => {
                     if (discount.type === 'order' || discount.type === 'promotion.order') {
@@ -87,6 +89,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 order_date: order.attributes.createdAt,
                 order_number: order.attributes.identifier,
                 shipping_method: order.attributes.shippingMethod.label,
+                carrier: carrier,
                 currency_code: order.attributes.currency,
                 deliveryInstructions: {
                     authorityToLeave: null,
@@ -131,7 +134,6 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 status: '', // OTF-86
                 printed_card_included: false,
                 gift_receipt_included: false,
-                carrier: '',
                 total: {
                     discounts: orderDiscounts,
                     base_grand_total: {
