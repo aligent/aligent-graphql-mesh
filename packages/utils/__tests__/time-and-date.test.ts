@@ -17,7 +17,6 @@ describe('Time and Date tests', () => {
         const result = getUnixTimeStampInSeconds({ additionalHours: 24 });
 
         expect(result).toEqual(1666212137);
-        jest.useRealTimers();
     });
 
     test('return unix time stamp in seconds for midnight of the current day', () => {
