@@ -10,7 +10,10 @@ import {
     getBcProductSearchGraphql,
     retrieveStoreConfigsFromCache,
 } from '../../apis/graphql';
-import { getTransformedProductArgs } from '../../factories/helpers/transform-product-search-arguments';
+import {
+    getTransformedProductArgs,
+    getTransformedSortArguments,
+} from '../../factories/helpers/transform-product-search-arguments';
 import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
@@ -51,6 +54,7 @@ export const productsResolver: QueryResolvers['products'] = {
             const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
             const searchTerm = args?.search || '';
             const pageSize = args?.pageSize || 24;
+            const sort = args?.sort || null;
 
             /* These base filters will help the "getBcAvailableProductFilters" get the available filters for search and
              * category pages
@@ -78,11 +82,14 @@ export const productsResolver: QueryResolvers['products'] = {
                 args?.currentPage
             );
 
+            const transformedSortArguments = getTransformedSortArguments(sort);
+
             const bcProducts = await getBcProductSearchGraphql(
                 {
                     after: paginationPage?.startCursor,
                     includeTax: getIncludesTax(taxSettings?.plp),
                     filters: transformedFilterArguments,
+                    sort: transformedSortArguments,
                     pageSize,
                 },
                 customerImpersonationToken
