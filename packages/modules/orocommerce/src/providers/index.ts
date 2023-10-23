@@ -10,7 +10,9 @@ import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
+import { CategoriesClient } from '../apis/rest/category-client';
 import { getOroTransformers } from '../transformers';
+import { OrdersClient } from '../apis/rest/orders';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -85,6 +87,18 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: CmsBlockClient,
             provide: CmsBlockClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CategoriesClient,
+            provide: CategoriesClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: OrdersClient,
+            provide: OrdersClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },

@@ -1,0 +1,41 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "baseBranches": ["epic/orocommerce"],
+    "packageRules": [
+        {
+            "matchPackageNames": ["node"],
+            "matchManagers": ["npm", "nvm", "bitbucket-pipelines"],
+            "groupName": "node",
+            "reviewers": ["adam_hall_ali", "krishan-thisera", "daniel-vanderploeg"],
+            "reviewersSampleSize": 2
+        },
+        {
+            "excludePackageNames": ["node"],
+            "matchManagers": ["bitbucket-pipelines"],
+            "groupName": "bb-pipelines",
+            "reviewers": ["adam_hall_ali", "krishan-thisera", "daniel-vanderploeg"],
+            "reviewersSampleSize": 2
+        },
+        {
+            "matchPackagePatterns": ["*"],
+            "excludePackageNames": ["node", "@types/node"],
+            "matchManagers": ["npm", "nvm"],
+            "groupName": "all-node",
+            "reviewers": [
+                "gregziborov",
+                "pasqualinibruno",
+                "gowri_zrh",
+                "adam_hall_ali",
+                "daniel-vanderploeg",
+                "torbjorn_vanheeswijck",
+                "brettcut",
+                "jackMcloughlin"
+            ],
+            "reviewersSampleSize": 2
+        },
+        {
+            "allowedVersions": "<=18",
+            "matchPackageNames": ["node", "@types/node"]
+        }
+    ]
+}

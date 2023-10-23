@@ -12,8 +12,26 @@ export interface Relationships {
     };
 }
 
+export interface EntityAttributes {
+    [name: string]: EntityAttribute | EntityAttribute[];
+}
+
+export interface EntityAttribute {
+    id: string;
+    targetValue: string;
+}
+
 export interface Attributes {
-    [name: string]: boolean | number | string | null;
+    [name: string]:
+        | boolean
+        | number
+        | string
+        | object
+        | null
+        | Array<number>
+        | Array<string>
+        | Array<object>
+        | EntityAttributes;
 }
 
 export interface Entity extends Resource {
@@ -39,5 +57,8 @@ export * from './customer';
 export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
+export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';
+export * from './order';
+
