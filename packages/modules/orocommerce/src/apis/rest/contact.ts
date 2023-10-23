@@ -1,16 +1,20 @@
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
+
 import { ApiClient } from './client';
-import { ContactUsInput, ContactUsOutput } from '@aligent/orocommerce-resolvers';
+import {
+    ContactUsInput as OroContactUsInput,
+    ContactUsOutput as OroContactUsOutput,
+} from '../../types';
 
 @Injectable()
 export class ContactClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
-    async postContact(contactUsInput: ContactUsInput): Promise<ContactUsOutput> {
+    async postContact(_contactUsInput: OroContactUsInput): Promise<OroContactUsOutput> {
         // TODO: contact doesn't has an API for contact
         // We are using this as mock
         return new Promise((resolve, _) => {
-            const oroContactUsOutput: ContactUsOutput = {
+            const oroContactUsOutput: OroContactUsOutput = {
                 status: true,
             };
             resolve(oroContactUsOutput);
