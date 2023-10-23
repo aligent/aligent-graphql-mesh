@@ -1,0 +1,47 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "ES2018",
+        "module": "esnext",
+        "lib": ["es2020", "dom"],
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": false,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "strictPropertyInitialization": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "noImplicitOverride": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "@aligent/bigcommerce-graphql-module": ["packages/modules/bigcommerce/src/index.ts"],
+            "@aligent/bigcommerce-operations": [
+                "packages/generated/bigcommerce-operations/src/index.ts"
+            ],
+            "@aligent/bigcommerce-resolvers": [
+                "packages/generated/bigcommerce-resolvers/src/index.ts"
+            ],
+            "@aligent/orocommerce-graphql-module": ["packages/modules/orocommerce/src/index.ts"],
+            "@aligent/orocommerce-resolvers": [
+                "packages/generated/orocommerce-resolvers/src/index.ts"
+            ],
+            "@aligent/utils": ["packages/utils/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
+}

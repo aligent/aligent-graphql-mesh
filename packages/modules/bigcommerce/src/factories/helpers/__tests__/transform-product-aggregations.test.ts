@@ -15,7 +15,7 @@ import {
 const expectedResult = [
     {
         attribute_code: 'brand',
-        count: 0,
+        count: 1,
         label: 'Brand',
         options: [{ count: 1, label: 'Weller', value: '139' }],
         filterType: 'FilterEqualTypeInput',

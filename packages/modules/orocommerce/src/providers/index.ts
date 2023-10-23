@@ -1,16 +1,19 @@
-import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
-import { ApiClient } from '../apis/rest/client';
-import { CustomerClient } from '../apis/rest/customer';
-import { CountryClient } from '../apis/rest/country-client';
-import { CountryTransformer } from '../transformers/country/country-transformer';
-import { ShoppingListsClient } from '../apis/rest/shoppinglists';
-import { Auth } from '../services/auth';
-import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
-import { StoreLocationClient } from '../apis/rest/store-location-api-client';
-import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
-import { getOroTransformers } from '../transformers';
-import { CmsPageClient } from '../apis/rest/cms-page';
+import {InjectionToken, Provider, Scope} from 'graphql-modules';
+import {OroCommerceModuleConfig} from '../index';
+import {ApiClient} from '../apis/rest/client';
+import {CustomerClient} from '../apis/rest/customer';
+import {CountryClient} from '../apis/rest/country-client';
+import {CountryTransformer} from '../transformers/country/country-transformer';
+import {ShoppingListsClient} from '../apis/rest/shoppinglists';
+import {Auth} from '../services/auth';
+import {CurrencyClient} from '../apis/rest/currency';
+import {KeyMessagesClient} from '../apis/rest/key-messages-api-client';
+import {StoreLocationClient} from '../apis/rest/store-location-api-client';
+import {CmsBlockClient} from '../apis/rest/cms-blocks-api-client';
+import {CategoriesClient} from '../apis/rest/category-client';
+import {getOroTransformers} from '../transformers';
+import {CmsPageClient} from '../apis/rest/cms-page';
+import {OrdersClient} from '../apis/rest/orders';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -54,6 +57,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         {
+            useClass: CurrencyClient,
+            provide: CurrencyClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
             useClass: KeyMessagesClient,
             provide: KeyMessagesClient,
             deps: [ApiClient],
@@ -85,6 +94,18 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: CmsPageClient,
             provide: CmsPageClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CategoriesClient,
+            provide: CategoriesClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: OrdersClient,
+            provide: OrdersClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
