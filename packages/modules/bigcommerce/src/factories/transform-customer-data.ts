@@ -18,7 +18,7 @@ export const transformBcCustomer = (
     isSubscriber: boolean
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
-
+    
     return {
         addresses: getTransformedCustomerAddresses(bcAddresses),
         email,

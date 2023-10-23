@@ -4,15 +4,20 @@ import {
     transformBcCustomerToAcCustomerForMutation,
     transformCustomerForMutation,
     getTransformedCreateCustomerData,
+    transformBcCustomer,
 } from '../transform-customer-data';
+import { bcAddress } from './__data__/customer-address-tranformation-data';
 import {
+    acCustomer,
     acCustomerOutputWithEmail,
     acCustomerOutputWithName,
     acCustomerWithEmail,
     acCustomerWithName,
     acCustomerWithNoRemoteAssistance,
     acCustomerWithRemoteAssistance,
+    bcAddresses,
     bcCreateCustomerInputData,
+    bcCustomer,
     bcCustomerForPasswordChange,
     bcMutationCustomerWithEmail,
     bcMutationCustomerWithName,
@@ -118,5 +123,21 @@ describe('Customer Bc to Ac Transformation', () => {
         const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer, isSubscribed);
 
         expect(acCustomer).toEqual(acCustomerExpected);
+    });
+
+    test('Transform entire customer object from BC to AC', () => {
+        const bcCustomerInput = bcCustomer;
+        const bcAddressInput = bcAddresses;
+        const isSubscribed = true;
+
+        const acCustomerExpected = acCustomer;
+
+        const transformedAcCustomer = transformBcCustomer(
+            bcCustomerInput,
+            bcAddressInput,
+            isSubscribed
+        );
+
+        expect(transformedAcCustomer).toEqual(acCustomerExpected);
     });
 });
