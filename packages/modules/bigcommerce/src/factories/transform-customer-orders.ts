@@ -72,7 +72,7 @@ export const getTransformedOrders = (
                     },
                     total_amount: {
                         currency: bcOrder.currency_code as CurrencyEnum,
-                        value: Number(bcOrder.subtotal_inc_tax),
+                        value: Number(bcOrder.shipping_cost_inc_tax),
                     },
                 },
                 taxes: [

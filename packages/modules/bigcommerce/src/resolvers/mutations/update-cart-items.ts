@@ -36,7 +36,7 @@ export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
             cart_items[0].cart_item_uid
         );
 
-        const updateCartResponse = await updateCartLineItem(
+        const { cart: cartMutationResponse } = await updateCartLineItem(
             {
                 cartEntityId: cart_id,
                 lineItemEntityId,
@@ -52,14 +52,17 @@ export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
             customerImpersonationToken
         );
 
-        if (!updateCartResponse?.entityId) return null;
+        /* We fall back to using the "cartId" arg when the "addProductsToCart" errors
+         * due to "user_errors", This way we can query for the user existing
+         * cart and return it to them along with the user_error */
+        const cartIdToQuery = cartMutationResponse?.entityId || cart_id;
 
         /* The response from update cart doesn't supply enough data which Take Flight is expecting
          * so we have to follow up with a getCheckout query to get more enriched data. */
         const checkoutResponse = await getEnrichedCart(
-            { cart_id: updateCartResponse.entityId },
-            bcCustomerId,
-            customerImpersonationToken
+            { cart_id: cartIdToQuery },
+            context,
+            bcCustomerId
         );
 
         return {

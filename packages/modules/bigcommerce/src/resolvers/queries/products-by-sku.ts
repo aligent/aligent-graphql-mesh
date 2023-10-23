@@ -1,10 +1,10 @@
 import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
-import { getTaxSettings } from '../../apis/graphql';
 import { getProducts } from '../../apis/rest/products';
-import { getBcProductsGraphql } from '../../apis/graphql';
-import { AxiosGraphqlError, getIncludesTax } from '@aligent/utils';
-import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../../../../utils/sort';
+import { getBcProductsGraphql, retrieveStoreConfigsFromCache } from '../../apis/graphql';
+import { AxiosGraphqlError } from '@aligent/utils';
+import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../utils/sort';
+import { getIncludesTax } from '../../utils/get-tax';
 
 /* This is the maximum page size we're allowing for a products by sku look up */
 const MAX_SKU_QUERY_LIMIT = 50;
@@ -21,7 +21,8 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const taxSettings = await getTaxSettings(customerImpersonationToken);
+        const storeConfig = await retrieveStoreConfigsFromCache(context);
+        const { tax: taxSettings } = storeConfig;
 
         /* Convert sort args coming from the FE to a sort structure the rest products query will accept */
         const transformedSort = transformGQLSortArgsToRestSortArgs(args.sort, sortKeyMapping);
@@ -96,6 +97,10 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
             transformedSort.direction
         );
 
-        return getTransformedProductsData({ products: { ...bcProducts, edges: sortedProducts } });
+        return getTransformedProductsData(
+            { products: { ...bcProducts, edges: sortedProducts } },
+            args.pageSize,
+            1
+        );
     },
 };

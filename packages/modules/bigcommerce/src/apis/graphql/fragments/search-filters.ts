@@ -3,6 +3,7 @@ import { gql } from 'graphql-tag';
 export const searchFilters = gql`
     fragment SearchFilters on SearchProductFilter {
         name
+        __typename
         ... on BrandSearchFilter {
             displayProductCount
             brands {
@@ -15,7 +16,6 @@ export const searchFilters = gql`
                     }
                 }
             }
-            __typename
         }
         ... on CategorySearchFilter {
             displayProductCount
@@ -53,7 +53,6 @@ export const searchFilters = gql`
                 maxPrice
             }
             name
-            __typename
         }
         ... on ProductAttributeSearchFilter {
             displayProductCount
@@ -69,7 +68,6 @@ export const searchFilters = gql`
                     }
                 }
             }
-            __typename
         }
         ... on RatingSearchFilter {
             ratings {
@@ -81,7 +79,6 @@ export const searchFilters = gql`
                     }
                 }
             }
-            __typename
         }
         ... on SearchProductFilter {
             name

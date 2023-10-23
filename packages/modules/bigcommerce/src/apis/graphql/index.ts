@@ -5,6 +5,7 @@ export * from './channel';
 export * from './checkout';
 export * from './client';
 export * from './customer';
+export * from './store-configs';
 export * from './login';
 export * from './pdp-product';
 export * from './products';

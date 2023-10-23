@@ -53,8 +53,8 @@ export const removeItemFromCartResolver = {
 
         const checkoutResponse = await getEnrichedCart(
             { cart_id: removeCartItemResponse.entityId },
-            bcCustomerId,
-            customerImpersonationToken
+            context,
+            bcCustomerId
         );
 
         return {

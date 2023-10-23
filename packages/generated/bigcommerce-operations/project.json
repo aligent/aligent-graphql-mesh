@@ -1,0 +1,32 @@
+{
+    "name": "bigcommerce-operations",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/modules/bigcommerce/src",
+    "projectType": "library",
+    "targets": {
+        "codegen": {
+            "executor": "nx:run-commands",
+            "inputs": ["codegen"],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "packages/generated/bigcommerce-operations/src",
+                "command": "env-cmd -f packages/mesh/bigcommerce/.env --silent graphql-codegen --config {projectRoot}/codegen.ts"
+            }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/generated/bigcommerce-operations",
+                "tsConfig": "packages/generated/bigcommerce-operations/tsconfig.lib.json",
+                "packageJson": "packages/generated/bigcommerce-operations/package.json",
+                "main": "packages/generated/bigcommerce-operations/src/index.ts"
+            },
+            "dependsOn": ["codegen"]
+        }
+    },
+    "tags": [],
+    "namedInputs": {
+        "codegen": ["{projectRoot}/codegen.ts"]
+    }
+}

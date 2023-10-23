@@ -1,0 +1,32 @@
+{
+    "name": "orocommerce-resolvers",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/modules/orocommerce/src",
+    "projectType": "library",
+    "targets": {
+        "codegen": {
+            "executor": "nx:run-commands",
+            "inputs": ["codegen"],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "packages/generated/orocommerce-resolvers/src",
+                "command": "env-cmd -f packages/mesh/orocommerce/.env --silent graphql-codegen --config {projectRoot}/codegen.ts"
+            }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/generated/orocommerce-resolvers",
+                "tsConfig": "packages/generated/orocommerce-resolvers/tsconfig.lib.json",
+                "packageJson": "packages/generated/orocommerce-resolvers/package.json",
+                "main": "packages/generated/orocommerce-resolvers/src/index.ts"
+            },
+            "dependsOn": ["codegen"]
+        }
+    },
+    "tags": [],
+    "namedInputs": {
+        "codegen": ["{projectRoot}/codegen.ts"]
+    }
+}
