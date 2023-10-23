@@ -40,3 +40,4 @@ export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
 export * from './customer-user';
+export * from './customer-address';

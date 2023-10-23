@@ -1,0 +1,23 @@
+export interface CustomerAddresses {
+    type: 'customeruseraddresses';
+    attributes: CustomerAddressesAttributes;
+    relationships: CustomerAddressesRelationships;
+}
+
+interface CustomerAddressesAttributes {
+    city: string;
+    firstName: string | null;
+    lastName: string | null;
+    organization: string | null;
+    postalCode: string;
+    street: string;
+    street2: string | null;
+    phone: string | null;
+    types: { default: boolean; addressType: string }[];
+}
+
+interface CustomerAddressesRelationships {
+    country: { data: { type: string; id: string } };
+    customerUser: { data: { type: string; id: string } };
+    region: { data: { type: string; id: string } };
+}
