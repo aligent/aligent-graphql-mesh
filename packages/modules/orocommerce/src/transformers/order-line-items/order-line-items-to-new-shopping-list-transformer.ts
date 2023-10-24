@@ -1,4 +1,3 @@
-import { Transformer, TransformerContext } from '../../../../../utils/transformers';
 import { ShoppingListAttribute } from '../../types';
 import { OroOrderLineItem } from '../../types/order-line-item';
 import {
@@ -8,6 +7,7 @@ import {
 } from '../../types/shopping-list-input';
 import { v4 as uuidv4 } from 'uuid';
 import { OrderLineItemToShoppingListItemTransformer } from './order-line-item-to-shopping-list-item-transformer';
+import { Transformer, TransformerContext } from '@aligent/utils';
 
 export interface OrderLineItemsToNewShoppingListTransformerInput {
     newShoppingList: ShoppingListAttribute;

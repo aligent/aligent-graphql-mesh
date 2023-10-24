@@ -109,7 +109,7 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             useClass: ReorderItemsClient,
             provide: ReorderItemsClient,
             deps: [ApiClient],
-            scope: Scope.Operation
+            scope: Scope.Operation,
         },
         {
             useClass: CategoriesClient,

@@ -1,11 +1,6 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
-import {
-    ShoppingList,
-    ShoppingListItem,
-    ShoppingListWithItems,
-    ShoppingListsWithItems,
-} from '../../types';
+import { ShoppingList, ShoppingListItem, ShoppingListWithItems } from '../../types';
 import {
     ShoppingListItemInputWithoutID,
     ShoppingListWithItemsInput,

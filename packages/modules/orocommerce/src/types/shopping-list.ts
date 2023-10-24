@@ -1,9 +1,4 @@
 import { Entity, Attributes } from '.';
-
-export interface ShoppingListsWithItems {
-    data: ShoppingList[];
-    included: ShoppingListItem[];
-}
 export interface ShoppingListWithItems {
     data: ShoppingList;
     included: ShoppingListItem[];

@@ -4,5 +4,5 @@ export * from './country-client';
 export * from './currency';
 export * from './customer';
 export * from './key-messages-api-client';
-export * from './shoppinglists';
+export * from './shopping-list-api-client';
 export * from './store-location-api-client';

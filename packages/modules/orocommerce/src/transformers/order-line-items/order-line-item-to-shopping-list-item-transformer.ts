@@ -1,4 +1,4 @@
-import { Transformer, TransformerContext } from '../../../../../utils/transformers';
+import { Transformer, TransformerContext } from '@aligent/utils';
 import { OroOrderLineItem } from '../../types/order-line-item';
 import { ShoppingListItemInputWithoutID } from '../../types/shopping-list-input';
 
