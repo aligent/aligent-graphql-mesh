@@ -12,6 +12,7 @@ import { storeLocationsResolver } from './queries/store-locations';
 import { createCustomerMutation } from './mutations/create-customer';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
+import { deleteCustomerAddressMutation } from './mutations/delete-customer-address';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -28,6 +29,7 @@ export const resolvers: Resolvers = {
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         createCustomer: createCustomerMutation,
+        deleteCustomerAddress: deleteCustomerAddressMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

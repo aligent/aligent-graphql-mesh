@@ -18,4 +18,9 @@ export class CustomerClient {
         );
         return response;
     }
+
+    async deleteCustomerAddress(id: number): Promise<boolean> {
+        const response = await this.apiClient.delete(`/customeruseraddresses/${id}`);
+        return response;
+    }
 }
