@@ -1,4 +1,4 @@
-export interface CustomerAddresses {
+export interface OroCustomerAddress {
     type: 'customeruseraddresses';
     attributes: CustomerAddressesAttributes;
     relationships: CustomerAddressesRelationships;

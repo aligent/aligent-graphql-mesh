@@ -18,7 +18,7 @@ export const createCustomerAddressMutation: MutationResolvers['createCustomerAdd
         const transformedCustomerAddress = getTransformCustomerAddress(input);
 
         const customerClient: CustomerClient = context.injector.get(CustomerClient);
-        const response = await customerClient.createCustomerAddresses(transformedCustomerAddress);
+        const response = await customerClient.createCustomerAddress(transformedCustomerAddress);
 
         return transformOroAddress(response);
     },
