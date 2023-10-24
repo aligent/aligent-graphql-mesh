@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
-import { isCustomerAddressValid } from '../../utils';
+import { isCustomerAddressNotValid } from '../../utils';
 import {
     getTransformCustomerAddress,
     transformOroAddress,
@@ -9,7 +9,7 @@ import { CustomerClient } from '../../apis/rest/customer';
 
 export const createCustomerAddressMutation: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
-        if (isCustomerAddressValid(input)) {
+        if (isCustomerAddressNotValid(input)) {
             return logAndThrowError(
                 'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );

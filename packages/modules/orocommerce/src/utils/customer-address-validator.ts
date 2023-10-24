@@ -1,6 +1,6 @@
 import { CustomerAddressInput } from '@aligent/orocommerce-resolvers';
 
-export const isCustomerAddressValid = (input: CustomerAddressInput) => {
+export const isCustomerAddressNotValid = (input: CustomerAddressInput) => {
     if (
         input &&
         input.city &&
