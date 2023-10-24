@@ -4,13 +4,16 @@ import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
 import { CountryTransformer } from '../transformers/country/country-transformer';
-import { ShoppingListsClient } from '../apis/rest/shoppinglists';
+import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { Auth } from '../services/auth';
 import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { getOroTransformers } from '../transformers';
+import { ReorderItemsClient } from '../apis/rest/reorder-items-api-client';
+import { CartDetailsService } from '../services/cart-details-service';
+import { ShoppingListService } from '../services/shopping-list-service';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -34,6 +37,18 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             useClass: Auth,
             provide: Auth,
             deps: [ModuleConfig],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CartDetailsService,
+            provide: CartDetailsService,
+            deps: [ShoppingListsClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: ShoppingListService,
+            provide: ShoppingListService,
+            deps: [ShoppingListsClient],
             scope: Scope.Operation,
         },
         {
@@ -85,6 +100,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: CmsBlockClient,
             provide: CmsBlockClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: ReorderItemsClient,
+            provide: ReorderItemsClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },

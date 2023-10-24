@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
-import { ShoppingListsClient } from '../../apis/rest/shoppinglists';
+import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
 
 /**
  * If the customer has a shopping list, return it. If not create a new shopping list.

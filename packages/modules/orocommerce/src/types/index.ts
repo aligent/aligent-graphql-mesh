@@ -10,7 +10,7 @@ export interface Relationships {
 }
 
 export interface Attributes {
-    [name: string]: boolean | number | string | null;
+    [name: string]: boolean | number | string | null | Attributes[];
 }
 
 export interface Entity extends Resource {
