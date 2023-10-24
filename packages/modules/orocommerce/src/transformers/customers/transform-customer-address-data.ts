@@ -1,12 +1,8 @@
-import {
-    CustomerAddressInput,
-    CustomerAddress,
-    CountryCodeEnum,
-} from '@aligent/orocommerce-resolvers';
-import { OroCustomerAddress } from '../../types';
+import { CustomerAddress, CountryCodeEnum } from '@aligent/orocommerce-resolvers';
+import { OroCustomerAddress, CustomerAddressValidated } from '../../types';
 
 export const getTransformCustomerAddress = (
-    customerAddress: CustomerAddressInput
+    customerAddress: CustomerAddressValidated
 ): OroCustomerAddress => {
     const {
         postcode,
@@ -24,13 +20,13 @@ export const getTransformCustomerAddress = (
     const transformedCustomerAddress: OroCustomerAddress = {
         type: 'customeruseraddresses',
         attributes: {
-            city: city!,
+            city: city,
             firstName: firstname,
             lastName: lastname,
             organization: company,
-            postalCode: postcode!,
-            street: street![0]!,
-            street2: street![1] || null,
+            postalCode: postcode,
+            street: street[0],
+            street2: street[1] || null,
             phone: telephone,
             types: [
                 {
@@ -59,7 +55,7 @@ export const getTransformCustomerAddress = (
             region: {
                 data: {
                     type: 'regions',
-                    id: region!.region_id ? region!.region_id.toString() : `${region!.region}`,
+                    id: region.region_id ? region.region_id.toString() : `${region.region}`,
                 },
             },
         },

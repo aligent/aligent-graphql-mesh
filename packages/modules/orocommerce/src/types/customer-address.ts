@@ -1,3 +1,18 @@
+import { CustomerAddressInput, CountryCodeEnum } from '@aligent/orocommerce-resolvers';
+
+export interface CustomerAddressValidated extends CustomerAddressInput {
+    firstname: string;
+    lastname: string;
+    city: string;
+    country_code: CountryCodeEnum;
+    street: string[];
+    region: {
+        region: string;
+        region_id: string;
+    };
+    postcode: string;
+}
+
 export interface OroCustomerAddress {
     type: 'customeruseraddresses';
     attributes: CustomerAddressesAttributes;
