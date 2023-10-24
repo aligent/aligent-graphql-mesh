@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import { DateTime } from 'luxon';
 
 export const getUnixTimeStampInSeconds = (additionalTime: { additionalHours: number }) => {
     const hoursInSeconds = 60 * 60 * additionalTime.additionalHours; // sec * mins * hours
@@ -7,11 +8,10 @@ export const getUnixTimeStampInSeconds = (additionalTime: { additionalHours: num
 };
 
 export const getUnixTimeStampInSecondsForMidnightTonight = (): number => {
-    const currentDate = new Date();
-
-    currentDate.setHours(24, 0, 0, 0);
-
-    return currentDate.getTime() / 1000;
+    return DateTime.now()
+        .setZone('Australia/Brisbane')
+        .set({ hour: 24, minute: 0, second: 0, millisecond: 0 })
+        .toSeconds();
 };
 
 export const convertDateFormat = (inputDate: string): string => {
