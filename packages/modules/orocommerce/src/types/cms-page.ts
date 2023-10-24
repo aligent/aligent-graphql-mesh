@@ -10,7 +10,7 @@ export interface OroLandingPageAttributes extends Attributes {
     title: string;
     createdAt: string;
     url: string;
-    urls: string;
+    urls: string[];
     metaTitle: string;
     metaDescription: string;
     metaKeywords: string;

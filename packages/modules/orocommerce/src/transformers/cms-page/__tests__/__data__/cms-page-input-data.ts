@@ -7,7 +7,7 @@ export const oroLandingPage: OroLandingPage = {
         title: 'Landing Page title',
         createdAt: '2023-10-12 11:00:00',
         url: 'https://aligent.com.au/landing-page',
-        urls: 'https://aligent.com.au/landing-page',
+        urls: ['https://aligent.com.au/landing-page'],
         metaTitle: 'landing page meta title',
         metaDescription: 'meta description landing page',
         metaKeywords: 'Meta keywords landing page',

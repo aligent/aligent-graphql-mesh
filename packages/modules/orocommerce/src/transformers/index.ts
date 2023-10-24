@@ -20,6 +20,7 @@ import {
     BreadcrumbsTransformer,
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
+import { CmsPageTransformer, CmsPageTransformerChain } from './cms-page/transform-cms-page-data';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -118,6 +119,22 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+        // Cms Page Register Chain transformers
+        {
+            provide: CmsPageTransformerChain,
+            useClass: CmsPageTransformerChain,
+            global: true,
+        },
+        {
+            provide: CmsPageTransformer,
+            useFactory: (transformerChain) => {
+                const cmsPageTransformer = new CmsPageTransformer();
+                // Add to the chain transformer
+                transformerChain.addTransformer(CmsPageTransformer);
+                return cmsPageTransformer;
+            },
+            deps: [CmsPageTransformerChain],
         },
     ];
 };

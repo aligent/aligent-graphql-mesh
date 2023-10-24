@@ -3,10 +3,10 @@ import { CmsPageClient } from '../../apis/rest/cms-page';
 import { CmsPageTransformerChain } from '../../transformers/cms-page/transform-cms-page-data';
 
 export const cmsPageResolver: QueryResolvers['cmsPage'] = {
-    resolve: async (_root, _args, context, _info) => {
+    resolve: async (_root, args, context, _info) => {
         const cmsPageClient: CmsPageClient = context.injector.get(CmsPageClient);
 
-        const id = String(_args.id)
+        const id = String(args.id);
         const oroLandingPage = await cmsPageClient.getLandingPage(id);
 
         const cmsPageTransformerChain: CmsPageTransformerChain =
