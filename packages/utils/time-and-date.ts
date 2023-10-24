@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 import { DateTime } from 'luxon';
 
 export const getUnixTimeStampInSeconds = (additionalTime: { additionalHours: number }) => {
@@ -15,12 +14,10 @@ export const getUnixTimeStampInSecondsForMidnightTonight = (): number => {
 };
 
 export const convertDateFormat = (inputDate: string): string => {
-    const inputDateFormat = 'ddd, DD MMM YYYY HH:mm:ss Z'; // BC Format
-    const outputDateFormat = 'YYYY-MM-DD HH:mm:ss'; // AC Format
+    // 'ddd, DD MMM YYYY HH:mm:ss Z' -> BC Format
+    const outputDateFormat = 'yyyy-MM-dd hh:mm:ss'; // AC Format
 
-    const parsedDate = moment.utc(inputDate, inputDateFormat);
+    const parsedDate = DateTime.fromRFC2822(inputDate, { setZone: true }).toString();
 
-    const formattedDate = parsedDate.format(outputDateFormat);
-
-    return formattedDate;
+    return DateTime.fromISO(parsedDate, { setZone: true }).toFormat(outputDateFormat);
 };

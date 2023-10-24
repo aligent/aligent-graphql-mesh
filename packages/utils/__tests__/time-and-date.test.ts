@@ -1,4 +1,8 @@
-import { convertDateFormat, getUnixTimeStampInSecondsForMidnightTonight } from '../time-and-date';
+import {
+    convertDateFormat,
+    getUnixTimeStampInSeconds,
+    getUnixTimeStampInSecondsForMidnightTonight,
+} from '../time-and-date';
 
 beforeAll(() => {
     jest.useFakeTimers();
@@ -21,5 +25,12 @@ describe('Time and Date tests', () => {
 
         const result = getUnixTimeStampInSecondsForMidnightTonight();
         expect(result).toEqual(1666188000);
+    });
+
+    test('return unix time stamp in seconds plus an additional amount of hours', () => {
+        jest.setSystemTime(new Date('2022-10-18T20:42:16.652+00:00').getTime());
+        const result = getUnixTimeStampInSeconds({ additionalHours: 24 });
+
+        expect(result).toEqual(1666212137);
     });
 });

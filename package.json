@@ -74,7 +74,6 @@
     "lodash": "^4.17.21",
     "luxon": "^3.4.3",
     "module-alias": "^2.2.3",
-    "moment-timezone": "^0.5.43",
     "uuid": "^9.0.0"
   }
 }

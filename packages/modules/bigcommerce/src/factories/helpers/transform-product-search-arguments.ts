@@ -1,8 +1,13 @@
 import { atob } from '@aligent/utils';
-import { FilterTypeInput, QueryProductsArgs } from '@aligent/bigcommerce-resolvers';
+import {
+    FilterTypeInput,
+    ProductAttributeSortInput,
+    QueryProductsArgs,
+} from '@aligent/bigcommerce-resolvers';
 import {
     SearchProductsFiltersInput,
     SearchProductFilterConnection,
+    SearchProductsSortInput,
 } from '@aligent/bigcommerce-operations';
 
 type createFilterMappingProps = {
@@ -156,4 +161,21 @@ export const getTransformedProductArgs = (
     }
 
     return bcProductFilters;
+};
+
+export const getTransformedSortArguments = (
+    sortArgs: ProductAttributeSortInput | null
+): SearchProductsSortInput => {
+    if (!sortArgs) {
+        return 'RELEVANCE';
+    }
+
+    if ('price' in sortArgs) {
+        if (sortArgs.price === 'ASC') {
+            return 'LOWEST_PRICE';
+        }
+        return 'HIGHEST_PRICE';
+    }
+
+    return 'RELEVANCE';
 };
