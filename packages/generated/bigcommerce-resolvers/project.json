@@ -1,0 +1,32 @@
+{
+    "name": "bigcommerce-resolvers",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/modules/bigcommerce/src",
+    "projectType": "library",
+    "targets": {
+        "codegen": {
+            "executor": "nx:run-commands",
+            "inputs": ["codegen"],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "packages/generated/bigcommerce-resolvers/src",
+                "command": "env-cmd -f packages/mesh/bigcommerce/.env --silent graphql-codegen --config {projectRoot}/codegen.ts"
+            }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/generated/bigcommerce-resolvers",
+                "tsConfig": "packages/generated/bigcommerce-resolvers/tsconfig.lib.json",
+                "packageJson": "packages/generated/bigcommerce-resolvers/package.json",
+                "main": "packages/generated/bigcommerce-resolvers/src/index.ts"
+            },
+            "dependsOn": ["codegen"]
+        }
+    },
+    "tags": [],
+    "namedInputs": {
+        "codegen": ["{projectRoot}/codegen.ts"]
+    }
+}

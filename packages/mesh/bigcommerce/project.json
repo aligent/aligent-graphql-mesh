@@ -1,0 +1,68 @@
+{
+    "name": "bigcommerce-mesh",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/mesh/bigcommerce/src",
+    "projectType": "application",
+    "targets": {
+        "mesh-build": {
+            "executor": "nx:run-commands",
+            "inputs": [],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "command": "mesh build --throwOnInvalidConfiguration --dir packages/mesh/bigcommerce",
+                "runBuildTargetDependencies": true
+            },
+            "dependsOn": [
+                {
+                    "projects": [
+                        "bigcommerce-graphql-module",
+                        "bigcommerce-resolvers",
+                        "bigcommerce-operations"
+                    ],
+                    "target": "build"
+                }
+            ]
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/mesh/bigcommerce",
+                "tsConfig": "packages/mesh/bigcommerce/tsconfig.app.json",
+                "packageJson": "packages/mesh/bigcommerce/package.json",
+                "main": "packages/mesh/bigcommerce/src/server.ts",
+                "assets": ["packages/mesh/bigcommerce/.mesh/**/*.graphql"],
+                "external": "none",
+                "generateExportsField": true,
+                "generateLockfile": true
+            },
+            "dependsOn": ["mesh-build"]
+        },
+        "serve": {
+            "executor": "nx:run-commands",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "command": "STAGE=dev mesh dev --dir packages/mesh/bigcommerce",
+                "runBuildTargetDependencies": true
+            },
+            "dependsOn": [
+                {
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations"],
+                    "target": "codegen"
+                }
+            ]
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/mesh/bigcommerce/**/*.ts"]
+            }
+        },
+        "docker-build": {
+            "dependsOn": ["build"],
+            "command": "docker build -f packages/mesh/bigcommerce/Dockerfile . -t bigcommerce-mesh"
+        }
+    },
+    "tags": []
+}

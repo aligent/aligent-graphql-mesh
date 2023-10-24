@@ -1,12 +1,17 @@
-import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
+import {
+    BundleCartItem,
+    ConfigurableCartItem,
+    MutationResolvers,
+    SimpleCartItem,
+} from '@aligent/bigcommerce-resolvers';
+import { GraphqlError } from '@aligent/utils';
 import {
     addProductsToCart,
+    assignGuestCartToNewUserAccount,
     getCartIdFromBcCustomerAttribute,
-    getCheckout,
 } from '../../apis/graphql';
 import { getBcCustomerId } from '../../utils';
 import { transformCartItemsToLineItems } from '../../factories/transform-cart-items-to-line-items';
-import { getTransformedCartData } from '../../factories/transform-cart-data';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
@@ -17,50 +22,68 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
 
         //  Merge cart can be only performed by a logged-in user
         if (!bcCustomerId)
-            throw new Error("The current customer isn't authorized to perform merge cart");
+            throw new GraphqlError(
+                'authorization',
+                "The current customer isn't authorized to perform merge cart"
+            );
 
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
-        const guestCheckout = await getCheckout(guestCartId, null, customerImpersonationToken);
+
+        const guestCheckoutQuery = getEnrichedCart({ cart_id: guestCartId }, context, null);
 
         // There may be a cart to merge provided by the FE or already attached to the customer
-        const customerCartId =
+        const customerCartIdQuery =
             destination_cart_id ||
-            (await getCartIdFromBcCustomerAttribute(bcCustomerId, customerImpersonationToken));
+            getCartIdFromBcCustomerAttribute(bcCustomerId, customerImpersonationToken);
 
+        const [guestCheckout, customerCartId] = await Promise.all([
+            guestCheckoutQuery,
+            customerCartIdQuery,
+        ]);
+
+        /* This is for guest users who have a guest cart and are creating a new account.
+         * Since we know the user doesn't have a cart attached to a user account we assign
+         * their guest cart to their new customer account */
         if (!customerCartId) {
-            // Nothing to merge, return the guest cart
-            return getTransformedCartData(guestCheckout);
+            await assignGuestCartToNewUserAccount(
+                guestCartId,
+                bcCustomerId,
+                customerImpersonationToken
+            );
+
+            return guestCheckout;
         }
 
-        const customerCheckout = getEnrichedCart(
-            { cart_id: customerCartId },
-            bcCustomerId,
-            customerImpersonationToken
-        );
-
         // At this point we certainly have the customerCartId so If guest cart doesn't have a cart -> return customer cart
-        if (!guestCheckout.cart) {
+        if (!guestCheckout.items) {
+            const customerCheckout = await getEnrichedCart(
+                { cart_id: customerCartId },
+                context,
+                bcCustomerId
+            );
+
             return customerCheckout;
         }
 
         const guestCartLineItems = transformCartItemsToLineItems(
-            guestCheckout.cart.lineItems.physicalItems
+            guestCheckout.items as Array<ConfigurableCartItem | BundleCartItem | SimpleCartItem>
         );
 
         // Merge the guest and customer cart by adding line items of guest cart to customer cart
-        const updatedCustomerCartResponse = await addProductsToCart(
+        const cartMutationResponse = await addProductsToCart(
             customerCartId,
             { lineItems: guestCartLineItems },
             customerImpersonationToken,
             bcCustomerId
         );
 
-        return getEnrichedCart(
-            { cart_id: updatedCustomerCartResponse.entityId },
-            bcCustomerId,
-            customerImpersonationToken
-        );
+        /* We fall back to using the "customerCartId" arg when the "addProductsToCart" errors
+         * due to "user_errors", This way we can query for the user existing
+         * cart and return it to them along with the user_error */
+        const cartIdToQuery = cartMutationResponse.cart?.entityId || customerCartId;
+
+        return getEnrichedCart({ cart_id: cartIdToQuery }, context, bcCustomerId);
     },
 };

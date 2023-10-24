@@ -39,3 +39,5 @@ export const jsonStringStoreConfigProperties = [
     'paypal_express',
     'StoreInformation',
 ];
+
+export const STORE_CONFIG__GRID_PER_PAGE = 24;

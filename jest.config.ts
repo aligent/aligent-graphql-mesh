@@ -1,15 +1,8 @@
-import type { Config } from 'jest';
+import { getJestProjects } from '@nx/jest';
 
-const config: Config = {
-    testEnvironment: 'node',
-    transform: {
-        '^.+\\.m?[tj]sx?$': [
-            'ts-jest',
-            {
-                isolatedModules: true,
-            },
-        ],
-    },
+export default {
+    projects: getJestProjects(),
+    modulePathIgnorePatterns: ['__data__'],
     coverageThreshold: {
         global: {
             branches: 80,
@@ -18,15 +11,4 @@ const config: Config = {
             statements: 80,
         },
     },
-    modulePathIgnorePatterns: ['__data__'],
-    moduleNameMapper: {
-        '@aligent/bigcommerce-graphql-module': '<rootDir>/packages/modules/bigcommerce/src/index',
-        '@aligent/bigcommerce-operations':
-            '<rootDir>/packages/generated/bigcommerce/operations/index',
-        '@aligent/bigcommerce-resolvers':
-            '<rootDir>/packages/generated/bigcommerce/resolvers/index',
-        '@aligent/utils': '<rootDir>/packages/utils/index',
-    },
 };
-
-export default config;

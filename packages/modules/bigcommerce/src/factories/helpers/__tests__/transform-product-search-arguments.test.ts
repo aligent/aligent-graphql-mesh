@@ -41,6 +41,12 @@ const availableFilters = {
                 __typename: 'OtherSearchFilter',
             },
         },
+        {
+            node: {
+                name: 'Category',
+                __typename: 'CategorySearchFilter',
+            },
+        },
     ],
 } as SearchProductFilterConnection;
 

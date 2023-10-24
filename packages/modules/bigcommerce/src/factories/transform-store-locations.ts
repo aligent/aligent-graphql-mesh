@@ -60,6 +60,7 @@ export const getTransformedStoreLocationItems = (
             city: location?.node?.address?.city,
             distance: location?.node?.distance?.value,
             email: location?.node?.address?.email,
+            id: location?.node.entityId,
             latitude: location?.node?.address?.latitude,
             longitude: location?.node?.address?.longitude,
             name: location?.node?.label,

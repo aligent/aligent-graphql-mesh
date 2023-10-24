@@ -1,4 +1,4 @@
-import { acOrders, bcOrders } from './__data__/customer-orders.data';
+import { acOrders, bcOrders } from './__data__/customer-orders-data';
 import { getTransformedOrders } from '../transform-customer-orders';
 
 describe('transform customer orders from BC to AC', () => {

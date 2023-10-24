@@ -68,54 +68,69 @@ const expectResult = [
 
 describe('transform-configurable-options', () => {
     it('Gets AC configurable_options structured data from BC productOptions', () => {
-        expect(getTransformedConfigurableOptions(mockBcProducts[0].productOptions)).toEqual(
-            expectResult
-        );
+        expect(
+            getTransformedConfigurableOptions(
+                mockBcProducts[0].productOptions,
+                'ConfigurableProduct'
+            )
+        ).toEqual(expectResult);
     });
 
     it(`Returns an empty array if there's no productOptions.edges`, () => {
         expect(
-            getTransformedConfigurableOptions({
-                ...mockBcProducts[0].productOptions,
-                edges: undefined,
-            })
+            getTransformedConfigurableOptions(
+                {
+                    ...mockBcProducts[0].productOptions,
+                    edges: undefined,
+                },
+                'ConfigurableProduct'
+            )
         ).toEqual([]);
     });
 
     it(`Returns an empty array if there's no productOption values`, () => {
         expect(
-            getTransformedConfigurableOptions({
-                ...mockBcProducts[0].productOptions,
-                edges: [{} as Maybe<ProductOptionEdge>],
-            })
+            getTransformedConfigurableOptions(
+                {
+                    ...mockBcProducts[0].productOptions,
+                    edges: [{} as Maybe<ProductOptionEdge>],
+                },
+                'ConfigurableProduct'
+            )
         ).toEqual([]);
     });
 
     it(`Returns null if there's no values in the productOption array`, () => {
         expect(
-            getTransformedConfigurableOptions({
-                ...mockBcProducts[0].productOptions,
-                edges: [null],
-            })
+            getTransformedConfigurableOptions(
+                {
+                    ...mockBcProducts[0].productOptions,
+                    edges: [null],
+                },
+                'ConfigurableProduct'
+            )
         ).toEqual([]);
     });
 
     it(`Returns and empty array if there's no value in a productOptions.values`, () => {
         expect(
-            getTransformedConfigurableOptions({
-                ...mockBcProducts[0].productOptions,
-                edges: [
-                    {
-                        cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                        node: {
-                            ...mockBcProducts[0].productOptions.edges[0].node,
-                            values: {
-                                edges: [null],
-                            },
-                        } as MultipleChoiceOption,
-                    },
-                ],
-            })
+            getTransformedConfigurableOptions(
+                {
+                    ...mockBcProducts[0].productOptions,
+                    edges: [
+                        {
+                            cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                            node: {
+                                ...mockBcProducts[0].productOptions.edges[0].node,
+                                values: {
+                                    edges: [null],
+                                },
+                            } as MultipleChoiceOption,
+                        },
+                    ],
+                },
+                'ConfigurableProduct'
+            )
         ).toEqual([
             {
                 ...expectResult[0],

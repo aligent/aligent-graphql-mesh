@@ -1,5 +1,5 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { OroCommerceModuleConfig } from '@aligent/orocommerce-graphql-module';
+import { OroCommerceModuleConfig } from '../index';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
@@ -10,10 +10,12 @@ import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
+import { CategoriesClient } from '../apis/rest/category-client';
 import { getOroTransformers } from '../transformers';
 import { ReorderItemsClient } from '../apis/rest/reorder-items-api-client';
 import { CartDetailsService } from '../services/cart-details-service';
 import { ShoppingListService } from '../services/shopping-list-service';
+import { OrdersClient } from '../apis/rest/orders';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -106,6 +108,18 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ReorderItemsClient,
             provide: ReorderItemsClient,
+            deps: [ApiClient],
+            scope: Scope.Operation
+        },
+        {
+            useClass: CategoriesClient,
+            provide: CategoriesClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: OrdersClient,
+            provide: OrdersClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
