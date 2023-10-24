@@ -1,10 +1,7 @@
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
 
 import { ApiClient } from './client';
-import {
-    ContactUsInput as OroContactUsInput,
-    ContactUsOutput as OroContactUsOutput,
-} from '../../types';
+import { OroContactUsInput, OroContactUsOutput } from '../../types';
 
 @Injectable()
 export class ContactClient {

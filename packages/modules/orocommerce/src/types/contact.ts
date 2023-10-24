@@ -1,4 +1,4 @@
-export interface ContactUsInput {
+export interface OroContactUsInput {
     comment: string;
     email: string;
     name: string;
@@ -6,7 +6,7 @@ export interface ContactUsInput {
 }
 
 /** Contains the status of the request. */
-export interface ContactUsOutput {
+export interface OroContactUsOutput {
     __typename?: 'ContactUsOutput';
     status: boolean;
 }

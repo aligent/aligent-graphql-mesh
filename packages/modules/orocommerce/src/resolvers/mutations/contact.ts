@@ -1,9 +1,6 @@
 import { ContactUsInput, MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ContactClient } from '../../apis/rest/contact';
-import {
-    ContactUsInput as OroContactUsInput,
-    ContactUsOutput as OroContactUsOutput,
-} from '../../types';
+import { OroContactUsInput, OroContactUsOutput } from '../../types';
 
 export const postContactFormMutation: MutationResolvers['postContactForm'] = {
     resolve: async (_root, { input }, context: GraphQLModules.Context, _info) => {
