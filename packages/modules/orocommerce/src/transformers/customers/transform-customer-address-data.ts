@@ -68,7 +68,7 @@ export const transformOroAddress = (response: OroCustomerAddress): CustomerAddre
     const attributes = response.attributes;
     return {
         id: response.id ? parseInt(response.id) : null,
-        street: [attributes.street, attributes.street || null],
+        street: [attributes.street, attributes.street2 || null],
         city: attributes.city,
         company: attributes.organization,
         country_code: response.relationships.country.data.id as CountryCodeEnum,
