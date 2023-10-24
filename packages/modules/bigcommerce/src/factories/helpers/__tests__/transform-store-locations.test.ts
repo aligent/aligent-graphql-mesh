@@ -46,4 +46,12 @@ describe('transform store locations', () => {
             expectAcStoreLocations
         );
     });
+
+    it(`return undefined when there is no location items`, () => {
+        expect(
+            getTransformedStoreLocationItems({
+                pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            })
+        ).toEqual({ items: undefined });
+    });
 });
