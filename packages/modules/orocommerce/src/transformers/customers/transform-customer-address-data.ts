@@ -67,7 +67,7 @@ export const getTransformCustomerAddress = (
 export const transformOroAddress = (response: OroCustomerAddress): CustomerAddress => {
     const attributes = response.attributes;
     return {
-        id: parseInt(response.relationships.customerUser.data.id),
+        id: response.id ? parseInt(response.id) : null,
         street: [attributes.street, attributes.street || null],
         city: attributes.city,
         company: attributes.organization,
