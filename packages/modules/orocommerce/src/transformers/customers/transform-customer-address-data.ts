@@ -1,87 +1,99 @@
+import { Transformer, TransformerContext } from '@aligent/utils';
 import { CustomerAddress, CountryCodeEnum } from '@aligent/orocommerce-resolvers';
 import { OroCustomerAddress, CustomerAddressValidated } from '../../types';
 
-export const getTransformCustomerAddress = (
-    customerAddress: CustomerAddressValidated
-): OroCustomerAddress => {
-    const {
-        postcode,
-        city,
-        country_code,
-        default_billing = false,
-        default_shipping = false,
-        firstname = null,
-        lastname = null,
-        street,
-        company = null,
-        telephone = null,
-        region,
-    } = customerAddress;
-    const transformedCustomerAddress: OroCustomerAddress = {
-        type: 'customeruseraddresses',
-        attributes: {
-            city: city,
-            firstName: firstname,
-            lastName: lastname,
-            organization: company,
-            postalCode: postcode,
-            street: street[0],
-            street2: street[1] || null,
-            phone: telephone,
-            types: [
-                {
-                    default: default_billing!,
-                    addressType: 'billing',
+export class createCustomerAddressTransformer
+    implements Transformer<CustomerAddressValidated, OroCustomerAddress>
+{
+    public transform(
+        context: TransformerContext<CustomerAddressValidated, OroCustomerAddress>
+    ): OroCustomerAddress {
+        const {
+            postcode,
+            city,
+            country_code,
+            default_billing = false,
+            default_shipping = false,
+            firstname = null,
+            lastname = null,
+            street,
+            company = null,
+            telephone = null,
+            region,
+        } = context.data;
+
+        return {
+            type: 'customeruseraddresses',
+            attributes: {
+                city: city,
+                firstName: firstname,
+                lastName: lastname,
+                organization: company,
+                postalCode: postcode,
+                street: street[0],
+                street2: street[1] || null,
+                phone: telephone,
+                types: [
+                    {
+                        default: default_billing!,
+                        addressType: 'billing',
+                    },
+                    {
+                        default: default_shipping!,
+                        addressType: 'shipping',
+                    },
+                ],
+            },
+            relationships: {
+                country: {
+                    data: {
+                        type: 'countries',
+                        id: country_code!,
+                    },
                 },
-                {
-                    default: default_shipping!,
-                    addressType: 'shipping',
+                customerUser: {
+                    data: {
+                        type: 'customerusers',
+                        id: 'mine',
+                    },
                 },
-            ],
-        },
-        relationships: {
-            country: {
-                data: {
-                    type: 'countries',
-                    id: country_code!,
+                region: {
+                    data: {
+                        type: 'regions',
+                        id: region.region_id ? region.region_id.toString() : `${region.region}`,
+                    },
                 },
             },
-            customerUser: {
-                data: {
-                    type: 'customerusers',
-                    id: 'mine',
-                },
-            },
+        };
+    }
+}
+
+export class createCustomerOroAddressTransformer
+    implements Transformer<OroCustomerAddress, CustomerAddress>
+{
+    public transform(
+        context: TransformerContext<OroCustomerAddress, CustomerAddress>
+    ): CustomerAddress {
+        const customerAddress = context.data;
+        const attributes = context.data.attributes;
+
+        return {
+            id: customerAddress.id ? parseInt(customerAddress.id) : null,
+            street: [attributes.street, attributes.street2 || null],
+            city: attributes.city,
+            company: attributes.organization,
+            country_code: customerAddress.relationships.country.data.id as CountryCodeEnum,
+            firstname: attributes.firstName,
+            lastname: attributes.lastName,
+            telephone: attributes.phone,
+            postcode: attributes.postalCode,
             region: {
-                data: {
-                    type: 'regions',
-                    id: region.region_id ? region.region_id.toString() : `${region.region}`,
-                },
+                region: null,
+                region_id: null,
+                region_code: customerAddress.relationships.region.data.id,
             },
-        },
-    };
-
-    return transformedCustomerAddress;
-};
-
-export const transformOroAddress = (response: OroCustomerAddress): CustomerAddress => {
-    const attributes = response.attributes;
-    return {
-        id: response.id ? parseInt(response.id) : null,
-        street: [attributes.street, attributes.street2 || null],
-        city: attributes.city,
-        company: attributes.organization,
-        country_code: response.relationships.country.data.id as CountryCodeEnum,
-        firstname: attributes.firstName,
-        lastname: attributes.lastName,
-        telephone: attributes.phone,
-        postcode: attributes.postalCode,
-        region: {
-            region: null,
-            region_id: null,
-            region_code: response.relationships.region.data.id,
-        },
-        default_billing: attributes.types[0].default,
-        default_shipping: attributes.types[1].default,
-    };
-};
+            default_billing: attributes.types[0].default,
+            default_shipping: attributes.types[1].default,
+        };
+    }
+}

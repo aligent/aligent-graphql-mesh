@@ -2,8 +2,8 @@ import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
 import { isCustomerAddressValid } from '../../utils';
 import {
-    getTransformCustomerAddress,
-    transformOroAddress,
+    createCustomerOroAddressTransformer,
+    createCustomerAddressTransformer,
 } from '../../transformers/customers/transform-customer-address-data';
 import { CustomerClient } from '../../apis/rest/customer';
 
@@ -14,12 +14,15 @@ export const createCustomerAddressMutation: MutationResolvers['createCustomerAdd
                 'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );
         }
-
-        const transformedCustomerAddress = getTransformCustomerAddress(input);
+        const createCustomerAddressInitializer = new createCustomerAddressTransformer();
+        const transformedCustomerAddress = createCustomerAddressInitializer.transform({
+            data: input,
+        });
 
         const customerClient: CustomerClient = context.injector.get(CustomerClient);
         const response = await customerClient.createCustomerAddress(transformedCustomerAddress);
+        const oroCustomerAddressInitializer = new createCustomerOroAddressTransformer();
 
-        return transformOroAddress(response);
+        return oroCustomerAddressInitializer.transform({data: response});
     },
 };
