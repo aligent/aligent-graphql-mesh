@@ -20,6 +20,10 @@ import {
     BreadcrumbsTransformer,
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
+import {
+    StoreConfigTransformer,
+    StoreConfigTransformerChain,
+} from './store-config/store-config-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -118,6 +122,21 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+        // Store Config transfomers
+        {
+            provide: StoreConfigTransformerChain,
+            useClass: StoreConfigTransformerChain,
+            global: true,
+        },
+        {
+            provide: StoreConfigTransformer,
+            useFactory: (transformerChain) => {
+                const storeConfigTransformer = new StoreConfigTransformer();
+                transformerChain.addTransformer(storeConfigTransformer);
+                return storeConfigTransformer;
+            },
+            deps: [StoreConfigTransformerChain],
         },
     ];
 };

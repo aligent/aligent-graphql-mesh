@@ -60,3 +60,4 @@ export * from './shopping-list';
 export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './order';
+export * from './store-config';
