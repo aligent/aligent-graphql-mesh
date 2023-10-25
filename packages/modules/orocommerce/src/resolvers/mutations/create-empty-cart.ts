@@ -10,7 +10,7 @@ export const createEmptyCartMutation: MutationResolvers['createEmptyCart'] = {
         const shoppinglists = (await client.getShoppingLists()).data;
 
         if (shoppinglists.length === 0) {
-            return (await client.createDefaultShoppingList()).data.id;
+            return (await client.createDefaultShoppingList()).id;
         } else {
             return shoppinglists[0].id;
         }
