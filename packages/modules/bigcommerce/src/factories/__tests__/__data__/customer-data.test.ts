@@ -1,6 +1,6 @@
 import { Customer, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 import { BcMutationCustomer, ValidatePasswordRequest } from '../../../types';
-import { Category, CustomField, Product } from '@aligent/bigcommerce-operations';
+import { bcWishListItems } from '../../helpers/__tests__/__data__/transform-customer-wishlist-data';
 
 // @ts-expect-error: ignore bad non-nullable fields
 export const acCustomerWithName: Customer = {
@@ -145,211 +145,7 @@ export const bcCustomer = {
                 node: {
                     entityId: 5,
                     isPublic: true,
-                    items: {
-                        edges: [
-                            {
-                                cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                node: {
-                                    entityId: 6,
-                                    productEntityId: 492,
-                                    variantEntityId: null,
-                                    product: {
-                                        id: 'UHJvZHVjdDo0OTI=',
-                                        entityId: 492,
-                                        sku: 'WH01',
-                                        name: 'Mona Pullover Hoodlie',
-                                        addToCartUrl:
-                                            'https://aligent.mybigcommerce.com/cart.php?action=add&product_id=492',
-                                        description: '',
-                                        defaultImage: null,
-                                        seo: {
-                                            pageTitle: 'Mona Pullover Hoodlie',
-                                            metaDescription:
-                                                'This is the "Mona Pullover Hoodlie" meta_description',
-                                            metaKeywords: '',
-                                        },
-                                        images: {
-                                            edges: [
-                                                {
-                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-                                                    node: {
-                                                        url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/402/wh01-purple_main__43854.1690452461.jpg',
-                                                        urlOriginal:
-                                                            'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/402/wh01-purple_main__43854.1690452461.jpg',
-                                                        altText: '',
-                                                        isDefault: false,
-                                                    },
-                                                },
-                                            ],
-                                            pageInfo: {
-                                                hasNextPage: false,
-                                                hasPreviousPage: false,
-                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-                                            },
-                                        },
-                                        categories: {
-                                            pageInfo: {
-                                                hasNextPage: false,
-                                                hasPreviousPage: false,
-                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-                                            },
-                                            edges: [
-                                                {
-                                                    node: {
-                                                        __typename: 'Category',
-                                                        shopByPriceRanges: {
-                                                            pageInfo: {
-                                                                hasNextPage: false,
-                                                                hasPreviousPage: false,
-                                                                startCursor:
-                                                                    'YXJyYXljb25uZWN0aW9uOjA=',
-                                                                endCursor:
-                                                                    'YXJyYXljb25uZWN0aW9uOjE=',
-                                                            },
-                                                        },
-                                                        id: 'Q2F0ZWdvcnk6NTk=',
-                                                        entityId: 59,
-                                                        name: 'Tops',
-                                                        path: '/women/tops/',
-                                                        defaultImage: null,
-                                                        description: '',
-                                                        breadcrumbs: {
-                                                            edges: [
-                                                                {
-                                                                    node: {
-                                                                        name: 'Women',
-                                                                        path: '/women/',
-                                                                        entityId: 58,
-                                                                    },
-                                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                                },
-                                                                {
-                                                                    node: {
-                                                                        name: 'Tops',
-                                                                        path: '/women/tops/',
-                                                                        entityId: 59,
-                                                                    },
-                                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-                                                                },
-                                                            ],
-                                                            pageInfo: {
-                                                                hasNextPage: false,
-                                                                hasPreviousPage: false,
-                                                                startCursor:
-                                                                    'YXJyYXljb25uZWN0aW9uOjA=',
-                                                                endCursor:
-                                                                    'YXJyYXljb25uZWN0aW9uOjE=',
-                                                            },
-                                                        },
-                                                        metafields: {
-                                                            edges: [],
-                                                            pageInfo: {
-                                                                hasNextPage: false,
-                                                                hasPreviousPage: false,
-                                                                startCursor:
-                                                                    'YXJyYXljb25uZWN0aW9uOjA=',
-                                                                endCursor:
-                                                                    'YXJyYXljb25uZWN0aW9uOjE=',
-                                                            },
-                                                        },
-                                                        seo: {
-                                                            pageTitle: '',
-                                                            metaDescription: '',
-                                                            metaKeywords: '',
-                                                        },
-                                                        defaultProductSort: 'FEATURED',
-                                                    } as unknown as Category,
-                                                    cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
-                                                },
-                                            ],
-                                        },
-                                        reviews: {
-                                            pageInfo: {
-                                                hasNextPage: false,
-                                                hasPreviousPage: false,
-                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
-                                            },
-                                        },
-                                        availabilityV2: {
-                                            status: 'Available',
-                                            description: 'The is the "availability text"',
-                                        },
-                                        prices: {
-                                            basePrice: { currencyCode: 'AUD', value: 51.82 },
-                                            bulkPricing: [],
-                                            mapPrice: null,
-                                            price: { currencyCode: 'AUD', value: 9.09 },
-                                            priceRange: {
-                                                min: { currencyCode: 'AUD', value: 9.09 },
-                                                max: { currencyCode: 'AUD', value: 51.82 },
-                                            },
-                                            retailPrice: null,
-                                            retailPriceRange: null,
-                                            salePrice: { currencyCode: 'AUD', value: 9.09 },
-                                            saved: null,
-                                        },
-                                        customFields: {
-                                            edges: [
-                                                {
-                                                    node: {
-                                                        name: 'is_clothing',
-                                                        value: 'true',
-                                                        entityId: 1,
-                                                    } as CustomField,
-                                                    cursor: 'sd',
-                                                },
-                                            ],
-                                            pageInfo: {
-                                                hasNextPage: false,
-                                                hasPreviousPage: false,
-                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                                            },
-                                        },
-                                        metafields: {
-                                            edges: [
-                                                {
-                                                    node: {
-                                                        key: 'is_bulky_item',
-                                                        value: '0',
-                                                        entityId: 2,
-                                                        id: '',
-                                                    },
-                                                    cursor: '11',
-                                                },
-                                            ],
-                                            pageInfo: {
-                                                __typename: undefined,
-                                                endCursor: undefined,
-                                                hasNextPage: false,
-                                                hasPreviousPage: false,
-                                                startCursor: undefined,
-                                            },
-                                        },
-                                        productOptions: {
-                                            edges: [],
-                                            pageInfo: {
-                                                hasNextPage: false,
-                                                hasPreviousPage: false,
-                                                startCursor: null,
-                                                endCursor: null,
-                                            },
-                                        },
-                                        path: '/mona-pullover-hoodlie/',
-                                    } as unknown as Product,
-                                },
-                            },
-                        ],
-                        pageInfo: {
-                            hasNextPage: false,
-                            hasPreviousPage: false,
-                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                            endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                        },
-                    },
+                    items: bcWishListItems,
                     name: 'sample-list',
                     token: 'bf1ed4dc-1724-48a6-92a3-bef2c1dd5868',
                 },
@@ -429,11 +225,89 @@ export const acCustomer = {
                         product: {
                             categories: [
                                 {
-                                    canonical_url: 'women/tops',
+                                    __typename: 'CategoryTree',
+                                    breadcrumbs: [],
+                                    canonical_url: 'shop-all',
+                                    children: [],
+                                    children_count: '0',
+                                    description: '',
+                                    id: 23,
+                                    image: undefined,
+                                    include_in_menu: 1,
+                                    level: 1,
+                                    meta_description: '',
+                                    meta_title: '',
+                                    name: 'Shop All',
+                                    path: '0/23',
+                                    position: 0,
+                                    product_count: 25,
+                                    products: {
+                                        aggregations: null,
+                                        items: null,
+                                        page_info: {
+                                            current_page: 1,
+                                            page_size: 24,
+                                            total_pages: 2,
+                                        },
+                                        total_count: 25,
+                                    },
+                                    redirect_code: 0,
+                                    staged: false,
+                                    uid: 'MjM=',
+                                    url_path: 'shop-all',
+                                    url_suffix: '',
+                                },
+                                {
+                                    __typename: 'CategoryTree',
+                                    breadcrumbs: [],
+                                    canonical_url: 'women',
+                                    children: [],
+                                    children_count: '0',
+                                    description: '',
+                                    id: 58,
+                                    image: undefined,
+                                    include_in_menu: 1,
+                                    level: 1,
+                                    meta_description: 'This is the "Women" meta_description',
+                                    meta_title: 'Women',
+                                    name: 'Women',
+                                    path: '0/58',
+                                    position: 0,
+                                    product_count: 1,
+                                    products: {
+                                        aggregations: null,
+                                        items: null,
+                                        page_info: {
+                                            current_page: 1,
+                                            page_size: 24,
+                                            total_pages: 1,
+                                        },
+                                        total_count: 1,
+                                    },
+                                    redirect_code: 0,
+                                    staged: false,
+                                    uid: 'NTg=',
+                                    url_path: 'women',
+                                    url_suffix: '',
+                                },
+                                {
+                                    __typename: 'CategoryTree',
+                                    breadcrumbs: [
+                                        {
+                                            category_id: 58,
+                                            category_level: 1,
+                                            category_name: 'Women',
+                                            category_uid: 'NTg=',
+                                            category_url_key: 'women',
+                                            category_url_path: 'women',
+                                        },
+                                    ],
+                                    canonical_url: 'women/tops-women',
                                     children: [],
                                     children_count: '0',
                                     description: '',
                                     id: 59,
+                                    image: undefined,
                                     include_in_menu: 1,
                                     level: 2,
                                     meta_description: '',
@@ -441,23 +315,72 @@ export const acCustomer = {
                                     name: 'Tops',
                                     path: '0/59',
                                     position: 0,
-                                    products: null,
+                                    product_count: 1,
+                                    products: {
+                                        aggregations: null,
+                                        items: null,
+                                        page_info: {
+                                            current_page: 1,
+                                            page_size: 24,
+                                            total_pages: 1,
+                                        },
+                                        total_count: 1,
+                                    },
                                     redirect_code: 0,
-                                    uid: 'NTk=',
-                                    url_path: 'women/tops',
-                                    url_suffix: '',
                                     staged: false,
+                                    uid: 'NTk=',
+                                    url_path: 'women/tops-women',
+                                    url_suffix: '',
+                                },
+                                {
+                                    __typename: 'CategoryTree',
                                     breadcrumbs: [
                                         {
                                             category_id: 58,
                                             category_level: 1,
                                             category_name: 'Women',
-                                            category_url_path: 'women',
-                                            category_url_key: 'women',
                                             category_uid: 'NTg=',
+                                            category_url_key: 'women',
+                                            category_url_path: 'women',
+                                        },
+                                        {
+                                            category_id: 59,
+                                            category_level: 2,
+                                            category_name: 'Tops',
+                                            category_uid: 'NTk=',
+                                            category_url_key: 'women/tops-women',
+                                            category_url_path: 'women/tops-women',
                                         },
                                     ],
-                                    __typename: 'CategoryTree',
+                                    canonical_url: 'women/tops-women/hoodies-and-sweatshirts-women',
+                                    children: [],
+                                    children_count: '0',
+                                    description: '',
+                                    id: 60,
+                                    image: undefined,
+                                    include_in_menu: 1,
+                                    level: 3,
+                                    meta_description: '',
+                                    meta_title: '',
+                                    name: 'Hoodies & Sweatshirts',
+                                    path: '0/60',
+                                    position: 0,
+                                    product_count: 1,
+                                    products: {
+                                        aggregations: null,
+                                        items: null,
+                                        page_info: {
+                                            current_page: 1,
+                                            page_size: 24,
+                                            total_pages: 1,
+                                        },
+                                        total_count: 1,
+                                    },
+                                    redirect_code: 0,
+                                    staged: false,
+                                    uid: 'NjA=',
+                                    url_path: 'women/tops-women/hoodies-and-sweatshirts-women',
+                                    url_suffix: '',
                                 },
                             ],
                             configurable_options: [],
@@ -470,10 +393,18 @@ export const acCustomer = {
                             media_gallery_entries: [
                                 {
                                     disabled: false,
+                                    file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
+                                    id: 12573090,
+                                    label: '',
+                                    position: 0,
+                                    uid: '',
+                                },
+                                {
+                                    disabled: false,
                                     file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/402/wh01-purple_main__43854.1690452461.jpg',
                                     id: 13020129,
                                     label: '',
-                                    position: 0,
+                                    position: 1,
                                     uid: '',
                                 },
                             ],
@@ -500,25 +431,52 @@ export const acCustomer = {
                             },
                             price_tiers: [],
                             redirect_code: 0,
-                            rating_summary: 0,
-                            review_count: 0,
+                            rating_summary: 1,
+                            review_count: 1,
                             related_products: null,
                             sku: 'WH01',
                             small_image: {
                                 label: '',
                                 url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/stencil/15eec2b0-e387-0138-ad46-0242ac110007/e/ec579c80-7d66-0139-f0a8-5273ac5aab0b/img/ProductDefault.gif',
                             },
-                            stock_status: 'OUT_OF_STOCK',
+                            stock_status: 'IN_STOCK',
                             url_key: 'mona-pullover-hoodlie',
                             url_suffix: '',
                             reviews: {
-                                items: [],
+                                items: [
+                                    {
+                                        average_rating: 5,
+                                        created_at: '2019-08-24T14:15:22Z',
+                                        nickname: '',
+                                        product: {},
+                                        ratings_breakdown: [
+                                            {
+                                                name: 'John',
+                                                value: '',
+                                            },
+                                        ],
+                                        summary: 'Great product',
+                                        text: 'I want more of this',
+                                    },
+                                    {
+                                        average_rating: 5,
+                                        created_at: '2019-08-24T14:15:22Z',
+                                        nickname: '',
+                                        product: {},
+                                        ratings_breakdown: [
+                                            {
+                                                name: 'John',
+                                                value: '',
+                                            },
+                                        ],
+                                        summary: 'Great product',
+                                        text: 'I want more of this',
+                                    },
+                                ],
                                 page_info: { current_page: 0, page_size: 0, total_pages: 0 },
                             },
                             variants: [],
                             __typename: 'SimpleProduct',
-                            is_clothing: 'true',
-                            is_bulky_item: '0',
                         },
                     },
                 ],
