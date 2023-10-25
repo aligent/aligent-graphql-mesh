@@ -39,11 +39,8 @@ export const customerResolver = {
                 allowRemoteShoppingAssistance === 'Yes' ? true : false,
         };
 
-        console.log(JSON.stringify(bcAddresses));
-        const cust = transformBcCustomer(bcCustomer, bcAddresses, isSubscriber);
-
         return {
-            ...cust,
+            ...transformBcCustomer(bcCustomer, bcAddresses, isSubscriber),
             ...customerAttributesFromFormFields,
             ...allowRemoteAssist,
         };
