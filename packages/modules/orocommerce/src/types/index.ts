@@ -7,9 +7,11 @@ export interface Resource {
 }
 
 export interface Relationships {
-    [name: string]: {
-        data?: Array<Resource> | Resource | null;
-    };
+    [name: string]:
+        | {
+              data?: Array<Resource> | Resource | null;
+          }
+        | undefined;
 }
 
 export interface EntityAttributes {

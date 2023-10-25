@@ -1,16 +1,16 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { OroOrderLineItem } from '../../types/order-line-item';
-import { ShoppingListItemInputWithoutID } from '../../types/shopping-list-input';
+import { ShoppingListItemtWithoutID } from '../../types';
 
 /**
  * This transformer is meant to convert a order line item into a new shopping list line item
  */
-export class OrderLineItemToShoppingListItemTransformer
-    implements Transformer<OroOrderLineItem, ShoppingListItemInputWithoutID>
+export class ShoppingListItemTransformer
+    implements Transformer<OroOrderLineItem, ShoppingListItemtWithoutID>
 {
     transform(
-        context: TransformerContext<OroOrderLineItem, ShoppingListItemInputWithoutID>
-    ): ShoppingListItemInputWithoutID {
+        context: TransformerContext<OroOrderLineItem, ShoppingListItemtWithoutID>
+    ): ShoppingListItemtWithoutID {
         const orderLineItem = context.data;
         return {
             type: 'shoppinglistitems',

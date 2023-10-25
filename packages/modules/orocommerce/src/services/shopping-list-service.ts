@@ -2,25 +2,25 @@ import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { ShoppingList, ShoppingListWithItems } from '../types';
 import { OroOrderLineItem } from '../types/order-line-item';
-import { OrderLineItemsToNewShoppingListTransformer } from '../transformers/order-line-items/order-line-items-to-new-shopping-list-transformer';
-import { OrderLineItemToShoppingListItemTransformer } from '../transformers/order-line-items/order-line-item-to-shopping-list-item-transformer';
+import { NewShoppingListTransformer } from '../transformers/shopping-list/new-shopping-list-transformer';
+import { ShoppingListItemTransformer } from '../transformers/shopping-list/shopping-list-item-transformer';
 
 @Injectable()
 export class ShoppingListService {
-    protected shoppingListTransformer: OrderLineItemsToNewShoppingListTransformer;
-    protected shoppingListItemTransformer: OrderLineItemToShoppingListItemTransformer;
+    protected newShoppingListTransformer: NewShoppingListTransformer;
+    protected shoppingListItemTransformer: ShoppingListItemTransformer;
 
     constructor(
         @Inject(forwardRef(() => ShoppingListsClient)) protected apiClient: ShoppingListsClient
     ) {
-        this.shoppingListItemTransformer = new OrderLineItemToShoppingListItemTransformer();
-        this.shoppingListTransformer = new OrderLineItemsToNewShoppingListTransformer(
+        this.shoppingListItemTransformer = new ShoppingListItemTransformer();
+        this.newShoppingListTransformer = new NewShoppingListTransformer(
             this.shoppingListItemTransformer
         );
     }
 
     /**
-     * Get the user's shopping list. We're assuming that currently the user will always have one shopping list
+     * Get the user's shopping list. We're assuming that the user will always have one shopping list
      * @returns Promise<ShoppingList | null>
      */
     async getShoppingList(): Promise<ShoppingList | null> {
@@ -29,7 +29,7 @@ export class ShoppingListService {
     }
 
     /**
-     * Get the user's shopping list with items. We're assuming that currently the user will always have one shopping list
+     * Get the user's shopping list with items. We're assuming that the user will always have one shopping list
      * @returns Promise<ShoppingListWithItems | null>
      */
     async getShoppingListWithItems(): Promise<ShoppingListWithItems | null> {
@@ -44,13 +44,12 @@ export class ShoppingListService {
      */
     async addItemsFromOrderLineItems(items: OroOrderLineItem[]): Promise<ShoppingListWithItems> {
         const currentShoppingList = await this.getShoppingList();
-
         // if the user doesn't have a shopping list, we'll create one
         if (currentShoppingList === null) {
             // transforms the order line items into a new shopping list with items to be persisted via API
-            const transformedShoppingList = this.shoppingListTransformer.transform({
+            const transformedShoppingList = this.newShoppingListTransformer.transform({
                 data: {
-                    newShoppingList: { name: 'Default Shopping List', default: false },
+                    newShoppingList: { name: 'Default Shopping List', default: false, notes: null },
                     orderLineItems: items,
                 },
             });

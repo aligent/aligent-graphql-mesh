@@ -1,10 +1,12 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
-import { ShoppingList, ShoppingListItem, ShoppingListWithItems } from '../../types';
 import {
-    ShoppingListItemInputWithoutID,
-    ShoppingListWithItemsInput,
-} from '../../types/shopping-list-input';
+    ShoppingList,
+    ShoppingListInputAttribute,
+    ShoppingListItem,
+    ShoppingListItemtWithoutID,
+    ShoppingListWithItems,
+} from '../../types';
 
 @Injectable()
 export class ShoppingListsClient {
@@ -34,12 +36,12 @@ export class ShoppingListsClient {
             attributes: {
                 name: 'default',
                 default: true,
-            },
+            } as ShoppingListInputAttribute,
         });
     }
 
-    async createShoppingListWithItems(data: ShoppingListWithItemsInput) {
-        return this.apiClient.post<ShoppingListWithItems, ShoppingListWithItemsInput>(
+    async createShoppingListWithItems(data: ShoppingListWithItems): Promise<ShoppingListWithItems> {
+        return this.apiClient.post<ShoppingListWithItems, ShoppingListWithItems>(
             '/shoppinglists',
             data
         );
@@ -47,10 +49,10 @@ export class ShoppingListsClient {
 
     async addItemsToShoppingList(
         shoppingList: ShoppingList,
-        items: ShoppingListItemInputWithoutID[]
+        items: ShoppingListItemtWithoutID[]
     ): Promise<ShoppingListItem[]> {
         const url = `/shoppinglists/${shoppingList.id}/items`;
-        return this.apiClient.post<ShoppingListItem[], { data: ShoppingListItemInputWithoutID[] }>(
+        return this.apiClient.post<ShoppingListItem[], { data: ShoppingListItemtWithoutID[] }>(
             url,
             {
                 data: items,

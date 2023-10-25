@@ -12,7 +12,6 @@ import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { CategoriesClient } from '../apis/rest/category-client';
 import { getOroTransformers } from '../transformers';
-import { ReorderItemsClient } from '../apis/rest/reorder-items-api-client';
 import { CartDetailsService } from '../services/cart-details-service';
 import { ShoppingListService } from '../services/shopping-list-service';
 import { OrdersClient } from '../apis/rest/orders';
@@ -39,18 +38,6 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             useClass: Auth,
             provide: Auth,
             deps: [ModuleConfig],
-            scope: Scope.Operation,
-        },
-        {
-            useClass: CartDetailsService,
-            provide: CartDetailsService,
-            deps: [ShoppingListsClient],
-            scope: Scope.Operation,
-        },
-        {
-            useClass: ShoppingListService,
-            provide: ShoppingListService,
-            deps: [ShoppingListsClient],
             scope: Scope.Operation,
         },
         {
@@ -106,12 +93,6 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         {
-            useClass: ReorderItemsClient,
-            provide: ReorderItemsClient,
-            deps: [ApiClient],
-            scope: Scope.Operation,
-        },
-        {
             useClass: CategoriesClient,
             provide: CategoriesClient,
             deps: [ApiClient],
@@ -124,5 +105,17 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         ...getOroTransformers(),
+        {
+            useClass: CartDetailsService,
+            provide: CartDetailsService,
+            deps: [ShoppingListsClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: ShoppingListService,
+            provide: ShoppingListService,
+            deps: [ShoppingListsClient],
+            scope: Scope.Operation,
+        },
     ];
 };

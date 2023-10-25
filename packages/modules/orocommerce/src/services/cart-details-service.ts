@@ -1,5 +1,5 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
-import { Cart } from '@aligent/orocommerce-resolvers';
+import { Cart, CurrencyEnum } from '@aligent/orocommerce-resolvers';
 import { ShoppingListService } from './shopping-list-service';
 import { ShoppingListItem, ShoppingListWithItems } from '../types';
 
@@ -30,6 +30,7 @@ export class CartDetailsService {
         const enrichedCart = { ...UNDEFINED_CART };
         enrichedCart.id = shoppingList!.data.id;
         enrichedCart.total_quantity = shoppingList!.included.length ?? 0;
+        //TODO: split items into a sub-resolver?
         enrichedCart.items = shoppingList!.included.map((item: ShoppingListItem) => {
             //TODO: this needs to be enriched to add missing data where possible
             return {
@@ -40,9 +41,12 @@ export class CartDetailsService {
                     custom_attributes: [],
                     price_range: {
                         minimum_price: {
-                            final_price: { currency: 'AUD', value: Number(item.attributes.value) },
+                            final_price: {
+                                currency: item.attributes.currency as CurrencyEnum,
+                                value: Number(item.attributes.value),
+                            },
                             regular_price: {
-                                currency: 'AUD',
+                                currency: item.attributes.currency as CurrencyEnum,
                                 value: Number(item.attributes.value),
                             },
                         },
@@ -59,6 +63,12 @@ export class CartDetailsService {
                 __typename: 'ConfigurableCartItem',
             };
         });
+        enrichedCart.prices = {
+            grand_total: {
+                currency: shoppingList!.data.attributes.currency as CurrencyEnum,
+                value: Number(shoppingList!.data.attributes.total),
+            },
+        };
         return Promise.resolve(enrichedCart);
     }
 }

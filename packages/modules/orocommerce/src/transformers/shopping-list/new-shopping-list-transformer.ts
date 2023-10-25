@@ -1,36 +1,32 @@
-import { ShoppingListAttribute } from '../../types';
-import { OroOrderLineItem } from '../../types/order-line-item';
 import {
-    ShoppingListInput,
-    ShoppingListItemInput,
-    ShoppingListWithItemsInput,
-} from '../../types/shopping-list-input';
+    ShoppingList,
+    ShoppingListInputAttribute,
+    ShoppingListItem,
+    ShoppingListWithItems,
+} from '../../types';
+import { OroOrderLineItem } from '../../types/order-line-item';
 import { v4 as uuidv4 } from 'uuid';
-import { OrderLineItemToShoppingListItemTransformer } from './order-line-item-to-shopping-list-item-transformer';
+import { ShoppingListItemTransformer } from './shopping-list-item-transformer';
 import { Transformer, TransformerContext } from '@aligent/utils';
 
-export interface OrderLineItemsToNewShoppingListTransformerInput {
-    newShoppingList: ShoppingListAttribute;
+export interface NewShoppingListTransformerInput {
+    newShoppingList: ShoppingListInputAttribute;
     orderLineItems: OroOrderLineItem[];
 }
 
 /**
  * This transformer is meant to convert order line items into a new shopping list with the line items from the order
  */
-export class OrderLineItemsToNewShoppingListTransformer
-    implements
-        Transformer<OrderLineItemsToNewShoppingListTransformerInput, ShoppingListWithItemsInput>
+export class NewShoppingListTransformer
+    implements Transformer<NewShoppingListTransformerInput, ShoppingListWithItems>
 {
-    constructor(protected lineItemTransformer: OrderLineItemToShoppingListItemTransformer) {}
+    constructor(protected lineItemTransformer: ShoppingListItemTransformer) {}
 
     transform(
-        context: TransformerContext<
-            OrderLineItemsToNewShoppingListTransformerInput,
-            ShoppingListWithItemsInput
-        >
-    ): ShoppingListWithItemsInput {
-        const included: ShoppingListItemInput[] = [];
-        const shoppingList: ShoppingListInput = {
+        context: TransformerContext<NewShoppingListTransformerInput, ShoppingListWithItems>
+    ): ShoppingListWithItems {
+        const included: ShoppingListItem[] = [];
+        const shoppingList: ShoppingList = {
             id: '1',
             type: 'shoppinglists',
             attributes: context.data.newShoppingList,
@@ -42,7 +38,7 @@ export class OrderLineItemsToNewShoppingListTransformer
         for (const orderLineItem of orderLineItems) {
             const id = uuidv4();
             const type = 'shoppinglistitems';
-            shoppingList.relationships.items.data.push({ id, type });
+            shoppingList.relationships!.items.data.push({ id, type });
 
             const shoppinglistLineItem = this.lineItemTransformer.transform({
                 data: orderLineItem,
