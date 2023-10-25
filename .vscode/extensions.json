@@ -1,8 +1,0 @@
-{
-    "recommendations": [
-        "esbenp.prettier-vscode",
-        "mquandalle.graphql",
-        "dbaeumer.vscode-eslint",
-        "editorconfig.editorconfig"
-    ]
-}
