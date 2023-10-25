@@ -23,6 +23,6 @@ export const createCustomerAddressMutation: MutationResolvers['createCustomerAdd
         const response = await customerClient.createCustomerAddress(transformedCustomerAddress);
         const oroCustomerAddressInitializer = new createCustomerOroAddressTransformer();
 
-        return oroCustomerAddressInitializer.transform({data: response});
+        return oroCustomerAddressInitializer.transform({ data: response });
     },
 };

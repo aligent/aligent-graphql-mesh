@@ -20,10 +20,10 @@ export class CustomerClient {
     }
 
     async createCustomerAddress(customerAddress: OroCustomerAddress): Promise<OroCustomerAddress> {
-        const response = await this.apiClient.post<OroCustomerAddress, { data: OroCustomerAddress }>(
-            `/customeruseraddresses`,
-            { data: customerAddress }
-        );
+        const response = await this.apiClient.post<
+            OroCustomerAddress,
+            { data: OroCustomerAddress }
+        >(`/customeruseraddresses`, { data: customerAddress });
         return response;
     }
 }
