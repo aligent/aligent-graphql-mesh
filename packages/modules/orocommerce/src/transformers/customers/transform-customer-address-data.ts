@@ -12,13 +12,13 @@ export class createCustomerAddressTransformer
             postcode,
             city,
             country_code,
-            default_billing = false,
-            default_shipping = false,
-            firstname = null,
-            lastname = null,
+            default_billing,
+            default_shipping,
+            firstname,
+            lastname,
             street,
-            company = null,
-            telephone = null,
+            company,
+            telephone,
             region,
         } = context.data;
 
@@ -28,18 +28,18 @@ export class createCustomerAddressTransformer
                 city: city,
                 firstName: firstname,
                 lastName: lastname,
-                organization: company,
+                organization: company || null,
                 postalCode: postcode,
                 street: street[0],
                 street2: street[1] || null,
-                phone: telephone,
+                phone: telephone || null ,
                 types: [
                     {
-                        default: default_billing!,
+                        default: default_billing || false,
                         addressType: 'billing',
                     },
                     {
-                        default: default_shipping!,
+                        default: default_shipping || false,
                         addressType: 'shipping',
                     },
                 ],
@@ -48,7 +48,7 @@ export class createCustomerAddressTransformer
                 country: {
                     data: {
                         type: 'countries',
-                        id: country_code!,
+                        id: country_code,
                     },
                 },
                 customerUser: {
