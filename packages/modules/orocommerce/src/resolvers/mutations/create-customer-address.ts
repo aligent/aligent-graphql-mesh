@@ -14,15 +14,13 @@ export const createCustomerAddressMutation: MutationResolvers['createCustomerAdd
                 'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );
         }
-        const createCustomerAddressInitializer = new createCustomerAddressTransformer();
-        const transformedCustomerAddress = createCustomerAddressInitializer.transform({
-            data: input,
-        });
+        const transformedCustomerAddress = new createCustomerAddressTransformer().transform({data: input});
+
 
         const customerClient: CustomerClient = context.injector.get(CustomerClient);
         const response = await customerClient.createCustomerAddress(transformedCustomerAddress);
-        const oroCustomerAddressInitializer = new createCustomerOroAddressTransformer();
+        const transformOroCustomerAddress = new createCustomerOroAddressTransformer().transform({data: response});
 
-        return oroCustomerAddressInitializer.transform({ data: response });
+        return transformOroCustomerAddress;
     },
 };
