@@ -53,20 +53,12 @@ export class ApiClient {
     }
 
     async patch<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.patch<T, AxiosResponse<T>, D>(
-            url,
-            data,
-            config
-        );
+        const response = await this.client.patch<T, AxiosResponse<T>, D>(url, data, config);
         return response.data;
     }
 
     async put<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.put<T, AxiosResponse<T>, D>(
-            url,
-            data,
-            config
-        );
+        const response = await this.client.put<T, AxiosResponse<T>, D>(url, data, config);
         return response.data;
     }
 

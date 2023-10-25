@@ -11,9 +11,12 @@ export class ShoppingListsClient {
     }
 
     async postShoppingLists(data: ShoppingList) {
-        return this.apiClient.post<{ data: ShoppingList }, { data: ShoppingList }>('/shoppinglists', {
-            data,
-        });
+        return this.apiClient.post<{ data: ShoppingList }, { data: ShoppingList }>(
+            '/shoppinglists',
+            {
+                data,
+            }
+        );
     }
 
     async createDefaultShoppingList() {
