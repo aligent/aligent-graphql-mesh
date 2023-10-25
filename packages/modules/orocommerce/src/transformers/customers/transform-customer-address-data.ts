@@ -32,7 +32,7 @@ export class createCustomerAddressTransformer
                 postalCode: postcode,
                 street: street[0],
                 street2: street[1] || null,
-                phone: telephone || null ,
+                phone: telephone || null,
                 types: [
                     {
                         default: default_billing || false,
