@@ -18,7 +18,7 @@ export const transformBcCustomer = (
     isSubscriber: boolean
 ): Customer => {
     const { firstName, lastName, email } = bcCustomer;
-    
+
     return {
         addresses: getTransformedCustomerAddresses(bcAddresses),
         email,
@@ -140,7 +140,7 @@ const formFieldPropertyMapping: { [index: string]: string } = {
  * Gets a customer property from a form field "name".
  * @param key
  */
-const getCustomerPropertyFromFormFieldKey = (key: string): string => {
+export const getCustomerPropertyFromFormFieldKey = (key: string): string => {
     const keyToSnakeCase = snakeCase(key);
 
     const mappedKey = formFieldPropertyMapping[keyToSnakeCase];

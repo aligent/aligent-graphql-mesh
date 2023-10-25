@@ -1,6 +1,6 @@
 import { Customer, CustomerOutput } from '@aligent/bigcommerce-resolvers';
-import { BcAddressRest, BcMutationCustomer, ValidatePasswordRequest } from '../../../types';
-import { Customer as BC_Customer, CustomField } from '@aligent/bigcommerce-operations';
+import { BcMutationCustomer, ValidatePasswordRequest } from '../../../types';
+import { Category, CustomField, Product } from '@aligent/bigcommerce-operations';
 
 // @ts-expect-error: ignore bad non-nullable fields
 export const acCustomerWithName: Customer = {
@@ -124,7 +124,8 @@ export const bcMutationCustomerWithRemoteAssistanceSetToFalse: BcMutationCustome
     ],
 };
 
-export const bcCustomer: BC_Customer = {
+export const bcCustomer = {
+    attributes: { attribute: { entityId: 1, name: 'name' } },
     addressCount: 1,
     attributeCount: 3,
     company: '',
@@ -188,10 +189,26 @@ export const bcCustomer: BC_Customer = {
                                             },
                                         },
                                         categories: {
+                                            pageInfo: {
+                                                hasNextPage: false,
+                                                hasPreviousPage: false,
+                                                startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                                endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                            },
                                             edges: [
                                                 {
                                                     node: {
                                                         __typename: 'Category',
+                                                        shopByPriceRanges: {
+                                                            pageInfo: {
+                                                                hasNextPage: false,
+                                                                hasPreviousPage: false,
+                                                                startCursor:
+                                                                    'YXJyYXljb25uZWN0aW9uOjA=',
+                                                                endCursor:
+                                                                    'YXJyYXljb25uZWN0aW9uOjE=',
+                                                            },
+                                                        },
                                                         id: 'Q2F0ZWdvcnk6NTk=',
                                                         entityId: 59,
                                                         name: 'Tops',
@@ -243,7 +260,7 @@ export const bcCustomer: BC_Customer = {
                                                             metaKeywords: '',
                                                         },
                                                         defaultProductSort: 'FEATURED',
-                                                    },
+                                                    } as unknown as Category,
                                                     cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                                                 },
                                             ],
@@ -299,7 +316,7 @@ export const bcCustomer: BC_Customer = {
                                                         key: 'is_bulky_item',
                                                         value: '0',
                                                         entityId: 2,
-                                                        id: ''
+                                                        id: '',
                                                     },
                                                     cursor: '11',
                                                 },
@@ -309,8 +326,8 @@ export const bcCustomer: BC_Customer = {
                                                 endCursor: undefined,
                                                 hasNextPage: false,
                                                 hasPreviousPage: false,
-                                                startCursor: undefined
-                                            }
+                                                startCursor: undefined,
+                                            },
                                         },
                                         productOptions: {
                                             edges: [],
@@ -322,7 +339,7 @@ export const bcCustomer: BC_Customer = {
                                             },
                                         },
                                         path: '/mona-pullover-hoodlie/',
-                                    },
+                                    } as unknown as Product,
                                 },
                             },
                         ],
@@ -347,7 +364,7 @@ export const bcCustomer: BC_Customer = {
     },
 };
 
-export const bcAddresses: BcAddressRest[] = [
+export const bcAddresses = [
     {
         id: 46,
         address1: '212 pirie st',
@@ -373,7 +390,7 @@ export const bcAddresses: BcAddressRest[] = [
     },
 ];
 
-export const acCustomer: Customer = {
+export const acCustomer = {
     addresses: [
         {
             id: 46,
