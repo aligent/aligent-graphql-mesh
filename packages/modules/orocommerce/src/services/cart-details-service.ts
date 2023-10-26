@@ -1,5 +1,5 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
-import { Cart, CurrencyEnum } from '@aligent/orocommerce-resolvers';
+import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
 import { ShoppingListService } from './shopping-list-service';
 import { ShoppingListItem, ShoppingListWithItems } from '../types';
 
@@ -32,25 +32,33 @@ export class CartDetailsService {
         enrichedCart.total_quantity = shoppingList!.included.length ?? 0;
         //TODO: split items into a sub-resolver?
         enrichedCart.items = shoppingList!.included.map((item: ShoppingListItem) => {
+            const prodPrice: Money = {
+                currency: item.attributes.currency as CurrencyEnum,
+                value: Number(item.attributes.value),
+            };
             //TODO: this needs to be enriched to add missing data where possible
             return {
                 id: item.id,
                 uid: btoa(item.id),
                 quantity: item.attributes.quantity,
+                prices: {
+                    price: prodPrice,
+                    price_including_tax: prodPrice,
+                    row_total: prodPrice,
+                    row_total_including_tax: prodPrice,
+                },
                 product: {
-                    custom_attributes: [],
                     price_range: {
                         minimum_price: {
-                            final_price: {
-                                currency: item.attributes.currency as CurrencyEnum,
-                                value: Number(item.attributes.value),
-                            },
-                            regular_price: {
-                                currency: item.attributes.currency as CurrencyEnum,
-                                value: Number(item.attributes.value),
-                            },
+                            final_price: prodPrice,
+                            regular_price: prodPrice,
+                        },
+                        maximum_price: {
+                            final_price: prodPrice,
+                            regular_price: prodPrice,
                         },
                     },
+                    custom_attributes: [],
                     review_count: 0,
                     reviews: { items: [], page_info: {} },
                     rating_summary: 0,
