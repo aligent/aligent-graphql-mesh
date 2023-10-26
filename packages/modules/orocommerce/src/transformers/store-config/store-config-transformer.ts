@@ -4,7 +4,7 @@ import { StoreConfig } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
 @Injectable()
-export class StoreConfigTransformerChain extends ChainTransformer<OroStoreConfig[], StoreConfig> {}
+export class StoreConfigTransformerChain extends ChainTransformer<OroStoreConfig, StoreConfig> {}
 
 @Injectable()
 export class StoreConfigTransformer implements Transformer<OroStoreConfig, StoreConfig> {
