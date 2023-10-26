@@ -12,11 +12,14 @@ import {
 export class ShoppingListsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
-    async getShoppingLists() {
-        return this.apiClient.get<ShoppingList[]>('/shoppinglists');
+    async getShoppingLists(): Promise<ShoppingList[]> {
+        return (await this.apiClient.get<ShoppingList[]>('/shoppinglists')).data;
     }
 
-    async getShoppingListsWithItems() {
+    async getShoppingListsWithItems(): Promise<{
+        data: ShoppingList[];
+        included?: ShoppingListItem[];
+    }> {
         const params = {
             include: 'items',
         };

@@ -24,7 +24,7 @@ export class ShoppingListService {
      * @returns Promise<ShoppingList | null>
      */
     async getShoppingList(): Promise<ShoppingList | null> {
-        const data = (await this.apiClient.getShoppingLists()).data;
+        const data = await this.apiClient.getShoppingLists();
         return data[0] ?? null;
     }
 

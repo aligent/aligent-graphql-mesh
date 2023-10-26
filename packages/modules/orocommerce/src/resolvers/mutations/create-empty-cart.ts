@@ -7,7 +7,7 @@ import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
 export const createEmptyCartMutation: MutationResolvers['createEmptyCart'] = {
     resolve: async (_root, _args, _context, _info) => {
         const client: ShoppingListsClient = _context.injector.get(ShoppingListsClient);
-        const shoppinglists = (await client.getShoppingLists()).data;
+        const shoppinglists = await client.getShoppingLists();
 
         if (shoppinglists.length === 0) {
             return (await client.createDefaultShoppingList()).id;
