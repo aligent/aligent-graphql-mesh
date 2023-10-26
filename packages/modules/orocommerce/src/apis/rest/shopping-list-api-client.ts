@@ -23,13 +23,17 @@ export class ShoppingListsClient {
         return this.apiClient.get<ShoppingList[], ShoppingListItem[]>('/shoppinglists', { params });
     }
 
-    async postShoppingLists(data: ShoppingList) {
-        return this.apiClient.post<ShoppingList, { data: ShoppingList }>('/shoppinglists', {
-            data,
-        });
+    async postShoppingLists(data: ShoppingList): Promise<ShoppingList> {
+        const res = await this.apiClient.post<{ data: ShoppingList }, { data: ShoppingList }>(
+            '/shoppinglists',
+            {
+                data,
+            }
+        );
+        return res.data;
     }
 
-    async createDefaultShoppingList() {
+    async createDefaultShoppingList(): Promise<ShoppingList> {
         return this.postShoppingLists({
             type: 'shoppinglists',
             id: '1',
@@ -52,11 +56,12 @@ export class ShoppingListsClient {
         items: ShoppingListItemtWithoutID[]
     ): Promise<ShoppingListItem[]> {
         const url = `/shoppinglists/${shoppingList.id}/items`;
-        return this.apiClient.post<ShoppingListItem[], { data: ShoppingListItemtWithoutID[] }>(
-            url,
-            {
-                data: items,
-            }
-        );
+        const res = await this.apiClient.post<
+            { data: ShoppingListItem[] },
+            { data: ShoppingListItemtWithoutID[] }
+        >(url, {
+            data: items,
+        });
+        return res.data;
     }
 }
