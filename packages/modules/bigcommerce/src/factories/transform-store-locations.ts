@@ -58,6 +58,7 @@ export const getTransformedStoreLocationItems = (
     const locationItems: StoreLocation[] | undefined = bcStoreLocations.edges?.map((location) => {
         return {
             city: location?.node?.address?.city,
+            code: location?.node?.code,
             distance: location?.node?.distance?.value,
             email: location?.node?.address?.email,
             id: location?.node.entityId,

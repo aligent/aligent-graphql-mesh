@@ -17119,6 +17119,10 @@ Defines Pickup Location information.
 """
 type StoreLocation {
     city: String
+    """
+    Store code
+    """
+    code: String
     contact_name: String
     country_id: String
     description: String
