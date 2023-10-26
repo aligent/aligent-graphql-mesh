@@ -2,7 +2,6 @@ import { Entity, Attributes } from '.';
 
 export interface OroLandingPage extends Entity {
     type: 'landingpages';
-    id: string;
     attributes: OroLandingPageAttributes;
 }
 
