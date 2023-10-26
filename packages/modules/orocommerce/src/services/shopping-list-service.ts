@@ -1,14 +1,24 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
-import { ShoppingList, ShoppingListWithItems } from '../types';
+import { ShoppingList, ShoppingListItemtWithoutID, ShoppingListWithItems } from '../types';
 import { OroOrderLineItem } from '../types/order-line-item';
-import { NewShoppingListTransformer } from '../transformers/shopping-list/new-shopping-list-transformer';
+import {
+    NewShoppingListTransformer,
+    NewShoppingListTransformerInput,
+} from '../transformers/shopping-list/new-shopping-list-transformer';
 import { ShoppingListItemTransformer } from '../transformers/shopping-list/shopping-list-item-transformer';
+import { Transformer } from '@aligent/utils';
 
 @Injectable()
 export class ShoppingListService {
-    protected newShoppingListTransformer: NewShoppingListTransformer;
-    protected shoppingListItemTransformer: ShoppingListItemTransformer;
+    protected newShoppingListTransformer: Transformer<
+        NewShoppingListTransformerInput,
+        ShoppingListWithItems
+    >;
+    protected shoppingListItemTransformer: Transformer<
+        OroOrderLineItem,
+        ShoppingListItemtWithoutID
+    >;
 
     constructor(
         @Inject(forwardRef(() => ShoppingListsClient)) protected apiClient: ShoppingListsClient
