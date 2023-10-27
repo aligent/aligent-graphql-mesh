@@ -73,32 +73,39 @@ export class ApiClient {
      * @param url
      * @param config
      */
-    async *paginate(
+    async *paginate<D, I = undefined>(
         url: string,
         config?: AxiosRequestConfig
-    ): AsyncGenerator<AxiosResponse['data']> {
-        let configPaginated = config;
-        if (!configPaginated) {
-            configPaginated = {
-                params: {
-                    page: {
-                        number: 1,
-                        size: 50,
-                    },
-                },
-            };
-        }
+    ): AsyncGenerator<AxiosResponse<{ data: D[]; included?: I[] }>['data']> {
+        let pageConfig = {
+            number: 1,
+            size: 50,
+        };
 
-        while (configPaginated.params.page.number >= 1) {
-            const response = await this.client.get(url, configPaginated);
-            const items = response.data.data;
-            if (items.length === 0) {
+        // merge the parameters that are coming in with the default "page" setting
+        const reqConfig = config ?? {};
+        reqConfig.params =
+            reqConfig.params?.page != undefined
+                ? reqConfig.params
+                : { ...reqConfig.params, page: pageConfig };
+
+        // add header to work out how many records are there
+        // https://doc.oroinc.com/backend/api/headers/
+        reqConfig.headers = reqConfig.headers ?? { 'X-Include': 'totalCount' };
+
+        pageConfig = reqConfig.params.page;
+
+        while (pageConfig.number >= 1) {
+            const response = await this.client.get<{ data: D[]; included?: I[] }>(url, reqConfig);
+            const oroResponse = response.data;
+            yield oroResponse;
+            const totalRecords = Number(response.headers['x-include-total-count']);
+            const totalProcessed =
+                (pageConfig.number - 1) * pageConfig.size + oroResponse.data.length;
+            if (totalProcessed == totalRecords || oroResponse.data.length === 0) {
                 break;
             }
-            for (const item of items) {
-                yield item;
-            }
-            configPaginated.params.page.number++;
+            reqConfig.params.page.number = ++pageConfig.number;
         }
     }
 }
