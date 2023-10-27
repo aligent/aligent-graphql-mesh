@@ -1,4 +1,4 @@
-import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
+import { QueryResolvers } from '@aligent/orocommerce-resolvers';
 
 export const getSocialLinksResolver: QueryResolvers['getSocialLinks'] = {
     resolve: async (_root, _args, _context, _info) => {
