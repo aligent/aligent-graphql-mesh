@@ -76,7 +76,7 @@ export class ApiClient {
     async *paginate<D, I = undefined>(
         url: string,
         config?: AxiosRequestConfig
-    ): AsyncGenerator<AxiosResponse<{ data: D[]; included?: I[] }>['data']> {
+    ): AsyncGenerator<{ data: D[]; included?: I[] }> {
         let pageConfig = {
             number: 1,
             size: 50,
