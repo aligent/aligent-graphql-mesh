@@ -200,7 +200,7 @@ export const acCustomer = {
     firstname: 'jack',
     lastname: 'mesh',
     is_subscribed: true,
-    allow_remote_shopping_assistance: false,
+    allow_remote_shopping_assistance: null,
     wishlists: transformedWishlistItemsTwo,
     wishlist: { visibility: 'PUBLIC' },
     reviews: { items: [], page_info: { current_page: null, page_size: null, total_pages: null } },
