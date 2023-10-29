@@ -65,7 +65,7 @@ export const getTransformedStoreLocationItems = (
             longitude: location?.node?.address?.longitude,
             name: location?.node?.label,
             phone: location?.node?.address?.phone,
-            pickup_location_code: location?.node?.address?.code,
+            pickup_location_code: location?.node?.code,
             postcode: location?.node?.address?.postalCode,
             street: location?.node?.address?.address1,
         };

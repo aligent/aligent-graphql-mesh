@@ -16,22 +16,12 @@ export const acCustomerWithEmail: Customer = {
     email: 'customer@example.com',
 };
 
-// @ts-expect-error: ignore bad non-nullable fields
-export const acCustomerWithRemoteAssistance: Customer = {
-    allow_remote_shopping_assistance: true,
-};
-
-// @ts-expect-error: ignore bad non-nullable fields
-export const acCustomerWithNoRemoteAssistance: Customer = {
-    allow_remote_shopping_assistance: false,
-};
-
 export const acCustomerOutputWithEmail: CustomerOutput = {
     customer: {
         email: 'customer@example.com',
         is_subscribed: false,
         //Mandatory fields required by customer type
-        allow_remote_shopping_assistance: false,
+        allow_remote_shopping_assistance: null,
         wishlists: [],
         wishlist: {
             visibility: 'PUBLIC',
@@ -54,7 +44,7 @@ export const acCustomerOutputWithName: CustomerOutput = {
         is_subscribed: false,
 
         //Mandatory fields required by customer type
-        allow_remote_shopping_assistance: false,
+        allow_remote_shopping_assistance: null,
         wishlists: [],
         wishlist: {
             visibility: 'PUBLIC',
