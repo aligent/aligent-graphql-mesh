@@ -25,7 +25,7 @@ import {
     bcMutationCustomerWithRemoteAssistanceSetToFalse,
     bcMutationCustomerWithRemoteAssistanceSetToTrue,
     bcValidatePasswordRequest,
-} from './__data__/customer-data.test';
+} from './__data__/customer-data';
 
 describe('Customer Ac to Bc Transformation', () => {
     test('Transform Ac Customer to Bc Customer for Name update', () => {
