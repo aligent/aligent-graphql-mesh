@@ -1,6 +1,12 @@
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
 import { WebCatalogTree as OroCategory } from '../../types';
-import { btoa, ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
+import {
+    btoa,
+    ChainTransformer,
+    slashAtStartOrEnd,
+    Transformer,
+    TransformerContext,
+} from '@aligent/utils';
 import { Injectable } from 'graphql-modules';
 
 /**
@@ -23,7 +29,7 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
                     position: category.attributes.order,
                     level: category.attributes.level,
                     name: category.attributes.title,
-                    url_path: category.attributes.url,
+                    url_path: category.attributes.url.replace(slashAtStartOrEnd, ''),
                     url_suffix: '',
                     meta_title: category.attributes.metaTitle,
                     meta_description: category.attributes.metaDescription,
@@ -33,6 +39,8 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
                     redirect_code: 0,
                     children_count: '0',
                     children: [],
+                    type: 'CATEGORY',
+                    __typename: 'CategoryTree',
                 })
         );
         const categoryTreeArray: Array<CategoryTree> = [];
