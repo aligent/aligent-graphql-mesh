@@ -83,9 +83,9 @@ export class ApiClient {
         };
 
         // merge the parameters that are coming in with the default "page" setting
-        const reqConfig = config ?? {};
+        const reqConfig = config || {};
         reqConfig.params =
-            reqConfig.params?.page != undefined
+            reqConfig.params?.page !== undefined
                 ? reqConfig.params
                 : { ...reqConfig.params, page: pageConfig };
 
@@ -102,7 +102,7 @@ export class ApiClient {
             const totalRecords = Number(response.headers['x-include-total-count']);
             const totalProcessed =
                 (pageConfig.number - 1) * pageConfig.size + oroResponse.data.length;
-            if (totalProcessed == totalRecords || oroResponse.data.length === 0) {
+            if (totalProcessed === totalRecords || oroResponse.data.length === 0) {
                 break;
             }
             reqConfig.params.page.number = ++pageConfig.number;
