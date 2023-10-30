@@ -2,7 +2,7 @@ import { Customer, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 import { BcMutationCustomer, ValidatePasswordRequest } from '../../../types';
 import {
     bcWishListItems,
-    transformedWishlistItemsTwo,
+    transformedWishlist,
 } from '../../helpers/__tests__/__data__/transform-customer-wishlist-data';
 
 // @ts-expect-error: ignore bad non-nullable fields
@@ -201,7 +201,7 @@ export const acCustomer = {
     lastname: 'mesh',
     is_subscribed: true,
     allow_remote_shopping_assistance: null,
-    wishlists: transformedWishlistItemsTwo,
+    wishlists: transformedWishlist,
     wishlist: { visibility: 'PUBLIC' },
     reviews: { items: [], page_info: { current_page: null, page_size: null, total_pages: null } },
 };
