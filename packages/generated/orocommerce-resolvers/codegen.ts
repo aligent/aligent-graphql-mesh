@@ -11,14 +11,15 @@ const config: CodegenConfig = {
             plugins: [
                 {
                     add: {
-                        content: 'import * as gm from "graphql-modules";'
-                    }
+                        content: 'import * as gm from "graphql-modules";',
+                    },
                 },
                 'typescript',
                 'typescript-resolvers',
             ],
             config: {
                 contextType: 'GraphQLModules.ModuleContext',
+                useImplementingTypes: true,
             },
         },
     },
