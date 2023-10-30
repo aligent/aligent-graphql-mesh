@@ -1,4 +1,8 @@
-import { CheckoutShippingConsignment } from '@aligent/bigcommerce-operations';
+import {
+    CheckoutAddressCheckboxesCustomField,
+    CheckoutAddressTextFieldCustomField,
+    CheckoutShippingConsignment,
+} from '@aligent/bigcommerce-operations';
 import { Cart, Maybe, Scalars, ShippingCartAddress } from '@aligent/bigcommerce-resolvers';
 import { btoa } from '@aligent/utils';
 import {
@@ -6,10 +10,17 @@ import {
     getTransformedSelectedShippingOption,
 } from './transform-available-shipping-methods';
 import { getTransformedAddress } from './transform-address';
+import { BcStorefrontFormFields } from '../../types';
+
+const DELIVERY_INSTRUCTIONS_MAP = {
+    authorityToLeave: 'Authority To Leave',
+    instructions: 'Delivery Instructions',
+};
 
 export const getTransformedShippingAddresses = (
     shippingConsignments?: Maybe<Array<CheckoutShippingConsignment>>,
-    customerMessage?: Maybe<Scalars['String']>
+    customerMessage?: Maybe<Scalars['String']>,
+    formFields?: BcStorefrontFormFields
 ): Cart['shipping_addresses'] => {
     if (!shippingConsignments) return [];
 
@@ -20,6 +31,37 @@ export const getTransformedShippingAddresses = (
 
             const transformedAddress = getTransformedAddress(address);
 
+            const deliveryInstructions = {
+                authorityToLeave: false,
+                instructions: '',
+            };
+
+            if (formFields) {
+                const { shippingAddress: shippingCustomFields } = formFields;
+
+                shippingCustomFields.forEach((shippingCustomField) => {
+                    address.customFields.some((addressCustomField) => {
+                        if (
+                            addressCustomField.entityId === getFieldEntityId(shippingCustomField.id)
+                        ) {
+                            if (
+                                shippingCustomField.label ===
+                                DELIVERY_INSTRUCTIONS_MAP.authorityToLeave
+                            ) {
+                                deliveryInstructions.authorityToLeave = !!(
+                                    addressCustomField as CheckoutAddressCheckboxesCustomField
+                                ).valueEntityIds.length;
+                            } else if (
+                                shippingCustomField.label === DELIVERY_INSTRUCTIONS_MAP.instructions
+                            ) {
+                                deliveryInstructions.instructions = (
+                                    addressCustomField as CheckoutAddressTextFieldCustomField
+                                ).text;
+                            }
+                        }
+                    });
+                });
+            }
             return {
                 ...transformedAddress,
                 uid: btoa(entityId),
@@ -28,25 +70,14 @@ export const getTransformedShippingAddresses = (
                 selected_shipping_method:
                     getTransformedSelectedShippingOption(selectedShippingOption),
                 customer_notes: customerMessage,
-                deliveryInstructions: {
-                    authorityToLeave: false,
-                    instructions: '',
-                },
-                /* @todo This is from "customFields" on the "shippingAddress" object. To get this
-                 *  we need to know what customField.fieldId corresponds to. The BC Aligent instance currently
-                 * shows this as
-                 *[
-                 *   {
-                 *        fieldId: "field_26", // "instructions"
-                 *        fieldValue: "this are instructions"
-                 *   },
-                 *   {
-                 *       "fieldId": "field_29", "authorityToLeave"
-                 *       "fieldValue": ["0"]
-                 *   }
-                 * ]
-                 */
+                deliveryInstructions,
             };
         }
     );
+};
+
+// BC REST FormField API returns field id in the format of 'field_26',
+// BC Graphql Checkout returns customField with entityId: 26
+const getFieldEntityId = (fieldId: string): number => {
+    return Number(fieldId.replace('field_', ''));
 };

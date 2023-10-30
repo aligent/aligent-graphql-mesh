@@ -1,4 +1,5 @@
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
+import { MockedStorefrontFormFields } from '../../../resolvers/mocks/storefront-form-fields';
 import { getTransformedShippingAddresses } from '../transform-shipping-addresses';
 
 const expectResult = [
@@ -66,8 +67,8 @@ const expectResult = [
         },
         customer_notes: 'This is my order',
         deliveryInstructions: {
-            authorityToLeave: false,
-            instructions: '',
+            authorityToLeave: true,
+            instructions: 'Leave at the rear door',
         },
     },
 ];
@@ -77,7 +78,11 @@ const customerMessage = 'This is my order';
 describe('transform-shipping-address', () => {
     it(`transforms shipping addresses`, () => {
         expect(
-            getTransformedShippingAddresses(mockBcCheckout.shippingConsignments, customerMessage)
+            getTransformedShippingAddresses(
+                mockBcCheckout.shippingConsignments,
+                customerMessage,
+                MockedStorefrontFormFields
+            )
         ).toEqual(expect.objectContaining(expectResult));
     });
 
