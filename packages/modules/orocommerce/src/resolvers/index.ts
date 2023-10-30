@@ -13,6 +13,7 @@ import { createCustomerMutation } from './mutations/create-customer';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
 import { loginMutation } from './mutations/login';
+import { routeResolver } from './queries/route';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -24,6 +25,7 @@ export const resolvers: Resolvers = {
         cmsBlocks: cmsBlocksResolver,
         storeLocations: storeLocationsResolver,
         customer: customerResolver,
+        route: routeResolver,
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
