@@ -4,14 +4,13 @@ import {
     RequireFields,
     ResolversTypes,
 } from '@aligent/orocommerce-resolvers';
-
+import { GraphQLResolveInfo } from 'graphql/type';
+import { Routes } from '../../types/routes';
 import { RoutesClient } from '../../apis/rest/routes';
 import { mockCmsPage } from '../mocks/cms-page';
 import { productMock } from '../mocks/products';
 import { categoriesResolver } from './categories';
-import { GraphQLResolveInfo } from 'graphql/type';
-import { Routes } from '../../types/routes';
-import { getIdFromLandingPageApiUrl, getUidFromCategoryApiUrl } from '../../utils/routes';
+import { getIdFromLandingPageApiUrl, getUidFromCategoryApiUrl } from '../../utils';
 
 const getRouteTypeData = async (
     root: {},
@@ -103,8 +102,6 @@ export const routeResolver: QueryResolvers['route'] = {
         if (!routeData) return null;
 
         const { url, redirectStatusCode } = routeData.attributes;
-
-        console.dir(routeData);
 
         const transformedRouteData = await getRouteTypeData(root, args, context, info, routeData);
 
