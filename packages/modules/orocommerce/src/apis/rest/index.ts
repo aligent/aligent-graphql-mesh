@@ -6,3 +6,4 @@ export * from './customer';
 export * from './key-messages-api-client';
 export * from './shoppinglists';
 export * from './store-location-api-client';
+export * from './category-client'
