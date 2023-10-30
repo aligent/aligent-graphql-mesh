@@ -10,10 +10,10 @@ import { RoutesClient } from '../../apis/rest/routes';
 import { mockCmsPage } from '../mocks/cms-page';
 import { productMock } from '../mocks/products';
 import { categoriesResolver } from './categories';
-import { getIdFromLandingPageApiUrl, getUidFromCategoryApiUrl } from '../../utils';
+import { getUidFromCategoryApiUrl } from '../../utils';
 
 const getRouteTypeData = async (
-    root: {},
+    root: object,
     args: RequireFields<QueryRouteArgs, 'url'>,
     context: GraphQLModules.ModuleContext,
     info: GraphQLResolveInfo,
@@ -61,10 +61,10 @@ const getRouteTypeData = async (
      * a CMS Page with its own landing page
      * */
     if (resourceType === 'landing_page' || url === '/') {
-        const cmsPageId = getIdFromLandingPageApiUrl(apiUrl);
-
         /*
         @todo uncomment and adjust when there's a cms page resolver
+        const cmsPageId = getIdFromLandingPageApiUrl(apiUrl);
+
         const cmsPageData = await cmsPageResolver.resolve(
             root,
             { id },
