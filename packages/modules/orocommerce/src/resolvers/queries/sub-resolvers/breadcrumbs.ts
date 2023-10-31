@@ -11,7 +11,7 @@ export const breadcrumbsSubResolver: CategoryTreeResolvers['breadcrumbs'] = {
     resolve: async (root, _args, context, _info) => {
         //root.uid contains the categoryId which is base64 encoded by the previously executed categories resolver
         const nodeId = decodeCategoryId(root.uid);
-        if (nodeId) return [];
+        if (!nodeId) return [];
 
         const api: CategoriesClient = context.injector.get(CategoriesClient);
         const categories = await api.getBreadcrumbs(nodeId);
