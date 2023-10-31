@@ -1,12 +1,12 @@
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
-import { WebCatalogTree as OroCategory } from '../../types';
+import { Resource, WebCatalogTree as OroCategory } from '../../types';
 import {
     atob,
     btoa,
     ChainTransformer,
     logAndThrowError,
     Transformer,
-    TransformerContext
+    TransformerContext,
 } from '@aligent/utils';
 import { Injectable } from 'graphql-modules';
 
@@ -29,7 +29,7 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
                     id: Number(category.id),
                     // category tree node can be different entity (mastercatalogcategory, cms page, etc.)
                     // we need an entity type and real id in Mesh to get valid data from Oro
-                    uid: btoa(JSON.stringify(category.relationships?.content.data)),
+                    uid: encodeCategoryUid(category.relationships?.content.data),
                     position: category.attributes.order,
                     level: category.attributes.level,
                     name: category.attributes.title,
@@ -59,7 +59,7 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
 
 // decoded uid is an object of 2 properties, 'type' and 'id'
 // ex.: {'type': 'mastercatalogcategories', 'id': 5}
-export const decodeCategoryId = (categoryUid?: string): number|null => {
+export const decodeCategoryId = (categoryUid?: string | null): number | null => {
     if (!categoryUid) {
         return null;
     }
@@ -67,10 +67,15 @@ export const decodeCategoryId = (categoryUid?: string): number|null => {
     try {
         const categoryData = JSON.parse(atob(categoryUid || ''));
         if ('id' in categoryData && categoryData?.type === 'mastercatalogcategories') {
-            return Number(categoryData.id)
+            return Number(categoryData.id);
         }
         return null;
-    } catch(error) {
+    } catch (error) {
         return logAndThrowError(error);
     }
-}
+};
+
+// encode webcatalogtree node content data into schema UID
+const encodeCategoryUid = (categoryData?: Resource): string | null => {
+    return btoa(JSON.stringify(categoryData));
+};

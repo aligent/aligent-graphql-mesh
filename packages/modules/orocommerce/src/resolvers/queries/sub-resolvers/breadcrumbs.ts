@@ -10,12 +10,16 @@ import { decodeCategoryId } from '../../../transformers/categories/categories-tr
 export const breadcrumbsSubResolver: CategoryTreeResolvers['breadcrumbs'] = {
     resolve: async (root, _args, context, _info) => {
         //root.uid contains the categoryId which is base64 encoded by the previously executed categories resolver
-        const nodeId = <number>decodeCategoryId(root.uid);
-        const api: CategoriesClient = context.injector.get(CategoriesClient);
-        const categories = await api.getBreadcrumbs(nodeId);
-        const transformer: BreadcrumbsTransformerChain = context.injector.get(
-            BreadcrumbsTransformerChain
-        );
-        return transformer.transform({ data: categories });
+        const nodeId = decodeCategoryId(root.uid);
+        if (nodeId) {
+            const api: CategoriesClient = context.injector.get(CategoriesClient);
+            const categories = await api.getBreadcrumbs(nodeId);
+            const transformer: BreadcrumbsTransformerChain = context.injector.get(
+                BreadcrumbsTransformerChain
+            );
+            return transformer.transform({ data: categories });
+        } else {
+            return [];
+        }
     },
 };
