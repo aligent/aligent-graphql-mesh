@@ -12,10 +12,10 @@ export class CustomerClient {
     }
 
     async createCustomerUser(customerUser: CustomerUser): Promise<CustomerUser> {
-        const response = await this.apiClient.post<CustomerUser, { data: CustomerUser }>(
+        const response = await this.apiClient.post<{ data: CustomerUser }, { data: CustomerUser }>(
             `/customerusers`,
             { data: customerUser }
         );
-        return response;
+        return response.data;
     }
 }
