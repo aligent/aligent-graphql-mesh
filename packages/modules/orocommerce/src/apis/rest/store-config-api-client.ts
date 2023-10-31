@@ -7,6 +7,7 @@ import { getMockOroStoreConfig } from '../../transformers/store-config/__tests__
 export class StoreConfigApiClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
+    // TODO: we will implement Oro Api for store config in ticket OTF-96
     async getStoreConfig(): Promise<OroStoreConfig> {
         return new Promise((resolve, _) => {
             resolve(getMockOroStoreConfig());
