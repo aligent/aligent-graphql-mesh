@@ -77,5 +77,8 @@ export const decodeCategoryId = (categoryUid?: string | null): number | null => 
 
 // encode webcatalogtree node content data into schema UID
 const encodeCategoryUid = (categoryData?: Resource): string | null => {
+    if (!categoryData) {
+        return null;
+    }
     return btoa(JSON.stringify(categoryData));
 };
