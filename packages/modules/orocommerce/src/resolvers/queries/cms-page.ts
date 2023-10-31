@@ -7,7 +7,10 @@ export const cmsPageResolver: QueryResolvers['cmsPage'] = {
         const cmsPageClient: CmsPageClient = context.injector.get(CmsPageClient);
 
         const id = String(args.id);
-        const oroLandingPage = await cmsPageClient.getLandingPage(id);
+        const identifier = String(args.identifier);
+        const identifierOrId = identifier ? identifier : id;
+
+        const oroLandingPage = await cmsPageClient.getLandingPage(identifierOrId);
 
         const cmsPageTransformerChain: CmsPageTransformerChain =
             context.injector.get(CmsPageTransformerChain);
