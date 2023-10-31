@@ -21,6 +21,16 @@ import {
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
 
+import {
+    CustomerAddressTransformer,
+    CustomerAddressTransformerChain,
+} from './customers/transform-customer-address-data';
+
+import {
+    TransformOroAddress,
+    TransformOroAddressChain,
+} from './customers/transform-oro-address-data';
+
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
 export * from './currency/transform-currency-data';
@@ -49,6 +59,17 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: BreadcrumbsTransformerChain,
             useClass: BreadcrumbsTransformerChain,
+            global: true,
+        },
+        {
+            provide: CustomerAddressTransformerChain,
+            useClass: CustomerAddressTransformerChain,
+            global: true,
+        },
+
+        {
+            provide: TransformOroAddressChain,
+            useClass: TransformOroAddressChain,
             global: true,
         },
         // Create default transformers and register them with their chain transformers
@@ -118,6 +139,25 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+
+        {
+            provide: CustomerAddressTransformer,
+            useFactory: (transformerChain) => {
+                const customerAddressTransformer = new CustomerAddressTransformer();
+                transformerChain.addTransformer(customerAddressTransformer);
+                return CustomerAddressTransformer;
+            },
+            deps: [CustomerAddressTransformerChain],
+        },
+        {
+            provide: TransformOroAddress,
+            useFactory: (transformerChain) => {
+                const transformOroAddress = new TransformOroAddress();
+                transformerChain.addTransformer(transformOroAddress);
+                return TransformOroAddress;
+            },
+            deps: [TransformOroAddressChain],
         },
     ];
 };

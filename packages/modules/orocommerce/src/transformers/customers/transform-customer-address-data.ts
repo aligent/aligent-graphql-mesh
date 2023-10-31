@@ -1,8 +1,15 @@
-import { Transformer, TransformerContext } from '@aligent/utils';
-import { CustomerAddress, CountryCodeEnum } from '@aligent/orocommerce-resolvers';
+import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 import { OroCustomerAddress, CustomerAddressValidated } from '../../types';
+import { Injectable } from 'graphql-modules';
 
-export class createCustomerAddressTransformer
+@Injectable()
+export class CustomerAddressTransformerChain extends ChainTransformer<
+    CustomerAddressValidated,
+    OroCustomerAddress
+> {}
+
+@Injectable()
+export class CustomerAddressTransformer
     implements Transformer<CustomerAddressValidated, OroCustomerAddress>
 {
     public transform(
@@ -64,36 +71,6 @@ export class createCustomerAddressTransformer
                     },
                 },
             },
-        };
-    }
-}
-
-export class createCustomerOroAddressTransformer
-    implements Transformer<OroCustomerAddress, CustomerAddress>
-{
-    public transform(
-        context: TransformerContext<OroCustomerAddress, CustomerAddress>
-    ): CustomerAddress {
-        const customerAddress = context.data;
-        const attributes = context.data.attributes;
-
-        return {
-            id: customerAddress.id ? parseInt(customerAddress.id) : null,
-            street: [attributes.street, attributes.street2 || null],
-            city: attributes.city,
-            company: attributes.organization,
-            country_code: customerAddress.relationships.country.data.id as CountryCodeEnum,
-            firstname: attributes.firstName,
-            lastname: attributes.lastName,
-            telephone: attributes.phone,
-            postcode: attributes.postalCode,
-            region: {
-                region: null,
-                region_id: null,
-                region_code: customerAddress.relationships.region.data.id,
-            },
-            default_billing: attributes.types[0].default,
-            default_shipping: attributes.types[1].default,
         };
     }
 }
