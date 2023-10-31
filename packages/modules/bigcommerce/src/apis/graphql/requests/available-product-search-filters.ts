@@ -7,7 +7,7 @@ export const getAvailableProductsSearchFiltersQuery = stripIgnoredCharacters(
         query availableProductSearchFilters($filters: SearchProductsFiltersInput!) {
             site {
                 search {
-                    searchProducts(filters: $filters) {
+                    searchProducts(filters: $filters, sort: RELEVANCE) {
                         filters {
                             edges {
                                 node {

@@ -14,7 +14,7 @@ export const getProductsPaginationQuery = stripIgnoredCharacters(
         ) {
             site {
                 search {
-                    searchProducts(filters: $filters) {
+                    searchProducts(filters: $filters, sort: RELEVANCE) {
                         products(first: $first, after: $after) {
                             edges {
                                 cursor

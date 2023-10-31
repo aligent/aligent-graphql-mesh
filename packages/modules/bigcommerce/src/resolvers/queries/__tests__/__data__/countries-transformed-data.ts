@@ -52,7 +52,7 @@ export const transformedCountries = {
 
 export const transformedCreatedCustomer = {
     id: 19,
-    allow_remote_shopping_assistance: true,
+    allow_remote_shopping_assistance: null,
     reviews: {
         items: [],
         page_info: {

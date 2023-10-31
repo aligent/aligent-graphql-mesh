@@ -27,7 +27,7 @@ const expectAcStoreLocations = {
             longitude: 138.610467,
             name: 'Aligent BC address 1',
             phone: '',
-            pickup_location_code: 'BC-ADDRESS-1',
+            pickup_location_code: 'BC-LOCATION-1',
             postcode: '5000',
             street: 'L2/212 Pirie St',
         },
@@ -45,5 +45,13 @@ describe('transform store locations', () => {
         expect(getTransformedStoreLocationItems(mockedBcStoreLocations)).toEqual(
             expectAcStoreLocations
         );
+    });
+
+    it(`return undefined when there is no location items`, () => {
+        expect(
+            getTransformedStoreLocationItems({
+                pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            })
+        ).toEqual({ items: undefined });
     });
 });

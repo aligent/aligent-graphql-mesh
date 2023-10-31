@@ -27,6 +27,6 @@ export const mockCustomer = {
             __typename: 'Wishlist',
         },
     ],
-    allow_remote_shopping_assistance: false,
+    allow_remote_shopping_assistance: null,
     __typename: 'Customer',
 };
