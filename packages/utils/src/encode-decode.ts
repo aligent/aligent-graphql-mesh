@@ -1,4 +1,4 @@
-import { atob as BufferAtob, Buffer } from 'buffer';
+import { atob as BufferAtob, Buffer } from 'node:buffer';
 
 /**
  * Encodes a string to base64.

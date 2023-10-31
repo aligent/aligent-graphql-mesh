@@ -46,30 +46,19 @@ export class ApiClient {
         const response = await this.client.get<{ data: T; included?: D }>(url, config);
         return response.data;
     }
+
     async post<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.post<{ data: T }, AxiosResponse<{ data: T }>, D>(
-            url,
-            data,
-            config
-        );
-        return response.data.data;
+        const response = await this.client.post<T, AxiosResponse<T>, D>(url, data, config);
+        return response.data;
     }
 
     async patch<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.patch<{ data: T }, AxiosResponse<{ data: T }>, D>(
-            url,
-            data,
-            config
-        );
+        const response = await this.client.patch<T, AxiosResponse<T>, D>(url, data, config);
         return response.data;
     }
 
     async put<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.put<{ data: T }, AxiosResponse<{ data: T }>, D>(
-            url,
-            data,
-            config
-        );
+        const response = await this.client.put<T, AxiosResponse<T>, D>(url, data, config);
         return response.data;
     }
 
