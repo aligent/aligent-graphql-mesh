@@ -29,6 +29,12 @@ const yoga = createYoga({
             maxAliases: {
                 n: 70,
             },
+            maxDepth: {
+                n: 15000,
+            },
+            costLimit: {
+                maxCost: 15000,
+            },
         }),
     ],
 });
@@ -37,7 +43,7 @@ const app = express();
 
 let allowedOrigins: (string | RegExp)[] = [
     new RegExp('.*.dev.aligent.consulting$'),
-    new RegExp('.*.local.pwadev$'),
+    new RegExp('.*.local.pwadev:8128'),
 ];
 
 if (process.env.ORIGINS) {
