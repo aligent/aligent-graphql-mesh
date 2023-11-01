@@ -4,7 +4,7 @@ export interface WebCatalogTree extends Entity {
     type: 'webcatalogtree';
     id: string;
     attributes: WebCatalogTreeAttributes;
-    relationships?: WebCatalogTreeRelationships;
+    relationships: WebCatalogTreeRelationships;
 }
 
 export interface WebCatalogTreeAttributes extends Attributes {
@@ -22,13 +22,13 @@ export interface WebCatalogTreeAttributes extends Attributes {
 
 export interface WebCatalogTreeRelationships extends Relationships {
     parent: {
-        data?: Resource | null;
+        data: Resource | null;
     };
     path: {
-        data?: Array<Resource>;
+        data: Array<Resource>;
     };
     content: {
-        data?: Resource;
+        data: Resource;
     };
 }
 

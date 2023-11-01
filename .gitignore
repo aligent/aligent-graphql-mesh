@@ -8,6 +8,7 @@ dist
 tmp
 /out-tsc
 **/.mesh
+.nx
 
 # dependencies
 node_modules

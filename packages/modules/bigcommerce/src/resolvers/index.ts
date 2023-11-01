@@ -54,6 +54,7 @@ import { customerOrderItemsResolver } from './queries/sub-query-resolvers/custom
 import { customerOrderShippingMethodResolver } from './queries/sub-query-resolvers/customerOrderShippingMethod';
 import { customerOrderShippingAddressResolver } from './queries/sub-query-resolvers/customerOrderShippingAddress';
 import { productsBySkuResolver } from './queries/products-by-sku';
+import { clearCustomerCartResolver } from './mutations/clear-customer-cart';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -83,6 +84,7 @@ export const resolvers: Resolvers = {
         applyGiftCardToCart: applyGiftCardToCartResolver,
         shareWishlist: shareWishlistResolver,
         changeCustomerPassword: changeCustomerPasswordResolver,
+        clearCustomerCart: clearCustomerCartResolver,
         createBraintreeClientToken: createBraintreeClientTokenResolver,
         createCartRedirectUrls: createCartRedirectUrlsResolver,
         createCustomer: createCustomerResolver,

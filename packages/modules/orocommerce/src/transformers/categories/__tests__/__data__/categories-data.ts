@@ -315,7 +315,7 @@ export const inputCategories: Array<WebCatalogTree> = [
 export const outputCategories: Array<CategoryTree> = [
     {
         id: 1,
-        uid: 'MQ==',
+        uid: 'eyJ0eXBlIjoic3lzdGVtcGFnZXMiLCJpZCI6Im9yb19mcm9udGVuZF9yb290In0=',
         position: 1,
         level: 0,
         name: 'Home',
@@ -332,7 +332,7 @@ export const outputCategories: Array<CategoryTree> = [
         children: [
             {
                 id: 5,
-                uid: 'NQ==',
+                uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjMifQ==',
                 position: 2,
                 level: 1,
                 name: 'Clothing',
@@ -349,7 +349,7 @@ export const outputCategories: Array<CategoryTree> = [
                 children: [
                     {
                         id: 6,
-                        uid: 'Ng==',
+                        uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjQifQ==',
                         position: 3,
                         level: 2,
                         name: 'Hoodies',
@@ -371,7 +371,7 @@ export const outputCategories: Array<CategoryTree> = [
             },
             {
                 id: 3,
-                uid: 'Mw==',
+                uid: 'eyJ0eXBlIjoicHJvZHVjdGNvbGxlY3Rpb24iLCJpZCI6IjMifQ==',
                 position: 6,
                 level: 1,
                 name: 'Sale',
@@ -388,7 +388,7 @@ export const outputCategories: Array<CategoryTree> = [
                 children: [
                     {
                         id: 4,
-                        uid: 'NA==',
+                        uid: 'eyJ0eXBlIjoicHJvZHVjdGNvbGxlY3Rpb24iLCJpZCI6IjEwIn0=',
                         position: 7,
                         level: 2,
                         name: 'Test Product Collection',
@@ -407,7 +407,7 @@ export const outputCategories: Array<CategoryTree> = [
                     },
                     {
                         id: 8,
-                        uid: 'OA==',
+                        uid: 'eyJ0eXBlIjoicHJvZHVjdHMiLCJpZCI6IjEifQ==',
                         position: 9,
                         level: 2,
                         name: 'Test Product Page',
@@ -429,7 +429,7 @@ export const outputCategories: Array<CategoryTree> = [
             },
             {
                 id: 2,
-                uid: 'Mg==',
+                uid: 'eyJ0eXBlIjoibGFuZGluZ3BhZ2VzIiwiaWQiOiIzIn0=',
                 position: 12,
                 level: 1,
                 name: 'Contact Us',
@@ -448,7 +448,7 @@ export const outputCategories: Array<CategoryTree> = [
             },
             {
                 id: 7,
-                uid: 'Nw==',
+                uid: 'eyJ0eXBlIjoibGFuZGluZ3BhZ2VzIiwiaWQiOiIxIn0=',
                 position: 14,
                 level: 1,
                 name: 'About',

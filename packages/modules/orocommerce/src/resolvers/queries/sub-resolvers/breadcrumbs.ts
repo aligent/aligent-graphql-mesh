@@ -1,7 +1,7 @@
 import { CategoryTreeResolvers } from '@aligent/orocommerce-resolvers';
-import { atob } from '@aligent/utils';
 import { CategoriesClient } from '../../../apis/rest/category-client';
 import { BreadcrumbsTransformerChain } from '../../../transformers/categories/breadcrumbs-transformer';
+import { decodeCategoryId } from '../../../transformers/categories/categories-transformer';
 
 /**
  * This is a sub-resolver it is executed after categoriesResolver when items was specified in the query
@@ -10,7 +10,9 @@ import { BreadcrumbsTransformerChain } from '../../../transformers/categories/br
 export const breadcrumbsSubResolver: CategoryTreeResolvers['breadcrumbs'] = {
     resolve: async (root, _args, context, _info) => {
         //root.uid contains the categoryId which is base64 encoded by the previously executed categories resolver
-        const nodeId = Number(atob(root.uid));
+        const nodeId = decodeCategoryId(root.uid);
+        if (!nodeId) return [];
+
         const api: CategoriesClient = context.injector.get(CategoriesClient);
         const categories = await api.getBreadcrumbs(nodeId);
         const transformer: BreadcrumbsTransformerChain = context.injector.get(
