@@ -16,6 +16,7 @@ import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
+import { routeResolver } from './queries/route';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -27,6 +28,7 @@ export const resolvers: Resolvers = {
         cmsBlocks: cmsBlocksResolver,
         storeLocations: storeLocationsResolver,
         customer: customerResolver,
+        route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
     },
     Mutation: {

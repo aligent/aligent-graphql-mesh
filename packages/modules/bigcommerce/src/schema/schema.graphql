@@ -5777,7 +5777,7 @@ type Customer {
     """
     Indicates whether the customer has enabled remote shopping assistance.
     """
-    allow_remote_shopping_assistance: Boolean!
+    allow_remote_shopping_assistance: Boolean
     """
     The contents of the customer's compare list.
     """

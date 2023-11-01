@@ -188,7 +188,7 @@ export interface BcAddressRest {
     phone: string;
     postal_code: string;
     state_or_province: string;
-    form_fields: FormField[] | [DefaultBillingOrShippingField] | [AllowRemoteAssistanceField];
+    form_fields: FormField[] | [DefaultBillingOrShippingField];
 }
 
 export interface FormField {
@@ -198,11 +198,6 @@ export interface FormField {
 
 export interface DefaultBillingOrShippingField extends FormField {
     name: 'Default Billing' | 'Default Shipping';
-    value: ['Yes'] | [];
-}
-
-export interface AllowRemoteAssistanceField extends FormField {
-    name: 'allow_remote_shopping_assistance';
     value: ['Yes'] | [];
 }
 
