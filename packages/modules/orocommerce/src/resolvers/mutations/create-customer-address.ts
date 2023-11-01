@@ -2,7 +2,7 @@ import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
 import { isCustomerAddressValid } from '../../utils';
 import { CustomerAddressTransformerChain } from '../../transformers/customers/transform-customer-address-data';
-import { TransformOroAddressChain } from '../../transformers/customers/transform-oro-address-data';
+import { OroAddressTransformerChain } from '../../transformers/customers/transform-oro-address-data';
 import { CustomerClient } from '../../apis/rest/customer';
 
 export const createCustomerAddressMutation: MutationResolvers['createCustomerAddress'] = {
@@ -22,13 +22,12 @@ export const createCustomerAddressMutation: MutationResolvers['createCustomerAdd
 
         const customerClient: CustomerClient = context.injector.get(CustomerClient);
         const response = await customerClient.createCustomerAddress(transformedCustomerAddress);
-        const transformOroAddress: TransformOroAddressChain =
-            context.injector.get(TransformOroAddressChain);
+        const transformOroAddress: OroAddressTransformerChain = context.injector.get(
+            OroAddressTransformerChain
+        );
 
-        const transformOroCustomerAddress = transformOroAddress.transform({
+        return transformOroAddress.transform({
             data: response,
         });
-
-        return transformOroCustomerAddress;
     },
 };
