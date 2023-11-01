@@ -10,7 +10,7 @@ import { RoutesClient } from '../../apis/rest/routes';
 import { mockCmsPage } from '../mocks/cms-page';
 import { productMock } from '../mocks/products';
 import { categoriesResolver } from './categories';
-import { getUidFromCategoryApiUrl } from '../../utils';
+import { getCategoryUidFromCategoryApiUrl } from '../../utils';
 
 const getRouteTypeData = async (
     root: object,
@@ -24,7 +24,7 @@ const getRouteTypeData = async (
     } = routeData;
 
     if (resourceType === 'master_catalog_category_product_collection') {
-        const categoryId = getUidFromCategoryApiUrl(apiUrl);
+        const categoryId = getCategoryUidFromCategoryApiUrl(apiUrl);
 
         const categoriesResolverData = await categoriesResolver.resolve(
             root,
@@ -55,12 +55,8 @@ const getRouteTypeData = async (
         };
     }
 
-    /* about us, any other CMS page
-     *
-     * Home page is a "system_page" "resourceType" but will be treated as
-     * a CMS Page with its own landing page
-     * */
-    if (resourceType === 'landing_page' || url === '/') {
+    /* home page, about us, any other CMS page */
+    if (resourceType === 'landing_page') {
         /*
         @todo uncomment and adjust when there's a cms page resolver
         const cmsPageId = getIdFromLandingPageApiUrl(apiUrl);
@@ -78,14 +74,13 @@ const getRouteTypeData = async (
         return mockCmsPage;
     }
 
-    /* quick order, account order, home page
+    /* quick order, account order
      * These routes are defined in the PWA, so it's not expected for this condition
      * to be hit.
-     *
-     * Home page will be treated as a landing page
      *  */
     if (resourceType === 'system_page') {
-        return mockCmsPage;
+        /* If no page can be found return null which will prompt the PWA to raise its 404 page */
+        return null;
     }
 
     /* If no page can be found return null which will prompt the PWA to raise its 404 page */

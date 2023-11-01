@@ -1,4 +1,4 @@
-import { btoa } from '@aligent/utils';
+import { getEncodedCategoryUidFromCategoryData } from './categories';
 
 /**
  * Extracts the id from a category "apiUrl", encodes it to base 64 and returns
@@ -8,10 +8,12 @@ import { btoa } from '@aligent/utils';
  *
  * @param apiUrl
  */
-export const getUidFromCategoryApiUrl = (apiUrl: string): string => {
+export const getCategoryUidFromCategoryApiUrl = (apiUrl: string): string => {
     const apiUrlParts = apiUrl.split('=');
 
-    return btoa(apiUrlParts[apiUrlParts.length - 1]);
+    const category = { id: apiUrlParts[apiUrlParts.length - 1], type: 'mastercatalogcategories' };
+
+    return getEncodedCategoryUidFromCategoryData(category);
 };
 
 /**
