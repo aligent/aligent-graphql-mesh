@@ -43,7 +43,7 @@ const app = express();
 
 let allowedOrigins: (string | RegExp)[] = [
     new RegExp('.*.dev.aligent.consulting$'),
-    new RegExp('.*.local.pwadev:8128'),
+    new RegExp('.*.local.pwadev$'),
 ];
 
 if (process.env.ORIGINS) {
