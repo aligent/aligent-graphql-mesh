@@ -77,7 +77,7 @@ export class ApiClient {
         url: string,
         config?: AxiosRequestConfig
     ): AsyncGenerator<{ data: D[]; included?: I[] }> {
-        let pageConfig = {
+        const pageConfig = {
             number: 1,
             size: 50,
         };
@@ -89,8 +89,6 @@ export class ApiClient {
                 ? reqConfig.params
                 : { ...reqConfig.params, page: pageConfig };
 
-        pageConfig = reqConfig.params.page;
-
         let hasNextPage = true;
 
         do {
@@ -100,7 +98,7 @@ export class ApiClient {
                 links: { next?: string };
             }>(url, reqConfig);
             yield response.data;
-            reqConfig.params.page.number = ++pageConfig.number;
+            reqConfig.params.page.number++;
             hasNextPage = response.data.links.next !== undefined;
         } while (hasNextPage);
     }
