@@ -1,6 +1,6 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
-import { Routes } from '../../types/routes';
+import { Route } from '../../types/routes';
 import axios from 'axios';
 import { logAndThrowError } from '@aligent/utils';
 
@@ -10,9 +10,9 @@ const ROUTE_URL = '/routes';
 export class RoutesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
-    async getRoutes(id: string): Promise<Routes | null> {
+    async getRoutes(id: string): Promise<Route | null> {
         try {
-            const response = await this.apiClient.get<Routes>(`${ROUTE_URL}/${id}`);
+            const response = await this.apiClient.get<Route>(`${ROUTE_URL}/${id}`);
 
             return response.data;
         } catch (error) {

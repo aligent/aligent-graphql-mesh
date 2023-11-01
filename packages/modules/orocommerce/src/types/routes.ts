@@ -1,4 +1,4 @@
-export interface Routes {
+export interface Route {
     type: string;
     id: string;
     links: {

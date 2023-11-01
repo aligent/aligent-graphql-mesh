@@ -5,7 +5,7 @@ import {
     ResolversTypes,
 } from '@aligent/orocommerce-resolvers';
 import { GraphQLResolveInfo } from 'graphql/type';
-import { Routes } from '../../types/routes';
+import { Route } from '../../types/routes';
 import { RoutesClient } from '../../apis/rest/routes';
 import { mockCmsPage } from '../mocks/cms-page';
 import { productMock } from '../mocks/products';
@@ -17,10 +17,10 @@ const getRouteTypeData = async (
     args: RequireFields<QueryRouteArgs, 'url'>,
     context: GraphQLModules.ModuleContext,
     info: GraphQLResolveInfo,
-    routeData: Routes
+    routeData: Route
 ): Promise<ResolversTypes['RoutableInterface'] | null> => {
     const {
-        attributes: { apiUrl, resourceType, url },
+        attributes: { apiUrl, resourceType },
     } = routeData;
 
     if (resourceType === 'master_catalog_category_product_collection') {
