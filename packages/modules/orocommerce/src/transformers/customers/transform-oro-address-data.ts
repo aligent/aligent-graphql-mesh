@@ -4,13 +4,13 @@ import { OroCustomerAddress } from '../../types';
 import { Injectable } from 'graphql-modules';
 
 @Injectable()
-export class TransformOroAddressChain extends ChainTransformer<
+export class OroAddressTransformerChain extends ChainTransformer<
     OroCustomerAddress,
     CustomerAddress
 > {}
 
 @Injectable()
-export class TransformOroAddress implements Transformer<OroCustomerAddress, CustomerAddress> {
+export class OroAddressTransformer implements Transformer<OroCustomerAddress, CustomerAddress> {
     public transform(
         context: TransformerContext<OroCustomerAddress, CustomerAddress>
     ): CustomerAddress {
