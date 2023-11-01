@@ -1,23 +1,25 @@
-import { ContactUsInput, MutationResolvers } from '@aligent/orocommerce-resolvers';
+import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ContactClient } from '../../apis/rest/contact';
-import { OroContactUsInput, OroContactUsOutput } from '../../types';
 
 export const postContactFormMutation: MutationResolvers['postContactForm'] = {
     resolve: async (_root, { input }, context: GraphQLModules.Context, _info) => {
-        const contactClient: ContactClient = context.injector.get(ContactClient);
-        const contactUsInput = input as ContactUsInput;
+        if (!input) return false;
 
-        const oroContactUsInput: OroContactUsInput = {
-            comment: contactUsInput.comment,
-            email: contactUsInput.email,
-            name: contactUsInput.name,
-            telephone: contactUsInput.telephone,
-        };
-
-        const contactUsOutput: OroContactUsOutput =
-            await contactClient.postContact(oroContactUsInput);
         try {
-            return contactUsOutput.status;
+            const contactClient: ContactClient = context.injector.get(ContactClient);
+
+            const response = await contactClient.postContact({
+                type: 'contact_request',
+                id: '0', // dummy id that Oro will ignore
+                attributes: {
+                    name: input.name,
+                    email: input.email,
+                    comment: input.comment,
+                    telephone: input.telephone || null,
+                },
+            });
+
+            return response;
         } catch (error) {
             throw new Error('Can not send your comment Now. Please try again later!');
         }
