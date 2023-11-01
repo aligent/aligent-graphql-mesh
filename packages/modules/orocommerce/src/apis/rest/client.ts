@@ -89,23 +89,19 @@ export class ApiClient {
                 ? reqConfig.params
                 : { ...reqConfig.params, page: pageConfig };
 
-        // add header to work out how many records are there
-        // https://doc.oroinc.com/backend/api/headers/
-        reqConfig.headers = reqConfig.headers ?? { 'X-Include': 'totalCount' };
-
         pageConfig = reqConfig.params.page;
 
-        while (pageConfig.number >= 1) {
-            const response = await this.client.get<{ data: D[]; included?: I[] }>(url, reqConfig);
-            const oroResponse = response.data;
-            yield oroResponse;
-            const totalRecords = Number(response.headers['x-include-total-count']);
-            const totalProcessed =
-                (pageConfig.number - 1) * pageConfig.size + oroResponse.data.length;
-            if (totalProcessed === totalRecords || oroResponse.data.length === 0) {
-                break;
-            }
+        let hasNextPage = true;
+
+        do {
+            const response = await this.client.get<{
+                data: D[];
+                included?: I[];
+                links: { next?: string };
+            }>(url, reqConfig);
+            yield response.data;
             reqConfig.params.page.number = ++pageConfig.number;
-        }
+            hasNextPage = response.data.links.next !== undefined;
+        } while (hasNextPage);
     }
 }
