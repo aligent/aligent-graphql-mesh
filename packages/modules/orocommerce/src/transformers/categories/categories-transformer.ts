@@ -1,15 +1,13 @@
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
-import { Resource, WebCatalogTree as OroCategory } from '../../types';
+import { WebCatalogTree as OroCategory } from '../../types';
 import {
-    atob,
-    btoa,
     ChainTransformer,
-    logAndThrowError,
     slashAtStartOrEnd,
     Transformer,
     TransformerContext,
 } from '@aligent/utils';
 import { Injectable } from 'graphql-modules';
+import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
 /**
  * Transforms category data into a shape the PWA is expecting
@@ -30,7 +28,7 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
                     id: Number(category.id),
                     // category tree node can be different entity (mastercatalogcategory, cms page, etc.)
                     // we need an entity type and real id in Mesh to get valid data from Oro
-                    uid: encodeCategoryUid(category.relationships.content.data),
+                    uid: getEncodedCategoryUidFromCategoryData(category.relationships.content.data),
                     position: category.attributes.order,
                     level: category.attributes.level,
                     name: category.attributes.title,
@@ -59,26 +57,3 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
         return categoryTreeArray;
     }
 }
-
-// decoded uid is an object of 2 properties, 'type' and 'id'
-// ex.: {'type': 'mastercatalogcategories', 'id': 5}
-export const decodeCategoryId = (categoryUid?: string | null): number | null => {
-    if (!categoryUid || categoryUid === 'null') {
-        return null;
-    }
-
-    try {
-        const categoryData = JSON.parse(atob(categoryUid || ''));
-        if ('id' in categoryData && categoryData?.type === 'mastercatalogcategories') {
-            return Number(categoryData.id);
-        }
-        return null;
-    } catch (error) {
-        return logAndThrowError(error);
-    }
-};
-
-// encode webcatalogtree node content data into schema UID
-const encodeCategoryUid = (categoryData: Resource): string => {
-    return btoa(JSON.stringify(categoryData));
-};
