@@ -1,4 +1,4 @@
-import { Resource } from '@aligent/orocommerce-graphql-module';
+import { Resource } from '../types/index';
 import { atob, btoa, logAndThrowError } from '@aligent/utils';
 
 /**
