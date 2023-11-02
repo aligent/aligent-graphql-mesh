@@ -122,6 +122,15 @@ export const mockBcCart = {
         totalQuantity: 1,
     },
     locale: 'en',
+    metafields: {
+        edges: [],
+        pageInfo: {
+            endCursor: null,
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: 'asb',
+        },
+    },
     updatedAt: {
         utc: '2023-07-28T01:17:18Z',
     },
