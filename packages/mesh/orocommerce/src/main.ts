@@ -29,6 +29,12 @@ const yoga = createYoga({
             maxAliases: {
                 n: 70,
             },
+            maxDepth: {
+                n: 15000,
+            },
+            costLimit: {
+                maxCost: 15000,
+            },
         }),
     ],
 });

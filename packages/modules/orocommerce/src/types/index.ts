@@ -62,4 +62,5 @@ export * from './country';
 export * from './shopping-list';
 export * from './web-catalog-tree';
 export * from './customer-user';
+export * from './customer-address';
 export * from './order';
