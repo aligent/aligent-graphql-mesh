@@ -8,6 +8,7 @@ import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { Auth } from '../services/auth';
 import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
+import { ContactClient } from '../apis/rest/contact';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { CategoriesClient } from '../apis/rest/category-client';
@@ -78,6 +79,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ShoppingListsClient,
             provide: ShoppingListsClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: ContactClient,
+            provide: ContactClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
