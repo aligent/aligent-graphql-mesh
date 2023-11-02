@@ -7,6 +7,7 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
+import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { storeLocationsResolver } from './queries/store-locations';
 import { createCustomerMutation } from './mutations/create-customer';
@@ -34,6 +35,7 @@ export const resolvers: Resolvers = {
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
+        postContactForm: postContactFormMutation,
         createCustomer: createCustomerMutation,
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
