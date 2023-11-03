@@ -24,7 +24,9 @@ export class CustomerClient {
         return response;
     }
 
-    async createCustomerAddress(customerAddress: OroCustomerAddressInput): Promise<OroCustomerAddress> {
+    async createCustomerAddress(
+        customerAddress: OroCustomerAddressInput
+    ): Promise<OroCustomerAddress> {
         const response = await this.apiClient.post<
             { data: OroCustomerAddress },
             { data: OroCustomerAddressInput }
