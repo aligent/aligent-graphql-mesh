@@ -18,6 +18,7 @@ import { deleteCustomerAddressMutation } from './mutations/delete-customer-addre
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
+import { updateCustomerAddressMutation } from './mutations/update-customer-address';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -40,6 +41,7 @@ export const resolvers: Resolvers = {
         deleteCustomerAddress: deleteCustomerAddressMutation,
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
+        updateCustomerAddress: updateCustomerAddressMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

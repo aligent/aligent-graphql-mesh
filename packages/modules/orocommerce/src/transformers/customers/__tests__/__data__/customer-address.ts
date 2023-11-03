@@ -1,4 +1,9 @@
-import { OroCustomerAddress, CustomerAddressValidated } from '../../../../types/customer-address';
+import {
+    OroCustomerAddress,
+    CustomerAddressValidated,
+    OroCustomerAddressInput,
+    CustomerAddressUpdateValidated,
+} from '../../../../types/customer-address';
 import { CustomerAddress } from '@aligent/orocommerce-resolvers';
 
 export const inputAddress: CustomerAddressValidated = {
@@ -17,6 +22,11 @@ export const inputAddress: CustomerAddressValidated = {
     telephone: '0432471111',
     default_billing: true,
     default_shipping: true,
+};
+
+export const InputUpdateAdress: CustomerAddressUpdateValidated = {
+    id: 123,
+    ...inputAddress,
 };
 
 export const outputAddress: CustomerAddress = {
@@ -38,7 +48,7 @@ export const outputAddress: CustomerAddress = {
     default_shipping: true,
 };
 
-export const addresses: OroCustomerAddress = {
+export const oroCreateAddressInput: OroCustomerAddressInput = {
     type: 'customeruseraddresses',
     attributes: {
         phone: '0432471111',
@@ -82,7 +92,52 @@ export const addresses: OroCustomerAddress = {
     },
 };
 
-export const oroAddressesResponse: OroCustomerAddress = {
+export const oroAddressUpdateInput: OroCustomerAddress = {
+    type: 'customeruseraddresses',
+    id: '123',
+    attributes: {
+        phone: '0432471111',
+        street: '212 Pirie St',
+        street2: null,
+        city: 'Adelaide',
+        postalCode: '5000',
+        organization: null,
+        firstName: 'Mandy',
+        lastName: 'Tatla',
+        types: [
+            {
+                default: true,
+                addressType: 'billing',
+            },
+            {
+                default: true,
+                addressType: 'shipping',
+            },
+        ],
+    },
+    relationships: {
+        customerUser: {
+            data: {
+                type: 'customerusers',
+                id: 'mine',
+            },
+        },
+        country: {
+            data: {
+                type: 'countries',
+                id: 'AU',
+            },
+        },
+        region: {
+            data: {
+                type: 'regions',
+                id: 'AU-SA',
+            },
+        },
+    },
+};
+
+export const oroAddressResponse: OroCustomerAddress = {
     type: 'customeruseraddresses',
     id: '123',
     attributes: {

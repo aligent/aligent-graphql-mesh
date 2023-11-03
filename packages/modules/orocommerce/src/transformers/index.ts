@@ -35,10 +35,16 @@ import {
     OroCustomerTransformer,
     OroCustomerTransformerChain,
 } from './customers/transform-customer-data';
+
 import {
     OroAddressesTransformer,
     OroAddressesTransformerChain,
 } from './customers/transform-oro-addresses-data';
+
+import {
+    UpdateCustomerAddressTransformer,
+    UpdateCustomerAddressTransformerChain,
+} from './customers/transform-update-customer-address-data';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -90,6 +96,10 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: OroAddressesTransformerChain,
             useClass: OroAddressesTransformerChain,
+        },
+        {
+            provide: UpdateCustomerAddressTransformerChain,
+            useClass: UpdateCustomerAddressTransformerChain,
             global: true,
         },
         // Create default transformers and register them with their chain transformers
@@ -179,7 +189,6 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [OroAddressTransformerChain],
         },
-
         {
             provide: OroCustomerTransformer,
             useFactory: (transformerChain) => {
@@ -198,6 +207,16 @@ export const getOroTransformers = (): Array<Provider> => {
                 return OroAddressesTransformer;
             },
             deps: [OroAddressesTransformerChain],
+        },
+
+        {
+            provide: UpdateCustomerAddressTransformer,
+            useFactory: (transformerChain) => {
+                const updateCustomerAddressTransformer = new UpdateCustomerAddressTransformer();
+                transformerChain.addTransformer(updateCustomerAddressTransformer);
+                return UpdateCustomerAddressTransformer;
+            },
+            deps: [UpdateCustomerAddressTransformerChain],
         },
     ];
 };
