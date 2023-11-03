@@ -1,30 +1,27 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
-import { ShoppingList, ShoppingListItemtWithoutID, ShoppingListWithItems } from '../types';
+import { ShoppingList, ShoppingListItemInput, ShoppingListWithItems } from '../types';
 import { OroOrderLineItem } from '../types/order-line-item';
 import {
-    NewShoppingListTransformer,
-    NewShoppingListTransformerInput,
-} from '../transformers/shopping-list/new-shopping-list-transformer';
-import { ShoppingListItemTransformer } from '../transformers/shopping-list/shopping-list-item-transformer';
+    OrderLineItemsToNewShoppingListTransformer,
+    OrderLineItemsToNewShoppingListTransformerInput,
+} from '../transformers/shopping-list/order-line-items-to-new-shopping-list-transformer';
+import { OrderLineItemToShoppingListItemTransformer } from '../transformers/shopping-list/order-line-item-to-shopping-list-item-transformer';
 import { Transformer } from '@aligent/utils';
 
 @Injectable()
 export class ShoppingListService {
     protected newShoppingListTransformer: Transformer<
-        NewShoppingListTransformerInput,
+        OrderLineItemsToNewShoppingListTransformerInput,
         ShoppingListWithItems
     >;
-    protected shoppingListItemTransformer: Transformer<
-        OroOrderLineItem,
-        ShoppingListItemtWithoutID
-    >;
+    protected shoppingListItemTransformer: Transformer<OroOrderLineItem, ShoppingListItemInput>;
 
     constructor(
         @Inject(forwardRef(() => ShoppingListsClient)) protected apiClient: ShoppingListsClient
     ) {
-        this.shoppingListItemTransformer = new ShoppingListItemTransformer();
-        this.newShoppingListTransformer = new NewShoppingListTransformer(
+        this.shoppingListItemTransformer = new OrderLineItemToShoppingListItemTransformer();
+        this.newShoppingListTransformer = new OrderLineItemsToNewShoppingListTransformer(
             this.shoppingListItemTransformer
         );
     }
@@ -43,8 +40,8 @@ export class ShoppingListService {
      * @returns Promise<ShoppingListWithItems | null>
      */
     async getShoppingListWithItems(): Promise<ShoppingListWithItems | null> {
-        const data = await this.apiClient.getShoppingListsWithItems();
-        return { data: data.data[0], included: data.included! };
+        const { data, included } = await this.apiClient.getShoppingListsWithItems();
+        return data[0] !== undefined ? { data: data[0], included: included! } : null;
     }
 
     /**

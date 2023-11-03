@@ -4,7 +4,7 @@ import {
     ShoppingList,
     ShoppingListInputAttribute,
     ShoppingListItem,
-    ShoppingListItemtWithoutID,
+    ShoppingListItemInput,
     ShoppingListWithItems,
 } from '../../types';
 
@@ -56,12 +56,12 @@ export class ShoppingListsClient {
 
     async addItemsToShoppingList(
         shoppingList: ShoppingList,
-        items: ShoppingListItemtWithoutID[]
+        items: ShoppingListItemInput[]
     ): Promise<ShoppingListItem[]> {
         const url = `/shoppinglists/${shoppingList.id}/items`;
         const res = await this.apiClient.post<
             { data: ShoppingListItem[] },
-            { data: ShoppingListItemtWithoutID[] }
+            { data: ShoppingListItemInput[] }
         >(url, {
             data: items,
         });

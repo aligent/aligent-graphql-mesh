@@ -31,7 +31,7 @@ export interface ShoppingListRelationships extends Relationships {
         }[];
     };
 }
-export interface ShoppingListItemtWithoutID extends Omit<ShoppingListItem, 'id'> {}
+export interface ShoppingListItemInput extends Omit<ShoppingListItem, 'id'> {}
 export interface ShoppingListItem extends Entity {
     type: 'shoppinglistitems';
     attributes: ShoppingListItemInputAttributes | ShoppingListItemAttributes;

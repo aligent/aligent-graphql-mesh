@@ -16,16 +16,15 @@ export class OrdersClient {
         });
     }
 
-    async getOrderLineItems(orderNumber: number): Promise<OroOrderLineItem[]> {
+    getOrderLineItems(orderNumber: number): AsyncGenerator<{ data: OroOrderLineItem[] }> {
         const url = `/orders/${orderNumber}/lineItems`;
         const params = {
             page: {
                 number: 1,
-                size: 1000,
+                size: 250,
             },
             sort: 'id',
         };
-        const res = await this.apiClient.get<OroOrderLineItem[]>(url, { params });
-        return res.data;
+        return this.apiClient.paginate<OroOrderLineItem>(url, { params });
     }
 }

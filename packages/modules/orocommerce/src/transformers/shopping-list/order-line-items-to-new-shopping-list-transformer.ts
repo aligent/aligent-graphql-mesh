@@ -6,24 +6,27 @@ import {
 } from '../../types';
 import { OroOrderLineItem } from '../../types/order-line-item';
 import { v4 as uuidv4 } from 'uuid';
-import { ShoppingListItemTransformer } from './shopping-list-item-transformer';
+import { OrderLineItemToShoppingListItemTransformer } from './order-line-item-to-shopping-list-item-transformer';
 import { Transformer, TransformerContext } from '@aligent/utils';
 
-export interface NewShoppingListTransformerInput {
+export interface OrderLineItemsToNewShoppingListTransformerInput {
     newShoppingList: ShoppingListInputAttribute;
     orderLineItems: OroOrderLineItem[];
 }
 
 /**
- * This transformer is meant to convert order line items into a new shopping list with the line items from the order
+ * This transformer is meant to convert order line items into a new shopping list with the order line items
  */
-export class NewShoppingListTransformer
-    implements Transformer<NewShoppingListTransformerInput, ShoppingListWithItems>
+export class OrderLineItemsToNewShoppingListTransformer
+    implements Transformer<OrderLineItemsToNewShoppingListTransformerInput, ShoppingListWithItems>
 {
-    constructor(protected lineItemTransformer: ShoppingListItemTransformer) {}
+    constructor(protected lineItemTransformer: OrderLineItemToShoppingListItemTransformer) {}
 
     transform(
-        context: TransformerContext<NewShoppingListTransformerInput, ShoppingListWithItems>
+        context: TransformerContext<
+            OrderLineItemsToNewShoppingListTransformerInput,
+            ShoppingListWithItems
+        >
     ): ShoppingListWithItems {
         const included: ShoppingListItem[] = [];
         const shoppingList: ShoppingList = {

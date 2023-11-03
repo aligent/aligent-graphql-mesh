@@ -13,7 +13,7 @@ import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { CategoriesClient } from '../apis/rest/category-client';
 import { getOroTransformers } from '../transformers';
-import { CartDetailsService } from '../services/cart-details-service';
+import { CartService } from '../services/cart-service';
 import { ShoppingListService } from '../services/shopping-list-service';
 import { OrdersClient } from '../apis/rest/orders';
 import { RoutesClient } from '../apis/rest/routes';
@@ -120,8 +120,8 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         },
         ...getOroTransformers(),
         {
-            useClass: CartDetailsService,
-            provide: CartDetailsService,
+            useClass: CartService,
+            provide: CartService,
             deps: [ShoppingListsClient],
             scope: Scope.Operation,
         },

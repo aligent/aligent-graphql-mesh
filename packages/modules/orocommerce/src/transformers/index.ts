@@ -20,10 +20,6 @@ import {
     BreadcrumbsTransformer,
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
-import {
-    ReorderItemsTransformer,
-    ReorderItemsTransformerChain,
-} from './reorder-items/reorder-items-transformer';
 
 import {
     CustomerAddressTransformer,
@@ -143,20 +139,6 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
-        },
-        {
-            provide: ReorderItemsTransformerChain,
-            useClass: ReorderItemsTransformerChain,
-            global: true,
-        },
-        {
-            provide: ReorderItemsTransformer,
-            useFactory: (transformerChain) => {
-                const transformer = new ReorderItemsTransformer();
-                transformerChain.addTransformer(transformer);
-                return transformer;
-            },
-            deps: [ReorderItemsTransformerChain],
         },
         {
             provide: CustomerAddressTransformer,
