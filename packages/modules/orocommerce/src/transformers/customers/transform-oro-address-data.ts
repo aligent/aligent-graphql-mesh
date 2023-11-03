@@ -17,7 +17,7 @@ export class OroAddressTransformer implements Transformer<OroCustomerAddress, Cu
         const customerAddress = context.data;
 
         return {
-            id: context.data.id ? parseInt(context.data.id) : null,
+            id: parseInt(context.data.id),
             street: [customerAddress.attributes.street, customerAddress.attributes.street2 || null],
             city: customerAddress.attributes.city,
             company: customerAddress.attributes.organization,
