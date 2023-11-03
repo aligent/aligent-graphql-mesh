@@ -1,4 +1,4 @@
-import { Resolvers } from 'graphql-modules';
+import { Resolvers } from '@aligent/orocommerce-resolvers';
 import { storeConfigResolver } from './queries/store-config';
 import { countriesResolver } from './queries/country';
 import { generateCustomerTokenMutation } from './mutations/generate-customer-token';
@@ -13,6 +13,9 @@ import { createCustomerMutation } from './mutations/create-customer';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
 import { deleteCustomerAddressMutation } from './mutations/delete-customer-address';
+import { getSocialLinksResolver } from './queries/get-social-links';
+import { loginMutation } from './mutations/login';
+import { routeResolver } from './queries/route';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -24,12 +27,15 @@ export const resolvers: Resolvers = {
         cmsBlocks: cmsBlocksResolver,
         storeLocations: storeLocationsResolver,
         customer: customerResolver,
+        route: routeResolver,
+        getSocialLinks: getSocialLinksResolver,
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         createCustomer: createCustomerMutation,
         deleteCustomerAddress: deleteCustomerAddressMutation,
+        login: loginMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

@@ -1240,6 +1240,40 @@ type Mutation {
         """
         visibility: WishlistVisibilityEnum
     ): UpdateWishlistOutput
+    """
+    Generate a token for guest or customers.
+    """
+    login(input: LoginInput!): LoginOutput
+}
+
+input LoginInput {
+    """
+    The username.
+    """
+    username: String!
+    """
+    The password.
+    """
+    password: String!
+}
+
+type LoginOutput {
+    """
+    The type of token generated.
+    """
+    token_type: String
+    """
+    The expiry time in seconds.
+    """
+    expires_in: Int
+    """
+    The authorization token.
+    """
+    access_token: String
+    """
+    The token used to obtain a new auth token
+    """
+    refresh_token: String
 }
 
 """
