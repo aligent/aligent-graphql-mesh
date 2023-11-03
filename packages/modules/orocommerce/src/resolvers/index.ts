@@ -15,6 +15,7 @@ import { reorderItemsResolver } from './mutations/reorder-items-mutation';
 import { createCustomerAddressMutation } from './mutations/create-customer-address';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
+import { deleteCustomerAddressMutation } from './mutations/delete-customer-address';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
@@ -38,6 +39,7 @@ export const resolvers: Resolvers = {
         postContactForm: postContactFormMutation,
         createCustomer: createCustomerMutation,
         reorderItems: reorderItemsResolver,
+        deleteCustomerAddress: deleteCustomerAddressMutation,
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
     },
