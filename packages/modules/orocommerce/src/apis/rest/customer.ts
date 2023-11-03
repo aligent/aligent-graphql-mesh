@@ -19,9 +19,12 @@ export class CustomerClient {
         return response.data;
     }
 
-    async createCustomerAddress(
-        customerAddress: OroCustomerAddressInput
-    ): Promise<OroCustomerAddress> {
+    async deleteCustomerAddress(id: number): Promise<boolean> {
+        const response = await this.apiClient.delete(`/customeruseraddresses/${id}`);
+        return response;
+    }
+
+    async createCustomerAddress(customerAddress: OroCustomerAddress): Promise<OroCustomerAddress> {
         const response = await this.apiClient.post<
             { data: OroCustomerAddress },
             { data: OroCustomerAddressInput }
