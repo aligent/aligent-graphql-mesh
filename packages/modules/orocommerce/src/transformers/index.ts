@@ -27,8 +27,8 @@ import {
 } from './customers/transform-customer-address-data';
 
 import {
-    TransformOroAddress,
-    TransformOroAddressChain,
+    OroAddressTransformer,
+    OroAddressTransformerChain,
 } from './customers/transform-oro-address-data';
 
 import {
@@ -77,8 +77,8 @@ export const getOroTransformers = (): Array<Provider> => {
         },
 
         {
-            provide: TransformOroAddressChain,
-            useClass: TransformOroAddressChain,
+            provide: OroAddressTransformerChain,
+            useClass: OroAddressTransformerChain,
             global: true,
         },
         {
@@ -171,13 +171,13 @@ export const getOroTransformers = (): Array<Provider> => {
             deps: [CustomerAddressTransformerChain],
         },
         {
-            provide: TransformOroAddress,
+            provide: OroAddressTransformer,
             useFactory: (transformerChain) => {
-                const transformOroAddress = new TransformOroAddress();
+                const transformOroAddress = new OroAddressTransformer();
                 transformerChain.addTransformer(transformOroAddress);
-                return TransformOroAddress;
+                return OroAddressTransformer;
             },
-            deps: [TransformOroAddressChain],
+            deps: [OroAddressTransformerChain],
         },
 
         {

@@ -7,15 +7,17 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
+import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { storeLocationsResolver } from './queries/store-locations';
 import { createCustomerMutation } from './mutations/create-customer';
-
 import { createCustomerAddressMutation } from './mutations/create-customer-address';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
+import { deleteCustomerAddressMutation } from './mutations/delete-customer-address';
 import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
+import { routeResolver } from './queries/route';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -27,12 +29,15 @@ export const resolvers: Resolvers = {
         cmsBlocks: cmsBlocksResolver,
         storeLocations: storeLocationsResolver,
         customer: customerResolver,
+        route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
     },
     Mutation: {
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
+        postContactForm: postContactFormMutation,
         createCustomer: createCustomerMutation,
+        deleteCustomerAddress: deleteCustomerAddressMutation,
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
     },

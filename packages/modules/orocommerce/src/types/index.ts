@@ -57,6 +57,7 @@ export * from './customer';
 export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
+export * from './contact';
 export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';
