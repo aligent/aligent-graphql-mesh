@@ -3,6 +3,7 @@ import {
     CountryCodeEnum,
     CustomerAddressRegionInput,
 } from '@aligent/orocommerce-resolvers';
+import { Entity, Attributes, Relationships } from '.';
 
 export interface CustomerAddressValidated extends CustomerAddressInput {
     firstname: string;
@@ -14,14 +15,20 @@ export interface CustomerAddressValidated extends CustomerAddressInput {
     postcode: string;
 }
 
-export interface OroCustomerAddress {
+export interface CustomerAddressUpdateValidated extends CustomerAddressValidated {
+    id: number;
+}
+
+export interface OroCustomerAddressInput extends Omit<OroCustomerAddress, 'id'> {}
+
+export interface OroCustomerAddress extends Entity {
     type: 'customeruseraddresses';
     attributes: CustomerAddressesAttributes;
     relationships: CustomerAddressesRelationships;
-    id?: string;
+    id: string;
 }
 
-interface CustomerAddressesAttributes {
+interface CustomerAddressesAttributes extends Attributes {
     city: string;
     firstName: string | null;
     lastName: string | null;
@@ -33,7 +40,7 @@ interface CustomerAddressesAttributes {
     types: { default: boolean; addressType: string }[];
 }
 
-interface CustomerAddressesRelationships {
+interface CustomerAddressesRelationships extends Relationships {
     country: { data: { type: string; id: string } };
     customerUser: { data: { type: string; id: string } };
     region: { data: { type: string; id: string } };

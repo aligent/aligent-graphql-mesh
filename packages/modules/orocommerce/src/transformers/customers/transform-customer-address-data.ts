@@ -1,20 +1,20 @@
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
-import { OroCustomerAddress, CustomerAddressValidated } from '../../types';
+import { CustomerAddressValidated, OroCustomerAddressInput } from '../../types';
 import { Injectable } from 'graphql-modules';
 
 @Injectable()
 export class CustomerAddressTransformerChain extends ChainTransformer<
     CustomerAddressValidated,
-    OroCustomerAddress
+    OroCustomerAddressInput
 > {}
 
 @Injectable()
 export class CustomerAddressTransformer
-    implements Transformer<CustomerAddressValidated, OroCustomerAddress>
+    implements Transformer<CustomerAddressValidated, OroCustomerAddressInput>
 {
     public transform(
-        context: TransformerContext<CustomerAddressValidated, OroCustomerAddress>
-    ): OroCustomerAddress {
+        context: TransformerContext<CustomerAddressValidated, OroCustomerAddressInput>
+    ): OroCustomerAddressInput {
         const {
             postcode,
             city,
