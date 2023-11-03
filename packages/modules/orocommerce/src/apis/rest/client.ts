@@ -73,32 +73,33 @@ export class ApiClient {
      * @param url
      * @param config
      */
-    async *paginate(
+    async *paginate<D, I = undefined>(
         url: string,
         config?: AxiosRequestConfig
-    ): AsyncGenerator<AxiosResponse['data']> {
-        let configPaginated = config;
-        if (!configPaginated) {
-            configPaginated = {
-                params: {
-                    page: {
-                        number: 1,
-                        size: 50,
-                    },
-                },
-            };
-        }
+    ): AsyncGenerator<{ data: D[]; included?: I[] }> {
+        const pageConfig = {
+            number: 1,
+            size: 50,
+        };
 
-        while (configPaginated.params.page.number >= 1) {
-            const response = await this.client.get(url, configPaginated);
-            const items = response.data.data;
-            if (items.length === 0) {
-                break;
-            }
-            for (const item of items) {
-                yield item;
-            }
-            configPaginated.params.page.number++;
-        }
+        // merge the parameters that are coming in with the default "page" setting
+        const reqConfig = config || {};
+        reqConfig.params =
+            reqConfig.params?.page !== undefined
+                ? reqConfig.params
+                : { ...reqConfig.params, page: pageConfig };
+
+        let hasNextPage = true;
+
+        do {
+            const response = await this.client.get<{
+                data: D[];
+                included?: I[];
+                links: { next?: string };
+            }>(url, reqConfig);
+            yield response.data;
+            reqConfig.params.page.number++;
+            hasNextPage = response.data.links.next !== undefined;
+        } while (hasNextPage);
     }
 }
