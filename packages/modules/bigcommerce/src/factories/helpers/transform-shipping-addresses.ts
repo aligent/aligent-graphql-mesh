@@ -1,8 +1,4 @@
-import {
-    CheckoutAddressCheckboxesCustomField,
-    CheckoutAddressTextFieldCustomField,
-    CheckoutShippingConsignment,
-} from '@aligent/bigcommerce-operations';
+import { CheckoutShippingConsignment } from '@aligent/bigcommerce-operations';
 import { Cart, Maybe, Scalars, ShippingCartAddress } from '@aligent/bigcommerce-resolvers';
 import { btoa } from '@aligent/utils';
 import {
@@ -11,11 +7,7 @@ import {
 } from './transform-available-shipping-methods';
 import { getTransformedAddress } from './transform-address';
 import { BcStorefrontFormFields } from '../../types';
-
-const DELIVERY_INSTRUCTIONS_MAP = {
-    authorityToLeave: 'Authority To Leave',
-    instructions: 'Delivery Instructions',
-};
+import { getTransformedDeliveryInstructions } from './transform-delivery-instructions';
 
 export const getTransformedShippingAddresses = (
     shippingConsignments?: Maybe<Array<CheckoutShippingConsignment>>,
@@ -31,37 +23,8 @@ export const getTransformedShippingAddresses = (
 
             const transformedAddress = getTransformedAddress(address);
 
-            const deliveryInstructions = {
-                authorityToLeave: false,
-                instructions: '',
-            };
+            const deliveryInstructions = getTransformedDeliveryInstructions(address, formFields);
 
-            if (formFields) {
-                const { shippingAddress: shippingCustomFields } = formFields;
-
-                shippingCustomFields.forEach((shippingCustomField) => {
-                    address.customFields.some((addressCustomField) => {
-                        if (
-                            addressCustomField.entityId === getFieldEntityId(shippingCustomField.id)
-                        ) {
-                            if (
-                                shippingCustomField.label ===
-                                DELIVERY_INSTRUCTIONS_MAP.authorityToLeave
-                            ) {
-                                deliveryInstructions.authorityToLeave = !!(
-                                    addressCustomField as CheckoutAddressCheckboxesCustomField
-                                ).valueEntityIds.length;
-                            } else if (
-                                shippingCustomField.label === DELIVERY_INSTRUCTIONS_MAP.instructions
-                            ) {
-                                deliveryInstructions.instructions = (
-                                    addressCustomField as CheckoutAddressTextFieldCustomField
-                                ).text;
-                            }
-                        }
-                    });
-                });
-            }
             return {
                 ...transformedAddress,
                 uid: btoa(entityId),
@@ -74,10 +37,4 @@ export const getTransformedShippingAddresses = (
             };
         }
     );
-};
-
-// BC REST FormField API returns field id in the format of 'field_26',
-// BC Graphql Checkout returns customField with entityId: 26
-const getFieldEntityId = (fieldId: string): number => {
-    return Number(fieldId.replace('field_', ''));
 };

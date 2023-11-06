@@ -1,7 +1,8 @@
-import { logAndThrowError } from '@aligent/utils';
+import { getDataFromMeshCache, logAndThrowError } from '@aligent/utils';
 import { BcStorefrontFormFields } from '../../types';
 import axios from 'axios';
 
+const CACHE_KEY__STOREFRONT_FORM_FIELDS = 'storefront_form_fields';
 const BC_STOREFRONT_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');
 
 const headers = {
@@ -18,4 +19,12 @@ export const getStorefrontFormFields = async (): Promise<BcStorefrontFormFields>
     } catch (error) {
         return logAndThrowError(error, axios.get.name);
     }
+};
+
+export const retrieveStorefrontFormFieldsFromCache = async (
+    context: GraphQLModules.ModuleContext
+): Promise<BcStorefrontFormFields> => {
+    const query = getStorefrontFormFields();
+
+    return getDataFromMeshCache(context, CACHE_KEY__STOREFRONT_FORM_FIELDS, query);
 };

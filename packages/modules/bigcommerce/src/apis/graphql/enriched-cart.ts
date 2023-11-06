@@ -6,7 +6,7 @@ import { getFlattenedProducts } from '../../utils';
 import { retrieveStoreConfigsFromCache } from './store-configs';
 import { getIncludesTax } from '@aligent/utils';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
-import { getStorefrontFormFields } from '../rest/formFields';
+import { retrieveStorefrontFormFieldsFromCache } from '../rest/formFields';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -41,13 +41,9 @@ export const getEnrichedCart = async (
 
     const storeConfigRequest = await retrieveStoreConfigsFromCache(context);
 
-    const storeFrontFormFieldsRequest = getStorefrontFormFields();
+    const storeFrontFormFields = await retrieveStorefrontFormFieldsFromCache(context);
 
-    const [checkoutResponse, storeConfig, formFields] = await Promise.all([
-        checkoutQuery,
-        storeConfigRequest,
-        storeFrontFormFieldsRequest,
-    ]);
+    const [checkoutResponse, storeConfig] = await Promise.all([checkoutQuery, storeConfigRequest]);
 
     const { tax: taxSettingsResponse } = storeConfig;
 
@@ -79,5 +75,5 @@ export const getEnrichedCart = async (
      * when mapping additional product data to its corresponding cart item*/
     const flattenedProducts = getFlattenedProducts(transformedProducts);
 
-    return getTransformedCartData(checkoutResponse, flattenedProducts, formFields);
+    return getTransformedCartData(checkoutResponse, flattenedProducts, storeFrontFormFields);
 };
