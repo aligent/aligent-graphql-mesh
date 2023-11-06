@@ -39,11 +39,15 @@ export const getEnrichedCart = async (
 
     const checkoutQuery = getCheckout(args.cart_id, bcCustomerId, customerImpersonationToken);
 
-    const storeConfigRequest = await retrieveStoreConfigsFromCache(context);
+    const storeConfigRequest = retrieveStoreConfigsFromCache(context);
 
-    const storeFrontFormFields = await retrieveStorefrontFormFieldsFromCache(context);
+    const storeFrontFormFieldsRequest = retrieveStorefrontFormFieldsFromCache(context);
 
-    const [checkoutResponse, storeConfig] = await Promise.all([checkoutQuery, storeConfigRequest]);
+    const [checkoutResponse, storeConfig, storeFrontFormFields] = await Promise.all([
+        checkoutQuery,
+        storeConfigRequest,
+        storeFrontFormFieldsRequest,
+    ]);
 
     const { tax: taxSettingsResponse } = storeConfig;
 
