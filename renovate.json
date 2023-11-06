@@ -3,8 +3,9 @@
     "baseBranches": ["epic/orocommerce"],
     "packageRules": [
         {
-            "matchPackageNames": ["node"],
+            "matchPackageNames": ["node", "@types/node"],
             "matchManagers": ["npm", "nvm", "bitbucket-pipelines"],
+            "allowedVersions": "<=18",
             "groupName": "node",
             "reviewers": ["adam_hall_ali", "krishan-thisera", "daniel-vanderploeg"],
             "reviewersSampleSize": 2
@@ -20,7 +21,7 @@
             "matchPackagePatterns": ["*"],
             "excludePackageNames": ["node", "@types/node"],
             "matchManagers": ["npm", "nvm"],
-            "groupName": "all-node",
+            "groupName": "all-npm",
             "reviewers": [
                 "gregziborov",
                 "pasqualinibruno",
@@ -32,10 +33,6 @@
                 "jackMcloughlin"
             ],
             "reviewersSampleSize": 2
-        },
-        {
-            "allowedVersions": "<=18",
-            "matchPackageNames": ["node", "@types/node"]
         }
     ]
 }

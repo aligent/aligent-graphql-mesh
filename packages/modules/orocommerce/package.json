@@ -9,7 +9,8 @@
     "jsonwebtoken": "^9.0.0",
     "tslib": "^2.3.0",
     "keyv": "^4.5.4",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "graphql": "^16.7.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",

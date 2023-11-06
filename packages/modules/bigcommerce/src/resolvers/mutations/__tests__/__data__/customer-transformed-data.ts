@@ -2,7 +2,7 @@ import { Customer } from '@aligent/bigcommerce-resolvers';
 
 export const transformedCreatedCustomer: Customer = {
     id: 19,
-    allow_remote_shopping_assistance: true,
+    allow_remote_shopping_assistance: null,
     reviews: {
         items: [],
         page_info: {

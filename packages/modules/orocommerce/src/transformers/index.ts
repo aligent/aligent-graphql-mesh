@@ -25,6 +25,16 @@ import {
     StoreConfigTransformerChain,
 } from './store-config/store-config-transformer';
 
+import {
+    CustomerAddressTransformer,
+    CustomerAddressTransformerChain,
+} from './customers/transform-customer-address-data';
+
+import {
+    OroAddressTransformer,
+    OroAddressTransformerChain,
+} from './customers/transform-oro-address-data';
+
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
 export * from './currency/transform-currency-data';
@@ -53,6 +63,17 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: BreadcrumbsTransformerChain,
             useClass: BreadcrumbsTransformerChain,
+            global: true,
+        },
+        {
+            provide: CustomerAddressTransformerChain,
+            useClass: CustomerAddressTransformerChain,
+            global: true,
+        },
+
+        {
+            provide: OroAddressTransformerChain,
+            useClass: OroAddressTransformerChain,
             global: true,
         },
         // Create default transformers and register them with their chain transformers
@@ -137,6 +158,24 @@ export const getOroTransformers = (): Array<Provider> => {
                 return storeConfigTransformer;
             },
             deps: [StoreConfigTransformerChain],
+        },
+        {
+            provide: CustomerAddressTransformer,
+            useFactory: (transformerChain) => {
+                const customerAddressTransformer = new CustomerAddressTransformer();
+                transformerChain.addTransformer(customerAddressTransformer);
+                return CustomerAddressTransformer;
+            },
+            deps: [CustomerAddressTransformerChain],
+        },
+        {
+            provide: OroAddressTransformer,
+            useFactory: (transformerChain) => {
+                const transformOroAddress = new OroAddressTransformer();
+                transformerChain.addTransformer(transformOroAddress);
+                return OroAddressTransformer;
+            },
+            deps: [OroAddressTransformerChain],
         },
     ];
 };

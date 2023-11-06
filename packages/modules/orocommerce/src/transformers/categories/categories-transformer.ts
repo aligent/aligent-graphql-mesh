@@ -1,7 +1,13 @@
 import { CategoryTree } from '@aligent/orocommerce-resolvers';
 import { WebCatalogTree as OroCategory } from '../../types';
-import { btoa, ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
+import {
+    ChainTransformer,
+    slashAtStartOrEnd,
+    Transformer,
+    TransformerContext,
+} from '@aligent/utils';
 import { Injectable } from 'graphql-modules';
+import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
 /**
  * Transforms category data into a shape the PWA is expecting
@@ -18,12 +24,15 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
         categories.forEach(
             (category) =>
                 (hashTable[category.id] = {
+                    // virtual webcatalogtree id
                     id: Number(category.id),
-                    uid: btoa(category.id.toString()),
+                    // category tree node can be different entity (mastercatalogcategory, cms page, etc.)
+                    // we need an entity type and real id in Mesh to get valid data from Oro
+                    uid: getEncodedCategoryUidFromCategoryData(category.relationships.content.data),
                     position: category.attributes.order,
                     level: category.attributes.level,
                     name: category.attributes.title,
-                    url_path: category.attributes.url,
+                    url_path: category.attributes.url.replace(slashAtStartOrEnd, ''),
                     url_suffix: '',
                     meta_title: category.attributes.metaTitle,
                     meta_description: category.attributes.metaDescription,
@@ -33,6 +42,8 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
                     redirect_code: 0,
                     children_count: '0',
                     children: [],
+                    type: 'CATEGORY',
+                    __typename: 'CategoryTree',
                 })
         );
         const categoryTreeArray: Array<CategoryTree> = [];

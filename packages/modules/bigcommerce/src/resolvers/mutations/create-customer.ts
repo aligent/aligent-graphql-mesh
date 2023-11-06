@@ -39,7 +39,7 @@ export const transformCustomerData = (bcCustomer: BcCustomer): Customer => {
         // all data below is to satisfy TS, FE only needs id
         // TODO: Try to reduce typescript object requirements with mappers:
         // https://the-guild.dev/graphql/codegen/plugins/typescript/typescript-resolvers#mappers
-        allow_remote_shopping_assistance: true,
+        allow_remote_shopping_assistance: null, // This is being forced to show the PWA that BC doesnt have this feature
         reviews: {
             items: [],
             page_info: {

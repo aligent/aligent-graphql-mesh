@@ -1,4 +1,4 @@
-import { isBoolean, snakeCase } from 'lodash';
+import { snakeCase } from 'lodash';
 
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 
@@ -25,7 +25,7 @@ export const transformBcCustomer = (
         firstname: firstName,
         lastname: lastName,
         is_subscribed: isSubscriber,
-        allow_remote_shopping_assistance: false, // this will be overridden by form fields in customerResolver
+        allow_remote_shopping_assistance: null, // This is being forced to show the PWA that BC doesnt have this feature
         wishlists: getTransformedWishlists(bcCustomer.wishlists),
         wishlist: {
             // Types say wishlist is deprecated, but is required and needs to have visibility
@@ -55,7 +55,7 @@ export const transformBcCustomerToAcCustomerForMutation = (
             is_subscribed: isSubscribed,
 
             //TODO: Following attributes need to be remove using CodeGen, they are badly generated and required, but should not.
-            allow_remote_shopping_assistance: false,
+            allow_remote_shopping_assistance: null, // This is being forced to show the PWA that BC doesnt have this feature
             wishlists: [],
             wishlist: {
                 visibility: 'PUBLIC',
@@ -90,15 +90,6 @@ export const transformCustomerForMutation = (
     }
     if (customer.lastname) {
         bcCustomer.last_name = customer.lastname;
-    }
-    if (isBoolean(customer.allow_remote_shopping_assistance)) {
-        bcCustomer.form_fields = [
-            {
-                id: customerId as number,
-                name: 'allow_remote_shopping_assistance',
-                value: customer.allow_remote_shopping_assistance ? ['Yes'] : [],
-            },
-        ];
     }
 
     return bcCustomer;

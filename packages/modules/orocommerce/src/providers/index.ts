@@ -8,12 +8,14 @@ import { ShoppingListsClient } from '../apis/rest/shoppinglists';
 import { Auth } from '../services/auth';
 import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
+import { ContactClient } from '../apis/rest/contact';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { CategoriesClient } from '../apis/rest/category-client';
 import { getOroTransformers } from '../transformers';
 import { OrdersClient } from '../apis/rest/orders';
 import { StoreConfigApiClient } from '../apis/rest/store-config-api-client';
+import { RoutesClient } from '../apis/rest/routes';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -80,6 +82,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         {
+            useClass: ContactClient,
+            provide: ContactClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
+        },
+        {
             useClass: StoreLocationClient,
             provide: StoreLocationClient,
             deps: [ApiClient],
@@ -106,6 +114,10 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: StoreConfigApiClient,
             provide: StoreConfigApiClient,
+        },
+        {
+            useClass: RoutesClient,
+            provide: RoutesClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },

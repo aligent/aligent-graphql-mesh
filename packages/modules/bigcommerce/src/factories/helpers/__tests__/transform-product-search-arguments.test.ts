@@ -115,7 +115,6 @@ describe('get-product-search-filter', () => {
             price: {},
             productAttributes: [],
             rating: {},
-            searchTerm: '',
         });
     });
 
