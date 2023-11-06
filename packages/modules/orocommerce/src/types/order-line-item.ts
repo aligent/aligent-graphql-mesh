@@ -45,7 +45,7 @@ export interface OroOrderLineItem extends Entity {
             };
         };
         parentProduct: {
-            data: {
+            data: null | {
                 type: 'products';
                 id: string;
             };
