@@ -176,16 +176,16 @@ export const getOroTransformers = (): Array<Provider> => {
             useFactory: (transformerChain) => {
                 const customerAddressTransformer = new CustomerAddressTransformer();
                 transformerChain.addTransformer(customerAddressTransformer);
-                return CustomerAddressTransformer;
+                return customerAddressTransformer;
             },
             deps: [CustomerAddressTransformerChain],
         },
         {
             provide: OroAddressTransformer,
             useFactory: (transformerChain) => {
-                const transformOroAddress = new OroAddressTransformer();
-                transformerChain.addTransformer(transformOroAddress);
-                return OroAddressTransformer;
+                const oroAddressTransformer = new OroAddressTransformer();
+                transformerChain.addTransformer(oroAddressTransformer);
+                return oroAddressTransformer;
             },
             deps: [OroAddressTransformerChain],
         },
@@ -214,7 +214,7 @@ export const getOroTransformers = (): Array<Provider> => {
             useFactory: (transformerChain) => {
                 const updateCustomerAddressTransformer = new UpdateCustomerAddressTransformer();
                 transformerChain.addTransformer(updateCustomerAddressTransformer);
-                return UpdateCustomerAddressTransformer;
+                return updateCustomerAddressTransformer;
             },
             deps: [UpdateCustomerAddressTransformerChain],
         },
