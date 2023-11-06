@@ -71,7 +71,7 @@ describe('Order Line Item to New Shopping List transformation tests', () => {
             });
 
             expect(
-                newShoppingListWithItems.data.relationships.items.data[index].type
+                newShoppingListWithItems.data.relationships!.items.data[index].type
             ).toStrictEqual('shoppinglistitems');
         }
     });
