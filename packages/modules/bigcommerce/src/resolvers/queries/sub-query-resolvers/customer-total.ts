@@ -7,9 +7,13 @@ import { getSelectionInSelectionSet } from '../../../../../../utils/selection-se
  * This is a sub-resolver it is executed after customerOrdersResolver when items was specified in the query
  * The sub-resolvers is configured here in the scr/resolves/index.ts
  */
-export const customerTotal: CustomerOrderResolvers['total'] = {
+export const customerTotalResolver: CustomerOrderResolvers['total'] = {
     resolve: async (root, _args, _context, info) => {
-        if (!root.total) return null;
+        /* The already retrieved and transformed total information from the customerOrderResolvers
+         * at packages/modules/bigcommerce/src/resolvers/queries/sub-query-resolvers/customerOrders.ts */
+        const totalFromCustomerOrder = root.total;
+
+        if (!totalFromCustomerOrder) return null;
 
         const orderId = root.order_number;
 
@@ -28,6 +32,6 @@ export const customerTotal: CustomerOrderResolvers['total'] = {
 
         const transformedDiscounts = getTransformedOrderDiscounts(discounts, currencyCode);
 
-        return { ...root.total, discounts: transformedDiscounts };
+        return { ...totalFromCustomerOrder, discounts: transformedDiscounts };
     },
 };
