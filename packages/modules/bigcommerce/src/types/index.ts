@@ -442,6 +442,16 @@ export interface BCConsignment {
     shipping: BCShipping[];
 }
 
+export interface BCDiscount {
+    id: number;
+    coupon_id: number;
+    order_id: number;
+    code: string;
+    amount: string;
+    type: number;
+    discount: string;
+}
+
 export interface BCShipping {
     id: number;
     first_name: string;

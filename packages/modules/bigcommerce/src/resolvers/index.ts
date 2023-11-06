@@ -10,6 +10,7 @@ import { createCustomerResolver } from './mutations/create-customer';
 import { createCustomerAddressResolver } from './mutations/create-customer-address';
 import { createEmptyCartResolver } from './mutations/create-empty-cart';
 import { createProductReviewResolver } from './mutations/create-product-review';
+import { customerTotal } from './queries/sub-query-resolvers/customer-total';
 import { deleteCustomerAddressResolver } from './mutations/delete-customer-address';
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
@@ -121,6 +122,7 @@ export const resolvers: Resolvers = {
         items: customerOrderItemsResolver,
         shipping_address: customerOrderShippingAddressResolver,
         shipping_method: customerOrderShippingMethodResolver,
+        total: customerTotal,
     },
 };
 

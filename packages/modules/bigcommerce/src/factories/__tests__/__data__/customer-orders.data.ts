@@ -241,7 +241,6 @@ export const acOrders: CustomerOrders = {
             total: {
                 grand_total: { currency: 'AUD', value: 62.62 },
                 base_grand_total: { currency: 'AUD', value: null },
-                discounts: [],
                 shipping_handling: {
                     amount_including_tax: {
                         currency: 'AUD',
@@ -319,7 +318,6 @@ export const acOrders: CustomerOrders = {
                     currency: 'AUD',
                     value: null,
                 },
-                discounts: [],
                 grand_total: {
                     currency: 'AUD',
                     value: 368,
