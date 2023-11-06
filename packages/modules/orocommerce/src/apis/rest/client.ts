@@ -46,30 +46,19 @@ export class ApiClient {
         const response = await this.client.get<{ data: T; included?: D }>(url, config);
         return response.data;
     }
+
     async post<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.post<{ data: T }, AxiosResponse<{ data: T }>, D>(
-            url,
-            data,
-            config
-        );
-        return response.data.data;
+        const response = await this.client.post<T, AxiosResponse<T>, D>(url, data, config);
+        return response.data;
     }
 
     async patch<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.patch<{ data: T }, AxiosResponse<{ data: T }>, D>(
-            url,
-            data,
-            config
-        );
+        const response = await this.client.patch<T, AxiosResponse<T>, D>(url, data, config);
         return response.data;
     }
 
     async put<T, D = void>(url: string, data?: D, config?: AxiosRequestConfig) {
-        const response = await this.client.put<{ data: T }, AxiosResponse<{ data: T }>, D>(
-            url,
-            data,
-            config
-        );
+        const response = await this.client.put<T, AxiosResponse<T>, D>(url, data, config);
         return response.data;
     }
 
@@ -84,32 +73,33 @@ export class ApiClient {
      * @param url
      * @param config
      */
-    async *paginate(
+    async *paginate<D, I = undefined>(
         url: string,
         config?: AxiosRequestConfig
-    ): AsyncGenerator<AxiosResponse['data']> {
-        let configPaginated = config;
-        if (!configPaginated) {
-            configPaginated = {
-                params: {
-                    page: {
-                        number: 1,
-                        size: 50,
-                    },
-                },
-            };
-        }
+    ): AsyncGenerator<{ data: D[]; included?: I[] }> {
+        const pageConfig = {
+            number: 1,
+            size: 50,
+        };
 
-        while (configPaginated.params.page.number >= 1) {
-            const response = await this.client.get(url, configPaginated);
-            const items = response.data.data;
-            if (items.length === 0) {
-                break;
-            }
-            for (const item of items) {
-                yield item;
-            }
-            configPaginated.params.page.number++;
-        }
+        // merge the parameters that are coming in with the default "page" setting
+        const reqConfig = config || {};
+        reqConfig.params =
+            reqConfig.params?.page !== undefined
+                ? reqConfig.params
+                : { ...reqConfig.params, page: pageConfig };
+
+        let hasNextPage = true;
+
+        do {
+            const response = await this.client.get<{
+                data: D[];
+                included?: I[];
+                links: { next?: string };
+            }>(url, reqConfig);
+            yield response.data;
+            reqConfig.params.page.number++;
+            hasNextPage = response.data.links.next !== undefined;
+        } while (hasNextPage);
     }
 }
