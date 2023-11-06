@@ -479,3 +479,13 @@ export interface BCShipping {
 export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';
 
 export type CartUserErrors = Array<Maybe<CartUserInputError & CheckoutUserInputError>>;
+
+export type BcStorefrontFormField = {
+    id: string;
+    label: string;
+};
+export interface BcStorefrontFormFields {
+    customerAccount: BcStorefrontFormField[];
+    shippingAddress: BcStorefrontFormField[];
+    billingAddress: BcStorefrontFormField[];
+}

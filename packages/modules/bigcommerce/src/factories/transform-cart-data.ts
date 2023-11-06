@@ -5,10 +5,12 @@ import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
+import { BcStorefrontFormFields } from '../types';
 
 export const getTransformedCartData = (
     checkoutData: Checkout,
-    additionalCartItemData?: Array<ProductInterface>
+    additionalCartItemData?: Array<ProductInterface>,
+    formFields?: BcStorefrontFormFields
 ): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
@@ -37,7 +39,11 @@ export const getTransformedCartData = (
         },
         prices: getTransformedCartPrices(checkoutData, cart),
         billing_address: getTransformedBillingAddress(billingAddress),
-        shipping_addresses: getTransformedShippingAddresses(shippingConsignments, customerMessage),
+        shipping_addresses: getTransformedShippingAddresses(
+            shippingConsignments,
+            customerMessage,
+            formFields
+        ),
         available_gift_wrappings: [],
         gift_receipt_included: false,
         printed_card_included: false,
