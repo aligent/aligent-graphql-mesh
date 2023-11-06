@@ -9,7 +9,7 @@ export interface Resource {
 export interface Relationships {
     [name: string]:
         | {
-              data: Array<Resource> | Resource | null;
+              data?: Array<Resource> | Resource | null;
           }
         | undefined;
 }

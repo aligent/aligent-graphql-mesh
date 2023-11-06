@@ -6,7 +6,7 @@ export interface ShoppingListWithItems {
 export interface ShoppingList extends Entity {
     type: 'shoppinglists';
     attributes: ShoppingListInputAttribute | ShoppingListAttribute;
-    relationships: ShoppingListRelationships;
+    relationships?: ShoppingListRelationships;
 }
 /**
  * This interface is used to create a new shopping list
