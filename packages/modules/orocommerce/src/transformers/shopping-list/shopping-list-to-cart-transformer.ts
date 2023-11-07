@@ -68,7 +68,6 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             },
         };
 
-        console.log(JSON.stringify(cart));
         return cart;
     }
 }
