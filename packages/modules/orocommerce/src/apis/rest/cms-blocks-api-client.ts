@@ -17,7 +17,7 @@ export class CmsBlockClient {
                         id: 1,
                         content:
                             '<div style="text-align: center; font-weight: bold"><span>Work in progress: CMS block resolver </span></div>',
-                        identifier: 'mock-identifier',
+                        identifier: identifiers[0],
                         title: 'Work in Progress',
                     },
                 },
