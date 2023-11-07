@@ -114,6 +114,8 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: StoreConfigApiClient,
             provide: StoreConfigApiClient,
+            deps: [ApiClient],
+            scope: Scope.Operation,
         },
         {
             useClass: RoutesClient,
