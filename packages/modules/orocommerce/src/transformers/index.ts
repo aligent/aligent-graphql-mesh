@@ -20,6 +20,10 @@ import {
     BreadcrumbsTransformer,
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
+import {
+    StoreConfigTransformer,
+    StoreConfigTransformerChain,
+} from './store-config/store-config-transformer';
 
 import {
     CustomerAddressTransformer,
@@ -125,7 +129,6 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [CurrencyTransformerChain],
         },
-        // Customer Order transfomers
         {
             provide: CustomerOrdersTransformerChain,
             useClass: CustomerOrdersTransformerChain,
@@ -139,6 +142,20 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+        {
+            provide: StoreConfigTransformerChain,
+            useClass: StoreConfigTransformerChain,
+            global: true,
+        },
+        {
+            provide: StoreConfigTransformer,
+            useFactory: (transformerChain) => {
+                const storeConfigTransformer = new StoreConfigTransformer();
+                transformerChain.addTransformer(storeConfigTransformer);
+                return storeConfigTransformer;
+            },
+            deps: [StoreConfigTransformerChain],
         },
         {
             provide: CustomerAddressTransformer,
