@@ -37,13 +37,15 @@ export class ShoppingListsClient {
     }
 
     async createDefaultShoppingList(): Promise<ShoppingList> {
+        const attrs: ShoppingListInputAttribute = {
+            name: 'default',
+            default: true,
+            notes: null
+        }
         return this.postShoppingLists({
             type: 'shoppinglists',
             id: '1',
-            attributes: {
-                name: 'default',
-                default: true,
-            } as ShoppingListInputAttribute,
+            attributes: attrs,
         });
     }
 
