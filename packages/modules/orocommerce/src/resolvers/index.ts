@@ -9,6 +9,7 @@ import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
+import { cmsPageResolver } from './queries/cms-page';
 import { storeLocationsResolver } from './queries/store-locations';
 import { createCustomerMutation } from './mutations/create-customer';
 import { reorderItemsResolver } from './mutations/reorder-items-mutation';
@@ -28,6 +29,7 @@ export const resolvers: Resolvers = {
         keyMessages: keyMessagesResolver,
         categories: categoriesResolver,
         cmsBlocks: cmsBlocksResolver,
+        cmsPage: cmsPageResolver,
         storeLocations: storeLocationsResolver,
         customer: customerResolver,
         route: routeResolver,
