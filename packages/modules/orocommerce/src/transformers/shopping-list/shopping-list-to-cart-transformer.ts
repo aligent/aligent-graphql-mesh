@@ -27,6 +27,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 value: Number(item.attributes.value),
             };
             return {
+                __typename: 'SimpleCartItem',
                 id: item.id,
                 uid: btoa(item.id),
                 quantity: item.attributes.quantity,
@@ -39,6 +40,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total_including_tax: prodPrice,
                 },
                 product: {
+                    __typename: 'SimpleProduct', // Temp fix, same approach as BC Mesh
                     redirect_code: 0,
                     price_range: {
                         minimum_price: {
@@ -65,6 +67,8 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 value: Number(shoppingList.data.attributes.total),
             },
         };
+
+        console.log(JSON.stringify(cart));
         return cart;
     }
 }

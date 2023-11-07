@@ -30,11 +30,12 @@ export class AddProductsToCartTransformer
                     product: {
                         data: {
                             type: 'products',
-                            id: (atob(String(listItem.uid || '')).replace('Product:', '')),
+                            id: atob(String(listItem.uid || '')).replace('Product:', ''),
                         },
                     },
                     unit: {
-                        data: { // Currently ORO isnt returning prouductunits
+                        data: {
+                            // Currently ORO products resolver isnt returning prouductunits
                             type: 'productunits',
                             id: 'each',
                         },
