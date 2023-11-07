@@ -20,11 +20,11 @@ import {
     BreadcrumbsTransformer,
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
+import { CmsPageTransformer, CmsPageTransformerChain } from './cms-page/transform-cms-page-data';
 import {
     StoreConfigTransformer,
     StoreConfigTransformerChain,
 } from './store-config/store-config-transformer';
-
 import {
     CustomerAddressTransformer,
     CustomerAddressTransformerChain,
@@ -48,6 +48,12 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: CmsBlocksTransformerChain,
             useClass: CmsBlocksTransformerChain,
+            global: true,
+        },
+        // Cms Page Register Chain transformers
+        {
+            provide: CmsPageTransformerChain,
+            useClass: CmsPageTransformerChain,
             global: true,
         },
         {
@@ -94,6 +100,16 @@ export const getOroTransformers = (): Array<Provider> => {
                 return transformer;
             },
             deps: [CmsBlocksTransformerChain],
+        },
+        {
+            provide: CmsPageTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new CmsPageTransformer();
+                // Add to the chain transformer
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [CmsPageTransformerChain],
         },
         {
             provide: CategoriesTransformer,

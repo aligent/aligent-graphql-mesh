@@ -7,10 +7,10 @@ import {
 import { GraphQLResolveInfo } from 'graphql/type';
 import { Route } from '../../types/routes';
 import { RoutesClient } from '../../apis/rest/routes';
-import { mockCmsPage } from '../mocks/cms-page';
 import { productMock } from '../mocks/products';
 import { categoriesResolver } from './categories';
-import { getCategoryUidFromCategoryApiUrl } from '../../utils';
+import { getCategoryUidFromCategoryApiUrl, getIdFromLandingPageApiUrl } from '../../utils';
+import { cmsPageResolver } from './cms-page';
 
 const getRouteTypeData = async (
     root: object,
@@ -57,21 +57,16 @@ const getRouteTypeData = async (
 
     /* home page, about us, any other CMS page */
     if (resourceType === 'landing_page') {
-        /*
-        @todo uncomment and adjust when there's a cms page resolver
         const cmsPageId = getIdFromLandingPageApiUrl(apiUrl);
 
         const cmsPageData = await cmsPageResolver.resolve(
             root,
-            { id },
+            { id: Number(cmsPageId) },
             context,
             info
         );
 
-        return cmsPageData
-        */
-
-        return mockCmsPage;
+        return cmsPageData;
     }
 
     /* quick order, account order
