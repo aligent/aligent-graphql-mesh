@@ -27,7 +27,6 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 value: Number(item.attributes.value),
             };
             return {
-                __typename: 'SimpleCartItem',
                 id: item.id,
                 uid: btoa(item.id),
                 quantity: item.attributes.quantity,

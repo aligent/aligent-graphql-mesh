@@ -4,6 +4,7 @@ import { Cart, MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { AddProductsToCartTransformerChain } from '../../transformers/shopping-list/add-products-to-cart-transformer';
 import { ShoppingListsClient } from '../../apis/rest';
 import { CartService } from '../../services/cart-service';
+import { ShoppingListService } from '../../services/shopping-list-service';
 
 const UNDEFINED_CART: Cart = {
     id: '',
@@ -19,36 +20,34 @@ const UNDEFINED_CART: Cart = {
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, mutationParams, context, _info) => {
         // Transform input -> ORO
-        console.log('test', mutationParams);
         // If no ID is sent then ORO will attempt to add the default shopping list
         // If no list exists a new one will be created
-        const shoppingListId = mutationParams.cartId === "" ? 'default' : mutationParams.cartId
+        const shoppingListId = mutationParams.cartId === '' ? 'default' : mutationParams.cartId;
 
         const addProductToCartTransformer: AddProductsToCartTransformerChain = context.injector.get(
             AddProductsToCartTransformerChain
         );
-
         const transformedAddProductsToCartInput = addProductToCartTransformer.transform({
             data: mutationParams.cartItems,
         });
 
-        console.log(JSON.stringify(transformedAddProductsToCartInput));
-
         // Add items to shopping list
         const shoppingListClient: ShoppingListsClient = context.injector.get(ShoppingListsClient);
-        const updatedShoppingList = await shoppingListClient.addItemsToShoppingList(
-            shoppingListId, //mutationParams.cartId once the FE is sending ORO shoppinglist ID
+        await shoppingListClient.addItemsToShoppingList(
+            shoppingListId, 
             transformedAddProductsToCartInput
         );
 
-        console.log(JSON.stringify(updatedShoppingList));
+        const shoppingListService: ShoppingListService = context.injector.get(ShoppingListService)
+        const shoppingList = await shoppingListService.getShoppingListWithItems(shoppingListId)
 
         // Transform shopping list -> cart
-        // const cartService: CartService = context.injector.get(CartService);
-        // const cart = await cartService.getCart(updatedShoppingList);
+        const cartService: CartService = context.injector.get(CartService);
+
+        const transformedCart = await cartService.getCart(shoppingList);
 
         return {
-            cart: cart,
+            cart: transformedCart,
             user_errors: [],
         };
     },

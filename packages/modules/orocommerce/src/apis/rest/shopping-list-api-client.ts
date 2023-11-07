@@ -16,12 +16,13 @@ export class ShoppingListsClient {
         return (await this.apiClient.get<ShoppingList[]>('/shoppinglists')).data;
     }
 
-    async getShoppingListsWithItems(): Promise<{
+    async getShoppingListsWithItems(id?: string): Promise<{
         data: ShoppingList[];
         included?: ShoppingListItem[];
     }> {
         const params = {
             include: 'items',
+            'filter[id]': id,
         };
         return this.apiClient.get<ShoppingList[], ShoppingListItem[]>('/shoppinglists', { params });
     }

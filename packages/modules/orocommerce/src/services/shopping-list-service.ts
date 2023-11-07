@@ -39,8 +39,8 @@ export class ShoppingListService {
      * Get the user's shopping list with items. We're assuming that the user will always have one shopping list
      * @returns Promise<ShoppingListWithItems | null>
      */
-    async getShoppingListWithItems(): Promise<ShoppingListWithItems | null> {
-        const { data, included } = await this.apiClient.getShoppingListsWithItems();
+    async getShoppingListWithItems(id?: string): Promise<ShoppingListWithItems | null> {
+        const { data, included } = await this.apiClient.getShoppingListsWithItems(id);
         return data[0] !== undefined ? { data: data[0], included: included! } : null;
     }
 
