@@ -30,6 +30,10 @@ import {
     OroAddressTransformer,
     OroAddressTransformerChain,
 } from './customers/transform-oro-address-data';
+import {
+    AddProductsToCartTransformer,
+    AddProductsToCartTransformerChain,
+} from './shopping-list/add-products-to-cart-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -70,6 +74,11 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: OroAddressTransformerChain,
             useClass: OroAddressTransformerChain,
+            global: true,
+        },
+        {
+            provide: AddProductsToCartTransformerChain,
+            useClass: AddProductsToCartTransformerChain,
             global: true,
         },
         // Create default transformers and register them with their chain transformers
@@ -157,6 +166,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return OroAddressTransformer;
             },
             deps: [OroAddressTransformerChain],
+        },
+        {
+            provide: AddProductsToCartTransformer,
+            useFactory: (transformerChain) => {
+                const addProductsToCartTransformer = new AddProductsToCartTransformer();
+                transformerChain.addTransformer(addProductsToCartTransformer);
+                return addProductsToCartTransformer;
+            },
+            deps: [AddProductsToCartTransformerChain],
         },
     ];
 };
