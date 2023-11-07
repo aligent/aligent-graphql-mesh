@@ -69,7 +69,7 @@ export class ShoppingListService {
         const transformer = this.shoppingListItemTransformer.transform;
 
         await this.apiClient.addItemsToShoppingList(
-            currentShoppingList,
+            currentShoppingList.id,
             // convert each order line item into a new shopping list line item
             items.map((item) => transformer({ data: item }))
         );

@@ -55,10 +55,10 @@ export class ShoppingListsClient {
     }
 
     async addItemsToShoppingList(
-        shoppingList: ShoppingList,
+        shoppingListId: string,
         items: ShoppingListItemInput[]
     ): Promise<ShoppingListItem[]> {
-        const url = `/shoppinglists/${shoppingList.id}/items`;
+        const url = `/shoppinglists/${shoppingListId}/items`;
         const res = await this.apiClient.post<
             { data: ShoppingListItem[] },
             { data: ShoppingListItemInput[] }

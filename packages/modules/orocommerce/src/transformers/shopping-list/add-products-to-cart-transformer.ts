@@ -20,27 +20,27 @@ export class AddProductsToCartTransformer
         >
     ): ShoppingListItemInput[] {
         const shoppingListItemInput = context.data;
-        return [
-            {
+        return shoppingListItemInput.map((listItem) => {
+            return {
                 type: 'shoppinglistitems',
                 attributes: {
-                    quantity: 1,
+                    quantity: listItem.quantity,
                 },
                 relationships: {
                     product: {
                         data: {
                             type: 'products',
-                            id: '8',
+                            id: (atob(String(listItem.uid || '')).replace('Product:', '')),
                         },
                     },
                     unit: {
-                        data: {
+                        data: { // Currently ORO isnt returning prouductunits
                             type: 'productunits',
                             id: 'each',
                         },
                     },
                 },
-            },
-        ];
+            };
+        });
     }
 }
