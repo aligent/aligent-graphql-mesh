@@ -15,6 +15,7 @@ import { CategoriesClient } from '../apis/rest/category-client';
 import { getOroTransformers } from '../transformers';
 import { CmsPageClient } from '../apis/rest/cms-page';
 import { OrdersClient } from '../apis/rest/orders';
+import { StoreConfigApiClient } from '../apis/rest/store-config-api-client';
 import { RoutesClient } from '../apis/rest/routes';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
@@ -116,6 +117,10 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             provide: OrdersClient,
             deps: [ApiClient],
             scope: Scope.Operation,
+        },
+        {
+            useClass: StoreConfigApiClient,
+            provide: StoreConfigApiClient,
         },
         {
             useClass: RoutesClient,

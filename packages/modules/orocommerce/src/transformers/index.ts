@@ -21,7 +21,10 @@ import {
     BreadcrumbsTransformerChain,
 } from './categories/breadcrumbs-transformer';
 import { CmsPageTransformer, CmsPageTransformerChain } from './cms-page/transform-cms-page-data';
-
+import {
+    StoreConfigTransformer,
+    StoreConfigTransformerChain,
+} from './store-config/store-config-transformer';
 import {
     CustomerAddressTransformer,
     CustomerAddressTransformerChain,
@@ -156,6 +159,21 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+        // Store Config transfomers
+        {
+            provide: StoreConfigTransformerChain,
+            useClass: StoreConfigTransformerChain,
+            global: true,
+        },
+        {
+            provide: StoreConfigTransformer,
+            useFactory: (transformerChain) => {
+                const storeConfigTransformer = new StoreConfigTransformer();
+                transformerChain.addTransformer(storeConfigTransformer);
+                return storeConfigTransformer;
+            },
+            deps: [StoreConfigTransformerChain],
         },
         {
             provide: CustomerAddressTransformer,
