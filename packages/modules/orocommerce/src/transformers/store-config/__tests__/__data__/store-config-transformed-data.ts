@@ -168,7 +168,7 @@ export const transformedStoreConfig: AcStoreConfig = {
     sales_gift_wrapping: '_',
     sales_printed_card: '_',
     secure_base_link_url: '_',
-    secure_base_media_url: '_',
+    secure_base_media_url: 'https://aligent.oro-cloud.com',
     secure_base_static_url: '_',
     secure_base_url: '_',
     show_cms_breadcrumbs: 1,
