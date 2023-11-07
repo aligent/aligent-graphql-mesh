@@ -47,6 +47,12 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: CmsBlocksTransformerChain,
             global: true,
         },
+        // Cms Page Register Chain transformers
+        {
+            provide: CmsPageTransformerChain,
+            useClass: CmsPageTransformerChain,
+            global: true,
+        },
         {
             provide: StoreLocationsTransformerChain,
             useClass: StoreLocationsTransformerChain,
@@ -91,6 +97,16 @@ export const getOroTransformers = (): Array<Provider> => {
                 return transformer;
             },
             deps: [CmsBlocksTransformerChain],
+        },
+        {
+            provide: CmsPageTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new CmsPageTransformer();
+                // Add to the chain transformer
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [CmsPageTransformerChain],
         },
         {
             provide: CategoriesTransformer,
@@ -140,22 +156,6 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
-        },
-        // Cms Page Register Chain transformers
-        {
-            provide: CmsPageTransformerChain,
-            useClass: CmsPageTransformerChain,
-            global: true,
-        },
-        {
-            provide: CmsPageTransformer,
-            useFactory: (transformerChain) => {
-                const cmsPageTransformer = new CmsPageTransformer();
-                // Add to the chain transformer
-                transformerChain.addTransformer(CmsPageTransformer);
-                return cmsPageTransformer;
-            },
-            deps: [CmsPageTransformerChain],
         },
         {
             provide: CustomerAddressTransformer,
