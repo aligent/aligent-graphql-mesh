@@ -32,7 +32,7 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
 
         return {
             cart: transformedCart,
-            user_errors: [],
+            user_errors: [], // TODO: To be completed in a follow up ticket -> OTF-114
         };
     },
 };
