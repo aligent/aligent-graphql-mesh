@@ -1,24 +1,37 @@
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
-import { Customer as MagentoCustomer, CustomerAddress } from '@aligent/orocommerce-resolvers';
-import { CustomerUser } from '../../types';
+import { Customer, CustomerAddress } from '@aligent/orocommerce-resolvers';
+import { CustomerUser, OroCustomerAddress } from '../../types';
 
 import { Injectable } from 'graphql-modules';
 
-interface Customer {
-    oroCustomer: CustomerUser;
-    transformedAddresses: CustomerAddress[];
-}
+@Injectable()
+export class OroCustomerTransformerChain extends ChainTransformer<
+    { oroCustomer: CustomerUser; oroAddresses: OroCustomerAddress[] | undefined },
+    Customer
+> {}
 
 @Injectable()
-export class OroCustomerTransformerChain extends ChainTransformer<Customer, MagentoCustomer> {}
+export class OroCustomerTransformer
+    implements
+        Transformer<
+            { oroCustomer: CustomerUser; oroAddresses: OroCustomerAddress[] | undefined },
+            Customer
+        >
+{
+    constructor(
+        protected addressesChain: Transformer<OroCustomerAddress[] | undefined, CustomerAddress[]>
+    ) {}
 
-@Injectable()
-export class OroCustomerTransformer implements Transformer<Customer, MagentoCustomer> {
-    public transform(context: TransformerContext<Customer, MagentoCustomer>): MagentoCustomer {
+    public transform(
+        context: TransformerContext<
+            { oroCustomer: CustomerUser; oroAddresses: OroCustomerAddress[] | undefined },
+            Customer
+        >
+    ): Customer {
         const { firstName, lastName, email } = context.data.oroCustomer.attributes;
 
         return {
-            addresses: context.data.transformedAddresses,
+            addresses: this.addressesChain.transform({ data: context.data.oroAddresses }),
             email,
             firstname: firstName,
             lastname: lastName,

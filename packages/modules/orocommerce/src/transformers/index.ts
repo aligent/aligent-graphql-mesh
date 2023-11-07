@@ -191,12 +191,12 @@ export const getOroTransformers = (): Array<Provider> => {
         },
         {
             provide: OroCustomerTransformer,
-            useFactory: (transformerChain) => {
-                const transformOroAddress = new OroCustomerTransformer();
-                transformerChain.addTransformer(transformOroAddress);
-                return OroCustomerTransformer;
+            useFactory: (customerTransformerChain, addressesChain) => {
+                const oroCustomerTransformer = new OroCustomerTransformer(addressesChain);
+                customerTransformerChain.addTransformer(oroCustomerTransformer);
+                return oroCustomerTransformer;
             },
-            deps: [OroCustomerTransformerChain],
+            deps: [OroCustomerTransformerChain, OroAddressesTransformerChain],
         },
 
         {
