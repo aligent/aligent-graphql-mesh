@@ -1,13 +1,16 @@
 import { OroLandingPage } from '../../../../types';
 
 export const oroLandingPage: OroLandingPage = {
-    id: '1',
     type: 'landingpages',
+    id: '1',
+    links: {
+        self: 'https://aligent.oro-cloud.com/api/landingpages/1',
+    },
     attributes: {
-        title: 'Landing Page title',
+        title: 'About',
         createdAt: '2023-10-12 11:00:00',
-        url: 'https://aligent.com.au/landing-page',
-        urls: ['https://aligent.com.au/landing-page'],
+        url: '/about',
+        urls: ['/about'],
         metaTitle: 'landing page meta title',
         metaDescription: 'meta description landing page',
         metaKeywords: 'Meta keywords landing page',

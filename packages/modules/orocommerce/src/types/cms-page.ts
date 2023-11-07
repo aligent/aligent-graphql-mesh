@@ -2,6 +2,10 @@ import { Entity, Attributes } from '.';
 
 export interface OroLandingPage extends Entity {
     type: 'landingpages';
+    id: string;
+    links: {
+        self: string;
+    };
     attributes: OroLandingPageAttributes;
 }
 
@@ -10,8 +14,8 @@ export interface OroLandingPageAttributes extends Attributes {
     createdAt: string;
     url: string;
     urls: string[];
-    metaTitle: string;
-    metaDescription: string;
-    metaKeywords: string;
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaKeywords: string | null;
     content: string;
 }
