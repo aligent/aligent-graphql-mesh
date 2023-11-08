@@ -31,7 +31,8 @@ export interface Attributes {
         | Array<number>
         | Array<string>
         | Array<object>
-        | EntityAttributes;
+        | EntityAttributes
+        | undefined;
 }
 
 export interface Entity extends Resource {
@@ -62,3 +63,4 @@ export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';
 export * from './order';
+export * from './update-customer';
