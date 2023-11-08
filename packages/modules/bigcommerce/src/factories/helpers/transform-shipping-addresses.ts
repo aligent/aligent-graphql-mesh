@@ -21,7 +21,7 @@ export const getTransformedShippingAddresses = (
             const { selectedShippingOption, entityId, availableShippingOptions, address } =
                 shippingConsignment;
 
-            const transformedAddress = getTransformedAddress(address);
+            const transformedAddress = getTransformedAddress(address, formFields);
 
             const deliveryInstructions = getTransformedDeliveryInstructions(address, formFields);
 

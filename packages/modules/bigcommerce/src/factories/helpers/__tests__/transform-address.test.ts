@@ -1,6 +1,7 @@
 import { getTransformedBillingAddress, getTransformedAddress } from '../transform-address';
 import { CheckoutAddressCheckboxesCustomField } from '@aligent/bigcommerce-operations';
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
+import { MockedStorefrontFormFields } from '../../../resolvers/mocks/storefront-form-fields';
 
 const expectShippingAddress = {
     firstname: 'John',
@@ -37,15 +38,18 @@ const expectedBillingAddress = {
 
 describe('transform-address', () => {
     it(`transforms a address`, () => {
-        expect(getTransformedAddress(mockBcCheckout.shippingConsignments[0].address)).toEqual(
-            expect.objectContaining(expectShippingAddress)
-        );
+        expect(
+            getTransformedAddress(
+                mockBcCheckout.shippingConsignments[0].address,
+                MockedStorefrontFormFields
+            )
+        ).toEqual(expect.objectContaining(expectShippingAddress));
     });
 
     it(`transforms a billing address`, () => {
-        expect(getTransformedBillingAddress(mockBcCheckout.billingAddress)).toEqual(
-            expect.objectContaining(expectedBillingAddress)
-        );
+        expect(
+            getTransformedBillingAddress(mockBcCheckout.billingAddress, MockedStorefrontFormFields)
+        ).toEqual(expect.objectContaining(expectedBillingAddress));
     });
 
     it(`sets default values when address information doesn't exist`, () => {
@@ -84,7 +88,7 @@ describe('transform-address', () => {
                 region: {
                     code: '',
                     label: '',
-                    region_id: 573,
+                    region_id: null,
                 },
                 street: [],
                 telephone: '',

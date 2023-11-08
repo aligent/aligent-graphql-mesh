@@ -38,7 +38,7 @@ export const getTransformedCartData = (
             },
         },
         prices: getTransformedCartPrices(checkoutData, cart),
-        billing_address: getTransformedBillingAddress(billingAddress),
+        billing_address: getTransformedBillingAddress(billingAddress, formFields),
         shipping_addresses: getTransformedShippingAddresses(
             shippingConsignments,
             customerMessage,

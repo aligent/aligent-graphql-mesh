@@ -1,6 +1,7 @@
 import { mockBcCart } from './cart.bc';
 import {
     CheckoutAddressCheckboxesCustomField,
+    CheckoutAddressNumberCustomField,
     CheckoutAddressTextFieldCustomField,
     CouponType,
 } from '@aligent/bigcommerce-operations';
@@ -75,6 +76,10 @@ export const mockBcCheckout = {
                 entityId: 29,
                 valueEntityIds: [0],
             } as CheckoutAddressCheckboxesCustomField,
+            {
+                number: 573,
+                entityId: 35,
+            } as CheckoutAddressNumberCustomField,
         ],
         countryCode: 'AU',
         company: 'Aligent',
@@ -137,6 +142,10 @@ export const mockBcCheckout = {
                         text: 'Leave at the rear door',
                         entityId: 26,
                     } as CheckoutAddressTextFieldCustomField,
+                    {
+                        number: 573,
+                        entityId: 35,
+                    } as CheckoutAddressNumberCustomField,
                 ],
                 countryCode: 'AU',
                 company: 'Aligent',
