@@ -1,10 +1,12 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { OroOrderLineItem } from '../../types/order-line-item';
 import { ShoppingListItemInput } from '../../types';
+import { Injectable } from 'graphql-modules';
 
 /**
  * This transformer is meant to convert a order line item into a new shopping list line item
  */
+@Injectable()
 export class OrderLineItemToShoppingListItemTransformer
     implements Transformer<OroOrderLineItem, ShoppingListItemInput>
 {

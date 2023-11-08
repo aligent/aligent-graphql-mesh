@@ -8,6 +8,7 @@ import { OroOrderLineItem } from '../../types/order-line-item';
 import { v4 as uuidv4 } from 'uuid';
 import { OrderLineItemToShoppingListItemTransformer } from './order-line-item-to-shopping-list-item-transformer';
 import { Transformer, TransformerContext } from '@aligent/utils';
+import { Injectable } from 'graphql-modules';
 
 export interface OrderLineItemsToNewShoppingListTransformerInput {
     newShoppingList: ShoppingListInputAttribute;
@@ -17,6 +18,7 @@ export interface OrderLineItemsToNewShoppingListTransformerInput {
 /**
  * This transformer is meant to convert order line items into a new shopping list with the order line items
  */
+@Injectable()
 export class OrderLineItemsToNewShoppingListTransformer
     implements Transformer<OrderLineItemsToNewShoppingListTransformerInput, ShoppingListWithItems>
 {

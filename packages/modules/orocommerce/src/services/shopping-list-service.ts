@@ -1,30 +1,34 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
-import { ShoppingList, ShoppingListItemInput, ShoppingListWithItems } from '../types';
-import { OroOrderLineItem } from '../types/order-line-item';
 import {
-    OrderLineItemsToNewShoppingListTransformer,
-    OrderLineItemsToNewShoppingListTransformerInput,
-} from '../transformers/shopping-list/order-line-items-to-new-shopping-list-transformer';
+    ShoppingList,
+    ShoppingListInputAttribute,
+    ShoppingListItemInput,
+    ShoppingListWithItems,
+} from '../types';
+import { OroOrderLineItem } from '../types/order-line-item';
+import { OrderLineItemsToNewShoppingListTransformer } from '../transformers/shopping-list/order-line-items-to-new-shopping-list-transformer';
 import { OrderLineItemToShoppingListItemTransformer } from '../transformers/shopping-list/order-line-item-to-shopping-list-item-transformer';
 import { Transformer } from '@aligent/utils';
 
 @Injectable()
 export class ShoppingListService {
-    protected newShoppingListTransformer: Transformer<
-        OrderLineItemsToNewShoppingListTransformerInput,
-        ShoppingListWithItems
-    >;
-    protected shoppingListItemTransformer: Transformer<OroOrderLineItem, ShoppingListItemInput>;
-
     constructor(
-        @Inject(forwardRef(() => ShoppingListsClient)) protected apiClient: ShoppingListsClient
-    ) {
-        this.shoppingListItemTransformer = new OrderLineItemToShoppingListItemTransformer();
-        this.newShoppingListTransformer = new OrderLineItemsToNewShoppingListTransformer(
-            this.shoppingListItemTransformer
-        );
-    }
+        @Inject(forwardRef(() => ShoppingListsClient))
+        protected readonly apiClient: ShoppingListsClient,
+
+        @Inject(forwardRef(() => OrderLineItemsToNewShoppingListTransformer))
+        protected readonly newShoppingListTransformer: Transformer<
+            { newShoppingList: ShoppingListInputAttribute; orderLineItems: OroOrderLineItem[] },
+            ShoppingListWithItems
+        >,
+
+        @Inject(forwardRef(() => OrderLineItemToShoppingListItemTransformer))
+        protected readonly shoppingListItemTransformer: Transformer<
+            OroOrderLineItem,
+            ShoppingListItemInput
+        >
+    ) {}
 
     /**
      * Get the user's shopping list. We're assuming that the user will always have one shopping list

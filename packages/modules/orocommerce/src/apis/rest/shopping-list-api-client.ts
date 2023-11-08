@@ -40,8 +40,8 @@ export class ShoppingListsClient {
         const attrs: ShoppingListInputAttribute = {
             name: 'default',
             default: true,
-            notes: null
-        }
+            notes: null,
+        };
         return this.postShoppingLists({
             type: 'shoppinglists',
             id: '1',
