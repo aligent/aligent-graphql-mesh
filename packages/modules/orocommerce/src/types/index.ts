@@ -67,3 +67,5 @@ export * from './customer-user';
 export * from './customer-address';
 export * from './order';
 export * from './store-config';
+export * from './shopping-list';
+export * from './order-line-item';
