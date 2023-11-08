@@ -7,13 +7,11 @@ import { ShoppingListToCartTransformer } from '../transformers/shopping-list/sho
 
 @Injectable()
 export class CartService {
-    protected readonly transformer: Transformer<ShoppingListWithItems, Cart>;
-
     constructor(
-        @Inject(forwardRef(() => ShoppingListService)) protected apiClient: ShoppingListService
-    ) {
-        this.transformer = new ShoppingListToCartTransformer();
-    }
+        @Inject(forwardRef(() => ShoppingListService)) protected apiClient: ShoppingListService,
+        @Inject(forwardRef(() => ShoppingListToCartTransformer))
+        protected readonly cartTransformer: Transformer<ShoppingListWithItems, Cart>
+    ) {}
 
     /**
      * The purpose of this method is to return a populated cart with relevant/up-to-date data containing all items etc
@@ -22,6 +20,6 @@ export class CartService {
      */
     async getCart(shoppingList: ShoppingListWithItems | null): Promise<Cart> {
         shoppingList = shoppingList ?? (await this.apiClient.getShoppingListWithItems());
-        return this.transformer.transform({ data: shoppingList! });
+        return this.cartTransformer.transform({ data: shoppingList! });
     }
 }

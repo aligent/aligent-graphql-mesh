@@ -4,6 +4,11 @@ import { ShoppingListsClient } from '../apis/rest';
 import { ShoppingListService } from './shopping-list-service';
 import { Auth } from './auth';
 import { ModuleConfig } from '../providers';
+import {
+    OrderLineItemToShoppingListItemTransformer,
+    OrderLineItemsToNewShoppingListTransformer,
+    ShoppingListToCartTransformer,
+} from '../transformers';
 
 export * from './auth';
 export * from './cart-service';
@@ -20,13 +25,17 @@ export const getOroServices = (): Array<Provider> => {
         {
             useClass: CartService,
             provide: CartService,
-            deps: [ShoppingListsClient],
+            deps: [ShoppingListsClient, ShoppingListToCartTransformer],
             scope: Scope.Operation,
         },
         {
             useClass: ShoppingListService,
             provide: ShoppingListService,
-            deps: [ShoppingListsClient],
+            deps: [
+                ShoppingListsClient,
+                OrderLineItemsToNewShoppingListTransformer,
+                OrderLineItemToShoppingListItemTransformer,
+            ],
             scope: Scope.Operation,
         },
     ];

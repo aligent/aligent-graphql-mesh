@@ -36,6 +36,7 @@ import {
 } from './customers/transform-oro-address-data';
 import { OrderLineItemToShoppingListItemTransformer } from './shopping-list/order-line-item-to-shopping-list-item-transformer';
 import { OrderLineItemsToNewShoppingListTransformer } from './shopping-list/order-line-items-to-new-shopping-list-transformer';
+import { ShoppingListToCartTransformer } from './shopping-list/shopping-list-to-cart-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -43,6 +44,9 @@ export * from './currency/transform-currency-data';
 export * from './customers/customer-transformer';
 export * from './key-messages/key-messages-transformer';
 export * from './store-locations/store-locations-transformer';
+export * from './shopping-list/order-line-item-to-shopping-list-item-transformer';
+export * from './shopping-list/order-line-items-to-new-shopping-list-transformer';
+export * from './shopping-list/shopping-list-to-cart-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
@@ -188,6 +192,10 @@ export const getOroTransformers = (): Array<Provider> => {
                 return OroAddressTransformer;
             },
             deps: [OroAddressTransformerChain],
+        },
+        {
+            provide: ShoppingListToCartTransformer,
+            useClass: ShoppingListToCartTransformer,
         },
         {
             provide: OrderLineItemToShoppingListItemTransformer,

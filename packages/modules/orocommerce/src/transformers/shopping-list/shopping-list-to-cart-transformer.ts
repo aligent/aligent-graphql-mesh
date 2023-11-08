@@ -1,6 +1,7 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListItem, ShoppingListWithItems } from '../../types';
 import { Cart, CurrencyEnum, Money, SimpleCartItem } from '@aligent/orocommerce-resolvers';
+import { Injectable } from 'graphql-modules';
 
 const UNDEFINED_CART: Cart = {
     id: '',
@@ -13,6 +14,7 @@ const UNDEFINED_CART: Cart = {
     shipping_addresses: [],
 };
 
+@Injectable()
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
