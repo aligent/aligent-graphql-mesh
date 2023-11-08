@@ -1,6 +1,12 @@
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
-import { Customer, CustomerUser, OroCustomerAddress, OroCustomerAddressInput } from '../../types';
+import {
+    Customer,
+    CustomerUser,
+    OroCustomerAddress,
+    OroCustomerAddressInput,
+    UpdateCustomer,
+} from '../../types';
 
 @Injectable()
 export class CustomerClient {
@@ -52,6 +58,15 @@ export class CustomerClient {
             { data: OroCustomerAddress },
             { data: OroCustomerAddress }
         >(`/customeruseraddresses/${customerAddress.id}`, { data: customerAddress });
+        return response.data;
+    }
+
+    async updateCustomer(updateCustomer: UpdateCustomer): Promise<UpdateCustomer> {
+        console.log(updateCustomer);
+        const response = await this.apiClient.patch<
+            { data: UpdateCustomer },
+            { data: UpdateCustomer }
+        >(`/customerusers/mine`, { data: updateCustomer });
         return response.data;
     }
 }
