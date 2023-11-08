@@ -60,7 +60,7 @@ export class ShoppingListService {
             // transforms the order line items into a new shopping list with items to be persisted via API
             const transformedShoppingList = this.newShoppingListTransformer.transform({
                 data: {
-                    newShoppingList: { name: 'Default Shopping List', default: false, notes: null },
+                    newShoppingList: { name: 'Default Shopping List', default: true, notes: null },
                     orderLineItems: items,
                 },
             });
