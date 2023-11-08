@@ -1,11 +1,10 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { OroCommerceModuleConfig } from '../index';
+import { OroCommerceModuleConfig, getOroServices } from '../index';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
 import { CountryTransformer } from '../transformers/country/country-transformer';
-import { ShoppingListsClient } from '../apis/rest/shoppinglists';
-import { Auth } from '../services/auth';
+import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
 import { ContactClient } from '../apis/rest/contact';
@@ -35,12 +34,6 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             provide: StoreUrl,
             useValue: config.storeUrl,
             scope: Scope.Singleton,
-        },
-        {
-            useClass: Auth,
-            provide: Auth,
-            deps: [ModuleConfig],
-            scope: Scope.Operation,
         },
         {
             useClass: ApiClient,
@@ -131,5 +124,6 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
             scope: Scope.Operation,
         },
         ...getOroTransformers(),
+        ...getOroServices(),
     ];
 };

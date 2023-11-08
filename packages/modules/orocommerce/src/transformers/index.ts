@@ -34,6 +34,9 @@ import {
     OroAddressTransformer,
     OroAddressTransformerChain,
 } from './customers/transform-oro-address-data';
+import { OrderLineItemToShoppingListItemTransformer } from './shopping-list/order-line-item-to-shopping-list-item-transformer';
+import { OrderLineItemsToNewShoppingListTransformer } from './shopping-list/order-line-items-to-new-shopping-list-transformer';
+import { ShoppingListToCartTransformer } from './shopping-list/shopping-list-to-cart-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -41,6 +44,9 @@ export * from './currency/transform-currency-data';
 export * from './customers/customer-transformer';
 export * from './key-messages/key-messages-transformer';
 export * from './store-locations/store-locations-transformer';
+export * from './shopping-list/order-line-item-to-shopping-list-item-transformer';
+export * from './shopping-list/order-line-items-to-new-shopping-list-transformer';
+export * from './shopping-list/shopping-list-to-cart-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
@@ -50,7 +56,6 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: CmsBlocksTransformerChain,
             global: true,
         },
-        // Cms Page Register Chain transformers
         {
             provide: CmsPageTransformerChain,
             useClass: CmsPageTransformerChain,
@@ -82,7 +87,21 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: OroAddressTransformerChain,
             global: true,
         },
-        // Create default transformers and register them with their chain transformers
+        {
+            provide: CurrencyTransformerChain,
+            useClass: CurrencyTransformerChain,
+            global: true,
+        },
+        {
+            provide: CustomerOrdersTransformerChain,
+            useClass: CustomerOrdersTransformerChain,
+            global: true,
+        },
+        {
+            provide: StoreConfigTransformerChain,
+            useClass: StoreConfigTransformerChain,
+            global: true,
+        },
         {
             provide: StoreLocationsTransformer,
             useFactory: (transformerChain) => {
@@ -105,7 +124,6 @@ export const getOroTransformers = (): Array<Provider> => {
             provide: CmsPageTransformer,
             useFactory: (transformerChain) => {
                 const transformer = new CmsPageTransformer();
-                // Add to the chain transformer
                 transformerChain.addTransformer(transformer);
                 return transformer;
             },
@@ -129,27 +147,15 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [BreadcrumbsTransformerChain],
         },
-        // Currency Register Chain transformers
-        {
-            provide: CurrencyTransformerChain,
-            useClass: CurrencyTransformerChain,
-            global: true,
-        },
+
         {
             provide: CurrencyTransformer,
             useFactory: (transformerChain) => {
                 const currencyTransformer = new CurrencyTransformer();
-                // Add to the chain transformer
                 transformerChain.addTransformer(currencyTransformer);
                 return currencyTransformer;
             },
             deps: [CurrencyTransformerChain],
-        },
-        // Customer Order transfomers
-        {
-            provide: CustomerOrdersTransformerChain,
-            useClass: CustomerOrdersTransformerChain,
-            global: true,
         },
         {
             provide: CustomerOrdersTransfomer,
@@ -159,12 +165,6 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
-        },
-        // Store Config transfomers
-        {
-            provide: StoreConfigTransformerChain,
-            useClass: StoreConfigTransformerChain,
-            global: true,
         },
         {
             provide: StoreConfigTransformer,
@@ -192,6 +192,19 @@ export const getOroTransformers = (): Array<Provider> => {
                 return OroAddressTransformer;
             },
             deps: [OroAddressTransformerChain],
+        },
+        {
+            provide: ShoppingListToCartTransformer,
+            useClass: ShoppingListToCartTransformer,
+        },
+        {
+            provide: OrderLineItemToShoppingListItemTransformer,
+            useClass: OrderLineItemToShoppingListItemTransformer,
+        },
+        {
+            provide: OrderLineItemsToNewShoppingListTransformer,
+            useClass: OrderLineItemsToNewShoppingListTransformer,
+            deps: [OrderLineItemToShoppingListItemTransformer],
         },
     ];
 };
