@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { getOroMockOrderLineItems } from './__data__/order-line-items-data';
 import { ShoppingListToCartTransformer } from '../shopping-list-to-cart-transformer';
 import { OrderLineItemToShoppingListItemTransformer } from '../order-line-item-to-shopping-list-item-transformer';
