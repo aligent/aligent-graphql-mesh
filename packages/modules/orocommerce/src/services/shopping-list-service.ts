@@ -31,7 +31,7 @@ export class ShoppingListService {
     ) {}
 
     /**
-     * Get the user's shopping list. We're assuming that the user will always have one shopping list
+     * Get the user's shopping list. We're assuming that users will always have a maximum of one shopping list
      * @returns Promise<ShoppingList | null>
      */
     async getShoppingList(): Promise<ShoppingList | null> {
@@ -40,7 +40,7 @@ export class ShoppingListService {
     }
 
     /**
-     * Get the user's shopping list with items. We're assuming that the user will always have one shopping list
+     * Get the user's shopping list with items. We're assuming that users will always have a maximum of one shopping list
      * @returns Promise<ShoppingListWithItems | null>
      */
     async getShoppingListWithItems(): Promise<ShoppingListWithItems | null> {
