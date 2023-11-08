@@ -6,16 +6,16 @@ import { arrayFromAsyncGenerator } from '@aligent/utils';
 
 export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: async (_root, mutationParams, context, _info) => {
-        const api: OrdersClient = context.injector.get(OrdersClient);
+        const ordersClient: OrdersClient = context.injector.get(OrdersClient);
 
-        const paginator = api.getOrderLineItems(Number(mutationParams.orderNumber));
+        const orderLineItemsPaginator = ordersClient.getOrderLineItems(Number(mutationParams.orderNumber));
 
-        const orderLineItems = (await arrayFromAsyncGenerator(paginator)).flatMap(
+        const orderLineItems = (await arrayFromAsyncGenerator(orderLineItemsPaginator)).flatMap(
             (generatorResult) => generatorResult.data
         );
 
-        const service: ShoppingListService = context.injector.get(ShoppingListService);
-        const updatedShoppingList = await service.addItemsFromOrderLineItems(orderLineItems);
+        const shoppingListService: ShoppingListService = context.injector.get(ShoppingListService);
+        const updatedShoppingList = await shoppingListService.addItemsFromOrderLineItems(orderLineItems);
 
         const cartService: CartService = context.injector.get(CartService);
         const cart = await cartService.getCart(updatedShoppingList);
