@@ -43,7 +43,7 @@ export class OrderLineItemsToNewShoppingListTransformer
         for (const orderLineItem of orderLineItems) {
             const id = uuidv4();
             const type = 'shoppinglistitems';
-            shoppingList.relationships!.items.data.push({ id, type });
+            shoppingList.relationships.items.data.push({ id, type });
 
             const shoppinglistLineItem = this.lineItemTransformer.transform({
                 data: orderLineItem,

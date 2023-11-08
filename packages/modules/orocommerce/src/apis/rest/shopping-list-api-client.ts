@@ -46,6 +46,7 @@ export class ShoppingListsClient {
             type: 'shoppinglists',
             id: '1',
             attributes: attrs,
+            relationships: { items: { data: [] } },
         });
     }
 

@@ -8,14 +8,17 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
     resolve: async (_root, mutationParams, context, _info) => {
         const ordersClient: OrdersClient = context.injector.get(OrdersClient);
 
-        const orderLineItemsPaginator = ordersClient.getOrderLineItems(Number(mutationParams.orderNumber));
+        const orderLineItemsPaginator = ordersClient.getOrderLineItems(
+            Number(mutationParams.orderNumber)
+        );
 
         const orderLineItems = (await arrayFromAsyncGenerator(orderLineItemsPaginator)).flatMap(
             (generatorResult) => generatorResult.data
         );
 
         const shoppingListService: ShoppingListService = context.injector.get(ShoppingListService);
-        const updatedShoppingList = await shoppingListService.addItemsFromOrderLineItems(orderLineItems);
+        const updatedShoppingList =
+            await shoppingListService.addItemsFromOrderLineItems(orderLineItems);
 
         const cartService: CartService = context.injector.get(CartService);
         const cart = await cartService.getCart(updatedShoppingList);
