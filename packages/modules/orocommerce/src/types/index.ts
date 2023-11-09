@@ -7,9 +7,11 @@ export interface Resource {
 }
 
 export interface Relationships {
-    [name: string]: {
-        data?: Array<Resource> | Resource | null;
-    };
+    [name: string]:
+        | {
+              data?: Array<Resource> | Resource | null;
+          }
+        | undefined;
 }
 
 export interface EntityAttributes {
@@ -31,6 +33,7 @@ export interface Attributes {
         | Array<number>
         | Array<string>
         | Array<object>
+        | Attributes[]
         | EntityAttributes;
 }
 
@@ -57,8 +60,12 @@ export * from './customer';
 export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
+export * from './cms-page';
 export * from './contact';
 export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';
 export * from './order';
+export * from './store-config';
+export * from './shopping-list';
+export * from './order-line-item';

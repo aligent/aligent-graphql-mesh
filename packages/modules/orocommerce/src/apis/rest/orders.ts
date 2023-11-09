@@ -1,6 +1,7 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { Entity, Order } from '../../types';
+import { OroOrderLineItem } from '../../types/order-line-item';
 
 @Injectable()
 export class OrdersClient {
@@ -13,5 +14,17 @@ export class OrdersClient {
                     'billingAddress,shippingAddress,billingAddress.country,billingAddress.region,shippingAddress.country,shippingAddress.region',
             },
         });
+    }
+
+    getOrderLineItems(orderNumber: number): AsyncGenerator<{ data: OroOrderLineItem[] }> {
+        const url = `/orders/${orderNumber}/lineItems`;
+        const params = {
+            page: {
+                number: 1,
+                size: 250,
+            },
+            sort: 'id',
+        };
+        return this.apiClient.paginate<OroOrderLineItem>(url, { params });
     }
 }

@@ -117,7 +117,7 @@ type Query {
         """
         An array of CMS block IDs.
         """
-        identifiers: [String!]
+        identifiers: [String]
     ): CmsBlocks
     """
     Return details about a CMS page.
