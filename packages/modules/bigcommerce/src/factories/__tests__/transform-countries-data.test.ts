@@ -32,7 +32,7 @@ describe('Countries data transform tests', () => {
     test('return transformed countries', () => {
         const inputBcCountry = [bcCountry];
         const inputBcStates = bcStates;
-        const inputTransformedCountries = [transformedCountries];
+        const inputTransformedCountries = transformedCountries;
 
         const transformed = transformCountriesAndStates(inputBcCountry, inputBcStates);
 

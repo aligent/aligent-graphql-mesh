@@ -8,6 +8,7 @@ import { getIncludesTax } from '@aligent/utils';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 import { retrieveStorefrontFormFieldsFromCache } from '../rest/formFields';
 import { retrieveCountriesAndStatesFromCache } from '../../resolvers/queries/countries';
+import { transformCountriesAndStates } from '../../factories/transform-countries-data';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -46,12 +47,13 @@ export const getEnrichedCart = async (
 
     const countriesRequest = retrieveCountriesAndStatesFromCache(context);
 
-    const [checkoutResponse, storeConfig, storeFrontFormFields, countries] = await Promise.all([
-        checkoutQuery,
-        storeConfigRequest,
-        storeFrontFormFieldsRequest,
-        countriesRequest,
-    ]);
+    const [checkoutResponse, storeConfig, storeFrontFormFields, [countries, states]] =
+        await Promise.all([
+            checkoutQuery,
+            storeConfigRequest,
+            storeFrontFormFieldsRequest,
+            countriesRequest,
+        ]);
 
     const { tax: taxSettingsResponse } = storeConfig;
 
@@ -87,6 +89,6 @@ export const getEnrichedCart = async (
         checkoutResponse,
         flattenedProducts,
         storeFrontFormFields,
-        countries
+        transformCountriesAndStates(countries, states)
     );
 };
