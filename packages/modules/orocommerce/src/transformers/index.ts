@@ -39,6 +39,16 @@ import { OrderLineItemsToNewShoppingListTransformer } from './shopping-list/orde
 import { ShoppingListToCartTransformer } from './shopping-list/shopping-list-to-cart-transformer';
 
 import {
+    OroCustomerTransformer,
+    OroCustomerTransformerChain,
+} from './customers/transform-customer-data';
+
+import {
+    OroAddressesTransformer,
+    OroAddressesTransformerChain,
+} from './customers/transform-oro-addresses-data';
+
+import {
     UpdateCustomerAddressTransformer,
     UpdateCustomerAddressTransformerChain,
 } from './customers/transform-update-customer-address-data';
@@ -92,7 +102,16 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: OroAddressTransformerChain,
             global: true,
         },
+        {
+            provide: OroCustomerTransformerChain,
+            useClass: OroCustomerTransformerChain,
+            global: true,
+        },
 
+        {
+            provide: OroAddressesTransformerChain,
+            useClass: OroAddressesTransformerChain,
+        },
         {
             provide: UpdateCustomerAddressTransformerChain,
             useClass: UpdateCustomerAddressTransformerChain,
@@ -206,6 +225,26 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [OroAddressTransformerChain],
         },
+        {
+            provide: OroCustomerTransformer,
+            useFactory: (customerTransformerChain, addressesChain) => {
+                const oroCustomerTransformer = new OroCustomerTransformer(addressesChain);
+                customerTransformerChain.addTransformer(oroCustomerTransformer);
+                return oroCustomerTransformer;
+            },
+            deps: [OroCustomerTransformerChain, OroAddressesTransformerChain],
+        },
+
+        {
+            provide: OroAddressesTransformer,
+            useFactory: (transformerChain) => {
+                const transformOroAddress = new OroAddressesTransformer();
+                transformerChain.addTransformer(transformOroAddress);
+                return OroAddressesTransformer;
+            },
+            deps: [OroAddressesTransformerChain],
+        },
+
         {
             provide: UpdateCustomerAddressTransformer,
             useFactory: (transformerChain) => {
