@@ -62,6 +62,7 @@ describe('Shopping List to Cart transformation tests', () => {
                     row_total_including_tax: shoppingListItemPrice,
                 },
                 product: {
+                    __typename: 'SimpleProduct',
                     redirect_code: 0,
                     price_range: {
                         minimum_price: {

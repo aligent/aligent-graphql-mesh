@@ -43,8 +43,8 @@ export class ShoppingListService {
      * Get the user's shopping list with items. We're assuming that users will always have a maximum of one shopping list
      * @returns Promise<ShoppingListWithItems | null>
      */
-    async getShoppingListWithItems(): Promise<ShoppingListWithItems | null> {
-        const { data, included } = await this.apiClient.getShoppingListsWithItems();
+    async getShoppingListWithItems(id?: string): Promise<ShoppingListWithItems | null> {
+        const { data, included } = await this.apiClient.getShoppingListsWithItems(id);
         return data[0] !== undefined ? { data: data[0], included: included! } : null;
     }
 
@@ -73,7 +73,7 @@ export class ShoppingListService {
         const transformer = this.shoppingListItemTransformer.transform;
 
         await this.apiClient.addItemsToShoppingList(
-            currentShoppingList,
+            currentShoppingList.id,
             // convert each order line item into a new shopping list line item
             items.map((item) => transformer({ data: item }))
         );
