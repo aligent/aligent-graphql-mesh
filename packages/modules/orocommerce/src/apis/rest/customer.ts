@@ -34,8 +34,10 @@ export class CustomerClient {
         return response.data;
     }
 
-    async getCustomerUser(): Promise<{ data: CustomerUser; included?: OroCustomerAddress[] }> {
-        const path = `/customerusers/mine`;
+    async getCustomerUser(
+        id: string = 'mine'
+    ): Promise<{ data: CustomerUser; included?: OroCustomerAddress[] }> {
+        const path = `/customerusers/${id}`;
         const params = {
             include: 'addresses',
         };
