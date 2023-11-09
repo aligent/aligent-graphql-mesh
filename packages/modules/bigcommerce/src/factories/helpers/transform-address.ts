@@ -2,13 +2,17 @@ import {
     CheckoutBillingAddress,
     CheckoutConsignmentAddress,
 } from '@aligent/bigcommerce-operations';
-import { BillingCartAddress, Maybe, CartAddressInterface } from '@aligent/bigcommerce-resolvers';
-import { BcStorefrontFormFields } from '../../types';
+import {
+    BillingCartAddress,
+    Maybe,
+    CartAddressInterface,
+    Country as AcCountry,
+} from '@aligent/bigcommerce-resolvers';
 import { getTransformedRegionId } from './transform-regions';
 
 export const getTransformedAddress = (
     bcAddress: CheckoutConsignmentAddress | CheckoutBillingAddress,
-    formFields?: BcStorefrontFormFields
+    countries?: AcCountry[]
 ): CartAddressInterface => {
     const {
         stateOrProvinceCode,
@@ -37,7 +41,7 @@ export const getTransformedAddress = (
         region: {
             code: stateOrProvinceCode,
             label: stateOrProvince,
-            region_id: getTransformedRegionId(bcAddress, formFields),
+            region_id: getTransformedRegionId(bcAddress, countries),
         },
         street: [address1 || null, address2 || null].filter(Boolean),
         telephone: phone,
@@ -47,8 +51,8 @@ export const getTransformedAddress = (
 
 export const getTransformedBillingAddress = (
     billingAddress?: Maybe<CheckoutBillingAddress>,
-    formFields?: BcStorefrontFormFields
+    countries?: AcCountry[]
 ): Maybe<BillingCartAddress> => {
     if (!billingAddress) return null;
-    return getTransformedAddress(billingAddress, formFields);
+    return getTransformedAddress(billingAddress, countries);
 };
