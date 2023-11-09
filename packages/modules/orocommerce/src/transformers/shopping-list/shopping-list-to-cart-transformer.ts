@@ -42,6 +42,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total_including_tax: prodPrice,
                 },
                 product: {
+                    __typename: 'SimpleProduct', // Temp fix, same approach as BC Mesh
                     redirect_code: 0,
                     price_range: {
                         minimum_price: {
@@ -68,6 +69,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 value: Number(shoppingList.data.attributes.total),
             },
         };
+
         return cart;
     }
 }

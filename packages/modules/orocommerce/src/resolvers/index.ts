@@ -21,6 +21,7 @@ import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
+import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -37,6 +38,7 @@ export const resolvers: Resolvers = {
         getSocialLinks: getSocialLinksResolver,
     },
     Mutation: {
+        addProductsToCart: addProductsToCartResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         postContactForm: postContactFormMutation,
