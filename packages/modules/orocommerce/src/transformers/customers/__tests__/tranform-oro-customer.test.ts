@@ -28,7 +28,11 @@ describe('update customer email', () => {
         const data: UpdateCustomer = {
             type: 'customerusers',
             id: 'mine',
-            attributes: { email: 'mandy.tatla@aligent.com.au' },
+            attributes: {
+                email: 'mandy.tatla@aligent.com.au',
+                firstName: undefined,
+                lastname: undefined,
+            },
         };
         const transformed = updateCustomerTransformer.transform({
             data: { ...customerInput },
@@ -47,7 +51,7 @@ describe('update customer firstname and lastname', () => {
         const data: UpdateCustomer = {
             type: 'customerusers',
             id: 'mine',
-            attributes: { firstName: 'Mandy', lastName: 'Tatla' },
+            attributes: { firstName: 'Mandy', lastName: 'Tatla', email: undefined },
         };
         const transformed = updateCustomerTransformer.transform({
             data: { ...customerInput },
