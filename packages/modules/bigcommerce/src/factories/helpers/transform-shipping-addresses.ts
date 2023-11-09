@@ -1,5 +1,11 @@
 import { CheckoutShippingConsignment } from '@aligent/bigcommerce-operations';
-import { Cart, Maybe, Scalars, ShippingCartAddress } from '@aligent/bigcommerce-resolvers';
+import {
+    Cart,
+    Maybe,
+    Scalars,
+    ShippingCartAddress,
+    Country as AcCountry,
+} from '@aligent/bigcommerce-resolvers';
 import { btoa } from '@aligent/utils';
 import {
     getTransformedAvailableShippingMethods,
@@ -12,7 +18,8 @@ import { getTransformedDeliveryInstructions } from './transform-delivery-instruc
 export const getTransformedShippingAddresses = (
     shippingConsignments?: Maybe<Array<CheckoutShippingConsignment>>,
     customerMessage?: Maybe<Scalars['String']>,
-    formFields?: BcStorefrontFormFields
+    formFields?: BcStorefrontFormFields,
+    countries?: AcCountry[]
 ): Cart['shipping_addresses'] => {
     if (!shippingConsignments) return [];
 
@@ -21,7 +28,7 @@ export const getTransformedShippingAddresses = (
             const { selectedShippingOption, entityId, availableShippingOptions, address } =
                 shippingConsignment;
 
-            const transformedAddress = getTransformedAddress(address);
+            const transformedAddress = getTransformedAddress(address, countries);
 
             const deliveryInstructions = getTransformedDeliveryInstructions(address, formFields);
 

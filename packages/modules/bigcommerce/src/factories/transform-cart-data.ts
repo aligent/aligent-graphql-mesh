@@ -1,6 +1,6 @@
 import { getIsVirtualCart } from '@aligent/utils';
 import { Checkout } from '@aligent/bigcommerce-operations';
-import { Cart, ProductInterface } from '@aligent/bigcommerce-resolvers';
+import { Cart, ProductInterface, Country as AcCountry } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
@@ -10,7 +10,8 @@ import { BcStorefrontFormFields } from '../types';
 export const getTransformedCartData = (
     checkoutData: Checkout,
     additionalCartItemData?: Array<ProductInterface>,
-    formFields?: BcStorefrontFormFields
+    formFields?: BcStorefrontFormFields,
+    countries?: AcCountry[]
 ): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
@@ -38,11 +39,12 @@ export const getTransformedCartData = (
             },
         },
         prices: getTransformedCartPrices(checkoutData, cart),
-        billing_address: getTransformedBillingAddress(billingAddress),
+        billing_address: getTransformedBillingAddress(billingAddress, countries),
         shipping_addresses: getTransformedShippingAddresses(
             shippingConsignments,
             customerMessage,
-            formFields
+            formFields,
+            countries
         ),
         available_gift_wrappings: [],
         gift_receipt_included: false,

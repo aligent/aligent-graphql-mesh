@@ -41,14 +41,16 @@ export const transformedStates = [
     },
 ];
 
-export const transformedCountries = {
-    full_name_english: 'Australia',
-    full_name_locale: null,
-    id: '13',
-    two_letter_abbreviation: 'AU',
-    three_letter_abbreviation: 'AUS',
-    available_regions: transformedStates,
-};
+export const transformedCountries = [
+    {
+        full_name_english: 'Australia',
+        full_name_locale: null,
+        id: '13',
+        two_letter_abbreviation: 'AU',
+        three_letter_abbreviation: 'AUS',
+        available_regions: transformedStates,
+    },
+];
 
 export const transformedCreatedCustomer = {
     id: 19,

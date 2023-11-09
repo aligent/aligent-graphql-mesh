@@ -1,5 +1,6 @@
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
 import { MockedStorefrontFormFields } from '../../../resolvers/mocks/storefront-form-fields';
+import { transformedCountries } from '../../../resolvers/queries/__tests__/__data__/countries-transformed-data';
 import { getTransformedShippingAddresses } from '../transform-shipping-addresses';
 
 const expectResult = [
@@ -16,7 +17,7 @@ const expectResult = [
         region: {
             code: 'SA',
             label: 'South Australia',
-            region_id: 573,
+            region_id: 212,
         },
         street: ['14 Shipping Ct'],
         telephone: '0000000000',
@@ -81,7 +82,8 @@ describe('transform-shipping-address', () => {
             getTransformedShippingAddresses(
                 mockBcCheckout.shippingConsignments,
                 customerMessage,
-                MockedStorefrontFormFields
+                MockedStorefrontFormFields,
+                transformedCountries
             )
         ).toEqual(expect.objectContaining(expectResult));
     });
