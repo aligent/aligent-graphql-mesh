@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { StoreUrl } from '../../providers';
-import { Auth } from '../../services/auth';
+import { Auth } from '../../services';
+import { MetaAllowedTypes, ProductSearchMeta } from '../../types';
 
 // @TOOO: Set version based on NPM package version
 export const USER_AGENT = 'AligentMesh / 0.0.1';
@@ -43,7 +44,18 @@ export class ApiClient {
     }
 
     async get<T, D = undefined>(url: string, config?: AxiosRequestConfig) {
-        const response = await this.client.get<{ data: T; included?: D }>(url, config);
+        const response = await this.client.get<{ data: T; included?: D; meta?: MetaAllowedTypes }>(
+            url,
+            config
+        );
+        // move total count to meta section of the response object
+        if (!isNaN(response.headers['x-include-total-count'])) {
+            if (response.data.meta === undefined) response.data.meta = {} as ProductSearchMeta;
+            response.data.meta.totalRecordsCount = Number(
+                response.headers['x-include-total-count']
+            );
+        }
+
         return response.data;
     }
 
