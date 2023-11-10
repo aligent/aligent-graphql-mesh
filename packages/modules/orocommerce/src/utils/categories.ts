@@ -16,6 +16,7 @@ export const getIdFromCategoryUid = (categoryUid?: string | null): number | null
     try {
         const categoryData = JSON.parse(atob(categoryUid || ''));
         if ('id' in categoryData && categoryData?.type === 'mastercatalogcategories') {
+            if (categoryData.id === 'oro_frontend_root') return null;
             return Number(categoryData.id);
         }
         return null;
