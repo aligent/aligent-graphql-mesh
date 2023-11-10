@@ -178,7 +178,7 @@ export class ProductsSearchArgsBuilder {
         };
 
         /* We can only sort by one option so grab the first key/value pair option from the sort object */
-        const [key, value] = Object.entries(sort)[0];
+        const [key] = Object.entries(sort)[0];
 
         const sortValueFromMapping = sortKeyMapping[key];
 
