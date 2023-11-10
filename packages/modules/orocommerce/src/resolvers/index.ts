@@ -22,6 +22,7 @@ import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
 import { productsResolver } from './queries/products';
+import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -39,6 +40,7 @@ export const resolvers: Resolvers = {
         products: productsResolver,
     },
     Mutation: {
+        addProductsToCart: addProductsToCartResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         postContactForm: postContactFormMutation,
