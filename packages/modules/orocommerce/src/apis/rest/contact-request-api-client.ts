@@ -2,7 +2,6 @@ import { forwardRef, Inject, Injectable } from 'graphql-modules';
 
 import { ApiClient } from './client';
 import { ContactRequest } from '../../types';
-import { Agent } from 'https';
 
 @Injectable()
 export class ContactClient {
