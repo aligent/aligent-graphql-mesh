@@ -15,6 +15,7 @@ export class ContactUsInputToContactRequestTransformer
         const lastName = nameComponents.splice(1).join(' ').substring(0, 100).trim();
         const phone = contactInput.telephone?.substring(0, 100).trim() || null;
         return {
+            // This can be any random ID and Oro won't care because we're just creating a new resource
             id: '1',
             type: 'contactrequests',
             attributes: {
