@@ -38,7 +38,14 @@ mutation login {
 3. Open a test query [getCountries](https://localhost:4000/graphql?query=query+getCountries+%7B%0A++countries+%7B%0A++++id%2C%0A++++available_regions+%7B%0A++++++id%0A++++%7D%0A++%7D%0A%7D)
 
 4. Add the token to your "Header" section with `Bearer` prefixing the value (see screenshot)
-   ![Authorization](docs/auth.png 'Authorization Header')
+
+```
+{
+  "Authorization": "Bearer <Add_token_here>"
+}
+```
+
+![Authorization](docs/auth.png 'Authorization Header')
 
 ## Configuration
 
