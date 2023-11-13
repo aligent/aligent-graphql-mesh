@@ -4,6 +4,7 @@ import {
     CustomerOrder,
     CustomerOrders,
     Discount,
+    SalesCommentItem,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
@@ -56,12 +57,16 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 return lineItemsId.includes(entity.id) && entity.type === 'orderlineitems';
             }) as OrderLineItem[];
 
-            const comments = lineItems.map((lineItem) => {
-                return {
-                    message: lineItem.attributes.comment,
-                    timestamp: '',
-                };
-            });
+            const comments = lineItems.reduce((comments: SalesCommentItem[], lineItem) => {
+                if (lineItem.attributes.comment) {
+                    comments.push({
+                        message: lineItem.attributes.comment,
+                        timestamp: '',
+                    });
+                }
+
+                return comments;
+            }, []);
 
             const paymentMethods = order.attributes.paymentMethod.map((paymentMethod) => {
                 return {
