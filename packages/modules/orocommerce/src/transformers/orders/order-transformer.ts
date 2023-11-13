@@ -26,7 +26,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
         const items = orders.data.map((order): CustomerOrder => {
             const billingAddressId = order.relationships?.billingAddress.data.id;
             const shippingAddressId = order.relationships?.shippingAddress.data.id;
-            const lineItemsId = order.relationships?.lineItems.data.id;
+            const lineItemsId = order.relationships?.lineItems.data.map((lineItem) => lineItem.id);
 
             const billingAddress = orders.included?.find((entity: Entity) => {
                 return entity.id === billingAddressId && entity.type === 'orderaddresses';
@@ -53,7 +53,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
             }) as CountryRegion;
 
             const lineItems = orders.included?.filter((entity) => {
-                return entity.id === lineItemsId && entity.type === 'orderlineitems';
+                return lineItemsId.includes(entity.id) && entity.type === 'orderlineitems';
             }) as OrderLineItem[];
 
             const comments = lineItems.map((lineItem) => {

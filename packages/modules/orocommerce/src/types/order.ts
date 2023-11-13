@@ -64,7 +64,7 @@ interface OrderRelationships extends Relationships {
         data: Resource;
     };
     lineItems: {
-        data: Resource;
+        data: Resource[];
     };
 }
 
