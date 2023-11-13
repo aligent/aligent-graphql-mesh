@@ -21,7 +21,7 @@ import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
-import { contactUsMutation } from './mutations/contact-us-mutation';
+import { contactUsMutation } from './mutations/contact-us';
 
 export const resolvers: Resolvers = {
     Query: {
