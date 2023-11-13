@@ -27,7 +27,7 @@ interface OrderAttributes extends Attributes {
     totalTaxAmount: string;
     paymentTerm: null;
     discounts: Discounts[];
-    shippingTrackings: ShippingTrackings[];
+    shippingTrackings: ShippingTracking[];
 }
 
 interface Discounts {
@@ -36,7 +36,7 @@ interface Discounts {
     amount: string;
 }
 
-interface ShippingTrackings {
+interface ShippingTracking {
     method: string;
     number: string;
 }

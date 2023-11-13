@@ -58,7 +58,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 };
             });
 
-            const carrier = order.attributes.shippingTrackings[0].method;
+            const carrier = order.attributes.shippingTrackings[0]?.method;
 
             const orderDiscounts = order.attributes.discounts.reduce(
                 (discounts: Discount[], discount) => {
