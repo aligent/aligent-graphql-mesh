@@ -56,6 +56,7 @@ import {
     AddProductsToCartTransformer,
     AddProductsToCartTransformerChain,
 } from './shopping-list/add-products-to-cart-transformer';
+import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-us-to-contact-request-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -66,6 +67,7 @@ export * from './store-locations/store-locations-transformer';
 export * from './shopping-list/order-line-item-to-shopping-list-item-transformer';
 export * from './shopping-list/order-line-items-to-new-shopping-list-transformer';
 export * from './shopping-list/shopping-list-to-cart-transformer';
+export * from './contact-us/contact-us-to-contact-request-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
@@ -284,6 +286,10 @@ export const getOroTransformers = (): Array<Provider> => {
                 return addProductsToCartTransformer;
             },
             deps: [AddProductsToCartTransformerChain],
+        },
+        {
+            provide: ContactUsInputToContactRequestTransformer,
+            useClass: ContactUsInputToContactRequestTransformer,
         },
     ];
 };

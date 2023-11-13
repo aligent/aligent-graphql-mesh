@@ -5,6 +5,7 @@ import { USER_AGENT } from '../apis/rest/client';
 import { OroCommerceModuleConfig } from '../index';
 import { Token } from '../types/auth';
 import { decode } from 'jsonwebtoken';
+import { Agent } from 'https';
 
 // @TOOO: Set version based on NPM package version
 const OAUTH_PATH = '/oauth2-token';

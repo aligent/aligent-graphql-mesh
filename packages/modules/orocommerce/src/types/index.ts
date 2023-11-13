@@ -61,7 +61,7 @@ export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
 export * from './cms-page';
-export * from './contact';
+export * from './contact-request';
 export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';

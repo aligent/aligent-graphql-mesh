@@ -7,7 +7,6 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
-import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { storeLocationsResolver } from './queries/store-locations';
@@ -22,6 +21,7 @@ import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
+import { contactUsMutation } from './mutations/contact-us-mutation';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -41,7 +41,7 @@ export const resolvers: Resolvers = {
         addProductsToCart: addProductsToCartResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
-        postContactForm: postContactFormMutation,
+        contactUs: contactUsMutation,
         createCustomer: createCustomerMutation,
         reorderItems: reorderItemsResolver,
         deleteCustomerAddress: deleteCustomerAddressMutation,
