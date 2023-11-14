@@ -1,8 +1,50 @@
 import { Entity, Attributes, Relationships } from '.';
 export interface ShoppingListWithItems {
     data: ShoppingList;
-    included: ShoppingListItem[];
+    included: ShoppingListItem[] | IncludedProduct[];
 }
+
+export interface IncludedProduct extends Entity {
+    type: 'products';
+    attributes: ProductAttribute;
+    // relationships: ShoppingListItemInputRelationships | ShoppingListItemRelationships;
+}
+
+export interface ProductAttribute extends Attributes {
+    sku: string;
+    createdAt: Date;
+    updatedAt: Date;
+    productType: string;
+    featured: boolean;
+    newArrival: boolean;
+    name: string;
+    shortDescription: string;
+    description: string;
+    unitPrecisions: UnitPrecision[];
+    url: string;
+    prices: Price[];
+    lowInventory: boolean;
+    upcoming: boolean;
+    availabilityDate: null;
+    metaTitle: string;
+    metaDescription: string;
+    metaKeywords: string;
+}
+
+interface Price {
+    price: number;
+    currencyId: string;
+    quantity: number;
+    unit: string;
+}
+
+interface UnitPrecision {
+    unit: string;
+    precision: number;
+    conversionRate: number;
+    default: boolean;
+}
+
 export interface ShoppingList extends Entity {
     type: 'shoppinglists';
     attributes: ShoppingListInputAttribute | ShoppingListAttribute;
@@ -70,16 +112,19 @@ export interface ShoppingListItemRelationships extends ShoppingListItemInputRela
     kitItems: {
         data: [];
     };
-    parentProduct?: {
-        data: {
-            type: 'products';
-            id: string;
-        };
-    };
+    parentProduct?: ProductData;
     shoppingList: {
         data: {
             type: 'shoppinglists';
             id: string;
         };
+    };
+    product: ProductData;
+}
+
+interface ProductData {
+    data: {
+        type: 'products';
+        id: string;
     };
 }

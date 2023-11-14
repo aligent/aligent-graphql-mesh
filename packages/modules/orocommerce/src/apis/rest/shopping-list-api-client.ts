@@ -1,6 +1,7 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import {
+    IncludedProduct,
     ShoppingList,
     ShoppingListInputAttribute,
     ShoppingListItem,
@@ -18,10 +19,10 @@ export class ShoppingListsClient {
 
     async getShoppingListsWithItems(id?: string): Promise<{
         data: ShoppingList[];
-        included?: ShoppingListItem[];
+        included?: ShoppingListItem[] | IncludedProduct[]
     }> {
         const params = {
-            include: 'items',
+            include: 'items,items.products',
             'filter[id]': id,
         };
         return this.apiClient.get<ShoppingList[], ShoppingListItem[]>('/shoppinglists', { params });
