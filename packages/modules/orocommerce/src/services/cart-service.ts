@@ -5,6 +5,17 @@ import { Transformer } from '@aligent/utils';
 import { ShoppingListWithItems } from '../types';
 import { ShoppingListToCartTransformer } from '../transformers/shopping-list/shopping-list-to-cart-transformer';
 
+const UNDEFINED_CART: Cart = {
+    id: '',
+    items: [],
+    total_quantity: 0,
+    available_gift_wrappings: [],
+    gift_receipt_included: false,
+    is_virtual: false,
+    printed_card_included: false,
+    shipping_addresses: [],
+};
+
 @Injectable()
 export class CartService {
     constructor(
@@ -15,11 +26,21 @@ export class CartService {
 
     /**
      * The purpose of this method is to return a populated cart with relevant/up-to-date data containing all items etc
-     * @param shoppingList ShoppingListWithItems | null
+     * @param shoppingListOrId ShoppingListWithItems | string
      * @returns Promise<Cart>
      */
-    async getCart(shoppingList: ShoppingListWithItems | null): Promise<Cart> {
-        shoppingList = shoppingList ?? (await this.apiClient.getShoppingListWithItems());
-        return this.cartTransformer.transform({ data: shoppingList! });
+    async getCart(shoppingListOrId: ShoppingListWithItems | string): Promise<Cart> {
+        if (typeof shoppingListOrId === 'string') {
+            const shoppingListWithItems =
+                await this.apiClient.getShoppingListWithItems(shoppingListOrId);
+
+            if (!shoppingListWithItems) {
+                return UNDEFINED_CART;
+            }
+
+            return this.cartTransformer.transform({ data: shoppingListWithItems });
+        }
+
+        return this.cartTransformer.transform({ data: shoppingListOrId });
     }
 }

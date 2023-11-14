@@ -22,10 +22,12 @@ import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
+import { cartResolver } from './queries/cart';
 
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
+        cart: cartResolver,
         currency: currencyResolver,
         countries: countriesResolver,
         keyMessages: keyMessagesResolver,
