@@ -80,7 +80,6 @@ export interface ProductAttribute extends Attributes {
     prices: Price[];
     lowInventory: boolean;
     upcoming: boolean;
-    availabilityDate: null;
     metaTitle: string;
     metaDescription: string;
     metaKeywords: string;
