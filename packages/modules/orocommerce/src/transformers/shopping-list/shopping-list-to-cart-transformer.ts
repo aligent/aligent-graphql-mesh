@@ -32,13 +32,6 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         ) as IncludedProduct[];
     }
 
-    getProductType(product: IncludedProduct): 'ConfigurableProduct' | 'SimpleProduct' {
-        if (product.attributes.productType === 'simple') {
-            return 'SimpleProduct';
-        }
-        return 'ConfigurableProduct';
-    }
-
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
@@ -84,7 +77,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total_including_tax: prodPrice,
                 },
                 product: {
-                    __typename: this.getProductType(product), // This works however doesnt give the correct typ
+                    __typename: 'SimpleProduct',
                     id: Number(product.id),
                     name: product.attributes.name,
                     sku: product.attributes.sku,
