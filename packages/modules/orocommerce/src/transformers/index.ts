@@ -56,6 +56,10 @@ import {
     AddProductsToCartTransformer,
     AddProductsToCartTransformerChain,
 } from './shopping-list/add-products-to-cart-transformer';
+import {
+    UpdateProductToCartTransformer,
+    UpdateProductToCartTransformerChain,
+} from './shopping-list/update-product-to-cart-transfomer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -124,6 +128,11 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: AddProductsToCartTransformerChain,
             useClass: AddProductsToCartTransformerChain,
+            global: true,
+        },
+        {
+            provide: UpdateProductToCartTransformerChain,
+            useClass: UpdateProductToCartTransformerChain,
             global: true,
         },
         // Create default transformers and register them with their chain transformers
@@ -284,6 +293,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return addProductsToCartTransformer;
             },
             deps: [AddProductsToCartTransformerChain],
+        },
+        {
+            provide: UpdateProductToCartTransformer,
+            useFactory: (transformerChain) => {
+                const updateProductToCartTransformer = new UpdateProductToCartTransformer();
+                transformerChain.addTransformer(updateProductToCartTransformer);
+                return updateProductToCartTransformer;
+            },
+            deps: [UpdateProductToCartTransformerChain],
         },
     ];
 };
