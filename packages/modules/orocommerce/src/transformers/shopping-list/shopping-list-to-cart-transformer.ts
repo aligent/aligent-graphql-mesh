@@ -16,20 +16,12 @@ const UNDEFINED_CART: Cart = {
 
 @Injectable()
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
-    getIncludedShoppingListItems(
-        shoppingListWithItemsIncluded: (ShoppingListItem | IncludedProduct)[]
-    ): ShoppingListItem[] {
-        return shoppingListWithItemsIncluded.filter(
-            (listItem) => listItem.type === 'shoppinglistitems'
-        ) as ShoppingListItem[];
+    isShoppingListItem(item: ShoppingListItem | IncludedProduct): item is ShoppingListItem {
+        return item.type === 'shoppinglistitems';
     }
 
-    getIncludedProducts(
-        shoppingListWithItemsIncluded: (ShoppingListItem | IncludedProduct)[]
-    ): IncludedProduct[] {
-        return shoppingListWithItemsIncluded.filter(
-            (listItem) => listItem.type === 'products'
-        ) as IncludedProduct[];
+    isProduct(item: ShoppingListItem | IncludedProduct): item is IncludedProduct {
+        return item.type === 'products';
     }
 
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
@@ -44,9 +36,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             },
         };
 
-        const shoppingListItems = this.getIncludedShoppingListItems(shoppingList.included);
+        const shoppingListItems = shoppingList.included.filter(this.isShoppingListItem);
 
-        const products = this.getIncludedProducts(shoppingList.included);
+        const products = shoppingList.included.filter(this.isProduct);
 
         for (const product of products) {
             const relatedShoppingListItem = shoppingListItems.find(
