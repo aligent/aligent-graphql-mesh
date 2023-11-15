@@ -1,13 +1,68 @@
 import { Entity, Attributes, Relationships } from '.';
 export interface ShoppingListWithItems {
     data: ShoppingList;
-    included: ShoppingListItem[] | IncludedProduct[];
+    included: (ShoppingListItem | IncludedProduct)[];
 }
 
-export interface IncludedProduct extends Entity {
+export interface IncludedProduct {
     type: 'products';
+    id: string;
     attributes: ProductAttribute;
-    // relationships: ShoppingListItemInputRelationships | ShoppingListItemRelationships;
+    relationships: ProductRelationships;
+}
+
+interface ProductRelationships {
+    images: {
+        links: Links;
+        data: [{ type: 'productimages'; id: string }];
+    };
+    productFamily: {
+        links: {
+            self: string;
+            related: string;
+        };
+        data: { type: 'productfamilies'; id: string };
+    };
+    kitItems: {
+        links: {
+            self: string;
+            related: string;
+        };
+        data: [];
+    };
+    category: {
+        links: {
+            self: string;
+            related: string;
+        };
+        data: { type: 'mastercatalogcategories'; id: string };
+    };
+    inventoryStatus: {
+        links: {
+            self: string;
+            related: string;
+        };
+        data: { type: 'productinventorystatuses'; id: string };
+    };
+    variantProducts: {
+        links: {
+            self: string;
+            related: string;
+        };
+        data: []; // Todo: Update with actual type
+    };
+    parentProducts: {
+        links: {
+            self: string;
+            related: string;
+        };
+        data: []; // Todo: Update with actual type
+    };
+}
+
+interface Links {
+    self: string;
+    related: string;
 }
 
 export interface ProductAttribute extends Attributes {
@@ -110,7 +165,7 @@ export interface ShoppingListItemInputRelationships extends Relationships {
 }
 export interface ShoppingListItemRelationships extends ShoppingListItemInputRelationships {
     kitItems: {
-        data: [];
+        data: []; // Todo: Update with actual type
     };
     parentProduct?: ProductData;
     shoppingList: {

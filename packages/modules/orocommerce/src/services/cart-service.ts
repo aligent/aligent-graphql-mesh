@@ -33,8 +33,7 @@ export class CartService {
         if (typeof shoppingListOrId === 'string') {
             const shoppingListWithItems =
                 await this.apiClient.getShoppingListWithItems(shoppingListOrId);
-            console.log(JSON.stringify(shoppingListWithItems));
-            
+
             if (!shoppingListWithItems) {
                 return UNDEFINED_CART;
             }
