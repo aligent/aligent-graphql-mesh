@@ -1,4 +1,4 @@
-import { CheckoutSources } from '@aligent/orocommerce-graphql-module';
+import { CheckoutSources } from '../types';
 
 /**
  * Finds the active (deleted: false) checkout sources belonging to a

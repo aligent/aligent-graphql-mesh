@@ -1,5 +1,5 @@
 import { GraphQLError } from 'graphql';
-import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
+import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { CheckoutSourcesClient } from '../../apis/rest';
 import { getActiveCheckoutSourcesFromShoppingListId } from '../../utils';
 
