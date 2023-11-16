@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import { UpdateProductToCartTransformer } from '../../shopping-list/update-product-to-cart-transfomer';
+import { UpdateCartItemTransformer } from '../../shopping-list/update-product-to-cart-transfomer';
 
-describe('Update product item to cart transformation tests', () => {
-    test('Returns update item Args transformed into ORO Shopping list items format', () => {
-        const updateProductItemToCartArgs = {
+describe('Update cart item transformation tests', () => {
+    test('Returns update cart item Args transformed into ORO Shopping list cart item format', () => {
+        const updatedCartItemArgs = {
             quantity: 20,
             cartItemId: '123',
         };
@@ -16,10 +16,10 @@ describe('Update product item to cart transformation tests', () => {
             },
         };
 
-        const updateProductToCartTransformer: UpdateProductToCartTransformer =
-            new UpdateProductToCartTransformer();
-        const transformedUpdateProductItem = updateProductToCartTransformer.transform({
-            data: updateProductItemToCartArgs,
+        const updateCartItemTransformer: UpdateCartItemTransformer =
+            new UpdateCartItemTransformer();
+        const transformedUpdateProductItem = updateCartItemTransformer.transform({
+            data: updatedCartItemArgs,
         });
 
         expect(transformedUpdateProductItem).toEqual(expectedTransformedArgs);
