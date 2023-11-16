@@ -1,3 +1,5 @@
+export type GetCheckoutSourcesArgs = { 'filter[shoppingList]': number; sort?: string };
+
 export interface CheckoutSourceAttributes {
     deleted: boolean;
 }
@@ -26,3 +28,11 @@ export interface CheckoutSource {
 }
 
 export interface CheckoutSources extends Array<CheckoutSource> {}
+
+export type CreateCheckoutSourceArgs = { deleted?: boolean; shoppingList: number };
+
+export type CreateCheckoutSourceResponse = {
+    id?: number;
+    deleted?: boolean;
+    shoppingList?: number;
+};
