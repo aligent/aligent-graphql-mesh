@@ -6,7 +6,6 @@ import {
     ShoppingListItem,
     ShoppingListItemInput,
     ShoppingListWithItems,
-    UpdateShoppingListItem,
     ShoppingListItemRelationships,
 } from '../../types';
 
@@ -74,14 +73,13 @@ export class ShoppingListsClient {
         return res.data;
     }
 
-    async updateItemToShoppingList(
-        updateItem: UpdateShoppingListItem,
-        shoppingListItemId: string
+    async updateItemInShoppingList(
+        updateItem: ShoppingListItem
     ): Promise<ShoppingListItemRelationships> {
-        const url = `/shoppinglistitems/${shoppingListItemId}`;
+        const url = `/shoppinglistitems/${updateItem.id}`;
         const res = await this.apiClient.patch<
             { data: ShoppingListItemRelationships },
-            { data: UpdateShoppingListItem }
+            { data: ShoppingListItem }
         >(url, {
             data: updateItem,
         });
