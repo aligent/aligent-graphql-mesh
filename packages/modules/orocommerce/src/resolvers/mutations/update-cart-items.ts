@@ -1,5 +1,5 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@aligent/orocommerce-resolvers';
-import { UpdateProductToCartTransformerChain } from '../../transformers/shopping-list/update-product-to-cart-transfomer';
+import { UpdateCartItemTransformerChain } from '../../transformers/shopping-list/update-product-to-cart-transfomer';
 import { ShoppingListsClient } from '../../apis/rest';
 import { CartService } from '../../services/cart-service';
 import { atob } from '@aligent/utils';
@@ -24,17 +24,15 @@ export const updateCartItemsMutation: MutationResolvers['updateCartItems'] = {
 
         const cartItemId = atob(cart_items?.[0]?.cart_item_uid);
 
-        const updateProductToCartTransformer: UpdateProductToCartTransformerChain =
-            context.injector.get(UpdateProductToCartTransformerChain);
-        const transformedupdateProductToCartInput = updateProductToCartTransformer.transform({
+        const updateCartItemTransformer: UpdateCartItemTransformerChain = context.injector.get(
+            UpdateCartItemTransformerChain
+        );
+        const transformedCartItemInput = updateCartItemTransformer.transform({
             data: { cartItemId, quantity },
         });
 
         const shoppingListClient: ShoppingListsClient = context.injector.get(ShoppingListsClient);
-        await shoppingListClient.updateItemToShoppingList(
-            transformedupdateProductToCartInput,
-            cartItemId
-        );
+        await shoppingListClient.updateItemInShoppingList(transformedCartItemInput);
 
         const cartService: CartService = context.injector.get(CartService);
         const transformedCart = await cartService.getCart(cart_id);
