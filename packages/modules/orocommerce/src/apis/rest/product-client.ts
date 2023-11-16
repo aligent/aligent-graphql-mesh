@@ -183,7 +183,7 @@ export class ProductsSearchArgsBuilder {
 
         try {
             // Result sorting. Comma-separated fields, e.g. 'field1,-field2'.
-            const sortArray = [];
+            const sortArray: string[] = [];
             Object.entries(sort).map((sortOption) => {
                 const [key, value] = sortOption;
                 /* Find sort values through a mapping where the args don't directly translate to Oro commerce sort options */

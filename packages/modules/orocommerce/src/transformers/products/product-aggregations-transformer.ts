@@ -1,6 +1,11 @@
 import { Attributes } from '../../types';
 import { Aggregation, FilterTypeEnum } from '@aligent/orocommerce-resolvers';
 
+interface OroAttribute {
+    count: number;
+    value: string;
+}
+
 const getFilterType = (typename?: string): FilterTypeEnum => {
     if (typename === 'count') {
         return 'FilterEqualTypeInput';
@@ -14,12 +19,12 @@ export const getTransformedProductAggregations = (
 ): Array<Aggregation> => {
     if (!oroAttributes) return [];
     const productAttributes = Object.keys(oroAttributes);
-    return productAttributes
+    return <Array<Aggregation>>productAttributes
         .map((attribute) => {
             const [attributeName, attributeType] = attribute.split('_');
 
             if (attributeType === 'count') {
-                const oroAttributeOptions = <Array<object>>oroAttributes[attribute];
+                const oroAttributeOptions = <Array<OroAttribute>>oroAttributes[attribute];
                 const options = oroAttributeOptions.map((option) => {
                     return {
                         count: option.count,
@@ -40,6 +45,7 @@ export const getTransformedProductAggregations = (
             }
 
             // TODO: Price range filter
+            return null;
         })
         .filter(Boolean);
 };

@@ -44,7 +44,7 @@ export const productsResolver: QueryResolvers['products'] = {
                 data: { oroProductsData, productAttributes, pageSize, currentPage },
             });
         } catch (error) {
-            return logAndThrowError(error, this.productsResolver.name);
+            return logAndThrowError(error);
         }
     },
 };
