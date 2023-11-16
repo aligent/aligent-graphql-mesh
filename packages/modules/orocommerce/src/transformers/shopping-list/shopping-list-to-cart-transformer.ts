@@ -22,6 +22,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         cart.id = shoppingList.data.id;
         cart.total_quantity = shoppingList.included?.length || 0;
         //TODO: split items into a sub-resolver?
+
+        /* Included might be undefined here.
+         * It happens when we delete the last item
+         * from the cart and invoke the get cart resolver */
+
         cart.items = shoppingList.included?.map((item: ShoppingListItem): SimpleCartItem => {
             // Can this also be a ConfigurableCartItem?
             const prodPrice: Money = {
