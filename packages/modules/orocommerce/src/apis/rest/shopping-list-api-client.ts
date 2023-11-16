@@ -6,7 +6,6 @@ import {
     ShoppingListItem,
     ShoppingListItemInput,
     ShoppingListWithItems,
-    ShoppingListItemRelationships,
 } from '../../types';
 
 @Injectable()
@@ -75,10 +74,10 @@ export class ShoppingListsClient {
 
     async updateItemInShoppingList(
         updateItem: ShoppingListItem
-    ): Promise<ShoppingListItemRelationships> {
+    ): Promise<ShoppingListItem> {
         const url = `/shoppinglistitems/${updateItem.id}`;
         const res = await this.apiClient.patch<
-            { data: ShoppingListItemRelationships },
+            { data: ShoppingListItem },
             { data: ShoppingListItem }
         >(url, {
             data: updateItem,
