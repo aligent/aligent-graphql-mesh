@@ -11,7 +11,6 @@ export const updateCartItemsMutation: MutationResolvers['updateCartItems'] = {
         if (!cart_id || !cart_items?.[0]?.cart_item_uid) {
             throw new Error(`Missing update cart information`);
         }
-
         const { quantity } = cart_items[0];
 
         if (quantity === 0) {

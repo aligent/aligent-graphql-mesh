@@ -72,9 +72,7 @@ export class ShoppingListsClient {
         return res.data;
     }
 
-    async updateItemInShoppingList(
-        updateItem: ShoppingListItem
-    ): Promise<ShoppingListItem> {
+    async updateItemInShoppingList(updateItem: ShoppingListItem): Promise<ShoppingListItem> {
         const url = `/shoppinglistitems/${updateItem.id}`;
         const res = await this.apiClient.patch<
             { data: ShoppingListItem },
