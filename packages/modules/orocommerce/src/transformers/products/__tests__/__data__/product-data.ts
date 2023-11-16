@@ -343,7 +343,9 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
                 ),
                 label: '',
                 position: 1,
-                uid: '',
+                uid: btoa(
+                    '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/26/63291469b2140178133702-Test-Product-Only.jpg'
+                ),
                 __typename: 'MediaGalleryEntry',
             },
         ],
@@ -397,7 +399,9 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
                 ),
                 label: '',
                 position: 1,
-                uid: '',
+                uid: btoa(
+                    '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/47/63313705e53ae870057940-download_1_4.png'
+                ),
                 __typename: 'MediaGalleryEntry',
             },
             {
@@ -408,7 +412,9 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
                 ),
                 label: '',
                 position: 2,
-                uid: '',
+                uid: btoa(
+                    '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/48/6331371b44a5b561493337-download_5__1_4.png'
+                ),
                 __typename: 'MediaGalleryEntry',
             },
         ],
@@ -464,7 +470,9 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
                 ),
                 label: '',
                 position: 1,
-                uid: '',
+                uid: btoa(
+                    '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg'
+                ),
                 __typename: 'MediaGalleryEntry',
             },
         ],

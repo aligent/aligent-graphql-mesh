@@ -12,7 +12,7 @@ import {
     ProductAttributeSortInput,
     FilterTypeInput,
 } from '@aligent/orocommerce-resolvers';
-import { logAndThrowError } from '@aligent/utils';
+import { logAndThrowError, GraphqlError } from '@aligent/utils';
 import { lowerCase } from 'lodash';
 import { getIdFromCategoryUid } from '../../utils';
 
@@ -20,6 +20,7 @@ import { getIdFromCategoryUid } from '../../utils';
 export class ProductsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
+    // TODO: Add caching of product attributes in the Redis, because they won’t change often (and if they do there will be a deploy); OTF-128
     async getProductAttributes() {
         const path = `/tf_product_attributes`;
         const response = await this.apiClient.get<ConfigurableProductAttribute[]>(path);
@@ -42,7 +43,7 @@ export class ProductsClient {
         const params = {
             ...(searchQuery && { 'filter[searchQuery]': searchQuery }),
             ...(aggregations && { 'filter[aggregations]': aggregations }),
-            include: 'product,product.images,category,inventoryStatus',
+            ...(!aggregations && { include: 'product,product.images,category,inventoryStatus' }),
             'page[number]': currentPage,
             'page[size]': pageSize,
             sort,
@@ -67,14 +68,16 @@ export class ProductsClient {
         });
 
         if (response.data.length > 1)
-            throw new Error(`More than 1 product found with the same url: ${url}`);
+            throw new GraphqlError('input', `More than 1 product found with the same url: ${url}`);
 
         return response;
     }
 }
 
 export class ProductsSearchArgsBuilder {
-    /* The list of fields that can be used in the search query:
+    /* This filter is used to specify the search query.
+     * The simple query consists of a field, followed by an operator, followed by one or more values surrounded by parentheses.
+     * The list of fields that can be used in the search query:
      * allText, id, sku, skuUppercase, name, shortDescription, productType, isVariant, newArrival, inventoryStatus, minimalPrice, minimalPrice_{unit}, orderedAt, product, productFamily, category.
      * Also, any filterable product attribute can be used. */
     static buildSearchQuery(args?: QueryProductsArgs): string {
@@ -129,11 +132,13 @@ export class ProductsSearchArgsBuilder {
 
             return searchQueriesArray.join(' and ');
         } catch (error) {
-            return logAndThrowError(error);
+            return logAndThrowError(error, this.buildSearchQuery.name);
         }
     }
 
-    /* The list of fields for which the aggregated data can be requested:
+    /* This filter should contain comma delimited definitions of aggregations.
+     * The definition of each aggregation can be "fieldName aggregatingFunction" or "fieldName aggregatingFunction resultName".
+     * The list of fields for which the aggregated data can be requested:
      * id, sku, skuUppercase, name, shortDescription, productType, isVariant, newArrival, inventoryStatus, minimalPrice, minimalPrice_{unit}, orderedAt, product, productFamily, category.
      * Also, any filterable product attribute can be used. */
     static buildAggregations(productAttributes?: ConfigurableProductAttribute[]): string {
@@ -142,22 +147,21 @@ export class ProductsSearchArgsBuilder {
         }
 
         try {
-            const aggregationsArray = [];
-
-            //add aggregation by brand
-            aggregationsArray.push('brand count');
-
-            //add aggregation by price
-            aggregationsArray.push('minimalPrice min', 'minimalPrice max');
+            //add aggregations by brand and price
+            const aggregationsArray = [
+                'brand count brand_count',
+                'minimalPrice min price_min',
+                'minimalPrice max price_max',
+            ];
 
             //add aggregations by product attributes
             productAttributes.forEach((attribute) => {
-                aggregationsArray.push(`${attribute.id} count`);
+                aggregationsArray.push(`${attribute.id} count ${attribute.label}_count`);
             });
 
             return aggregationsArray.join(',');
         } catch (error) {
-            return logAndThrowError(error);
+            return logAndThrowError(error, this.buildAggregations.name);
         }
     }
 
@@ -177,12 +181,21 @@ export class ProductsSearchArgsBuilder {
             price: 'minimalPrice',
         };
 
-        /* We can only sort by one option so grab the first key/value pair option from the sort object */
-        const [key] = Object.entries(sort)[0];
+        try {
+            // Result sorting. Comma-separated fields, e.g. 'field1,-field2'.
+            const sortArray = [];
+            Object.entries(sort).map((sortOption) => {
+                const [key, value] = sortOption;
+                /* Find sort values through a mapping where the args don't directly translate to Oro commerce sort options */
+                const sortValueFromMapping = sortKeyMapping[key] ?? key;
+                sortArray.push(
+                    value === 'DESC' ? '-' + sortValueFromMapping : sortValueFromMapping
+                );
+            });
 
-        const sortValueFromMapping = sortKeyMapping[key];
-
-        /* Find sort values through a mapping where the args don't directly translate to Oro commerce sort options */
-        return sortValueFromMapping ? sortKeyMapping[key] : key;
+            return sortArray.join(',');
+        } catch (error) {
+            return logAndThrowError(error, this.buildSort.name);
+        }
     }
 }

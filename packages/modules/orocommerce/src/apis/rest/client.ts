@@ -48,7 +48,11 @@ export class ApiClient {
             url,
             config
         );
-        // move total count to meta section of the response object
+        // In Oro, by providing additional requests header parameters,
+        // it is possible to retrieve additional information, such as the total number of records .
+        // The X-Include request header can be used for such purposes.
+        // https://doc.oroinc.com/api/http-header-specifics/#web-services-api-http-header-specifics
+        // Move total count from response header to meta section of the response object for convenience
         if (!isNaN(response.headers['x-include-total-count'])) {
             if (response.data.meta === undefined) response.data.meta = {} as ProductSearchMeta;
             response.data.meta.totalRecordsCount = Number(

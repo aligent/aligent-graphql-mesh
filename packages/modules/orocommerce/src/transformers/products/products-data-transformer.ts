@@ -1,4 +1,5 @@
 import {
+    ConfigurableProductAttribute,
     Product as OroProduct,
     ProductIncludeTypes,
     ProductSearch,
@@ -21,6 +22,7 @@ import {
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
+import { getTransformedProductAggregations } from './product-aggregations-transformer';
 
 import { Injectable } from 'graphql-modules';
 
@@ -49,6 +51,7 @@ interface ProductsTransformerInput {
         included?: Array<ProductIncludeTypes>;
         meta?: ProductSearchMeta;
     };
+    productAttributes?: Array<ConfigurableProductAttribute>;
     pageSize: number;
     currentPage: number;
 }
@@ -66,7 +69,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         const { data, included, meta } = oroProductsData;
         const oroProducts: Array<OroProduct> = [];
 
-        data.map((entry) => {
+        /* Response data here can be coming from either '/products' or '/productsearch' Oro apis
+         * In the latter case, associated products are returned in the 'included' section of the response
+         * messed up with all the other related entities like categories, images and stock statuses.
+         * For the sake of consistency we have to filter out each Product entity, and all the related to it data
+         */
+        data.forEach((entry) => {
             if (entry.type === 'productsearch') {
                 const oroProduct = <OroProduct>(
                     included?.find((entity) => entity.type === 'products' && entity.id === entry.id)
@@ -74,16 +82,23 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 oroProduct.included = oroProductsData.included?.filter(
                     (entity) =>
                         entity.type === 'productinventorystatuses' ||
-                        entity.type === 'productimages'
+                        entity.type === 'productimages' ||
+                        entity.type === 'mastercatalogcategories'
                 );
                 oroProducts.push(oroProduct);
+            }
+
+            if (entry.type === 'products') {
+                oroProducts.push(entry);
             }
         });
 
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
 
         return {
-            aggregations: null, //TODO ( ex.: oroProductsData.meta?.aggregatedData ? getTransformedProductAggregations(oroProductsData.meta.aggregatedData) : null )
+            aggregations: oroProductsData.meta?.aggregatedData
+                ? getTransformedProductAggregations(oroProductsData.meta.aggregatedData)
+                : null,
             items: oroProducts.map((product) => this.getTransformedProductData(product)),
             page_info: {
                 current_page: currentPage,
@@ -97,8 +112,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     public getTransformedProductData(
         oroProduct: OroProduct
     ): SimpleProduct | ConfigurableProduct | BundleProduct | null {
-        if (!oroProduct) return null;
-
         try {
             return {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
