@@ -17,10 +17,10 @@ export const removeItemFromCartMutation = {
         }
 
         const cartId = args.input.cart_id;
-        const cartItemId = args.input.cart_item_uid;
+        const cartItemId = atob(args.input.cart_item_uid);
 
         const shoppingListsClient: ShoppingListsClient = context.injector.get(ShoppingListsClient);
-        await shoppingListsClient.deleteItemInShoppingList(atob(cartItemId));
+        await shoppingListsClient.deleteItemInShoppingList(cartItemId);
 
         const cartService: CartService = context.injector.get(CartService);
         const transformedCart = await cartService.getCart(cartId);
