@@ -20,9 +20,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
-        cart.total_quantity = shoppingList.included.length || 0;
+        cart.total_quantity = shoppingList.included?.length || 0;
         //TODO: split items into a sub-resolver?
-        cart.items = shoppingList.included.map((item: ShoppingListItem): SimpleCartItem => {
+        cart.items = shoppingList.included?.map((item: ShoppingListItem): SimpleCartItem => {
             // Can this also be a ConfigurableCartItem?
             const prodPrice: Money = {
                 currency: item.attributes.currency as CurrencyEnum,
