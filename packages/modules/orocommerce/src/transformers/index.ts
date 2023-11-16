@@ -59,7 +59,7 @@ import {
 import {
     UpdateCartItemTransformer,
     UpdateCartItemTransformerChain,
-} from './shopping-list/update-product-to-cart-transfomer';
+} from './shopping-list/update-cart-item-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';

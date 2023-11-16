@@ -1,5 +1,5 @@
 import { MutationResolvers, UpdateCartItemsOutput } from '@aligent/orocommerce-resolvers';
-import { UpdateCartItemTransformerChain } from '../../transformers/shopping-list/update-product-to-cart-transfomer';
+import { UpdateCartItemTransformerChain } from '../../transformers/shopping-list/update-cart-item-transformer';
 import { ShoppingListsClient } from '../../apis/rest';
 import { CartService } from '../../services/cart-service';
 import { atob } from '@aligent/utils';

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { UpdateCartItemTransformer } from '../../shopping-list/update-product-to-cart-transfomer';
+import { UpdateCartItemTransformer } from '../update-cart-item-transformer';
 
 describe('Update cart item transformation tests', () => {
     test('Returns update cart item Args transformed into ORO Shopping list cart item format', () => {
