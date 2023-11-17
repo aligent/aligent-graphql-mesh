@@ -31,7 +31,3 @@ export interface WebCatalogTreeRelationships extends Relationships {
         data: Resource;
     };
 }
-
-export interface Product extends Entity {}
-
-export interface ProductCollection extends Entity {}
