@@ -5,12 +5,12 @@ import { logAndThrowError, getPathFromUrlKey } from '@aligent/utils';
 
 const DEFAULT_PLP_PRODUCTS_DISPLAY = 24;
 
-export const productsResolver: QueryResolvers['products'] = {
+export const productsResolver = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
         const api: ProductsClient = context.injector.get(ProductsClient);
 
         try {
-            const url_key = getPathFromUrlKey(args.filter?.url_key?.eq);
+            const url_key = args.filter?.url_key?.eq;
             const pageSize = args?.pageSize || DEFAULT_PLP_PRODUCTS_DISPLAY;
             const currentPage = args?.currentPage || 1;
 
@@ -47,4 +47,4 @@ export const productsResolver: QueryResolvers['products'] = {
             return logAndThrowError(error);
         }
     },
-};
+} satisfies QueryResolvers['products'];
