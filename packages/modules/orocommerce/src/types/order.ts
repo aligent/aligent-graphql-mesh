@@ -27,7 +27,7 @@ interface OrderAttributes extends Attributes {
     totalTaxAmount: string;
     paymentTerm: null;
     discounts: Discounts[];
-    shippingTrackings: ShippingTrackings[];
+    shippingTrackings: ShippingTracking[];
 }
 
 interface Discounts {
@@ -36,7 +36,10 @@ interface Discounts {
     amount: string;
 }
 
-interface ShippingTrackings {}
+interface ShippingTracking {
+    method: string;
+    number: string;
+}
 
 interface ShippingMethod {
     code: string;
@@ -59,6 +62,9 @@ interface OrderRelationships extends Relationships {
     };
     shippingAddress: {
         data: Resource;
+    };
+    lineItems: {
+        data: Resource[];
     };
 }
 
@@ -110,4 +116,40 @@ export interface CountryRegion extends Entity {
 interface RegionAttributes extends Attributes {
     code: string;
     name: string;
+}
+
+export interface OrderLineItem extends Entity {
+    attributes: OrderLineItemAttributes;
+}
+
+interface OrderLineItemAttributes extends Attributes {
+    productSku: string;
+    productName: string;
+    freeFormProduct: string | null;
+    quantity: number;
+    productUnitCode: string;
+    price: string;
+    currency: string;
+    shipUntil: string | null;
+    comment: string;
+    shippingEstimateAmount: string | null;
+    unitPriceIncludingTax: string;
+    unitPriceExcludingTax: string;
+    unitPriceTaxAmount: string;
+    rowTotalIncludingTax: string;
+    rowTotalExcludingTax: string;
+    rowTotalTaxAmount: string;
+    taxes: OrderLineItemTax[];
+    rowTotalDiscountAmount: string;
+    rowTotalAfterDiscountIncludingTax: string;
+    rowTotalAfterDiscountExcludingTax: string;
+    rowTotalAfterDiscount: string;
+}
+
+interface OrderLineItemTax {
+    tax: string;
+    rate: string;
+    taxableAmount: string;
+    taxAmount: string;
+    currency: string;
 }

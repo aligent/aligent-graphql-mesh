@@ -9,3 +9,4 @@ export * from './key-messages-api-client';
 export * from './shopping-list-api-client';
 export * from './store-location-api-client';
 export * from './category-client';
+export * from './product-client';

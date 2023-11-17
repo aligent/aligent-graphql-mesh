@@ -4,11 +4,12 @@ import {
     CustomerOrder,
     CustomerOrders,
     Discount,
+    SalesCommentItem,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 import { Countries, Entity, Order, OrderAddress } from '../../types';
-import { CountryRegion } from '../../types/order';
+import { CountryRegion, OrderLineItem } from '../../types/order';
 
 type OroOrder = {
     data: Order[];
@@ -26,13 +27,14 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
         const items = orders.data.map((order): CustomerOrder => {
             const billingAddressId = order.relationships?.billingAddress.data.id;
             const shippingAddressId = order.relationships?.shippingAddress.data.id;
+            const lineItemsId = order.relationships?.lineItems.data.map((lineItem) => lineItem.id);
 
             const billingAddress = orders.included?.find((entity: Entity) => {
-                return entity.id === billingAddressId;
+                return entity.id === billingAddressId && entity.type === 'orderaddresses';
             }) as OrderAddress;
 
             const shippingAddress = orders.included?.find((entity) => {
-                return entity.id === shippingAddressId;
+                return entity.id === shippingAddressId && entity.type === 'orderaddresses';
             }) as OrderAddress;
 
             const billingAddressCountry = orders.included?.find((entity) => {
@@ -51,12 +53,29 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 return shippingAddress?.relationships.region.data.id === entity.id;
             }) as CountryRegion;
 
+            const lineItems = orders.included?.filter((entity) => {
+                return lineItemsId.includes(entity.id) && entity.type === 'orderlineitems';
+            }) as OrderLineItem[];
+
+            const comments = lineItems.reduce((comments: SalesCommentItem[], lineItem) => {
+                if (lineItem.attributes.comment) {
+                    comments.push({
+                        message: lineItem.attributes.comment,
+                        timestamp: '',
+                    });
+                }
+
+                return comments;
+            }, []);
+
             const paymentMethods = order.attributes.paymentMethod.map((paymentMethod) => {
                 return {
                     name: paymentMethod.label,
                     type: paymentMethod.code,
                 };
             });
+
+            const carrier = order.attributes.shippingTrackings[0]?.method;
 
             const orderDiscounts = order.attributes.discounts.reduce(
                 (discounts: Discount[], discount) => {
@@ -87,6 +106,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 order_date: order.attributes.createdAt,
                 order_number: order.attributes.identifier,
                 shipping_method: order.attributes.shippingMethod.label,
+                carrier: carrier,
                 currency_code: order.attributes.currency,
                 deliveryInstructions: {
                     authorityToLeave: null,
@@ -131,7 +151,6 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 status: '', // OTF-86
                 printed_card_included: false,
                 gift_receipt_included: false,
-                carrier: '',
                 total: {
                     discounts: orderDiscounts,
                     base_grand_total: {
@@ -163,15 +182,15 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                     total_giftcard: null,
                     taxes: [],
                 },
-                returns: null,
+                returns: null, // OTF-120
                 gift_message: null,
                 gift_wrapping: null,
                 items: [],
-                comments: [],
-                invoices: [],
-                shipments: [],
-                credit_memos: [],
-                items_eligible_for_return: [],
+                comments: comments,
+                invoices: [], // OTF-122
+                shipments: [], // OTF-121
+                credit_memos: [], // OTF-119
+                items_eligible_for_return: [], // OTF-120
             };
         });
 
