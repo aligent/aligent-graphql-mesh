@@ -2,7 +2,7 @@
  * Forms an url path from a product "url_key"
  * @param url_key
  */
-export const getPathFromUrlKey = (url_key: string | null): string | null => {
+export const getPathFromUrlKey = (url_key?: string | null): string | null => {
     if (!url_key) return null;
 
     // Removes "html" from the string if it doesn't exist
