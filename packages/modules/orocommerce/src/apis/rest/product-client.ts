@@ -105,7 +105,9 @@ export class ProductsSearchArgsBuilder {
                         //transform filter by category to oro productsearch format acceptable
                         const categoryId = getIdFromCategoryUid(eqValue);
                         if (categoryId) {
-                            searchQueriesArray.push(`category >= ${categoryId}`);
+                            // TODO: Add filter products by child master catalog categories to productsearch api (OTF-133)
+                            // It should filter by the specified category and its child categories
+                            searchQueriesArray.push(`category = ${categoryId}`);
                         }
                         continue;
                     }
