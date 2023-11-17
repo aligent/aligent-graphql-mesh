@@ -53,9 +53,18 @@ import {
     UpdateCustomerAddressTransformerChain,
 } from './customers/transform-update-customer-address-data';
 import {
+    ProductsTransformer,
+    ProductsTransformerChain,
+} from './products/products-data-transformer';
+import {
     AddProductsToCartTransformer,
     AddProductsToCartTransformerChain,
 } from './shopping-list/add-products-to-cart-transformer';
+
+import {
+    UpdateCustomerTransformer,
+    UpdateCustomerTransformerChain,
+} from './customers/update-customer-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -122,6 +131,10 @@ export const getOroTransformers = (): Array<Provider> => {
             global: true,
         },
         {
+            provide: UpdateCustomerTransformerChain,
+            useClass: UpdateCustomerTransformerChain,
+        },
+        {
             provide: AddProductsToCartTransformerChain,
             useClass: AddProductsToCartTransformerChain,
             global: true,
@@ -141,6 +154,11 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: StoreConfigTransformerChain,
             useClass: StoreConfigTransformerChain,
+            global: true,
+        },
+        {
+            provide: ProductsTransformerChain,
+            useClass: ProductsTransformerChain,
             global: true,
         },
         {
@@ -263,6 +281,17 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [UpdateCustomerAddressTransformerChain],
         },
+
+        {
+            provide: UpdateCustomerTransformer,
+            useFactory: (transformerChain) => {
+                const updateCustomerTransformer = new UpdateCustomerTransformer();
+                transformerChain.addTransformer(updateCustomerTransformer);
+                return updateCustomerTransformer;
+            },
+            deps: [UpdateCustomerTransformerChain],
+        },
+
         {
             provide: ShoppingListToCartTransformer,
             useClass: ShoppingListToCartTransformer,
@@ -275,6 +304,15 @@ export const getOroTransformers = (): Array<Provider> => {
             provide: OrderLineItemsToNewShoppingListTransformer,
             useClass: OrderLineItemsToNewShoppingListTransformer,
             deps: [OrderLineItemToShoppingListItemTransformer],
+        },
+        {
+            provide: ProductsTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new ProductsTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [ProductsTransformerChain],
         },
         {
             provide: AddProductsToCartTransformer,
