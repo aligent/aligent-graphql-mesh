@@ -21,7 +21,7 @@ export const getTransformedProductAggregations = (
     const productAttributes = Object.keys(oroAttributes);
     return <Array<Aggregation>>productAttributes
         .map((attribute) => {
-            const [attributeName, attributeType] = attribute.split('_');
+            const [attributeName, attributeType] = attribute.split('+');
 
             if (attributeType === 'count') {
                 const oroAttributeOptions = <Array<OroAttribute>>oroAttributes[attribute];
