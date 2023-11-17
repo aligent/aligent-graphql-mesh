@@ -56,6 +56,7 @@ declare global {
 }
 /* eslint-enable */
 
+export * from './checkouts';
 export * from './checkout-sources';
 export * from './customer';
 export * from './oroCurrency';

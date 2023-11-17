@@ -1,6 +1,6 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
 import { OroCommerceModuleConfig, getOroServices } from '../index';
-import { CheckoutSourcesClient } from '../apis/rest';
+import { CheckoutsClient, CheckoutSourcesClient } from '../apis/rest';
 import { ApiClient } from '../apis/rest/client';
 import { CustomerClient } from '../apis/rest/customer';
 import { CountryClient } from '../apis/rest/country-client';
@@ -39,6 +39,12 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ApiClient,
             provide: ApiClient,
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CheckoutsClient,
+            provide: CheckoutsClient,
+            deps: [ApiClient],
             scope: Scope.Operation,
         },
         {
