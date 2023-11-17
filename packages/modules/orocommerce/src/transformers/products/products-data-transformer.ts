@@ -18,6 +18,7 @@ import {
     SimpleProduct,
     ConfigurableProduct,
     BundleProduct,
+    CurrencyEnum,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
@@ -26,22 +27,26 @@ import { getTransformedProductAggregations } from './product-aggregations-transf
 
 import { Injectable } from 'graphql-modules';
 
+// @TODO remove once product prices is implemented as the
+// currencyCode should be dynamic. This ensures the PWA PDP page doesn't break
+const MOCK_CURRENCY = 'AUD' as CurrencyEnum;
+
 export const NO_PRICES_RESPONSE = {
     maximum_price: {
         discount: {
             amount_off: null,
             percent_off: null,
         },
-        final_price: { currency: null, value: null },
-        regular_price: { currency: null, value: null },
+        final_price: { currency: MOCK_CURRENCY, value: null },
+        regular_price: { currency: MOCK_CURRENCY, value: null },
     },
     minimum_price: {
         discount: {
             amount_off: null,
             percent_off: null,
         },
-        final_price: { currency: null, value: null },
-        regular_price: { currency: null, value: null },
+        final_price: { currency: MOCK_CURRENCY, value: null },
+        regular_price: { currency: MOCK_CURRENCY, value: null },
     },
 };
 
@@ -148,6 +153,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     variants: [],
                 }), // TODO: simple products of configurable product
                 // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
+                type: 'PRODUCT',
                 __typename: this.getProductTypeName(oroProduct),
             };
         } catch (error) {
