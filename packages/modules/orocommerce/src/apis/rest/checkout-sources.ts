@@ -8,6 +8,8 @@ import {
 } from '../../types';
 import { getSearchParamStringFromSearchParams } from '@aligent/utils';
 
+const CHECKOUT_SOURCES_API = '/checkoutsources';
+
 @Injectable()
 export class CheckoutSourcesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
@@ -16,7 +18,7 @@ export class CheckoutSourcesClient {
         const searchParamsToString = getSearchParamStringFromSearchParams(args);
 
         const response = await this.apiClient.get<CheckoutSources>(
-            `/checkoutsources${searchParamsToString}`
+            `${CHECKOUT_SOURCES_API}${searchParamsToString}`
         );
 
         return response.data;
@@ -30,7 +32,7 @@ export class CheckoutSourcesClient {
         const response = await this.apiClient.post<
             CreateCheckoutSourceResponse,
             CreateCheckoutSourceArgs
-        >(`/checkoutsources`, args, { headers });
+        >(CHECKOUT_SOURCES_API, args, { headers });
 
         return response;
     }
