@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
-import { CheckoutService } from '@aligent/orocommerce-graphql-module';
+import { CheckoutService } from '../../services';
 import { AxiosError } from 'axios';
 
 const SUCCESS_RESPONSE = {

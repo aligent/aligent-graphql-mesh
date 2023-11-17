@@ -1,5 +1,5 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
-import { CheckoutsClient, CheckoutSourcesClient } from '@aligent/orocommerce-graphql-module';
+import { CheckoutsClient, CheckoutSourcesClient } from '../apis/rest';
 import { getActiveCheckoutSourcesFromShoppingListId } from '../utils';
 
 @Injectable()

@@ -77,7 +77,7 @@ export const checkout = {
     },
 };
 
-const getCheckouts = [checkout];
+export const getCheckouts = [checkout];
 
 export const createdCheckout = {
     ...checkoutAttributes,
