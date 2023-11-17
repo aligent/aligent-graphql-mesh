@@ -151,14 +151,14 @@ export class ProductsSearchArgsBuilder {
         try {
             //add aggregations by brand and price
             const aggregationsArray = [
-                'brand count brand_count',
-                'minimalPrice min price_min',
-                'minimalPrice max price_max',
+                'brand count brand+count',
+                'minimalPrice min price+min',
+                'minimalPrice max price+max',
             ];
 
             //add aggregations by product attributes
             productAttributes.forEach((attribute) => {
-                aggregationsArray.push(`${attribute.id} count ${attribute.label}_count`);
+                aggregationsArray.push(`${attribute.meta.id} count ${attribute.meta.label}+count`);
             });
 
             return aggregationsArray.join(',');
