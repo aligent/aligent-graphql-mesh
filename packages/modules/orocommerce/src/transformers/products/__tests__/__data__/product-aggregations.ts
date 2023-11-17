@@ -2,7 +2,7 @@ import { Attributes } from '../../../../types';
 import { Aggregation } from '@aligent/orocommerce-resolvers';
 
 export const oroProductAttributes: Attributes = {
-    color_count: [
+    'color+count': [
         {
             value: 'purple',
             count: 2,
@@ -16,7 +16,7 @@ export const oroProductAttributes: Attributes = {
             count: 1,
         },
     ],
-    size_count: [
+    'size+count': [
         {
             value: 'm',
             count: 2,
