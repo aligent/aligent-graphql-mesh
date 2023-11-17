@@ -61,6 +61,11 @@ import {
     AddProductsToCartTransformerChain,
 } from './shopping-list/add-products-to-cart-transformer';
 
+import {
+    UpdateCustomerTransformer,
+    UpdateCustomerTransformerChain,
+} from './customers/update-customer-transformer';
+
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
 export * from './currency/transform-currency-data';
@@ -124,6 +129,10 @@ export const getOroTransformers = (): Array<Provider> => {
             provide: UpdateCustomerAddressTransformerChain,
             useClass: UpdateCustomerAddressTransformerChain,
             global: true,
+        },
+        {
+            provide: UpdateCustomerTransformerChain,
+            useClass: UpdateCustomerTransformerChain,
         },
         {
             provide: AddProductsToCartTransformerChain,
@@ -272,6 +281,17 @@ export const getOroTransformers = (): Array<Provider> => {
             },
             deps: [UpdateCustomerAddressTransformerChain],
         },
+
+        {
+            provide: UpdateCustomerTransformer,
+            useFactory: (transformerChain) => {
+                const updateCustomerTransformer = new UpdateCustomerTransformer();
+                transformerChain.addTransformer(updateCustomerTransformer);
+                return updateCustomerTransformer;
+            },
+            deps: [UpdateCustomerTransformerChain],
+        },
+
         {
             provide: ShoppingListToCartTransformer,
             useClass: ShoppingListToCartTransformer,
