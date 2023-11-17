@@ -1,13 +1,13 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
-import { ShoppingListsClient } from '../../apis/rest/shoppinglists';
+import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
 
 /**
  * If the customer has a shopping list, return it. If not create a new shopping list.
  */
 export const createEmptyCartMutation: MutationResolvers['createEmptyCart'] = {
-    resolve: async (_root, _args, _context, _info) => {
-        const client: ShoppingListsClient = _context.injector.get(ShoppingListsClient);
-        const shoppinglists = (await client.getShoppingLists()).data;
+    resolve: async (_root, _args, context, _info) => {
+        const client: ShoppingListsClient = context.injector.get(ShoppingListsClient);
+        const shoppinglists = await client.getShoppingLists();
 
         if (shoppinglists.length === 0) {
             return (await client.createDefaultShoppingList()).id;

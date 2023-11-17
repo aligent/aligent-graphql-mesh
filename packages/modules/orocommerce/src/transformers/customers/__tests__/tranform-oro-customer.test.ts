@@ -7,7 +7,7 @@ import { CustomerInput } from '@aligent/orocommerce-resolvers';
 import { UpdateCustomer } from '../../../types';
 
 describe('Transform  Oro customer to Takflight customer', () => {
-    test('return transformed Oro Address', () => {
+    test('return transformed Customer', () => {
         const oroAddressTransformer = new OroAddressesTransformer();
         const oroCustomerTransformer: OroCustomerTransformer = new OroCustomerTransformer(
             oroAddressTransformer

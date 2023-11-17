@@ -9,8 +9,10 @@ import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
+import { cmsPageResolver } from './queries/cms-page';
 import { storeLocationsResolver } from './queries/store-locations';
 import { createCustomerMutation } from './mutations/create-customer';
+import { reorderItemsResolver } from './mutations/reorder-items-mutation';
 import { createCustomerAddressMutation } from './mutations/create-customer-address';
 import { customerResolver } from './queries/customer';
 import { customerOrdersResolver } from './queries/customer/orders';
@@ -20,25 +22,33 @@ import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
 import { updateCustomerMutation } from './mutations/update-customer';
+import { productsResolver } from './queries/products';
+import { addProductsToCartResolver } from './mutations/add-products-to-cart';
+import { cartResolver } from './queries/cart';
 
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
+        cart: cartResolver,
         currency: currencyResolver,
         countries: countriesResolver,
         keyMessages: keyMessagesResolver,
         categories: categoriesResolver,
         cmsBlocks: cmsBlocksResolver,
+        cmsPage: cmsPageResolver,
         storeLocations: storeLocationsResolver,
         customer: customerResolver,
         route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
+        products: productsResolver,
     },
     Mutation: {
+        addProductsToCart: addProductsToCartResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         postContactForm: postContactFormMutation,
         createCustomer: createCustomerMutation,
+        reorderItems: reorderItemsResolver,
         deleteCustomerAddress: deleteCustomerAddressMutation,
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
