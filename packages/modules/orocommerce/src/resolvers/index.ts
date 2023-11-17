@@ -25,6 +25,7 @@ import { updateCustomerMutation } from './mutations/update-customer';
 import { productsResolver } from './queries/products';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 import { cartResolver } from './queries/cart';
+import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -53,6 +54,7 @@ export const resolvers: Resolvers = {
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
         updateCustomerAddress: updateCustomerAddressMutation,
+        removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
