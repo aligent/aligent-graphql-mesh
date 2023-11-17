@@ -15,7 +15,7 @@
         "build": {
             "dependsOn": ["^build", "^codegen"],
             "inputs": [
-                "default", 
+                "default",
                 "^default",
                 "{workspaceRoot}/jest.preset.js",
                 "{workspaceRoot}/tsconfig.base.json"
@@ -23,8 +23,8 @@
         },
         "test": {
             "inputs": [
-                "default", 
-                "^default", 
+                "default",
+                "^default",
                 "{workspaceRoot}/jest.preset.js",
                 "{workspaceRoot}/jest.config.ts"
             ]
