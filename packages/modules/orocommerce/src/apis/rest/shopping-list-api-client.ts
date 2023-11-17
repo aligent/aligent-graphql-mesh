@@ -71,4 +71,9 @@ export class ShoppingListsClient {
         });
         return res.data;
     }
+
+    async deleteItemInShoppingList(cartItemId: string) {
+        const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
+        return response;
+    }
 }

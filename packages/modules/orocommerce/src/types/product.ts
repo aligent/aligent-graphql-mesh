@@ -136,9 +136,11 @@ export interface ProductImageFile {
 }
 
 export interface ConfigurableProductAttribute {
-    id: string;
-    attrType: string;
-    label: string;
+    meta: {
+        id: string;
+        attrType: string;
+        label: string;
+    };
 }
 
 export interface Category extends Entity {
