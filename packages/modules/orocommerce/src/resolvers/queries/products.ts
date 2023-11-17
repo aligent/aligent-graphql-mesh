@@ -1,7 +1,7 @@
 import { Products, QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { ProductsTransformerChain } from '../../transformers/products/products-data-transformer';
 import { ProductsClient, ProductsSearchArgsBuilder } from '../../apis/rest';
-import { logAndThrowError, getPathFromUrlKey } from '@aligent/utils';
+import { logAndThrowError } from '@aligent/utils';
 
 const DEFAULT_PLP_PRODUCTS_DISPLAY = 24;
 
