@@ -4,24 +4,35 @@
         "default": {
             "runner": "nx/tasks-runners/default",
             "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e"]
+                "cacheableOperations": ["codegen", "build", "lint", "test", "e2e"]
             }
         }
     },
     "targetDefaults": {
         "codegen": {
-            "inputs": ["^production"]
+            "inputs": ["default", "^default"]
         },
         "build": {
             "dependsOn": ["^build", "^codegen"],
-            "inputs": ["production", "^production"]
+            "inputs": [
+                "default", 
+                "^default",
+                "{workspaceRoot}/jest.preset.js",
+                "{workspaceRoot}/tsconfig.base.json"
+            ]
         },
         "test": {
-            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+            "inputs": [
+                "default", 
+                "^default", 
+                "{workspaceRoot}/jest.preset.js",
+                "{workspaceRoot}/jest.config.ts"
+            ]
         },
         "lint": {
             "inputs": [
                 "default",
+                "^default",
                 "{workspaceRoot}/.eslintrc.json",
                 "{workspaceRoot}/.eslintignore",
                 "{workspaceRoot}/eslint.config.js"
@@ -29,17 +40,6 @@
         }
     },
     "namedInputs": {
-        "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": [
-            "default",
-            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-            "!{projectRoot}/tsconfig.spec.json",
-            "!{projectRoot}/jest.config.[jt]s",
-            "!{projectRoot}/src/test-setup.[jt]s",
-            "!{projectRoot}/test-setup.[jt]s",
-            "!{projectRoot}/.eslintrc.json",
-            "!{projectRoot}/eslint.config.js"
-        ],
-        "sharedGlobals": []
+        "default": ["{projectRoot}/**/*"]
     }
 }
