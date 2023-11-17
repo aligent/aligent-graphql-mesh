@@ -48,12 +48,14 @@ export class OrderLineItemsToNewShoppingListTransformer
             const shoppinglistLineItem = this.lineItemTransformer.transform({
                 data: orderLineItem,
             });
-            shoppinglistLineItem.relationships.shoppingList = {
-                data: {
-                    type: 'shoppinglists',
-                    id: shoppingList.id,
-                },
-            };
+            if (shoppinglistLineItem.relationships) {
+                shoppinglistLineItem.relationships.shoppingList = {
+                    data: {
+                        type: 'shoppinglists',
+                        id: shoppingList.id,
+                    },
+                };
+            }
 
             included.push({
                 id: id,

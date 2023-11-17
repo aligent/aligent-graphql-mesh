@@ -60,6 +60,10 @@ import {
     AddProductsToCartTransformer,
     AddProductsToCartTransformerChain,
 } from './shopping-list/add-products-to-cart-transformer';
+import {
+    UpdateCartItemTransformer,
+    UpdateCartItemTransformerChain,
+} from './shopping-list/update-cart-item-transformer';
 
 import {
     UpdateCustomerTransformer,
@@ -137,6 +141,11 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: AddProductsToCartTransformerChain,
             useClass: AddProductsToCartTransformerChain,
+            global: true,
+        },
+        {
+            provide: UpdateCartItemTransformerChain,
+            useClass: UpdateCartItemTransformerChain,
             global: true,
         },
         // Create default transformers and register them with their chain transformers
@@ -322,6 +331,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return addProductsToCartTransformer;
             },
             deps: [AddProductsToCartTransformerChain],
+        },
+        {
+            provide: UpdateCartItemTransformer,
+            useFactory: (transformerChain) => {
+                const updateCartItemTransformer = new UpdateCartItemTransformer();
+                transformerChain.addTransformer(updateCartItemTransformer);
+                return updateCartItemTransformer;
+            },
+            deps: [UpdateCartItemTransformerChain],
         },
     ];
 };

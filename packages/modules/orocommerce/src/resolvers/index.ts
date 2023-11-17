@@ -25,6 +25,7 @@ import { updateCustomerMutation } from './mutations/update-customer';
 import { productsResolver } from './queries/products';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 import { cartResolver } from './queries/cart';
+import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
 
 export const resolvers: Resolvers = {
@@ -54,6 +55,7 @@ export const resolvers: Resolvers = {
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
         updateCustomerAddress: updateCustomerAddressMutation,
+        updateCartItems: updateCartItemsMutation,
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
     },
