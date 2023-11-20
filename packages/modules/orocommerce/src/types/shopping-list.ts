@@ -1,7 +1,8 @@
+import { ComplexTextValue } from '@aligent/orocommerce-resolvers';
 import { Entity, Attributes, Relationships } from '.';
 export interface ShoppingListWithItems {
     data: ShoppingList;
-    included: (ShoppingListItem | IncludedProduct)[];
+    included?: (ShoppingListItem | IncludedProduct | IncludedProductImages)[];
 }
 
 export interface IncludedProduct {
@@ -9,6 +10,21 @@ export interface IncludedProduct {
     id: string;
     attributes: ProductAttribute;
     relationships: ProductRelationships;
+}
+export interface IncludedProductImages {
+    type: 'productimages';
+    id: string;
+    attributes: ImageAttribute;
+    relationships: ImageRelationships;
+}
+
+interface ImageRelationships {
+    product: {
+        data: {
+            type: 'products';
+            id: string;
+        };
+    };
 }
 
 interface ProductRelationships {
@@ -65,6 +81,22 @@ interface Links {
     related: string;
 }
 
+export interface ImageAttribute extends Attributes {
+    updatedAt: Date;
+    mimeType: string;
+    types: string[];
+    files: ImageFiles[];
+}
+
+interface ImageFiles {
+    url: string;
+    maxWidth: number | null;
+    maxHeight: number | null | string;
+    dimension: string;
+    url_webp: string;
+    types: string[];
+}
+
 export interface ProductAttribute extends Attributes {
     sku: string;
     createdAt: Date;
@@ -73,8 +105,8 @@ export interface ProductAttribute extends Attributes {
     featured: boolean;
     newArrival: boolean;
     name: string;
-    shortDescription: string;
-    description: string;
+    shortDescription: ComplexTextValue;
+    description: ComplexTextValue;
     unitPrecisions: UnitPrecision[];
     url: string;
     prices: Price[];
