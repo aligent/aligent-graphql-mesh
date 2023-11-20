@@ -130,7 +130,7 @@ export interface ImageAttribute extends Attributes {
     files: ImageFiles[];
 }
 
-interface ImageFiles {
+export interface ImageFiles {
     url: string;
     maxWidth: number | null;
     maxHeight: number | null | string;

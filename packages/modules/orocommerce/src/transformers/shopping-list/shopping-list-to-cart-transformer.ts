@@ -1,5 +1,6 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
 import {
+    ImageFiles,
     IncludedProduct,
     IncludedProductCategory,
     IncludedProductImages,
@@ -46,30 +47,47 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         };
     }
 
+    getImageByDimension(
+        images: IncludedProductImages[] | undefined,
+        productId: string,
+        imageDimension: string
+    ): ImageFiles | undefined {
+        const productImages = images?.find(
+            (item) => item.relationships.product.data.id === productId
+        );
+        if (!productImages)
+            return logAndThrowError(
+                `Could not find related product image to product id: ${productId}`
+            );
+
+        const foundImage = productImages.attributes.files.find(
+            (image) => image.dimension === imageDimension
+        );
+
+        return foundImage;
+    }
+
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
         cart.total_quantity = shoppingList.included?.length || 0;
 
-        const currency = shoppingList.data.attributes.currency as CurrencyEnum;
+        const currency = shoppingList.data.attributes.currency as string;
         cart.prices = {
-            grand_total: {
-                currency: currency,
-                value: Number(shoppingList.data.attributes.total),
-            },
+            grand_total: this.getMoneyData(currency, Number(shoppingList.data.attributes.total)),
             applied_taxes: [
                 // TODO taxes
                 {
                     amount: {
-                        currency,
+                        currency: 'AUD',
                         value: 0,
                     },
                     label: 'Tax description',
                 },
             ],
             subtotal_including_tax: {
-                currency,
+                currency: 'AUD',
                 value: 0,
             },
         };
@@ -95,22 +113,6 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     `Could not find related shopping list item to product id: ${product.id}`
                 );
 
-            const productImages = productsImages?.find(
-                (item) => item.relationships.product.data.id === product.id
-            );
-            if (!productImages)
-                return logAndThrowError(
-                    `Could not find related product image to product id: ${product.id}`
-                );
-
-            const smallImage = productImages.attributes.files.find(
-                (image) => image.dimension === 'product_small'
-            );
-
-            const originalImage = productImages.attributes.files.find(
-                (image) => image.dimension === 'product_original'
-            );
-
             const productCategories = productsCategories?.find(
                 (item) => item.relationships.categoryPath.data.id === product.id
             );
@@ -119,6 +121,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 return logAndThrowError(
                     `Could not find related product categories to product id: ${product.id}`
                 );
+
+            const [smallImage, originalImage] = [
+                this.getImageByDimension(productsImages, product.id, 'product_small'),
+                this.getImageByDimension(productsImages, product.id, 'product_original'),
+            ];
 
             const productAttributes = product.attributes;
             // This previously was being taken from the shoppinglistitems type
