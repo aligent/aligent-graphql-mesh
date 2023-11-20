@@ -46,21 +46,6 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         };
     }
 
-    // getProductsIncludedData<T>(
-    //     relatedItem: ShoppingListItem[] | IncludedProductImages[],
-    //     productId: string
-    // ): T {
-    //     const relatedShoppingListItem = relatedItem.find(
-    //         (item) => item.relationships?.product.data.id === productId
-    //     );
-    //     if (!relatedShoppingListItem)
-    //         return logAndThrowError(
-    //             `Could not find related shopping list item to product id: ${productId}`
-    //         );
-
-    //     return relatedShoppingListItem;
-    // }
-
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
@@ -80,7 +65,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                         currency,
                         value: 0,
                     },
-                    label: 'Tax description', // TODO
+                    label: 'Tax description',
                 },
             ],
             subtotal_including_tax: {
@@ -97,7 +82,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         const productsCategories = shoppingList.included?.filter(this.isProductCategory);
         if (!products || !shoppingListItems) {
             return logAndThrowError(
-                `Could not find products or shoppingListItems or productsCategories included in cart ID: ${cart.id}`
+                `Could not find products or shoppingListItems included in cart ID: ${cart.id}`
             );
         }
 
@@ -182,8 +167,8 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                             staged: true, // Couldnt see equivalent value in ORO
                             name: productCategories.attributes.title,
                             level: 1, // Couldnt see equivalent value in ORO
-                            redirect_code: 0,
-                            description: String(productCategories.attributes.description), // Not sure why this isnt ComplexTextValue type
+                            redirect_code: 0, // Couldnt see equivalent value in ORO
+                            description: String(productCategories.attributes.description),
                             url_path: productCategories.attributes.url,
                             image: productCategories.attributes.images[0].url,
                         },
@@ -200,7 +185,8 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                             final_price: price,
                             regular_price: price,
                             discount: {
-                                amount_off: 0, // TODO
+                                // TODO
+                                amount_off: 0,
                             },
                         },
                         maximum_price: {
