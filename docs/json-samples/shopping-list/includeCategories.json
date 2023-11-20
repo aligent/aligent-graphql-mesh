@@ -1,0 +1,867 @@
+{
+    "data": [
+        {
+            "type": "shoppinglists",
+            "id": "89",
+            "attributes": {
+                "name": "Shopping List",
+                "notes": null,
+                "currency": "AUD",
+                "createdAt": "2023-11-14T00:51:32Z",
+                "updatedAt": "2023-11-14T00:51:32Z",
+                "default": true,
+                "total": "62",
+                "subTotal": "62"
+            },
+            "relationships": {
+                "items": {
+                    "data": [
+                        {
+                            "type": "shoppinglistitems",
+                            "id": "132"
+                        },
+                        {
+                            "type": "shoppinglistitems",
+                            "id": "133"
+                        },
+                        {
+                            "type": "shoppinglistitems",
+                            "id": "134"
+                        }
+                    ]
+                },
+                "customerUser": {
+                    "data": {
+                        "type": "customerusers",
+                        "id": "5"
+                    }
+                },
+                "customer": {
+                    "data": {
+                        "type": "customers",
+                        "id": "5"
+                    }
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "productimages",
+            "id": "1",
+            "attributes": {
+                "updatedAt": "2023-06-08T05:08:53Z",
+                "mimeType": "image/jpeg",
+                "types": ["main", "listing", "additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": 610,
+                        "maxHeight": 610,
+                        "dimension": "product_gallery_popup",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": 378,
+                        "maxHeight": "auto",
+                        "dimension": "product_gallery_main",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main", "listing"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main", "listing", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": 262,
+                        "maxHeight": "auto",
+                        "dimension": "product_medium",
+                        "url_webp": "/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/26/63291469b2140178133702-Test-Product-Only.jpg",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/26/63291469b2140178133702-Test-Product-Only.jpg.webp",
+                        "types": ["main", "listing", "additional"]
+                    }
+                ]
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "1"
+                    }
+                }
+            }
+        },
+        {
+            "type": "brands",
+            "id": "1",
+            "attributes": {
+                "status": "enabled",
+                "defaultTitle": "Aligent"
+            }
+        },
+        {
+            "type": "mastercatalogcategories",
+            "id": "2",
+            "attributes": {
+                "createdAt": "2022-09-20T01:18:36Z",
+                "updatedAt": "2022-09-20T01:18:37Z",
+                "title": "Test Category",
+                "shortDescription": null,
+                "description": null,
+                "url": "/test-category",
+                "urls": [],
+                "images": [],
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "categoryPath": {
+                    "data": [
+                        {
+                            "type": "mastercatalogcategories",
+                            "id": "1"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "1",
+            "attributes": {
+                "sku": "TEST-1",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-20T01:16:46Z",
+                "updatedAt": "2023-06-08T05:08:53Z",
+                "productType": "simple",
+                "featured": true,
+                "newArrival": true,
+                "category_sort_order": null,
+                "name": "TEST",
+                "shortDescription": "<p>This is a short description</p>",
+                "description": "<style type=\"text/css\">#isolation-scope-q78t0n6lokwastg5xgdr1120 #i2jc{min-height:18px;}</style><div id=\"isolation-scope-q78t0n6lokwastg5xgdr1120\" class=\"cms-wrapper\"><div id=\"i2jc\">This is a simple product description. TEST<br/></div></div>",
+                "productAttributes": {
+                    "Attachments_633139d05ca82": [
+                        {
+                            "id": "1",
+                            "targetValue": "1"
+                        }
+                    ]
+                },
+                "unitPrecisions": [
+                    {
+                        "unit": "each",
+                        "precision": 0,
+                        "conversionRate": 1,
+                        "default": true
+                    }
+                ],
+                "url": "/test",
+                "urls": [],
+                "prices": [
+                    {
+                        "price": "10.0000",
+                        "currencyId": "AUD",
+                        "quantity": "0",
+                        "unit": "each"
+                    }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": "Meta Title",
+                "metaDescription": "Meta Content from Oro",
+                "metaKeywords": "Key, Words, Aligent"
+            },
+            "relationships": {
+                "images": {
+                    "data": [
+                        {
+                            "type": "productimages",
+                            "id": "1"
+                        }
+                    ]
+                },
+                "productFamily": {
+                    "data": {
+                        "type": "productfamilies",
+                        "id": "1"
+                    }
+                },
+                "brand": {
+                    "data": {
+                        "type": "brands",
+                        "id": "1"
+                    }
+                },
+                "kitItems": {
+                    "data": []
+                },
+                "category": {
+                    "data": {
+                        "type": "mastercatalogcategories",
+                        "id": "2"
+                    }
+                },
+                "inventoryStatus": {
+                    "data": {
+                        "type": "productinventorystatuses",
+                        "id": "in_stock"
+                    }
+                },
+                "variantProducts": {
+                    "data": []
+                },
+                "parentProducts": {
+                    "data": []
+                }
+            }
+        },
+        {
+            "type": "shoppinglistitems",
+            "id": "132",
+            "attributes": {
+                "checksum": "",
+                "quantity": 1,
+                "notes": null,
+                "currency": "AUD",
+                "value": "10"
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "1"
+                    }
+                },
+                "parentProduct": {
+                    "data": null
+                },
+                "kitItems": {
+                    "data": []
+                },
+                "shoppingList": {
+                    "data": {
+                        "type": "shoppinglists",
+                        "id": "89"
+                    }
+                },
+                "unit": {
+                    "data": {
+                        "type": "productunits",
+                        "id": "each"
+                    }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "2",
+            "attributes": {
+                "updatedAt": "2022-09-26T05:24:35Z",
+                "mimeType": "image/png",
+                "types": ["main"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 610,
+                        "maxHeight": 610,
+                        "dimension": "product_gallery_popup",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 378,
+                        "maxHeight": "auto",
+                        "dimension": "product_gallery_main",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 262,
+                        "maxHeight": "auto",
+                        "dimension": "product_medium",
+                        "url_webp": "/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/29/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/29/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    }
+                ]
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "3",
+            "attributes": {
+                "updatedAt": "2022-09-26T05:24:35Z",
+                "mimeType": "image/png",
+                "types": ["listing", "additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/30/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/30/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["listing", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/30/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/30/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["listing", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/30/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/30/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["listing"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/30/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/30/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["additional"]
+                    }
+                ]
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "mastercatalogcategories",
+            "id": "4",
+            "attributes": {
+                "createdAt": "2022-09-26T05:14:44Z",
+                "updatedAt": "2023-07-04T00:29:51Z",
+                "title": "Hoodies",
+                "shortDescription": "<p>Hoodies short description</p>",
+                "description": "<div id=\"isolation-scope-gp1y8ip1meb67290mfnh3027\" class=\"cms-wrapper\"><div id=\"ilth\">Hoodies CMS content</div></div>",
+                "url": "/hoodies",
+                "urls": [],
+                "images": [
+                    {
+                        "mimeType": "image/png",
+                        "url": "/media/cache/attachment/filter/category_medium/83f7315c7ee62f290f4e98073a013781/52/64a367fadbf91060988969-63313705e53ae870057940-download_1_4.png",
+                        "type": "small"
+                    },
+                    {
+                        "mimeType": "image/png",
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/51/64a367fad31c3453399474-63313705e53ae870057940-download_1_4.png",
+                        "type": "large"
+                    }
+                ],
+                "metaTitle": "Hoodies",
+                "metaDescription": "Hoodies are awesome",
+                "metaKeywords": "Hoodies"
+            },
+            "relationships": {
+                "categoryPath": {
+                    "data": [
+                        {
+                            "type": "mastercatalogcategories",
+                            "id": "1"
+                        },
+                        {
+                            "type": "mastercatalogcategories",
+                            "id": "3"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "2",
+            "attributes": {
+                "sku": "HOODIE-LP",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-26T05:23:22Z",
+                "updatedAt": "2022-09-26T05:24:35Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Purple Large Aligent Hoodie",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "size_63313224a7189": {
+                        "id": "l",
+                        "targetValue": "L"
+                    },
+                    "size_633132c50db9e": {
+                        "id": "purple",
+                        "targetValue": "purple"
+                    }
+                },
+                "unitPrecisions": [
+                    {
+                        "unit": "each",
+                        "precision": 0,
+                        "conversionRate": 1,
+                        "default": true
+                    }
+                ],
+                "url": "/purple-large-aligent-hoodie",
+                "urls": [],
+                "prices": [
+                    {
+                        "price": "11.0000",
+                        "currencyId": "AUD",
+                        "quantity": "0",
+                        "unit": "each"
+                    }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "data": [
+                        {
+                            "type": "productimages",
+                            "id": "2"
+                        },
+                        {
+                            "type": "productimages",
+                            "id": "3"
+                        }
+                    ]
+                },
+                "productFamily": {
+                    "data": {
+                        "type": "productfamilies",
+                        "id": "2"
+                    }
+                },
+                "brand": {
+                    "data": {
+                        "type": "brands",
+                        "id": "1"
+                    }
+                },
+                "kitItems": {
+                    "data": []
+                },
+                "category": {
+                    "data": {
+                        "type": "mastercatalogcategories",
+                        "id": "4"
+                    }
+                },
+                "inventoryStatus": {
+                    "data": {
+                        "type": "productinventorystatuses",
+                        "id": "in_stock"
+                    }
+                },
+                "variantProducts": {
+                    "data": []
+                },
+                "parentProducts": {
+                    "data": [
+                        {
+                            "type": "products",
+                            "id": "11"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "shoppinglistitems",
+            "id": "133",
+            "attributes": {
+                "checksum": "",
+                "quantity": 3,
+                "notes": null,
+                "currency": "AUD",
+                "value": "11"
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "2"
+                    }
+                },
+                "parentProduct": {
+                    "data": null
+                },
+                "kitItems": {
+                    "data": []
+                },
+                "shoppingList": {
+                    "data": {
+                        "type": "shoppinglists",
+                        "id": "89"
+                    }
+                },
+                "unit": {
+                    "data": {
+                        "type": "productunits",
+                        "id": "each"
+                    }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "16",
+            "attributes": {
+                "updatedAt": "2023-11-15T02:31:42Z",
+                "mimeType": "image/png",
+                "types": ["main"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 610,
+                        "maxHeight": 610,
+                        "dimension": "product_gallery_popup",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 378,
+                        "maxHeight": "auto",
+                        "dimension": "product_gallery_main",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 262,
+                        "maxHeight": "auto",
+                        "dimension": "product_medium",
+                        "url_webp": "/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/43/63313705e53ae870057940-download_1_4.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/43/63313705e53ae870057940-download_1_4.png.webp",
+                        "types": ["main"]
+                    }
+                ]
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "9"
+                    }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "17",
+            "attributes": {
+                "updatedAt": "2023-11-15T02:31:42Z",
+                "mimeType": "image/png",
+                "types": ["listing", "additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/44/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/44/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["listing", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/44/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/44/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["listing", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/44/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/44/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["listing"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/44/6331371b44a5b561493337-download_5__1_4.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/44/6331371b44a5b561493337-download_5__1_4.png.webp",
+                        "types": ["additional"]
+                    }
+                ]
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "9"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "9",
+            "attributes": {
+                "sku": "HOODIE-SY",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-26T05:27:58Z",
+                "updatedAt": "2023-11-15T02:31:42Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Yellow Small Aligent Hoodie",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "size_63313224a7189": {
+                        "id": "s",
+                        "targetValue": "S"
+                    },
+                    "size_633132c50db9e": {
+                        "id": "yellow",
+                        "targetValue": "yellow"
+                    }
+                },
+                "unitPrecisions": [
+                    {
+                        "unit": "each",
+                        "precision": 0,
+                        "conversionRate": 1,
+                        "default": true
+                    }
+                ],
+                "url": "/yellow-small-aligent-hoodie",
+                "urls": [],
+                "prices": [
+                    {
+                        "price": "19.0000",
+                        "currencyId": "AUD",
+                        "quantity": "0",
+                        "unit": "each"
+                    }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "data": [
+                        {
+                            "type": "productimages",
+                            "id": "16"
+                        },
+                        {
+                            "type": "productimages",
+                            "id": "17"
+                        }
+                    ]
+                },
+                "productFamily": {
+                    "data": {
+                        "type": "productfamilies",
+                        "id": "2"
+                    }
+                },
+                "brand": {
+                    "data": {
+                        "type": "brands",
+                        "id": "1"
+                    }
+                },
+                "kitItems": {
+                    "data": []
+                },
+                "category": {
+                    "data": {
+                        "type": "mastercatalogcategories",
+                        "id": "4"
+                    }
+                },
+                "inventoryStatus": {
+                    "data": {
+                        "type": "productinventorystatuses",
+                        "id": "out_of_stock"
+                    }
+                },
+                "variantProducts": {
+                    "data": []
+                },
+                "parentProducts": {
+                    "data": [
+                        {
+                            "type": "products",
+                            "id": "11"
+                        },
+                        {
+                            "type": "products",
+                            "id": "12"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "shoppinglistitems",
+            "id": "134",
+            "attributes": {
+                "checksum": "",
+                "quantity": 1,
+                "notes": null,
+                "currency": "AUD",
+                "value": "19"
+            },
+            "relationships": {
+                "product": {
+                    "data": {
+                        "type": "products",
+                        "id": "9"
+                    }
+                },
+                "parentProduct": {
+                    "data": null
+                },
+                "kitItems": {
+                    "data": []
+                },
+                "shoppingList": {
+                    "data": {
+                        "type": "shoppinglists",
+                        "id": "89"
+                    }
+                },
+                "unit": {
+                    "data": {
+                        "type": "productunits",
+                        "id": "each"
+                    }
+                }
+            }
+        }
+    ]
+}

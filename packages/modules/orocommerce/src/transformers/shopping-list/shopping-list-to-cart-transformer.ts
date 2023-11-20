@@ -1,9 +1,11 @@
-import { Transformer, TransformerContext, logAndThrowError } from '@aligent/utils';
+import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
 import {
     IncludedProduct,
+    IncludedProductCategory,
     IncludedProductImages,
     ShoppingListItem,
     ShoppingListWithItems,
+    ShoppingListWithItemsIncluded,
 } from '../../types';
 import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
@@ -21,22 +23,20 @@ const UNDEFINED_CART: Cart = {
 
 @Injectable()
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
-    isShoppingListItem(
-        item: ShoppingListItem | IncludedProduct | IncludedProductImages
-    ): item is ShoppingListItem {
+    isShoppingListItem(item: ShoppingListWithItemsIncluded): item is ShoppingListItem {
         return item.type === 'shoppinglistitems';
     }
 
-    isProduct(
-        item: ShoppingListItem | IncludedProduct | IncludedProductImages
-    ): item is IncludedProduct {
+    isProduct(item: ShoppingListWithItemsIncluded): item is IncludedProduct {
         return item.type === 'products';
     }
 
-    isProductImage(
-        item: ShoppingListItem | IncludedProduct | IncludedProductImages
-    ): item is IncludedProductImages {
+    isProductImage(item: ShoppingListWithItemsIncluded): item is IncludedProductImages {
         return item.type === 'productimages';
+    }
+
+    isProductCategory(item: ShoppingListWithItemsIncluded): item is IncludedProductCategory {
+        return item.type === 'mastercatalogcategories';
     }
 
     getMoneyData(currency: string, price: string | number): Money {
@@ -46,30 +46,62 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         };
     }
 
+    // getProductsIncludedData<T>(
+    //     relatedItem: ShoppingListItem[] | IncludedProductImages[],
+    //     productId: string
+    // ): T {
+    //     const relatedShoppingListItem = relatedItem.find(
+    //         (item) => item.relationships?.product.data.id === productId
+    //     );
+    //     if (!relatedShoppingListItem)
+    //         return logAndThrowError(
+    //             `Could not find related shopping list item to product id: ${productId}`
+    //         );
+
+    //     return relatedShoppingListItem;
+    // }
+
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
         cart.total_quantity = shoppingList.included?.length || 0;
 
+        const currency = shoppingList.data.attributes.currency as CurrencyEnum;
         cart.prices = {
             grand_total: {
-                currency: shoppingList.data.attributes.currency as CurrencyEnum,
+                currency: currency,
                 value: Number(shoppingList.data.attributes.total),
             },
+            applied_taxes: [
+                // TODO taxes
+                {
+                    amount: {
+                        currency,
+                        value: 0,
+                    },
+                    label: 'Tax description', // TODO
+                },
+            ],
+            subtotal_including_tax: {
+                currency,
+                value: 0,
+            },
         };
+        // cart.free_shipping_details = free_shipping_details -> TODO
+        // ...CheckoutCartFragment @include(if: $isInCheckout -> TODO
 
         const shoppingListItems = shoppingList.included?.filter(this.isShoppingListItem);
         const products = shoppingList.included?.filter(this.isProduct);
         const productsImages = shoppingList.included?.filter(this.isProductImage);
-        if (!products || !shoppingListItems || !productsImages) {
+        const productsCategories = shoppingList.included?.filter(this.isProductCategory);
+        if (!products || !shoppingListItems) {
             return logAndThrowError(
-                `Could not find products or shoppingListItems or productsImages included in cart ID: ${cart.id}`
+                `Could not find products or shoppingListItems or productsCategories included in cart ID: ${cart.id}`
             );
         }
 
         for (const product of products) {
-            const productAttributes = product.attributes;
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
@@ -78,7 +110,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     `Could not find related shopping list item to product id: ${product.id}`
                 );
 
-            const productImages = productsImages.find(
+            const productImages = productsImages?.find(
                 (item) => item.relationships.product.data.id === product.id
             );
             if (!productImages)
@@ -94,6 +126,16 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 (image) => image.dimension === 'product_original'
             );
 
+            const productCategories = productsCategories?.find(
+                (item) => item.relationships.categoryPath.data.id === product.id
+            );
+
+            if (!productCategories)
+                return logAndThrowError(
+                    `Could not find related product categories to product id: ${product.id}`
+                );
+
+            const productAttributes = product.attributes;
             // This previously was being taken from the shoppinglistitems type
             const price = this.getMoneyData(
                 productAttributes.prices[0].currencyId,
@@ -126,6 +168,26 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                         url: smallImage?.url,
                         label: smallImage?.dimension,
                     },
+                    categories: [
+                        {
+                            id: Number(productCategories.id),
+                            breadcrumbs: [
+                                // Not sure about this in ORO
+                                {
+                                    category_uid: btoa(productCategories.id),
+                                    category_name: productCategories.attributes.title,
+                                },
+                            ],
+                            uid: btoa(productCategories.id),
+                            staged: true, // Couldnt see equivalent value in ORO
+                            name: productCategories.attributes.title,
+                            level: 1, // Couldnt see equivalent value in ORO
+                            redirect_code: 0,
+                            description: String(productCategories.attributes.description), // Not sure why this isnt ComplexTextValue type
+                            url_path: productCategories.attributes.url,
+                            image: productCategories.attributes.images[0].url,
+                        },
+                    ],
                     canonical_url: productAttributes.url,
                     description: productAttributes.description,
                     short_description: productAttributes.shortDescription,
