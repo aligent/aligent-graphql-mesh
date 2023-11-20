@@ -42,7 +42,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
 
         for (const product of products) {
             const relatedShoppingListItem = shoppingListItems.find(
-                (item) => item.relationships.product.data.id === product.id
+                (item) => item.relationships?.product.data.id === product.id
             );
             if (!relatedShoppingListItem)
                 throw new Error(
