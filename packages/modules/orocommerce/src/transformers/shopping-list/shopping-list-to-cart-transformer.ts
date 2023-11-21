@@ -1,5 +1,10 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
-import { ImageFiles, IncludedProductImages, ShoppingListWithItems } from '../../types';
+import {
+    ImageFiles,
+    IncludedProductCategory,
+    IncludedProductImages,
+    ShoppingListWithItems,
+} from '../../types';
 import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
@@ -49,6 +54,27 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         return foundImage;
     }
 
+    getCategoriesData(productCategories: IncludedProductCategory) {
+        return {
+            id: Number(productCategories.id),
+            breadcrumbs: [
+                // Not sure about this in ORO
+                {
+                    category_uid: btoa(productCategories.id),
+                    category_name: productCategories.attributes.title,
+                },
+            ],
+            uid: btoa(productCategories.id),
+            staged: true, // Couldnt see equivalent value in ORO
+            name: productCategories.attributes.title,
+            level: 1, // Couldnt see equivalent value in ORO
+            redirect_code: 0, // Couldnt see equivalent value in ORO
+            description: String(productCategories.attributes.description),
+            url_path: productCategories.attributes.url,
+            image: productCategories.attributes.images[0].url,
+        };
+    }
+
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
@@ -87,12 +113,13 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         }
 
         for (const product of products) {
+            let errorMessage = '';
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
             if (!relatedShoppingListItem) {
                 return logAndThrowError(
-                    `Related ShoppingListItem not found for product: ${product.id} `
+                    `Related ShoppingListItem not found for product: ${product.id} this data is required`
                 );
             }
 
@@ -101,9 +128,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
 
             if (!productCategories) {
-                return logAndThrowError(
-                    `Related productCategories not found for product: ${product.id} `
-                );
+                errorMessage += `Related productCategories not found for product: ${product.id} `;
+            }
+
+            if (!productsImages) {
+                errorMessage += `Related productsImages not found for product: ${product.id} `;
             }
 
             const smallImage = productsImages
@@ -135,6 +164,12 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total: price,
                     row_total_including_tax: price,
                 },
+                errors: [
+                    {
+                        message: errorMessage,
+                        code: 'UNDEFINED',
+                    },
+                ],
                 product: {
                     __typename: 'SimpleProduct',
                     id: Number(product.id),
@@ -148,26 +183,10 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                         url: smallImage?.url,
                         label: smallImage?.dimension,
                     },
-                    categories: [
-                        {
-                            id: Number(productCategories.id),
-                            breadcrumbs: [
-                                // Not sure about this in ORO
-                                {
-                                    category_uid: btoa(productCategories.id),
-                                    category_name: productCategories.attributes.title,
-                                },
-                            ],
-                            uid: btoa(productCategories.id),
-                            staged: true, // Couldnt see equivalent value in ORO
-                            name: productCategories.attributes.title,
-                            level: 1, // Couldnt see equivalent value in ORO
-                            redirect_code: 0, // Couldnt see equivalent value in ORO
-                            description: String(productCategories.attributes.description),
-                            url_path: productCategories.attributes.url,
-                            image: productCategories.attributes.images[0].url,
-                        },
-                    ],
+
+                    categories: productCategories
+                        ? [this.getCategoriesData(productCategories)]
+                        : null,
                     canonical_url: productAttributes.url,
                     description: productAttributes.description,
                     short_description: productAttributes.shortDescription,
