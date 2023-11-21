@@ -170,10 +170,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     ): ProductIncludeTypes[] {
         return included.filter(
             (entity) =>
-                entity.type === 'productinventorystatuses' ||
-                entity.type === 'productimages' ||
-                entity.type === 'mastercatalogcategories' ||
-                //filter product variants
+                ["productinventorystatuses", "productimages", "mastercatalogcategories"].includes(entity.type) ||
+                //filter only product variants related to requested product
                 (entity.type === 'products' &&
                     entity.relationships.parentProducts.data.find(
                         (parent) => parent.id === productId
