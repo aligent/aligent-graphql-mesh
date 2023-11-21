@@ -7,7 +7,7 @@ import { CountryTransformer } from '../transformers/country/country-transformer'
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { CurrencyClient } from '../apis/rest/currency';
 import { KeyMessagesClient } from '../apis/rest/key-messages-api-client';
-import { ContactClient } from '../apis/rest/contact';
+import { ContactClient } from '../apis/rest/contact-request-api-client';
 import { StoreLocationClient } from '../apis/rest/store-location-api-client';
 import { CmsBlockClient } from '../apis/rest/cms-blocks-api-client';
 import { CategoriesClient } from '../apis/rest/category-client';

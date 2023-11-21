@@ -7,7 +7,6 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
-import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { storeLocationsResolver } from './queries/store-locations';
@@ -24,6 +23,7 @@ import { updateCustomerAddressMutation } from './mutations/update-customer-addre
 import { updateCustomerMutation } from './mutations/update-customer';
 import { productsResolver } from './queries/products';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
+import { contactUsMutation } from './mutations/contact-us';
 import { cartResolver } from './queries/cart';
 import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
@@ -48,7 +48,7 @@ export const resolvers: Resolvers = {
         addProductsToCart: addProductsToCartResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
-        postContactForm: postContactFormMutation,
+        contactUs: contactUsMutation,
         createCustomer: createCustomerMutation,
         reorderItems: reorderItemsResolver,
         deleteCustomerAddress: deleteCustomerAddressMutation,
