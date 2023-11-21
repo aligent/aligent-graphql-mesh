@@ -163,7 +163,7 @@ export const oroProducts: OroProduct[] = [
             inventoryStatus: {
                 data: {
                     type: 'productinventorystatuses',
-                    id: 'in_stock',
+                    id: 'out_of_stock',
                 },
             },
             variantProducts: {
@@ -292,7 +292,7 @@ export const oroProducts: OroProduct[] = [
             inventoryStatus: {
                 data: {
                     type: 'productinventorystatuses',
-                    id: 'in_stock',
+                    id: 'discontinued',
                 },
             },
             variantProducts: {

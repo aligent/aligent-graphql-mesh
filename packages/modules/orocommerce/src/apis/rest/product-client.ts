@@ -43,7 +43,10 @@ export class ProductsClient {
         const params = {
             ...(searchQuery && { 'filter[searchQuery]': searchQuery }),
             ...(aggregations && { 'filter[aggregations]': aggregations }),
-            ...(!aggregations && { include: 'product,product.images,product.variantProducts.images,category,inventoryStatus' }),
+            ...(!aggregations && {
+                include:
+                    'product,product.images,product.variantProducts.images,category,inventoryStatus',
+            }),
             'page[number]': currentPage,
             'page[size]': pageSize,
             sort,

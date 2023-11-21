@@ -25,7 +25,7 @@ import { getTransformedReviews } from './reviews-transformer';
 import { getTransformedProductAggregations } from './product-aggregations-transformer';
 
 import { Injectable } from 'graphql-modules';
-import {getTransformedVariants} from "./product-variants-transformer";
+import { getTransformedVariants } from './product-variants-transformer';
 
 export const NO_PRICES_RESPONSE = {
     maximum_price: {
@@ -81,7 +81,10 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     included?.find((entity) => entity.type === 'products' && entity.id === entry.id)
                 );
                 if (oroProductsData.included) {
-                    oroProduct.included = this.getEntitiesRelatedToProduct(oroProductsData.included, oroProduct.id);
+                    oroProduct.included = this.getEntitiesRelatedToProduct(
+                        oroProductsData.included,
+                        oroProduct.id
+                    );
                 }
                 oroProducts.push(oroProduct);
             }
@@ -161,14 +164,20 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         }
     }
 
-    protected getEntitiesRelatedToProduct(included: ProductIncludeTypes[], productId: string): ProductIncludeTypes[] {
+    protected getEntitiesRelatedToProduct(
+        included: ProductIncludeTypes[],
+        productId: string
+    ): ProductIncludeTypes[] {
         return included.filter(
             (entity) =>
                 entity.type === 'productinventorystatuses' ||
                 entity.type === 'productimages' ||
                 entity.type === 'mastercatalogcategories' ||
                 //filter product variants
-                (entity.type === 'products' && entity.relationships.parentProducts.data.find(parent => parent.id === productId))
+                (entity.type === 'products' &&
+                    entity.relationships.parentProducts.data.find(
+                        (parent) => parent.id === productId
+                    ))
         );
     }
 }
