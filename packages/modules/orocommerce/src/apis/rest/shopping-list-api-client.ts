@@ -71,4 +71,20 @@ export class ShoppingListsClient {
         });
         return res.data;
     }
+
+    async updateItemInShoppingList(updateItem: ShoppingListItem): Promise<ShoppingListItem> {
+        const url = `/shoppinglistitems/${updateItem.id}`;
+        const res = await this.apiClient.patch<
+            { data: ShoppingListItem },
+            { data: ShoppingListItem }
+        >(url, {
+            data: updateItem,
+        });
+        return res.data;
+    }
+
+    async deleteItemInShoppingList(cartItemId: string) {
+        const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
+        return response;
+    }
 }

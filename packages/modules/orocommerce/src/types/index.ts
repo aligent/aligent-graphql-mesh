@@ -15,7 +15,7 @@ export interface Relationships {
 }
 
 export interface EntityAttributes {
-    [name: string]: EntityAttribute | EntityAttribute[];
+    [name: string]: EntityAttribute | EntityAttribute[] | null;
 }
 
 export interface EntityAttribute {
@@ -33,6 +33,7 @@ export interface Attributes {
         | Array<number>
         | Array<string>
         | Array<object>
+        | undefined
         | Attributes[]
         | EntityAttributes;
 }
@@ -66,6 +67,8 @@ export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';
 export * from './order';
+export * from './update-customer';
 export * from './store-config';
 export * from './shopping-list';
 export * from './order-line-item';
+export * from './product';

@@ -20,12 +20,18 @@ import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
+import { updateCustomerMutation } from './mutations/update-customer';
+import { productsResolver } from './queries/products';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
 import { contactUsMutation } from './mutations/contact-us';
+import { cartResolver } from './queries/cart';
+import { updateCartItemsMutation } from './mutations/update-cart-items';
+import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
 
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
+        cart: cartResolver,
         currency: currencyResolver,
         countries: countriesResolver,
         keyMessages: keyMessagesResolver,
@@ -36,6 +42,7 @@ export const resolvers: Resolvers = {
         customer: customerResolver,
         route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
+        products: productsResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
@@ -48,6 +55,9 @@ export const resolvers: Resolvers = {
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
         updateCustomerAddress: updateCustomerAddressMutation,
+        updateCartItems: updateCartItemsMutation,
+        removeItemFromCart: removeItemFromCartMutation,
+        updateCustomer: updateCustomerMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {
