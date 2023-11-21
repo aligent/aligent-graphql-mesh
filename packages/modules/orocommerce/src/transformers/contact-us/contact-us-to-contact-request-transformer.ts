@@ -10,10 +10,9 @@ export class ContactUsInputToContactRequestTransformer
     transform(context: TransformerContext<ContactUsInput, ContactRequest>): ContactRequest {
         const contactInput = context.data;
         const nameComponents = contactInput.name.split(' ');
-        // Oro has a limit of 100 characters for firstName, lastName and phone
-        const firstName = nameComponents[0]?.substring(0, 100).trim();
-        const lastName = nameComponents.splice(1).join(' ').substring(0, 100).trim();
-        const phone = contactInput.telephone?.substring(0, 100).trim() || null;
+        const firstName = nameComponents[0]?.trim();
+        const lastName = nameComponents.splice(1).join(' ').trim();
+        const phone = contactInput.telephone?.trim() || null;
         return {
             // This can be any random ID and Oro won't care because we're just creating a new resource
             id: '1',
@@ -22,8 +21,8 @@ export class ContactUsInputToContactRequestTransformer
                 firstName,
                 lastName,
                 phone,
-                comment: contactInput.comment,
-                emailAddress: contactInput.email,
+                comment: contactInput.comment.trim(),
+                emailAddress: contactInput.email.trim(),
             },
         };
     }
