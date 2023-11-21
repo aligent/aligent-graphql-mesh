@@ -25,6 +25,7 @@ import { getTransformedReviews } from './reviews-transformer';
 import { getTransformedProductAggregations } from './product-aggregations-transformer';
 
 import { Injectable } from 'graphql-modules';
+import {getTransformedVariants} from "./product-variants-transformer";
 
 export const NO_PRICES_RESPONSE = {
     maximum_price: {
@@ -79,12 +80,9 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 const oroProduct = <OroProduct>(
                     included?.find((entity) => entity.type === 'products' && entity.id === entry.id)
                 );
-                oroProduct.included = oroProductsData.included?.filter(
-                    (entity) =>
-                        entity.type === 'productinventorystatuses' ||
-                        entity.type === 'productimages' ||
-                        entity.type === 'mastercatalogcategories'
-                );
+                if (oroProductsData.included) {
+                    oroProduct.included = this.getEntitiesRelatedToProduct(oroProductsData.included, oroProduct.id);
+                }
                 oroProducts.push(oroProduct);
             }
 
@@ -145,7 +143,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 url_suffix: '',
                 reviews: getTransformedReviews(),
                 ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
-                    variants: [],
+                    variants: getTransformedVariants(oroProduct),
                 }), // TODO: simple products of configurable product
                 // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
                 __typename: this.getProductTypeName(oroProduct),
@@ -161,5 +159,16 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         } else {
             return 'SimpleProduct';
         }
+    }
+
+    protected getEntitiesRelatedToProduct(included: ProductIncludeTypes[], productId: string): ProductIncludeTypes[] {
+        return included.filter(
+            (entity) =>
+                entity.type === 'productinventorystatuses' ||
+                entity.type === 'productimages' ||
+                entity.type === 'mastercatalogcategories' ||
+                //filter product variants
+                (entity.type === 'products' && entity.relationships.parentProducts.data.find(parent => parent.id === productId))
+        );
     }
 }
