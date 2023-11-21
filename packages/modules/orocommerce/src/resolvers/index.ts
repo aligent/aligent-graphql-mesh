@@ -27,6 +27,7 @@ import { contactUsMutation } from './mutations/contact-us';
 import { cartResolver } from './queries/cart';
 import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
+import { isEmailAvailableResolver } from './queries/is-email-available';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -43,6 +44,7 @@ export const resolvers: Resolvers = {
         route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
         products: productsResolver,
+        isEmailAvailable: isEmailAvailableResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
