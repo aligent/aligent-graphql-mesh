@@ -4,6 +4,7 @@ import {
     CustomerOrder,
     CustomerOrders,
     Discount,
+    OrderItemInterface,
     SalesCommentItem,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
@@ -25,6 +26,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
         const orders = context.data;
 
         const items = orders.data.map((order): CustomerOrder => {
+            const currency = order.attributes.currency as CurrencyEnum;
             const billingAddressId = order.relationships?.billingAddress.data.id;
             const shippingAddressId = order.relationships?.shippingAddress.data.id;
             const lineItemsId = order.relationships?.lineItems.data.map((lineItem) => lineItem.id);
@@ -68,6 +70,39 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 return comments;
             }, []);
 
+            const items = lineItems.map<OrderItemInterface>((lineItem) => {
+                return {
+                    __typename: 'OrderItem',
+                    id: lineItem.id,
+                    line_total: Number(lineItem.attributes.rowTotalIncludingTax),
+                    product_name: lineItem.attributes.productName,
+                    product_sale_price: {
+                        value: Number(lineItem.attributes.unitPriceExcludingTax),
+                        currency: currency,
+                    },
+                    product_sale_price_incl_tax: {
+                        value: Number(lineItem.attributes.unitPriceIncludingTax),
+                        currency: currency,
+                    },
+                    product_sku: lineItem.attributes.productSku,
+                    product_type: 'simple',
+                    quantity_invoiced: lineItem.attributes.quantity,
+                    quantity_ordered: lineItem.attributes.quantity,
+                    selected_options: null, // OTF-136
+                    status: 'Ordered',
+                    discounts: [],
+                    product_url_key: null,
+                    quantity_canceled: 0,
+                    quantity_refunded: 0,
+                    quantity_returned: 0,
+                    quantity_shipped: 0,
+                    eligible_for_return: null,
+                    entered_options: null,
+                    gift_message: null,
+                    gift_wrapping: null,
+                };
+            });
+
             const paymentMethods = order.attributes.paymentMethod.map((paymentMethod) => {
                 return {
                     name: paymentMethod.label,
@@ -94,8 +129,6 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 },
                 []
             );
-
-            const currency = order.attributes.currency as CurrencyEnum;
 
             return {
                 id: order.id,
@@ -185,7 +218,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                 returns: null, // OTF-120
                 gift_message: null,
                 gift_wrapping: null,
-                items: [],
+                items: items,
                 comments: comments,
                 invoices: [], // OTF-122
                 shipments: [], // OTF-121
