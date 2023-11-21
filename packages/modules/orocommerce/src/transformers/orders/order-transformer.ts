@@ -88,7 +88,7 @@ export class CustomerOrdersTransfomer implements Transformer<OroOrder, CustomerO
                     product_type: 'simple',
                     quantity_invoiced: lineItem.attributes.quantity,
                     quantity_ordered: lineItem.attributes.quantity,
-                    selected_options: null,
+                    selected_options: null, // OTF-136
                     status: null,
                     discounts: [],
                     product_url_key: null,
