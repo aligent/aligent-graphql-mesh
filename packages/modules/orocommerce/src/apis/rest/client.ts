@@ -1,9 +1,9 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HttpStatusCode } from 'axios';
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { StoreUrl } from '../../providers';
-import { Auth } from '../../services';
+import { Auth } from '../../services/auth';
 import { MetaAllowedTypes, ProductSearchMeta } from '../../types';
-
+import { GraphqlError } from '@aligent/utils';
 // @TOOO: Set version based on NPM package version
 export const USER_AGENT = 'AligentMesh / 0.0.1';
 const API_PATH = '/api';
@@ -31,13 +31,40 @@ export class ApiClient {
             (error) => {
                 if (axios.isAxiosError(error)) {
                     console.log(error.message);
-                    if (error.response) {
+
+                    const response = error.response;
+                    if (response) {
                         console.error(error.toJSON());
+                    }
+
+                    const graphqlErrorMessage = JSON.stringify({
+                        statusCode: response?.status,
+                        statusText: response?.statusText,
+                        // Oro might return a response body even though it isn't a 200
+                        // https://jsonapi.org/format/#errors-processing
+                        data: response?.data,
+                    });
+
+                    const httpStatus = response?.status;
+                    switch (httpStatus) {
+                        // 400 errors - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
+                        case HttpStatusCode.BadRequest:
+                            throw new GraphqlError('input', graphqlErrorMessage);
+                        case HttpStatusCode.Unauthorized:
+                        case HttpStatusCode.Forbidden:
+                            throw new GraphqlError('authorization', graphqlErrorMessage);
+                        case HttpStatusCode.NotFound:
+                            throw new GraphqlError('no-such-entity', graphqlErrorMessage);
+                        case HttpStatusCode.Conflict:
+                            throw new GraphqlError('already-exists', graphqlErrorMessage);
+                        case HttpStatusCode.InternalServerError:
+                            throw new GraphqlError('server-internal-error', graphqlErrorMessage);
+                        default:
+                            throw new Error(graphqlErrorMessage);
                     }
                 } else {
                     console.error(error);
                 }
-
                 return Promise.reject(error);
             }
         );
