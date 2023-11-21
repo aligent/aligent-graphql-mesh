@@ -1,7 +1,18 @@
-import { Transformer, TransformerContext } from '@aligent/utils';
-import { ShoppingListItem, ShoppingListWithItems } from '../../types';
-import { Cart, CurrencyEnum, Money, SimpleCartItem } from '@aligent/orocommerce-resolvers';
+import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
+import {
+    ImageFiles,
+    IncludedProductCategory,
+    IncludedProductImages,
+    ShoppingListWithItems,
+} from '../../types';
+import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
+import {
+    isShoppingListItem,
+    isProduct,
+    isProductImage,
+    isProductCategory,
+} from '../../utils/type-predicates';
 
 const UNDEFINED_CART: Cart = {
     id: '',
@@ -16,64 +27,198 @@ const UNDEFINED_CART: Cart = {
 
 @Injectable()
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
+    getMoneyData(currency: string, price: string | number): Money {
+        return {
+            currency: currency as CurrencyEnum,
+            value: Number(price),
+        };
+    }
+
+    getImageByDimension(
+        images: IncludedProductImages[],
+        productId: string,
+        imageDimension: string
+    ): ImageFiles | undefined {
+        const productImages = images.find(
+            (item) => item.relationships.product.data.id === productId
+        );
+        if (!productImages)
+            return logAndThrowError(
+                `Could not find related product image to product id: ${productId}`
+            );
+
+        const foundImage = productImages.attributes.files.find(
+            (image) => image.dimension === imageDimension
+        );
+
+        return foundImage;
+    }
+
+    getCategoriesData(productCategories: IncludedProductCategory) {
+        return {
+            id: Number(productCategories.id),
+            breadcrumbs: [
+                // Not sure about this in ORO
+                {
+                    category_uid: btoa(productCategories.id),
+                    category_name: productCategories.attributes.title,
+                },
+            ],
+            uid: btoa(productCategories.id),
+            staged: true, // Couldnt see equivalent value in ORO
+            name: productCategories.attributes.title,
+            level: 1, // Couldnt see equivalent value in ORO
+            redirect_code: 0, // Couldnt see equivalent value in ORO
+            description: String(productCategories.attributes.description),
+            url_path: productCategories.attributes.url,
+            image: productCategories.attributes.images[0].url,
+        };
+    }
+
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
         cart.total_quantity = shoppingList.included?.length || 0;
-        //TODO: split items into a sub-resolver?
 
-        /* Included might be undefined here.
-         * It happens when we delete the last item
-         * from the cart and invoke the get cart resolver */
+        const currency = shoppingList.data.attributes.currency as string;
+        cart.prices = {
+            grand_total: this.getMoneyData(currency, Number(shoppingList.data.attributes.total)),
+            applied_taxes: [
+                // TODO taxes
+                {
+                    amount: {
+                        currency: 'AUD',
+                        value: 0,
+                    },
+                    label: 'Tax description',
+                },
+            ],
+            subtotal_including_tax: {
+                currency: 'AUD',
+                value: 0,
+            },
+        };
+        // cart.free_shipping_details = free_shipping_details -> TODO
+        // ...CheckoutCartFragment @include(if: $isInCheckout -> TODO
 
-        cart.items = shoppingList.included?.map((item: ShoppingListItem): SimpleCartItem => {
-            // Can this also be a ConfigurableCartItem?
-            const prodPrice: Money = {
-                currency: item.attributes.currency as CurrencyEnum,
-                value: Number(item.attributes.value),
-            };
-            return {
+        const shoppingListItems = shoppingList.included?.filter(isShoppingListItem);
+        const products = shoppingList.included?.filter(isProduct);
+        const productsImages = shoppingList.included?.filter(isProductImage);
+        const productsCategories = shoppingList.included?.filter(isProductCategory);
+        if (!products || !shoppingListItems) {
+            return logAndThrowError(
+                `Could not find products or shoppingListItems included in cart ID: ${cart.id}`
+            );
+        }
+
+        for (const product of products) {
+            let errorMessage = '';
+            const relatedShoppingListItem = shoppingListItems.find(
+                (item) => item.relationships?.product.data.id === product.id
+            );
+            if (!relatedShoppingListItem) {
+                return logAndThrowError(
+                    `Related ShoppingListItem not found for product: ${product.id} this data is required`
+                );
+            }
+
+            const productCategories = productsCategories?.find(
+                (item) => item.relationships.categoryPath.data.id === product.id
+            );
+
+            if (!productCategories) {
+                errorMessage += `Related productCategories not found for product: ${product.id} `;
+            }
+
+            if (!productsImages) {
+                errorMessage += `Related productsImages not found for product: ${product.id} `;
+            }
+
+            const smallImage = productsImages
+                ? this.getImageByDimension(productsImages, product.id, 'product_small')
+                : null;
+
+            const originalImage = productsImages
+                ? this.getImageByDimension(productsImages, product.id, 'product_original')
+                : null;
+
+            const currency = relatedShoppingListItem.attributes.currency as string;
+            const price = this.getMoneyData(
+                currency,
+                Number(relatedShoppingListItem.attributes.value)
+            );
+
+            const productAttributes = product.attributes;
+
+            cart.items?.push({
                 __typename: 'SimpleCartItem',
-                id: item.id,
-                uid: btoa(item.id),
-                quantity: item.attributes.quantity,
+                id: product.id,
+                quantity: relatedShoppingListItem.attributes.quantity,
+                uid: btoa(product.id),
                 available_gift_wrapping: [],
                 customizable_options: [],
                 prices: {
-                    price: prodPrice,
-                    price_including_tax: prodPrice,
-                    row_total: prodPrice,
-                    row_total_including_tax: prodPrice,
+                    price,
+                    price_including_tax: price,
+                    row_total: price,
+                    row_total_including_tax: price,
                 },
+                errors: [
+                    {
+                        message: errorMessage,
+                        code: 'UNDEFINED',
+                    },
+                ],
                 product: {
-                    __typename: 'SimpleProduct', // Temp fix, same approach as BC Mesh
+                    __typename: 'SimpleProduct',
+                    id: Number(product.id),
+                    name: productAttributes.name,
+                    sku: productAttributes.sku,
+                    image: {
+                        url: originalImage?.url,
+                        label: originalImage?.dimension,
+                    },
+                    small_image: {
+                        url: smallImage?.url,
+                        label: smallImage?.dimension,
+                    },
+
+                    categories: productCategories
+                        ? [this.getCategoriesData(productCategories)]
+                        : null,
+                    canonical_url: productAttributes.url,
+                    description: productAttributes.description,
+                    short_description: productAttributes.shortDescription,
+                    meta_description: productAttributes.metaDescription,
+                    meta_keyword: productAttributes.metaKeywords,
+                    meta_title: productAttributes.metaTitle,
                     redirect_code: 0,
                     price_range: {
                         minimum_price: {
-                            final_price: prodPrice,
-                            regular_price: prodPrice,
+                            final_price: price,
+                            regular_price: price,
+                            discount: {
+                                // TODO
+                                amount_off: 0,
+                            },
                         },
                         maximum_price: {
-                            final_price: prodPrice,
-                            regular_price: prodPrice,
+                            final_price: price,
+                            regular_price: price,
                         },
                     },
+                    stock_status: 'IN_STOCK', // Not sure about this, was able to add an out of stock item to the shoppinglist
+                    url_key: productAttributes.url,
                     custom_attributes: [],
                     review_count: 0,
                     reviews: { items: [], page_info: {} },
                     rating_summary: 0,
                     staged: false,
-                    uid: btoa(item.id),
+                    uid: btoa(product.id),
                 },
-            };
-        });
-        cart.prices = {
-            grand_total: {
-                currency: shoppingList.data.attributes.currency as CurrencyEnum,
-                value: Number(shoppingList.data.attributes.total),
-            },
-        };
+            });
+        }
 
         return cart;
     }

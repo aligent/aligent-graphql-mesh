@@ -38,10 +38,10 @@ describe('Shopping List to Cart transformation tests', () => {
             value: Number(shoppingListWithItems.data.attributes.total),
         });
 
-        expect(cart.total_quantity).toStrictEqual(shoppingListWithItems.included.length);
+        expect(cart.total_quantity).toStrictEqual(shoppingListWithItems.included!.length);
 
         for (const index in cart.items!) {
-            const shoppingListItem = shoppingListWithItems.included[index];
+            const shoppingListItem = shoppingListWithItems.included![index];
 
             const shoppingListItemPrice: Money = {
                 currency: shoppingListItem.attributes.currency as CurrencyEnum,
