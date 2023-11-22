@@ -229,6 +229,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
                 small_image: getTransformedSmallImage(oroProduct),
+                type: 'PRODUCT',
                 stock_status: getTransformedProductStockStatus(oroProduct),
                 url_key: getPathFromUrlKey(oroProduct.attributes.url),
                 url_suffix: '',
