@@ -7,7 +7,6 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
-import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { storeLocationsResolver } from './queries/store-locations';
@@ -21,12 +20,19 @@ import { getSocialLinksResolver } from './queries/get-social-links';
 import { loginMutation } from './mutations/login';
 import { routeResolver } from './queries/route';
 import { updateCustomerAddressMutation } from './mutations/update-customer-address';
+import { updateCustomerMutation } from './mutations/update-customer';
 import { productsResolver } from './queries/products';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
+import { contactUsMutation } from './mutations/contact-us';
+import { cartResolver } from './queries/cart';
+import { updateCartItemsMutation } from './mutations/update-cart-items';
+import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
+import { isEmailAvailableResolver } from './queries/is-email-available';
 
 export const resolvers: Resolvers = {
     Query: {
         storeConfig: storeConfigResolver,
+        cart: cartResolver,
         currency: currencyResolver,
         countries: countriesResolver,
         keyMessages: keyMessagesResolver,
@@ -38,18 +44,22 @@ export const resolvers: Resolvers = {
         route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
         products: productsResolver,
+        isEmailAvailable: isEmailAvailableResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
-        postContactForm: postContactFormMutation,
+        contactUs: contactUsMutation,
         createCustomer: createCustomerMutation,
         reorderItems: reorderItemsResolver,
         deleteCustomerAddress: deleteCustomerAddressMutation,
         createCustomerAddress: createCustomerAddressMutation,
         login: loginMutation,
         updateCustomerAddress: updateCustomerAddressMutation,
+        updateCartItems: updateCartItemsMutation,
+        removeItemFromCart: removeItemFromCartMutation,
+        updateCustomer: updateCustomerMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

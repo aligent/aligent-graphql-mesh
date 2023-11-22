@@ -18,13 +18,16 @@ export class ShoppingListsClient {
 
     async getShoppingListsWithItems(id?: string): Promise<{
         data: ShoppingList[];
-        included?: ShoppingListItem[];
+        included?: ShoppingListWithItems['included'];
     }> {
         const params = {
-            include: 'items',
+            include: 'items.product.images,items.product.category',
             'filter[id]': id,
         };
-        return this.apiClient.get<ShoppingList[], ShoppingListItem[]>('/shoppinglists', { params });
+        return this.apiClient.get<ShoppingList[], ShoppingListWithItems['included']>(
+            '/shoppinglists',
+            { params }
+        );
     }
 
     async postShoppingLists(data: ShoppingList): Promise<ShoppingList> {
@@ -70,5 +73,21 @@ export class ShoppingListsClient {
             data: items,
         });
         return res.data;
+    }
+
+    async updateItemInShoppingList(updateItem: ShoppingListItem): Promise<ShoppingListItem> {
+        const url = `/shoppinglistitems/${updateItem.id}`;
+        const res = await this.apiClient.patch<
+            { data: ShoppingListItem },
+            { data: ShoppingListItem }
+        >(url, {
+            data: updateItem,
+        });
+        return res.data;
+    }
+
+    async deleteItemInShoppingList(cartItemId: string) {
+        const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
+        return response;
     }
 }

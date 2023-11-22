@@ -251,10 +251,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 __typename: 'SimpleProduct',
             };
         } catch (error) {
-            return logAndThrowError(
-                'product failed to transform',
-                this.getTransformedProductData.name
-            );
+            return logAndThrowError(error, this.getTransformedProductData.name);
         }
     }
 

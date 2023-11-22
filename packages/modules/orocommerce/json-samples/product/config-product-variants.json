@@ -1,0 +1,483 @@
+{
+    "data": [
+        {
+            "type": "products",
+            "id": "12",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/12" },
+            "attributes": {
+                "sku": "WH01",
+                "variantAttributeNames": ["size_63313224a7189", "size_633132c50db9e"],
+                "createdAt": "2023-10-27T01:50:22Z",
+                "updatedAt": "2023-10-27T02:19:31Z",
+                "productType": "configurable",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Mona Pullover Hoodlie",
+                "shortDescription": null,
+                "description": "<div id=\"isolation-scope-9g6aw0a9x3jbp8ftbuod16944\" class=\"cms-wrapper\"><div>Whether you&#039;re after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You&#039;ll stay warm and look fashionable, wherever you are.</div><br/><div> </div><br/><div> • Light green heathered hoodie. </div><br/><div> • Long-Sleeve, pullover.</div><br/><div> • Long elliptical hem for extra coverage.</div><br/><div> • Deep button placket for layering.</div><br/><div> • Double rib design.</div><br/><div> • Mid layer, mid weight.</div><br/><div> • 98% Merino Wool / 2% Spandex</div></div>",
+                "productAttributes": { "size_63313224a7189": null, "size_633132c50db9e": null },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/mona-pullover-hoodlie",
+                "urls": [],
+                "prices": [
+                    { "price": "57.0000", "currencyId": "AUD", "quantity": "0", "unit": "each" }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/images"
+                    },
+                    "data": [
+                        { "type": "productimages", "id": "23" },
+                        { "type": "productimages", "id": "24" },
+                        { "type": "productimages", "id": "22" }
+                    ]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "2" }
+                },
+                "brand": { "data": null },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "7" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "in_stock" }
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/variantProducts"
+                    },
+                    "data": [
+                        { "type": "products", "id": "9" },
+                        { "type": "products", "id": "7" },
+                        { "type": "products", "id": "6" },
+                        { "type": "products", "id": "10" }
+                    ]
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/12/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/12/parentProducts"
+                    },
+                    "data": []
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "brands",
+            "id": "1",
+            "links": { "self": "https://aligent.oro-cloud.com/api/brands/1" },
+            "attributes": { "status": "enabled", "defaultTitle": "Aligent" }
+        },
+        {
+            "type": "products",
+            "id": "9",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/9" },
+            "attributes": {
+                "sku": "HOODIE-SY",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-26T05:27:58Z",
+                "updatedAt": "2023-11-15T02:31:42Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Yellow Small Aligent Hoodie",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "size_63313224a7189": { "id": "s", "targetValue": "S" },
+                    "size_633132c50db9e": { "id": "yellow", "targetValue": "yellow" }
+                },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/yellow-small-aligent-hoodie",
+                "urls": [],
+                "prices": [
+                    { "price": "19.0000", "currencyId": "AUD", "quantity": "0", "unit": "each" }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/images"
+                    },
+                    "data": [
+                        { "type": "productimages", "id": "16" },
+                        { "type": "productimages", "id": "17" }
+                    ]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "2" }
+                },
+                "brand": { "data": { "type": "brands", "id": "1" } },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "4" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "out_of_stock" }
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/variantProducts"
+                    },
+                    "data": []
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/9/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/9/parentProducts"
+                    },
+                    "data": [
+                        { "type": "products", "id": "11" },
+                        { "type": "products", "id": "12" }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "7",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/7" },
+            "attributes": {
+                "sku": "HOODIE-MP",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-26T05:26:20Z",
+                "updatedAt": "2022-09-26T05:27:13Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Purple Medium Aligent Hoodie",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "size_63313224a7189": { "id": "m", "targetValue": "M" },
+                    "size_633132c50db9e": { "id": "purple", "targetValue": "purple" }
+                },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/purple-medium-aligent-hoodie",
+                "urls": [],
+                "prices": [
+                    { "price": "14.0000", "currencyId": "AUD", "quantity": "0", "unit": "each" }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/images"
+                    },
+                    "data": [
+                        { "type": "productimages", "id": "12" },
+                        { "type": "productimages", "id": "13" }
+                    ]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "2" }
+                },
+                "brand": { "data": { "type": "brands", "id": "1" } },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "4" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "in_stock" }
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/variantProducts"
+                    },
+                    "data": []
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/7/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/7/parentProducts"
+                    },
+                    "data": [
+                        { "type": "products", "id": "11" },
+                        { "type": "products", "id": "12" }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "6",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/6" },
+            "attributes": {
+                "sku": "HOODIE-MY",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-26T05:26:17Z",
+                "updatedAt": "2022-09-26T05:27:29Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Yellow Medium Aligent Hoodie",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "size_63313224a7189": { "id": "m", "targetValue": "M" },
+                    "size_633132c50db9e": { "id": "yellow", "targetValue": "yellow" }
+                },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/yellow-medium-aligent-hoodie",
+                "urls": [],
+                "prices": [
+                    { "price": "16.0000", "currencyId": "AUD", "quantity": "0", "unit": "each" }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/images"
+                    },
+                    "data": [
+                        { "type": "productimages", "id": "10" },
+                        { "type": "productimages", "id": "11" }
+                    ]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "2" }
+                },
+                "brand": { "data": { "type": "brands", "id": "1" } },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "4" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "in_stock" }
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/variantProducts"
+                    },
+                    "data": []
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/6/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/6/parentProducts"
+                    },
+                    "data": [
+                        { "type": "products", "id": "11" },
+                        { "type": "products", "id": "12" }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "10",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/10" },
+            "attributes": {
+                "sku": "HOODIE-SP",
+                "variantAttributeNames": [],
+                "createdAt": "2022-09-26T05:28:01Z",
+                "updatedAt": "2022-09-26T05:28:57Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "category_sort_order": null,
+                "name": "Purple Small Aligent Hoodie",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "size_63313224a7189": { "id": "s", "targetValue": "S" },
+                    "size_633132c50db9e": { "id": "purple", "targetValue": "purple" }
+                },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/purple-small-aligent-hoodie",
+                "urls": [],
+                "prices": [
+                    { "price": "17.0000", "currencyId": "AUD", "quantity": "0", "unit": "each" }
+                ],
+                "lowInventory": false,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/images"
+                    },
+                    "data": [
+                        { "type": "productimages", "id": "18" },
+                        { "type": "productimages", "id": "19" }
+                    ]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "2" }
+                },
+                "brand": { "data": { "type": "brands", "id": "1" } },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "4" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "in_stock" }
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/variantProducts"
+                    },
+                    "data": []
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/10/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/10/parentProducts"
+                    },
+                    "data": [
+                        { "type": "products", "id": "11" },
+                        { "type": "products", "id": "12" }
+                    ]
+                }
+            }
+        }
+    ],
+    "links": { "self": "https://aligent.oro-cloud.com/api/products" }
+}

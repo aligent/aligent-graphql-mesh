@@ -2,7 +2,6 @@ import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { AddProductsToCartTransformerChain } from '../../transformers/shopping-list/add-products-to-cart-transformer';
 import { ShoppingListsClient } from '../../apis/rest';
 import { CartService } from '../../services/cart-service';
-import { ShoppingListService } from '../../services/shopping-list-service';
 
 export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] = {
     resolve: async (_root, mutationParams, context, _info) => {
@@ -23,12 +22,8 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             transformedAddProductsToCartInput
         );
 
-        const shoppingListService: ShoppingListService = context.injector.get(ShoppingListService);
-        const shoppingListWithItems =
-            await shoppingListService.getShoppingListWithItems(shoppingListId);
-
         const cartService: CartService = context.injector.get(CartService);
-        const transformedCart = await cartService.getCart(shoppingListWithItems);
+        const transformedCart = await cartService.getCart(shoppingListId);
 
         return {
             cart: transformedCart,

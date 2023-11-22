@@ -5,7 +5,7 @@ import { logAndThrowError } from '@aligent/utils';
 
 const DEFAULT_PLP_PRODUCTS_DISPLAY = 24;
 
-export const productsResolver: QueryResolvers['products'] = {
+export const productsResolver = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
         const api: ProductsClient = context.injector.get(ProductsClient);
         try {
@@ -45,4 +45,4 @@ export const productsResolver: QueryResolvers['products'] = {
             return logAndThrowError(error);
         }
     },
-};
+} satisfies QueryResolvers['products'];

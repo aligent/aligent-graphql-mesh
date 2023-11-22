@@ -33,6 +33,7 @@ export interface Attributes {
         | Array<number>
         | Array<string>
         | Array<object>
+        | undefined
         | Attributes[]
         | EntityAttributes;
 }
@@ -61,11 +62,12 @@ export * from './oroCurrency';
 export * from './country';
 export * from './shopping-list';
 export * from './cms-page';
-export * from './contact';
+export * from './contact-request';
 export * from './web-catalog-tree';
 export * from './customer-user';
 export * from './customer-address';
 export * from './order';
+export * from './update-customer';
 export * from './store-config';
 export * from './shopping-list';
 export * from './order-line-item';

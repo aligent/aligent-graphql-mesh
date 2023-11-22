@@ -136,7 +136,7 @@ export const getMockOroStoreConfig = (): OroStoreConfig => {
             list_mode: '_',
             list_per_page: 1,
             list_per_page_values: '_',
-            locale: '_',
+            locale: 'en_AU',
             logo_alt: '_',
             logo_height: 1,
             logo_width: 1,
