@@ -27,27 +27,7 @@ import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './i
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { getTransformedProductAggregations } from './product-aggregations-transformer';
-
 import { Injectable } from 'graphql-modules';
-
-export const NO_PRICES_RESPONSE = {
-    maximum_price: {
-        discount: {
-            amount_off: null,
-            percent_off: null,
-        },
-        final_price: { currency: null, value: null },
-        regular_price: { currency: null, value: null },
-    },
-    minimum_price: {
-        discount: {
-            amount_off: null,
-            percent_off: null,
-        },
-        final_price: { currency: null, value: null },
-        regular_price: { currency: null, value: null },
-    },
-};
 
 interface ProductsTransformerInput {
     oroProductsData: {
@@ -186,6 +166,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             rating_summary: 0,
                             redirect_code: 0,
                             reviews: {
+                                // TODO
                                 items: [],
                                 page_info: {
                                     current_page: 0,
