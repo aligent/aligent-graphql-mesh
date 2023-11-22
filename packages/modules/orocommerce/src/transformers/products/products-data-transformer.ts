@@ -1,7 +1,6 @@
 import {
     ConfigurableProductAttribute,
     Product as OroProduct,
-    Product,
     ProductIncludeTypes,
     ProductSearch,
     ProductSearchMeta,
@@ -96,11 +95,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             if (entry.type === 'products') {
                 oroProducts.push(entry);
 
-                const productVariants = included?.filter(
-                    (product): product is Product => product.type === 'products'
-                );
+                const productVariants = included?.filter((product) => product.type === 'products');
                 if (productVariants) {
-                    console.log('HERE');
                     oroProducts[0].included = productVariants;
                 }
             }
@@ -203,7 +199,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
-            const currency = oroProduct.attributes.prices[0].currencyId;
+            const currency = oroProduct.attributes.prices[0].currencyId as string;
             const productPrice = this.getPriceData(currency, oroProduct.attributes.prices[0].price);
             const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
@@ -231,7 +227,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                         regular_price: productPrice,
                         final_price: productPrice,
                     },
-                }, // TODO
+                },
                 price_tiers: [], // TODO
                 redirect_code: 0,
                 rating_summary: 0,
@@ -262,7 +258,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 __typename: 'SimpleProduct',
             };
         } catch (error) {
-            return logAndThrowError(error, this.getTransformedProductData.name);
+            console.log(error);
+            return logAndThrowError(
+                'product failed to transform',
+                this.getTransformedProductData.name
+            );
         }
     }
 
