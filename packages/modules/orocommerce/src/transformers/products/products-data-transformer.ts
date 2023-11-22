@@ -161,6 +161,10 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             variant.id
                         );
                     }
+                    const productPrice = this.getPriceData(
+                        variant.attributes.prices[0].currencyId,
+                        variant.attributes.prices[0].price
+                    );
                     return {
                         attributes: this.getTransformedProductsAttributes(variant),
                         product: {
@@ -168,7 +172,16 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             // TODO: Do we need to return anything here?
                             custom_attributes: [],
                             media_gallery_entries: getTransformedMediaGalleryEntries(variant),
-                            price_range: NO_PRICES_RESPONSE, // TODO
+                            price_range: {
+                                minimum_price: {
+                                    regular_price: productPrice,
+                                    final_price: productPrice,
+                                },
+                                maximum_price: {
+                                    regular_price: productPrice,
+                                    final_price: productPrice,
+                                },
+                            },
                             price_tiers: [], // TODO
                             rating_summary: 0,
                             redirect_code: 0,
