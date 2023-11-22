@@ -1,16 +1,15 @@
 import { Products, QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { ProductsTransformerChain } from '../../transformers/products/products-data-transformer';
 import { ProductsClient, ProductsSearchArgsBuilder } from '../../apis/rest';
-import { logAndThrowError, getPathFromUrlKey } from '@aligent/utils';
+import { logAndThrowError } from '@aligent/utils';
 
 const DEFAULT_PLP_PRODUCTS_DISPLAY = 24;
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
         const api: ProductsClient = context.injector.get(ProductsClient);
-
         try {
-            const url_key = getPathFromUrlKey(args.filter?.url_key?.eq);
+            const url_key = args.filter?.url_key?.eq;
             const pageSize = args?.pageSize || DEFAULT_PLP_PRODUCTS_DISPLAY;
             const currentPage = args?.currentPage || 1;
 
@@ -20,7 +19,6 @@ export const productsResolver: QueryResolvers['products'] = {
             // The PDP passes an "url_key" arg, so if we see this then get product information from Oro "site.route.product" query
             if (url_key) {
                 const oroProductsData = await api.getProductBySlug(url_key);
-
                 if (!oroProductsData) return null;
 
                 return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });

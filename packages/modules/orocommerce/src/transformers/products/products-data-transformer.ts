@@ -1,10 +1,10 @@
 import {
     ConfigurableProductAttribute,
     Product as OroProduct,
+    Product,
     ProductIncludeTypes,
     ProductSearch,
     ProductSearchMeta,
-    SupportedProductTypes,
 } from '../../types';
 import {
     ChainTransformer,
@@ -17,7 +17,8 @@ import {
     Products,
     SimpleProduct,
     ConfigurableProduct,
-    BundleProduct,
+    ConfigurableAttributeOption,
+    Maybe,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
@@ -25,7 +26,6 @@ import { getTransformedReviews } from './reviews-transformer';
 import { getTransformedProductAggregations } from './product-aggregations-transformer';
 
 import { Injectable } from 'graphql-modules';
-import { getTransformedVariants } from './product-variants-transformer';
 
 export const NO_PRICES_RESPONSE = {
     maximum_price: {
@@ -91,6 +91,14 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
             if (entry.type === 'products') {
                 oroProducts.push(entry);
+
+                const productVariants = included?.filter(
+                    (product): product is Product => product.type === 'products'
+                );
+                if (productVariants) {
+                    console.log('HERE');
+                    oroProducts[0].included = productVariants;
+                }
             }
         });
 
@@ -110,10 +118,79 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         };
     }
 
+    getTransformedProductsAttributes = (
+        oroProductData: OroProduct
+    ): Maybe<Array<Maybe<ConfigurableAttributeOption>>> => {
+        const productAttributesWithValues = oroProductData.attributes.productAttributes;
+        const productAttributes = Object.keys(productAttributesWithValues);
+
+        const attributes = productAttributes
+            .map((attribute) => {
+                const attributeValue = productAttributesWithValues[attribute];
+                if (!attributeValue) return null;
+                //TODO: figure out when attribute can be an array and handle it
+                if (Array.isArray(attributeValue)) return null;
+                return {
+                    code: attribute,
+                    label: attributeValue.targetValue,
+                    // value_index: Number(attributeValue.id), // This is a string in ORO
+                    uid: btoa(String(attributeValue.id)),
+                };
+            })
+            .filter(Boolean);
+        return attributes;
+    };
+
+    getTransformedVariants = (oroProductData: OroProduct) => {
+        const variantsResults = oroProductData.included
+            ?.map((entity) => {
+                if (entity.type === 'products') {
+                    const variant = <OroProduct>entity;
+                    if (oroProductData.included) {
+                        variant.included = this.getEntitiesRelatedToProduct(
+                            oroProductData.included,
+                            variant.id
+                        );
+                    }
+                    return {
+                        attributes: this.getTransformedProductsAttributes(variant),
+                        product: {
+                            id: Number(variant.id),
+                            media_gallery_entries: getTransformedMediaGalleryEntries(variant),
+                            price_range: NO_PRICES_RESPONSE, // TODO
+                            price_tiers: [], // TODO
+                            rating_summary: 0,
+                            redirect_code: 0,
+                            reviews: {
+                                items: [],
+                                page_info: {
+                                    current_page: 0,
+                                    page_size: 0,
+                                    total_pages: 0,
+                                },
+                            },
+                            review_count: 0,
+                            sku: variant.attributes.sku,
+                            small_image: getTransformedSmallImage(variant),
+                            staged: false,
+                            stock_status: getTransformedProductStockStatus(variant),
+                            uid: btoa(variant.id),
+                        },
+                        __typename: 'ConfigurableVariant',
+                    };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        return variantsResults;
+    };
+
     public getTransformedProductData(
         oroProduct: OroProduct
-    ): SimpleProduct | ConfigurableProduct | BundleProduct | null {
+    ): ConfigurableProduct | SimpleProduct {
         try {
+            // @ts-expect-error: __typename error confusion
             return {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
                 ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
@@ -146,7 +223,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 url_suffix: '',
                 reviews: getTransformedReviews(),
                 ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
-                    variants: getTransformedVariants(oroProduct),
+                    variants: this.getTransformedVariants(oroProduct),
                 }), // TODO: simple products of configurable product
                 // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
                 __typename: this.getProductTypeName(oroProduct),
@@ -156,7 +233,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         }
     }
 
-    protected getProductTypeName(oroProduct: OroProduct): SupportedProductTypes {
+    protected getProductTypeName(oroProduct: OroProduct): 'ConfigurableProduct' | 'SimpleProduct' {
         if (oroProduct.attributes.productType === 'configurable') {
             return 'ConfigurableProduct';
         } else {
@@ -164,7 +241,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         }
     }
 
-    protected getEntitiesRelatedToProduct(
+    getEntitiesRelatedToProduct(
         included: ProductIncludeTypes[],
         productId: string
     ): ProductIncludeTypes[] {

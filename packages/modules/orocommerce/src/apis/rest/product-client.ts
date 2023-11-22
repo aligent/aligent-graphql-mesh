@@ -65,11 +65,11 @@ export class ProductsClient {
         const path = `/products`;
         const params = {
             'filter[slug]': url,
+            'include': 'variantProducts'
         };
         const response = await this.apiClient.get<Product[], ProductIncludeTypes[]>(path, {
             params,
         });
-
         if (response.data.length > 1)
             throw new GraphqlError('input', `More than 1 product found with the same url: ${url}`);
 
