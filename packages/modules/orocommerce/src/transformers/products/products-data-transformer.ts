@@ -11,6 +11,7 @@ import {
     Transformer,
     TransformerContext,
     getPathFromUrlKey,
+    isNotNull,
     logAndThrowError,
 } from '@aligent/utils';
 import {
@@ -19,6 +20,9 @@ import {
     ConfigurableProduct,
     ConfigurableAttributeOption,
     Maybe,
+    CurrencyEnum,
+    Money,
+    ConfigurableVariant,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
@@ -118,6 +122,13 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         };
     }
 
+    getPriceData(currency: string, price: string): Money {
+        return {
+            currency: currency as CurrencyEnum,
+            value: Number(price),
+        };
+    }
+
     getTransformedProductsAttributes = (
         oroProductData: OroProduct
     ): Maybe<Array<Maybe<ConfigurableAttributeOption>>> => {
@@ -141,9 +152,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         return attributes;
     };
 
-    getTransformedVariants = (oroProductData: OroProduct) => {
+    getTransformedVariants = (oroProductData: OroProduct): ConfigurableVariant[] => {
+        if (!oroProductData.included) return [];
+
         const variantsResults = oroProductData.included
-            ?.map((entity) => {
+            .map((entity) => {
                 if (entity.type === 'products') {
                     const variant = <OroProduct>entity;
                     if (oroProductData.included) {
@@ -176,26 +189,25 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             stock_status: getTransformedProductStockStatus(variant),
                             uid: btoa(variant.id),
                         },
-                        __typename: 'ConfigurableVariant',
+                        __typename: 'ConfigurableVariant' as const,
                     };
                 }
                 return null;
             })
-            .filter(Boolean);
+            .filter(isNotNull);
 
         return variantsResults;
     };
 
-    public getTransformedProductData(
-        oroProduct: OroProduct
-    ): ConfigurableProduct | SimpleProduct {
+    public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
-            // @ts-expect-error: __typename error confusion
-            return {
+            const currency = oroProduct.attributes.prices[0].currencyId;
+            const productPrice = this.getPriceData(currency, oroProduct.attributes.prices[0].price);
+            // @ts-expect-error: __typename confusion
+
+            const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
-                ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
-                    configurable_options: [],
-                }), // TODO (product.attributes.productAttributes - for config product only)
+
                 description: {
                     __typename: 'ComplexTextValue',
                     html: oroProduct.attributes.description ?? '',
@@ -210,7 +222,16 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 meta_description: oroProduct.attributes.metaDescription,
                 name: oroProduct.attributes.name,
                 price: null, // TODO
-                price_range: NO_PRICES_RESPONSE, // TODO
+                price_range: {
+                    minimum_price: {
+                        regular_price: productPrice,
+                        final_price: productPrice,
+                    },
+                    maximum_price: {
+                        regular_price: productPrice,
+                        final_price: productPrice,
+                    },
+                }, // TODO
                 price_tiers: [], // TODO
                 redirect_code: 0,
                 rating_summary: 0,
@@ -222,12 +243,21 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 url_key: getPathFromUrlKey(oroProduct.attributes.url),
                 url_suffix: '',
                 reviews: getTransformedReviews(),
-                ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
-                    variants: this.getTransformedVariants(oroProduct),
-                }), // TODO: simple products of configurable product
-                // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
+
                 __typename: this.getProductTypeName(oroProduct),
             };
+
+            if (this.getProductTypeName(oroProduct) === 'ConfigurableProduct') {
+                return {
+                    ...baseProduct,
+                    variants: this.getTransformedVariants(oroProduct),
+                    // TODO: simple products of configurable product
+                    // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
+
+                    configurable_options: [],
+                    __typename: 'ConfigurableProduct',
+                }; // TODO (product.attributes.productAttributes - for config product only)
+            }
         } catch (error) {
             return logAndThrowError(error, this.getTransformedProductData.name);
         }
