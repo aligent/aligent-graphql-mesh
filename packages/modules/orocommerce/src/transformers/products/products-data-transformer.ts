@@ -241,7 +241,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     variants: this.getTransformedVariants(oroProduct),
                     // TODO: simple products of configurable product
                     // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
-
                     configurable_options: [],
                     __typename: 'ConfigurableProduct',
                 }; // TODO (product.attributes.productAttributes - for config product only)
@@ -252,7 +251,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 __typename: 'SimpleProduct',
             };
         } catch (error) {
-            console.log(error);
             return logAndThrowError(
                 'product failed to transform',
                 this.getTransformedProductData.name
