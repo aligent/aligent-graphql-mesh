@@ -169,6 +169,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                         attributes: this.getTransformedProductsAttributes(variant),
                         product: {
                             id: Number(variant.id),
+                            // TODO: Do we need to return anything here?
+                            custom_attributes: [],
                             media_gallery_entries: getTransformedMediaGalleryEntries(variant),
                             price_range: NO_PRICES_RESPONSE, // TODO
                             price_tiers: [], // TODO
@@ -189,8 +191,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             stock_status: getTransformedProductStockStatus(variant),
                             uid: btoa(variant.id),
                         },
-                        __typename: 'ConfigurableVariant' as const,
-                    };
+                        __typename: 'ConfigurableVariant',
+                    } satisfies ConfigurableVariant;
                 }
                 return null;
             })
@@ -203,8 +205,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         try {
             const currency = oroProduct.attributes.prices[0].currencyId;
             const productPrice = this.getPriceData(currency, oroProduct.attributes.prices[0].price);
-            // @ts-expect-error: __typename confusion
-
             const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
 
@@ -243,9 +243,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 url_key: getPathFromUrlKey(oroProduct.attributes.url),
                 url_suffix: '',
                 reviews: getTransformedReviews(),
-
-                __typename: this.getProductTypeName(oroProduct),
-            };
+            } satisfies SimpleProduct;
 
             if (this.getProductTypeName(oroProduct) === 'ConfigurableProduct') {
                 return {
@@ -258,6 +256,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     __typename: 'ConfigurableProduct',
                 }; // TODO (product.attributes.productAttributes - for config product only)
             }
+
+            return {
+                ...baseProduct,
+                __typename: 'SimpleProduct',
+            };
         } catch (error) {
             return logAndThrowError(error, this.getTransformedProductData.name);
         }
