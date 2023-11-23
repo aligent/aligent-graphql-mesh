@@ -1,8 +1,8 @@
 export interface PasswordReset {
-    meta: Meta;
+    meta: PasswordResetMeta;
 }
 
-interface Meta {
+interface PasswordResetMeta {
     action: 'init' | 'confirm';
     email?: string;
     token?: string;
