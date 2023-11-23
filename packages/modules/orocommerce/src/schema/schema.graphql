@@ -715,6 +715,10 @@ type Mutation {
         input: CreateProductReviewInput!
     ): CreateProductReviewOutput!
     """
+    Create an empty requisition list.
+    """
+    createRequisitionList(input: CreateRequisitionListInput): CreateRequisitionListOutput
+    """
     Create a new wish list.
     """
     createWishlist(
@@ -7301,6 +7305,141 @@ enum CartUserInputErrorType {
     INSUFFICIENT_STOCK @deprecated(reason: "")
     UNDEFINED @deprecated(reason: "")
     PERMISSION_DENIED @deprecated(reason: "")
+}
+
+"""
+An input object that identifies and describes a new requisition list.
+"""
+input CreateRequisitionListInput {
+    """
+    An optional description of the requisition list.
+    """
+    description: String
+
+    """
+    The name assigned to the requisition list.
+    """
+    name: String!
+}
+
+"""
+Contains an array of items added to a requisition list.
+"""
+type RequistionListItems {
+    """
+    An array of items in the requisition list.
+    """
+    items: [RequisitionListItemInterface]!
+
+    """
+    Pagination metadata.
+    """
+    page_info: SearchResultPageInfo
+
+    """
+    The number of pages returned.
+    """
+    total_pages: Int!
+}
+
+"""
+The interface for requisition list items.
+"""
+interface RequisitionListItemInterface {
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The amount added.
+    """
+    quantity: Float!
+
+    """
+    The unique ID for the requisition list item.
+    """
+    uid: ID!
+}
+
+"""
+Defines customer requisition lists.
+"""
+type RequisitionLists {
+    """
+    An array of requisition lists.
+    """
+    items: [RequisitionList]
+
+    """
+    Pagination metadata.
+    """
+    page_info: SearchResultPageInfo
+
+    """
+    The number of returned requisition lists.
+    """
+    total_count: Int
+}
+
+"""
+Defines the contents of a requisition list.
+"""
+type RequisitionList {
+    """
+    Optional text that describes the requisition list.
+    """
+    description: String
+
+    """
+    An array of products added to the requisition list.
+    """
+    items(
+        """
+        The page of results to return. The default value is 1.
+        """
+        currentPage: Int = 1
+
+        """
+        The maximum number of results to return. The default value is 1.
+        """
+        pageSize: Int = 20
+    ): RequistionListItems
+
+    """
+    The number of items in the list.
+    """
+    items_count: Int!
+
+    """
+    The requisition list name.
+    """
+    name: String!
+
+    """
+    The unique requisition list ID.
+    """
+    uid: ID!
+
+    """
+    The time of the last modification of the requisition list.
+    """
+    updated_at: String
+}
+
+"""
+Output of the request to create a requisition list.
+"""
+type CreateRequisitionListOutput {
+    """
+    The created requisition list.
+    """
+    requisition_list: RequisitionList
 }
 
 input ContactUsInput {

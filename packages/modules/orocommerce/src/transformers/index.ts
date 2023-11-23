@@ -72,6 +72,7 @@ import {
 } from './customers/update-customer-transformer';
 
 import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-us-to-contact-request-transformer';
+import { CreateShoppingListTransformer } from './shopping-list/create-shopping-list-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -172,6 +173,11 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: ProductsTransformerChain,
             useClass: ProductsTransformerChain,
+            global: true,
+        },
+        {
+            provide: CreateShoppingListTransformer,
+            useClass: CreateShoppingListTransformer,
             global: true,
         },
         {
