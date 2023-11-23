@@ -28,6 +28,8 @@ import { cartResolver } from './queries/cart';
 import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
 import { isEmailAvailableResolver } from './queries/is-email-available';
+import { requestPasswordResetEmailMutation } from './mutations/request-password-reset-email';
+import { resetPasswordMutation } from './mutations/reset-password';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -60,6 +62,8 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsMutation,
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
+        requestPasswordResetEmail: requestPasswordResetEmailMutation,
+        resetPassword: resetPasswordMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {
