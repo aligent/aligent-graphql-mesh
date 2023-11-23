@@ -37,7 +37,9 @@ export class GraphqlError extends Error {
             /* When a query contains invalid input*/
             | 'input'
             /* When an expected resource doesn't exist*/
-            | 'no-such-entity',
+            | 'no-such-entity'
+            /* Internal server error */
+            | 'server-internal-error',
         message: string
     ) {
         super(message);

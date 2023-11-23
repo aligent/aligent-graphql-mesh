@@ -18,13 +18,16 @@ export class ShoppingListsClient {
 
     async getShoppingListsWithItems(id?: string): Promise<{
         data: ShoppingList[];
-        included?: ShoppingListItem[];
+        included?: ShoppingListWithItems['included'];
     }> {
         const params = {
-            include: 'items',
+            include: 'items.product.images,items.product.category',
             'filter[id]': id,
         };
-        return this.apiClient.get<ShoppingList[], ShoppingListItem[]>('/shoppinglists', { params });
+        return this.apiClient.get<ShoppingList[], ShoppingListWithItems['included']>(
+            '/shoppinglists',
+            { params }
+        );
     }
 
     async postShoppingLists(data: ShoppingList): Promise<ShoppingList> {

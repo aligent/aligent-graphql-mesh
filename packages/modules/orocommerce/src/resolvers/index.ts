@@ -8,7 +8,6 @@ import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
-import { postContactFormMutation } from './mutations/contact';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
 import { storeLocationsResolver } from './queries/store-locations';
@@ -25,9 +24,13 @@ import { updateCustomerAddressMutation } from './mutations/update-customer-addre
 import { updateCustomerMutation } from './mutations/update-customer';
 import { productsResolver } from './queries/products';
 import { addProductsToCartResolver } from './mutations/add-products-to-cart';
+import { contactUsMutation } from './mutations/contact-us';
 import { cartResolver } from './queries/cart';
 import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
+import { isEmailAvailableResolver } from './queries/is-email-available';
+import { requestPasswordResetEmailMutation } from './mutations/request-password-reset-email';
+import { resetPasswordMutation } from './mutations/reset-password';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -44,13 +47,14 @@ export const resolvers: Resolvers = {
         route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
         products: productsResolver,
+        isEmailAvailable: isEmailAvailableResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
         createCartRedirectUrls: createCartRedirectUrlsResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
-        postContactForm: postContactFormMutation,
+        contactUs: contactUsMutation,
         createCustomer: createCustomerMutation,
         reorderItems: reorderItemsResolver,
         deleteCustomerAddress: deleteCustomerAddressMutation,
@@ -60,6 +64,8 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsMutation,
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
+        requestPasswordResetEmail: requestPasswordResetEmailMutation,
+        resetPassword: resetPasswordMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

@@ -7,10 +7,11 @@ import {
 import { GraphQLResolveInfo } from 'graphql/type';
 import { Route } from '../../types/routes';
 import { RoutesClient } from '../../apis/rest/routes';
-import { productMock } from '../mocks/products';
-import { categoriesResolver } from './categories';
+
 import { getCategoryUidFromCategoryApiUrl, getIdFromLandingPageApiUrl } from '../../utils';
-import { cmsPageResolver } from './cms-page';
+import { slashAtStartOrEnd } from '@aligent/utils';
+
+import { categoriesResolver, cmsPageResolver, productsResolver } from './';
 
 const getRouteTypeData = async (
     root: object,
@@ -20,7 +21,7 @@ const getRouteTypeData = async (
     routeData: Route
 ): Promise<ResolversTypes['RoutableInterface'] | null> => {
     const {
-        attributes: { apiUrl, resourceType },
+        attributes: { apiUrl, resourceType, url },
     } = routeData;
 
     if (resourceType === 'master_catalog_category_product_collection') {
@@ -37,22 +38,16 @@ const getRouteTypeData = async (
     }
 
     if (resourceType === 'product') {
-        /*
-        @todo uncomment and adjust when there's a products resolver
-        const urlKey = id.replace(':', '');
+        const urlKey = url.replace(slashAtStartOrEnd, '');
+
         const productsResolverData = await productsResolver.resolve(
             root,
-            { url_key: urlKey},
+            { filter: { url_key: { eq: urlKey } }, pageSize: 1, currentPage: 1 },
             context,
             info
         );
 
-        return productsResolverData
-        */
-
-        return {
-            ...productMock,
-        };
+        return productsResolverData?.items?.[0] || null;
     }
 
     /* home page, about us, any other CMS page */
