@@ -1,6 +1,7 @@
 import { Resolvers } from '@aligent/orocommerce-resolvers';
 import { storeConfigResolver } from './queries/store-config';
 import { countriesResolver } from './queries/country';
+import { createCartRedirectUrlsResolver } from './mutations/create-cart-redirect-urls';
 import { generateCustomerTokenMutation } from './mutations/generate-customer-token';
 import { currencyResolver } from './queries/currency';
 import { keyMessagesResolver } from './queries/key-messages';
@@ -50,6 +51,7 @@ export const resolvers: Resolvers = {
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
+        createCartRedirectUrls: createCartRedirectUrlsResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         contactUs: contactUsMutation,
