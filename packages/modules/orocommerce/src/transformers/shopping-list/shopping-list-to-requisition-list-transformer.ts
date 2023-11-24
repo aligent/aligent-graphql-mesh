@@ -4,7 +4,7 @@ import { CreateRequisitionListOutput } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
 @Injectable()
-export class CreateShoppingListTransformer
+export class ShoppingListToRequisitionListTransformer
     implements Transformer<ShoppingList, CreateRequisitionListOutput>
 {
     transform(
@@ -13,7 +13,7 @@ export class CreateShoppingListTransformer
         const shoppingList = context.data;
         return {
             requisition_list: {
-                description: '',
+                description: shoppingList.attributes.notes,
                 items: {
                     items: [],
                     page_info: {

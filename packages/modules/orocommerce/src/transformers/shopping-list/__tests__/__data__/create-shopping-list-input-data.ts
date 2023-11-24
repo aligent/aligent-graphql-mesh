@@ -1,11 +1,12 @@
 import { ShoppingList } from '../../../../types';
+import { CreateRequisitionListInput } from '@aligent/orocommerce-resolvers';
 
-export const createShoppingListInputData: ShoppingList = {
+export const shoppingList: ShoppingList = {
     id: '1',
     type: 'shoppinglists',
     attributes: {
         name: 'Name1',
-        notes: '',
+        notes: 'description',
         default: false,
     },
     relationships: {
@@ -13,4 +14,9 @@ export const createShoppingListInputData: ShoppingList = {
             data: [],
         },
     },
+};
+
+export const createRequisitionListInput: CreateRequisitionListInput = {
+    description: 'description',
+    name: 'Name1',
 };

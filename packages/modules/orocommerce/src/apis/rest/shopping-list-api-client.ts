@@ -90,18 +90,4 @@ export class ShoppingListsClient {
         const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
         return response;
     }
-
-    async createShoppingList(name: string): Promise<ShoppingList> {
-        const attrs: ShoppingListInputAttribute = {
-            name: name,
-            default: false,
-            notes: null,
-        };
-        return this.postShoppingLists({
-            type: 'shoppinglists',
-            id: '1',
-            attributes: attrs,
-            relationships: { items: { data: [] } },
-        });
-    }
 }

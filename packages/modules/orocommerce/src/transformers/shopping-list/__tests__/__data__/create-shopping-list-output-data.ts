@@ -2,7 +2,7 @@ import { CreateRequisitionListOutput } from '@aligent/orocommerce-resolvers';
 
 export const createShoppingListOutputData: CreateRequisitionListOutput = {
     requisition_list: {
-        description: '',
+        description: 'description',
         items: {
             items: [],
             page_info: {
