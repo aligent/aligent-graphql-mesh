@@ -2,14 +2,6 @@ import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { CheckoutService } from '../../services';
 import { AxiosError } from 'axios';
 
-const SUCCESS_RESPONSE = {
-    data: {
-        cart_url: '',
-        checkout_url: '/checkout',
-        embedded_checkout_url: '',
-    },
-};
-
 const getCreateCheckoutSourceError = (shoppingListId: number) => {
     return `Could not create a checkout source for shopping list id "${shoppingListId}"`;
 };
