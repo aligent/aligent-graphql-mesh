@@ -31,9 +31,20 @@ export const createCartRedirectUrlsResolver: MutationResolvers['createCartRedire
                 throw new Error(getCreateCheckoutSourceError(shoppingListId));
             }
 
+            /* Form a cartUid as a string encoded object containing the cart and checkout ids.
+             * Once this comes back to the mesh we know we can query for the shopping list and corresponding
+             * checkout without having to go through the "/checkoutsources" api. */
+            const cartUid = btoa(`{ cart_id: ${shoppingListId}, checkout_id: ${checkout.id} }`);
+
             /* Once a checkout source is successfully created, tell the PWA it can redirect to the checkout
              * by returning the checkout_url  */
-            return SUCCESS_RESPONSE;
+            return {
+                data: {
+                    cart_url: '',
+                    checkout_url: `/checkout?id=${cartUid}`,
+                    embedded_checkout_url: '',
+                },
+            };
         } catch (e) {
             if (e instanceof AxiosError && e.response?.data?.[0]?.detail) {
                 throw new Error(e.response.data[0].detail);
