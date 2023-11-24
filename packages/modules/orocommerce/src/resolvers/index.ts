@@ -1,6 +1,7 @@
 import { Resolvers } from '@aligent/orocommerce-resolvers';
 import { storeConfigResolver } from './queries/store-config';
 import { countriesResolver } from './queries/country';
+import { createCartRedirectUrlsResolver } from './mutations/create-cart-redirect-urls';
 import { generateCustomerTokenMutation } from './mutations/generate-customer-token';
 import { currencyResolver } from './queries/currency';
 import { keyMessagesResolver } from './queries/key-messages';
@@ -29,6 +30,8 @@ import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
 import { isEmailAvailableResolver } from './queries/is-email-available';
 import { createShoppingListMutation } from './mutations/create-shoppinglist';
+import { requestPasswordResetEmailMutation } from './mutations/request-password-reset-email';
+import { resetPasswordMutation } from './mutations/reset-password';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -49,6 +52,7 @@ export const resolvers: Resolvers = {
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
+        createCartRedirectUrls: createCartRedirectUrlsResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
         contactUs: contactUsMutation,
@@ -62,6 +66,8 @@ export const resolvers: Resolvers = {
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
         createRequisitionList: createShoppingListMutation,
+        requestPasswordResetEmail: requestPasswordResetEmailMutation,
+        resetPassword: resetPasswordMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

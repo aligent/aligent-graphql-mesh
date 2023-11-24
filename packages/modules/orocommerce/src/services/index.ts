@@ -1,8 +1,6 @@
 import { Provider, Scope } from 'graphql-modules';
-import { CartService } from './cart-service';
-import { ShoppingListsClient } from '../apis/rest';
-import { ShoppingListService } from './shopping-list-service';
-import { Auth } from './auth';
+import { Auth, CartService, CheckoutService, ShoppingListService } from './';
+import { CheckoutsClient, CheckoutSourcesClient, ShoppingListsClient } from '../apis/rest';
 import { ModuleConfig } from '../providers';
 import {
     OrderLineItemToShoppingListItemTransformer,
@@ -11,6 +9,7 @@ import {
 } from '../transformers';
 
 export * from './auth';
+export * from './checkouts';
 export * from './cart-service';
 export * from './shopping-list-service';
 
@@ -26,6 +25,12 @@ export const getOroServices = (): Array<Provider> => {
             useClass: CartService,
             provide: CartService,
             deps: [ShoppingListsClient, ShoppingListToCartTransformer],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: CheckoutService,
+            provide: CheckoutService,
+            deps: [CheckoutSourcesClient, CheckoutsClient],
             scope: Scope.Operation,
         },
         {

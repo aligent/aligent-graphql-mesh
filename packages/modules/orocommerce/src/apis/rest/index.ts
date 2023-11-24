@@ -1,3 +1,5 @@
+export * from './checkouts';
+export * from './checkout-sources';
 export * from './client';
 export * from './cms-blocks-api-client';
 export * from './country-client';

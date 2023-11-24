@@ -7,6 +7,7 @@ import {
     OroCustomerAddressInput,
     UpdateCustomer,
 } from '../../types';
+import { PasswordReset } from '../../types/password-reset';
 
 @Injectable()
 export class CustomerClient {
@@ -70,5 +71,16 @@ export class CustomerClient {
             { data: UpdateCustomer }
         >(`/customerusers/mine`, { data: updateCustomer });
         return response.data;
+    }
+
+    async passwordReset(passwordReset: PasswordReset): Promise<PasswordReset> {
+        const response = await this.apiClient.post<PasswordReset, PasswordReset>(
+            `/tf_password_reset`,
+            {
+                meta: passwordReset.meta,
+            }
+        );
+
+        return response;
     }
 }
