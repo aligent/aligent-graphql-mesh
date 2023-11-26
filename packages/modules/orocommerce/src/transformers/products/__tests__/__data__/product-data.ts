@@ -3,7 +3,6 @@ import { Product as OroProduct } from '../../../../types';
 import { oroImages } from './product-images';
 import { oroDiscontinued, oroInStock, oroOutOfStock } from './stock-status';
 import { createImageIdFromUrl } from '../../../../utils';
-import { NO_PRICES_RESPONSE } from '../../products-data-transformer';
 
 export const oroProducts: OroProduct[] = [
     {
@@ -124,7 +123,14 @@ export const oroProducts: OroProduct[] = [
             ],
             url: '/aligent-hoodie',
             urls: [],
-            prices: [],
+            prices: [
+                {
+                    price: '10.0000',
+                    currencyId: 'AUD',
+                    quantity: '0',
+                    unit: 'each',
+                },
+            ],
             lowInventory: false,
             upcoming: false,
             availabilityDate: null,
@@ -163,7 +169,7 @@ export const oroProducts: OroProduct[] = [
             inventoryStatus: {
                 data: {
                     type: 'productinventorystatuses',
-                    id: 'in_stock',
+                    id: 'out_of_stock',
                 },
             },
             variantProducts: {
@@ -244,7 +250,7 @@ export const oroProducts: OroProduct[] = [
             urls: [],
             prices: [
                 {
-                    price: '57.0000',
+                    price: '10.0000',
                     currencyId: 'AUD',
                     quantity: '0',
                     unit: 'each',
@@ -292,7 +298,7 @@ export const oroProducts: OroProduct[] = [
             inventoryStatus: {
                 data: {
                     type: 'productinventorystatuses',
-                    id: 'in_stock',
+                    id: 'discontinued',
                 },
             },
             variantProducts: {
@@ -354,7 +360,16 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
         meta_description: 'Meta Content from Oro',
         name: 'TEST',
         price: null,
-        price_range: NO_PRICES_RESPONSE,
+        price_range: {
+            minimum_price: {
+                regular_price: { currency: 'AUD', value: 10 },
+                final_price: { currency: 'AUD', value: 10 },
+            },
+            maximum_price: {
+                regular_price: { currency: 'AUD', value: 10 },
+                final_price: { currency: 'AUD', value: 10 },
+            },
+        },
         price_tiers: [],
         rating_summary: 0,
         redirect_code: 0,
@@ -424,7 +439,16 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
         meta_description: null,
         name: 'Aligent Hoodie',
         price: null,
-        price_range: NO_PRICES_RESPONSE,
+        price_range: {
+            minimum_price: {
+                regular_price: { currency: 'AUD', value: 10 },
+                final_price: { currency: 'AUD', value: 10 },
+            },
+            maximum_price: {
+                regular_price: { currency: 'AUD', value: 10 },
+                final_price: { currency: 'AUD', value: 10 },
+            },
+        },
         price_tiers: [],
         rating_summary: 0,
         redirect_code: 0,
@@ -483,7 +507,16 @@ export const outputProducts: Array<SimpleProduct | ConfigurableProduct> = [
         meta_description: null,
         name: 'Mona Pullover Hoodlie',
         price: null,
-        price_range: NO_PRICES_RESPONSE,
+        price_range: {
+            minimum_price: {
+                regular_price: { currency: 'AUD', value: 10 },
+                final_price: { currency: 'AUD', value: 10 },
+            },
+            maximum_price: {
+                regular_price: { currency: 'AUD', value: 10 },
+                final_price: { currency: 'AUD', value: 10 },
+            },
+        },
         price_tiers: [],
         rating_summary: 0,
         redirect_code: 0,

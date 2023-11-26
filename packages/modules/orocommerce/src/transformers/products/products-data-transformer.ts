@@ -4,51 +4,30 @@ import {
     ProductIncludeTypes,
     ProductSearch,
     ProductSearchMeta,
-    SupportedProductTypes,
 } from '../../types';
 import {
     ChainTransformer,
     Transformer,
     TransformerContext,
     getPathFromUrlKey,
+    isNotNull,
     logAndThrowError,
 } from '@aligent/utils';
 import {
     Products,
     SimpleProduct,
     ConfigurableProduct,
-    BundleProduct,
+    ConfigurableAttributeOption,
+    Maybe,
     CurrencyEnum,
+    Money,
+    ConfigurableVariant,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { getTransformedProductAggregations } from './product-aggregations-transformer';
-
 import { Injectable } from 'graphql-modules';
-
-// @TODO remove once product prices is implemented as the
-// currencyCode should be dynamic. This ensures the PWA PDP page doesn't break
-const MOCK_CURRENCY = 'AUD' as CurrencyEnum;
-
-export const NO_PRICES_RESPONSE = {
-    maximum_price: {
-        discount: {
-            amount_off: null,
-            percent_off: null,
-        },
-        final_price: { currency: MOCK_CURRENCY, value: null },
-        regular_price: { currency: MOCK_CURRENCY, value: null },
-    },
-    minimum_price: {
-        discount: {
-            amount_off: null,
-            percent_off: null,
-        },
-        final_price: { currency: MOCK_CURRENCY, value: null },
-        regular_price: { currency: MOCK_CURRENCY, value: null },
-    },
-};
 
 interface ProductsTransformerInput {
     oroProductsData: {
@@ -84,17 +63,22 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 const oroProduct = <OroProduct>(
                     included?.find((entity) => entity.type === 'products' && entity.id === entry.id)
                 );
-                oroProduct.included = oroProductsData.included?.filter(
-                    (entity) =>
-                        entity.type === 'productinventorystatuses' ||
-                        entity.type === 'productimages' ||
-                        entity.type === 'mastercatalogcategories'
-                );
+                if (oroProductsData.included) {
+                    oroProduct.included = this.getEntitiesRelatedToProduct(
+                        oroProductsData.included,
+                        oroProduct.id
+                    );
+                }
                 oroProducts.push(oroProduct);
             }
 
             if (entry.type === 'products') {
                 oroProducts.push(entry);
+
+                const productVariants = included?.filter((product) => product.type === 'products');
+                if (productVariants) {
+                    oroProducts[0].included = productVariants;
+                }
             }
         });
 
@@ -114,15 +98,106 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         };
     }
 
-    public getTransformedProductData(
-        oroProduct: OroProduct
-    ): SimpleProduct | ConfigurableProduct | BundleProduct | null {
+    getPriceData(currency: string, price: string): Money {
+        return {
+            currency: currency as CurrencyEnum,
+            value: Number(price),
+        };
+    }
+
+    getTransformedProductsAttributes = (
+        oroProductData: OroProduct
+    ): Maybe<Array<Maybe<ConfigurableAttributeOption>>> => {
+        const productAttributesWithValues = oroProductData.attributes.productAttributes;
+        const productAttributes = Object.keys(productAttributesWithValues);
+
+        const attributes = productAttributes
+            .map((attribute) => {
+                const attributeValue = productAttributesWithValues[attribute];
+                if (!attributeValue) return null;
+                //TODO: figure out when attribute can be an array and handle it
+                if (Array.isArray(attributeValue)) return null;
+                return {
+                    code: attribute,
+                    label: attributeValue.targetValue,
+                    // value_index: Number(attributeValue.id), // This is a string in ORO
+                    uid: btoa(String(attributeValue.id)),
+                };
+            })
+            .filter(Boolean);
+        return attributes;
+    };
+
+    getTransformedVariants = (oroProductData: OroProduct): ConfigurableVariant[] => {
+        if (!oroProductData.included) return [];
+
+        const variantsResults = oroProductData.included
+            .map((entity) => {
+                if (entity.type === 'products') {
+                    const variant = <OroProduct>entity;
+                    if (oroProductData.included) {
+                        variant.included = this.getEntitiesRelatedToProduct(
+                            oroProductData.included,
+                            variant.id
+                        );
+                    }
+                    const productPrice = this.getPriceData(
+                        variant.attributes.prices[0].currencyId,
+                        variant.attributes.prices[0].price
+                    );
+                    return {
+                        attributes: this.getTransformedProductsAttributes(variant),
+                        product: {
+                            id: Number(variant.id),
+                            // TODO: Do we need to return anything here?
+                            custom_attributes: [],
+                            media_gallery_entries: getTransformedMediaGalleryEntries(variant),
+                            price_range: {
+                                minimum_price: {
+                                    regular_price: productPrice,
+                                    final_price: productPrice,
+                                },
+                                maximum_price: {
+                                    regular_price: productPrice,
+                                    final_price: productPrice,
+                                },
+                            },
+                            price_tiers: [], // TODO
+                            rating_summary: 0,
+                            redirect_code: 0,
+                            reviews: {
+                                // TODO
+                                items: [],
+                                page_info: {
+                                    current_page: 0,
+                                    page_size: 0,
+                                    total_pages: 0,
+                                },
+                            },
+                            review_count: 0,
+                            sku: variant.attributes.sku,
+                            small_image: getTransformedSmallImage(variant),
+                            staged: false,
+                            stock_status: getTransformedProductStockStatus(variant),
+                            uid: btoa(variant.id),
+                        },
+                        __typename: 'ConfigurableVariant',
+                    } satisfies ConfigurableVariant;
+                }
+                return null;
+            })
+            .filter(isNotNull);
+
+        return variantsResults;
+    };
+
+    public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
-            return {
+            const currency = oroProduct.attributes.prices[0].currencyId as string;
+            const productPrice = this.getPriceData(currency, oroProduct.attributes.prices[0].price);
+            const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
-                ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
-                    configurable_options: [],
-                }), // TODO (product.attributes.productAttributes - for config product only)
+
                 description: {
                     __typename: 'ComplexTextValue',
                     html: oroProduct.attributes.description ?? '',
@@ -137,7 +212,16 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 meta_description: oroProduct.attributes.metaDescription,
                 name: oroProduct.attributes.name,
                 price: null, // TODO
-                price_range: NO_PRICES_RESPONSE, // TODO
+                price_range: {
+                    minimum_price: {
+                        regular_price: productPrice,
+                        final_price: productPrice,
+                    },
+                    maximum_price: {
+                        regular_price: productPrice,
+                        final_price: productPrice,
+                    },
+                },
                 price_tiers: [], // TODO
                 redirect_code: 0,
                 rating_summary: 0,
@@ -145,27 +229,55 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
                 small_image: getTransformedSmallImage(oroProduct),
+                type: 'PRODUCT',
                 stock_status: getTransformedProductStockStatus(oroProduct),
                 url_key: getPathFromUrlKey(oroProduct.attributes.url),
                 url_suffix: '',
                 reviews: getTransformedReviews(),
-                ...(this.getProductTypeName(oroProduct) === 'ConfigurableProduct' && {
-                    variants: [],
-                }), // TODO: simple products of configurable product
-                // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
-                type: 'PRODUCT',
-                __typename: this.getProductTypeName(oroProduct),
+            } satisfies SimpleProduct;
+
+            if (this.getProductTypeName(oroProduct) === 'ConfigurableProduct') {
+                return {
+                    ...baseProduct,
+                    variants: this.getTransformedVariants(oroProduct),
+                    // TODO: simple products of configurable product
+                    // TODO: need product unit (it's a required field for many oro POST apis, ex. add product to cart)
+                    configurable_options: [],
+                    __typename: 'ConfigurableProduct',
+                }; // TODO (product.attributes.productAttributes - for config product only)
+            }
+
+            return {
+                ...baseProduct,
+                __typename: 'SimpleProduct',
             };
         } catch (error) {
             return logAndThrowError(error, this.getTransformedProductData.name);
         }
     }
 
-    protected getProductTypeName(oroProduct: OroProduct): SupportedProductTypes {
+    protected getProductTypeName(oroProduct: OroProduct): 'ConfigurableProduct' | 'SimpleProduct' {
         if (oroProduct.attributes.productType === 'configurable') {
             return 'ConfigurableProduct';
         } else {
             return 'SimpleProduct';
         }
+    }
+
+    getEntitiesRelatedToProduct(
+        included: ProductIncludeTypes[],
+        productId: string
+    ): ProductIncludeTypes[] {
+        return included.filter(
+            (entity) =>
+                ['productinventorystatuses', 'productimages', 'mastercatalogcategories'].includes(
+                    entity.type
+                ) ||
+                //filter only product variants related to requested product
+                (entity.type === 'products' &&
+                    entity.relationships.parentProducts.data.find(
+                        (parent) => parent.id === productId
+                    ))
+        );
     }
 }

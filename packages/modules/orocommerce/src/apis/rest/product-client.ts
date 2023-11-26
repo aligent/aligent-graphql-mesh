@@ -43,7 +43,10 @@ export class ProductsClient {
         const params = {
             ...(searchQuery && { 'filter[searchQuery]': searchQuery }),
             ...(aggregations && { 'filter[aggregations]': aggregations }),
-            ...(!aggregations && { include: 'product,product.images,category,inventoryStatus' }),
+            ...(!aggregations && {
+                include:
+                    'product,product.images,product.variantProducts.images,category,inventoryStatus',
+            }),
             'page[number]': currentPage,
             'page[size]': pageSize,
             sort,
@@ -62,11 +65,11 @@ export class ProductsClient {
         const path = `/products`;
         const params = {
             'filter[slug]': url,
+            include: 'variantProducts',
         };
         const response = await this.apiClient.get<Product[], ProductIncludeTypes[]>(path, {
             params,
         });
-
         if (response.data.length > 1)
             throw new GraphqlError('input', `More than 1 product found with the same url: ${url}`);
 

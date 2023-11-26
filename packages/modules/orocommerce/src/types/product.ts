@@ -64,7 +64,7 @@ export interface ProductAttributes extends Attributes {
     metaKeywords: string | null;
     name: string;
     newArrival: boolean;
-    prices: Array<object>;
+    prices: Price[];
     productAttributes: EntityAttributes;
     productType: string;
     shortDescription: string | null;
@@ -76,6 +76,13 @@ export interface ProductAttributes extends Attributes {
     variantAttributeNames: Array<string>;
     createdAt: string;
     updatedAt: string;
+}
+
+interface Price {
+    price: string;
+    currencyId: string;
+    quantity: string;
+    unit: string;
 }
 
 export interface ProductRelationships extends Relationships {
