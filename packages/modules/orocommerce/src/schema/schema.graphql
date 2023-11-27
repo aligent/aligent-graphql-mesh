@@ -717,7 +717,7 @@ type Mutation {
     """
     Create an empty requisition list.
     """
-    createRequisitionList(input: CreateRequisitionListInput): CreateRequisitionListOutput
+    createRequisitionList(input: CreateRequisitionListInput!): CreateRequisitionListOutput
     """
     Create a new wish list.
     """

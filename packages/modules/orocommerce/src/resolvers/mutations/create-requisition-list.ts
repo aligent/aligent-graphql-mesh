@@ -11,8 +11,6 @@ export const createRequisitionListMutation: MutationResolvers['createRequisition
         const requisitionListInputToShoppingListTransformer: RequisitionListInputToShoppingListTransformer =
             context.injector.get(RequisitionListInputToShoppingListTransformer);
 
-        if (!args.input) throw new Error(`Input is required`);
-
         const shoppingList = requisitionListInputToShoppingListTransformer.transform({
             data: args.input,
         });
