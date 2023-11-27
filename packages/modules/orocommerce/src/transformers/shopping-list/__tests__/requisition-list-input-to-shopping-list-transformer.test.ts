@@ -6,7 +6,7 @@ import {
 } from './__data__/create-shopping-list-input-data';
 
 describe('Requisition list input to shopping list transform tests', () => {
-    test('return transformed shopping list', () => {
+    test('Transform requisition list input to shopping list', () => {
         const requisitionListInputToShoppingListTransformer =
             new RequisitionListInputToShoppingListTransformer();
         const transformed = requisitionListInputToShoppingListTransformer.transform({

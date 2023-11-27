@@ -29,9 +29,9 @@ import { cartResolver } from './queries/cart';
 import { updateCartItemsMutation } from './mutations/update-cart-items';
 import { removeItemFromCartMutation } from './mutations/remove-item-from-cart';
 import { isEmailAvailableResolver } from './queries/is-email-available';
-import { createShoppingListMutation } from './mutations/create-shoppinglist';
 import { requestPasswordResetEmailMutation } from './mutations/request-password-reset-email';
 import { resetPasswordMutation } from './mutations/reset-password';
+import { createRequisitionListMutation } from './mutations/create-requisition-list';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -65,7 +65,7 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsMutation,
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
-        createRequisitionList: createShoppingListMutation,
+        createRequisitionList: createRequisitionListMutation,
         requestPasswordResetEmail: requestPasswordResetEmailMutation,
         resetPassword: resetPasswordMutation,
     },
