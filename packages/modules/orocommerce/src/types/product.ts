@@ -64,7 +64,7 @@ export interface ProductAttributes extends Attributes {
     metaKeywords: string | null;
     name: string;
     newArrival: boolean;
-    prices: Price[];
+    prices: Price[] | [];
     productAttributes: EntityAttributes;
     productType: string;
     shortDescription: string | null;
@@ -147,7 +147,7 @@ export interface ConfigurableProductAttribute {
         id: string;
         attrType: string;
         label: string;
-    };
+    }
 }
 
 export interface Category extends Entity {

@@ -22,11 +22,12 @@ import {
     CurrencyEnum,
     Money,
     ConfigurableVariant,
+    Aggregation,
+    FilterTypeEnum,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
-import { getTransformedProductAggregations } from './product-aggregations-transformer';
 import { Injectable } from 'graphql-modules';
 
 interface ProductsTransformerInput {
@@ -35,7 +36,7 @@ interface ProductsTransformerInput {
         included?: Array<ProductIncludeTypes>;
         meta?: ProductSearchMeta;
     };
-    productAttributes?: Array<ConfigurableProductAttribute>;
+    productAttributes?: ConfigurableProductAttribute[];
     pageSize: number;
     currentPage: number;
 }
@@ -49,7 +50,7 @@ export class ProductsTransformerChain extends ChainTransformer<
 @Injectable()
 export class ProductsTransformer implements Transformer<ProductsTransformerInput, Products> {
     public transform(context: TransformerContext<ProductsTransformerInput, Products>): Products {
-        const { oroProductsData, pageSize, currentPage } = context.data;
+        const { oroProductsData, pageSize, currentPage, productAttributes } = context.data;
         const { data, included, meta } = oroProductsData;
         const oroProducts: Array<OroProduct> = [];
 
@@ -85,8 +86,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
 
         return {
-            aggregations: oroProductsData.meta?.aggregatedData
-                ? getTransformedProductAggregations(oroProductsData.meta.aggregatedData)
+            aggregations: productAttributes
+                ? this.getTransformedProductAggregations(productAttributes)
                 : null,
             items: oroProducts.map((product) => this.getTransformedProductData(product)),
             page_info: {
@@ -96,6 +97,20 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             },
             total_count: totalRecordsCount,
         };
+    }
+
+    getTransformedProductAggregations(
+        productAttributes: ConfigurableProductAttribute[]
+    ): Aggregation[] {
+        return productAttributes.map((attribute) => {
+            const { id, label } = attribute.meta;
+            return {
+                attribute_code: id,
+                count: 1,
+                label: label,
+                options: [],
+            };
+        });
     }
 
     getPriceData(currency: string, price: string): Money {
@@ -193,8 +208,9 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
-            const currency = oroProduct.attributes.prices[0].currencyId as string;
-            const productPrice = this.getPriceData(currency, oroProduct.attributes.prices[0].price);
+            const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
+            const price = oroProduct.attributes.prices[0]?.price || '0';
+            const productPrice = this.getPriceData(currency, price);
             const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
 

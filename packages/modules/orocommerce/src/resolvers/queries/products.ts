@@ -1,7 +1,7 @@
 import { Products, QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { ProductsTransformerChain } from '../../transformers/products/products-data-transformer';
 import { ProductsClient, ProductsSearchArgsBuilder } from '../../apis/rest';
-import { logAndThrowError } from '@aligent/utils';
+import { atob, logAndThrowError } from '@aligent/utils';
 
 const DEFAULT_PLP_PRODUCTS_DISPLAY = 24;
 
@@ -23,21 +23,28 @@ export const productsResolver = {
 
                 return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });
             }
-
+            console.log(args);
+            const categoryUid = args.filter?.category_uid?.eq as string;
+            const decodedCategoryUid = atob(categoryUid);
+            const categoryId = JSON.parse(decodedCategoryUid)
+            categoryId.id
             // Continue to search products by provided filters
-            const searchQuery = ProductsSearchArgsBuilder.buildSearchQuery(args);
+            // const searchQuery = ProductsSearchArgsBuilder.buildSearchQuery(args);
+            // console.log(searchQuery, 'ssssssssssssssssssss');
             const productAttributes = await api.getProductAttributes();
-            const aggregations = ProductsSearchArgsBuilder.buildAggregations(productAttributes);
+            console.log(productAttributes);
+            // const aggregations = ProductsSearchArgsBuilder.buildAggregations(productAttributes);
+            // console.log(aggregations);
             const sort = ProductsSearchArgsBuilder.buildSort(args?.sort);
 
             const oroProductsData = await api.searchProducts(
-                searchQuery, // includes filters and search keywords to narrow down product search results
-                aggregations, // includes attributes to request aggregated data which is returned in the meta section of the response, and can be used to build product filters
+                `category =${categoryId.id}`, // includes filters and search keywords to narrow down product search results
+                '', // includes attributes to request aggregated data which is returned in the meta section of the response, and can be used to build product filters
                 pageSize,
                 currentPage,
                 sort
             );
-
+            console.log(oroProductsData);
             return transformer.transform({
                 data: { oroProductsData, productAttributes, pageSize, currentPage },
             });
