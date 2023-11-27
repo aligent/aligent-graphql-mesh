@@ -26,7 +26,6 @@ export class ShoppingListToRequisitionListTransformer
                 items_count: 0,
                 name: shoppingList.attributes.name,
                 uid: '',
-                updated_at: '2023-22-21',
             },
         };
     }
