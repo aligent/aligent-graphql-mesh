@@ -23,7 +23,6 @@ import {
     Money,
     ConfigurableVariant,
     Aggregation,
-    FilterTypeEnum,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
@@ -84,7 +83,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         });
 
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
-
         return {
             aggregations: productAttributes
                 ? this.getTransformedProductAggregations(productAttributes)
@@ -99,6 +97,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         };
     }
 
+    // This function has been created from the limited data returned from /tf_product_attributes custom API
     getTransformedProductAggregations(
         productAttributes: ConfigurableProductAttribute[]
     ): Aggregation[] {
@@ -208,6 +207,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
+            // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
             const price = oroProduct.attributes.prices[0]?.price || '0';
             const productPrice = this.getPriceData(currency, price);

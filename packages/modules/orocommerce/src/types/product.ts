@@ -147,7 +147,7 @@ export interface ConfigurableProductAttribute {
         id: string;
         attrType: string;
         label: string;
-    }
+    };
 }
 
 export interface Category extends Entity {
