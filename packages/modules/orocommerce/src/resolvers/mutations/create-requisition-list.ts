@@ -1,4 +1,4 @@
-import { CreateRequisitionListInput, MutationResolvers } from '@aligent/orocommerce-resolvers';
+import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
 import { ShoppingListToRequisitionListTransformer } from '../../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
 import { RequisitionListInputToShoppingListTransformer } from '../../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
@@ -10,8 +10,11 @@ export const createRequisitionListMutation: MutationResolvers['createRequisition
     resolve: async (_root, args, context, _info) => {
         const requisitionListInputToShoppingListTransformer: RequisitionListInputToShoppingListTransformer =
             context.injector.get(RequisitionListInputToShoppingListTransformer);
+
+        if (!args.input) throw new Error(`Input is required`);
+
         const shoppingList = requisitionListInputToShoppingListTransformer.transform({
-            data: args.input as CreateRequisitionListInput,
+            data: args.input,
         });
 
         const client: ShoppingListsClient = context.injector.get(ShoppingListsClient);
