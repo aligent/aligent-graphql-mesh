@@ -11,7 +11,7 @@ export class RequisitionListInputToShoppingListTransformer
         const attrs: ShoppingListInputAttribute = {
             name: context.data.name,
             default: false,
-            notes: context.data.description as string,
+            notes: context.data.description || '',
         };
         return {
             type: 'shoppinglists',
