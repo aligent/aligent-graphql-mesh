@@ -1,7 +1,7 @@
 import { Products, QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { ProductsTransformerChain } from '../../transformers/products/products-data-transformer';
 import { ProductsClient, ProductsSearchArgsBuilder } from '../../apis/rest';
-import { logAndThrowError } from '@aligent/utils';
+import { logAndThrowError, slashAtStartOrEnd } from '@aligent/utils';
 
 const DEFAULT_PLP_PRODUCTS_DISPLAY = 24;
 
@@ -18,9 +18,9 @@ export const productsResolver = {
 
             // The PDP passes an "url_key" arg, so if we see this then get product information from Oro "site.route.product" query
             if (url_key) {
-                const oroProductsData = await api.getProductBySlug(url_key);
+                const urlKeyWithSlashRemoved = url_key.replace(slashAtStartOrEnd, '');
+                const oroProductsData = await api.getProductBySlug(urlKeyWithSlashRemoved);
                 if (!oroProductsData) return null;
-
                 return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });
             }
 

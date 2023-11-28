@@ -1,6 +1,8 @@
 import {
     ConfigurableProductAttribute,
     Product as OroProduct,
+    ProductImage,
+    ProductImageFile,
     ProductIncludeTypes,
     ProductSearch,
     ProductSearchMeta,
@@ -9,9 +11,10 @@ import {
     ChainTransformer,
     Transformer,
     TransformerContext,
-    getPathFromUrlKey,
+    btoa,
     isNotNull,
     logAndThrowError,
+    slashAtStartOrEnd,
 } from '@aligent/utils';
 import {
     Products,
@@ -23,8 +26,8 @@ import {
     Money,
     ConfigurableVariant,
     Aggregation,
+    MediaGalleryEntry,
 } from '@aligent/orocommerce-resolvers';
-import { getTransformedSmallImage, getTransformedMediaGalleryEntries } from './images-transformer';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
@@ -75,19 +78,21 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             if (entry.type === 'products') {
                 oroProducts.push(entry);
 
-                const productVariants = included?.filter((product) => product.type === 'products');
-                if (productVariants) {
-                    oroProducts[0].included = productVariants;
+                if (included) {
+                    oroProducts[0].included = included;
                 }
             }
         });
 
+        // console.log(JSON.stringify(oroProducts));
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
+        const itemsT = oroProducts.map((product) => this.getTransformedProductData(product));
+        console.log(JSON.stringify(itemsT));
         return {
             aggregations: productAttributes
                 ? this.getTransformedProductAggregations(productAttributes)
                 : null,
-            items: oroProducts.map((product) => this.getTransformedProductData(product)),
+            items: itemsT,
             page_info: {
                 current_page: currentPage,
                 page_size: pageSize,
@@ -159,13 +164,21 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                         variant.attributes.prices[0].currencyId,
                         variant.attributes.prices[0].price
                     );
+                    const productsImages = variant.included?.filter(this.isProductImage);
+
+                    const smallImage = productsImages
+                        ? this.getImageByDimension(productsImages, 'product_small')
+                        : null;
+
                     return {
                         attributes: this.getTransformedProductsAttributes(variant),
                         product: {
                             id: Number(variant.id),
                             // TODO: Do we need to return anything here?
                             custom_attributes: [],
-                            media_gallery_entries: getTransformedMediaGalleryEntries(variant),
+                            media_gallery_entries: productsImages
+                                ? this.getMediaImages(productsImages)
+                                : [],
                             price_range: {
                                 minimum_price: {
                                     regular_price: productPrice,
@@ -190,7 +203,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             },
                             review_count: 0,
                             sku: variant.attributes.sku,
-                            small_image: getTransformedSmallImage(variant),
+                            small_image: smallImage,
                             staged: false,
                             stock_status: getTransformedProductStockStatus(variant),
                             uid: btoa(variant.id),
@@ -205,15 +218,61 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         return variantsResults;
     };
 
+    isProductImage = (item: ProductIncludeTypes): item is ProductImage => {
+        return item.type === 'productimages';
+    };
+
+    getImageByDimension(
+        images: ProductImage[],
+        imageDimension: string
+    ): ProductImageFile | undefined {
+        const foundImage = images[0].attributes.files.find(
+            (image) => image.dimension === imageDimension
+        );
+
+        return foundImage;
+    }
+
+    getMediaImages(includedImages: ProductImage[]): MediaGalleryEntry[] {
+        const mediaGalleryEntries: MediaGalleryEntry[] = [];
+
+        for (const includedImage of includedImages) {
+            const transformedMediaImages = includedImage.attributes.files.map((image) => {
+                return {
+                    id: Number(includedImage.id),
+                    label: image.dimension,
+                    disabled: false,
+                    file: image.url,
+                    uid: btoa(`id:${includedImage.id}-dimension:${image.dimension}`),
+                };
+            });
+
+            mediaGalleryEntries.push(...transformedMediaImages);
+        }
+
+        return mediaGalleryEntries;
+    }
+
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
             // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
             const price = oroProduct.attributes.prices[0]?.price || '0';
             const productPrice = this.getPriceData(currency, price);
+            const productsImages = oroProduct.included?.filter(this.isProductImage);
+            const smallImage = productsImages
+                ? this.getImageByDimension(productsImages, 'product_small')
+                : null;
+
+            const originalImage = productsImages
+                ? this.getImageByDimension(productsImages, 'product_original')
+                : null;
+
+            // const mediGallter =  productsImages ? this.getMediaImages(productsImages) : []
+            // console.log(JSON.stringify(mediGallter))
+
             const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
-
                 description: {
                     __typename: 'ComplexTextValue',
                     html: oroProduct.attributes.description ?? '',
@@ -222,7 +281,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 uid: btoa(oroProduct.id),
                 custom_attributes: [],
                 id: Number(oroProduct.id),
-                media_gallery_entries: getTransformedMediaGalleryEntries(oroProduct),
+                media_gallery_entries: productsImages ? this.getMediaImages(productsImages) : [],
                 meta_title: oroProduct.attributes.metaTitle,
                 meta_keyword: oroProduct.attributes.metaKeywords,
                 meta_description: oroProduct.attributes.metaDescription,
@@ -232,6 +291,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     minimum_price: {
                         regular_price: productPrice,
                         final_price: productPrice,
+                        discount: { amount_off: 0 }, // This is needed for the PWA to not error
                     },
                     maximum_price: {
                         regular_price: productPrice,
@@ -244,10 +304,17 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 review_count: 0,
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
-                small_image: getTransformedSmallImage(oroProduct),
+                small_image: {
+                    url: smallImage?.url,
+                    label: smallImage?.dimension,
+                },
+                image: {
+                    url: originalImage?.url,
+                    label: originalImage?.dimension,
+                },
                 type: 'PRODUCT',
                 stock_status: getTransformedProductStockStatus(oroProduct),
-                url_key: getPathFromUrlKey(oroProduct.attributes.url),
+                url_key: oroProduct.attributes.url.replace(slashAtStartOrEnd, ''),
                 url_suffix: '',
                 reviews: getTransformedReviews(),
             } satisfies SimpleProduct;
