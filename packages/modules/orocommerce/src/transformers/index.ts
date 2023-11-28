@@ -73,6 +73,9 @@ import {
 
 import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-us-to-contact-request-transformer';
 
+import { ShoppingListToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
+import { RequisitionListInputToShoppingListTransformer } from '../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
+
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
 export * from './currency/transform-currency-data';
@@ -172,6 +175,16 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: ProductsTransformerChain,
             useClass: ProductsTransformerChain,
+            global: true,
+        },
+        {
+            provide: ShoppingListToRequisitionListTransformer,
+            useClass: ShoppingListToRequisitionListTransformer,
+            global: true,
+        },
+        {
+            provide: RequisitionListInputToShoppingListTransformer,
+            useClass: RequisitionListInputToShoppingListTransformer,
             global: true,
         },
         {
