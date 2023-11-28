@@ -2,6 +2,7 @@ import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingList } from '../../types';
 import { CreateRequisitionListOutput } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
+import { btoa } from '@aligent/utils';
 
 @Injectable()
 export class ShoppingListToRequisitionListTransformer
@@ -25,7 +26,7 @@ export class ShoppingListToRequisitionListTransformer
                 },
                 items_count: 0,
                 name: shoppingList.attributes.name,
-                uid: '',
+                uid: btoa(shoppingList.id),
             },
         };
     }

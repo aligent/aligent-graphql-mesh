@@ -14,7 +14,6 @@ export const createShoppingListOutputData: CreateRequisitionListOutput = {
         },
         items_count: 0,
         name: 'Name1',
-        uid: '',
-        updated_at: '2023-22-21',
+        uid: 'MQ==',
     },
 };
