@@ -111,7 +111,9 @@ You can now send queries to `https://mesh.local.pwadev:4000/graphql` to hit the 
 ### OroCommerce
 
 `ORO_STORE_URL` - OroCommerce Storefront URL, used as a base for all Authentication and API calls
+
 `ORO_CLIENT_ID` - Storefront OAuth application client id
+
 `ORO_CLIENT_SECRET` - Storefront OAuth application client secret
 
 To generate a client id and client secret head here: `${ORO_STORE_URL}/admin/oauth2/frontend` and create a Password grant type application by following these instructions: https://doc.oroinc.com/user/back-office/system/user-management/oauth-app/#oauth-applications
