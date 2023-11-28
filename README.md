@@ -69,7 +69,7 @@ OroCommerce:
 $ cp packages/mesh/orocommerce/.env.template packages/mesh/orocommerce/.env
 ```
 
-4. Navigate to packages/mesh/.env and add environment configuration to .env file (see section below: Environment configuration)
+4. Navigate to `packages/mesh/.env` and add environment configuration to `.env` file (see section below: Environment configuration)
 
 5. Generate SSL certificates
 
