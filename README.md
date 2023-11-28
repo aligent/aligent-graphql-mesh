@@ -60,13 +60,13 @@ npm install --global yarn
 BigCommerce:
 
 ```shell
-$ cp .env.template packages/mesh/bigcommerce/.env
+$ cp packages/mesh/bigcommerce/.env.template packages/mesh/bigcommerce/.env
 ```
 
 OroCommerce:
 
 ```shell
-$ cp .env.template packages/mesh/orocommerce/.env
+$ cp packages/mesh/orocommerce/.env.template packages/mesh/orocommerce/.env
 ```
 
 4. Navigate to packages/mesh/.env and add environment configuration to .env file (see section below: Environment configuration)
