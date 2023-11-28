@@ -84,15 +84,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             }
         });
 
-        // console.log(JSON.stringify(oroProducts));
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
-        const itemsT = oroProducts.map((product) => this.getTransformedProductData(product));
-        console.log(JSON.stringify(itemsT));
         return {
             aggregations: productAttributes
                 ? this.getTransformedProductAggregations(productAttributes)
                 : null,
-            items: itemsT,
+            items: oroProducts.map((product) => this.getTransformedProductData(product)),
             page_info: {
                 current_page: currentPage,
                 page_size: pageSize,
@@ -267,9 +264,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             const originalImage = productsImages
                 ? this.getImageByDimension(productsImages, 'product_original')
                 : null;
-
-            // const mediGallter =  productsImages ? this.getMediaImages(productsImages) : []
-            // console.log(JSON.stringify(mediGallter))
 
             const baseProduct = {
                 categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
