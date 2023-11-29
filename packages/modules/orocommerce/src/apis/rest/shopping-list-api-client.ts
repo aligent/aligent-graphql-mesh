@@ -90,4 +90,9 @@ export class ShoppingListsClient {
         const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
         return response;
     }
+
+    async deleteShoppingLists(shoppingListId: string): Promise<boolean> {
+        const response = await this.apiClient.delete(`/shoppinglists/${shoppingListId}`);
+        return response;
+    }
 }
