@@ -33,6 +33,7 @@ import { requestPasswordResetEmailMutation } from './mutations/request-password-
 import { resetPasswordMutation } from './mutations/reset-password';
 import { createRequisitionListMutation } from './mutations/create-requisition-list';
 import { deleteRequisitionListMutation } from './mutations/delete-requisition-list';
+import { customerCartResolver } from './queries/customer-cart';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -50,6 +51,7 @@ export const resolvers: Resolvers = {
         getSocialLinks: getSocialLinksResolver,
         products: productsResolver,
         isEmailAvailable: isEmailAvailableResolver,
+        customerCart: customerCartResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,

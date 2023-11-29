@@ -1,4 +1,4 @@
-import { Attributes } from '../../../../types';
+import { Attributes, ConfigurableProductAttribute } from '../../../../types';
 import { Aggregation } from '@aligent/orocommerce-resolvers';
 
 export const oroProductAttributes: Attributes = {
@@ -87,5 +87,29 @@ export const outputProductFilers: Array<Aggregation> = [
         ],
         filterType: 'FilterEqualTypeInput',
         __typename: 'Aggregation',
+    },
+];
+
+export const outputProductFilters: Aggregation[] = [
+    {
+        attribute_code: 'size_63313224a7189',
+        count: 1,
+        label: 'size',
+        options: [],
+    },
+    {
+        attribute_code: 'size_633132c50db9e',
+        count: 1,
+        label: 'Colour',
+        options: [],
+    },
+];
+
+export const oroProductAttributesFromAPI: ConfigurableProductAttribute[] = [
+    {
+        meta: { id: 'size_63313224a7189', attrType: 'enum', label: 'size' },
+    },
+    {
+        meta: { id: 'size_633132c50db9e', attrType: 'enum', label: 'Colour' },
     },
 ];
