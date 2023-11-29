@@ -133,6 +133,10 @@ export const mockBcCheckout = {
                         valueEntityIds: [0],
                         entityId: 29,
                     } as CheckoutAddressCheckboxesCustomField,
+                    {
+                        text: 'Leave at the rear door',
+                        entityId: 26,
+                    } as CheckoutAddressTextFieldCustomField,
                 ],
                 countryCode: 'AU',
                 company: 'Aligent',

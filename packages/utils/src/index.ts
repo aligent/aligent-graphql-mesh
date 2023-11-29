@@ -10,3 +10,5 @@ export * from './error-handling';
 export * from './search-params';
 export * from './transformers';
 export * from './array-from-async-generator';
+export * from './get-custom-field-entity-id';
+export * from './selection-set';

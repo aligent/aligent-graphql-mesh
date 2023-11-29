@@ -1,6 +1,7 @@
 import { getTransformedBillingAddress, getTransformedAddress } from '../transform-address';
 import { CheckoutAddressCheckboxesCustomField } from '@aligent/bigcommerce-operations';
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
+import { transformedCountries } from '../../../resolvers/queries/__tests__/__data__/countries-transformed-data';
 
 const expectShippingAddress = {
     firstname: 'John',
@@ -9,7 +10,7 @@ const expectShippingAddress = {
     city: 'Adelaide',
     country: { code: 'AU', label: 'AU' },
     postcode: '5000',
-    region: { code: 'SA', label: 'South Australia', region_id: 573 },
+    region: { code: 'SA', label: 'South Australia', region_id: 212 },
     street: ['14 Shipping Ct'],
     telephone: '0000000000',
     uid: '',
@@ -28,7 +29,7 @@ const expectedBillingAddress = {
     region: {
         code: 'QLD',
         label: 'Queensland',
-        region_id: 573,
+        region_id: 211,
     },
     street: ['14 Billing Ct'],
     telephone: '00000000000',
@@ -37,15 +38,18 @@ const expectedBillingAddress = {
 
 describe('transform-address', () => {
     it(`transforms a address`, () => {
-        expect(getTransformedAddress(mockBcCheckout.shippingConsignments[0].address)).toEqual(
-            expect.objectContaining(expectShippingAddress)
-        );
+        expect(
+            getTransformedAddress(
+                mockBcCheckout.shippingConsignments[0].address,
+                transformedCountries
+            )
+        ).toEqual(expect.objectContaining(expectShippingAddress));
     });
 
     it(`transforms a billing address`, () => {
-        expect(getTransformedBillingAddress(mockBcCheckout.billingAddress)).toEqual(
-            expect.objectContaining(expectedBillingAddress)
-        );
+        expect(
+            getTransformedBillingAddress(mockBcCheckout.billingAddress, transformedCountries)
+        ).toEqual(expect.objectContaining(expectedBillingAddress));
     });
 
     it(`sets default values when address information doesn't exist`, () => {
@@ -84,7 +88,7 @@ describe('transform-address', () => {
                 region: {
                     code: '',
                     label: '',
-                    region_id: 573,
+                    region_id: null,
                 },
                 street: [],
                 telephone: '',

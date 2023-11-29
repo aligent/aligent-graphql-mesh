@@ -3,30 +3,11 @@ import {
     CurrencyEnum,
     CustomerOrder,
     CustomerOrders,
-    Discount,
     Invoice,
 } from '@aligent/bigcommerce-resolvers';
 import { SearchResultPageInfo } from '@aligent/bigcommerce-resolvers';
 import { btoa, convertDateFormat } from '@aligent/utils';
 import { BCOrder } from '../types';
-
-function transformOrderDiscount(bcOrder: BCOrder): Discount[] {
-    if (bcOrder.discount_amount === '0.0000') {
-        return [];
-    }
-    //TODO: get order coupon code and label from https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/coupons
-    //check with FE if coupons are implemented in PWA
-    return [
-        {
-            amount: {
-                currency: bcOrder.currency_code as CurrencyEnum,
-                value: Number(bcOrder.discount_amount),
-            },
-            code: 'Not available',
-            label: 'Not available',
-        },
-    ];
-}
 
 export const getTransformedOrders = (
     bcOrders: BCOrder[],
@@ -91,7 +72,6 @@ export const getTransformedOrders = (
                     currency: bcOrder.currency_code as CurrencyEnum,
                     value: Number(bcOrder.gift_certificate_amount),
                 },
-                discounts: transformOrderDiscount(bcOrder),
             },
             payment_methods: [
                 {
@@ -116,7 +96,7 @@ export const getTransformedOrders = (
             printed_card_included: false,
             invoices: [] as unknown as Invoice[],
             currency_code: bcOrder.currency_code,
-            //Added by sub-resolvers: shipping_address, shipping_method, items
+            //Added by sub-resolvers: shipping_address, shipping_method, items, totals.discounts
             //Sub resolvers see: src/resolvers/index.ts CustomerOrder
         };
 
