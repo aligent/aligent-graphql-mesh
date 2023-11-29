@@ -64,7 +64,7 @@ export interface ProductAttributes extends Attributes {
     metaKeywords: string | null;
     name: string;
     newArrival: boolean;
-    prices: Price[];
+    prices: Price[] | [];
     productAttributes: EntityAttributes;
     productType: string;
     shortDescription: string | null;
