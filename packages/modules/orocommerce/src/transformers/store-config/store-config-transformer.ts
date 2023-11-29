@@ -31,16 +31,30 @@ export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData
             'oro_pricing_pro.default_currency'
         );
         return {
+            __typename: 'StoreConfig',
             pwa_base_url: url ?? '',
             default_display_currency_code: defaultCurrency ?? '',
-            contact_enabled: true, // needed for types
-            newsletter_enabled: true, // needed for types
-            returns_enabled: '', // needed for types
+            contact_enabled: true, // needed for types, some are needed for PWA to not error
+            newsletter_enabled: true,
+            returns_enabled: '',
             id: null,
+            use_store_in_url: true,
+            website_code: '1',
+            website_id: 1,
+            root_category_id: 1,
+            root_category_uid: '1',
+            secure_base_media_url: url ?? '',
+            plpAddToCartEnabled: true,
+            plpQtyModifierEnabled: true,
+            locale: 'en_AU',
+            is_default_store: true,
+            is_default_store_group: true,
+            list_per_page: 1,
+            check_money_order_enable_for_specific_countries: true,
+            autocomplete_on_storefront: true,
+            check_money_order_enabled: true, // needed for types
             category_url_suffix: null,
             grid_per_page: null,
-            plpAddToCartEnabled: null,
-            plpQtyModifierEnabled: null,
             captcha_type_contact: null,
             captcha_type_customer_create: null,
             captcha_type_customer_forgot_password: null,
@@ -77,7 +91,6 @@ export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData
                 is_context_checkout: null,
             },
             product_reviews_enabled: null,
-            locale: null,
         };
     }
 }
