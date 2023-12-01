@@ -91,7 +91,7 @@ export class ShoppingListsClient {
         return response;
     }
 
-    async deleteShoppingLists(shoppingListId: string): Promise<boolean> {
+    async deleteShoppingList(shoppingListId: string): Promise<boolean> {
         const response = await this.apiClient.delete(`/shoppinglists/${shoppingListId}`);
         return response;
     }

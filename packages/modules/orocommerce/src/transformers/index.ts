@@ -373,8 +373,10 @@ export const getOroTransformers = (): Array<Provider> => {
         },
         {
             provide: DeleteShoppingListOutputTransformer,
-            useFactory: (transformerChain) => {
-                const transformer = new DeleteShoppingListOutputTransformer();
+            useFactory: (transformerChain, shoppingListWithItemsToRequisitionListTransformer) => {
+                const transformer = new DeleteShoppingListOutputTransformer(
+                    shoppingListWithItemsToRequisitionListTransformer
+                );
                 transformerChain.addTransformer(transformer);
                 return transformer;
             },
