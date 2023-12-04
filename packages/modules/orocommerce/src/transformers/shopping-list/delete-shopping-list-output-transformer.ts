@@ -5,6 +5,7 @@ import { Injectable } from 'graphql-modules';
 import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list-with-items-to-requisition-list-transformer';
 import { ShoppingListWithItems } from '../../types';
 import { isNull } from 'lodash';
+import { ShoppingListToCartTransformer } from '../../transformers/shopping-list/shopping-list-to-cart-transformer';
 @Injectable()
 export class DeleteShoppingListOutputTransformerChain extends ChainTransformer<
     { status: boolean; shopping_list_with_items: ShoppingListWithItems | null },
@@ -19,9 +20,6 @@ export class DeleteShoppingListOutputTransformer
             DeleteRequisitionListOutput
         >
 {
-    constructor(
-        protected shoppingListWithItemsToRequisitionListTransformer: ShoppingListWithItemsToRequisitionListTransformer
-    ) {}
     transform(
         context: TransformerContext<
             { status: boolean; shopping_list_with_items: ShoppingListWithItems | null },
@@ -30,10 +28,15 @@ export class DeleteShoppingListOutputTransformer
     ): DeleteRequisitionListOutput {
         const requisitionListItems: RequisitionList[] = [];
         if (!isNull(context.data.shopping_list_with_items)) {
-            const requisitionList =
-                this.shoppingListWithItemsToRequisitionListTransformer.transform({
-                    data: context.data.shopping_list_with_items,
-                });
+            const shoppingListToCartTransformer = new ShoppingListToCartTransformer();
+            const shoppingListWithItemsToRequisitionListTransformer =
+                new ShoppingListWithItemsToRequisitionListTransformer(
+                    shoppingListToCartTransformer
+                );
+
+            const requisitionList = shoppingListWithItemsToRequisitionListTransformer.transform({
+                data: context.data.shopping_list_with_items,
+            });
             requisitionListItems.push(requisitionList);
         }
         return {
