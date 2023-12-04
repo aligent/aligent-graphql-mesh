@@ -48,6 +48,7 @@ export interface ProductSearchMeta {
 export interface Product extends Entity {
     type: 'products';
     id: string;
+    links: { self: string };
     attributes: ProductAttributes;
     relationships: ProductRelationships;
     included?: Array<ProductIncludeTypes>;
@@ -120,6 +121,7 @@ export interface InventoryStatus extends Entity {
 export interface ProductImage extends Entity {
     type: 'productimages';
     id: string;
+    links: { self: string };
     attributes: ProductImageAttributes;
     relationships?: {
         product: { data: Resource };
