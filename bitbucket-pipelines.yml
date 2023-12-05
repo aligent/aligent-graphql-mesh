@@ -82,7 +82,7 @@ definitions:
           - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
           - echo "Publishing $PACKAGE @ $VERSION"
           - npm config set //npm.corp.aligent.consulting/:_authToken $NPM_PUBLISH_TOKEN
-          - yarn nx publish $PACKAGE --ver=$VERSION
+          - yarn nx publish $PACKAGE --ver=$VERSION --tag=latest
 
     - step: &deploy
         name: 📦 Push to ECR
