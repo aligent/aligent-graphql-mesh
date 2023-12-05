@@ -1,0 +1,113 @@
+{
+    "status": true,
+    "requisition_lists": {
+        "items": [
+            {
+                "description": null,
+                "items": {
+                    "items": [
+                        {
+                            "customizable_options": [],
+                            "quantity": 3,
+                            "uid": "MTMz",
+                            "product": {
+                                "__typename": "SimpleProduct",
+                                "id": 2,
+                                "name": "Purple Large Aligent Hoodie",
+                                "sku": "HOODIE-LP",
+                                "image": {
+                                    "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/29/63313705e53ae870057940-download_1_4.png",
+                                    "label": "product_original"
+                                },
+                                "small_image": {
+                                    "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/29/63313705e53ae870057940-download_1_4.png",
+                                    "label": "product_small"
+                                },
+                                "categories": null,
+                                "canonical_url": "/purple-large-aligent-hoodie",
+                                "description": null,
+                                "short_description": null,
+                                "meta_description": null,
+                                "meta_keyword": null,
+                                "meta_title": null,
+                                "redirect_code": 0,
+                                "price_range": {
+                                    "minimum_price": {
+                                        "final_price": { "currency": "AUD", "value": 11 },
+                                        "regular_price": { "currency": "AUD", "value": 11 },
+                                        "discount": { "amount_off": 0 }
+                                    },
+                                    "maximum_price": {
+                                        "final_price": { "currency": "AUD", "value": 11 },
+                                        "regular_price": { "currency": "AUD", "value": 11 }
+                                    }
+                                },
+                                "stock_status": "IN_STOCK",
+                                "url_key": "/purple-large-aligent-hoodie",
+                                "custom_attributes": [],
+                                "review_count": 0,
+                                "reviews": { "items": [], "page_info": {} },
+                                "rating_summary": 0,
+                                "staged": false,
+                                "uid": "Mg=="
+                            }
+                        },
+                        {
+                            "customizable_options": [],
+                            "quantity": 1,
+                            "uid": "MTM0",
+                            "product": {
+                                "__typename": "SimpleProduct",
+                                "id": 9,
+                                "name": "Yellow Small Aligent Hoodie",
+                                "sku": "HOODIE-SY",
+                                "image": {
+                                    "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/43/63313705e53ae870057940-download_1_4.png",
+                                    "label": "product_original"
+                                },
+                                "small_image": {
+                                    "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/43/63313705e53ae870057940-download_1_4.png",
+                                    "label": "product_small"
+                                },
+                                "categories": null,
+                                "canonical_url": "/yellow-small-aligent-hoodie",
+                                "description": null,
+                                "short_description": null,
+                                "meta_description": null,
+                                "meta_keyword": null,
+                                "meta_title": null,
+                                "redirect_code": 0,
+                                "price_range": {
+                                    "minimum_price": {
+                                        "final_price": { "currency": "AUD", "value": 19 },
+                                        "regular_price": { "currency": "AUD", "value": 19 },
+                                        "discount": { "amount_off": 0 }
+                                    },
+                                    "maximum_price": {
+                                        "final_price": { "currency": "AUD", "value": 19 },
+                                        "regular_price": { "currency": "AUD", "value": 19 }
+                                    }
+                                },
+                                "stock_status": "IN_STOCK",
+                                "url_key": "/yellow-small-aligent-hoodie",
+                                "custom_attributes": [],
+                                "review_count": 0,
+                                "reviews": { "items": [], "page_info": {} },
+                                "rating_summary": 0,
+                                "staged": false,
+                                "uid": "OQ=="
+                            }
+                        }
+                    ],
+                    "page_info": { "current_page": 0, "page_size": 0, "total_pages": 0 },
+                    "total_pages": 0
+                },
+                "items_count": 0,
+                "name": "Shopping List",
+                "uid": "ODk="
+            }
+        ],
+        "page_info": {},
+        "total_count": 0
+    }
+}

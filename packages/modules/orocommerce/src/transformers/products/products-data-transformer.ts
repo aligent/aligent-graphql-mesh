@@ -241,14 +241,14 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     getMediaImages(includedImages: ProductImage[], origin?: string): MediaGalleryEntry[] {
         const mediaGalleryEntries: MediaGalleryEntry[] = [];
         for (const includedImage of includedImages) {
-            let count = 1;
-            const transformedMediaImages = includedImage.attributes.files.map((image) => {
+            const transformedMediaImages = includedImage.attributes.files.map((image, index) => {
+                index++;
                 return {
-                    id: Number(includedImage.id) + count, // This ID just needs to be unique for the FE
+                    id: Number(includedImage.id) + index, // This ID just needs to be unique for the FE
                     label: image.dimension,
                     disabled: false,
                     file: `${origin}${image.url}`,
-                    position: count++, // This value doesnt exist in ORO
+                    position: index, // This value doesnt exist in ORO
                     uid: btoa(`id:${includedImage.id}-dimension:${image.dimension}`),
                 };
             });
