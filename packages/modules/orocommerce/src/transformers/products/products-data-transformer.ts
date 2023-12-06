@@ -286,7 +286,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 name: title,
                 level: 1, // Couldnt see equivalent value in ORO
                 redirect_code: 0, // Couldnt see equivalent value in ORO
-                description: String(description),
+                description: description,
                 meta_title: metaTitle,
                 meta_description: metaDescription,
                 meta_keywords: metaKeywords,
