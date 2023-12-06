@@ -5,12 +5,6 @@ export interface OroStoreConfig extends Entity {
     attributes: OroStoreConfigAttrs;
 }
 
-export interface OroStoreConfigApiData {
-    meta: {
-        id: string;
-        value: string;
-    };
-}
 interface OroStoreConfigAttrs extends Attributes {
     paypal_express: PaypalExpressAttributes;
     send_friend: SendFriendAttributes;
