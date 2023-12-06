@@ -161,6 +161,9 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                         variant.attributes.prices[0].currencyId,
                         variant.attributes.prices[0].price
                     );
+
+                    const { origin } = new URL(variant.links.self);
+
                     const productsImages = variant.included?.filter(this.isProductImage);
 
                     const smallImage = productsImages
@@ -174,7 +177,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             // TODO: Do we need to return anything here?
                             custom_attributes: [],
                             media_gallery_entries: productsImages
-                                ? this.getMediaImages(productsImages)
+                                ? this.getMediaImages(productsImages, origin)
                                 : [],
                             price_range: {
                                 minimum_price: {
@@ -200,7 +203,10 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             },
                             review_count: 0,
                             sku: variant.attributes.sku,
-                            small_image: smallImage,
+                            small_image: {
+                                url: `${origin}${smallImage?.url}`,
+                                label: smallImage?.dimension,
+                            },
                             staged: false,
                             stock_status: getTransformedProductStockStatus(variant),
                             uid: btoa(variant.id),
@@ -223,27 +229,29 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         images: ProductImage[],
         imageDimension: string
     ): ProductImageFile | undefined {
-        const foundImage = images[0].attributes.files.find(
-            (image) => image.dimension === imageDimension
-        );
-
-        return foundImage;
+        for (const image of images) {
+            const foundImage = image.attributes.files.find(
+                (image) => image.dimension === imageDimension
+            );
+            if (foundImage) return foundImage;
+        }
+        return;
     }
 
-    getMediaImages(includedImages: ProductImage[]): MediaGalleryEntry[] {
+    getMediaImages(includedImages: ProductImage[], origin?: string): MediaGalleryEntry[] {
         const mediaGalleryEntries: MediaGalleryEntry[] = [];
-
         for (const includedImage of includedImages) {
-            const transformedMediaImages = includedImage.attributes.files.map((image) => {
+            const transformedMediaImages = includedImage.attributes.files.map((image, index) => {
+                index++;
                 return {
-                    id: Number(includedImage.id),
+                    id: Number(includedImage.id) + index, // This ID just needs to be unique for the FE
                     label: image.dimension,
                     disabled: false,
-                    file: image.url,
+                    file: `${origin}${image.url}`,
+                    position: index, // This value doesnt exist in ORO
                     uid: btoa(`id:${includedImage.id}-dimension:${image.dimension}`),
                 };
             });
-
             mediaGalleryEntries.push(...transformedMediaImages);
         }
 
@@ -257,6 +265,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             const price = oroProduct.attributes.prices[0]?.price || '0';
             const productPrice = this.getPriceData(currency, price);
             const productsImages = oroProduct.included?.filter(this.isProductImage);
+            const { origin } = new URL(oroProduct.links.self);
+
             const smallImage = productsImages
                 ? this.getImageByDimension(productsImages, 'product_small')
                 : null;
@@ -275,7 +285,9 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 uid: btoa(oroProduct.id),
                 custom_attributes: [],
                 id: Number(oroProduct.id),
-                media_gallery_entries: productsImages ? this.getMediaImages(productsImages) : [],
+                media_gallery_entries: productsImages
+                    ? this.getMediaImages(productsImages, origin)
+                    : [],
                 meta_title: oroProduct.attributes.metaTitle,
                 meta_keyword: oroProduct.attributes.metaKeywords,
                 meta_description: oroProduct.attributes.metaDescription,
@@ -299,11 +311,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
                 small_image: {
-                    url: smallImage?.url,
+                    url: `${origin}${smallImage?.url}`,
                     label: smallImage?.dimension,
                 },
                 image: {
-                    url: originalImage?.url,
+                    url: `${origin}${originalImage?.url}`,
                     label: originalImage?.dimension,
                 },
                 type: 'PRODUCT',
