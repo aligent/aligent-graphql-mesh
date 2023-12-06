@@ -20,10 +20,12 @@ export class ShoppingListsClient {
         data: ShoppingList[];
         included?: ShoppingListWithItems['included'];
     }> {
-        const params = {
+        const params: Record<string, string> = {
             include: 'items.product.images,items.product.category',
-            'filter[id]': id,
         };
+        if (id) {
+            params['filter[id]'] = id;
+        }
         return this.apiClient.get<ShoppingList[], ShoppingListWithItems['included']>(
             '/shoppinglists',
             { params }

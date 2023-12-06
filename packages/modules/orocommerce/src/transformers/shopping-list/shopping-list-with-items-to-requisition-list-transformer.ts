@@ -1,11 +1,6 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListWithItems } from '../../types';
-import {
-    CurrencyEnum,
-    Money,
-    RequisitionList,
-    RequisitionListItemInterface,
-} from '@aligent/orocommerce-resolvers';
+import { RequisitionList, RequisitionListItemInterface } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
@@ -14,12 +9,6 @@ export class ShoppingListWithItemsToRequisitionListTransformer
     implements Transformer<ShoppingListWithItems, RequisitionList>
 {
     constructor(protected shoppingListToCartTransformer: ShoppingListToCartTransformer) {}
-    getMoneyData(currency: string, price: string | number): Money {
-        return {
-            currency: currency as CurrencyEnum,
-            value: Number(price),
-        };
-    }
 
     transform(
         context: TransformerContext<ShoppingListWithItems, RequisitionList>

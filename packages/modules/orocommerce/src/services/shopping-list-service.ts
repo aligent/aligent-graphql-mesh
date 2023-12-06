@@ -48,6 +48,15 @@ export class ShoppingListService {
         return data[0] !== undefined ? { data: data[0], included: included! } : null;
     }
 
+    async getAllShoppingListsWithItems(): Promise<ShoppingListWithItems[] | null> {
+        const { data, included } = await this.apiClient.getShoppingListsWithItems();
+
+        return data.map((shoppingList) => ({
+            data: shoppingList,
+            included: included!,
+        }));
+    }
+
     /**
      * Add order line items to the shopping list and return updated shopping list
      * @param items OroOrderLineItem[]
