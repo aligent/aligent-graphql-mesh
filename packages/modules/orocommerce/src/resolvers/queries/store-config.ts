@@ -1,7 +1,5 @@
 import { QueryResolvers } from '@aligent/orocommerce-resolvers';
-
 import { StoreConfigApiClient } from '../../apis/rest/store-config-api-client';
-
 import { StoreConfigTransformerChain } from '../../transformers/store-config/store-config-transformer';
 
 export const storeConfigResolver: QueryResolvers['storeConfig'] = {
@@ -9,6 +7,7 @@ export const storeConfigResolver: QueryResolvers['storeConfig'] = {
         const storeConfigApiClient: StoreConfigApiClient =
             context.injector.get(StoreConfigApiClient);
         const oroStoreConfig = await storeConfigApiClient.getStoreConfig();
+
         const storeConfigTransformerChain: StoreConfigTransformerChain = context.injector.get(
             StoreConfigTransformerChain
         );
