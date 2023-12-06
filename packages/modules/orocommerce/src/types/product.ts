@@ -168,11 +168,17 @@ export interface CategoryAttributes extends Attributes {
     shortDescription: string | null;
     description: string | null;
     url: string;
-    urls: Array<object>;
-    images: Array<object>;
+    urls: string[];
+    images: CategoryImage[] | [];
     metaTitle: string | null;
     metaDescription: string | null;
     metaKeywords: string | null;
+}
+
+interface CategoryImage {
+    mimeType: string;
+    url: string;
+    type: string;
 }
 
 export type ProductIncludeTypes = InventoryStatus | ProductImage | Product | Category;

@@ -6,7 +6,6 @@ import { generateCustomerTokenMutation } from './mutations/generate-customer-tok
 import { currencyResolver } from './queries/currency';
 import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
-import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
@@ -72,9 +71,9 @@ export const resolvers: Resolvers = {
         resetPassword: resetPasswordMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
-    CategoryTree: {
-        breadcrumbs: breadcrumbsSubResolver,
-    },
+    // CategoryTree: {
+    //     breadcrumbs: breadcrumbsSubResolver,
+    // },
     Customer: {
         orders: customerOrdersResolver,
     },
