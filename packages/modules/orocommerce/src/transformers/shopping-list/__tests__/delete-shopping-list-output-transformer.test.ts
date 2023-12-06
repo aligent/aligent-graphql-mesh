@@ -29,7 +29,7 @@ describe('Delete shopping list transform tests', () => {
             shoppingListWithItemsToRequisitionListTransformer
         );
         const transformed = deleteShoppingListOutputTransformer.transform({
-            data: { status: true, shopping_list_with_items: shoppingListWithItems },
+            data: { status: true, shopping_lists_with_items: [shoppingListWithItems] },
         });
 
         expect(transformed).toEqual(deleteShoppingListWithItemsOutputData);
