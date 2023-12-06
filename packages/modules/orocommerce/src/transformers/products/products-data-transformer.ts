@@ -325,7 +325,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
             const baseProduct = {
                 categories: productCategories ? this.getCategoriesData(productCategories) : null,
-                // categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
                 description: {
                     __typename: 'ComplexTextValue',
                     html: oroProduct.attributes.description ?? '',
