@@ -75,6 +75,21 @@ export class ProductsClient {
 
         return response;
     }
+
+    async getProductsBySkus(
+        skus: string[]
+    ): Promise<{ data: Product[]; included?: ProductIncludeTypes[] }> {
+        const path = `/products`;
+        const params = {
+            'filter[sku]': skus.toString(),
+            include: 'variantProducts,images',
+        };
+        const response = await this.apiClient.get<Product[], ProductIncludeTypes[]>(path, {
+            params,
+        });
+
+        return response;
+    }
 }
 
 export class ProductsSearchArgsBuilder {
