@@ -1,10 +1,10 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
-import { ShoppingListWithItems } from '../types';
+import { ShoppingListsWithItems } from '../types';
 import { Transformer } from '@aligent/utils';
 import { isNull } from 'lodash';
-import { ShoppingListWithItemsToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-with-items-to-requisition-list-transformer';
-import { RequisitionList, RequisitionLists } from '@aligent/orocommerce-resolvers';
+import { RequisitionLists } from '@aligent/orocommerce-resolvers';
+import { ShoppingListsToRequisitionListsTransformer } from '../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
 
 @Injectable()
 export class RequisitionListService {
@@ -12,16 +12,16 @@ export class RequisitionListService {
         @Inject(forwardRef(() => ShoppingListsClient))
         protected readonly apiClient: ShoppingListsClient,
 
-        @Inject(forwardRef(() => ShoppingListWithItemsToRequisitionListTransformer))
-        protected readonly shoppingListWithItemsToRequisitionListTransformer: Transformer<
-            ShoppingListWithItems,
-            RequisitionList
+        @Inject(forwardRef(() => ShoppingListsToRequisitionListsTransformer))
+        protected readonly shoppingListsToRequisitionListsTransformer: Transformer<
+            ShoppingListsWithItems,
+            RequisitionLists
         >
     ) {}
 
     /**
-     * Get the user's shopping list. We're assuming that users will always have a maximum of one shopping list
-     * @returns Promise<ShoppingList | null>
+     * Get the user's RequisitionLists.
+     * @returns Promise<RequisitionLists | null>
      */
     async getLists(): Promise<RequisitionLists | null> {
         const { data, included } = await this.apiClient.getShoppingListsWithItems();
@@ -29,18 +29,11 @@ export class RequisitionListService {
             return null;
         }
 
-        const requisitionLists = data.map((shoppingList) =>
-            this.shoppingListWithItemsToRequisitionListTransformer.transform({
-                data: {
-                    data: shoppingList,
-                    included: included!,
-                },
-            })
-        );
-
-        return {
-            items: requisitionLists,
-            total_count: requisitionLists.length,
-        };
+        return this.shoppingListsToRequisitionListsTransformer.transform({
+            data: {
+                data: data,
+                included: included!,
+            },
+        });
     }
 }

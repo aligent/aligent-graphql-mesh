@@ -75,10 +75,6 @@ import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-
 
 import { ShoppingListToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
 import { RequisitionListInputToShoppingListTransformer } from '../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
-import {
-    DeleteShoppingListOutputTransformer,
-    DeleteShoppingListOutputTransformerChain,
-} from './shopping-list/delete-shopping-list-output-transformer';
 import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list/shopping-list-with-items-to-requisition-list-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
@@ -190,11 +186,6 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: RequisitionListInputToShoppingListTransformer,
             useClass: RequisitionListInputToShoppingListTransformer,
-            global: true,
-        },
-        {
-            provide: DeleteShoppingListOutputTransformerChain,
-            useClass: DeleteShoppingListOutputTransformerChain,
             global: true,
         },
         {
@@ -371,15 +362,6 @@ export const getOroTransformers = (): Array<Provider> => {
                 return updateCartItemTransformer;
             },
             deps: [UpdateCartItemTransformerChain],
-        },
-        {
-            provide: DeleteShoppingListOutputTransformer,
-            useFactory: (transformerChain) => {
-                const transformer = new DeleteShoppingListOutputTransformer();
-                transformerChain.addTransformer(transformer);
-                return transformer;
-            },
-            deps: [DeleteShoppingListOutputTransformerChain],
         },
         {
             provide: ShoppingListWithItemsToRequisitionListTransformer,

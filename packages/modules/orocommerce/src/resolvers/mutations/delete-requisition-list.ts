@@ -1,6 +1,5 @@
-import { DeleteRequisitionListOutput, MutationResolvers } from '@aligent/orocommerce-resolvers';
+import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
-import { DeleteShoppingListOutputTransformerChain } from '../../transformers/shopping-list/delete-shopping-list-output-transformer';
 import { RequisitionListService } from '../../services/requisition-list-service';
 
 export const deleteRequisitionListMutation: MutationResolvers['deleteRequisitionList'] = {
@@ -9,19 +8,11 @@ export const deleteRequisitionListMutation: MutationResolvers['deleteRequisition
         const deleteShoppingListResult = await client.deleteShoppingList(
             atob(args.requisitionListUid)
         );
-
-        const deleteShoppingListOutputTransformer: DeleteShoppingListOutputTransformerChain =
-            context.injector.get(DeleteShoppingListOutputTransformerChain);
-        const deleteRequisitionListOutput: DeleteRequisitionListOutput =
-            deleteShoppingListOutputTransformer.transform({
-                data: {
-                    status: deleteShoppingListResult,
-                },
-            });
         const requisitionListService: RequisitionListService =
             context.injector.get(RequisitionListService);
-        deleteRequisitionListOutput.requisition_lists = await requisitionListService.getLists();
-
-        return deleteRequisitionListOutput;
+        return {
+            status: deleteShoppingListResult,
+            requisition_lists: await requisitionListService.getLists(),
+        };
     },
 };

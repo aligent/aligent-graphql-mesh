@@ -1,9 +1,5 @@
 import { DeleteRequisitionListOutput, RequisitionList } from '@aligent/orocommerce-resolvers';
 
-export const deleteShoppingListOutputData: DeleteRequisitionListOutput = {
-    status: true,
-};
-
 export const requisitionList: RequisitionList = {
     description: 'description',
     items: {
