@@ -23,9 +23,9 @@ export const productsResolver = {
                 const oroProductsData = await api.getProductBySlug(urlKeyWithSlashRemoved);
                 if (!oroProductsData) return null;
                 return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });
-            } 
+            }
             // For getProductsBySku
-            else if(skus?.length){
+            else if (skus?.length) {
                 const oroProductsData = await api.getProductsBySkus(skus as string[]);
                 if (!oroProductsData) return null;
                 return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });
