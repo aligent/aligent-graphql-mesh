@@ -5,6 +5,7 @@ import {
     ShoppingListInputAttribute,
     ShoppingListItem,
     ShoppingListItemInput,
+    ShoppingListsWithItems,
     ShoppingListWithItems,
 } from '../../types';
 
@@ -16,10 +17,7 @@ export class ShoppingListsClient {
         return (await this.apiClient.get<ShoppingList[]>('/shoppinglists')).data;
     }
 
-    async getShoppingListsWithItems(id?: string): Promise<{
-        data: ShoppingList[];
-        included?: ShoppingListWithItems['included'];
-    }> {
+    async getShoppingListsWithItems(id?: string): Promise<ShoppingListsWithItems> {
         const params: Record<string, string> = {
             include: 'items.product.images,items.product.category',
         };

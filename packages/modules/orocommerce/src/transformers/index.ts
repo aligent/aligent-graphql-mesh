@@ -79,6 +79,7 @@ import {
     DeleteShoppingListOutputTransformer,
     DeleteShoppingListOutputTransformerChain,
 } from './shopping-list/delete-shopping-list-output-transformer';
+import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list/shopping-list-with-items-to-requisition-list-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -379,6 +380,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return transformer;
             },
             deps: [DeleteShoppingListOutputTransformerChain],
+        },
+        {
+            provide: ShoppingListWithItemsToRequisitionListTransformer,
+            useFactory: (shoppingListToCartTransformer) => {
+                return new ShoppingListWithItemsToRequisitionListTransformer(
+                    shoppingListToCartTransformer
+                );
+            },
+            deps: [ShoppingListToCartTransformer],
         },
     ];
 };

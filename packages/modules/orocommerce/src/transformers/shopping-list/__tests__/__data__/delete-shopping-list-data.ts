@@ -24,7 +24,6 @@ export const deleteShoppingListWithItemsOutputData: DeleteRequisitionListOutput 
     status: true,
     requisition_lists: {
         items: [requisitionList],
-        page_info: {},
-        total_count: 0,
+        total_count: 1,
     },
 };
