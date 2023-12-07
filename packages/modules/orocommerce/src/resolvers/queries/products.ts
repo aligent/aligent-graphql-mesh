@@ -10,7 +10,6 @@ export const productsResolver = {
         const api: ProductsClient = context.injector.get(ProductsClient);
         try {
             const url_key = args.filter?.url_key?.eq;
-            const skus = args.filter?.sku?.in;
             const pageSize = args?.pageSize || DEFAULT_PLP_PRODUCTS_DISPLAY;
             const currentPage = args?.currentPage || 1;
 
@@ -21,12 +20,6 @@ export const productsResolver = {
             if (url_key) {
                 const urlKeyWithSlashRemoved = url_key.replace(slashAtStartOrEnd, '');
                 const oroProductsData = await api.getProductBySlug(urlKeyWithSlashRemoved);
-                if (!oroProductsData) return null;
-                return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });
-            }
-            // For getProductsBySku
-            else if (skus?.length) {
-                const oroProductsData = await api.getProductsBySkus(skus as string[]);
                 if (!oroProductsData) return null;
                 return transformer.transform({ data: { oroProductsData, pageSize, currentPage } });
             }
