@@ -4,6 +4,7 @@ import { RequisitionList, RequisitionListItemInterface } from '@aligent/orocomme
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
+import { isNull } from 'lodash';
 @Injectable()
 export class ShoppingListWithItemsToRequisitionListTransformer
     implements Transformer<ShoppingListWithItems, RequisitionList>
@@ -15,16 +16,20 @@ export class ShoppingListWithItemsToRequisitionListTransformer
     ): RequisitionList {
         const shoppingList = context.data;
 
-        const shippingListItems =
-            this.shoppingListToCartTransformer.getShoppingListItems(shoppingList);
+        const cart = this.shoppingListToCartTransformer.transform({ data: shoppingList });
         const items: RequisitionListItemInterface[] = [];
-        for (const item of shippingListItems) {
-            items.push({
-                customizable_options: item.customizable_options,
-                quantity: item.quantity,
-                uid: item.uid,
-                product: item.product,
-            });
+        if (cart.items) {
+            for (const item of cart.items) {
+                if (isNull(item)) {
+                    continue;
+                }
+                items.push({
+                    customizable_options: item.customizable_options,
+                    quantity: item.quantity,
+                    uid: item.uid,
+                    product: item.product,
+                });
+            }
         }
         return {
             description: shoppingList.data.attributes.notes,
