@@ -24,16 +24,10 @@ export class RequisitionListService {
      * @returns Promise<RequisitionLists | null>
      */
     async getLists(): Promise<RequisitionLists | null> {
-        const { data, included } = await this.apiClient.getShoppingListsWithItems();
-        if (isNull(data)) {
-            return null;
-        }
+        const shoppingListsWithItems = await this.apiClient.getShoppingListsWithItems();
 
         return this.shoppingListsToRequisitionListsTransformer.transform({
-            data: {
-                data: data,
-                included: included!,
-            },
+            data: shoppingListsWithItems,
         });
     }
 }

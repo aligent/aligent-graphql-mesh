@@ -42,7 +42,7 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 },
                 total_pages: 0,
             },
-            items_count: 0,
+            items_count: items.length,
             name: shoppingList.data.attributes.name,
             uid: btoa(shoppingList.data.id),
         };
