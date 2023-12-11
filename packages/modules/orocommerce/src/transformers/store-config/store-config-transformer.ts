@@ -9,6 +9,17 @@ export class StoreConfigTransformerChain extends ChainTransformer<
     StoreConfig
 > {}
 
+const MANDATORY_STORE_CONFIGS = {
+    // Taken from OTF-94 comments
+    contact_enabled: false,
+    newsletter_enabled: false,
+    returns_enabled: '',
+    root_category_uid: 'null',
+    locale: 'en-AU',
+    category_url_suffix: '',
+    grid_per_page: 24,
+};
+
 @Injectable()
 export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData[], StoreConfig> {
     public transform(
@@ -33,28 +44,28 @@ export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData
         return {
             __typename: 'StoreConfig',
             pwa_base_url: url ?? '',
+            secure_base_media_url: url ?? '',
             default_display_currency_code: defaultCurrency ?? '',
-            contact_enabled: true, // needed for types, some are needed for PWA to not error
-            newsletter_enabled: true,
-            returns_enabled: '',
+            contact_enabled: MANDATORY_STORE_CONFIGS.contact_enabled,
+            newsletter_enabled: MANDATORY_STORE_CONFIGS.newsletter_enabled,
+            returns_enabled: MANDATORY_STORE_CONFIGS.returns_enabled,
+            root_category_uid: MANDATORY_STORE_CONFIGS.root_category_uid,
+            locale: MANDATORY_STORE_CONFIGS.locale,
+            category_url_suffix: MANDATORY_STORE_CONFIGS.category_url_suffix,
+            grid_per_page: MANDATORY_STORE_CONFIGS.grid_per_page,
             id: null,
             use_store_in_url: true,
             website_code: '1',
             website_id: 1,
             root_category_id: 1,
-            root_category_uid: '1',
-            secure_base_media_url: url ?? '',
             plpAddToCartEnabled: true,
             plpQtyModifierEnabled: true,
-            locale: 'en_AU',
             is_default_store: true,
             is_default_store_group: true,
             list_per_page: 1,
             check_money_order_enable_for_specific_countries: true,
             autocomplete_on_storefront: true,
             check_money_order_enabled: true, // needed for types
-            category_url_suffix: null,
-            grid_per_page: null,
             captcha_type_contact: null,
             captcha_type_customer_create: null,
             captcha_type_customer_forgot_password: null,
