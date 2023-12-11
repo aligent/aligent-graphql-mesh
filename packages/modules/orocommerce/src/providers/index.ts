@@ -17,7 +17,6 @@ import { CmsPageClient } from '../apis/rest/cms-page';
 import { OrdersClient } from '../apis/rest/orders';
 import { StoreConfigApiClient } from '../apis/rest/store-config-api-client';
 import { RoutesClient } from '../apis/rest/routes';
-import { AuthClient } from '../apis/rest/auth';
 
 export const ModuleConfig = new InjectionToken<OroCommerceModuleConfig>(
     'Configuration for the OroCommerce GraphQL Module'
@@ -140,12 +139,6 @@ export const getProviders = (config: OroCommerceModuleConfig): Array<Provider> =
         {
             useClass: ProductsClient,
             provide: ProductsClient,
-            deps: [ApiClient],
-            scope: Scope.Operation,
-        },
-        {
-            useClass: AuthClient,
-            provide: AuthClient,
             deps: [ApiClient],
             scope: Scope.Operation,
         },
