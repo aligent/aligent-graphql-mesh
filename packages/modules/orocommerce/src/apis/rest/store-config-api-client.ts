@@ -6,8 +6,10 @@ import { OroStoreConfigApiData } from '../../types/store-config';
 export class StoreConfigApiClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
-    async getStoreConfig(): Promise<OroStoreConfigApiData[]> {
-        const response = await this.apiClient.get<OroStoreConfigApiData[]>('/tf_config');
+    async getStoreConfig(accessToken: string): Promise<OroStoreConfigApiData[]> {
+        const response = await this.apiClient.get<OroStoreConfigApiData[]>('/tf_config', {
+            headers: { Authorization: accessToken },
+        });
         return response.data;
     }
 }
