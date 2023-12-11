@@ -2,7 +2,6 @@ import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { ShoppingListsWithItems } from '../types';
 import { Transformer } from '@aligent/utils';
-import { isNull } from 'lodash';
 import { RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsToRequisitionListsTransformer } from '../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
 
