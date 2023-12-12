@@ -5860,6 +5860,10 @@ type Customer {
         """
         currentPage: Int = 1
     ): [Wishlist]
+    """
+    The customer's requisition lists.
+    """
+    requisition_lists: RequisitionLists
 }
 
 """
