@@ -1,4 +1,8 @@
-import { MutationResolvers, UpdateCartItemsOutput } from '@aligent/orocommerce-resolvers';
+import {
+    MutationResolvers,
+    UpdateCartItemsOutput,
+    CartItemUpdateInput,
+} from '@aligent/orocommerce-resolvers';
 import { UpdateCartItemTransformerChain } from '../../transformers/shopping-list/update-cart-item-transformer';
 import { ShoppingListsClient } from '../../apis/rest';
 import { CartService } from '../../services/cart-service';
@@ -13,11 +17,15 @@ export const updateCartItemsMutation: MutationResolvers['updateCartItems'] = {
             UpdateCartItemTransformerChain
         );
 
+        if (!cart_id || !Array.isArray(cart_items)) {
+            throw new Error(`Missing update cart information`);
+        }
+
         // OTF-132:Enhancement feature to handle updating multiple items for a cart in one batch update API call.
         for (const item of cart_items) {
-            const { quantity, cart_item_uid } = item;
+            const { quantity, cart_item_uid } = <CartItemUpdateInput>item;
 
-            if (!cart_id || !cart_item_uid) {
+            if (!cart_item_uid) {
                 throw new Error(`Missing update cart information`);
             }
 
