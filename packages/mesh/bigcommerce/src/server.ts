@@ -7,8 +7,9 @@ import cachableObjects from './cache';
 const app = express();
 
 let allowedOrigins: (string | RegExp)[] = [
-    new RegExp('.*.dev.aligent.consulting$'),
-    new RegExp('.*.local.pwadev$'),
+    new RegExp('.*.dev.aligent.consulting(:\\d{4})?$'),
+    new RegExp('.*.local.pwadev(:\\d{4})?$'),
+    new RegExp('.*-\\w+-\\d+.pwa.aligent.com.au'), // TF feature envs
 ];
 
 if (process.env.ORIGINS) {

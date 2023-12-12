@@ -121,7 +121,7 @@ export class ProductsSearchArgsBuilder {
                     }
 
                     if (inArray && inArray.length > 0) {
-                        searchQueriesArray.push(`${key} in ${inArray.join(', ')}`);
+                        searchQueriesArray.push(`${key} in (${inArray.join(', ')})`);
                         continue;
                     }
 

@@ -22,7 +22,8 @@
                     "error",
                     {
                         "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"],
-                        "ignoredDependencies": ["@aligent/orocommerce-resolvers", "@aligent/utils"]
+                        "ignoredDependencies": ["@aligent/orocommerce-resolvers", "@aligent/utils"],
+                        "includeTransitiveDependencies": true // collect dependencies transitively from children
                     }
                 ]
             }

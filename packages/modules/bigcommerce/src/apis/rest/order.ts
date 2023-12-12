@@ -1,4 +1,4 @@
-import { BCConsignment, BCOrder, BCOrderLineItem } from '../../types';
+import { BCConsignment, BCDiscount, BCOrder, BCOrderLineItem } from '../../types';
 import { bcGet, bcPaginate } from './client';
 
 const ORDERS_API = `/v2/orders`;
@@ -42,4 +42,11 @@ export const getLineItems = async function* (id: string): AsyncGenerator<BCOrder
  */
 export const getConsignments = async (id: string): Promise<BCConsignment> => {
     return bcGet(`${ORDERS_API}/${id}/consignments`);
+};
+
+/**
+ * https://api.bigcommerce.com/stores/{{store_hash}}/v2/orders/133/coupons
+ */
+export const getDiscounts = async (id: string): Promise<BCDiscount[]> => {
+    return bcGet(`${ORDERS_API}/${id}/coupons`);
 };

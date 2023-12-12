@@ -11,7 +11,9 @@
     "keyv": "^4.5.4",
     "lodash": "^4.17.21",
     "graphql": "^16.7.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "luxon": "^3.4.3",
+    "@graphql-codegen/cli": "^5.0.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",
