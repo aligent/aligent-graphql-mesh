@@ -718,6 +718,14 @@ type Mutation {
     Create an empty requisition list.
     """
     createRequisitionList(input: CreateRequisitionListInput!): CreateRequisitionListOutput
+    """Rename a requisition list and change its description."""
+    updateRequisitionList(
+        """The unique ID of the requisition list."""
+        requisitionListUid: ID!
+
+        """"""
+        input: UpdateRequisitionListInput!
+    ): UpdateRequisitionListOutput!
     """
     Create a new wish list.
     """
@@ -7323,6 +7331,17 @@ input CreateRequisitionListInput {
 }
 
 """
+An input object that defines which requistion list characteristics to update.
+"""
+input UpdateRequisitionListInput {
+    """The updated description of the requisition list."""
+    description: String
+
+    """The new name of the requisition list."""
+    name: String!
+}
+
+"""
 Contains an array of items added to a requisition list.
 """
 type RequistionListItems {
@@ -7439,6 +7458,12 @@ type CreateRequisitionListOutput {
     """
     The created requisition list.
     """
+    requisition_list: RequisitionList
+}
+
+"""Output of the request to rename the requisition list."""
+type UpdateRequisitionListOutput {
+    """The renamed requisition list."""
     requisition_list: RequisitionList
 }
 

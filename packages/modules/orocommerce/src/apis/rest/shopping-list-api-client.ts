@@ -40,6 +40,16 @@ export class ShoppingListsClient {
         return res.data;
     }
 
+    async updateShoppingLists(data: ShoppingList): Promise<ShoppingList> {
+        const res = await this.apiClient.patch<{ data: ShoppingList }, { data: ShoppingList }>(
+            '/shoppinglists',
+            {
+                data,
+            }
+        );
+        return res.data;
+    }
+
     async createDefaultShoppingList(): Promise<ShoppingList> {
         const attrs: ShoppingListInputAttribute = {
             name: 'default',
