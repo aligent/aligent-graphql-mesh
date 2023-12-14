@@ -65,7 +65,6 @@ export class CustomerClient {
     }
 
     async updateCustomer(updateCustomer: UpdateCustomer): Promise<UpdateCustomer> {
-        console.log(updateCustomer);
         const response = await this.apiClient.patch<
             { data: UpdateCustomer },
             { data: UpdateCustomer }
