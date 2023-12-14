@@ -32,6 +32,7 @@ import { isEmailAvailableResolver } from './queries/is-email-available';
 import { requestPasswordResetEmailMutation } from './mutations/request-password-reset-email';
 import { resetPasswordMutation } from './mutations/reset-password';
 import { createRequisitionListMutation } from './mutations/create-requisition-list';
+import { deleteRequisitionListMutation } from './mutations/delete-requisition-list';
 import { customerCartResolver } from './queries/customer-cart';
 
 export const resolvers: Resolvers = {
@@ -68,6 +69,7 @@ export const resolvers: Resolvers = {
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
         createRequisitionList: createRequisitionListMutation,
+        deleteRequisitionList: deleteRequisitionListMutation,
         requestPasswordResetEmail: requestPasswordResetEmailMutation,
         resetPassword: resetPasswordMutation,
     },
