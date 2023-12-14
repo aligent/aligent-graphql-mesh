@@ -13,17 +13,7 @@ import {
     isProductImage,
     isProductCategory,
 } from '../../utils/type-predicates';
-
-const UNDEFINED_CART: Cart = {
-    id: '',
-    items: [],
-    total_quantity: 0,
-    available_gift_wrappings: [],
-    gift_receipt_included: false,
-    is_virtual: false,
-    printed_card_included: false,
-    shipping_addresses: [],
-};
+import { UNDEFINED_CART } from './constants';
 
 @Injectable()
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
@@ -117,6 +107,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
+            const itemShoppingListId =
+                relatedShoppingListItem?.relationships?.shoppingList?.data.id;
+            if (itemShoppingListId !== shoppingList.data.id) continue;
             if (!relatedShoppingListItem) {
                 return logAndThrowError(
                     `Related ShoppingListItem not found for product: ${product.id} this data is required`

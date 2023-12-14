@@ -4,13 +4,19 @@ import {
     transformBcCustomerToAcCustomerForMutation,
     transformCustomerForMutation,
     getTransformedCreateCustomerData,
+    transformBcCustomer,
+    getCustomerPropertyFromFormFieldKey,
+    getCustomerAttributesFromFormFields,
 } from '../transform-customer-data';
 import {
+    acCustomer,
     acCustomerOutputWithEmail,
     acCustomerOutputWithName,
     acCustomerWithEmail,
     acCustomerWithName,
+    bcAddresses,
     bcCreateCustomerInputData,
+    bcCustomer,
     bcCustomerForPasswordChange,
     bcMutationCustomerWithEmail,
     bcMutationCustomerWithName,
@@ -95,5 +101,40 @@ describe('Customer Bc to Ac Transformation', () => {
         const acCustomer = transformBcCustomerToAcCustomerForMutation(bcCustomer, isSubscribed);
 
         expect(acCustomer).toEqual(acCustomerExpected);
+    });
+
+    test('Transform entire customer object from BC to AC', () => {
+        const bcCustomerInput = bcCustomer;
+        const bcAddressInput = bcAddresses;
+        const isSubscribed = true;
+
+        const acCustomerExpected = acCustomer;
+
+        const transformedAcCustomer = transformBcCustomer(
+            bcCustomerInput,
+            bcAddressInput,
+            isSubscribed
+        );
+
+        expect(transformedAcCustomer).toEqual(acCustomerExpected);
+    });
+
+    test('Returns customer key in snake case', () => {
+        const expectedCustomerProperty = 'industry';
+
+        const result = getCustomerPropertyFromFormFieldKey('INDUSTRY');
+
+        expect(result).toEqual(expectedCustomerProperty);
+    });
+
+    test('Returns customer attributes from form fields in "{ [key: string]: string }" format', () => {
+        const expectedFormat = { test_name_1: 'testValue1', test_name_2: 'testValue2' };
+
+        const result = getCustomerAttributesFromFormFields([
+            { name: 'testName1', value: 'testValue1', customer_id: 1 },
+            { name: 'testName2', value: 'testValue2', customer_id: 2 },
+        ]);
+
+        expect(result).toEqual(expectedFormat);
     });
 });

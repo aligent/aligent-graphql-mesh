@@ -1,5 +1,5 @@
+import { transformCountriesAndStates } from '../../../factories/transform-countries-data';
 import { CountryStates } from '../../../types';
-import { transformCountriesAndStates } from '../countries';
 import { bcCountry, bcStates } from './__data__/countries-input-data';
 import { transformedCountries, transformedStates } from './__data__/countries-transformed-data';
 
@@ -26,7 +26,7 @@ describe('Countries data transform tests', () => {
     test('return transformed countries', () => {
         const inputBcCountry = [bcCountry];
         const inputBcStates = bcStates;
-        const inputTransformedCountries = [transformedCountries];
+        const inputTransformedCountries = transformedCountries;
 
         const transformed = transformCountriesAndStates(inputBcCountry, inputBcStates);
 

@@ -65,7 +65,7 @@ export class ProductsClient {
         const path = `/products`;
         const params = {
             'filter[slug]': url,
-            include: 'variantProducts',
+            include: 'variantProducts,images',
         };
         const response = await this.apiClient.get<Product[], ProductIncludeTypes[]>(path, {
             params,
@@ -121,7 +121,7 @@ export class ProductsSearchArgsBuilder {
                     }
 
                     if (inArray && inArray.length > 0) {
-                        searchQueriesArray.push(`${key} in ${inArray.join(', ')}`);
+                        searchQueriesArray.push(`${key} in (${inArray.join(', ')})`);
                         continue;
                     }
 

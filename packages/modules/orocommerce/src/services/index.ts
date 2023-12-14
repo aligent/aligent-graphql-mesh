@@ -7,6 +7,8 @@ import {
     OrderLineItemsToNewShoppingListTransformer,
     ShoppingListToCartTransformer,
 } from '../transformers';
+import { RequisitionListService } from './requisition-list-service';
+import { ShoppingListWithItemsToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-with-items-to-requisition-list-transformer';
 
 export * from './auth';
 export * from './checkouts';
@@ -41,6 +43,12 @@ export const getOroServices = (): Array<Provider> => {
                 OrderLineItemsToNewShoppingListTransformer,
                 OrderLineItemToShoppingListItemTransformer,
             ],
+            scope: Scope.Operation,
+        },
+        {
+            useClass: RequisitionListService,
+            provide: RequisitionListService,
+            deps: [ShoppingListsClient, ShoppingListWithItemsToRequisitionListTransformer],
             scope: Scope.Operation,
         },
     ];

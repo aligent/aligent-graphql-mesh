@@ -1,5 +1,7 @@
 import { QueryResolvers } from '@aligent/orocommerce-resolvers';
+
 import { StoreConfigApiClient } from '../../apis/rest/store-config-api-client';
+
 import { StoreConfigTransformerChain } from '../../transformers/store-config/store-config-transformer';
 import { Auth } from '../../services';
 

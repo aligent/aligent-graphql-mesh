@@ -14,7 +14,9 @@
     "jsonwebtoken": "^9.0.0",
     "uuid": "^9.0.0",
     "reflect-metadata": "^0.1.13",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@graphql-codegen/cli": "^5.0.0",
+    "luxon": "^3.4.3"
   },
   "type": "commonjs",
   "main": "./src/index.js",
