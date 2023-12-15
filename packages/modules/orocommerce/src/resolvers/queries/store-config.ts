@@ -7,11 +7,15 @@ import { Auth } from '../../services';
 
 export const storeConfigResolver: QueryResolvers['storeConfig'] = {
     resolve: async (_root, _args, context, _info) => {
-        const authService: Auth = context.injector.get(Auth);
-        const token = await authService.login('guest', 'guest');
+        let bearerToken = context.request.headers.get('authorization');
+        if (!bearerToken) {
+            const authService: Auth = context.injector.get(Auth);
+            bearerToken = `Bearer ${await authService.login('guest', 'guest')}`;
+        }
+
         const storeConfigApiClient: StoreConfigApiClient =
             context.injector.get(StoreConfigApiClient);
-        const oroStoreConfig = await storeConfigApiClient.getStoreConfig(token.access_token);
+        const oroStoreConfig = await storeConfigApiClient.getStoreConfig(bearerToken);
 
         const storeConfigTransformerChain: StoreConfigTransformerChain = context.injector.get(
             StoreConfigTransformerChain
