@@ -1228,6 +1228,19 @@ type Mutation {
         wishlistItems: [WishlistItemUpdateInput!]!
     ): UpdateProductsInWishlistOutput
     """
+    Updates products in a requisition list.
+    """
+    updateRequisitionListItems(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+        """
+        Items to be updated in the requisition list.
+        """
+        requisitionListItems: [UpdateRequisitionListItemsInput!]!
+    ): UpdateRequisitionListItemsOutput
+    """
     Change the name and visibility of the specified wish list.
     """
     updateWishlist(
@@ -7365,6 +7378,41 @@ interface RequisitionListItemInterface {
     The unique ID for the requisition list item.
     """
     uid: ID!
+}
+
+"""
+Defines which items in a requisition list to update.
+"""
+type UpdateRequisitionListItemsInput {
+    """
+    An array of customer-entered options.
+    """
+    entered_options: [EnteredOptionInput]
+
+    """
+    The ID of the requisition list item to update.
+    """
+    item_id: ID!
+
+    """
+    The new quantity of the item.
+    """
+    quantity: Float
+
+    """
+    An array of selected option IDs.
+    """
+    selected_options: [ID]
+}
+
+"""
+Output of the request to update items in the specified requisition list.
+"""
+type UpdateRequisitionListItemsOutput {
+    """
+    The requisition list after updating items.
+    """
+    requisition_list: RequisitionList
 }
 
 """

@@ -1,4 +1,8 @@
-import { ComplexTextValue } from '@aligent/orocommerce-resolvers';
+import {
+    ComplexTextValue,
+    CartUserInputError,
+    CheckoutUserInputError,
+} from '@aligent/orocommerce-resolvers';
 import { Entity, Attributes, Relationships } from '.';
 
 export type ShoppingListWithItemsIncluded =
@@ -257,3 +261,5 @@ interface ProductData {
         id: string;
     };
 }
+
+export type CartUserErrors = Array<CartUserInputError & CheckoutUserInputError>;
