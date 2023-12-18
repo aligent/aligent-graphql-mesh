@@ -169,7 +169,7 @@ export interface CategoryAttributes extends Attributes {
     description: string | null;
     url: string;
     urls: string[];
-    images: CategoryImage[] | [];
+    images: CategoryImage[]
     metaTitle: string | null;
     metaDescription: string | null;
     metaKeywords: string | null;

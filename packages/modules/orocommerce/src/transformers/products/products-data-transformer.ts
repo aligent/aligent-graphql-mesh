@@ -306,7 +306,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
             const productCategories = oroProduct.included?.find(this.isProductCategory);
-            console.log(JSON.stringify(productCategories));
             const productsImages = oroProduct.included?.filter(this.isProductImage);
 
             // Configurable products have empty array for prices with prices on the variants
