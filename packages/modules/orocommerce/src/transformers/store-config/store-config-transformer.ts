@@ -9,17 +9,6 @@ export class StoreConfigTransformerChain extends ChainTransformer<
     StoreConfig
 > {}
 
-const MANDATORY_STORE_CONFIGS = {
-    // Taken from OTF-94 comments
-    contact_enabled: false,
-    newsletter_enabled: false,
-    returns_enabled: '',
-    root_category_uid: 'null',
-    locale: 'en-AU',
-    category_url_suffix: '',
-    grid_per_page: 24,
-};
-
 @Injectable()
 export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData[], StoreConfig> {
     public transform(
@@ -41,11 +30,25 @@ export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData
             oroStoreConfig,
             'oro_pricing_pro.default_currency'
         );
+
+        // These are needed as fall back values
+        const MANDATORY_STORE_CONFIGS = {
+            // Taken from OTF-94 comments
+            pwa_base_url: url ?? '',
+            secure_base_media_url: url ?? '', // This is needed for images displaying
+            contact_enabled: false,
+            newsletter_enabled: false,
+            returns_enabled: '',
+            root_category_uid: 'null',
+            locale: 'en-AU', // This should come from the BE when it becomes available
+            category_url_suffix: '',
+            grid_per_page: 24,
+        };
+
         return {
             __typename: 'StoreConfig',
-            pwa_base_url: url ?? '',
-            secure_base_media_url: url ?? '',
-            default_display_currency_code: defaultCurrency ?? '',
+            pwa_base_url: MANDATORY_STORE_CONFIGS.pwa_base_url,
+            secure_base_media_url: MANDATORY_STORE_CONFIGS.secure_base_media_url,
             contact_enabled: MANDATORY_STORE_CONFIGS.contact_enabled,
             newsletter_enabled: MANDATORY_STORE_CONFIGS.newsletter_enabled,
             returns_enabled: MANDATORY_STORE_CONFIGS.returns_enabled,
@@ -53,6 +56,7 @@ export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData
             locale: MANDATORY_STORE_CONFIGS.locale,
             category_url_suffix: MANDATORY_STORE_CONFIGS.category_url_suffix,
             grid_per_page: MANDATORY_STORE_CONFIGS.grid_per_page,
+            default_display_currency_code: defaultCurrency ?? '',
             id: null,
             use_store_in_url: true,
             website_code: '1',

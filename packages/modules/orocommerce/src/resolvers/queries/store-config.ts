@@ -8,9 +8,12 @@ import { Auth } from '../../services';
 export const storeConfigResolver: QueryResolvers['storeConfig'] = {
     resolve: async (_root, _args, context, _info) => {
         let bearerToken = context.request.headers.get('authorization');
+
+        // This is only needed when the PWA builds
         if (!bearerToken) {
             const authService: Auth = context.injector.get(Auth);
-            bearerToken = `Bearer ${await authService.login('guest', 'guest')}`;
+            const { access_token } = await authService.login('guest', 'guest');
+            bearerToken = `Bearer ${access_token}`;
         }
 
         const storeConfigApiClient: StoreConfigApiClient =

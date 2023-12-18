@@ -8,7 +8,7 @@ export class StoreConfigApiClient {
 
     async getStoreConfig(accessToken: string): Promise<OroStoreConfigApiData[]> {
         const response = await this.apiClient.get<OroStoreConfigApiData[]>('/tf_config', {
-            headers: { Authorization: ` Bearer ${accessToken}` },
+            headers: { Authorization: accessToken },
         });
         return response.data;
     }
