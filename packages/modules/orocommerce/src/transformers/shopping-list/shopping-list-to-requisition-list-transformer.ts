@@ -1,19 +1,16 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingList } from '../../types';
-import {
-    CreateRequisitionListOutput,
-    UpdateRequisitionListOutput
-} from '@aligent/orocommerce-resolvers';
+import { CreateRequisitionListOutput } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 
 @Injectable()
 export class ShoppingListToRequisitionListTransformer
-    implements Transformer<ShoppingList, CreateRequisitionListOutput | UpdateRequisitionListOutput>
+    implements Transformer<ShoppingList, CreateRequisitionListOutput>
 {
     transform(
-        context: TransformerContext<ShoppingList, CreateRequisitionListOutput | UpdateRequisitionListOutput>
-    ): CreateRequisitionListOutput | UpdateRequisitionListOutput {
+        context: TransformerContext<ShoppingList, CreateRequisitionListOutput>
+    ): CreateRequisitionListOutput {
         const shoppingList = context.data;
         return {
             requisition_list: {

@@ -42,7 +42,7 @@ export class ShoppingListsClient {
 
     async updateShoppingLists(data: ShoppingList): Promise<ShoppingList> {
         const res = await this.apiClient.patch<{ data: ShoppingList }, { data: ShoppingList }>(
-            '/shoppinglists',
+            `/shoppinglists/${data.id}`,
             {
                 data,
             }
