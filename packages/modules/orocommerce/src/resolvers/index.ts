@@ -32,6 +32,7 @@ import { requestPasswordResetEmailMutation } from './mutations/request-password-
 import { resetPasswordMutation } from './mutations/reset-password';
 import { createRequisitionListMutation } from './mutations/create-requisition-list';
 import { customerCartResolver } from './queries/customer-cart';
+import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -71,9 +72,9 @@ export const resolvers: Resolvers = {
         resetPassword: resetPasswordMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
-    // CategoryTree: {
-    //     breadcrumbs: breadcrumbsSubResolver,
-    // },
+    CategoryTree: {
+        breadcrumbs: breadcrumbsSubResolver,
+    },
     Customer: {
         orders: customerOrdersResolver,
     },

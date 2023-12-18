@@ -157,7 +157,7 @@ export interface Category extends Entity {
     id: string;
     attributes: CategoryAttributes;
     relationships?: {
-        categoryPath: { data: Resource };
+        categoryPath: { data: Resource[] };
     };
 }
 

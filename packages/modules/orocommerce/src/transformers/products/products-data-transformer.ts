@@ -33,6 +33,7 @@ import {
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
+import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
 interface ProductsTransformerInput {
     oroProductsData: {
@@ -281,7 +282,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 __typename: 'CategoryTree',
                 created_at: createdAt,
                 id: Number(productCategories.id),
-                uid: btoa(productCategories.id),
+                uid: productCategories.relationships
+                    ? getEncodedCategoryUidFromCategoryData(
+                          productCategories.relationships?.categoryPath.data[0]
+                      )
+                    : '',
                 staged: true, // Couldnt see equivalent value in ORO
                 name: title,
                 level: 1, // Couldnt see equivalent value in ORO
@@ -292,13 +297,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 meta_keywords: metaKeywords,
                 url_path: url,
                 image: images.length === 0 ? null : images[0].url,
-                breadcrumbs: [
-                    // This has a sub resolver that isnt working
-                    {
-                        category_uid: btoa(productCategories.id),
-                        category_name: title,
-                    },
-                ],
             },
         ];
     }
