@@ -727,10 +727,18 @@ type Mutation {
         """
         requisitionListUid: ID!
 
-        """
-        """
         input: UpdateRequisitionListInput!
     ): UpdateRequisitionListOutput!
+
+    """
+    Delete a requisition list.
+    """
+    deleteRequisitionList(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+    ): DeleteRequisitionListOutput
     """
     Create a new wish list.
     """
@@ -5864,6 +5872,10 @@ type Customer {
         """
         currentPage: Int = 1
     ): [Wishlist]
+    """
+    The customer's requisition lists.
+    """
+    requisition_lists: RequisitionLists
 }
 
 """
@@ -7478,6 +7490,21 @@ type UpdateRequisitionListOutput {
     The renamed requisition list.
     """
     requisition_list: RequisitionList
+}
+
+"""
+Indicates whether the request to delete the requisition list was successful.
+"""
+type DeleteRequisitionListOutput {
+    """
+    The customer's requisition lists after deleting a requisition list.
+    """
+    requisition_lists: RequisitionLists
+
+    """
+    Indicates whether the request to delete the requisition list was successful.
+    """
+    status: Boolean!
 }
 
 input ContactUsInput {

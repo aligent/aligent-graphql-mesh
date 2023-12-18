@@ -5,6 +5,7 @@ import {
     ShoppingListInputAttribute,
     ShoppingListItem,
     ShoppingListItemInput,
+    ShoppingListsWithItems,
     ShoppingListWithItems,
 } from '../../types';
 
@@ -16,14 +17,13 @@ export class ShoppingListsClient {
         return (await this.apiClient.get<ShoppingList[]>('/shoppinglists')).data;
     }
 
-    async getShoppingListsWithItems(id?: string): Promise<{
-        data: ShoppingList[];
-        included?: ShoppingListWithItems['included'];
-    }> {
-        const params = {
+    async getShoppingListsWithItems(id?: string): Promise<ShoppingListsWithItems> {
+        const params: Record<string, string> = {
             include: 'items.product.images,items.product.category',
-            'filter[id]': id,
         };
+        if (id) {
+            params['filter[id]'] = id;
+        }
         return this.apiClient.get<ShoppingList[], ShoppingListWithItems['included']>(
             '/shoppinglists',
             { params }
@@ -98,6 +98,11 @@ export class ShoppingListsClient {
 
     async deleteItemInShoppingList(cartItemId: string) {
         const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
+        return response;
+    }
+
+    async deleteShoppingList(shoppingListId: string): Promise<boolean> {
+        const response = await this.apiClient.delete(`/shoppinglists/${shoppingListId}`);
         return response;
     }
 }

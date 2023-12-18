@@ -107,6 +107,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
+            const itemShoppingListId =
+                relatedShoppingListItem?.relationships?.shoppingList?.data.id;
+            if (itemShoppingListId !== shoppingList.data.id) continue;
             if (!relatedShoppingListItem) {
                 return logAndThrowError(
                     `Related ShoppingListItem not found for product: ${product.id} this data is required`

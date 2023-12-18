@@ -75,6 +75,8 @@ import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-
 
 import { ShoppingListToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
 import { RequisitionListInputToShoppingListTransformer } from '../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
+import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list/shopping-list-with-items-to-requisition-list-transformer';
+import { ShoppingListsToRequisitionListsTransformer } from './shopping-list/shopping-lists-to-requisition-lists-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -180,6 +182,11 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: ShoppingListToRequisitionListTransformer,
             useClass: ShoppingListToRequisitionListTransformer,
+            global: true,
+        },
+        {
+            provide: ShoppingListsToRequisitionListsTransformer,
+            useClass: ShoppingListsToRequisitionListsTransformer,
             global: true,
         },
         {
@@ -361,6 +368,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return updateCartItemTransformer;
             },
             deps: [UpdateCartItemTransformerChain],
+        },
+        {
+            provide: ShoppingListWithItemsToRequisitionListTransformer,
+            useFactory: (shoppingListToCartTransformer) => {
+                return new ShoppingListWithItemsToRequisitionListTransformer(
+                    shoppingListToCartTransformer
+                );
+            },
+            deps: [ShoppingListToCartTransformer],
         },
     ];
 };

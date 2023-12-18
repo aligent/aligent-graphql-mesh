@@ -1,6 +1,7 @@
 import { QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { CustomerClient } from '../../apis/rest/customer';
 import { OroCustomerTransformerChain } from '../../transformers/customers/transform-customer-data';
+import { RequisitionListService } from '../../services/requisition-list-service';
 
 export const customerResolver = {
     resolve: async (_root, _args, context, _info) => {
@@ -12,8 +13,15 @@ export const customerResolver = {
             OroCustomerTransformerChain
         );
 
-        return oroCustomerTransformer.transform({
-            data: { oroCustomer, oroAddresses },
-        });
+        const requisitionListService: RequisitionListService =
+            context.injector.get(RequisitionListService);
+        const requisitionLists = await requisitionListService.getLists();
+
+        return {
+            ...oroCustomerTransformer.transform({
+                data: { oroCustomer, oroAddresses },
+            }),
+            requisition_lists: requisitionLists,
+        };
     },
 } satisfies QueryResolvers['customer'];
