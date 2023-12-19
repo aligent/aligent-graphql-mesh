@@ -7,6 +7,11 @@ export type ShoppingListWithItemsIncluded =
     | IncludedProductImages
     | IncludedProductCategory;
 
+export interface ShoppingListsWithItems {
+    data: ShoppingList[];
+    included?: ShoppingListWithItemsIncluded[];
+}
+
 export interface ShoppingListWithItems {
     data: ShoppingList;
     included?: ShoppingListWithItemsIncluded[];
