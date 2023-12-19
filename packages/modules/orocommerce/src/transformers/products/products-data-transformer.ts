@@ -1,4 +1,5 @@
 import {
+    Category,
     ConfigurableProductAttribute,
     Product as OroProduct,
     ProductImage,
@@ -27,10 +28,12 @@ import {
     ConfigurableVariant,
     Aggregation,
     MediaGalleryEntry,
+    CategoryTree,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
+import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
 interface ProductsTransformerInput {
     oroProductsData: {
@@ -55,7 +58,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         const { oroProductsData, pageSize, currentPage, productAttributes } = context.data;
         const { data, included, meta } = oroProductsData;
         const oroProducts: Array<OroProduct> = [];
-
         /* Response data here can be coming from either '/products' or '/productsearch' Oro apis
          * In the latter case, associated products are returned in the 'included' section of the response
          * messed up with all the other related entities like categories, images and stock statuses.
@@ -225,6 +227,10 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         return item.type === 'productimages';
     };
 
+    isProductCategory = (item: ProductIncludeTypes): item is Category => {
+        return item.type === 'mastercatalogcategories';
+    };
+
     getImageByDimension(
         images: ProductImage[],
         imageDimension: string
@@ -258,13 +264,54 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         return mediaGalleryEntries;
     }
 
+    getCategoriesData(productCategories: Category[]): CategoryTree[] {
+        return productCategories.map((productCategory) => {
+            const {
+                title,
+                description,
+                metaDescription,
+                metaKeywords,
+                metaTitle,
+                url,
+                createdAt,
+                images,
+            } = productCategory.attributes;
+            const category = { type: productCategory.type, id: productCategory.id };
+            const level = 1;
+
+            return {
+                type: 'CATEGORY',
+                __typename: 'CategoryTree',
+                created_at: createdAt,
+                id: Number(productCategory.id),
+                uid: productCategory.relationships
+                    ? getEncodedCategoryUidFromCategoryData(category)
+                    : '',
+                staged: true, // Couldnt see equivalent value in ORO
+                name: title,
+                level: productCategory.relationships
+                    ? productCategory.relationships.categoryPath.data.length + level
+                    : level,
+                redirect_code: 0, // Couldnt see equivalent value in ORO
+                description: description,
+                meta_title: metaTitle,
+                meta_description: metaDescription,
+                meta_keywords: metaKeywords,
+                url_path: url,
+                image: images.length === 0 ? null : images[0].url,
+            };
+        });
+    }
+
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
+            const productCategories = oroProduct.included?.filter(this.isProductCategory);
+            const productsImages = oroProduct.included?.filter(this.isProductImage);
+
             // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
             const price = oroProduct.attributes.prices[0]?.price || '0';
             const productPrice = this.getPriceData(currency, price);
-            const productsImages = oroProduct.included?.filter(this.isProductImage);
             const { origin } = new URL(oroProduct.links.self);
 
             const smallImage = productsImages
@@ -276,7 +323,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 : null;
 
             const baseProduct = {
-                categories: null, // TODO (do we need webcatalog or mastercatalog categories here?)
+                categories: productCategories ? this.getCategoriesData(productCategories) : null,
                 description: {
                     __typename: 'ComplexTextValue',
                     html: oroProduct.attributes.description ?? '',
