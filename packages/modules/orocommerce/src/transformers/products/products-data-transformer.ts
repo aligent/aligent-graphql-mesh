@@ -276,6 +276,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             createdAt,
             images,
         } = productCategories.attributes;
+        const category = { type: productCategories.type, id: productCategories.id };
         return [
             {
                 type: 'CATEGORY',
@@ -283,9 +284,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 created_at: createdAt,
                 id: Number(productCategories.id),
                 uid: productCategories.relationships
-                    ? getEncodedCategoryUidFromCategoryData(
-                          productCategories.relationships?.categoryPath.data[0]
-                      )
+                    ? getEncodedCategoryUidFromCategoryData(category)
                     : '',
                 staged: true, // Couldnt see equivalent value in ORO
                 name: title,
