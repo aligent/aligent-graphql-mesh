@@ -65,7 +65,7 @@ export class ProductsClient {
         const path = `/products`;
         const params = {
             'filter[slug]': url,
-            include: 'variantProducts,images,category',
+            include: 'variantProducts,images,category,category.categoryPath',
         };
         const response = await this.apiClient.get<Product[], ProductIncludeTypes[]>(path, {
             params,

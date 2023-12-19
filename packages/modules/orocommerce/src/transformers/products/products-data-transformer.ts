@@ -58,7 +58,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         const { oroProductsData, pageSize, currentPage, productAttributes } = context.data;
         const { data, included, meta } = oroProductsData;
         const oroProducts: Array<OroProduct> = [];
-
         /* Response data here can be coming from either '/products' or '/productsearch' Oro apis
          * In the latter case, associated products are returned in the 'included' section of the response
          * messed up with all the other related entities like categories, images and stock statuses.
@@ -265,30 +264,34 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         return mediaGalleryEntries;
     }
 
-    getCategoriesData(productCategories: Category): CategoryTree[] {
-        const {
-            title,
-            description,
-            metaDescription,
-            metaKeywords,
-            metaTitle,
-            url,
-            createdAt,
-            images,
-        } = productCategories.attributes;
-        const category = { type: productCategories.type, id: productCategories.id };
-        return [
-            {
+    getCategoriesData(productCategories: Category[]): CategoryTree[] {
+        return productCategories.map((productCategory) => {
+            const {
+                title,
+                description,
+                metaDescription,
+                metaKeywords,
+                metaTitle,
+                url,
+                createdAt,
+                images,
+            } = productCategory.attributes;
+            const category = { type: productCategory.type, id: productCategory.id };
+            const level = 1;
+
+            return {
                 type: 'CATEGORY',
                 __typename: 'CategoryTree',
                 created_at: createdAt,
-                id: Number(productCategories.id),
-                uid: productCategories.relationships
+                id: Number(productCategory.id),
+                uid: productCategory.relationships
                     ? getEncodedCategoryUidFromCategoryData(category)
                     : '',
                 staged: true, // Couldnt see equivalent value in ORO
                 name: title,
-                level: 1, // Couldnt see equivalent value in ORO
+                level: productCategory.relationships
+                    ? productCategory.relationships.categoryPath.data.length + level
+                    : level,
                 redirect_code: 0, // Couldnt see equivalent value in ORO
                 description: description,
                 meta_title: metaTitle,
@@ -296,13 +299,13 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 meta_keywords: metaKeywords,
                 url_path: url,
                 image: images.length === 0 ? null : images[0].url,
-            },
-        ];
+            };
+        });
     }
 
     public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
         try {
-            const productCategories = oroProduct.included?.find(this.isProductCategory);
+            const productCategories = oroProduct.included?.filter(this.isProductCategory);
             const productsImages = oroProduct.included?.filter(this.isProductImage);
 
             // Configurable products have empty array for prices with prices on the variants
