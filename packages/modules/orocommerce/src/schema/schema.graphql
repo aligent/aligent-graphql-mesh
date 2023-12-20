@@ -719,6 +719,27 @@ type Mutation {
     """
     createRequisitionList(input: CreateRequisitionListInput!): CreateRequisitionListOutput
     """
+    Rename a requisition list and change its description.
+    """
+    updateRequisitionList(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+
+        input: UpdateRequisitionListInput!
+    ): UpdateRequisitionListOutput!
+
+    """
+    Delete a requisition list.
+    """
+    deleteRequisitionList(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+    ): DeleteRequisitionListOutput
+    """
     Create a new wish list.
     """
     createWishlist(
@@ -5851,6 +5872,10 @@ type Customer {
         """
         currentPage: Int = 1
     ): [Wishlist]
+    """
+    The customer's requisition lists.
+    """
+    requisition_lists: RequisitionLists
 }
 
 """
@@ -7323,6 +7348,21 @@ input CreateRequisitionListInput {
 }
 
 """
+An input object that defines which requistion list characteristics to update.
+"""
+input UpdateRequisitionListInput {
+    """
+    The updated description of the requisition list.
+    """
+    description: String
+
+    """
+    The new name of the requisition list.
+    """
+    name: String!
+}
+
+"""
 Contains an array of items added to a requisition list.
 """
 type RequistionListItems {
@@ -7440,6 +7480,31 @@ type CreateRequisitionListOutput {
     The created requisition list.
     """
     requisition_list: RequisitionList
+}
+
+"""
+Output of the request to rename the requisition list.
+"""
+type UpdateRequisitionListOutput {
+    """
+    The renamed requisition list.
+    """
+    requisition_list: RequisitionList
+}
+
+"""
+Indicates whether the request to delete the requisition list was successful.
+"""
+type DeleteRequisitionListOutput {
+    """
+    The customer's requisition lists after deleting a requisition list.
+    """
+    requisition_lists: RequisitionLists
+
+    """
+    Indicates whether the request to delete the requisition list was successful.
+    """
+    status: Boolean!
 }
 
 input ContactUsInput {
