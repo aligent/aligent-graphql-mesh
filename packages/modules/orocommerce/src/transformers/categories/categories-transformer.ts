@@ -13,7 +13,9 @@ import { getEncodedCategoryUidFromCategoryData } from '../../utils';
  * Transforms category data into a shape the PWA is expecting
  * @param categories - The current category object
  */
-@Injectable()
+@Injectable({
+    global: true
+})
 export class CategoriesTransformerChain extends ChainTransformer<OroCategory[], CategoryTree[]> {}
 
 @Injectable()

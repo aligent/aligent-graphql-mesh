@@ -9,7 +9,9 @@ import {
 } from '@aligent/utils';
 import { updateImageSrcInHtml } from '../../utils';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class CmsPageTransformerChain extends ChainTransformer<OroLandingPage, AcCmsPage> {}
 
 @Injectable()

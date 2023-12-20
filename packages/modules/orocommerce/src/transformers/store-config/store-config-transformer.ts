@@ -3,7 +3,9 @@ import { OroStoreConfigApiData } from '../../types/store-config';
 import { StoreConfig } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class StoreConfigTransformerChain extends ChainTransformer<
     OroStoreConfigApiData[],
     StoreConfig

@@ -98,43 +98,35 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: CmsBlocksTransformerChain,
             useClass: CmsBlocksTransformerChain,
-            global: true,
         },
         {
             provide: CmsPageTransformerChain,
             useClass: CmsPageTransformerChain,
-            global: true,
         },
         {
             provide: StoreLocationsTransformerChain,
             useClass: StoreLocationsTransformerChain,
-            global: true,
         },
         {
             provide: CategoriesTransformerChain,
             useClass: CategoriesTransformerChain,
-            global: true,
         },
         {
             provide: BreadcrumbsTransformerChain,
             useClass: BreadcrumbsTransformerChain,
-            global: true,
         },
         {
             provide: CustomerAddressTransformerChain,
             useClass: CustomerAddressTransformerChain,
-            global: true,
         },
 
         {
             provide: OroAddressTransformerChain,
             useClass: OroAddressTransformerChain,
-            global: true,
         },
         {
             provide: OroCustomerTransformerChain,
             useClass: OroCustomerTransformerChain,
-            global: true,
         },
 
         {
@@ -144,7 +136,6 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: UpdateCustomerAddressTransformerChain,
             useClass: UpdateCustomerAddressTransformerChain,
-            global: true,
         },
         {
             provide: UpdateCustomerTransformerChain,
@@ -153,50 +144,40 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: AddProductsToCartTransformerChain,
             useClass: AddProductsToCartTransformerChain,
-            global: true,
         },
         {
             provide: UpdateCartItemTransformerChain,
             useClass: UpdateCartItemTransformerChain,
-            global: true,
         },
-        // Create default transformers and register them with their chain transformers
-
         {
             provide: CurrencyTransformerChain,
             useClass: CurrencyTransformerChain,
-            global: true,
         },
         {
             provide: CustomerOrdersTransformerChain,
             useClass: CustomerOrdersTransformerChain,
-            global: true,
         },
         {
             provide: StoreConfigTransformerChain,
             useClass: StoreConfigTransformerChain,
-            global: true,
         },
         {
             provide: ProductsTransformerChain,
             useClass: ProductsTransformerChain,
-            global: true,
         },
         {
             provide: ShoppingListToRequisitionListTransformer,
             useClass: ShoppingListToRequisitionListTransformer,
-            global: true,
         },
         {
             provide: ShoppingListsToRequisitionListsTransformer,
             useClass: ShoppingListsToRequisitionListsTransformer,
-            global: true,
         },
         {
             provide: RequisitionListInputToShoppingListTransformer,
             useClass: RequisitionListInputToShoppingListTransformer,
-            global: true,
         },
+        // Create default transformers and register them with their chain transformers
         {
             provide: StoreLocationsTransformer,
             useFactory: (transformerChain) => {

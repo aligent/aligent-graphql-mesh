@@ -17,7 +17,9 @@ type OroOrder = {
     included?: Entity[] | undefined;
 };
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class CustomerOrdersTransformerChain extends ChainTransformer<OroOrder, CustomerOrders> {}
 
 @Injectable()

@@ -3,7 +3,9 @@ import { CustomerAddress, CountryCodeEnum } from '@aligent/orocommerce-resolvers
 import { OroCustomerAddress } from '../../types';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class OroAddressesTransformerChain extends ChainTransformer<
     OroCustomerAddress[] | undefined,
     CustomerAddress[]

@@ -34,7 +34,9 @@ import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
 import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class ProductsTransformerChain extends ChainTransformer<
     ProductsTransformerInput,
     Products

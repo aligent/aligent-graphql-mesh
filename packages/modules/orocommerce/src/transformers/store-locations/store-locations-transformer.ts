@@ -3,7 +3,9 @@ import { OroStoreLocation } from '../../types/store-location';
 import { StoreLocation, StoreLocations } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class StoreLocationsTransformerChain extends ChainTransformer<
     OroStoreLocation[],
     StoreLocations

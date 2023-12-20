@@ -3,7 +3,9 @@ import { Injectable } from 'graphql-modules';
 import { UpdateCustomer } from '../../types';
 import { CustomerInput } from '@aligent/orocommerce-resolvers';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class UpdateCustomerTransformerChain extends ChainTransformer<
     CustomerInput,
     UpdateCustomer

@@ -2,7 +2,9 @@ import { ChainTransformer, Transformer, TransformerContext } from '@aligent/util
 import { OroCustomerAddress, CustomerAddressUpdateValidated } from '../../types';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true
+})
 export class UpdateCustomerAddressTransformerChain extends ChainTransformer<
     CustomerAddressUpdateValidated,
     OroCustomerAddress
