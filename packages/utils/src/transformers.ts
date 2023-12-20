@@ -6,7 +6,7 @@ export interface TransformerContext<T, D> {
 }
 
 export interface Transformer<T, D> {
-    transform(context: TransformerContext<T, D>): D;
+    transform(context: TransformerContext<T, D>): D | undefined;
 }
 
 export class ChainTransformer<T, D> implements Transformer<T, D> {

@@ -4,8 +4,7 @@ import {
     ProductImage,
     ProductImageFile,
     ProductIncludeTypes,
-    ProductSearch,
-    ProductSearchMeta,
+    ProductsTransformerInput,
 } from '../../types';
 import {
     ChainTransformer,
@@ -31,17 +30,6 @@ import {
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
-
-interface ProductsTransformerInput {
-    oroProductsData: {
-        data: Array<OroProduct | ProductSearch>;
-        included?: Array<ProductIncludeTypes>;
-        meta?: ProductSearchMeta;
-    };
-    productAttributes?: ConfigurableProductAttribute[];
-    pageSize: number;
-    currentPage: number;
-}
 
 @Injectable()
 export class ProductsTransformerChain extends ChainTransformer<

@@ -86,6 +86,9 @@ export * from './shopping-list/order-line-item-to-shopping-list-item-transformer
 export * from './shopping-list/order-line-items-to-new-shopping-list-transformer';
 export * from './shopping-list/shopping-list-to-cart-transformer';
 export * from './contact-us/contact-us-to-contact-request-transformer';
+export * from './products/products-data-transformer';
+export * from './products/reviews-transformer';
+export * from './products/stock-status-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
