@@ -14,7 +14,7 @@ import { getEncodedCategoryUidFromCategoryData } from '../../utils';
  * @param categories - The current category object
  */
 @Injectable({
-    global: true
+    global: true,
 })
 export class CategoriesTransformerChain extends ChainTransformer<OroCategory[], CategoryTree[]> {}
 

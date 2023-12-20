@@ -4,7 +4,7 @@ import { Injectable } from 'graphql-modules';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class CurrencyTransformerChain extends ChainTransformer<OroCurrency, AcCurrency> {}
 

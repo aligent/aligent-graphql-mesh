@@ -4,7 +4,7 @@ import { UpdateCustomer } from '../../types';
 import { CustomerInput } from '@aligent/orocommerce-resolvers';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class UpdateCustomerTransformerChain extends ChainTransformer<
     CustomerInput,

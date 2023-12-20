@@ -10,7 +10,7 @@ import {
 import { updateImageSrcInHtml } from '../../utils';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class CmsPageTransformerChain extends ChainTransformer<OroLandingPage, AcCmsPage> {}
 

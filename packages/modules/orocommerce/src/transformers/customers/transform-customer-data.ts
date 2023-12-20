@@ -5,7 +5,7 @@ import { CustomerUser, OroCustomerAddress } from '../../types';
 import { Injectable } from 'graphql-modules';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class OroCustomerTransformerChain extends ChainTransformer<
     { oroCustomer: CustomerUser; oroAddresses: OroCustomerAddress[] | undefined },

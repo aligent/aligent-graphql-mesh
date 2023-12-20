@@ -4,7 +4,7 @@ import { btoa, ChainTransformer, Transformer, TransformerContext } from '@aligen
 import { Injectable } from 'graphql-modules';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class BreadcrumbsTransformerChain extends ChainTransformer<OroCategory[], Breadcrumb[]> {}
 

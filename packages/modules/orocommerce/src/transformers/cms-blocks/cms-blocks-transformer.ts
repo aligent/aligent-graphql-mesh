@@ -4,7 +4,7 @@ import { OroCmsBlock } from '../../types/cms-blocks';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class CmsBlocksTransformerChain extends ChainTransformer<OroCmsBlock[], CmsBlocks> {}
 

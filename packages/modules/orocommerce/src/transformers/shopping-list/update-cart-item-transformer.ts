@@ -3,7 +3,7 @@ import { ShoppingListItem } from '../../types';
 import { Injectable } from 'graphql-modules';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class UpdateCartItemTransformerChain extends ChainTransformer<
     { quantity: number; cartItemId: string },

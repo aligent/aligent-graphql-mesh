@@ -35,7 +35,7 @@ import { Injectable } from 'graphql-modules';
 import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class ProductsTransformerChain extends ChainTransformer<
     ProductsTransformerInput,

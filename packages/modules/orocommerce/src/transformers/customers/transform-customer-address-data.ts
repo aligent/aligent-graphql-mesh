@@ -3,7 +3,7 @@ import { CustomerAddressValidated, OroCustomerAddressInput } from '../../types';
 import { Injectable } from 'graphql-modules';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class CustomerAddressTransformerChain extends ChainTransformer<
     CustomerAddressValidated,

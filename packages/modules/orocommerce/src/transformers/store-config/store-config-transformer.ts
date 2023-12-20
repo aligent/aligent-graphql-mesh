@@ -4,7 +4,7 @@ import { StoreConfig } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class StoreConfigTransformerChain extends ChainTransformer<
     OroStoreConfigApiData[],

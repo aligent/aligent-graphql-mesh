@@ -18,7 +18,7 @@ type OroOrder = {
 };
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class CustomerOrdersTransformerChain extends ChainTransformer<OroOrder, CustomerOrders> {}
 

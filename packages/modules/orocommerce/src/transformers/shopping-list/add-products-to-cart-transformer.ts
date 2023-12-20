@@ -4,7 +4,7 @@ import { MutationAddProductsToCartArgs } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
 @Injectable({
-    global: true
+    global: true,
 })
 export class AddProductsToCartTransformerChain extends ChainTransformer<
     MutationAddProductsToCartArgs['cartItems'],
