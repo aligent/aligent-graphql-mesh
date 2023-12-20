@@ -184,3 +184,14 @@ interface CategoryImage {
 export type ProductIncludeTypes = InventoryStatus | ProductImage | Product | Category;
 export type MetaAllowedTypes = ProductSearchMeta;
 export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';
+
+export interface ProductsTransformerInput {
+    oroProductsData: {
+        data: Array<Product | ProductSearch>;
+        included?: Array<ProductIncludeTypes>;
+        meta?: ProductSearchMeta;
+    };
+    productAttributes?: ConfigurableProductAttribute[];
+    pageSize: number;
+    currentPage: number;
+}

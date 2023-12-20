@@ -3,7 +3,9 @@ import { WebCatalogTree as OroCategory } from '../../types';
 import { btoa, ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class BreadcrumbsTransformerChain extends ChainTransformer<OroCategory[], Breadcrumb[]> {}
 
 @Injectable()

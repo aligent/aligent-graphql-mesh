@@ -3,7 +3,9 @@ import { Injectable } from 'graphql-modules';
 import { OroCmsBlock } from '../../types/cms-blocks';
 import { ChainTransformer, Transformer, TransformerContext } from '@aligent/utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CmsBlocksTransformerChain extends ChainTransformer<OroCmsBlock[], CmsBlocks> {}
 
 @Injectable()

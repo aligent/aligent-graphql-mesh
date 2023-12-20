@@ -2,7 +2,9 @@ import { Transformer, TransformerContext, ChainTransformer } from '@aligent/util
 import { ShoppingListItem } from '../../types';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class UpdateCartItemTransformerChain extends ChainTransformer<
     { quantity: number; cartItemId: string },
     ShoppingListItem
