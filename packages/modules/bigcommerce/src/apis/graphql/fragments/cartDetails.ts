@@ -255,6 +255,7 @@ export const cartDetails = gql`
         metafields(namespace: "payment_info") {
             edges {
                 node {
+                    entityId
                     key
                     value
                 }
