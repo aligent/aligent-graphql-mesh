@@ -6,6 +6,9 @@ import { getTransformedShippingAddresses } from './helpers/transform-shipping-ad
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
 import { BcPaymentMethod, BcStorefrontFormFields } from '../types';
+import { findMetafieldValueByKey } from '../../../../utils/metafields';
+
+const SELECTED_PAYMENT_METHOD_KEY = 'selected_payment_method';
 
 export const getTransformedCartData = (
     checkoutData: Checkout,
@@ -16,6 +19,13 @@ export const getTransformedCartData = (
 ): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
+
+    const selectedPaymentMethodCode =
+        cart?.metafields.edges &&
+        findMetafieldValueByKey(cart?.metafields.edges, SELECTED_PAYMENT_METHOD_KEY);
+    const selectedPaymentMethod =
+        selectedPaymentMethodCode &&
+        paymentMethods?.find((method) => method.code === selectedPaymentMethodCode);
 
     const applied_coupons = coupons.map(({ code }) => ({ code }));
 
@@ -53,6 +63,12 @@ export const getTransformedCartData = (
             formFields,
             countries
         ),
+        selected_payment_method: selectedPaymentMethod
+            ? {
+                  title: selectedPaymentMethod.name,
+                  code: selectedPaymentMethod.code,
+              }
+            : null,
         available_gift_wrappings: [],
         gift_receipt_included: false,
         printed_card_included: false,
