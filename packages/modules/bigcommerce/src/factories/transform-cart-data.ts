@@ -5,13 +5,14 @@ import { getTransformedCartPrices } from './helpers/transform-cart-prices';
 import { getTransformedShippingAddresses } from './helpers/transform-shipping-addresses';
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
-import { BcStorefrontFormFields } from '../types';
+import { BcPaymentMethod, BcStorefrontFormFields } from '../types';
 
 export const getTransformedCartData = (
     checkoutData: Checkout,
     additionalCartItemData?: Array<ProductInterface>,
     formFields?: BcStorefrontFormFields,
-    countries?: AcCountry[]
+    countries?: AcCountry[],
+    paymentMethods?: BcPaymentMethod[]
 ): Cart => {
     const { billingAddress, cart, customerMessage, coupons, entityId, shippingConsignments } =
         checkoutData;
@@ -20,9 +21,15 @@ export const getTransformedCartData = (
 
     return {
         applied_coupons,
+        available_payment_methods: paymentMethods?.map((method) => ({
+            title: method.name,
+            code: method.code,
+            is_deferred: false, // BC doesn't provide a value match this field
+        })),
         id: entityId,
         total_quantity: cart?.lineItems?.totalQuantity || 0,
         error_type: null,
+        email: billingAddress?.email,
         items: getTransformCartItems(cart, additionalCartItemData),
         is_virtual: getIsVirtualCart(cart?.lineItems),
         // @todo work out free shipping details
