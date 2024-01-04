@@ -57,7 +57,6 @@ export const getEnrichedCart = async (
 
     const { tax: taxSettingsResponse, paymentMethods } = storeConfig;
 
-
     if (!checkoutResponse?.entityId) return UNDEFINED_CART;
 
     const cartItemEntityIds = checkoutResponse.cart?.lineItems.physicalItems.map(
