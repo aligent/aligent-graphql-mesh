@@ -46,7 +46,7 @@ describe('transform-cart-data', () => {
             error_type: null,
             email: undefined,
             available_payment_methods: undefined,
-            selected_payment_method: undefined,
+            selected_payment_method: null,
             items: [],
             is_virtual: false,
             free_shipping_details: {
@@ -97,7 +97,7 @@ describe('transform-cart-data', () => {
             error_type: null,
             email: undefined,
             available_payment_methods: undefined,
-            selected_payment_method: undefined,
+            selected_payment_method: null,
             free_shipping_details: {
                 free_shipping_active: false,
                 free_shipping_percentage: 100,
