@@ -1,4 +1,4 @@
-import { getIsVirtualCart } from '@aligent/utils';
+import { getIsVirtualCart, findMetafieldValueByKey } from '@aligent/utils';
 import { Checkout } from '@aligent/bigcommerce-operations';
 import { Cart, ProductInterface, Country as AcCountry } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCartPrices } from './helpers/transform-cart-prices';
@@ -6,7 +6,6 @@ import { getTransformedShippingAddresses } from './helpers/transform-shipping-ad
 import { getTransformCartItems } from './helpers/transform-cart-items';
 import { getTransformedBillingAddress } from './helpers/transform-address';
 import { BcPaymentMethod, BcStorefrontFormFields } from '../types';
-import { findMetafieldValueByKey } from '../../../../utils/metafields';
 
 const SELECTED_PAYMENT_METHOD_KEY = 'selected_payment_method';
 

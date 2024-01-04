@@ -503,5 +503,5 @@ export interface BcStorefrontFormFields {
 export type BcPaymentMethod = {
     code: string;
     name: string;
-    test_mode: boolean;
+    test_mode?: boolean;
 };
