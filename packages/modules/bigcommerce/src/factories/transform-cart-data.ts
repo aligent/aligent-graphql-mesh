@@ -21,7 +21,7 @@ export const getTransformedCartData = (
         checkoutData;
 
     const selectedPaymentMethodCode =
-        cart?.metafields.edges &&
+        cart?.metafields?.edges &&
         findMetafieldValueByKey(cart?.metafields.edges, SELECTED_PAYMENT_METHOD_KEY);
     const selectedPaymentMethod =
         selectedPaymentMethodCode &&
