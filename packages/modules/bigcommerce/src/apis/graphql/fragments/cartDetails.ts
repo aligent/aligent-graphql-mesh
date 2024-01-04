@@ -252,5 +252,13 @@ export const cartDetails = gql`
         updatedAt {
             utc
         }
+        metafields(namespace: "payment_info") {
+            edges {
+                node {
+                    key
+                    value
+                }
+            }
+        }
     }
 `;
