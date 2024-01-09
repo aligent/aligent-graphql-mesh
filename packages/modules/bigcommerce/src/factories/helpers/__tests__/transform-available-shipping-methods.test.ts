@@ -38,10 +38,10 @@ describe('transform-available-shipping-methods', () => {
     });
 
     it(`returns "null" if there's no availableShippingOptions`, () => {
-        expect(getTransformedAvailableShippingMethods(null)).toEqual(expect.objectContaining(null));
+        expect(getTransformedAvailableShippingMethods(null)).toBe(null);
     });
 
     it(`returns "null" if there's no selectedShippingOption`, () => {
-        expect(getTransformedSelectedShippingOption(null)).toEqual(expect.objectContaining(null));
+        expect(getTransformedSelectedShippingOption(null)).toBe(null);
     });
 });

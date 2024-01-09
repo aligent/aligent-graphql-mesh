@@ -1,0 +1,16 @@
+merger: stitching
+sources:
+  - name: TakeFlight
+    handler:
+      graphql:
+        source: ./src/application
+
+additionalEnvelopPlugins: './src/plugins/additional-plugins'
+
+plugins:
+  - hive:
+      token: '{env.HIVE_TOKEN}'
+      usage: !include 'src/${STAGE}/hive-usage.yml'
+
+serve: !include 'src/${STAGE}/serve.yml'
+cache: !include 'src/${STAGE}/cache.yml'

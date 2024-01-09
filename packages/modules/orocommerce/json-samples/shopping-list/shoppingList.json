@@ -1,0 +1,83 @@
+{
+    "data": {
+        "type": "shoppinglists",
+        "id": "89",
+        "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglists/89" },
+        "attributes": {
+            "name": "Shopping List",
+            "notes": null,
+            "createdAt": "2023-11-14T00:51:32Z",
+            "updatedAt": "2023-11-14T00:51:32Z",
+            "default": true,
+            "currency": "AUD",
+            "total": "32",
+            "subTotal": "32"
+        },
+        "relationships": {
+            "items": {
+                "links": {
+                    "self": "https://aligent.oro-cloud.com/api/shoppinglists/89/relationships/items",
+                    "related": "https://aligent.oro-cloud.com/api/shoppinglists/89/items"
+                },
+                "data": [
+                    { "type": "shoppinglistitems", "id": "132" },
+                    { "type": "shoppinglistitems", "id": "133" }
+                ]
+            },
+            "customerUser": {
+                "links": {
+                    "self": "https://aligent.oro-cloud.com/api/shoppinglists/89/relationships/customerUser",
+                    "related": "https://aligent.oro-cloud.com/api/shoppinglists/89/customerUser"
+                },
+                "data": { "type": "customerusers", "id": "5" }
+            },
+            "customer": {
+                "links": {
+                    "self": "https://aligent.oro-cloud.com/api/shoppinglists/89/relationships/customer",
+                    "related": "https://aligent.oro-cloud.com/api/shoppinglists/89/customer"
+                },
+                "data": { "type": "customers", "id": "5" }
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "shoppinglistitems",
+            "id": "132",
+            "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglistitems/132" },
+            "attributes": {
+                "checksum": "",
+                "quantity": 1,
+                "notes": null,
+                "currency": "AUD",
+                "value": "10"
+            },
+            "relationships": {
+                "product": { "data": { "type": "products", "id": "1" } },
+                "parentProduct": { "data": null },
+                "kitItems": { "data": [] },
+                "shoppingList": { "data": { "type": "shoppinglists", "id": "89" } },
+                "unit": { "data": { "type": "productunits", "id": "each" } }
+            }
+        },
+        {
+            "type": "shoppinglistitems",
+            "id": "133",
+            "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglistitems/133" },
+            "attributes": {
+                "checksum": "",
+                "quantity": 2,
+                "notes": null,
+                "currency": "AUD",
+                "value": "11"
+            },
+            "relationships": {
+                "product": { "data": { "type": "products", "id": "2" } },
+                "parentProduct": { "data": null },
+                "kitItems": { "data": [] },
+                "shoppingList": { "data": { "type": "shoppinglists", "id": "89" } },
+                "unit": { "data": { "type": "productunits", "id": "each" } }
+            }
+        }
+    ]
+}

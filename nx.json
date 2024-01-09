@@ -1,0 +1,45 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["codegen", "build", "lint", "test", "e2e"]
+            }
+        }
+    },
+    "targetDefaults": {
+        "codegen": {
+            "inputs": ["default", "^default"]
+        },
+        "build": {
+            "dependsOn": ["^build", "^codegen"],
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js",
+                "{workspaceRoot}/tsconfig.base.json"
+            ]
+        },
+        "test": {
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js",
+                "{workspaceRoot}/jest.config.ts"
+            ]
+        },
+        "lint": {
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.js"
+            ]
+        }
+    },
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*"]
+    }
+}
