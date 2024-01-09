@@ -28,6 +28,7 @@ const yoga = createYoga({
         EnvelopArmorPlugin({
             maxAliases: {
                 n: 70,
+                allowList: [],
             },
             maxDepth: {
                 n: 15000,
