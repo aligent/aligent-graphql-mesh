@@ -2097,6 +2097,10 @@ type StoreConfig {
     """
     payment_payflowpro_cc_vault_active: String
     """
+    Available payment methods
+    """
+    paymentMethods: String
+    """
     Configuration for the PayPal Express payment method
     """
     paypal_express: PaypalExpressConfig
