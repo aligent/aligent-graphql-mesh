@@ -30,11 +30,12 @@
     "@types/jest": "^29.5.5",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.198",
+    "@types/luxon": "^3.3.3",
     "@types/node": "~18.18.0",
     "@types/uuid": "^9.0.2",
-    "@types/luxon": "^3.3.3",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "env-cmd": "^10.1.0",
     "esbuild": "^0.17.17",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.8.0",
@@ -46,15 +47,14 @@
     "prettier": "^3.0.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "^5.1.6",
-    "env-cmd": "^10.1.0"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@envelop/core": "^4.0.0",
     "@envelop/graphql-modules": "^5.0.0",
     "@envelop/response-cache-redis": "^3.3.2",
     "@envelop/sentry": "^6.0.0",
-    "@escape.tech/graphql-armor": "^2.3.1",
+    "@escape.tech/graphql-armor": "2.3.2",
     "@graphql-mesh/cache-localforage": "^0.95.0",
     "@graphql-mesh/cache-redis": "^0.95.0",
     "@graphql-mesh/graphql": "^0.95.0",
@@ -79,10 +79,10 @@
     "jsonwebtoken": "^9.0.0",
     "keyv": "^4.5.4",
     "lodash": "^4.17.21",
-    "reflect-metadata": "^0.1.13",
-    "tslib": "^2.3.0",
     "luxon": "^3.4.3",
     "module-alias": "^2.2.3",
+    "reflect-metadata": "^0.1.13",
+    "tslib": "^2.3.0",
     "uuid": "^9.0.0"
   }
 }
