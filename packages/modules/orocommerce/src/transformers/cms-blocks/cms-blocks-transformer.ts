@@ -17,8 +17,8 @@ export class CmsBlocksTransformer implements Transformer<OroCmsBlock[], CmsBlock
                 const attrs = oroBlock.attributes;
                 return {
                     __typename: 'CmsBlock',
-                    content: attrs.content,
-                    identifier: attrs.identifier,
+                    content: attrs.contentVariant.content,
+                    identifier: oroBlock.id.toString(),
                     title: attrs.title,
                 };
             }),
