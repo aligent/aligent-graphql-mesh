@@ -12,7 +12,6 @@ export const getMockOroCmsBlocks = (): OroCmsBlock[] => [
                 content: '<div><span>Mock content 1</span></div>',
                 style: '',
             },
-
             alias: 'alias 1',
             enabled: true,
             createdAt: '2024-01-08T06:23:48Z',
@@ -29,7 +28,6 @@ export const getMockOroCmsBlocks = (): OroCmsBlock[] => [
                 content: '<div><span>Mock content 2</span></div>',
                 style: '',
             },
-
             alias: 'alias 2',
             enabled: true,
             createdAt: '2024-01-08T06:23:48Z',
@@ -46,7 +44,6 @@ export const getMockOroCmsBlocks = (): OroCmsBlock[] => [
                 content: '<div><span>Mock content 3</span></div>',
                 style: '',
             },
-
             alias: 'alias 3',
             enabled: true,
             createdAt: '2024-01-08T06:23:48Z',

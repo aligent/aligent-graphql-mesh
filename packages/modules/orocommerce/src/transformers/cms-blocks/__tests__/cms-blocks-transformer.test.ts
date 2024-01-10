@@ -28,7 +28,7 @@ describe('Cms Blocks data transformation tests', () => {
 
             const transformedBlock = output.items[blockIndex]!;
             expect(transformedBlock.content).toStrictEqual(blockAttrs.contentVariant.content);
-            expect(transformedBlock.identifier).toStrictEqual(blockAttrs.id.toString());
+            expect(transformedBlock.identifier).toStrictEqual(mockBlocks[blockIndex].id.toString());
             expect(transformedBlock.title).toStrictEqual(blockAttrs.title);
             expect(transformedBlock.__typename).toStrictEqual('CmsBlock');
         }
