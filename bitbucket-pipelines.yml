@@ -31,7 +31,6 @@ definitions:
         script:
           - FORCE_COLOR=true
           - DESTINATION_BRANCH=origin/${DESTINATION_BRANCH:-$BITBUCKET_PR_DESTINATION_BRANCH} # Set DESTINATION_BRANCH to the PR destination branch if it is not already set
-          - yarn nx workspace-lint --base=$DESTINATION_BRANCH --parallel --max-parallel=3 # Runs linting on nx specific files
           - yarn nx affected:lint --base=$DESTINATION_BRANCH --parallel --max-parallel=3 # Executes linting on affected projects/libs
           - yarn nx format:check --base=$DESTINATION_BRANCH --parallel --max-parallel=3 # Runs prettier against the project
           - yarn nx affected -t check-types --base=$DESTINATION_BRANCH --parallel --max-parallel=3
