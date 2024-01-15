@@ -17,13 +17,16 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
         });
 
         const shoppingListClient: ShoppingListsClient = context.injector.get(ShoppingListsClient);
-        await shoppingListClient.addItemsToShoppingList(
+        const itemAddedToShoppingList = await shoppingListClient.addItemsToShoppingList(
             shoppingListId,
             transformedAddProductsToCartInput
         );
 
+        console.log(JSON.stringify(itemAddedToShoppingList));
+        console.log(itemAddedToShoppingList[0].id);
+
         const cartService: CartService = context.injector.get(CartService);
-        const transformedCart = await cartService.getCart(shoppingListId);
+        const transformedCart = await cartService.getCart(itemAddedToShoppingList[0].id);
 
         return {
             cart: transformedCart,
