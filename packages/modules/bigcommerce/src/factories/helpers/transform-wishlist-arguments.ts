@@ -1,5 +1,10 @@
-import { CreateWishlistInput, WishlistVisibilityEnum } from '@aligent/bigcommerce-resolvers';
 import {
+    CreateWishlistInput,
+    WishlistItemInput,
+    WishlistVisibilityEnum,
+} from '@aligent/bigcommerce-resolvers';
+import {
+    AddWishlistItemsInput,
     CreateWishlistInput as BcCreateWishlistInput,
     UpdateWishlistInput as BcUpdateWishlistInput,
 } from '@aligent/bigcommerce-operations';
@@ -25,5 +30,23 @@ export const getTransformedUpdateWishlistArgs = (acArgs: {
             ...(name && { name }),
             ...(visibility && { isPublic: visibility === 'PUBLIC' }),
         },
+    };
+};
+
+export const getTransformedAddProductsToWishlistArgs = (acArgs: {
+    wishlistId: string;
+    wishlistItems: WishlistItemInput[];
+}): AddWishlistItemsInput => {
+    const { wishlistId, wishlistItems } = acArgs;
+
+    const items = wishlistItems.map((item) => {
+        return {
+            productEntityId: Number(atob(String(item.uid || '')).replace('Product:', '')),
+        };
+    });
+
+    return {
+        entityId: Number(wishlistId),
+        items,
     };
 };

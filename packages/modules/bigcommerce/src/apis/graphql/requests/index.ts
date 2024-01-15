@@ -18,3 +18,4 @@ export * from './update-cart-line-item';
 export * from './create-wishlist';
 export * from './delete-wishlist';
 export * from './update-wishlist';
+export * from './add-wishlist-items';
