@@ -8,7 +8,7 @@ export class CmsBlockClient {
 
     async getCmsBlocks(identifiers: string[]): Promise<OroCmsBlock[]> {
         const response = await this.apiClient.get<OroCmsBlock[]>(
-            `/contentblocks/?filter[id]=${identifiers[0]}`
+            `/contentblocks/?filter[alias]=${identifiers[0]}`
         );
         return response.data;
     }
