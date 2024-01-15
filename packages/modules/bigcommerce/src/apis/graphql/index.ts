@@ -12,3 +12,5 @@ export * from './products';
 export * from './product-search';
 export * from './route';
 export * from './settings';
+export * from './create-wishlist';
+export * from './delete-wishlist';

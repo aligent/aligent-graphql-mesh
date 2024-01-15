@@ -16,3 +16,4 @@ export * from './route';
 export * from './tax-settings';
 export * from './update-cart-line-item';
 export * from './create-wishlist';
+export * from './delete-wishlist';
