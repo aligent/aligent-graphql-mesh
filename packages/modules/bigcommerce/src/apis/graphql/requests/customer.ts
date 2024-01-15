@@ -32,7 +32,7 @@ export const customer = stripIgnoredCharacters(
                     currencyCode
                     value
                 }
-                wishlists {
+                wishlists(first: 50) {
                     edges {
                         cursor
                         node {

@@ -56,6 +56,7 @@ import { customerOrderShippingMethodResolver } from './queries/sub-query-resolve
 import { customerOrderShippingAddressResolver } from './queries/sub-query-resolvers/customerOrderShippingAddress';
 import { productsBySkuResolver } from './queries/products-by-sku';
 import { clearCustomerCartResolver } from './mutations/clear-customer-cart';
+import { createWishListResolver } from './mutations/create-wishlist';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -113,6 +114,7 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
         updateCustomerAddress: updateCustomerAddressResolver,
+        createWishlist: createWishListResolver,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     Customer: {
