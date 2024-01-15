@@ -7,6 +7,7 @@ import {
     AddWishlistItemsInput,
     CreateWishlistInput as BcCreateWishlistInput,
     UpdateWishlistInput as BcUpdateWishlistInput,
+    DeleteWishlistItemsInput,
 } from '@aligent/bigcommerce-operations';
 
 export const getTransformedCreateWishlistArgs = (
@@ -48,5 +49,21 @@ export const getTransformedAddProductsToWishlistArgs = (acArgs: {
     return {
         entityId: Number(wishlistId),
         items,
+    };
+};
+
+export const getTransformedDeleteWishlistItemsArgs = (acArgs: {
+    wishlistId: string;
+    wishlistItemsIds: string[];
+}): DeleteWishlistItemsInput => {
+    const { wishlistId, wishlistItemsIds } = acArgs;
+
+    const itemEntityIds = wishlistItemsIds.map((id) => {
+        return Number(id);
+    });
+
+    return {
+        entityId: Number(wishlistId),
+        itemEntityIds,
     };
 };

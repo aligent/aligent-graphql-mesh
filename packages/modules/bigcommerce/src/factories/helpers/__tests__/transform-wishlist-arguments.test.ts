@@ -2,6 +2,7 @@ import { WishlistVisibilityEnum } from '@aligent/bigcommerce-resolvers';
 import {
     getTransformedAddProductsToWishlistArgs,
     getTransformedCreateWishlistArgs,
+    getTransformedDeleteWishlistItemsArgs,
     getTransformedUpdateWishlistArgs,
 } from '../transform-wishlist-arguments';
 
@@ -61,6 +62,21 @@ describe('transform wishlist arguments', () => {
         };
 
         const result = getTransformedAddProductsToWishlistArgs(bcAddWishlistItemsArgs);
+
+        expect(result).toEqual(expectResult);
+    });
+
+    it('Returns the transformed BC delete wishlist items arguments', () => {
+        const bcDeleteWishlistItemsArgs = {
+            wishlistId: '10',
+            wishlistItemsIds: ['507'],
+        };
+        const expectResult = {
+            entityId: 10,
+            itemEntityIds: [507],
+        };
+
+        const result = getTransformedDeleteWishlistItemsArgs(bcDeleteWishlistItemsArgs);
 
         expect(result).toEqual(expectResult);
     });

@@ -15,3 +15,4 @@ export * from './settings';
 export * from './create-wishlist';
 export * from './delete-wishlist';
 export * from './add-wishlist-items';
+export * from './delete-wishlist-items';
