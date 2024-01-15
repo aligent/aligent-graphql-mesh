@@ -1,9 +1,9 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { getBcCustomerId } from '../../utils';
 import { createWishlist } from '../../apis/graphql/create-wishlist';
-import { getTransformedCreateWishlistArgs } from '../../factories/helpers/trasform-create-wishlist-arguments';
 import { customerResolver } from '../queries/customer';
 import { logAndThrowError } from '@aligent/utils';
+import { getTransformedCreateWishlistArgs } from '../../factories/helpers/transform-wishlist-arguments';
 
 export const createWishListResolver: MutationResolvers['createWishlist'] = {
     resolve: async (root, { input }, context, info) => {
