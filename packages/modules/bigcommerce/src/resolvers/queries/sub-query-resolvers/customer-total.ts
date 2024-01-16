@@ -1,7 +1,7 @@
 import { CustomerOrderResolvers } from '@aligent/bigcommerce-resolvers';
 import { getDiscounts } from '../../../apis/rest/order';
 import { getTransformedOrderDiscounts } from '../../../factories/helpers/transform-customer-order-discounts';
-import { getSelectionInSelectionSet } from '../../../../../../utils/selection-set';
+import { getSelectionInSelectionSet } from '@aligent/utils';
 
 /**
  * This is a sub-resolver it is executed after customerOrdersResolver when items was specified in the query

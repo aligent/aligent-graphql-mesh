@@ -33,7 +33,7 @@ import {
     getTransformedAvailableStock,
     getTransformedSimpleStockStatus,
 } from './helpers/transform-stock';
-import { getAttributesFromMetaAndCustomFields } from '../../../../utils/metafields';
+import { getAttributesFromMetaAndCustomFields } from '../utils/metafields';
 import { SupportedProductTypes } from '../types';
 import { getTransformBundleItems } from './helpers/transform-bundle-items';
 

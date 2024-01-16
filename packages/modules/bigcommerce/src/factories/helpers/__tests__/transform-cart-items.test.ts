@@ -771,6 +771,6 @@ describe('transform-cart-items', () => {
     });
 
     it(`returns "null" if there's no cart`, () => {
-        expect(getTransformCartItems(null)).toEqual(expect.objectContaining(null));
+        expect(getTransformCartItems(null)).toBe(null);
     });
 });

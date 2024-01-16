@@ -1,5 +1,5 @@
 import { getChannelMetafields } from '../graphql';
-import { findMetafieldValueByKey } from '../../../../../utils/metafields';
+import { findMetafieldValueByKey } from '../../utils/metafields';
 import { AxiosGraphqlError } from '@aligent/utils';
 
 const MAINTENANCE_MODE_NAMESPACE: string = 'maintenance_mode';

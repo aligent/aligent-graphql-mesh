@@ -6,7 +6,8 @@ import {
     TaxDisplaySettings,
 } from '@aligent/bigcommerce-operations';
 import { Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
-import { getIncludesTax, isNotNull } from '@aligent/utils';
+import { isNotNull } from '@aligent/utils';
+import { getIncludesTax } from '../../utils/get-tax';
 import {
     getHasPickListItems,
     getTransformedProductData,

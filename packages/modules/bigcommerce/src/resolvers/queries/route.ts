@@ -9,7 +9,6 @@ import {
     Settings,
     TaxDisplaySettings,
 } from '@aligent/bigcommerce-operations';
-import { getIncludesTax } from '@aligent/utils';
 import { getRoute, retrieveStoreConfigsFromCache } from '../../apis/graphql';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
@@ -17,6 +16,7 @@ import { getTransformedNormalPageData } from '../../factories/get-transformed-no
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
+import { getIncludesTax } from '../../utils/get-tax';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 
 interface TransformedRouteData {
