@@ -1,6 +1,7 @@
 import {
     CreateWishlistInput,
     WishlistItemInput,
+    WishlistItemInterface,
     WishlistVisibilityEnum,
 } from '@aligent/bigcommerce-resolvers';
 import {
@@ -65,5 +66,23 @@ export const getTransformedDeleteWishlistItemsArgs = (acArgs: {
     return {
         entityId: Number(wishlistId),
         itemEntityIds,
+    };
+};
+
+export const getTransformedCopyProductsBetweenWishlistsArgs = (acArgs: {
+    wishlistId: string;
+    wishlistItems: WishlistItemInterface[];
+}): AddWishlistItemsInput => {
+    const { wishlistId, wishlistItems } = acArgs;
+
+    const items = wishlistItems.map((item) => {
+        return {
+            productEntityId: Number(atob(String(item.product?.uid || '')).replace('Product:', '')),
+        };
+    });
+
+    return {
+        entityId: Number(wishlistId),
+        items,
     };
 };
