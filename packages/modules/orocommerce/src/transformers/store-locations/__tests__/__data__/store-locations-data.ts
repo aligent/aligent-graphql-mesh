@@ -1,0 +1,73 @@
+import { uniqueId } from 'lodash';
+import { OroStoreLocation } from '../../../../types/store-location';
+
+export const getMockOroStoreLocations = (): OroStoreLocation[] => {
+    return [
+        {
+            type: 'orostorelocation',
+            id: uniqueId(),
+            attributes: {
+                name: 'Kent Town',
+                pickup_location_code: 'ALIG002',
+                distance: 1.7946670610885,
+                street: 'Rundle St',
+                city: 'Kent Town',
+                postcode: '5067',
+                phone: '0400000000',
+                latitude: -34.919558,
+                longitude: 138.616999,
+                email: null,
+                contact_name: null,
+                country_id: null,
+                description: null,
+                fax: null,
+                region: null,
+                region_id: null,
+            },
+        },
+        {
+            type: 'orostorelocation',
+            id: uniqueId(),
+            attributes: {
+                name: 'Prospect',
+                pickup_location_code: 'ALIG003',
+                distance: 6.3900927312948,
+                street: 'Regency Rd',
+                city: 'Prospect',
+                postcode: '5082',
+                phone: '0400000000',
+                latitude: -34.873683,
+                longitude: 138.580124,
+                email: null,
+                contact_name: null,
+                country_id: null,
+                description: null,
+                fax: null,
+                region: null,
+                region_id: null,
+            },
+        },
+        {
+            type: 'orostorelocation',
+            id: uniqueId(),
+            attributes: {
+                name: 'Edwardstown',
+                pickup_location_code: 'ALIG004',
+                distance: 6.8288906787034,
+                street: '1028-1042 South Rd',
+                city: 'Edwardstown',
+                postcode: '5039',
+                email: null,
+                phone: '0400000000',
+                latitude: -34.985183,
+                longitude: 138.571624,
+                contact_name: null,
+                country_id: null,
+                description: null,
+                fax: null,
+                region: null,
+                region_id: null,
+            },
+        },
+    ];
+};

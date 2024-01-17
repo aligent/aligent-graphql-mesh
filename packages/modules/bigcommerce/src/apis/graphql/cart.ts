@@ -16,9 +16,10 @@ import {
     getCartEntityIdQuery,
     updateCartLineItemQuery,
 } from './requests';
-import { GraphqlError, getCartUserErrors, logAndThrowError } from '@aligent/utils';
+import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
 import { assignCartToCustomerMutation } from './requests/assign-cart';
+import { getCartUserErrors } from '../../utils/error-handling';
 
 const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logAndThrowError } from '../../../../../utils/error-handling';
+import { logAndThrowError } from '@aligent/utils';
 
 export const requestPasswordResetEmail = async (email: string): Promise<boolean> => {
     const BC_STENCIL_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');

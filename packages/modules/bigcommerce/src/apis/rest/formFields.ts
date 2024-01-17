@@ -1,6 +1,7 @@
-import { getDataFromMeshCache, logAndThrowError } from '@aligent/utils';
+import { logAndThrowError } from '@aligent/utils';
 import { BcStorefrontFormFields } from '../../types';
 import axios from 'axios';
+import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
 const CACHE_KEY__STOREFRONT_FORM_FIELDS = 'storefront_form_fields';
 const BC_STOREFRONT_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');

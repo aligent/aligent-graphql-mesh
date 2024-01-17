@@ -1,28 +1,54 @@
-.idea
-.vscode
-coverage
-node_modules
-storybook-dist
-test-results
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+# Cert files
+*.crt
+*.key
+
+# compiled output
 dist
+tmp
+/out-tsc
+**/.mesh
+.nx
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+test-results
 .DS_Store
 .env
 build-stats.json
-npm-debug.log
 lastCachedGraphQLSchema.json
 test-report.xml
 test-results.json
-yarn-error.log
-dist-storybook
+
+# System Files
+.DS_Store
+Thumbs.db
+
 # Files generated for the purposes of typescript
 graphql.d.ts
 graphql.schema.json
 packages/base/codegen.yml
-generated/
 .tsc
 *.scss.d.ts
-# Cert files
-*.crt
-*.key
-# Generated mesh files
-**/.mesh

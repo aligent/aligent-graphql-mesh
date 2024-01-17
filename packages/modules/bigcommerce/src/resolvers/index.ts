@@ -56,6 +56,11 @@ import { customerOrderShippingMethodResolver } from './queries/sub-query-resolve
 import { customerOrderShippingAddressResolver } from './queries/sub-query-resolvers/customerOrderShippingAddress';
 import { productsBySkuResolver } from './queries/products-by-sku';
 import { clearCustomerCartResolver } from './mutations/clear-customer-cart';
+import { createWishListResolver } from './mutations/create-wishlist';
+import { deleteWishListResolver } from './mutations/delete-wishlist';
+import { updateWishListResolver } from './mutations/update-wishlist';
+import { copyProductsBetweenWishlistsResolver } from './mutations/copy-products-between-wishlists';
+import { moveProductsBetweenWishlistsResolver } from './mutations/move-products-between-wishlists';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -113,6 +118,11 @@ export const resolvers: Resolvers = {
         updateCartItems: updateCartItemsResolver,
         updateCustomer: updateCustomerResolver,
         updateCustomerAddress: updateCustomerAddressResolver,
+        createWishlist: createWishListResolver,
+        deleteWishlist: deleteWishListResolver,
+        updateWishlist: updateWishListResolver,
+        copyProductsBetweenWishlists: copyProductsBetweenWishlistsResolver,
+        moveProductsBetweenWishlists: moveProductsBetweenWishlistsResolver,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     Customer: {
