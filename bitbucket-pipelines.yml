@@ -67,7 +67,7 @@ definitions:
         services:
           - docker
         script:
-          - yarn nx docker-build ${APPLICATION}
+          - STAGE=prod yarn nx docker-build ${APPLICATION}
           - docker save ${APPLICATION}:latest | gzip > ${APPLICATION}_latest.tar.gz
         artifacts:
           - '*.tar.gz'
