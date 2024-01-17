@@ -137,16 +137,6 @@ pipelines:
       - step: *publish
 
   branches:
-    # @TODO: Remove once epic is merged to main
-    'epic/orocommerce':
-      - step: *install
-      - stage:
-          name: Deploy OroCommerce Mesh
-          deployment: orocommerce
-          steps:
-            - step: *build-container
-            - step: *deploy
-
     main:
       - step: *install
       - stage:
@@ -158,6 +148,7 @@ pipelines:
 
       - stage:
           name: Deploy BigCommerce Mesh
+          deployment: bigcommerce
           steps:
             - step: *build-container
             - step: *deploy
