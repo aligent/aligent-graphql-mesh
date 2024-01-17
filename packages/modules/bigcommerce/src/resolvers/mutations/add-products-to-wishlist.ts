@@ -26,6 +26,8 @@ export const addProductsToWishlistResolver: MutationResolvers['addProductsToWish
 
         const { entityId } = response;
 
+        // Have to use Customer resolver to fetch fresh wishlist data
+        // as BC wishlist mutations run into max depth of query error if requesting item->product
         const currentCustomerInfo = await customerResolver.resolve(root, {}, context, info);
 
         const { wishlists } = currentCustomerInfo;

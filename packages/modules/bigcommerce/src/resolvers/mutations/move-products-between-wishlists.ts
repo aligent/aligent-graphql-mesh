@@ -75,6 +75,8 @@ export const moveProductsBetweenWishlistsResolver: MutationResolvers['moveProduc
 
             const { entityId: updatedSourceWishlistId } = deleteItemsResponse;
 
+            // Have to use Customer resolver to fetch fresh wishlist data
+            // as BC wishlist mutations run into max depth of query error if requesting item->product
             const updatedCurrentCustomerInfo = await customerResolver.resolve(
                 root,
                 {},
@@ -84,7 +86,8 @@ export const moveProductsBetweenWishlistsResolver: MutationResolvers['moveProduc
 
             const { wishlists: updatedWishlists } = updatedCurrentCustomerInfo;
 
-            let updatedSourceWishlist, updatedDestinationWishlist;
+            let updatedSourceWishlist;
+            let updatedDestinationWishlist;
 
             updatedWishlists.forEach((wishlist) => {
                 if (wishlist?.id === String(updatedSourceWishlistId)) {

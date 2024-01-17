@@ -57,6 +57,8 @@ export const copyProductsBetweenWishlistsResolver: MutationResolvers['copyProduc
 
             const { entityId } = response;
 
+            // Have to use Customer resolver to fetch fresh wishlist data
+            // as BC wishlist mutations run into max depth of query error if requesting item->product
             const updatedCurrentCustomerInfo = await customerResolver.resolve(
                 root,
                 {},
