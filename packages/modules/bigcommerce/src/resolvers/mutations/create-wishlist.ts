@@ -1,24 +1,20 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
-import { getTransformedAddProductsToWishlistArgs } from '../../factories/helpers/transform-wishlist-arguments';
-import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerId } from '../../utils';
-import { addWishlistItems } from '../../apis/graphql';
+import { createWishlist } from '../../apis/graphql/create-wishlist';
 import { customerResolver } from '../queries/customer';
+import { logAndThrowError } from '@aligent/utils';
+import { getTransformedCreateWishlistArgs } from '../../factories/helpers/transform-wishlist-arguments';
 
-export const addProductsToWishlistResolver: MutationResolvers['addProductsToWishlist'] = {
-    resolve: async (root, args, context, info) => {
-        if (!args.wishlistId) {
-            return logAndThrowError(new Error('Wishlist id is missing'));
-        }
-
+export const createWishListResolver: MutationResolvers['createWishlist'] = {
+    resolve: async (root, { input }, context, info) => {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
         )) as string;
         const bcCustomerId = getBcCustomerId(context);
 
-        const transformedArgs = getTransformedAddProductsToWishlistArgs(args);
+        const transformedArgs = getTransformedCreateWishlistArgs(input);
 
-        const response = await addWishlistItems(
+        const response = await createWishlist(
             transformedArgs,
             bcCustomerId,
             customerImpersonationToken
@@ -38,9 +34,6 @@ export const addProductsToWishlistResolver: MutationResolvers['addProductsToWish
             return logAndThrowError(new Error('Fail to retrieve customer wishlists, try again'));
         }
 
-        return {
-            user_errors: [],
-            wishlist,
-        };
+        return { wishlist };
     },
 };
