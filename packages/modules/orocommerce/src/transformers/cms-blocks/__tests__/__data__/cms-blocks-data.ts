@@ -1,7 +1,8 @@
 import { uniqueId } from 'lodash';
 import { OroCmsBlock } from '../../../../types/cms-blocks';
 
-export const mockStyles = "#isolation-scope-qofnc7y2lkacl57bib3a2247 #i021{float:none;text-align:center;font-size:12px;background-color:#3669b5;color:white;padding:3px 0 3px 0;}"
+export const mockStyles =
+    '#isolation-scope-qofnc7y2lkacl57bib3a2247 #i021{float:none;text-align:center;font-size:12px;background-color:#3669b5;color:white;padding:3px 0 3px 0;}';
 
 export const getMockOroCmsBlocks = (): OroCmsBlock[] => [
     {

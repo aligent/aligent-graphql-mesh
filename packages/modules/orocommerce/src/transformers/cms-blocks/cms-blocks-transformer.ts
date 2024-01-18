@@ -15,20 +15,23 @@ export class CmsBlocksTransformer implements Transformer<OroCmsBlock[], CmsBlock
         return {
             __typename: 'CmsBlocks',
             items: context.data.reduce((carry, oroBlock) => {
-                const {alias, enabled, title, contentVariant} = oroBlock.attributes;
+                const { alias, enabled, title, contentVariant } = oroBlock.attributes;
 
                 if (!enabled) return carry;
 
-                const {content, style} = contentVariant
+                const { content, style } = contentVariant;
 
                 const htmlWithUpdatedImages = updateImageSrcInHtml(content, oroBlock.links.self);
 
-                return [...carry,{
-                    __typename: 'CmsBlock',
-                    content: `${htmlWithUpdatedImages}<style>${style}</style>`,
-                    identifier: alias,
-                    title,
-                }];
+                return [
+                    ...carry,
+                    {
+                        __typename: 'CmsBlock',
+                        content: `${htmlWithUpdatedImages}<style>${style}</style>`,
+                        identifier: alias,
+                        title,
+                    },
+                ];
             }, [] as CmsBlock[]),
         };
     }
