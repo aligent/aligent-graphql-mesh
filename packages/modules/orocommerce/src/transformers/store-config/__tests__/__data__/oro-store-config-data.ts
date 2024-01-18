@@ -2,13 +2,26 @@ import { OroStoreConfig, OroStoreConfigApiData } from '../../../../types/store-c
 
 export const storeConfigData: OroStoreConfigApiData[] = [
     {
-        meta: {
-            id: 'oro_ui.application_url',
+        type: 'tf_config',
+        id: 'oro_ui.application_url',
+        attributes: {
             value: 'https://aligent.oro-cloud.com',
         },
     },
-    { meta: { id: 'oro_pricing_pro.default_currency', value: 'AUD' } },
-    { meta: { id: 'oro_sale.contact_details', value: '' } },
+    {
+        type: 'tf_config',
+        id: 'oro_pricing_pro.default_currency',
+        attributes: {
+            value: 'AUD',
+        },
+    },
+    {
+        type: 'tf_config',
+        id: 'oro_sale.contact_details',
+        attributes: {
+            value: '',
+        },
+    },
 ];
 
 export const getMockOroStoreConfig = (): OroStoreConfig => {

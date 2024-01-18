@@ -19,16 +19,16 @@ export class StoreConfigTransformer implements Transformer<OroStoreConfigApiData
         return this.transformOroStoreConfig(context.data);
     }
 
-    findStoreConfigByMetaId(storeConfigData: OroStoreConfigApiData[], id: string): string | null {
-        const foundStoreConfigMeta = storeConfigData.find((item) => item.meta.id === id);
+    findStoreConfigById(storeConfigData: OroStoreConfigApiData[], id: string): string | null {
+        const foundStoreConfigMeta = storeConfigData.find((item) => item.id === id);
 
         if (!foundStoreConfigMeta) return null;
-        return foundStoreConfigMeta.meta.value;
+        return foundStoreConfigMeta.attributes.value;
     }
 
     private transformOroStoreConfig(oroStoreConfig: OroStoreConfigApiData[]): StoreConfig {
-        const url = this.findStoreConfigByMetaId(oroStoreConfig, 'oro_ui.application_url');
-        const defaultCurrency = this.findStoreConfigByMetaId(
+        const url = this.findStoreConfigById(oroStoreConfig, 'oro_ui.application_url');
+        const defaultCurrency = this.findStoreConfigById(
             oroStoreConfig,
             'oro_pricing_pro.default_currency'
         );
