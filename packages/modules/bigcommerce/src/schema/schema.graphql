@@ -2820,6 +2820,10 @@ interface ProductInterface {
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     """
+    The products Brand name (if exists)
+    """
+    brand: String
+    """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """
     canonical_url: String
@@ -4182,6 +4186,10 @@ type VirtualProduct implements ProductInterface & RoutableInterface & Customizab
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     """
+    The products Brand name (if exists)
+    """
+    brand: String
+    """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """
     canonical_url: String
@@ -4473,6 +4481,10 @@ type SimpleProduct implements ProductInterface & RoutableInterface & PhysicalPro
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
+    """
+    The products Brand name (if exists)
+    """
+    brand: String
     """
     Inventory By Locations
     """
@@ -7653,6 +7665,10 @@ type DownloadableProduct implements ProductInterface & RoutableInterface & Custo
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     """
+    The products Brand name (if exists)
+    """
+    brand: String
+    """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """
     canonical_url: String
@@ -9898,6 +9914,10 @@ type BundleProduct implements ProductInterface & RoutableInterface & PhysicalPro
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
+    """
+    The products Brand name (if exists)
+    """
+    brand: String
     """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """
@@ -12297,6 +12317,10 @@ type GroupedProduct implements ProductInterface & RoutableInterface & PhysicalPr
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     """
+    The products Brand name (if exists)
+    """
+    brand: String
+    """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """
     canonical_url: String
@@ -12613,6 +12637,10 @@ type ConfigurableProduct implements ProductInterface & RoutableInterface & Physi
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
+    """
+    The products Brand name (if exists)
+    """
+    brand: String
     """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """
@@ -15899,6 +15927,10 @@ type GiftCardProduct implements ProductInterface & PhysicalProductInterface & Cu
     The attribute set assigned to the product.
     """
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
+    """
+    The products Brand name (if exists)
+    """
+    brand: String
     """
     The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled.
     """

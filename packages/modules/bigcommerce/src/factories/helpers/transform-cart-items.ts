@@ -17,6 +17,7 @@ export const getTransformCartItems = (
 
     return cartItems.lineItems.physicalItems.map((item) => {
         const {
+            brand,
             sku,
             entityId: cartItemId, // cart item id
             productEntityId,
@@ -85,6 +86,7 @@ export const getTransformCartItems = (
                 total_item_discount,
             },
             product: {
+                brand,
                 ...matchingEnrichedData,
                 __typename: 'SimpleProduct',
             },
