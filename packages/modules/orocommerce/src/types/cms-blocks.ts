@@ -2,6 +2,7 @@ import { Attributes, Entity } from '.';
 
 export interface OroCmsBlock extends Entity {
     attributes: OroCmsBlockAttributes;
+    links: { self: string }
 }
 
 export interface OroContentVariantAttributes extends Attributes {
