@@ -111,15 +111,15 @@ export const oroProductAttributesFromAPI: ConfigurableProductAttribute[] = [
         id: 'size_63313224a7189',
         attributes: {
             attrType: 'enum',
-            label: 'size'
-        }
+            label: 'size',
+        },
     },
     {
         type: 'tf_product_attributes',
         id: 'size_633132c50db9e',
         attributes: {
             attrType: 'enum',
-            label: 'Colour'
-        }
+            label: 'Colour',
+        },
     },
 ];
