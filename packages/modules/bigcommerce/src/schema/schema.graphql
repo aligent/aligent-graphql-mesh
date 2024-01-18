@@ -11064,6 +11064,10 @@ input WishlistItemInput {
     The SKU of the product to add. For complex product types, specify the child product SKU.
     """
     sku: String!
+    """
+    The uid of the product to add. For complex product types, specify the child product uid.
+    """
+    uid: ID
 }
 
 """
