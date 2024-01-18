@@ -5,9 +5,10 @@ export interface OroStoreConfig extends Entity {
     attributes: OroStoreConfigAttrs;
 }
 
-export interface OroStoreConfigApiData {
-    meta: {
-        id: string;
+export interface OroStoreConfigApiData extends Entity {
+    type: string;
+    id: string;
+    attributes: {
         value: string;
     };
 }

@@ -107,9 +107,19 @@ export const outputProductFilters: Aggregation[] = [
 
 export const oroProductAttributesFromAPI: ConfigurableProductAttribute[] = [
     {
-        meta: { id: 'size_63313224a7189', attrType: 'enum', label: 'size' },
+        type: 'tf_product_attributes',
+        id: 'size_63313224a7189',
+        attributes: {
+            attrType: 'enum',
+            label: 'size'
+        }
     },
     {
-        meta: { id: 'size_633132c50db9e', attrType: 'enum', label: 'Colour' },
+        type: 'tf_product_attributes',
+        id: 'size_633132c50db9e',
+        attributes: {
+            attrType: 'enum',
+            label: 'Colour'
+        }
     },
 ];
