@@ -88,6 +88,7 @@ export const getTransformedProductData = (
     try {
         const {
             availabilityV2,
+            brand,
             customFields,
             categories,
             defaultImage,
@@ -120,6 +121,7 @@ export const getTransformedProductData = (
 
         return {
             ...(availabilityV2?.status === 'Preorder' && { availability: availabilityV2 }),
+            brand: brand?.name || null,
             categories: getTransformedCategoriesData(categories),
             configurable_options: getTransformedConfigurableOptions(productOptions, productType),
             description: {

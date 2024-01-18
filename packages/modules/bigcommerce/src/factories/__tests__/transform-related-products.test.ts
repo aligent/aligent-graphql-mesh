@@ -7,6 +7,7 @@ import { mockBcProducts } from '../../resolvers/mocks/products.bc';
 
 const transformedRelatedProduct = [
     {
+        brand: 'Weller',
         categories: [
             {
                 breadcrumbs: [],

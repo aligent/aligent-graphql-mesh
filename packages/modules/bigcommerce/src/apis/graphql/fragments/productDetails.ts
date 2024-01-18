@@ -21,6 +21,10 @@ export const ProductsDetails: DocumentNode = gql`
 
     fragment ProductDetails on Product {
         __typename
+        brand {
+            id
+            name
+        }
         id
         entityId
         sku

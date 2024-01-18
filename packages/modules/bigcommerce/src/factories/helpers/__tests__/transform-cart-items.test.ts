@@ -715,6 +715,7 @@ const expectResult = [
         },
         product: {
             __typename: 'SimpleProduct',
+            brand: 'Weller',
             id: 1034,
             media_gallery_entries: [
                 {
