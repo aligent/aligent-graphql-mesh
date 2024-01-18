@@ -161,7 +161,7 @@ export class ProductsSearchArgsBuilder {
 
             //add aggregations by product attributes
             productAttributes.forEach((attribute) => {
-                aggregationsArray.push(`${attribute.meta.id} count ${attribute.meta.label}+count`);
+                aggregationsArray.push(`${attribute.id} count ${attribute.attributes.label}+count`);
             });
 
             return aggregationsArray.join(',');
