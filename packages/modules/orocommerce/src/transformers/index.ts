@@ -22,6 +22,10 @@ import {
 } from './categories/breadcrumbs-transformer';
 import { CmsPageTransformer, CmsPageTransformerChain } from './cms-page/transform-cms-page-data';
 import {
+    SocialLinksTransformer,
+    SocialLinksTransformerChain,
+} from './social-links/social-links-transformer';
+import {
     StoreConfigTransformer,
     StoreConfigTransformerChain,
 } from './store-config/store-config-transformer';
@@ -158,6 +162,10 @@ export const getOroTransformers = (): Array<Provider> => {
             useClass: CustomerOrdersTransformerChain,
         },
         {
+            provide: SocialLinksTransformerChain,
+            useClass: SocialLinksTransformerChain,
+        },
+        {
             provide: StoreConfigTransformerChain,
             useClass: StoreConfigTransformerChain,
         },
@@ -241,6 +249,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+        {
+            provide: SocialLinksTransformer,
+            useFactory: (transformerChain) => {
+                const socialLinksTransformer = new SocialLinksTransformer();
+                transformerChain.addTransformer(socialLinksTransformer);
+                return socialLinksTransformer;
+            },
+            deps: [SocialLinksTransformerChain],
         },
         {
             provide: StoreConfigTransformer,
