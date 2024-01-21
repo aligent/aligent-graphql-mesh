@@ -100,6 +100,10 @@ export class ShoppingListsClient {
         return res.data;
     }
 
+    async getShoppingListByItemId(itemId: string): Promise<ShoppingListItem> {
+        return (await this.apiClient.get<ShoppingListItem>(`/shoppinglistitems/${itemId}`)).data;
+    }
+
     async deleteItemInShoppingList(cartItemId: string) {
         const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
         return response;
