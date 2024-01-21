@@ -30,10 +30,6 @@ export class ShoppingListsClient {
         );
     }
 
-    async getShoppingListItems(): Promise<ShoppingList[]> {
-        return (await this.apiClient.get<ShoppingList[]>('/shoppinglists')).data;
-    }
-
     async postShoppingLists(data: ShoppingList): Promise<ShoppingList> {
         const res = await this.apiClient.post<{ data: ShoppingList }, { data: ShoppingList }>(
             '/shoppinglists',
