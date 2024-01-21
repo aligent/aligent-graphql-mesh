@@ -28,8 +28,8 @@ export const addProductsToCartResolver: MutationResolvers['addProductsToCart'] =
             itemAddedToShoppingList[0].id
         );
 
-        if(currentShoppingList.relationships?.shoppingList){
-            shoppingListId =  currentShoppingList.relationships.shoppingList.data.id
+        if (currentShoppingList.relationships?.shoppingList) {
+            shoppingListId = currentShoppingList.relationships.shoppingList.data.id;
         }
 
         const cartService: CartService = context.injector.get(CartService);
