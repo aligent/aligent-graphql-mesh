@@ -40,6 +40,7 @@ export const customerResolver = {
                 }),
                 requisition_lists: requisitionLists,
             };
+        // This will fail when a guest users token tries to get its customer details with the id=mine
         } catch (error) {
             return GUEST_USER;
         }
