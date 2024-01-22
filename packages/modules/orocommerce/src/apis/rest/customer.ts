@@ -42,7 +42,8 @@ export class CustomerClient {
     }
 
     async getCustomerUser(
-        id: string = 'mine'
+        id: string = 'mine',
+        token: string
     ): Promise<{ data: CustomerUser; included?: OroCustomerAddress[] }> {
         const path = `/customerusers/${id}`;
         const params = {
@@ -50,6 +51,7 @@ export class CustomerClient {
         };
         const response = await this.apiClient.get<CustomerUser, OroCustomerAddress[]>(path, {
             params,
+            headers: { Authorization: token },
         });
         return response;
     }
