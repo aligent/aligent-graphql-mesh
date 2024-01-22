@@ -18,23 +18,30 @@ export const customerResolver = {
         if (!bearerToken) return GUEST_USER;
 
         const customerClient: CustomerClient = context.injector.get(CustomerClient);
-        const getCustomerUserResponse = await customerClient.getCustomerUser('mine', bearerToken);
+        try {
+            const getCustomerUserResponse = await customerClient.getCustomerUser(
+                'mine',
+                bearerToken
+            );
 
-        const oroCustomer = getCustomerUserResponse.data;
-        const oroAddresses = getCustomerUserResponse.included;
-        const oroCustomerTransformer: OroCustomerTransformerChain = context.injector.get(
-            OroCustomerTransformerChain
-        );
+            const oroCustomer = getCustomerUserResponse.data;
+            const oroAddresses = getCustomerUserResponse.included;
+            const oroCustomerTransformer: OroCustomerTransformerChain = context.injector.get(
+                OroCustomerTransformerChain
+            );
 
-        const requisitionListService: RequisitionListService =
-            context.injector.get(RequisitionListService);
-        const requisitionLists = await requisitionListService.getLists();
+            const requisitionListService: RequisitionListService =
+                context.injector.get(RequisitionListService);
+            const requisitionLists = await requisitionListService.getLists();
 
-        return {
-            ...oroCustomerTransformer.transform({
-                data: { oroCustomer, oroAddresses },
-            }),
-            requisition_lists: requisitionLists,
-        };
+            return {
+                ...oroCustomerTransformer.transform({
+                    data: { oroCustomer, oroAddresses },
+                }),
+                requisition_lists: requisitionLists,
+            };
+        } catch (error) {
+            return GUEST_USER;
+        }
     },
 } satisfies QueryResolvers['customer'];
