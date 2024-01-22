@@ -2,47 +2,32 @@ import { QueryResolvers } from '@aligent/orocommerce-resolvers';
 import { CustomerClient } from '../../apis/rest/customer';
 import { OroCustomerTransformerChain } from '../../transformers/customers/transform-customer-data';
 import { RequisitionListService } from '../../services/requisition-list-service';
-const GUEST_USER = {
-    firstname: 'guest',
-    lastname: 'guest',
-    email: '',
-    is_subscribed: null,
-    allow_remote_shopping_assistance: false,
-};
+import { GraphqlError } from '@aligent/utils';
 
 export const customerResolver = {
     resolve: async (_root, _args, context, _info) => {
         const bearerToken = context.request.headers.get('authorization');
-        // The PWA makes a call to getCustomer on the home page
-        // This is preferred to throwing an error
-        if (!bearerToken) return GUEST_USER;
+        if (!bearerToken)
+            throw new GraphqlError('authorization', 'No bearer token sent to getCustomerResolver');
 
         const customerClient: CustomerClient = context.injector.get(CustomerClient);
-        try {
-            const getCustomerUserResponse = await customerClient.getCustomerUser(
-                'mine',
-                bearerToken
-            );
+        const getCustomerUserResponse = await customerClient.getCustomerUser('mine', bearerToken);
 
-            const oroCustomer = getCustomerUserResponse.data;
-            const oroAddresses = getCustomerUserResponse.included;
-            const oroCustomerTransformer: OroCustomerTransformerChain = context.injector.get(
-                OroCustomerTransformerChain
-            );
+        const oroCustomer = getCustomerUserResponse.data;
+        const oroAddresses = getCustomerUserResponse.included;
+        const oroCustomerTransformer: OroCustomerTransformerChain = context.injector.get(
+            OroCustomerTransformerChain
+        );
 
-            const requisitionListService: RequisitionListService =
-                context.injector.get(RequisitionListService);
-            const requisitionLists = await requisitionListService.getLists();
+        const requisitionListService: RequisitionListService =
+            context.injector.get(RequisitionListService);
+        const requisitionLists = await requisitionListService.getLists();
 
-            return {
-                ...oroCustomerTransformer.transform({
-                    data: { oroCustomer, oroAddresses },
-                }),
-                requisition_lists: requisitionLists,
-            };
-        // This will fail when a guest users token tries to get its customer details with the id=mine
-        } catch (error) {
-            return GUEST_USER;
-        }
+        return {
+            ...oroCustomerTransformer.transform({
+                data: { oroCustomer, oroAddresses },
+            }),
+            requisition_lists: requisitionLists,
+        };
     },
 } satisfies QueryResolvers['customer'];
