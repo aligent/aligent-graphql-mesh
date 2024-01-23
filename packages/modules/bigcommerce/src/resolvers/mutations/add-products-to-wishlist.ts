@@ -32,8 +32,6 @@ export const addProductsToWishlistResolver: MutationResolvers['addProductsToWish
 
         const transformedArgs = getTransformedAddProductsToWishlistArgs(args, bcDetailedProducts);
 
-        console.dir(transformedArgs, { depth: 10 });
-
         const response = await addWishlistItems(
             transformedArgs,
             bcCustomerId,
