@@ -113,6 +113,33 @@ export const customer = stripIgnoredCharacters(
                                                     ...PageInfo
                                                 }
                                             }
+                                            variants {
+                                                edges {
+                                                    node {
+                                                        id
+                                                        entityId
+                                                        sku
+                                                        productOptions {
+                                                            edges {
+                                                                node {
+                                                                    entityId
+                                                                    displayName
+                                                                    isRequired
+                                                                    isVariantOption
+                                                                }
+                                                            }
+                                                        }
+                                                        options {
+                                                            edges {
+                                                                node {
+                                                                    entityId
+                                                                    displayName
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                             path
                                         }
                                     }
