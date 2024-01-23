@@ -81,7 +81,8 @@ export const getTypeName = (
 /* istanbul ignore file */
 export const getTransformedProductData = (
     bcProduct: Product,
-    bundleItemProducts?: ProductInterface[] | undefined
+    bundleItemProducts?: ProductInterface[] | undefined,
+    variantEntityId?: number | null
 ): Maybe<ProductInterface & ConfigurableProduct & BundleProduct> => {
     if (!bcProduct) return null;
 
@@ -108,7 +109,9 @@ export const getTransformedProductData = (
             variants: bcVariants,
         } = bcProduct;
 
-        const productType = getTypeName(bcProduct, productOptions);
+        const productType = variantEntityId
+            ? 'ConfigurableProduct'
+            : getTypeName(bcProduct, productOptions);
 
         const fields = [...(customFields?.edges || []), ...(metafields?.edges || [])];
 

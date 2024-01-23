@@ -1,9 +1,10 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedAddProductsToWishlistArgs } from '../../factories/helpers/transform-wishlist-arguments';
 import { logAndThrowError } from '@aligent/utils';
-import { getBcCustomerId } from '../../utils';
-import { addWishlistItems } from '../../apis/graphql';
+import { getBcCustomerId, hasConfigurableWishlistItem } from '../../utils';
+import { addWishlistItems, getBcProductsGraphql } from '../../apis/graphql';
 import { customerResolver } from '../queries/customer';
+import { ProductConnection } from '@aligent/bigcommerce-operations';
 
 export const addProductsToWishlistResolver: MutationResolvers['addProductsToWishlist'] = {
     resolve: async (root, args, context, info) => {
@@ -16,7 +17,20 @@ export const addProductsToWishlistResolver: MutationResolvers['addProductsToWish
         )) as string;
         const bcCustomerId = getBcCustomerId(context);
 
-        const transformedArgs = getTransformedAddProductsToWishlistArgs(args);
+        let bcDetailedProducts: ProductConnection | null = null;
+
+        if (hasConfigurableWishlistItem(args.wishlistItems)) {
+            const entityIds = args.wishlistItems.map((item) => {
+                return Number(atob(String(item.uid || '')).replace('Product:', ''));
+            });
+            const bcProducts = await getBcProductsGraphql(
+                { entityIds },
+                customerImpersonationToken
+            );
+            bcDetailedProducts = bcProducts;
+        }
+
+        const transformedArgs = getTransformedAddProductsToWishlistArgs(args, bcDetailedProducts);
 
         const response = await addWishlistItems(
             transformedArgs,
