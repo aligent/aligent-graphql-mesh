@@ -3,7 +3,7 @@ import { ProductStockStatus } from '@aligent/orocommerce-resolvers';
 
 export const getTransformedProductStockStatus = (oroProduct: OroProduct): ProductStockStatus => {
     const stockStatus = oroProduct.relationships.inventoryStatus?.data;
-    return stockStatus?.id === 'in_stock' ? 'IN_STOCK' : 'OUT_OF_STOCK';
+    return stockStatus?.id === 'out_of_stock' ? 'OUT_OF_STOCK' : 'IN_STOCK';
 };
 
 export const getTransformedProductAvailability = (oroProduct: OroProduct): boolean => {

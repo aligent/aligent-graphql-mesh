@@ -144,9 +144,10 @@ export interface ProductImageFile {
     url_webp?: string;
 }
 
-export interface ConfigurableProductAttribute {
-    meta: {
-        id: string;
+export interface ConfigurableProductAttribute extends Entity {
+    type: 'tf_product_attributes';
+    id: string;
+    attributes: {
         attrType: string;
         label: string;
     };

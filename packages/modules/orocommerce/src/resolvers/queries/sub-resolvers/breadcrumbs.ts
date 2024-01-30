@@ -13,7 +13,7 @@ export const breadcrumbsSubResolver: CategoryTreeResolvers['breadcrumbs'] = {
         const nodeId = getIdFromCategoryUid(root.uid);
         if (!nodeId) return [];
         const api: CategoriesClient = context.injector.get(CategoriesClient);
-        const categories = await api.getBreadcrumbs(nodeId);
+        const categories = await api.getBreadcrumbsFromMasterCatalog(nodeId);
         const transformer: BreadcrumbsTransformerChain = context.injector.get(
             BreadcrumbsTransformerChain
         );

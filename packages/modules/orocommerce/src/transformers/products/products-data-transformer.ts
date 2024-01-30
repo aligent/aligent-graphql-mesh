@@ -96,11 +96,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         productAttributes: ConfigurableProductAttribute[]
     ): Aggregation[] {
         return productAttributes.map((attribute) => {
-            const { id, label } = attribute.meta;
+            const { id, attributes } = attribute;
             return {
                 attribute_code: id,
                 count: 1,
-                label: label,
+                label: attributes.label,
                 options: [],
             };
         });

@@ -3056,6 +3056,7 @@ This enumeration states whether a product stock status is in stock or out of sto
 enum ProductStockStatus {
     IN_STOCK @deprecated(reason: "")
     OUT_OF_STOCK @deprecated(reason: "")
+    LOW_STOCK @deprecated(reason: "")
 }
 
 """
