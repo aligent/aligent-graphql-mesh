@@ -5,7 +5,7 @@ import {
     IncludedProductImages,
     ShoppingListWithItems,
 } from '../../types';
-import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
+import { Cart, CurrencyEnum, Money, SimpleCartItem } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
     isShoppingListItem,
@@ -69,7 +69,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
-        cart.total_quantity = shoppingList.included?.length || 0;
+        cart.total_quantity = 0;
 
         const currency = shoppingList.data.attributes.currency as string;
         cart.prices = {
@@ -102,6 +102,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
         }
 
+        const items: SimpleCartItem[] = [];
         for (const product of products) {
             let errorMessage = '';
             const relatedShoppingListItem = shoppingListItems.find(
@@ -143,11 +144,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
 
             const productAttributes = product.attributes;
-
-            cart.items?.push({
+            const quantity = relatedShoppingListItem.attributes.quantity;
+            items.push({
                 __typename: 'SimpleCartItem',
                 id: product.id,
-                quantity: relatedShoppingListItem.attributes.quantity,
+                quantity: quantity,
                 uid: btoa(product.id),
                 available_gift_wrapping: [],
                 customizable_options: [],
@@ -211,7 +212,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     uid: btoa(product.id),
                 },
             });
+
+            cart.total_quantity += quantity;
         }
+
+        cart.items = items;
 
         return cart;
     }
