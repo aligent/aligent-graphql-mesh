@@ -17,15 +17,12 @@ export const getDataFromMeshCache = async (
     query: unknown
 ): Promise<AxiosResponse['data']> => {
     let response = await context.cache.get(cacheKey);
-    console.log('CACHE: ', context.cache);
-    //await context.cache.delete(cacheKey);
 
     if (!response && query) {
         response = await query;
 
         if (!cacheKey) return response;
         await context.cache.set(cacheKey, response, TTL_IN_SECONDS);
-        console.log('CACHE SET: ', context.cache);
     }
 
     return response;
