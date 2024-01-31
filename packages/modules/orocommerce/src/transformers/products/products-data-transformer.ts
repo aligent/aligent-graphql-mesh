@@ -75,7 +75,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 }
             }
         });
-        
+
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
         return {
             aggregations: productAttributes
