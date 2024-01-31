@@ -59,7 +59,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             name: productCategories.attributes.title,
             level: 1, // Couldnt see equivalent value in ORO
             redirect_code: 0, // Couldnt see equivalent value in ORO
-            description: String(productCategories.attributes.description),
+            description: productCategories.attributes.description,
             url_path: productCategories.attributes.url,
             image: productCategories.attributes.images[0]?.url,
         };
@@ -182,7 +182,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                         ? [this.getCategoriesData(productCategories)]
                         : null,
                     canonical_url: productAttributes.url,
-                    description: String(productAttributes.description),
+                    description: productAttributes.description,
                     short_description: productAttributes.shortDescription,
                     meta_description: productAttributes.metaDescription,
                     meta_keyword: productAttributes.metaKeywords,

@@ -83,7 +83,7 @@ const categoryAttributes: CategoryAttribute = {
     updatedAt: new Date('2024-01-25T01:24:22Z'),
     title: 'Chemicals',
     shortDescription: { html: '' },
-    description: '',
+    description: { html: '' },
     url: '/chemicals',
     urls: [],
     images: [],
@@ -110,7 +110,7 @@ const productAttribute: ProductAttribute = {
     taa_compliant_flag: false,
     name: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
     shortDescription: { html: '' },
-    description: '',
+    description: { html: '' },
     productAttributes: {
         video_url: null,
         video_url_description: null,
