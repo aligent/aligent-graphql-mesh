@@ -75,7 +75,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 }
             }
         });
-
+        
         const totalRecordsCount = meta?.totalRecordsCount ?? 1;
         return {
             aggregations: productAttributes
@@ -158,8 +158,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
                     const productsImages = variant.included?.filter(this.isProductImage);
 
-                    const smallImage = productsImages
-                        ? this.getImageByDimension(productsImages, 'product_small')
+                    const currentProductsImages = productsImages?.filter(
+                        (images) => images.relationships?.product.data.id === variant.id
+                    );
+
+                    const smallImage = currentProductsImages
+                        ? this.getImageByDimension(currentProductsImages, 'product_small')
                         : null;
 
                     return {
@@ -231,6 +235,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             );
             if (foundImage) return foundImage;
         }
+
         return;
     }
 
@@ -298,18 +303,22 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             const productCategories = oroProduct.included?.filter(this.isProductCategory);
             const productsImages = oroProduct.included?.filter(this.isProductImage);
 
+            const currentProductsImages = productsImages?.filter(
+                (images) => images.relationships?.product.data.id === oroProduct.id
+            );
+
             // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
             const price = oroProduct.attributes.prices[0]?.price || '0';
             const productPrice = this.getPriceData(currency, price);
             const { origin } = new URL(oroProduct.links.self);
 
-            const smallImage = productsImages
-                ? this.getImageByDimension(productsImages, 'product_small')
+            const smallImage = currentProductsImages
+                ? this.getImageByDimension(currentProductsImages, 'product_small')
                 : null;
 
-            const originalImage = productsImages
-                ? this.getImageByDimension(productsImages, 'product_original')
+            const originalImage = currentProductsImages
+                ? this.getImageByDimension(currentProductsImages, 'product_original')
                 : null;
 
             const baseProduct = {
