@@ -3,8 +3,6 @@ import {
     ImageAttribute,
     ProductAttribute,
     ShoppingListWithItems,
-    ProductRelationships,
-    CategoryRelationships,
     ShoppingListItem,
 } from '../../../../types/shopping-list';
 
@@ -85,7 +83,7 @@ const categoryAttributes: CategoryAttribute = {
     updatedAt: new Date('2024-01-25T01:24:22Z'),
     title: 'Chemicals',
     shortDescription: { html: '' },
-    description: { html: '' },
+    description: '',
     url: '/chemicals',
     urls: [],
     images: [],
@@ -112,7 +110,7 @@ const productAttribute: ProductAttribute = {
     taa_compliant_flag: false,
     name: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
     shortDescription: { html: '' },
-    description: { html: '' },
+    description: '',
     productAttributes: {
         video_url: null,
         video_url_description: null,
@@ -149,67 +147,6 @@ const productAttribute: ProductAttribute = {
     metaDescription: '',
     metaKeywords: '',
     attachments: null,
-};
-
-const productRelationships: ProductRelationships = {
-    images: {
-        links: { self: '', related: '' },
-        data: [
-            {
-                type: 'productimages',
-                id: '35',
-            },
-        ],
-    },
-    productFamily: {
-        links: { self: '', related: '' },
-        data: {
-            type: 'productfamilies',
-            id: '1',
-        },
-    },
-    kitItems: {
-        links: { self: '', related: '' },
-        data: [],
-    },
-    category: {
-        links: { self: '', related: '' },
-        data: {
-            type: 'mastercatalogcategories',
-            id: '10',
-        },
-    },
-    inventoryStatus: {
-        links: { self: '', related: '' },
-        data: {
-            type: 'productinventorystatuses',
-            id: 'in_stock',
-        },
-    },
-    variantProducts: {
-        links: { self: '', related: '' },
-        data: [],
-    },
-    parentProducts: {
-        links: { self: '', related: '' },
-        data: [],
-    },
-};
-
-const categoryRelationships: CategoryRelationships = {
-    categoryPath: {
-        data:
-            // [
-            {
-                type: 'mastercatalogcategories',
-                id: '1',
-            },
-        // {
-        //     type: "mastercatalogcategories",
-        //     id: "9"
-        // }
-        //]
-    },
 };
 
 export const shoppingListItem: ShoppingListItem = {
@@ -316,13 +253,63 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
                 type: 'mastercatalogcategories',
                 id: '10',
                 attributes: categoryAttributes,
-                relationships: categoryRelationships,
+                relationships: {
+                    categoryPath: {
+                        data: {
+                            type: 'mastercatalogcategories',
+                            id: '1',
+                        },
+                    },
+                },
             },
             {
                 type: 'products',
                 id: '21',
                 attributes: productAttribute,
-                relationships: productRelationships,
+                relationships: {
+                    images: {
+                        links: { self: '', related: '' },
+                        data: [
+                            {
+                                type: 'productimages',
+                                id: '35',
+                            },
+                        ],
+                    },
+                    productFamily: {
+                        links: { self: '', related: '' },
+                        data: {
+                            type: 'productfamilies',
+                            id: '1',
+                        },
+                    },
+                    kitItems: {
+                        links: { self: '', related: '' },
+                        data: [],
+                    },
+                    category: {
+                        links: { self: '', related: '' },
+                        data: {
+                            type: 'mastercatalogcategories',
+                            id: '10',
+                        },
+                    },
+                    inventoryStatus: {
+                        links: { self: '', related: '' },
+                        data: {
+                            type: 'productinventorystatuses',
+                            id: 'in_stock',
+                        },
+                    },
+                    variantProducts: {
+                        links: { self: '', related: '' },
+                        data: [],
+                    },
+                    parentProducts: {
+                        links: { self: '', related: '' },
+                        data: [],
+                    },
+                },
             },
             shoppingListItem,
         ],

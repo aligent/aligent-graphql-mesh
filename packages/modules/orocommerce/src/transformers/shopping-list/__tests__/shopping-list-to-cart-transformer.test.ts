@@ -92,9 +92,7 @@ describe('Shopping List to Cart transformation tests', () => {
                                     category_uid: 'MTA=',
                                 },
                             ],
-                            description: {
-                                html: '',
-                            },
+                            description: '',
                             id: 10,
                             image: undefined,
                             level: 1,
@@ -105,9 +103,7 @@ describe('Shopping List to Cart transformation tests', () => {
                             url_path: '/chemicals',
                         },
                     ],
-                    description: {
-                        html: '',
-                    },
+                    description: '',
                     id: 21,
                     meta_description: '',
                     meta_keyword: '',
