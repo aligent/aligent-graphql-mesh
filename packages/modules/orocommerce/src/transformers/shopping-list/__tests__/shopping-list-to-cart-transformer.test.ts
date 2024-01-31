@@ -92,7 +92,7 @@ describe('Shopping List to Cart transformation tests', () => {
                                     category_uid: 'MTA=',
                                 },
                             ],
-                            description: { html: '' },
+                            description: String({ html: '' }),
                             id: 10,
                             image: undefined,
                             level: 1,
