@@ -37,7 +37,7 @@ export interface IncludedProductCategory {
     relationships: CategoryRelationships;
 }
 
-interface CategoryRelationships {
+export interface CategoryRelationships {
     categoryPath: {
         data: {
             type: 'mastercatalogcategories';
@@ -55,7 +55,7 @@ interface ImageRelationships {
     };
 }
 
-interface ProductRelationships {
+export interface ProductRelationships {
     images: {
         links: Links;
         data: [{ type: 'productimages'; id: string }];

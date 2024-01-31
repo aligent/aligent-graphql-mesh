@@ -1,26 +1,15 @@
 import 'reflect-metadata';
 
-import { getOroMockOrderLineItems } from './__data__/order-line-items-data';
+import { getShoppingListsWithItems, shoppingListItem } from './__data__/shopping-list-data';
 import { ShoppingListToCartTransformer } from '../shopping-list-to-cart-transformer';
-import { OrderLineItemToShoppingListItemTransformer } from '../order-line-item-to-shopping-list-item-transformer';
-import { OrderLineItemsToNewShoppingListTransformer } from '../order-line-items-to-new-shopping-list-transformer';
+
 import { CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
 import { btoa } from '@aligent/utils';
 
 describe('Shopping List to Cart transformation tests', () => {
-    const orderLineItems = getOroMockOrderLineItems();
-
     const cartTransformer = new ShoppingListToCartTransformer();
-    const lineItemTransformer = new OrderLineItemToShoppingListItemTransformer();
 
-    const shoppingListWithItems = new OrderLineItemsToNewShoppingListTransformer(
-        lineItemTransformer
-    ).transform({
-        data: {
-            newShoppingList: { default: true, name: 'New Shopping List', notes: null },
-            orderLineItems: orderLineItems,
-        },
-    });
+    const shoppingListWithItems = getShoppingListsWithItems();
 
     const cart = cartTransformer.transform({ data: shoppingListWithItems });
 
@@ -38,11 +27,9 @@ describe('Shopping List to Cart transformation tests', () => {
             value: Number(shoppingListWithItems.data.attributes.total),
         });
 
-        expect(cart.total_quantity).toStrictEqual(shoppingListWithItems.included!.length);
+        expect(cart.total_quantity).toStrictEqual(1);
 
         for (const index in cart.items!) {
-            const shoppingListItem = shoppingListWithItems.included![index];
-
             const shoppingListItemPrice: Money = {
                 currency: shoppingListItem.attributes.currency as CurrencyEnum,
                 value: Number(shoppingListItem.attributes.value),
@@ -50,8 +37,8 @@ describe('Shopping List to Cart transformation tests', () => {
 
             expect(cart.items[index]!).toStrictEqual({
                 __typename: 'SimpleCartItem',
-                id: shoppingListItem.id,
-                uid: btoa(shoppingListItem.id),
+                id: '21',
+                uid: btoa('21'),
                 quantity: shoppingListItem.attributes.quantity,
                 available_gift_wrapping: [],
                 customizable_options: [],
@@ -61,11 +48,20 @@ describe('Shopping List to Cart transformation tests', () => {
                     row_total: shoppingListItemPrice,
                     row_total_including_tax: shoppingListItemPrice,
                 },
+                errors: [
+                    {
+                        code: 'UNDEFINED',
+                        message: '',
+                    },
+                ],
                 product: {
                     __typename: 'SimpleProduct',
                     redirect_code: 0,
                     price_range: {
                         minimum_price: {
+                            discount: {
+                                amount_off: 0,
+                            },
                             final_price: shoppingListItemPrice,
                             regular_price: shoppingListItemPrice,
                         },
@@ -79,7 +75,53 @@ describe('Shopping List to Cart transformation tests', () => {
                     reviews: { items: [], page_info: {} },
                     rating_summary: 0,
                     staged: false,
-                    uid: btoa(shoppingListItem.id),
+                    uid: btoa('21'), //btoa(shoppingListItem.id),
+
+                    short_description: {
+                        html: '',
+                    },
+                    sku: '1637228',
+                    stock_status: 'IN_STOCK',
+                    url_key: '/pb-blasterr-blaster-air-tool-lubricant-16oz',
+                    canonical_url: '/pb-blasterr-blaster-air-tool-lubricant-16oz',
+                    categories: [
+                        {
+                            breadcrumbs: [
+                                {
+                                    category_name: 'Chemicals',
+                                    category_uid: 'MTA=',
+                                },
+                            ],
+                            description: {
+                                html: '',
+                            },
+                            id: 10,
+                            image: undefined,
+                            level: 1,
+                            name: 'Chemicals',
+                            redirect_code: 0,
+                            staged: true,
+                            uid: 'MTA=',
+                            url_path: '/chemicals',
+                        },
+                    ],
+                    description: {
+                        html: '',
+                    },
+                    id: 21,
+                    meta_description: '',
+                    meta_keyword: '',
+                    meta_title: '',
+                    name: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
+                    image: {
+                        label: 'product_original', // TODO fix it
+                        url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
+                    },
+
+                    small_image: {
+                        label: 'product_small', // TODO fix it
+                        url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
+                    },
                 },
             });
         }
