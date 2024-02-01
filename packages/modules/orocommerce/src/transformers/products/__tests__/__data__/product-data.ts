@@ -1496,6 +1496,10 @@ export const outputProducts = [
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
                         label: 'product_small',
                     },
+                    image: {
+                        label: 'product_original',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
+                    },
                     staged: false,
                     stock_status: 'OUT_OF_STOCK',
                     uid: 'OQ==',
@@ -1590,6 +1594,10 @@ export const outputProducts = [
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
                         label: 'product_small',
+                    },
+                    image: {
+                        label: 'product_original',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
                     stock_status: 'IN_STOCK',
@@ -1686,6 +1694,10 @@ export const outputProducts = [
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
                         label: 'product_small',
                     },
+                    image: {
+                        label: 'product_original',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
+                    },
                     staged: false,
                     stock_status: 'IN_STOCK',
                     uid: 'Ng==',
@@ -1780,6 +1792,10 @@ export const outputProducts = [
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
                         label: 'product_small',
+                    },
+                    image: {
+                        label: 'product_original',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
                     stock_status: 'IN_STOCK',
