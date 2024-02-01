@@ -203,11 +203,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             sku: variant.attributes.sku,
                             small_image: {
                                 url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
-                                label: smallImage?.dimension || '',
+                                label: smallImage?.label || '',
                             },
                             image: {
                                 url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
-                                label: originalImage?.dimension,
+                                label: originalImage?.label,
                             },
                             staged: false,
                             stock_status: getTransformedProductStockStatus(variant),
@@ -239,7 +239,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             const foundImage = image.attributes.files.find(
                 (image) => image.dimension === imageDimension
             );
-            if (foundImage) return foundImage;
+
+            if (foundImage) {
+                foundImage.label = image.attributes.altText;
+                return foundImage;
+            }
         }
 
         return;
@@ -364,11 +368,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 sku: oroProduct.attributes.sku,
                 small_image: {
                     url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
-                    label: smallImage?.dimension || '',
+                    label: smallImage?.label || '',
                 },
                 image: {
                     url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
-                    label: originalImage?.dimension || '',
+                    label: originalImage?.label || '',
                 },
                 type: 'PRODUCT',
                 stock_status: getTransformedProductStockStatus(oroProduct),

@@ -99,6 +99,7 @@ export const oroProducts = [
                     mimeType: 'image/jpeg',
                     types: [],
                     files: [],
+                    altText: 'wh01-green_main',
                 },
                 relationships: {
                     product: {
@@ -119,6 +120,7 @@ export const oroProducts = [
                     mimeType: 'image/jpeg',
                     types: [],
                     files: [],
+                    altText: '',
                 },
                 relationships: {
                     product: {
@@ -203,6 +205,7 @@ export const oroProducts = [
                             types: ['main'],
                         },
                     ],
+                    altText: 'wh01-green_main',
                 },
                 relationships: {
                     product: {
@@ -1391,11 +1394,11 @@ export const outputProducts = [
         sku: 'WH01',
         small_image: {
             url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-            label: 'product_small',
+            label: 'wh01-green_main',
         },
         image: {
             url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-            label: 'product_original',
+            label: 'wh01-green_main',
         },
         type: 'PRODUCT',
         stock_status: 'IN_STOCK',
@@ -1494,10 +1497,10 @@ export const outputProducts = [
                     sku: 'HOODIE-SY',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
                     },
                     image: {
-                        label: 'product_original',
+                        label: 'wh01-green_main',
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
@@ -1593,10 +1596,10 @@ export const outputProducts = [
                     sku: 'HOODIE-MP',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
                     },
                     image: {
-                        label: 'product_original',
+                        label: 'wh01-green_main',
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
@@ -1692,10 +1695,10 @@ export const outputProducts = [
                     sku: 'HOODIE-MY',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
                     },
                     image: {
-                        label: 'product_original',
+                        label: 'wh01-green_main',
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
@@ -1791,10 +1794,10 @@ export const outputProducts = [
                     sku: 'HOODIE-SP',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
                     },
                     image: {
-                        label: 'product_original',
+                        label: 'wh01-green_main',
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
