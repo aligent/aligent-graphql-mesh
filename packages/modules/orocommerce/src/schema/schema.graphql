@@ -740,6 +740,21 @@ type Mutation {
         requisitionListUid: ID!
     ): DeleteRequisitionListOutput
     """
+    Delete items from a requisition list.
+    """
+    deleteRequisitionListItems(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+
+        """
+        An array of UIDs representing products to be removed from the requisition list.
+        """
+        requisitionListItemUids: [ID!]!
+    ): DeleteRequisitionListItemsOutput
+
+    """
     Create a new wish list.
     """
     createWishlist(
@@ -7506,6 +7521,16 @@ type DeleteRequisitionListOutput {
     Indicates whether the request to delete the requisition list was successful.
     """
     status: Boolean!
+}
+
+"""
+Output of the request to remove items from the requisition list.
+"""
+type DeleteRequisitionListItemsOutput {
+    """
+    The requisition list after removing items.
+    """
+    requisition_list: RequisitionList
 }
 
 input ContactUsInput {
