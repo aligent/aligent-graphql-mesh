@@ -139,6 +139,10 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     getTransformedVariants = (oroProductData: OroProduct): ConfigurableVariant[] => {
         if (!oroProductData.included) return [];
 
+        // The productimages data inside oroProductData.included only links to the parent product and not each variant
+        // Currently variant images arent correct, this will later need to be updated
+        const productsImages = oroProductData.included?.filter(this.isProductImage);
+
         const variantsResults = oroProductData.included
             .map((entity) => {
                 if (entity.type === 'products') {
@@ -156,14 +160,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
                     const { origin } = new URL(variant.links.self);
 
-                    const productsImages = variant.included?.filter(this.isProductImage);
+                    const smallImage = productsImages
+                        ? this.getImageByDimension(productsImages, 'product_small')
+                        : null;
 
-                    const currentProductsImages = productsImages?.filter(
-                        (images) => images.relationships?.product.data.id === variant.id
-                    );
-
-                    const smallImage = currentProductsImages
-                        ? this.getImageByDimension(currentProductsImages, 'product_small')
+                    const originalImage = productsImages
+                        ? this.getImageByDimension(productsImages, 'product_original')
                         : null;
 
                     return {
@@ -200,8 +202,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             review_count: 0,
                             sku: variant.attributes.sku,
                             small_image: {
-                                url: `${origin}${smallImage?.url}`,
-                                label: smallImage?.dimension,
+                                url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
+                                label: smallImage?.dimension || '',
+                            },
+                            image: {
+                                url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
+                                label: originalImage?.dimension,
                             },
                             staged: false,
                             stock_status: getTransformedProductStockStatus(variant),
@@ -357,12 +363,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
                 small_image: {
-                    url: `${origin}${smallImage?.url}`,
-                    label: smallImage?.dimension,
+                    url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
+                    label: smallImage?.dimension || '',
                 },
                 image: {
-                    url: `${origin}${originalImage?.url}`,
-                    label: originalImage?.dimension,
+                    url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
+                    label: originalImage?.dimension || '',
                 },
                 type: 'PRODUCT',
                 stock_status: getTransformedProductStockStatus(oroProduct),
