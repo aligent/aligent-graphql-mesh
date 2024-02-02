@@ -133,6 +133,7 @@ export interface ProductImageAttributes extends Attributes {
     mimeType: string;
     types: Array<string>;
     updatedAt: string;
+    altText: string;
 }
 
 export interface ProductImageFile {
@@ -142,6 +143,7 @@ export interface ProductImageFile {
     dimension: string;
     types: Array<string>;
     url_webp?: string;
+    label: string;
 }
 
 export interface ConfigurableProductAttribute extends Entity {
