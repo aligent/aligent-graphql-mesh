@@ -35,7 +35,7 @@ import { deleteRequisitionListMutation } from './mutations/delete-requisition-li
 import { customerCartResolver } from './queries/customer-cart';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { updateRequisitionListMutation } from './mutations/update-requisition-list';
-import { deleteRequisitionListItemsMutation} from './mutations/delete-requisition-list-items'; 
+import { deleteRequisitionListItemsMutation } from './mutations/delete-requisition-list-items';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -75,7 +75,7 @@ export const resolvers: Resolvers = {
         deleteRequisitionList: deleteRequisitionListMutation,
         requestPasswordResetEmail: requestPasswordResetEmailMutation,
         resetPassword: resetPasswordMutation,
-        deleteRequisitionListItems: deleteRequisitionListItemsMutation, 
+        deleteRequisitionListItems: deleteRequisitionListItemsMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

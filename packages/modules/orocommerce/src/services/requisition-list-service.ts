@@ -30,15 +30,15 @@ export class RequisitionListService {
         });
     }
 
-       /**
+    /**
      * Get the user's current RequisitionList.
      * @returns Promise<RequisitionList | null>
      */
     async getList(id: string): Promise<RequisitionLists | null> {
-        const shoppingListWithItem = await this.apiClient.getShoppingListsWithItems(id); 
+        const shoppingListWithItem = await this.apiClient.getShoppingListsWithItems(id);
 
         return this.shoppingListsToRequisitionListsTransformer.transform({
-            data: shoppingListWithItem, 
-        })
+            data: shoppingListWithItem,
+        });
     }
 }

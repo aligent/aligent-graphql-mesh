@@ -18,7 +18,7 @@ export class ShoppingListsClient {
     }
 
     async getShoppingListsWithItems(id?: string): Promise<ShoppingListsWithItems> {
-        console.log('get shopping list with items for list', id)
+        console.log('get shopping list with items for list', id);
         const params: Record<string, string> = {
             include: 'items.product.images,items.product.category',
         };
@@ -111,10 +111,12 @@ export class ShoppingListsClient {
         return response;
     }
 
-    //remove multiple items from a shopping list 
+    //remove multiple items from a shopping list
     // * @param cartItemIds Comma-separated list of IDs. eg. "122,124"
     async deleteItemsInShoppingList(cartItemIds: string) {
-        const response = await this.apiClient.delete(`/shoppinglistitems?filter[id]=${cartItemIds}`);
-        return response; 
+        const response = await this.apiClient.delete(
+            `/shoppinglistitems?filter[id]=${cartItemIds}`
+        );
+        return response;
     }
 }
