@@ -5,7 +5,9 @@ import { Transformer } from '@aligent/utils';
 import { RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsToRequisitionListsTransformer } from '../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class RequisitionListService {
     constructor(
         @Inject(forwardRef(() => ShoppingListsClient))

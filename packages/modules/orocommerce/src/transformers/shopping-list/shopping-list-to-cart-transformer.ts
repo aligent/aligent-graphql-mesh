@@ -15,7 +15,9 @@ import {
 } from '../../utils/type-predicates';
 import { UNDEFINED_CART } from './constants';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
     getMoneyData(currency: string, price: string | number): Money {
         return {

@@ -3,7 +3,10 @@ import { ShoppingListsWithItems } from '../../types';
 import { RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list-with-items-to-requisition-list-transformer';
-@Injectable()
+
+@Injectable({
+    global: true,
+})
 export class ShoppingListsToRequisitionListsTransformer
     implements Transformer<ShoppingListsWithItems, RequisitionLists>
 {

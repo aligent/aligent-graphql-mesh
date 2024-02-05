@@ -9,7 +9,9 @@ import {
     ShoppingListWithItems,
 } from '../../types';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ShoppingListsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

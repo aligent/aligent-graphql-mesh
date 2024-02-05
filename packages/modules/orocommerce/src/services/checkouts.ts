@@ -2,7 +2,9 @@ import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { CheckoutsClient, CheckoutSourcesClient } from '../apis/rest';
 import { getActiveCheckoutSourcesFromShoppingListId } from '../utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CheckoutService {
     constructor(
         @Inject(forwardRef(() => CheckoutSourcesClient))

@@ -11,7 +11,9 @@ import { OrderLineItemsToNewShoppingListTransformer } from '../transformers/shop
 import { OrderLineItemToShoppingListItemTransformer } from '../transformers/shopping-list/order-line-item-to-shopping-list-item-transformer';
 import { Transformer } from '@aligent/utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ShoppingListService {
     constructor(
         @Inject(forwardRef(() => ShoppingListsClient))

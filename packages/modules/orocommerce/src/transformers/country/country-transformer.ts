@@ -2,7 +2,9 @@ import { Country as AcCountry } from '@aligent/orocommerce-resolvers';
 import { Country, Region } from '../../types';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CountryTransformer {
     public transform(oroCountries: Country[], oroRegions?: Region[]): AcCountry[] {
         return <AcCountry[]>oroCountries.map((country) => {
