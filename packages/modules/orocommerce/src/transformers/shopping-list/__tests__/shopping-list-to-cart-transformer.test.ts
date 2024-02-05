@@ -48,12 +48,7 @@ describe('Shopping List to Cart transformation tests', () => {
                     row_total: shoppingListItemPrice,
                     row_total_including_tax: shoppingListItemPrice,
                 },
-                errors: [
-                    {
-                        code: 'UNDEFINED',
-                        message: '',
-                    },
-                ],
+                errors: [],
                 product: {
                     __typename: 'SimpleProduct',
                     redirect_code: 0,
