@@ -5,7 +5,13 @@ import {
     IncludedProductImages,
     ShoppingListWithItems,
 } from '../../types';
-import { Cart, CurrencyEnum, Money, SimpleCartItem } from '@aligent/orocommerce-resolvers';
+import {
+    Cart,
+    CurrencyEnum,
+    Money,
+    SimpleCartItem,
+    CartItemError,
+} from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
     isShoppingListItem,
@@ -104,7 +110,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
 
         const items: SimpleCartItem[] = [];
         for (const product of products) {
-            let errorMessage = '';
+            const errorMessage: CartItemError[] = [];
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
@@ -122,11 +128,17 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
 
             if (!productCategories) {
-                errorMessage += `Related productCategories not found for product: ${product.id} `;
+                errorMessage.push({
+                    message: `Related productCategories not found for product: ${product.id} `,
+                    code: 'UNDEFINED',
+                });
             }
 
             if (!productsImages) {
-                errorMessage += `Related productsImages not found for product: ${product.id} `;
+                errorMessage.push({
+                    message: `Related productsImages not found for product: ${product.id} `,
+                    code: 'UNDEFINED',
+                });
             }
 
             const smallImage = productsImages
@@ -145,6 +157,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
 
             const productAttributes = product.attributes;
             const quantity = relatedShoppingListItem.attributes.quantity;
+
             items.push({
                 __typename: 'SimpleCartItem',
                 id: product.id,
@@ -158,12 +171,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total: price,
                     row_total_including_tax: price,
                 },
-                errors: [
-                    {
-                        message: errorMessage,
-                        code: 'UNDEFINED',
-                    },
-                ],
+                errors: errorMessage,
                 product: {
                     __typename: 'SimpleProduct',
                     id: Number(product.id),
