@@ -5,7 +5,10 @@ import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
 import { isNull } from 'lodash';
-@Injectable()
+
+@Injectable({
+    global: true,
+})
 export class ShoppingListWithItemsToRequisitionListTransformer
     implements Transformer<ShoppingListWithItems, RequisitionList>
 {

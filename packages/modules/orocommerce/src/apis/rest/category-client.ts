@@ -5,7 +5,9 @@ import {
     Category as OroProductCategory,
 } from '../../types';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CategoriesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

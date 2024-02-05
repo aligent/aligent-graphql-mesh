@@ -6,7 +6,9 @@ import {
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class RequisitionListInputToShoppingListTransformer
     implements Transformer<CreateRequisitionListInput | UpdateRequisitionListInput, ShoppingList>
 {
