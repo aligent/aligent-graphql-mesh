@@ -105,12 +105,12 @@ describe('Shopping List to Cart transformation tests', () => {
                     meta_title: '',
                     name: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
                     image: {
-                        label: 'product_original', // TODO fix it
+                        label: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
                         url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
                     },
 
                     small_image: {
-                        label: 'product_small', // TODO fix it
+                        label: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
                         url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
                     },
                 },

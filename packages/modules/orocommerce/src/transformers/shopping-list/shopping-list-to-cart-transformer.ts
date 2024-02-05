@@ -1,16 +1,12 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
-import {
-    ImageFiles,
-    IncludedProductCategory,
-    IncludedProductImages,
-    ShoppingListWithItems,
-} from '../../types';
+import { IncludedProductCategory, IncludedProductImages, ShoppingListWithItems } from '../../types';
 import {
     Cart,
     CurrencyEnum,
     Money,
     SimpleCartItem,
     CartItemError,
+    ProductImage,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
@@ -36,7 +32,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         images: IncludedProductImages[],
         productId: string,
         imageDimension: string
-    ): ImageFiles | undefined {
+    ): ProductImage | undefined {
         const productImages = images.find(
             (item) => item.relationships.product.data.id === productId
         );
@@ -49,7 +45,10 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             (image) => image.dimension === imageDimension
         );
 
-        return foundImage;
+        return {
+            url: foundImage?.url,
+            label: productImages.attributes.altText,
+        };
     }
 
     getCategoriesData(productCategories: IncludedProductCategory) {
@@ -179,15 +178,8 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     id: Number(product.id),
                     name: productAttributes.name,
                     sku: productAttributes.sku,
-                    image: {
-                        url: originalImage?.url,
-                        label: originalImage?.dimension,
-                    },
-                    small_image: {
-                        url: smallImage?.url,
-                        label: smallImage?.dimension,
-                    },
-
+                    image: originalImage,
+                    small_image: smallImage,
                     categories: productCategories
                         ? [this.getCategoriesData(productCategories)]
                         : null,
