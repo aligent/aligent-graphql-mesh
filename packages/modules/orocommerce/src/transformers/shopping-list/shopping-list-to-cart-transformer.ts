@@ -5,7 +5,13 @@ import {
     IncludedProductImages,
     ShoppingListWithItems,
 } from '../../types';
-import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
+import {
+    Cart,
+    CurrencyEnum,
+    Money,
+    SimpleCartItem,
+    CartItemError,
+} from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
     isShoppingListItem,
@@ -63,7 +69,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             redirect_code: 0, // Couldnt see equivalent value in ORO
             description: String(productCategories.attributes.description),
             url_path: productCategories.attributes.url,
-            image: productCategories.attributes.images[0].url,
+            image: productCategories.attributes.images[0]?.url,
         };
     }
 
@@ -71,7 +77,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
-        cart.total_quantity = shoppingList.included?.length || 0;
+        cart.total_quantity = 0;
 
         const currency = shoppingList.data.attributes.currency as string;
         cart.prices = {
@@ -104,8 +110,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
         }
 
+        const items: SimpleCartItem[] = [];
         for (const product of products) {
-            let errorMessage = '';
+            const errorMessage: CartItemError[] = [];
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
@@ -119,15 +126,21 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             }
 
             const productCategories = productsCategories?.find(
-                (item) => item.relationships.categoryPath.data.id === product.id
+                (item) => item.id === product.relationships.category.data.id
             );
 
             if (!productCategories) {
-                errorMessage += `Related productCategories not found for product: ${product.id} `;
+                errorMessage.push({
+                    message: `Related productCategories not found for product: ${product.id} `,
+                    code: 'UNDEFINED',
+                });
             }
 
             if (!productsImages) {
-                errorMessage += `Related productsImages not found for product: ${product.id} `;
+                errorMessage.push({
+                    message: `Related productsImages not found for product: ${product.id} `,
+                    code: 'UNDEFINED',
+                });
             }
 
             const smallImage = productsImages
@@ -145,11 +158,12 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
 
             const productAttributes = product.attributes;
+            const quantity = relatedShoppingListItem.attributes.quantity;
 
-            cart.items?.push({
+            items.push({
                 __typename: 'SimpleCartItem',
                 id: product.id,
-                quantity: relatedShoppingListItem.attributes.quantity,
+                quantity: quantity,
                 uid: btoa(product.id),
                 available_gift_wrapping: [],
                 customizable_options: [],
@@ -159,12 +173,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total: price,
                     row_total_including_tax: price,
                 },
-                errors: [
-                    {
-                        message: errorMessage,
-                        code: 'UNDEFINED',
-                    },
-                ],
+                errors: errorMessage,
                 product: {
                     __typename: 'SimpleProduct',
                     id: Number(product.id),
@@ -213,7 +222,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     uid: btoa(product.id),
                 },
             });
+
+            cart.total_quantity += quantity;
         }
+
+        cart.items = items;
 
         return cart;
     }
