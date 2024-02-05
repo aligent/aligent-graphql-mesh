@@ -133,6 +133,7 @@ export interface ImageAttribute extends Attributes {
     mimeType: string;
     types: string[];
     files: ImageFiles[];
+    altText: string;
 }
 
 export interface ImageFiles {

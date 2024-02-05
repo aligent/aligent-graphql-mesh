@@ -17,6 +17,7 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
         } else {
             return shoppingListTransformer.transform({
                 data: shoppingListWithItems,
+                // storeUrl: shoppingListService.getStoreUrl()
             });
         }
     },
