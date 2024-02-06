@@ -21,7 +21,6 @@ export class OroAddressesTransformer
         if (!context.data) {
             return [];
         }
-        console.log(JSON.stringify(context.data));
         return context.data.map((address) => {
             const defaultBilling = address.attributes.types?.find(
                 (type) => type.addressType === 'billing'
