@@ -18,6 +18,13 @@ export class OroAddressTransformer implements Transformer<OroCustomerAddress, Cu
     ): CustomerAddress {
         const customerAddress = context.data;
 
+        const defaultBilling = customerAddress.attributes.types?.find(
+            (type) => type.addressType === 'billing'
+        );
+        const defaultShipping = customerAddress.attributes.types?.find(
+            (type) => type.addressType === 'shipping'
+        );
+
         return {
             id: parseInt(context.data.id),
             street: [customerAddress.attributes.street, customerAddress.attributes.street2 || null],
@@ -33,8 +40,8 @@ export class OroAddressTransformer implements Transformer<OroCustomerAddress, Cu
                 region_id: null,
                 region_code: customerAddress.relationships.region.data.id,
             },
-            default_billing: customerAddress.attributes.types[0].default,
-            default_shipping: customerAddress.attributes.types[1].default,
+            default_billing: defaultBilling ? defaultBilling.default : false,
+            default_shipping: defaultShipping ? defaultShipping.default : false,
         };
     }
 }
