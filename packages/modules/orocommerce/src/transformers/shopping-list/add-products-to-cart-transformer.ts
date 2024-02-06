@@ -30,40 +30,72 @@ export class AddProductsToCartTransformer
                 type: 'shoppinglistitems',
                 attributes: {
                     quantity: listItem.quantity,
-                    checksum: "12",
-                    notes: "12",
-                    currency: "12",
-                    value: "12",
+                    checcksum: "", 
+                    notes: "", 
+                    currency: "", 
+                    value: "",
 
                 },
                 relationships: {
                     product: {
                         data: {
                             type: 'products',
-                            id: "12", 
+                            sku:listItem.sku, 
+                           id: atob(String(listItem.uid || '')).replace('Product:', ''),
+                            // id: "1",
                         },
                     },
                     unit: {
                         data: {
+                            // Currently ORO products resolver isnt returning prouductunits
                             type: 'productunits',
-                            id: "12",
+                            id: 'each',
                         },
                     },
-                    shoppingList: {
-                        data: {
-                            type: 'shoppinglists',
-                            id: "12", 
-                        },
-                    },
-                    // unit: {
-                    //     data: {
-                    //         // Currently ORO products resolver isnt returning prouductunits
-                    //         type: 'productunits',
-                    //         id: 'each',
-                    //     },
-                    // },
                 },
             };
         });
+
+        // return shoppingListItemInput.map((listItem) => {
+        //     console.log('uid', listItem.uid)
+        //     return {
+        //         type: 'shoppinglistitems',
+        //         attributes: {
+        //             quantity: listItem.quantity,
+        //             checksum: "12",
+        //             notes: "12",
+        //             currency: "12",
+        //             value: "12",
+
+        //         },
+        //         relationships: {
+        //             product: {
+        //                 data: {
+        //                     type: 'products',
+        //                     id: "12", 
+        //                 },
+        //             },
+        //             unit: {
+        //                 data: {
+        //                     type: 'productunits',
+        //                     id: "12",
+        //                 },
+        //             },
+        //             shoppingList: {
+        //                 data: {
+        //                     type: 'shoppinglists',
+        //                     id: "12", 
+        //                 },
+        //             },
+        //             // unit: {
+        //             //     data: {
+        //             //         // Currently ORO products resolver isnt returning prouductunits
+        //             //         type: 'productunits',
+        //             //         id: 'each',
+        //             //     },
+        //             // },
+        //         },
+        //     };
+        // });
     }
 }
