@@ -1,7 +1,7 @@
 import { MutationAddProductsToCartArgs, MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
 import { AddProductsToCartTransformerChain } from '../../transformers/shopping-list/add-products-to-cart-transformer';
-// import { AddProductsToListTransformerChain } from '../../transformers/shopping-list/add-products-to-list-transformer'; 
+import { AddProductsToListTransformerChain } from '../../transformers/shopping-list/add-products-to-list-transformer'; 
 
 export const addProductsToRequisitionLisResolver: MutationResolvers['addProductsToRequisitionList'] =
     {
@@ -21,8 +21,8 @@ export const addProductsToRequisitionLisResolver: MutationResolvers['addProducts
                 context.injector.get(ShoppingListsClient);
 
             //3. add transformation step here
-            const shoppingListTransformer: AddProductsToCartTransformerChain = context.injector.get(
-                AddProductsToCartTransformerChain
+            const shoppingListTransformer: AddProductsToListTransformerChain = context.injector.get(
+                AddProductsToListTransformerChain
             );
             console.log('Shopping Lists', clientShoppingList);
 
@@ -31,7 +31,7 @@ export const addProductsToRequisitionLisResolver: MutationResolvers['addProducts
             //B - next function needs to only accept one type of output
             //the point of transforming this input is to make it to one.
             const transformedInput = shoppingListTransformer.transform({
-                data: args.requisitionListItems,
+                data: args.requisitionListItems
             });
             console.log('transformed', transformedInput);
             console.log('CONSOLE 3\n\n');
@@ -45,18 +45,18 @@ export const addProductsToRequisitionLisResolver: MutationResolvers['addProducts
 
             //6. Return the transformed data:
             // MOCK RETURN
-            return {
-                requisition_list: {
-                    items_count: 1,
-                    /** The requisition list name. */
-                    name: 'Michael List',
-                    /** The unique requisition list ID. */
-                    uid: '1',
-                },
-            };
-
             // return {
-            //     requisition_list: transformedInput
-            // }
+            //     requisition_list: {
+            //         items_count: 1,
+            //         /** The requisition list name. */
+            //         name: 'Michael List',
+            //         /** The unique requisition list ID. */
+            //         uid: '1',
+            //     },
+            // };
+
+            return {
+                requisition_list: addItemsToShoppingList
+            }
         },
     };

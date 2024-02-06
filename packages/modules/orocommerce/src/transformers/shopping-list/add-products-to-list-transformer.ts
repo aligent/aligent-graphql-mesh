@@ -12,7 +12,7 @@ MutationAddProductsToRequisitionListArgs['requisitionListItems'],
 > {}
 
 @Injectable()
-export class AddProductsToCartTransformer
+export class AddProductsToListTransformer
     implements Transformer<MutationAddProductsToRequisitionListArgs['requisitionListItems'], ShoppingListItemInput[]>
 {
     transform(
@@ -26,17 +26,18 @@ export class AddProductsToCartTransformer
             return {
                 type: 'shoppinglistitems',
                 attributes: {
-                    quantity: 1,
-                    checksum: 1,
-                    notes: "",
-                    currency: "", 
+                    quantity: listItem.quantity,
+
                 },
                 relationships: {
                     product: {
                         data: {
                             type: 'products',
+                            sku:listItem.sku, //atob(listItem.uid || '')
+                           id: atob(String(listItem.uid || '')).replace('Product:', ''),
+                            // id: "1",
                         },
-                    }, 
+                    },
                     unit: {
                         data: {
                             // Currently ORO products resolver isnt returning prouductunits
