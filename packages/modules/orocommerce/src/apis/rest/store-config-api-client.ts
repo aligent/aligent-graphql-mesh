@@ -27,7 +27,7 @@ export class StoreConfigApiClient {
     }
 
     async retrieveStoreConfigFromCache(): Promise<OroStoreConfigApiData[]> {
-        const query = this.getStoreConfig();
+        const query = () => this.getStoreConfig();
         return getDataFromMeshCache(this.context, CACHE_KEY__STORE_CONFIG, query);
     }
 }
