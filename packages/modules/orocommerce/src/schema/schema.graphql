@@ -7523,6 +7523,10 @@ input RequisitionListItemsInput {
     The product SKU.
     """
     sku: String!
+    """
+    Temporary parameter to allow for use of AC without mesh
+    """
+    uid: ID
 }
 """
 Output of the request to rename the requisition list.

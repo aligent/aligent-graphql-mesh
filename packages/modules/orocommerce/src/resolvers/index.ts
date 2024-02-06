@@ -35,8 +35,7 @@ import { deleteRequisitionListMutation } from './mutations/delete-requisition-li
 import { customerCartResolver } from './queries/customer-cart';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { updateRequisitionListMutation } from './mutations/update-requisition-list';
-import { addProductsToRequisitionLisResolver} from './mutations/add-products-to-requisition-list'; 
-
+import { addProductsToRequisitionLisResolver } from './mutations/add-products-to-requisition-list';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -58,7 +57,7 @@ export const resolvers: Resolvers = {
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
-        addProductsToRequisitionList: addProductsToRequisitionLisResolver, 
+        addProductsToRequisitionList: addProductsToRequisitionLisResolver,
         createCartRedirectUrls: createCartRedirectUrlsResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
