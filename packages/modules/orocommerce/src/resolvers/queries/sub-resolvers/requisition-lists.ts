@@ -16,3 +16,6 @@ export const RequisitionListsResolver: CustomerResolvers['requisition_lists'] = 
         return requisitionLists;
     },
 };
+
+
+// Abstract type \"RequisitionListItemInterface\" must resolve to an Object type at runtime for field \"RequistionListItems.items\". Either the \"RequisitionListItemInterface\" type should provide a \"resolveType\" function or each possible type should provide an \"isTypeOf\" function."

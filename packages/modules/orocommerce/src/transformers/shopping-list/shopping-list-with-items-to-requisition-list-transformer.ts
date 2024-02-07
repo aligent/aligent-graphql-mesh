@@ -1,6 +1,11 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListWithItems } from '../../types';
-import { RequisitionList, RequisitionListItemInterface } from '@aligent/orocommerce-resolvers';
+import {
+    Maybe,
+    RequisitionList,
+    RequisitionListItemInterface,
+    Scalars,
+} from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
@@ -26,6 +31,7 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 if (isNull(item)) {
                     continue;
                 }
+                console.log(item.product);
                 items.push({
                     customizable_options: item.customizable_options,
                     quantity: item.quantity,
@@ -34,15 +40,12 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 });
             }
         }
+        console.log(items);
         return {
             description: shoppingList.data.attributes.notes,
             items: {
                 items: items,
-                page_info: {
-                    current_page: 0,
-                    page_size: 0,
-                    total_pages: 0,
-                },
+
                 total_pages: 0,
             },
             items_count: items.length,

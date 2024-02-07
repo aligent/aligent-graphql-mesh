@@ -23,7 +23,7 @@ export class ShoppingListsToRequisitionListsTransformer
             this.requisitionListTransformer.transform({
                 data: {
                     data: shoppingList,
-                    included: included!,
+                    included: included,
                 },
             })
         );

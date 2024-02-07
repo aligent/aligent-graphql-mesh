@@ -165,7 +165,17 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 quantity: quantity,
                 uid: btoa(product.id),
                 available_gift_wrapping: [],
-                customizable_options: [],
+                customizable_options: [
+                    {
+                        customizable_option_uid: 'g',
+                        id: 1,
+                        is_required: true,
+                        label: 's',
+                        sort_order: 1,
+                        type: 's',
+                        values: [],
+                    },
+                ],
                 prices: {
                     price,
                     price_including_tax: price,
