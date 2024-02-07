@@ -1,11 +1,6 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListWithItems } from '../../types';
-import {
-    Maybe,
-    RequisitionList,
-    RequisitionListItemInterface,
-    Scalars,
-} from '@aligent/orocommerce-resolvers';
+import { RequisitionList, RequisitionListItemInterface } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
@@ -24,14 +19,30 @@ export class ShoppingListWithItemsToRequisitionListTransformer
     ): RequisitionList {
         const shoppingList = context.data;
 
-        const cart = this.shoppingListToCartTransformer.transform({ data: shoppingList });
+        const items = this.transformItems(shoppingList)
+       
+        return {
+            __typename: 'RequisitionList',
+            description: shoppingList.data.attributes.notes,
+            items: {
+                __typename: 'RequistionListItems',
+                items: items,
+                total_pages: 0,
+            },
+            items_count: items.length,
+            name: shoppingList.data.attributes.name,
+            uid: btoa(shoppingList.data.id),
+        };
+    }
+
+    transformItems(shoppingListWithItems: ShoppingListWithItems){
+        const cart = this.shoppingListToCartTransformer.transform({ data: shoppingListWithItems });
         const items: RequisitionListItemInterface[] = [];
         if (cart.items) {
             for (const item of cart.items) {
                 if (isNull(item)) {
                     continue;
                 }
-                console.log(item.product);
                 items.push({
                     customizable_options: item.customizable_options,
                     quantity: item.quantity,
@@ -40,17 +51,6 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 });
             }
         }
-        console.log(items);
-        return {
-            description: shoppingList.data.attributes.notes,
-            items: {
-                items: items,
-
-                total_pages: 0,
-            },
-            items_count: items.length,
-            name: shoppingList.data.attributes.name,
-            uid: btoa(shoppingList.data.id),
-        };
+        return items
     }
 }
