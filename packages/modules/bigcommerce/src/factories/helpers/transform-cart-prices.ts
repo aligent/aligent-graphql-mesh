@@ -26,6 +26,7 @@ export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<Cart>): Ca
         const { code, discountedAmount } = coupon;
 
         return {
+            code,
             label: code,
             amount: getTransformedPrice(discountedAmount),
         };
@@ -67,7 +68,8 @@ export const getTransformedCartPrices = (prices: Prices, cart?: Maybe<Cart>): Ca
     return {
         applied_taxes,
         discounts,
-        grand_total: grandTotal?.value ? getTransformedPrice(grandTotal) : null,
+        grand_total:
+            grandTotal?.value || grandTotal?.value === 0 ? getTransformedPrice(grandTotal) : null,
         subtotal_excluding_tax,
         subtotal_including_tax,
         subtotal_with_discount_including_tax,
