@@ -6,8 +6,8 @@ import { RequisitionListService } from '../../../services/requisition-list-servi
  * The sub-resolvers is configured here in the scr/resolves/index.ts
  */
 export const RequisitionListsResolver: CustomerResolvers['requisition_lists'] = {
-    resolve: async (root, _args, context, _info) => {
-        console.log('running');
+    resolve: async (root, args, context, _info) => {
+        console.log('running', args);
         const requisitionListService: RequisitionListService =
             context.injector.get(RequisitionListService);
 

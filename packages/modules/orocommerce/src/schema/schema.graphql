@@ -5876,7 +5876,23 @@ type Customer {
     """
     The customer's requisition lists.
     """
-    requisition_lists: RequisitionLists
+    requisition_lists(
+        """
+        The page of results to return. The default value is 1.
+        """
+        currentPage: Int = 1
+
+        """
+        The maximum number of results to return. The default value is 1.
+        """
+        pageSize: Int = 20
+
+        filter: RequisitionListFilterInput
+    ): RequisitionLists
+}
+
+input RequisitionListFilterInput {
+    coming_soon: String
 }
 
 """
@@ -7440,17 +7456,7 @@ type RequisitionList {
     """
     An array of products added to the requisition list.
     """
-    items(
-        """
-        The page of results to return. The default value is 1.
-        """
-        currentPage: Int = 1
-
-        """
-        The maximum number of results to return. The default value is 1.
-        """
-        pageSize: Int = 20
-    ): RequistionListItems
+    items: RequistionListItems
 
     """
     The number of items in the list.
