@@ -34,7 +34,7 @@ const yoga = createYoga({
                 n: 15000,
             },
             costLimit: {
-                maxCost: 15000,
+                maxCost: 50000,
             },
         }),
     ],
