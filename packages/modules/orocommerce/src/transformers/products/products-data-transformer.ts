@@ -290,7 +290,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 created_at: createdAt,
                 id: Number(productCategory.id),
                 uid: productCategory.relationships
-                    ? getEncodedCategoryUidFromCategoryData(category)
+                    ? getEncodedCategoryUidFromCategoryData(category, productCategory.id)
                     : '',
                 staged: true, // Couldnt see equivalent value in ORO
                 name: title,
