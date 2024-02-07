@@ -1,6 +1,6 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListWithItems } from '../../types';
-import { RequisitionList, RequisitionListItemInterface } from '@aligent/orocommerce-resolvers';
+import { Maybe, RequisitionList, RequisitionListItemInterface, Scalars, SimpleProduct } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
@@ -37,20 +37,20 @@ export class ShoppingListWithItemsToRequisitionListTransformer
 
     transformItems(shoppingListWithItems: ShoppingListWithItems){
         const cart = this.shoppingListToCartTransformer.transform({ data: shoppingListWithItems });
-        const items: RequisitionListItemInterface[] = [];
+        const items: Array<Maybe<RequisitionListItemInterface>> = [];
         if (cart.items) {
             for (const item of cart.items) {
                 if (isNull(item)) {
                     continue;
                 }
                 items.push({
-                    customizable_options: item.customizable_options,
-                    quantity: item.quantity,
-                    uid: item.uid,
+                    customizable_options: [],
+                    quantity:1,
+                    uid: "ss" as Scalars['ID']['output'],
                     product: item.product,
                 });
             }
         }
-        return items
+        return items as RequisitionListItemInterface[]
     }
 }
