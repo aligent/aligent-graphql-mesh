@@ -315,7 +315,7 @@ export const inputCategories: Array<WebCatalogTree> = [
 export const outputCategories: Array<CategoryTree> = [
     {
         id: 1,
-        uid: 'eyJ0eXBlIjoic3lzdGVtcGFnZXMiLCJpZCI6Im9yb19mcm9udGVuZF9yb290In0=',
+        uid: 'eyJpZCI6Im9yb19mcm9udGVuZF9yb290IiwidHlwZSI6InN5c3RlbXBhZ2VzIiwid2ViY2F0YWxvZ0lkIjoiMSJ9',
         position: 1,
         level: 0,
         name: 'Home',
@@ -332,7 +332,7 @@ export const outputCategories: Array<CategoryTree> = [
         children: [
             {
                 id: 5,
-                uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjMifQ==',
+                uid: 'eyJpZCI6IjMiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJ3ZWJjYXRhbG9nSWQiOiI1In0=',
                 position: 2,
                 level: 1,
                 name: 'Clothing',
@@ -349,7 +349,7 @@ export const outputCategories: Array<CategoryTree> = [
                 children: [
                     {
                         id: 6,
-                        uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjQifQ==',
+                        uid: 'eyJpZCI6IjQiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJ3ZWJjYXRhbG9nSWQiOiI2In0=',
                         position: 3,
                         level: 2,
                         name: 'Hoodies',
@@ -371,7 +371,7 @@ export const outputCategories: Array<CategoryTree> = [
             },
             {
                 id: 3,
-                uid: 'eyJ0eXBlIjoicHJvZHVjdGNvbGxlY3Rpb24iLCJpZCI6IjMifQ==',
+                uid: 'eyJpZCI6IjMiLCJ0eXBlIjoicHJvZHVjdGNvbGxlY3Rpb24iLCJ3ZWJjYXRhbG9nSWQiOiIzIn0=',
                 position: 6,
                 level: 1,
                 name: 'Sale',
@@ -388,7 +388,7 @@ export const outputCategories: Array<CategoryTree> = [
                 children: [
                     {
                         id: 4,
-                        uid: 'eyJ0eXBlIjoicHJvZHVjdGNvbGxlY3Rpb24iLCJpZCI6IjEwIn0=',
+                        uid: 'eyJpZCI6IjEwIiwidHlwZSI6InByb2R1Y3Rjb2xsZWN0aW9uIiwid2ViY2F0YWxvZ0lkIjoiNCJ9',
                         position: 7,
                         level: 2,
                         name: 'Test Product Collection',
@@ -407,7 +407,7 @@ export const outputCategories: Array<CategoryTree> = [
                     },
                     {
                         id: 8,
-                        uid: 'eyJ0eXBlIjoicHJvZHVjdHMiLCJpZCI6IjEifQ==',
+                        uid: 'eyJpZCI6IjEiLCJ0eXBlIjoicHJvZHVjdHMiLCJ3ZWJjYXRhbG9nSWQiOiI4In0=',
                         position: 9,
                         level: 2,
                         name: 'Test Product Page',
@@ -429,7 +429,7 @@ export const outputCategories: Array<CategoryTree> = [
             },
             {
                 id: 2,
-                uid: 'eyJ0eXBlIjoibGFuZGluZ3BhZ2VzIiwiaWQiOiIzIn0=',
+                uid: 'eyJpZCI6IjMiLCJ0eXBlIjoibGFuZGluZ3BhZ2VzIiwid2ViY2F0YWxvZ0lkIjoiMiJ9',
                 position: 12,
                 level: 1,
                 name: 'Contact Us',
@@ -448,7 +448,7 @@ export const outputCategories: Array<CategoryTree> = [
             },
             {
                 id: 7,
-                uid: 'eyJ0eXBlIjoibGFuZGluZ3BhZ2VzIiwiaWQiOiIxIn0=',
+                uid: 'eyJpZCI6IjEiLCJ0eXBlIjoibGFuZGluZ3BhZ2VzIiwid2ViY2F0YWxvZ0lkIjoiNyJ9',
                 position: 14,
                 level: 1,
                 name: 'About',
