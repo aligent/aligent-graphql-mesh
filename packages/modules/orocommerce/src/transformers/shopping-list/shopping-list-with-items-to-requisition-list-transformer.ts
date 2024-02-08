@@ -1,6 +1,10 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListWithItems } from '../../types';
-import { Maybe, RequisitionList, RequisitionListItemInterface, Scalars, SimpleProduct } from '@aligent/orocommerce-resolvers';
+import {
+    Maybe,
+    RequisitionList,
+    RequisitionListItemInterface,
+} from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
@@ -19,8 +23,8 @@ export class ShoppingListWithItemsToRequisitionListTransformer
     ): RequisitionList {
         const shoppingList = context.data;
 
-        const items = this.transformItems(shoppingList)
-       
+        const items = this.transformItems(shoppingList);
+
         return {
             __typename: 'RequisitionList',
             description: shoppingList.data.attributes.notes,
@@ -35,22 +39,24 @@ export class ShoppingListWithItemsToRequisitionListTransformer
         };
     }
 
-    transformItems(shoppingListWithItems: ShoppingListWithItems){
+    transformItems(shoppingListWithItems: ShoppingListWithItems) {
         const cart = this.shoppingListToCartTransformer.transform({ data: shoppingListWithItems });
-        const items: Array<Maybe<RequisitionListItemInterface>> = [];
+        const items = [];
         if (cart.items) {
             for (const item of cart.items) {
                 if (isNull(item)) {
                     continue;
                 }
+                console.log(item.product);
                 items.push({
-                    customizable_options: [],
-                    quantity:1,
-                    uid: "ss" as Scalars['ID']['output'],
+                    __typename: 'SimpleRequisitionListItem',
+                    customizable_options: item.customizable_options,
+                    quantity: item.quantity,
+                    uid: item.uid,
                     product: item.product,
                 });
             }
         }
-        return items as RequisitionListItemInterface[]
+        return items;
     }
 }

@@ -7424,6 +7424,117 @@ interface RequisitionListItemInterface {
     uid: ID!
 }
 
+"""Contains details about simple products added to a requisition list."""
+type SimpleRequisitionListItem implements RequisitionListItemInterface {
+  """Selected custom options for an item in the requisition list."""
+  customizable_options: [SelectedCustomizableOption]!
+
+  """Details about a requisition list item."""
+  product: ProductInterface!
+
+  """The amount added."""
+  quantity: Float!
+
+  """The unique ID for the requisition list item."""
+  uid: ID!
+}
+
+"""Contains details about virtual products added to a requisition list."""
+type VirtualRequisitionListItem implements RequisitionListItemInterface {
+  """Selected custom options for an item in the requisition list."""
+  customizable_options: [SelectedCustomizableOption]!
+
+  """Details about a requisition list item."""
+  product: ProductInterface!
+
+  """The amount added."""
+  quantity: Float!
+
+  """The unique ID for the requisition list item."""
+  uid: ID!
+}
+
+"""
+Contains details about downloadable products added to a requisition list.
+"""
+type DownloadableRequisitionListItem implements RequisitionListItemInterface {
+  """Selected custom options for an item in the requisition list."""
+  customizable_options: [SelectedCustomizableOption]!
+
+  """An array of links for downloadable products in the requisition list."""
+  links: [DownloadableProductLinks]
+
+  """Details about a requisition list item."""
+  product: ProductInterface!
+
+  """The quantity of the product added to the requisition list."""
+  quantity: Float!
+
+  """An array of links to downloadable product samples."""
+  samples: [DownloadableProductSamples]
+
+  """The unique ID of an item in a requisition list."""
+  uid: ID!
+}
+
+"""Contains details about bundle products added to a requisition list."""
+type BundleRequisitionListItem implements RequisitionListItemInterface {
+  """An array of selected options for a bundle product."""
+  bundle_options: [SelectedBundleOption]!
+
+  """Selected custom options for an item in the requisition list."""
+  customizable_options: [SelectedCustomizableOption]!
+
+  """Details about a requisition list item."""
+  product: ProductInterface!
+
+  """The quantity of the product added to the requisition list."""
+  quantity: Float!
+
+  """The unique ID of an item in a requisition list."""
+  uid: ID!
+}
+
+"""
+Contains details about configurable products added to a requisition list.
+"""
+type ConfigurableRequisitionListItem implements RequisitionListItemInterface {
+  """Selected configurable options for an item in the requisition list."""
+  configurable_options: [SelectedConfigurableOption]
+
+  """Selected custom options for an item in the requisition list."""
+  customizable_options: [SelectedCustomizableOption]!
+
+  """Details about a requisition list item."""
+  product: ProductInterface!
+
+  """The quantity of the product added to the requisition list."""
+  quantity: Float!
+
+  """The unique ID of an item in a requisition list."""
+  uid: ID!
+}
+
+
+"""Contains details about gift cards added to a requisition list."""
+type GiftCardRequisitionListItem implements RequisitionListItemInterface {
+  """Selected custom options for an item in the requisition list."""
+  customizable_options: [SelectedCustomizableOption]!
+
+  """An array that defines gift card properties."""
+  gift_card_options: GiftCardOptions!
+
+  """Details about a requisition list item."""
+  product: ProductInterface!
+
+  """The amount added."""
+  quantity: Float!
+
+  """The unique ID for the requisition list item."""
+  uid: ID!
+}
+
+
 """
 Defines customer requisition lists.
 """
@@ -7453,10 +7564,8 @@ type RequisitionList {
     """
     description: String
 
-    """
-    An array of products added to the requisition list.
-    """
-    items: RequistionListItems
+  """An array of products added to the requisition list."""
+  items: RequistionListItems
 
     """
     The number of items in the list.
@@ -7500,6 +7609,20 @@ type UpdateRequisitionListOutput {
 }
 
 """
+Output of the request to update items in the specified requisition list.
+"""
+type UpdateRequisitionListItemsOutput {
+  """The requisition list after updating items."""
+  requisition_list: RequisitionList
+}
+
+"""Output of the request to add products to a requisition list."""
+type AddProductsToRequisitionListOutput {
+  """The requisition list after adding products."""
+  requisition_list: RequisitionList
+}
+
+"""
 Indicates whether the request to delete the requisition list was successful.
 """
 type DeleteRequisitionListOutput {
@@ -7512,6 +7635,23 @@ type DeleteRequisitionListOutput {
     Indicates whether the request to delete the requisition list was successful.
     """
     status: Boolean!
+}
+
+"""
+Output of the request to copy items to the destination requisition list.
+"""
+type CopyItemsFromRequisitionListsOutput {
+  """The destination requisition list after the items were copied."""
+  requisition_list: RequisitionList
+}
+
+"""Output of the request to move items to another requisition list."""
+type MoveItemsBetweenRequisitionListsOutput {
+  """The destination requisition list after moving items."""
+  destination_requisition_list: RequisitionList
+
+  """The source requisition list after moving items."""
+  source_requisition_list: RequisitionList
 }
 
 input ContactUsInput {
