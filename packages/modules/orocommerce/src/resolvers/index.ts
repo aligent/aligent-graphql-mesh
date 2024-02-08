@@ -35,6 +35,7 @@ import { deleteRequisitionListMutation } from './mutations/delete-requisition-li
 import { customerCartResolver } from './queries/customer-cart';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { updateRequisitionListMutation } from './mutations/update-requisition-list';
+import { RequisitionListsResolver } from './queries/sub-resolvers/requisition-lists';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -81,6 +82,7 @@ export const resolvers: Resolvers = {
     },
     Customer: {
         orders: customerOrdersResolver,
+        requisition_lists: RequisitionListsResolver,
     },
 };
 
