@@ -7,6 +7,7 @@ import {
     SimpleCartItem,
     CartItemError,
     ProductImage,
+    CategoryTree,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
@@ -16,6 +17,7 @@ import {
     isProductCategory,
 } from '../../utils/type-predicates';
 import { UNDEFINED_CART } from './constants';
+import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
 @Injectable({
     global: true,
@@ -51,25 +53,22 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         };
     }
 
-    getCategoriesData(productCategories: IncludedProductCategory) {
-        return {
-            id: Number(productCategories.id),
-            breadcrumbs: [
-                // Not sure about this in ORO
-                {
-                    category_uid: btoa(productCategories.id),
-                    category_name: productCategories.attributes.title,
-                },
-            ],
-            uid: btoa(productCategories.id),
-            staged: true, // Couldnt see equivalent value in ORO
-            name: productCategories.attributes.title,
-            level: 1, // Couldnt see equivalent value in ORO
-            redirect_code: 0, // Couldnt see equivalent value in ORO
-            description: String(productCategories.attributes.description),
-            url_path: productCategories.attributes.url,
-            image: productCategories.attributes.images[0]?.url,
-        };
+    getCategoriesData(productCategories: IncludedProductCategory[]): CategoryTree[] {
+        return productCategories.map((productCategorie) => {
+            const category = { type: productCategorie.type, id: productCategorie.id };
+            return {
+                __typename: 'CategoryTree',
+                id: Number(productCategorie.id),
+                uid: getEncodedCategoryUidFromCategoryData(category, productCategorie.id),
+                staged: true, // Couldnt see equivalent value in ORO
+                name: productCategorie.attributes.title,
+                level: 1, // Couldnt see equivalent value in ORO
+                redirect_code: 0, // Couldnt see equivalent value in ORO
+                description: String(productCategorie.attributes.description),
+                url_path: productCategorie.attributes.url,
+                image: productCategorie.attributes.images[0]?.url,
+            };
+        });
     }
 
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
@@ -124,7 +123,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 );
             }
 
-            const productCategories = productsCategories?.find(
+            const productCategories = productsCategories?.filter(
                 (item) => item.id === product.relationships.category.data.id
             );
 
@@ -181,7 +180,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     image: originalImage,
                     small_image: smallImage,
                     categories: productCategories
-                        ? [this.getCategoriesData(productCategories)]
+                        ? this.getCategoriesData(productCategories)
                         : [],
                     canonical_url: productAttributes.url,
                     description: productAttributes.description,

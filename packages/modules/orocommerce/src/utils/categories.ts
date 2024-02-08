@@ -35,7 +35,6 @@ export const getWebcatalogIdFromCategoryUid = (categoryUid?: string | null): num
     if (!categoryUid || categoryUid === 'null') {
         return null;
     }
-
     try {
         const categoryData = JSON.parse(atob(categoryUid || ''));
         if ('webcatalogId' in categoryData) {
