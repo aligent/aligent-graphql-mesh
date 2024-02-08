@@ -15,9 +15,9 @@ export const getRouteQuery = stripIgnoredCharacters(
             $path: String!
             $productsPageSize: Int = 24
             $includeTax: Boolean
-            # first, last used for satisfying productDetails fragment
+            # first, after used for satisfying productDetails fragment
             $first: Int
-            $last: Int
+            $after: String
         ) {
             site {
                 route(path: $path) {
