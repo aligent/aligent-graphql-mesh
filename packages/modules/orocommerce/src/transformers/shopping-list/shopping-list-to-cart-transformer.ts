@@ -54,19 +54,19 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
     }
 
     getCategoriesData(productCategories: IncludedProductCategory[]): CategoryTree[] {
-        return productCategories.map((productCategorie) => {
-            const category = { type: productCategorie.type, id: productCategorie.id };
+        return productCategories.map((productCategory) => {
+            const category = { type: productCategory.type, id: productCategory.id };
             return {
                 __typename: 'CategoryTree',
-                id: Number(productCategorie.id),
-                uid: getEncodedCategoryUidFromCategoryData(category, productCategorie.id),
+                id: Number(productCategory.id),
+                uid: getEncodedCategoryUidFromCategoryData(category, productCategory.id),
                 staged: true, // Couldnt see equivalent value in ORO
-                name: productCategorie.attributes.title,
+                name: productCategory.attributes.title,
                 level: 1, // Couldnt see equivalent value in ORO
                 redirect_code: 0, // Couldnt see equivalent value in ORO
-                description: String(productCategorie.attributes.description),
-                url_path: productCategorie.attributes.url,
-                image: productCategorie.attributes.images[0]?.url,
+                description: String(productCategory.attributes.description),
+                url_path: productCategory.attributes.url,
+                image: productCategory.attributes.images[0]?.url,
             };
         });
     }

@@ -5883,7 +5883,7 @@ type Customer {
         currentPage: Int = 1
 
         """
-        The maximum number of results to return. The default value is 1.
+        The maximum number of results to return. The default value is 20.
         """
         pageSize: Int = 20
 
@@ -5892,6 +5892,9 @@ type Customer {
 }
 
 input RequisitionListFilterInput {
+    """
+    Soon to be added filter.
+    """
     coming_soon: String
 }
 
