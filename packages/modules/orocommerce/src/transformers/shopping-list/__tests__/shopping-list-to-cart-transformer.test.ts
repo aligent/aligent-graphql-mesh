@@ -81,12 +81,7 @@ describe('Shopping List to Cart transformation tests', () => {
                     canonical_url: '/pb-blasterr-blaster-air-tool-lubricant-16oz',
                     categories: [
                         {
-                            breadcrumbs: [
-                                {
-                                    category_name: 'Chemicals',
-                                    category_uid: 'MTA=',
-                                },
-                            ],
+                            __typename: 'CategoryTree',
                             description: String({ html: '' }),
                             id: 10,
                             image: undefined,
@@ -94,7 +89,7 @@ describe('Shopping List to Cart transformation tests', () => {
                             name: 'Chemicals',
                             redirect_code: 0,
                             staged: true,
-                            uid: 'MTA=',
+                            uid: 'eyJpZCI6IjEwIiwidHlwZSI6Im1hc3RlcmNhdGFsb2djYXRlZ29yaWVzIiwid2ViY2F0YWxvZ0lkIjoiMTAifQ==',
                             url_path: '/chemicals',
                         },
                     ],

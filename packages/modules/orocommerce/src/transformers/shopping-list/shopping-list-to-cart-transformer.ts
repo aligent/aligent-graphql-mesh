@@ -179,9 +179,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     sku: productAttributes.sku,
                     image: originalImage,
                     small_image: smallImage,
-                    categories: productCategories
-                        ? this.getCategoriesData(productCategories)
-                        : [],
+                    categories: productCategories ? this.getCategoriesData(productCategories) : [],
                     canonical_url: productAttributes.url,
                     description: productAttributes.description,
                     short_description: productAttributes.shortDescription,
