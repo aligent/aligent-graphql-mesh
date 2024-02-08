@@ -1,26 +1,42 @@
 import { Product, SiteRouteArgs } from '@aligent/bigcommerce-operations';
-import { bcGraphQlRequest } from './client';
+import { graphqlPaginate } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
-import { logAndThrowError } from '@aligent/utils';
 
 export const getBcProductByPathGraphql = async (
     variables: SiteRouteArgs & { includeTax?: boolean },
-    customerImpersonationToken: string
+    customerImpersonationToken: string,
+    pageSize?: number,
+    requestedPage?: number
 ): Promise<Product> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
 
-    const productsQuery = {
+    const productQuery = {
+        headers,
         query: getPdpProductQuery,
         variables: variables,
     };
 
-    const response = await bcGraphQlRequest(productsQuery, headers);
+    const responsePages = await graphqlPaginate(
+        productQuery,
+        'site.route.node.variants.pageInfo',
+        pageSize,
+        requestedPage
+    );
 
-    if (response.errors) {
-        return logAndThrowError(response.errors);
-    }
+    const productWithCombinedVariants: Product = responsePages.reduce((carry, responsePage) => {
+        const product = responsePage.site.route.node;
+        return {
+            ...product,
+            variants: {
+                edges: [
+                    ...(carry?.edges || []),
+                    ...(responsePage?.site?.route?.node?.variants?.edges || []),
+                ],
+            },
+        };
+    }, {});
 
-    return response.data.site.route.node;
+    return productWithCombinedVariants;
 };
