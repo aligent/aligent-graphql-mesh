@@ -47,9 +47,10 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 if (isNull(item)) {
                     continue;
                 }
-                console.log(item.product);
                 items.push({
-                    __typename: 'SimpleRequisitionListItem',
+                    __typename: item.product.__typename
+                        ? this.getTypeName(item.product.__typename)
+                        : 'SimpleRequisitionListItem',
                     customizable_options: item.customizable_options,
                     quantity: item.quantity,
                     uid: item.uid,
@@ -58,5 +59,13 @@ export class ShoppingListWithItemsToRequisitionListTransformer
             }
         }
         return items;
+    }
+
+    getTypeName(typeName: string): 'ConfigurableRequisitionListItem' | 'SimpleRequisitionListItem' {
+        if (typeName === 'SimpleProduct') {
+            return 'SimpleRequisitionListItem';
+        } else {
+            return 'ConfigurableRequisitionListItem';
+        }
     }
 }
