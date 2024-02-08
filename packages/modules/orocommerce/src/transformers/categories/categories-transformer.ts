@@ -30,7 +30,10 @@ export class CategoriesTransformer implements Transformer<OroCategory[], Categor
                     id: Number(category.id),
                     // category tree node can be different entity (mastercatalogcategory, cms page, etc.)
                     // we need an entity type and real id in Mesh to get valid data from Oro
-                    uid: getEncodedCategoryUidFromCategoryData(category.relationships.content.data),
+                    uid: getEncodedCategoryUidFromCategoryData(
+                        category.relationships.content.data,
+                        category.id
+                    ),
                     position: category.attributes.order,
                     level: category.attributes.level,
                     name: category.attributes.title,
