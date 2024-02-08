@@ -82,7 +82,7 @@ export const resolvers: Resolvers = {
     },
     Customer: {
         orders: customerOrdersResolver,
-        requisition_lists: RequisitionListsResolver
+        requisition_lists: RequisitionListsResolver,
     },
 };
 

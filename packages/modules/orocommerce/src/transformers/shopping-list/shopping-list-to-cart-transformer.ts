@@ -165,17 +165,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 quantity: quantity,
                 uid: btoa(product.id),
                 available_gift_wrapping: [],
-                customizable_options: [
-                    {
-                        customizable_option_uid: 'g',
-                        id: 1,
-                        is_required: true,
-                        label: 's',
-                        sort_order: 1,
-                        type: 's',
-                        values: [],
-                    },
-                ],
+                customizable_options: [],
                 prices: {
                     price,
                     price_including_tax: price,
@@ -190,7 +180,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     sku: productAttributes.sku,
                     image: originalImage,
                     small_image: smallImage,
-                    categories: [],
+                    categories: productCategories
+                        ? [this.getCategoriesData(productCategories)]
+                        : [],
                     canonical_url: productAttributes.url,
                     description: productAttributes.description,
                     short_description: productAttributes.shortDescription,

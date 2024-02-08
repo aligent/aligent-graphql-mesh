@@ -1,14 +1,10 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListWithItems } from '../../types';
-import {
-    Maybe,
-    RequisitionList,
-    RequisitionListItemInterface,
-} from '@aligent/orocommerce-resolvers';
-import { Injectable } from 'graphql-modules';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
 import { isNull } from 'lodash';
+import { Injectable } from 'graphql-modules';
+import { RequisitionList } from '@aligent/orocommerce-resolvers';
 
 @Injectable({
     global: true,
@@ -26,11 +22,14 @@ export class ShoppingListWithItemsToRequisitionListTransformer
         const items = this.transformItems(shoppingList);
 
         return {
-            __typename: 'RequisitionList',
             description: shoppingList.data.attributes.notes,
             items: {
-                __typename: 'RequistionListItems',
                 items: items,
+                page_info: {
+                    current_page: 0,
+                    page_size: 0,
+                    total_pages: 0,
+                },
                 total_pages: 0,
             },
             items_count: items.length,
