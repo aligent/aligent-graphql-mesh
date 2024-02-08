@@ -60,6 +60,8 @@ export class ShoppingListWithItemsToRequisitionListTransformer
         return items;
     }
 
+    // This isnt an ideal solution and only covers two use cases
+    // If we ever need other product and requisition list types this needs to be updated
     getTypeName(typeName: string): 'ConfigurableRequisitionListItem' | 'SimpleRequisitionListItem' {
         if (typeName === 'SimpleProduct') {
             return 'SimpleRequisitionListItem';
