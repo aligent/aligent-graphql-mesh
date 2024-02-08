@@ -116,11 +116,14 @@ export const ProductsDetails: DocumentNode = gql`
         productOptions {
             ...ProductOptions
         }
-        variants {
+        variants(first: $first, last: $last) {
             edges {
                 node {
                     ...Variants
                 }
+            }
+            pageInfo {
+                ...PageInfo
             }
         }
         weight {

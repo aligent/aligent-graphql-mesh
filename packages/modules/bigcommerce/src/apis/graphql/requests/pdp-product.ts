@@ -9,7 +9,7 @@ export const getPdpProductQuery = stripIgnoredCharacters(
         ${ProductsDetails}
         ${relatedProducts}
 
-        query getPdpProduct($path: String!, $includeTax: Boolean) {
+        query getPdpProduct($path: String!, $includeTax: Boolean, $first: Int, $last: Int) {
             site {
                 route(path: $path) {
                     node {
