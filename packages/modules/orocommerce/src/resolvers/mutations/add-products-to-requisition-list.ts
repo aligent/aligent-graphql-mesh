@@ -23,7 +23,7 @@ export const addProductsToRequisitionLisResolver: MutationResolvers['addProducts
             //3. add transformation step here
             const shoppingListTransformer: AddProductsToListTransformerChain = context.injector.get(
                 AddProductsToListTransformerChain
-            );
+            );          
             console.log('Shopping Lists', clientShoppingList);
 
             //4. Use exisiting transformer to transform data -> we are using this AddProductsToCartTransformerChain'

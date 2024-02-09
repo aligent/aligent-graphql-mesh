@@ -34,8 +34,8 @@ export class AddProductsToListTransformer
                         data: {
                             type: 'products',
                             sku:listItem.sku, //atob(listItem.uid || '')
-                           id: atob(String(listItem.uid || '')).replace('Product:', ''),
-                            // id: "1",
+                            id: atob(String(listItem.uid || '')).replace('Product:', ''),
+                            
                         },
                     },
                     unit: {
