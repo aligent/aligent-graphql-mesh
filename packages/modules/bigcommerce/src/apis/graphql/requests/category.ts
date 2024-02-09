@@ -7,7 +7,14 @@ export const getCategoryQuery = stripIgnoredCharacters(
     print(gql`
         ${categoryDetailsWithProducts}
 
-        query category($entityId: Int!, $productsPageSize: Int = 24, $includeTax: Boolean) {
+        query category(
+            $entityId: Int!
+            $productsPageSize: Int = 24
+            $includeTax: Boolean
+            # first, after used for satisfying productDetails fragment
+            $first: Int
+            $after: String
+        ) {
             site {
                 category(entityId: $entityId) {
                     ...CategoryDetailsWithProducts
