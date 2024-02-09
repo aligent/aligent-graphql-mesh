@@ -31,7 +31,7 @@ export class RequisitionListService {
     }
 
     /**
-     * Get the user's current RequisitionList.
+     * Get the user's requisition list specified by the ID parameter
      * @returns Promise<RequisitionList | null>
      */
     async getList(id: string): Promise<RequisitionLists | null> {

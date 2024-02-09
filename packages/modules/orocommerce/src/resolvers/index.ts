@@ -73,9 +73,9 @@ export const resolvers: Resolvers = {
         createRequisitionList: createRequisitionListMutation,
         updateRequisitionList: updateRequisitionListMutation,
         deleteRequisitionList: deleteRequisitionListMutation,
+        deleteRequisitionListItems: deleteRequisitionListItemsMutation,
         requestPasswordResetEmail: requestPasswordResetEmailMutation,
         resetPassword: resetPasswordMutation,
-        deleteRequisitionListItems: deleteRequisitionListItemsMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     CategoryTree: {

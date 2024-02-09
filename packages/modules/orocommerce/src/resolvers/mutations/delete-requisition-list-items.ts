@@ -11,20 +11,20 @@ export const deleteRequisitionListItemsMutation: MutationResolvers['deleteRequis
         await clientShoppingList.deleteItemsInShoppingList(ids);
 
         const shoppingListSerice: ShoppingListService = context.injector.get(ShoppingListService);
-        const itemsOnList = await shoppingListSerice.getShoppingListWithItems(
+        const shoppingList = await shoppingListSerice.getShoppingListWithItems(
             atob(args.requisitionListUid)
         );
 
         const shoppingListTransformenr: ShoppingListWithItemsToRequisitionListTransformer =
             context.injector.get(ShoppingListWithItemsToRequisitionListTransformer);
 
-        if (!itemsOnList) {
+        if (!shoppingList) {
             throw new Error('no product to delete');
         }
-        const transformed = shoppingListTransformenr.transform({
-            data: itemsOnList,
+        const requisitionList = shoppingListTransformenr.transform({
+            data: shoppingList,
         });
 
-        return { requisition_list: transformed };
+        return { requisition_list: requisitionList };
     },
 };
