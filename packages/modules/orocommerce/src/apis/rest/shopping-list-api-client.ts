@@ -111,12 +111,10 @@ export class ShoppingListsClient {
     }
 
     /**
-     * remove multiple items from a shopping list
-     * 
-     * @param cartItemIds 
-     * @returns 
+     * remove multiple item(s) from a shopping list
+     *
      */
-    async deleteItemsInShoppingList(cartItemIds: string) {
+    async deleteItemsInShoppingList(cartItemIds: string): Promise<boolean> {
         const response = await this.apiClient.delete(
             `/shoppinglistitems?filter[id]=${cartItemIds}`
         );

@@ -15,12 +15,13 @@ export const deleteRequisitionListItemsMutation: MutationResolvers['deleteRequis
             atob(args.requisitionListUid)
         );
 
+        if (!shoppingList) {
+            throw new Error('Shopping list not found.');
+        }
+
         const shoppingListTransformenr: ShoppingListWithItemsToRequisitionListTransformer =
             context.injector.get(ShoppingListWithItemsToRequisitionListTransformer);
 
-        if (!shoppingList) {
-            throw new Error('no product to delete');
-        }
         const requisitionList = shoppingListTransformenr.transform({
             data: shoppingList,
         });
