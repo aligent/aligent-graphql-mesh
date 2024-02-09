@@ -31,6 +31,12 @@ export class ShoppingListsToRequisitionListsTransformer
         return {
             items: requisitionLists,
             total_count: requisitionLists.length,
+            // This will be implemented in OTF-190 with filtering
+            page_info: {
+                current_page: 1,
+                page_size: 20,
+                total_pages: 1
+            }
         };
     }
 }

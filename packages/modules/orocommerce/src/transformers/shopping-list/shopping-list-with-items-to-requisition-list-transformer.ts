@@ -1,10 +1,10 @@
 import { Transformer, TransformerContext } from '@aligent/utils';
-import { ShoppingListWithItems } from '../../types';
+import { ShoppingListAttribute, ShoppingListWithItems } from '../../types';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
-import { isNull } from 'lodash';
+import { isNull, } from 'lodash';
 import { Injectable } from 'graphql-modules';
-import { RequisitionList } from '@aligent/orocommerce-resolvers';
+import { CurrencyEnum, RequisitionList } from '@aligent/orocommerce-resolvers';
 
 @Injectable({
     global: true,
@@ -18,23 +18,44 @@ export class ShoppingListWithItemsToRequisitionListTransformer
         context: TransformerContext<ShoppingListWithItems, RequisitionList>
     ): RequisitionList {
         const shoppingList = context.data;
-
+        const { customerUser, customer } = shoppingList.data.relationships;
+        const { createdAt, name, notes, currency, subTotal, total, updatedAt } = shoppingList.data
+            .attributes as ShoppingListAttribute;
         const items = this.transformItems(shoppingList);
 
+        const subTotal_price = {
+            currency: currency as CurrencyEnum,
+            value: Number(subTotal),
+        };
+
+        const total_price = {
+            currency: currency as CurrencyEnum,
+            value: Number(total),
+        };
+
         return {
-            description: shoppingList.data.attributes.notes,
+            description: notes,
             items: {
                 items: items,
+                // This will be implemented in OTF-190 with filtering
                 page_info: {
-                    current_page: 0,
-                    page_size: 0,
-                    total_pages: 0,
+                    current_page: 1,
+                    page_size: 1,
+                    total_pages: 20,
                 },
-                total_pages: 0,
+                total_pages: 1,
             },
             items_count: items.length,
-            name: shoppingList.data.attributes.name,
+            name,
+            default: shoppingList.data.attributes.default,
             uid: btoa(shoppingList.data.id),
+            updated_at: updatedAt,
+            created_at: createdAt,
+            currency,
+            sub_total: subTotal_price,
+            total: total_price,
+            customer: Number(customer?.data.id),
+            company_user: Number(customerUser?.data.id),
         };
     }
 

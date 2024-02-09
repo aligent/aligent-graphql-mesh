@@ -227,10 +227,16 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
                     ],
                 },
                 customerUser: {
-                    data: null,
+                    data: {
+                        type: 'customerusers',
+                        id: '1',
+                    },
                 },
                 customer: {
-                    data: null,
+                    data: {
+                        type: 'customers',
+                        id: '1',
+                    },
                 },
             },
         },
