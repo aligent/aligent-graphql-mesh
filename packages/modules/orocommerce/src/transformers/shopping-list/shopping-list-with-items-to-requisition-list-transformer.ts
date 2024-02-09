@@ -2,7 +2,7 @@ import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListAttribute, ShoppingListWithItems } from '../../types';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
-import { isNull, } from 'lodash';
+import { isNull } from 'lodash';
 import { Injectable } from 'graphql-modules';
 import { CurrencyEnum, RequisitionList } from '@aligent/orocommerce-resolvers';
 
@@ -75,6 +75,7 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                     quantity: item.quantity,
                     uid: item.uid,
                     product: item.product,
+                    notes: shoppingListWithItems.data.attributes.notes,
                 });
             }
         }

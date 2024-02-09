@@ -153,8 +153,8 @@ export interface ProductAttribute extends Attributes {
     featured: boolean;
     newArrival: boolean;
     name: string;
-    shortDescription: ComplexTextValue;
-    description: ComplexTextValue;
+    shortDescription: string;
+    description: string;
     unitPrecisions: UnitPrecision[];
     url: string;
     prices: Price[];
