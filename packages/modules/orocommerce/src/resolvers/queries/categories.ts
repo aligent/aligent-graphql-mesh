@@ -8,7 +8,7 @@ export const categoriesResolver = {
         const categoryUid = args?.filters?.category_uid?.eq;
         const rootEntityId = getWebcatalogIdFromCategoryUid(categoryUid);
         const api: CategoriesClient = context.injector.get(CategoriesClient);
-        const categories = await api.getCategories(rootEntityId);
+        const categories = await api.getWebcatalogCategories(rootEntityId);
         const transformer: CategoriesTransformerChain = context.injector.get(
             CategoriesTransformerChain
         );
