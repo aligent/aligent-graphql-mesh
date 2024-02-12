@@ -1,174 +1,143 @@
 export const oroProducts = [
     {
-        data: [
-            {
-                type: 'products',
-                id: '12',
-                attributes: {
-                    sku: 'WH01',
-                    variantAttributeNames: ['size_63313224a7189', 'size_633132c50db9e'],
-                    createdAt: '2023-10-27T01:50:22Z',
-                    updatedAt: '2024-01-18T00:11:50Z',
-                    productType: 'configurable',
-                    featured: false,
-                    newArrival: false,
-                    restrictions: null,
-                    category_sort_order: null,
-                    tech_specs: [
-                        { displayName: 'Item#:', specValue: 'DA6152Product', priority: 1 },
-                        {
-                            displayName: 'Name:',
-                            specValue:
-                                'Drummond\u2122 Open and Shut Nut/Bolt Loosener/Rust Penetrant',
-                            priority: 3,
-                        },
-                        { displayName: 'Size:', specValue: '20 Oz.', priority: 5 },
-                        { displayName: 'Type:', specValue: 'Aerosol', priority: 7 },
-                        {
-                            displayName: 'Viscosity Kinematic:',
-                            specValue: '<0.205 cSt',
-                            priority: 2,
-                        },
-                        { displayName: 'Accessories:', specValue: 'Yes', priority: 4 },
-                        { displayName: 'Base Oil:', specValue: 'Naphthenic', priority: 6 },
-                        { displayName: 'Net Fill Weight:', specValue: '20 Oz.', priority: 8 },
-                        { displayName: 'UNSPSC #:', specValue: '15121806TAA', priority: 10 },
-                        { displayName: 'Compliant:', specValue: 'Yes', priority: 9 },
-                    ],
-                    mat_freight_grp: null,
-                    prop65_message: null,
-                    unspsc: null,
-                    video_url: 'https://www.youtube.com/watch?v=COA_vgQjR6s',
-                    video_url_description: 'Penguins falling off of ice',
-                    taa_compliant_flag: false,
-                    name: 'Mona Pullover Hoodlie',
-                    shortDescription: '<p>Short description test for development</p>',
-                    description:
-                        '<div id="isolation-scope-9g6aw0a9x3jbp8ftbuod16944" class="cms-wrapper"><div>Whether you&#039;re after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You&#039;ll stay warm and look fashionable, wherever you are.</div><br/><div> </div><br/><div> \u2022 Light green heathered hoodie. </div><br/><div> \u2022 Long-Sleeve, pullover.</div><br/><div> \u2022 Long elliptical hem for extra coverage.</div><br/><div> \u2022 Deep button placket for layering.</div><br/><div> \u2022 Double rib design.</div><br/><div> \u2022 Mid layer, mid weight.</div><br/><div> \u2022 98% Merino Wool / 2% Spandex</div></div>',
-                    productAttributes: {
-                        size_63313224a7189: {
-                            id: 'size_63313224a7189',
-                            attrType: 'enum',
-                            label: 'size',
-                            options: [
-                                { id: 'l', name: 'L', priority: 1, default: false },
-                                { id: 'm', name: 'M', priority: 2, default: false },
-                                { id: 's', name: 'S', priority: 3, default: false },
-                            ],
-                        },
-                        size_633132c50db9e: {
-                            id: 'size_633132c50db9e',
-                            attrType: 'enum',
-                            label: 'Colour',
-                            options: [
-                                { id: 'purple', name: 'purple', priority: 1, default: false },
-                                { id: 'white', name: 'white', priority: 2, default: false },
-                                { id: 'yellow', name: 'yellow', priority: 3, default: false },
-                            ],
-                        },
-                        video_url: 'https://www.youtube.com/watch?v=COA_vgQjR6s',
-                        video_url_description: 'Penguins falling off of ice',
-                    },
-                    unitPrecisions: [
-                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
-                    ],
-                    url: '/mona-pullover-hoodlie',
-                    urls: [],
-                    prices: [{ price: '57.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
-                    lowInventory: true,
-                    upcoming: false,
-                    availabilityDate: null,
-                    metaTitle: null,
-                    metaDescription: null,
-                    metaKeywords: null,
-                    attachments: [],
+        type: 'products',
+        id: '12',
+        links: { self: 'https://aligent.oro-cloud.com/api/products/12' },
+        attributes: {
+            sku: 'WH01',
+            variantAttributeNames: ['size_63313224a7189', 'size_633132c50db9e'],
+            createdAt: '2023-10-27T01:50:22Z',
+            updatedAt: '2023-10-27T02:19:31Z',
+            productType: 'configurable',
+            featured: false,
+            newArrival: false,
+            category_sort_order: null,
+            name: 'Mona Pullover Hoodlie',
+            shortDescription: null,
+            description:
+                '<div id="isolation-scope-9g6aw0a9x3jbp8ftbuod16944" class="cms-wrapper"><div>Whether you&#039;re after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You&#039;ll stay warm and look fashionable, wherever you are.</div><br/><div> </div><br/><div> • Light green heathered hoodie. </div><br/><div> • Long-Sleeve, pullover.</div><br/><div> • Long elliptical hem for extra coverage.</div><br/><div> • Deep button placket for layering.</div><br/><div> • Double rib design.</div><br/><div> • Mid layer, mid weight.</div><br/><div> • 98% Merino Wool / 2% Spandex</div></div>',
+            productAttributes: { size_63313224a7189: null, size_633132c50db9e: null },
+            unitPrecisions: [{ unit: 'each', precision: 0, conversionRate: 1, default: true }],
+            url: '/mona-pullover-hoodlie',
+            urls: [],
+            prices: [{ price: '57.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
+            lowInventory: false,
+            upcoming: false,
+            availabilityDate: null,
+            metaTitle: null,
+            metaDescription: null,
+            metaKeywords: null,
+        },
+        relationships: {
+            images: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/images',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/images',
                 },
-                relationships: {
-                    images: {
-                        data: [
-                            { type: 'productimages', id: '24' },
-                            { type: 'productimages', id: '23' },
-                            { type: 'productimages', id: '22' },
-                        ],
-                    },
-                    productFamily: { data: { type: 'productfamilies', id: '2' } },
-                    brand: { data: null },
-                    kitItems: { data: [] },
-                    category: { data: { type: 'mastercatalogcategories', id: '7' } },
-                    inventoryStatus: { data: { type: 'productinventorystatuses', id: 'in_stock' } },
-                    alternate_products: { data: [] },
-                    required_accessories: { data: [] },
-                    optional_accessories: { data: [] },
-                    variantProducts: {
-                        data: [
-                            { type: 'products', id: '6' },
-                            { type: 'products', id: '7' },
-                            { type: 'products', id: '9' },
-                            { type: 'products', id: '10' },
-                        ],
-                    },
-                    parentProducts: { data: [] },
-                },
+                data: [
+                    { type: 'productimages', id: '23' },
+                    { type: 'productimages', id: '24' },
+                    { type: 'productimages', id: '22' },
+                ],
             },
-        ],
+            productFamily: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/productFamily',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/productFamily',
+                },
+                data: { type: 'productfamilies', id: '2' },
+            },
+            brand: { data: null },
+            kitItems: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/kitItems',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/kitItems',
+                },
+                data: [],
+            },
+            category: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/category',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/category',
+                },
+                data: { type: 'mastercatalogcategories', id: '7' },
+            },
+            inventoryStatus: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/inventoryStatus',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/inventoryStatus',
+                },
+                data: { type: 'productinventorystatuses', id: 'in_stock' },
+            },
+            variantProducts: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/variantProducts',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/variantProducts',
+                },
+                data: [
+                    { type: 'products', id: '9' },
+                    { type: 'products', id: '7' },
+                    { type: 'products', id: '6' },
+                    { type: 'products', id: '10' },
+                ],
+            },
+            parentProducts: {
+                links: {
+                    self: 'https://aligent.oro-cloud.com/api/products/12/relationships/parentProducts',
+                    related: 'https://aligent.oro-cloud.com/api/products/12/parentProducts',
+                },
+                data: [],
+            },
+        },
         included: [
             {
                 type: 'productimages',
-                id: '24',
+                id: '23',
+                links: { self: 'https://aligent.oro-cloud.com/api/productimages/23' },
                 attributes: {
                     updatedAt: '2023-10-27T01:50:22Z',
                     mimeType: 'image/jpeg',
                     types: [],
                     files: [],
-                    altText: 'wh01-green_back',
+                    altText: 'wh01-green_main',
                 },
-                relationships: { product: { data: { type: 'products', id: '12' } } },
+                relationships: {
+                    product: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/productimages/23/relationships/product',
+                            related: 'https://aligent.oro-cloud.com/api/productimages/23/product',
+                        },
+                        data: { type: 'products', id: '12' },
+                    },
+                },
             },
             {
                 type: 'productimages',
-                id: '23',
+                id: '24',
+                links: { self: 'https://aligent.oro-cloud.com/api/productimages/24' },
                 attributes: {
-                    updatedAt: '2024-01-18T00:11:50Z',
+                    updatedAt: '2023-10-27T01:50:22Z',
                     mimeType: 'image/jpeg',
-                    types: ['listing'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/57/653b168ddfbb8694631273-wh01-green_alt1.jpg',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/57/653b168ddfbb8694631273-wh01-green_alt1.jpg.webp',
-                            types: ['listing'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/57/653b168ddfbb8694631273-wh01-green_alt1.jpg',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/57/653b168ddfbb8694631273-wh01-green_alt1.jpg.webp',
-                            types: ['listing'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/57/653b168ddfbb8694631273-wh01-green_alt1.jpg',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/57/653b168ddfbb8694631273-wh01-green_alt1.jpg.webp',
-                            types: ['listing'],
-                        },
-                    ],
-                    altText: 'wh01-green_alt1',
+                    types: [],
+                    files: [],
+                    altText: '',
                 },
-                relationships: { product: { data: { type: 'products', id: '12' } } },
+                relationships: {
+                    product: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/productimages/24/relationships/product',
+                            related: 'https://aligent.oro-cloud.com/api/productimages/24/product',
+                        },
+                        data: { type: 'products', id: '12' },
+                    },
+                },
             },
             {
                 type: 'productimages',
                 id: '22',
+                links: { self: 'https://aligent.oro-cloud.com/api/productimages/22' },
                 attributes: {
-                    updatedAt: '2024-01-18T00:11:50Z',
+                    updatedAt: '2023-10-27T02:19:31Z',
                     mimeType: 'image/jpeg',
                     types: ['main'],
                     files: [
@@ -238,11 +207,912 @@ export const oroProducts = [
                     ],
                     altText: 'wh01-green_main',
                 },
-                relationships: { product: { data: { type: 'products', id: '12' } } },
+                relationships: {
+                    product: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/productimages/22/relationships/product',
+                            related: 'https://aligent.oro-cloud.com/api/productimages/22/product',
+                        },
+                        data: { type: 'products', id: '12' },
+                    },
+                },
+            },
+            {
+                type: 'brands',
+                id: '1',
+                links: { self: 'https://aligent.oro-cloud.com/api/brands/1' },
+                attributes: { status: 'enabled', defaultTitle: 'Aligent' },
+            },
+            {
+                type: 'products',
+                id: '9',
+                links: { self: 'https://aligent.oro-cloud.com/api/products/9' },
+                attributes: {
+                    sku: 'HOODIE-SY',
+                    variantAttributeNames: [],
+                    createdAt: '2022-09-26T05:27:58Z',
+                    updatedAt: '2023-11-15T02:31:42Z',
+                    productType: 'simple',
+                    featured: false,
+                    newArrival: false,
+                    category_sort_order: null,
+                    name: 'Yellow Small Aligent Hoodie',
+                    shortDescription: null,
+                    description: null,
+                    productAttributes: {
+                        size_63313224a7189: { id: 's', targetValue: 'S' },
+                        size_633132c50db9e: { id: 'yellow', targetValue: 'yellow' },
+                    },
+                    unitPrecisions: [
+                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
+                    ],
+                    url: '/yellow-small-aligent-hoodie',
+                    urls: [],
+                    prices: [{ price: '19.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
+                    lowInventory: false,
+                    upcoming: false,
+                    availabilityDate: null,
+                    metaTitle: null,
+                    metaDescription: null,
+                    metaKeywords: null,
+                },
+                relationships: {
+                    images: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/images',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/images',
+                        },
+                        data: [
+                            { type: 'productimages', id: '16' },
+                            { type: 'productimages', id: '17' },
+                        ],
+                    },
+                    productFamily: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/productFamily',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/productFamily',
+                        },
+                        data: { type: 'productfamilies', id: '2' },
+                    },
+                    brand: { data: { type: 'brands', id: '1' } },
+                    kitItems: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/kitItems',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/kitItems',
+                        },
+                        data: [],
+                    },
+                    category: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/category',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/category',
+                        },
+                        data: { type: 'mastercatalogcategories', id: '4' },
+                    },
+                    inventoryStatus: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/inventoryStatus',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/inventoryStatus',
+                        },
+                        data: { type: 'productinventorystatuses', id: 'out_of_stock' },
+                    },
+                    variantProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/variantProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/variantProducts',
+                        },
+                        data: [],
+                    },
+                    parentProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/9/relationships/parentProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/9/parentProducts',
+                        },
+                        data: [
+                            { type: 'products', id: '11' },
+                            { type: 'products', id: '12' },
+                        ],
+                    },
+                },
+                included: [
+                    {
+                        type: 'productimages',
+                        id: '23',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/23' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/23/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/23/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '24',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/24' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/24/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/24/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '22',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/22' },
+                        attributes: {
+                            updatedAt: '2023-10-27T02:19:31Z',
+                            mimeType: 'image/jpeg',
+                            types: ['main'],
+                            files: [
+                                {
+                                    url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: null,
+                                    maxHeight: null,
+                                    dimension: 'product_original',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 610,
+                                    maxHeight: 610,
+                                    dimension: 'product_gallery_popup',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_gallery_main',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 316,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 378,
+                                    dimension: 'product_extra_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 262,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_medium',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 82,
+                                    maxHeight: 82,
+                                    dimension: 'product_small',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                            ],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/22/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/22/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'products',
+                id: '7',
+                links: { self: 'https://aligent.oro-cloud.com/api/products/7' },
+                attributes: {
+                    sku: 'HOODIE-MP',
+                    variantAttributeNames: [],
+                    createdAt: '2022-09-26T05:26:20Z',
+                    updatedAt: '2022-09-26T05:27:13Z',
+                    productType: 'simple',
+                    featured: false,
+                    newArrival: false,
+                    category_sort_order: null,
+                    name: 'Purple Medium Aligent Hoodie',
+                    shortDescription: null,
+                    description: null,
+                    productAttributes: {
+                        size_63313224a7189: { id: 'm', targetValue: 'M' },
+                        size_633132c50db9e: { id: 'purple', targetValue: 'purple' },
+                    },
+                    unitPrecisions: [
+                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
+                    ],
+                    url: '/purple-medium-aligent-hoodie',
+                    urls: [],
+                    prices: [{ price: '14.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
+                    lowInventory: false,
+                    upcoming: false,
+                    availabilityDate: null,
+                    metaTitle: null,
+                    metaDescription: null,
+                    metaKeywords: null,
+                },
+                relationships: {
+                    images: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/images',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/images',
+                        },
+                        data: [
+                            { type: 'productimages', id: '12' },
+                            { type: 'productimages', id: '13' },
+                        ],
+                    },
+                    productFamily: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/productFamily',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/productFamily',
+                        },
+                        data: { type: 'productfamilies', id: '2' },
+                    },
+                    brand: { data: { type: 'brands', id: '1' } },
+                    kitItems: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/kitItems',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/kitItems',
+                        },
+                        data: [],
+                    },
+                    category: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/category',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/category',
+                        },
+                        data: { type: 'mastercatalogcategories', id: '4' },
+                    },
+                    inventoryStatus: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/inventoryStatus',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/inventoryStatus',
+                        },
+                        data: { type: 'productinventorystatuses', id: 'in_stock' },
+                    },
+                    variantProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/variantProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/variantProducts',
+                        },
+                        data: [],
+                    },
+                    parentProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/7/relationships/parentProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/7/parentProducts',
+                        },
+                        data: [
+                            { type: 'products', id: '11' },
+                            { type: 'products', id: '12' },
+                        ],
+                    },
+                },
+                included: [
+                    {
+                        type: 'productimages',
+                        id: '23',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/23' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/23/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/23/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '24',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/24' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/24/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/24/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '22',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/22' },
+                        attributes: {
+                            updatedAt: '2023-10-27T02:19:31Z',
+                            mimeType: 'image/jpeg',
+                            types: ['main'],
+                            files: [
+                                {
+                                    url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: null,
+                                    maxHeight: null,
+                                    dimension: 'product_original',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 610,
+                                    maxHeight: 610,
+                                    dimension: 'product_gallery_popup',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_gallery_main',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 316,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 378,
+                                    dimension: 'product_extra_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 262,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_medium',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 82,
+                                    maxHeight: 82,
+                                    dimension: 'product_small',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                            ],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/22/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/22/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'products',
+                id: '6',
+                links: { self: 'https://aligent.oro-cloud.com/api/products/6' },
+                attributes: {
+                    sku: 'HOODIE-MY',
+                    variantAttributeNames: [],
+                    createdAt: '2022-09-26T05:26:17Z',
+                    updatedAt: '2022-09-26T05:27:29Z',
+                    productType: 'simple',
+                    featured: false,
+                    newArrival: false,
+                    category_sort_order: null,
+                    name: 'Yellow Medium Aligent Hoodie',
+                    shortDescription: null,
+                    description: null,
+                    productAttributes: {
+                        size_63313224a7189: { id: 'm', targetValue: 'M' },
+                        size_633132c50db9e: { id: 'yellow', targetValue: 'yellow' },
+                    },
+                    unitPrecisions: [
+                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
+                    ],
+                    url: '/yellow-medium-aligent-hoodie',
+                    urls: [],
+                    prices: [{ price: '16.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
+                    lowInventory: false,
+                    upcoming: false,
+                    availabilityDate: null,
+                    metaTitle: null,
+                    metaDescription: null,
+                    metaKeywords: null,
+                },
+                relationships: {
+                    images: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/images',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/images',
+                        },
+                        data: [
+                            { type: 'productimages', id: '10' },
+                            { type: 'productimages', id: '11' },
+                        ],
+                    },
+                    productFamily: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/productFamily',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/productFamily',
+                        },
+                        data: { type: 'productfamilies', id: '2' },
+                    },
+                    brand: { data: { type: 'brands', id: '1' } },
+                    kitItems: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/kitItems',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/kitItems',
+                        },
+                        data: [],
+                    },
+                    category: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/category',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/category',
+                        },
+                        data: { type: 'mastercatalogcategories', id: '4' },
+                    },
+                    inventoryStatus: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/inventoryStatus',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/inventoryStatus',
+                        },
+                        data: { type: 'productinventorystatuses', id: 'in_stock' },
+                    },
+                    variantProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/variantProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/variantProducts',
+                        },
+                        data: [],
+                    },
+                    parentProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/6/relationships/parentProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/6/parentProducts',
+                        },
+                        data: [
+                            { type: 'products', id: '11' },
+                            { type: 'products', id: '12' },
+                        ],
+                    },
+                },
+                included: [
+                    {
+                        type: 'productimages',
+                        id: '23',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/23' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/23/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/23/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '24',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/24' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/24/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/24/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '22',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/22' },
+                        attributes: {
+                            updatedAt: '2023-10-27T02:19:31Z',
+                            mimeType: 'image/jpeg',
+                            types: ['main'],
+                            files: [
+                                {
+                                    url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: null,
+                                    maxHeight: null,
+                                    dimension: 'product_original',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 610,
+                                    maxHeight: 610,
+                                    dimension: 'product_gallery_popup',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_gallery_main',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 316,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 378,
+                                    dimension: 'product_extra_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 262,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_medium',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 82,
+                                    maxHeight: 82,
+                                    dimension: 'product_small',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                            ],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/22/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/22/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'products',
+                id: '10',
+                links: { self: 'https://aligent.oro-cloud.com/api/products/10' },
+                attributes: {
+                    sku: 'HOODIE-SP',
+                    variantAttributeNames: [],
+                    createdAt: '2022-09-26T05:28:01Z',
+                    updatedAt: '2022-09-26T05:28:57Z',
+                    productType: 'simple',
+                    featured: false,
+                    newArrival: false,
+                    category_sort_order: null,
+                    name: 'Purple Small Aligent Hoodie',
+                    shortDescription: null,
+                    description: null,
+                    productAttributes: {
+                        size_63313224a7189: { id: 's', targetValue: 'S' },
+                        size_633132c50db9e: { id: 'purple', targetValue: 'purple' },
+                    },
+                    unitPrecisions: [
+                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
+                    ],
+                    url: '/purple-small-aligent-hoodie',
+                    urls: [],
+                    prices: [{ price: '17.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
+                    lowInventory: false,
+                    upcoming: false,
+                    availabilityDate: null,
+                    metaTitle: null,
+                    metaDescription: null,
+                    metaKeywords: null,
+                },
+                relationships: {
+                    images: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/images',
+                            related: 'https://aligent.oro-cloud.com/api/products/10/images',
+                        },
+                        data: [
+                            { type: 'productimages', id: '18' },
+                            { type: 'productimages', id: '19' },
+                        ],
+                    },
+                    productFamily: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/productFamily',
+                            related: 'https://aligent.oro-cloud.com/api/products/10/productFamily',
+                        },
+                        data: { type: 'productfamilies', id: '2' },
+                    },
+                    brand: { data: { type: 'brands', id: '1' } },
+                    kitItems: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/kitItems',
+                            related: 'https://aligent.oro-cloud.com/api/products/10/kitItems',
+                        },
+                        data: [],
+                    },
+                    category: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/category',
+                            related: 'https://aligent.oro-cloud.com/api/products/10/category',
+                        },
+                        data: { type: 'mastercatalogcategories', id: '4' },
+                    },
+                    inventoryStatus: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/inventoryStatus',
+                            related:
+                                'https://aligent.oro-cloud.com/api/products/10/inventoryStatus',
+                        },
+                        data: { type: 'productinventorystatuses', id: 'in_stock' },
+                    },
+                    variantProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/variantProducts',
+                            related:
+                                'https://aligent.oro-cloud.com/api/products/10/variantProducts',
+                        },
+                        data: [],
+                    },
+                    parentProducts: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/products/10/relationships/parentProducts',
+                            related: 'https://aligent.oro-cloud.com/api/products/10/parentProducts',
+                        },
+                        data: [
+                            { type: 'products', id: '11' },
+                            { type: 'products', id: '12' },
+                        ],
+                    },
+                },
+                included: [
+                    {
+                        type: 'productimages',
+                        id: '23',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/23' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/23/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/23/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '24',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/24' },
+                        attributes: {
+                            updatedAt: '2023-10-27T01:50:22Z',
+                            mimeType: 'image/jpeg',
+                            types: [],
+                            files: [],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/24/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/24/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                    {
+                        type: 'productimages',
+                        id: '22',
+                        links: { self: 'https://aligent.oro-cloud.com/api/productimages/22' },
+                        attributes: {
+                            updatedAt: '2023-10-27T02:19:31Z',
+                            mimeType: 'image/jpeg',
+                            types: ['main'],
+                            files: [
+                                {
+                                    url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: null,
+                                    maxHeight: null,
+                                    dimension: 'product_original',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 610,
+                                    maxHeight: 610,
+                                    dimension: 'product_gallery_popup',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_gallery_main',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 316,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 378,
+                                    maxHeight: 378,
+                                    dimension: 'product_extra_large',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 262,
+                                    maxHeight: 'auto',
+                                    dimension: 'product_medium',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                                {
+                                    url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
+                                    maxWidth: 82,
+                                    maxHeight: 82,
+                                    dimension: 'product_small',
+                                    url_webp:
+                                        '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/56/653b166935ea7214964398-wh01-green_main.jpg.webp',
+                                    types: ['main'],
+                                },
+                            ],
+                        },
+                        relationships: {
+                            product: {
+                                links: {
+                                    self: 'https://aligent.oro-cloud.com/api/productimages/22/relationships/product',
+                                    related:
+                                        'https://aligent.oro-cloud.com/api/productimages/22/product',
+                                },
+                                data: { type: 'products', id: '12' },
+                            },
+                        },
+                    },
+                ],
             },
             {
                 type: 'mastercatalogcategories',
                 id: '1',
+                links: { self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/1' },
                 attributes: {
                     createdAt: '2022-08-26T10:34:23Z',
                     updatedAt: '2022-08-26T10:34:23Z',
@@ -256,11 +1126,21 @@ export const oroProducts = [
                     metaDescription: null,
                     metaKeywords: null,
                 },
-                relationships: { categoryPath: { data: [] } },
+                relationships: {
+                    categoryPath: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/1/relationships/categoryPath',
+                            related:
+                                'https://aligent.oro-cloud.com/api/mastercatalogcategories/1/categoryPath',
+                        },
+                        data: [],
+                    },
+                },
             },
             {
                 type: 'mastercatalogcategories',
                 id: '5',
+                links: { self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/5' },
                 attributes: {
                     createdAt: '2023-10-27T01:41:03Z',
                     updatedAt: '2023-10-27T01:41:05Z',
@@ -275,12 +1155,20 @@ export const oroProducts = [
                     metaKeywords: null,
                 },
                 relationships: {
-                    categoryPath: { data: [{ type: 'mastercatalogcategories', id: '1' }] },
+                    categoryPath: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/5/relationships/categoryPath',
+                            related:
+                                'https://aligent.oro-cloud.com/api/mastercatalogcategories/5/categoryPath',
+                        },
+                        data: [{ type: 'mastercatalogcategories', id: '1' }],
+                    },
                 },
             },
             {
                 type: 'mastercatalogcategories',
                 id: '6',
+                links: { self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/6' },
                 attributes: {
                     createdAt: '2023-10-27T01:41:32Z',
                     updatedAt: '2023-10-27T01:41:33Z',
@@ -296,6 +1184,11 @@ export const oroProducts = [
                 },
                 relationships: {
                     categoryPath: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/6/relationships/categoryPath',
+                            related:
+                                'https://aligent.oro-cloud.com/api/mastercatalogcategories/6/categoryPath',
+                        },
                         data: [
                             { type: 'mastercatalogcategories', id: '1' },
                             { type: 'mastercatalogcategories', id: '5' },
@@ -306,6 +1199,7 @@ export const oroProducts = [
             {
                 type: 'mastercatalogcategories',
                 id: '7',
+                links: { self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/7' },
                 attributes: {
                     createdAt: '2023-10-27T01:41:50Z',
                     updatedAt: '2023-10-27T01:57:11Z',
@@ -321,6 +1215,11 @@ export const oroProducts = [
                 },
                 relationships: {
                     categoryPath: {
+                        links: {
+                            self: 'https://aligent.oro-cloud.com/api/mastercatalogcategories/7/relationships/categoryPath',
+                            related:
+                                'https://aligent.oro-cloud.com/api/mastercatalogcategories/7/categoryPath',
+                        },
                         data: [
                             { type: 'mastercatalogcategories', id: '1' },
                             { type: 'mastercatalogcategories', id: '5' },
@@ -329,1454 +1228,562 @@ export const oroProducts = [
                     },
                 },
             },
-            {
-                type: 'productimages',
-                id: '10',
-                attributes: {
-                    updatedAt: '2022-09-26T05:27:25Z',
-                    mimeType: 'image/png',
-                    types: ['main'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 610,
-                            maxHeight: 610,
-                            dimension: 'product_gallery_popup',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 'auto',
-                            dimension: 'product_gallery_main',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 262,
-                            maxHeight: 'auto',
-                            dimension: 'product_medium',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/37/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/37/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                    ],
-                    altText: 'Hoodie',
-                },
-                relationships: { product: { data: { type: 'products', id: '6' } } },
-            },
-            {
-                type: 'productimages',
-                id: '11',
-                attributes: {
-                    updatedAt: '2022-09-26T05:27:25Z',
-                    mimeType: 'image/png',
-                    types: ['listing', 'additional'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/38/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/38/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/38/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/38/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/38/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/38/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/38/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/38/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['additional'],
-                        },
-                    ],
-                    altText: 'Hoodie 2',
-                },
-                relationships: { product: { data: { type: 'products', id: '6' } } },
-            },
-            {
-                type: 'brands',
-                id: '1',
-                attributes: {
-                    status: 'enabled',
-                    name: null,
-                    shortDescription: null,
-                    description: null,
-                    slug: null,
-                },
-            },
-            {
-                type: 'products',
-                id: '6',
-                attributes: {
-                    sku: 'HOODIE-MY',
-                    variantAttributeNames: [],
-                    createdAt: '2022-09-26T05:26:17Z',
-                    updatedAt: '2022-09-26T05:27:29Z',
-                    productType: 'simple',
-                    featured: false,
-                    newArrival: false,
-                    restrictions: null,
-                    category_sort_order: null,
-                    tech_specs: null,
-                    mat_freight_grp: null,
-                    prop65_message: null,
-                    unspsc: null,
-                    video_url: null,
-                    video_url_description: null,
-                    taa_compliant_flag: false,
-                    name: 'Yellow Medium Aligent Hoodie',
-                    shortDescription: null,
-                    description: null,
-                    productAttributes: {
-                        size_63313224a7189: { id: 'm', targetValue: 'M' },
-                        size_633132c50db9e: { id: 'yellow', targetValue: 'yellow' },
-                        video_url: null,
-                        video_url_description: null,
-                    },
-                    unitPrecisions: [
-                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
-                    ],
-                    url: '/yellow-medium-aligent-hoodie',
-                    urls: [],
-                    prices: [{ price: '16.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
-                    lowInventory: false,
-                    upcoming: false,
-                    availabilityDate: null,
-                    metaTitle: null,
-                    metaDescription: null,
-                    metaKeywords: null,
-                    attachments: null,
-                },
-                relationships: {
-                    images: {
-                        data: [
-                            { type: 'productimages', id: '10' },
-                            { type: 'productimages', id: '11' },
-                        ],
-                    },
-                    productFamily: { data: { type: 'productfamilies', id: '2' } },
-                    brand: { data: { type: 'brands', id: '1' } },
-                    kitItems: { data: [] },
-                    category: { data: { type: 'mastercatalogcategories', id: '4' } },
-                    inventoryStatus: { data: { type: 'productinventorystatuses', id: 'in_stock' } },
-                    alternate_products: { data: [] },
-                    required_accessories: { data: [] },
-                    optional_accessories: { data: [] },
-                    variantProducts: { data: [] },
-                    parentProducts: {
-                        data: [
-                            { type: 'products', id: '11' },
-                            { type: 'products', id: '12' },
-                        ],
-                    },
-                },
-            },
-            {
-                type: 'productimages',
-                id: '12',
-                attributes: {
-                    updatedAt: '2022-09-26T05:27:13Z',
-                    mimeType: 'image/png',
-                    types: ['main'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 610,
-                            maxHeight: 610,
-                            dimension: 'product_gallery_popup',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 'auto',
-                            dimension: 'product_gallery_main',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 262,
-                            maxHeight: 'auto',
-                            dimension: 'product_medium',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/39/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/39/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                    ],
-                    altText: 'Hoodie',
-                },
-                relationships: { product: { data: { type: 'products', id: '7' } } },
-            },
-            {
-                type: 'productimages',
-                id: '13',
-                attributes: {
-                    updatedAt: '2022-09-26T05:27:13Z',
-                    mimeType: 'image/png',
-                    types: ['listing', 'additional'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/40/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/40/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/40/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/40/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/40/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/40/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/40/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/40/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['additional'],
-                        },
-                    ],
-                    altText: 'Hoodie 2',
-                },
-                relationships: { product: { data: { type: 'products', id: '7' } } },
-            },
-            {
-                type: 'products',
-                id: '7',
-                attributes: {
-                    sku: 'HOODIE-MP',
-                    variantAttributeNames: [],
-                    createdAt: '2022-09-26T05:26:20Z',
-                    updatedAt: '2022-09-26T05:27:13Z',
-                    productType: 'simple',
-                    featured: false,
-                    newArrival: false,
-                    restrictions: null,
-                    category_sort_order: null,
-                    tech_specs: null,
-                    mat_freight_grp: null,
-                    prop65_message: null,
-                    unspsc: null,
-                    video_url: null,
-                    video_url_description: null,
-                    taa_compliant_flag: false,
-                    name: 'Purple Medium Aligent Hoodie',
-                    shortDescription: null,
-                    description: null,
-                    productAttributes: {
-                        size_63313224a7189: { id: 'm', targetValue: 'M' },
-                        size_633132c50db9e: { id: 'purple', targetValue: 'purple' },
-                        video_url: null,
-                        video_url_description: null,
-                    },
-                    unitPrecisions: [
-                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
-                    ],
-                    url: '/purple-medium-aligent-hoodie',
-                    urls: [],
-                    prices: [{ price: '14.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
-                    lowInventory: false,
-                    upcoming: false,
-                    availabilityDate: null,
-                    metaTitle: null,
-                    metaDescription: null,
-                    metaKeywords: null,
-                    attachments: null,
-                },
-                relationships: {
-                    images: {
-                        data: [
-                            { type: 'productimages', id: '12' },
-                            { type: 'productimages', id: '13' },
-                        ],
-                    },
-                    productFamily: { data: { type: 'productfamilies', id: '2' } },
-                    brand: { data: { type: 'brands', id: '1' } },
-                    kitItems: { data: [] },
-                    category: { data: { type: 'mastercatalogcategories', id: '4' } },
-                    inventoryStatus: { data: { type: 'productinventorystatuses', id: 'in_stock' } },
-                    alternate_products: { data: [] },
-                    required_accessories: { data: [] },
-                    optional_accessories: { data: [] },
-                    variantProducts: { data: [] },
-                    parentProducts: {
-                        data: [
-                            { type: 'products', id: '11' },
-                            { type: 'products', id: '12' },
-                        ],
-                    },
-                },
-            },
-            {
-                type: 'productimages',
-                id: '16',
-                attributes: {
-                    updatedAt: '2023-11-15T02:31:42Z',
-                    mimeType: 'image/png',
-                    types: ['main'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 610,
-                            maxHeight: 610,
-                            dimension: 'product_gallery_popup',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 'auto',
-                            dimension: 'product_gallery_main',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 262,
-                            maxHeight: 'auto',
-                            dimension: 'product_medium',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/43/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/43/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                    ],
-                    altText: 'Hoodie',
-                },
-                relationships: { product: { data: { type: 'products', id: '9' } } },
-            },
-            {
-                type: 'productimages',
-                id: '17',
-                attributes: {
-                    updatedAt: '2023-11-15T02:31:42Z',
-                    mimeType: 'image/png',
-                    types: ['listing', 'additional'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/44/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/44/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/44/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/44/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/44/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/44/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/44/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/44/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['additional'],
-                        },
-                    ],
-                    altText: 'Hoodie 2',
-                },
-                relationships: { product: { data: { type: 'products', id: '9' } } },
-            },
-            {
-                type: 'products',
-                id: '9',
-                attributes: {
-                    sku: 'HOODIE-SY',
-                    variantAttributeNames: [],
-                    createdAt: '2022-09-26T05:27:58Z',
-                    updatedAt: '2023-11-15T02:31:42Z',
-                    productType: 'simple',
-                    featured: false,
-                    newArrival: false,
-                    restrictions: null,
-                    category_sort_order: null,
-                    tech_specs: null,
-                    mat_freight_grp: null,
-                    prop65_message: null,
-                    unspsc: null,
-                    video_url: null,
-                    video_url_description: null,
-                    taa_compliant_flag: false,
-                    name: 'Yellow Small Aligent Hoodie',
-                    shortDescription: null,
-                    description: null,
-                    productAttributes: {
-                        size_63313224a7189: { id: 's', targetValue: 'S' },
-                        size_633132c50db9e: { id: 'yellow', targetValue: 'yellow' },
-                        video_url: null,
-                        video_url_description: null,
-                    },
-                    unitPrecisions: [
-                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
-                    ],
-                    url: '/yellow-small-aligent-hoodie',
-                    urls: [],
-                    prices: [{ price: '19.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
-                    lowInventory: false,
-                    upcoming: false,
-                    availabilityDate: null,
-                    metaTitle: null,
-                    metaDescription: null,
-                    metaKeywords: null,
-                    attachments: null,
-                },
-                relationships: {
-                    images: {
-                        data: [
-                            { type: 'productimages', id: '16' },
-                            { type: 'productimages', id: '17' },
-                        ],
-                    },
-                    productFamily: { data: { type: 'productfamilies', id: '2' } },
-                    brand: { data: { type: 'brands', id: '1' } },
-                    kitItems: { data: [] },
-                    category: { data: { type: 'mastercatalogcategories', id: '4' } },
-                    inventoryStatus: {
-                        data: { type: 'productinventorystatuses', id: 'out_of_stock' },
-                    },
-                    alternate_products: { data: [] },
-                    required_accessories: { data: [] },
-                    optional_accessories: { data: [] },
-                    variantProducts: { data: [] },
-                    parentProducts: {
-                        data: [
-                            { type: 'products', id: '11' },
-                            { type: 'products', id: '12' },
-                        ],
-                    },
-                },
-            },
-            {
-                type: 'productimages',
-                id: '18',
-                attributes: {
-                    updatedAt: '2022-09-26T05:28:53Z',
-                    mimeType: 'image/png',
-                    types: ['main'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 610,
-                            maxHeight: 610,
-                            dimension: 'product_gallery_popup',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 'auto',
-                            dimension: 'product_gallery_main',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 262,
-                            maxHeight: 'auto',
-                            dimension: 'product_medium',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/45/63313705e53ae870057940-download_1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/45/63313705e53ae870057940-download_1_4.png.webp',
-                            types: ['main'],
-                        },
-                    ],
-                    altText: 'Hoodie',
-                },
-                relationships: { product: { data: { type: 'products', id: '10' } } },
-            },
-            {
-                type: 'productimages',
-                id: '19',
-                attributes: {
-                    updatedAt: '2022-09-26T05:28:53Z',
-                    mimeType: 'image/png',
-                    types: ['listing', 'additional'],
-                    files: [
-                        {
-                            url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/46/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 378,
-                            maxHeight: 378,
-                            dimension: 'product_extra_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/46/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/46/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 82,
-                            maxHeight: 82,
-                            dimension: 'product_small',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/46/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing', 'additional'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/46/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: 316,
-                            maxHeight: 'auto',
-                            dimension: 'product_large',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/46/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['listing'],
-                        },
-                        {
-                            url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/46/6331371b44a5b561493337-download_5__1_4.png',
-                            maxWidth: null,
-                            maxHeight: null,
-                            dimension: 'product_original',
-                            url_webp:
-                                '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/46/6331371b44a5b561493337-download_5__1_4.png.webp',
-                            types: ['additional'],
-                        },
-                    ],
-                    altText: 'Hoodie 2',
-                },
-                relationships: { product: { data: { type: 'products', id: '10' } } },
-            },
-            {
-                type: 'products',
-                id: '10',
-                attributes: {
-                    sku: 'HOODIE-SP',
-                    variantAttributeNames: [],
-                    createdAt: '2022-09-26T05:28:01Z',
-                    updatedAt: '2022-09-26T05:28:57Z',
-                    productType: 'simple',
-                    featured: false,
-                    newArrival: false,
-                    restrictions: null,
-                    category_sort_order: null,
-                    tech_specs: null,
-                    mat_freight_grp: null,
-                    prop65_message: null,
-                    unspsc: null,
-                    video_url: null,
-                    video_url_description: null,
-                    taa_compliant_flag: false,
-                    name: 'Purple Small Aligent Hoodie',
-                    shortDescription: null,
-                    description: null,
-                    productAttributes: {
-                        size_63313224a7189: { id: 's', targetValue: 'S' },
-                        size_633132c50db9e: { id: 'purple', targetValue: 'purple' },
-                        video_url: null,
-                        video_url_description: null,
-                    },
-                    unitPrecisions: [
-                        { unit: 'each', precision: 0, conversionRate: 1, default: true },
-                    ],
-                    url: '/purple-small-aligent-hoodie',
-                    urls: [],
-                    prices: [{ price: '17.0000', currencyId: 'AUD', quantity: '0', unit: 'each' }],
-                    lowInventory: false,
-                    upcoming: false,
-                    availabilityDate: null,
-                    metaTitle: null,
-                    metaDescription: null,
-                    metaKeywords: null,
-                    attachments: null,
-                },
-                relationships: {
-                    images: {
-                        data: [
-                            { type: 'productimages', id: '18' },
-                            { type: 'productimages', id: '19' },
-                        ],
-                    },
-                    productFamily: { data: { type: 'productfamilies', id: '2' } },
-                    brand: { data: { type: 'brands', id: '1' } },
-                    kitItems: { data: [] },
-                    category: { data: { type: 'mastercatalogcategories', id: '4' } },
-                    inventoryStatus: { data: { type: 'productinventorystatuses', id: 'in_stock' } },
-                    alternate_products: { data: [] },
-                    required_accessories: { data: [] },
-                    optional_accessories: { data: [] },
-                    variantProducts: { data: [] },
-                    parentProducts: {
-                        data: [
-                            { type: 'products', id: '11' },
-                            { type: 'products', id: '12' },
-                        ],
-                    },
-                },
-            },
+            // {
+            //     type: 'productimages',
+            //     id: '10',
+            //     attributes: {
+            //         updatedAt: '2022-09-26T05:27:25Z',
+            //         mimeType: 'image/png',
+            //         types: ['main'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 610,
+            //                 maxHeight: 610,
+            //                 dimension: 'product_gallery_popup',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_gallery_main',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 262,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_medium',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/37/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/37/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '6',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '11',
+            //     attributes: {
+            //         updatedAt: '2022-09-26T05:27:25Z',
+            //         mimeType: 'image/png',
+            //         types: ['listing', 'additional'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/38/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/38/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/38/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/38/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/38/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/38/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/38/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/38/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['additional'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie 2',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '6',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '12',
+            //     attributes: {
+            //         updatedAt: '2022-09-26T05:27:13Z',
+            //         mimeType: 'image/png',
+            //         types: ['main'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 610,
+            //                 maxHeight: 610,
+            //                 dimension: 'product_gallery_popup',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_gallery_main',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 262,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_medium',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/39/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/39/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '7',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '13',
+            //     attributes: {
+            //         updatedAt: '2022-09-26T05:27:13Z',
+            //         mimeType: 'image/png',
+            //         types: ['listing', 'additional'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/40/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/40/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/40/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/40/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/40/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/40/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/40/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/40/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['additional'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie 2',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '7',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '16',
+            //     attributes: {
+            //         updatedAt: '2023-11-15T02:31:42Z',
+            //         mimeType: 'image/png',
+            //         types: ['main'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 610,
+            //                 maxHeight: 610,
+            //                 dimension: 'product_gallery_popup',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_gallery_main',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 262,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_medium',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/43/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/43/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '9',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '17',
+            //     attributes: {
+            //         updatedAt: '2023-11-15T02:31:42Z',
+            //         mimeType: 'image/png',
+            //         types: ['listing', 'additional'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/44/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/44/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/44/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/44/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/44/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/44/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/44/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/44/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['additional'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie 2',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '9',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '18',
+            //     attributes: {
+            //         updatedAt: '2022-09-26T05:28:53Z',
+            //         mimeType: 'image/png',
+            //         types: ['main'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 610,
+            //                 maxHeight: 610,
+            //                 dimension: 'product_gallery_popup',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_gallery_main',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 262,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_medium',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/45/63313705e53ae870057940-download_1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/45/63313705e53ae870057940-download_1_4.png.webp',
+            //                 types: ['main'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '10',
+            //             },
+            //         },
+            //     },
+            // },
+            // {
+            //     type: 'productimages',
+            //     id: '19',
+            //     attributes: {
+            //         updatedAt: '2022-09-26T05:28:53Z',
+            //         mimeType: 'image/png',
+            //         types: ['listing', 'additional'],
+            //         files: [
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/46/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 378,
+            //                 maxHeight: 378,
+            //                 dimension: 'product_extra_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/46/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/46/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 82,
+            //                 maxHeight: 82,
+            //                 dimension: 'product_small',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/46/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing', 'additional'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/46/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: 316,
+            //                 maxHeight: 'auto',
+            //                 dimension: 'product_large',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/46/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['listing'],
+            //             },
+            //             {
+            //                 url: '/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/46/6331371b44a5b561493337-download_5__1_4.png',
+            //                 maxWidth: null,
+            //                 maxHeight: null,
+            //                 dimension: 'product_original',
+            //                 url_webp:
+            //                     '/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/46/6331371b44a5b561493337-download_5__1_4.png.webp',
+            //                 types: ['additional'],
+            //             },
+            //         ],
+            //         altText: 'Hoodie 2',
+            //     },
+            //     relationships: {
+            //         product: {
+            //             data: {
+            //                 type: 'products',
+            //                 id: '10',
+            //             },
+            //         },
+            //     },
+            // },
         ],
-    },
-];
-
-export const outputProducts = [
-    {
-        categories: [
-            {
-                type: 'CATEGORY',
-                __typename: 'CategoryTree',
-                created_at: '2022-08-26T10:34:23Z',
-                id: 1,
-                uid: 'eyJpZCI6IjEiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                staged: true,
-                name: 'All Products',
-                level: 1,
-                redirect_code: 0,
-                description: null,
-                meta_title: null,
-                meta_description: null,
-                meta_keywords: null,
-                url_path: null,
-                image: null,
-            },
-            {
-                type: 'CATEGORY',
-                __typename: 'CategoryTree',
-                created_at: '2023-10-27T01:41:03Z',
-                id: 5,
-                uid: 'eyJpZCI6IjUiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                staged: true,
-                name: 'Women',
-                level: 2,
-                redirect_code: 0,
-                description: null,
-                meta_title: null,
-                meta_description: null,
-                meta_keywords: null,
-                url_path: '/women',
-                image: null,
-            },
-            {
-                type: 'CATEGORY',
-                __typename: 'CategoryTree',
-                created_at: '2023-10-27T01:41:32Z',
-                id: 6,
-                uid: 'eyJpZCI6IjYiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                staged: true,
-                name: 'Tops',
-                level: 3,
-                redirect_code: 0,
-                description: null,
-                meta_title: null,
-                meta_description: null,
-                meta_keywords: null,
-                url_path: '/tops',
-                image: null,
-            },
-            {
-                type: 'CATEGORY',
-                __typename: 'CategoryTree',
-                created_at: '2023-10-27T01:41:50Z',
-                id: 7,
-                uid: 'eyJpZCI6IjciLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                staged: true,
-                name: 'Hoodies & Sweatshirts',
-                level: 4,
-                redirect_code: 0,
-                description: null,
-                meta_title: null,
-                meta_description: null,
-                meta_keywords: null,
-                url_path: '/hoodies-sweatshirts',
-                image: null,
-            },
-        ],
-        description: {
-            __typename: 'ComplexTextValue',
-            html: '<div id="isolation-scope-9g6aw0a9x3jbp8ftbuod16944" class="cms-wrapper"><div>Whether you&#039;re after energizing activity or eye-catching apparel, the Mona Pullover is what you want. You&#039;ll stay warm and look fashionable, wherever you are.</div><br/><div> </div><br/><div> • Light green heathered hoodie. </div><br/><div> • Long-Sleeve, pullover.</div><br/><div> • Long elliptical hem for extra coverage.</div><br/><div> • Deep button placket for layering.</div><br/><div> • Double rib design.</div><br/><div> • Mid layer, mid weight.</div><br/><div> • 98% Merino Wool / 2% Spandex</div></div>',
-        },
-        staged: true,
-        uid: 'MTI=',
-        custom_attributes: [],
-        id: 12,
-        media_gallery_entries: [
-            {
-                id: 23,
-                label: 'product_original',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 1,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfb3JpZ2luYWw=',
-            },
-            {
-                id: 24,
-                label: 'product_gallery_popup',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 2,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9wb3B1cA==',
-            },
-            {
-                id: 25,
-                label: 'product_gallery_main',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 3,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9tYWlu',
-            },
-            {
-                id: 26,
-                label: 'product_large',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 4,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbGFyZ2U=',
-            },
-            {
-                id: 27,
-                label: 'product_extra_large',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 5,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZXh0cmFfbGFyZ2U=',
-            },
-            {
-                id: 28,
-                label: 'product_medium',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 6,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbWVkaXVt',
-            },
-            {
-                id: 29,
-                label: 'product_small',
-                disabled: false,
-                file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                position: 7,
-                uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfc21hbGw=',
-            },
-        ],
-        meta_title: null,
-        meta_keyword: null,
-        meta_description: null,
-        name: 'Mona Pullover Hoodlie',
-        price: null,
-        price_range: {
-            minimum_price: {
-                regular_price: { currency: 'AUD', value: 57 },
-                final_price: { currency: 'AUD', value: 57 },
-                discount: { amount_off: 0 },
-            },
-            maximum_price: {
-                regular_price: { currency: 'AUD', value: 57 },
-                final_price: { currency: 'AUD', value: 57 },
-            },
-        },
-        price_tiers: [],
-        redirect_code: 0,
-        rating_summary: 0,
-        review_count: 0,
-        related_products: null,
-        sku: 'WH01',
-        small_image: {
-            url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-            label: 'wh01-green_main',
-        },
-        image: {
-            url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-            label: 'wh01-green_main',
-        },
-        type: 'PRODUCT',
-        stock_status: 'IN_STOCK',
-        url_key: 'mona-pullover-hoodlie',
-        url_suffix: '',
-        reviews: {
-            __typename: 'ProductReviews',
-            items: [],
-            page_info: { current_page: 0, page_size: 0, total_pages: 0 },
-        },
-        variants: [
-            {
-                attributes: [
-                    { code: 'size_63313224a7189', label: 'S', uid: 'cw==' },
-                    { code: 'size_633132c50db9e', label: 'yellow', uid: 'eWVsbG93' },
-                ],
-                product: {
-                    id: 9,
-                    __typename: 'SimpleProduct',
-                    categories: [
-                        {
-                            __typename: 'CategoryTree',
-                            created_at: '2022-08-26T10:34:23Z',
-                            description: null,
-                            id: 1,
-                            image: null,
-                            level: 1,
-                            meta_description: null,
-                            meta_keywords: null,
-                            meta_title: null,
-                            name: 'All Products',
-                            redirect_code: 0,
-                            staged: true,
-                            type: 'CATEGORY',
-                            uid: 'eyJpZCI6IjEiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                            url_path: null,
-                        },
-                        {
-                            __typename: 'CategoryTree',
-                            created_at: '2023-10-27T01:41:03Z',
-                            description: null,
-                            id: 5,
-                            image: null,
-                            level: 2,
-                            meta_description: null,
-                            meta_keywords: null,
-                            meta_title: null,
-                            name: 'Women',
-                            redirect_code: 0,
-                            staged: true,
-                            type: 'CATEGORY',
-                            uid: 'eyJpZCI6IjUiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                            url_path: '/women',
-                        },
-                        {
-                            __typename: 'CategoryTree',
-                            created_at: '2023-10-27T01:41:32Z',
-                            description: null,
-                            id: 6,
-                            image: null,
-                            level: 3,
-                            meta_description: null,
-                            meta_keywords: null,
-                            meta_title: null,
-                            name: 'Tops',
-                            redirect_code: 0,
-                            staged: true,
-                            type: 'CATEGORY',
-                            uid: 'eyJpZCI6IjYiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                            url_path: '/tops',
-                        },
-                        {
-                            __typename: 'CategoryTree',
-                            created_at: '2023-10-27T01:41:50Z',
-                            description: null,
-                            id: 7,
-                            image: null,
-                            level: 4,
-                            meta_description: null,
-                            meta_keywords: null,
-                            meta_title: null,
-                            name: 'Hoodies & Sweatshirts',
-                            redirect_code: 0,
-                            staged: true,
-                            type: 'CATEGORY',
-                            uid: 'eyJpZCI6IjciLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==',
-                            url_path: '/hoodies-sweatshirts',
-                        },
-                    ],
-                    custom_attributes: [],
-                    description: {
-                        __typename: 'ComplexTextValue',
-                        html: '',
-                    },
-                    media_gallery_entries: [
-                        {
-                            id: 23,
-                            label: 'product_original',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 1,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfb3JpZ2luYWw=',
-                        },
-                        {
-                            id: 24,
-                            label: 'product_gallery_popup',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 2,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9wb3B1cA==',
-                        },
-                        {
-                            id: 25,
-                            label: 'product_gallery_main',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 3,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9tYWlu',
-                        },
-                        {
-                            id: 26,
-                            label: 'product_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 4,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbGFyZ2U=',
-                        },
-                        {
-                            id: 27,
-                            label: 'product_extra_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 5,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZXh0cmFfbGFyZ2U=',
-                        },
-                        {
-                            id: 28,
-                            label: 'product_medium',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 6,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbWVkaXVt',
-                        },
-                        {
-                            id: 29,
-                            label: 'product_small',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 7,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfc21hbGw=',
-                        },
-                    ],
-                    meta_description: null,
-                    meta_keyword: null,
-                    meta_title: null,
-                    name: 'Yellow Small Aligent Hoodie',
-                    price: null,
-
-                    price_range: {
-                        minimum_price: {
-                            regular_price: { currency: 'AUD', value: 19 },
-                            final_price: { currency: 'AUD', value: 19 },
-                            discount: { amount_off: 0 },
-                        },
-                        maximum_price: {
-                            regular_price: { currency: 'AUD', value: 19 },
-                            final_price: { currency: 'AUD', value: 19 },
-                        },
-                    },
-                    price_tiers: [],
-                    rating_summary: 0,
-                    redirect_code: 0,
-                    related_products: null,
-                    reviews: {
-                        __typename: 'ProductReviews',
-                        items: [],
-                        page_info: { current_page: 0, page_size: 0, total_pages: 0 },
-                    },
-                    review_count: 0,
-                    sku: 'HOODIE-SY',
-                    small_image: {
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'wh01-green_main',
-                    },
-                    image: {
-                        label: 'wh01-green_main',
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                    },
-                    staged: true,
-                    stock_status: 'OUT_OF_STOCK',
-                    type: 'PRODUCT',
-                    uid: 'OQ==',
-                    url_key: 'yellow-small-aligent-hoodie',
-                    url_suffix: '',
-                },
-                __typename: 'ConfigurableVariant',
-            },
-            {
-                attributes: [
-                    { code: 'size_63313224a7189', label: 'M', uid: 'bQ==' },
-                    { code: 'size_633132c50db9e', label: 'purple', uid: 'cHVycGxl' },
-                ],
-                product: {
-                    id: 7,
-                    custom_attributes: [],
-                    media_gallery_entries: [
-                        {
-                            id: 23,
-                            label: 'product_original',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 1,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfb3JpZ2luYWw=',
-                        },
-                        {
-                            id: 24,
-                            label: 'product_gallery_popup',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 2,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9wb3B1cA==',
-                        },
-                        {
-                            id: 25,
-                            label: 'product_gallery_main',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 3,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9tYWlu',
-                        },
-                        {
-                            id: 26,
-                            label: 'product_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 4,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbGFyZ2U=',
-                        },
-                        {
-                            id: 27,
-                            label: 'product_extra_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 5,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZXh0cmFfbGFyZ2U=',
-                        },
-                        {
-                            id: 28,
-                            label: 'product_medium',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 6,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbWVkaXVt',
-                        },
-                        {
-                            id: 29,
-                            label: 'product_small',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 7,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfc21hbGw=',
-                        },
-                    ],
-                    price_range: {
-                        minimum_price: {
-                            regular_price: { currency: 'AUD', value: 14 },
-                            final_price: { currency: 'AUD', value: 14 },
-                        },
-                        maximum_price: {
-                            regular_price: { currency: 'AUD', value: 14 },
-                            final_price: { currency: 'AUD', value: 14 },
-                        },
-                    },
-                    price_tiers: [],
-                    rating_summary: 0,
-                    redirect_code: 0,
-                    reviews: {
-                        items: [],
-                        page_info: { current_page: 0, page_size: 0, total_pages: 0 },
-                    },
-                    review_count: 0,
-                    sku: 'HOODIE-MP',
-                    small_image: {
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'wh01-green_main',
-                    },
-                    image: {
-                        label: 'wh01-green_main',
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                    },
-                    staged: false,
-                    stock_status: 'IN_STOCK',
-                    uid: 'Nw==',
-                },
-                __typename: 'ConfigurableVariant',
-            },
-            {
-                attributes: [
-                    { code: 'size_63313224a7189', label: 'M', uid: 'bQ==' },
-                    { code: 'size_633132c50db9e', label: 'yellow', uid: 'eWVsbG93' },
-                ],
-                product: {
-                    id: 6,
-                    custom_attributes: [],
-                    media_gallery_entries: [
-                        {
-                            id: 23,
-                            label: 'product_original',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 1,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfb3JpZ2luYWw=',
-                        },
-                        {
-                            id: 24,
-                            label: 'product_gallery_popup',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 2,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9wb3B1cA==',
-                        },
-                        {
-                            id: 25,
-                            label: 'product_gallery_main',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 3,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9tYWlu',
-                        },
-                        {
-                            id: 26,
-                            label: 'product_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 4,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbGFyZ2U=',
-                        },
-                        {
-                            id: 27,
-                            label: 'product_extra_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 5,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZXh0cmFfbGFyZ2U=',
-                        },
-                        {
-                            id: 28,
-                            label: 'product_medium',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 6,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbWVkaXVt',
-                        },
-                        {
-                            id: 29,
-                            label: 'product_small',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 7,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfc21hbGw=',
-                        },
-                    ],
-                    price_range: {
-                        minimum_price: {
-                            regular_price: { currency: 'AUD', value: 16 },
-                            final_price: { currency: 'AUD', value: 16 },
-                        },
-                        maximum_price: {
-                            regular_price: { currency: 'AUD', value: 16 },
-                            final_price: { currency: 'AUD', value: 16 },
-                        },
-                    },
-                    price_tiers: [],
-                    rating_summary: 0,
-                    redirect_code: 0,
-                    reviews: {
-                        items: [],
-                        page_info: { current_page: 0, page_size: 0, total_pages: 0 },
-                    },
-                    review_count: 0,
-                    sku: 'HOODIE-MY',
-                    small_image: {
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'wh01-green_main',
-                    },
-                    image: {
-                        label: 'wh01-green_main',
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                    },
-                    staged: false,
-                    stock_status: 'IN_STOCK',
-                    uid: 'Ng==',
-                },
-                __typename: 'ConfigurableVariant',
-            },
-            {
-                attributes: [
-                    { code: 'size_63313224a7189', label: 'S', uid: 'cw==' },
-                    { code: 'size_633132c50db9e', label: 'purple', uid: 'cHVycGxl' },
-                ],
-                product: {
-                    id: 10,
-                    custom_attributes: [],
-                    media_gallery_entries: [
-                        {
-                            id: 23,
-                            label: 'product_original',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 1,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfb3JpZ2luYWw=',
-                        },
-                        {
-                            id: 24,
-                            label: 'product_gallery_popup',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 2,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9wb3B1cA==',
-                        },
-                        {
-                            id: 25,
-                            label: 'product_gallery_main',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 3,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZ2FsbGVyeV9tYWlu',
-                        },
-                        {
-                            id: 26,
-                            label: 'product_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 4,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbGFyZ2U=',
-                        },
-                        {
-                            id: 27,
-                            label: 'product_extra_large',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 5,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfZXh0cmFfbGFyZ2U=',
-                        },
-                        {
-                            id: 28,
-                            label: 'product_medium',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 6,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3RfbWVkaXVt',
-                        },
-                        {
-                            id: 29,
-                            label: 'product_small',
-                            disabled: false,
-                            file: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                            position: 7,
-                            uid: 'aWQ6MjItZGltZW5zaW9uOnByb2R1Y3Rfc21hbGw=',
-                        },
-                    ],
-                    price_range: {
-                        minimum_price: {
-                            regular_price: { currency: 'AUD', value: 17 },
-                            final_price: { currency: 'AUD', value: 17 },
-                        },
-                        maximum_price: {
-                            regular_price: { currency: 'AUD', value: 17 },
-                            final_price: { currency: 'AUD', value: 17 },
-                        },
-                    },
-                    price_tiers: [],
-                    rating_summary: 0,
-                    redirect_code: 0,
-                    reviews: {
-                        items: [],
-                        page_info: { current_page: 0, page_size: 0, total_pages: 0 },
-                    },
-                    review_count: 0,
-                    sku: 'HOODIE-SP',
-                    small_image: {
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'wh01-green_main',
-                    },
-                    image: {
-                        label: 'wh01-green_main',
-                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-                    },
-                    staged: false,
-                    stock_status: 'IN_STOCK',
-                    uid: 'MTA=',
-                },
-                __typename: 'ConfigurableVariant',
-            },
-        ],
-        configurable_options: [],
-        __typename: 'ConfigurableProduct',
     },
 ];
