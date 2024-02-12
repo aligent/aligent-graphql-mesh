@@ -33,10 +33,10 @@ export class ShoppingListsToRequisitionListsTransformer
             total_count: requisitionLists.length,
             // This will be implemented in OTF-190 with filtering
             page_info: {
-                current_page: 1,
-                page_size: 20,
-                total_pages: 1
-            }
+                current_page: 0,
+                page_size: 0,
+                total_pages: 0,
+            },
         };
     }
 }

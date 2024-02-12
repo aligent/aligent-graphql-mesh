@@ -39,11 +39,11 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 items: items,
                 // This will be implemented in OTF-190 with filtering
                 page_info: {
-                    current_page: 1,
-                    page_size: 1,
-                    total_pages: 20,
+                    current_page: 0,
+                    page_size: 0,
+                    total_pages: 0,
                 },
-                total_pages: 1,
+                total_pages: 0,
             },
             items_count: items.length,
             name,
