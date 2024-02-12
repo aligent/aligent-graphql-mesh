@@ -3,7 +3,9 @@ import { ApiClient } from './client';
 import { Entity, Order } from '../../types';
 import { OroOrderLineItem } from '../../types/order-line-item';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class OrdersClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

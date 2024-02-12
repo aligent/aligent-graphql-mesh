@@ -1,11 +1,14 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
+import { IncludedProductCategory, IncludedProductImages, ShoppingListWithItems } from '../../types';
 import {
-    ImageFiles,
-    IncludedProductCategory,
-    IncludedProductImages,
-    ShoppingListWithItems,
-} from '../../types';
-import { Cart, CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
+    Cart,
+    CurrencyEnum,
+    Money,
+    SimpleCartItem,
+    CartItemError,
+    ProductImage,
+    CategoryTree,
+} from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
     isShoppingListItem,
@@ -14,8 +17,11 @@ import {
     isProductCategory,
 } from '../../utils/type-predicates';
 import { UNDEFINED_CART } from './constants';
+import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
     getMoneyData(currency: string, price: string | number): Money {
         return {
@@ -28,7 +34,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         images: IncludedProductImages[],
         productId: string,
         imageDimension: string
-    ): ImageFiles | undefined {
+    ): ProductImage | undefined {
         const productImages = images.find(
             (item) => item.relationships.product.data.id === productId
         );
@@ -41,35 +47,35 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             (image) => image.dimension === imageDimension
         );
 
-        return foundImage;
+        return {
+            url: foundImage?.url,
+            label: productImages.attributes.altText,
+        };
     }
 
-    getCategoriesData(productCategories: IncludedProductCategory) {
-        return {
-            id: Number(productCategories.id),
-            breadcrumbs: [
-                // Not sure about this in ORO
-                {
-                    category_uid: btoa(productCategories.id),
-                    category_name: productCategories.attributes.title,
-                },
-            ],
-            uid: btoa(productCategories.id),
-            staged: true, // Couldnt see equivalent value in ORO
-            name: productCategories.attributes.title,
-            level: 1, // Couldnt see equivalent value in ORO
-            redirect_code: 0, // Couldnt see equivalent value in ORO
-            description: String(productCategories.attributes.description),
-            url_path: productCategories.attributes.url,
-            image: productCategories.attributes.images[0].url,
-        };
+    getCategoriesData(productCategories: IncludedProductCategory[]): CategoryTree[] {
+        return productCategories.map((productCategory) => {
+            const category = { type: productCategory.type, id: productCategory.id };
+            return {
+                __typename: 'CategoryTree',
+                id: Number(productCategory.id),
+                uid: getEncodedCategoryUidFromCategoryData(category, productCategory.id),
+                staged: true, // Couldnt see equivalent value in ORO
+                name: productCategory.attributes.title,
+                level: 1, // Couldnt see equivalent value in ORO
+                redirect_code: 0, // Couldnt see equivalent value in ORO
+                description: String(productCategory.attributes.description),
+                url_path: productCategory.attributes.url,
+                image: productCategory.attributes.images[0]?.url,
+            };
+        });
     }
 
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
-        cart.total_quantity = shoppingList.included?.length || 0;
+        cart.total_quantity = 0;
 
         const currency = shoppingList.data.attributes.currency as string;
         cart.prices = {
@@ -102,8 +108,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
         }
 
+        const items: SimpleCartItem[] = [];
         for (const product of products) {
-            let errorMessage = '';
+            const errorMessage: CartItemError[] = [];
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
@@ -116,16 +123,22 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 );
             }
 
-            const productCategories = productsCategories?.find(
-                (item) => item.relationships.categoryPath.data.id === product.id
+            const productCategories = productsCategories?.filter(
+                (item) => item.id === product.relationships.category.data.id
             );
 
             if (!productCategories) {
-                errorMessage += `Related productCategories not found for product: ${product.id} `;
+                errorMessage.push({
+                    message: `Related productCategories not found for product: ${product.id} `,
+                    code: 'UNDEFINED',
+                });
             }
 
             if (!productsImages) {
-                errorMessage += `Related productsImages not found for product: ${product.id} `;
+                errorMessage.push({
+                    message: `Related productsImages not found for product: ${product.id} `,
+                    code: 'UNDEFINED',
+                });
             }
 
             const smallImage = productsImages
@@ -143,11 +156,12 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             );
 
             const productAttributes = product.attributes;
+            const quantity = relatedShoppingListItem.attributes.quantity;
 
-            cart.items?.push({
+            items.push({
                 __typename: 'SimpleCartItem',
                 id: product.id,
-                quantity: relatedShoppingListItem.attributes.quantity,
+                quantity: quantity,
                 uid: btoa(product.id),
                 available_gift_wrapping: [],
                 customizable_options: [],
@@ -157,32 +171,24 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total: price,
                     row_total_including_tax: price,
                 },
-                errors: [
-                    {
-                        message: errorMessage,
-                        code: 'UNDEFINED',
-                    },
-                ],
+                errors: errorMessage,
                 product: {
                     __typename: 'SimpleProduct',
                     id: Number(product.id),
                     name: productAttributes.name,
                     sku: productAttributes.sku,
-                    image: {
-                        url: originalImage?.url,
-                        label: originalImage?.dimension,
-                    },
-                    small_image: {
-                        url: smallImage?.url,
-                        label: smallImage?.dimension,
-                    },
-
-                    categories: productCategories
-                        ? [this.getCategoriesData(productCategories)]
-                        : null,
+                    image: originalImage,
+                    small_image: smallImage,
+                    categories: productCategories ? this.getCategoriesData(productCategories) : [],
                     canonical_url: productAttributes.url,
-                    description: productAttributes.description,
-                    short_description: productAttributes.shortDescription,
+                    description: {
+                        html: productAttributes.description ? productAttributes.description : '',
+                    },
+                    short_description: {
+                        html: productAttributes.shortDescription
+                            ? productAttributes.shortDescription
+                            : '',
+                    },
                     meta_description: productAttributes.metaDescription,
                     meta_keyword: productAttributes.metaKeywords,
                     meta_title: productAttributes.metaTitle,
@@ -211,7 +217,11 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     uid: btoa(product.id),
                 },
             });
+
+            cart.total_quantity += quantity;
         }
+
+        cart.items = items;
 
         return cart;
     }

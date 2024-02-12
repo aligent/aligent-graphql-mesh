@@ -99,6 +99,7 @@ export const oroProducts = [
                     mimeType: 'image/jpeg',
                     types: [],
                     files: [],
+                    altText: 'wh01-green_main',
                 },
                 relationships: {
                     product: {
@@ -119,6 +120,7 @@ export const oroProducts = [
                     mimeType: 'image/jpeg',
                     types: [],
                     files: [],
+                    altText: '',
                 },
                 relationships: {
                     product: {
@@ -203,6 +205,7 @@ export const oroProducts = [
                             types: ['main'],
                         },
                     ],
+                    altText: 'wh01-green_main',
                 },
                 relationships: {
                     product: {
@@ -1237,7 +1240,7 @@ export const outputProducts = [
                 __typename: 'CategoryTree',
                 created_at: '2022-08-26T10:34:23Z',
                 id: 1,
-                uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjEifQ==',
+                uid: 'eyJpZCI6IjEiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJ3ZWJjYXRhbG9nSWQiOiIxIn0=',
                 staged: true,
                 name: 'All Products',
                 level: 1,
@@ -1254,7 +1257,7 @@ export const outputProducts = [
                 __typename: 'CategoryTree',
                 created_at: '2023-10-27T01:41:03Z',
                 id: 5,
-                uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjUifQ==',
+                uid: 'eyJpZCI6IjUiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJ3ZWJjYXRhbG9nSWQiOiI1In0=',
                 staged: true,
                 name: 'Women',
                 level: 2,
@@ -1271,7 +1274,7 @@ export const outputProducts = [
                 __typename: 'CategoryTree',
                 created_at: '2023-10-27T01:41:32Z',
                 id: 6,
-                uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjYifQ==',
+                uid: 'eyJpZCI6IjYiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJ3ZWJjYXRhbG9nSWQiOiI2In0=',
                 staged: true,
                 name: 'Tops',
                 level: 3,
@@ -1288,7 +1291,7 @@ export const outputProducts = [
                 __typename: 'CategoryTree',
                 created_at: '2023-10-27T01:41:50Z',
                 id: 7,
-                uid: 'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjcifQ==',
+                uid: 'eyJpZCI6IjciLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJ3ZWJjYXRhbG9nSWQiOiI3In0=',
                 staged: true,
                 name: 'Hoodies & Sweatshirts',
                 level: 4,
@@ -1391,11 +1394,11 @@ export const outputProducts = [
         sku: 'WH01',
         small_image: {
             url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-            label: 'product_small',
+            label: 'wh01-green_main',
         },
         image: {
             url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
-            label: 'product_original',
+            label: 'wh01-green_main',
         },
         type: 'PRODUCT',
         stock_status: 'IN_STOCK',
@@ -1494,7 +1497,11 @@ export const outputProducts = [
                     sku: 'HOODIE-SY',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
+                    },
+                    image: {
+                        label: 'wh01-green_main',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
                     stock_status: 'OUT_OF_STOCK',
@@ -1589,7 +1596,11 @@ export const outputProducts = [
                     sku: 'HOODIE-MP',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
+                    },
+                    image: {
+                        label: 'wh01-green_main',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
                     stock_status: 'IN_STOCK',
@@ -1684,7 +1695,11 @@ export const outputProducts = [
                     sku: 'HOODIE-MY',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
+                    },
+                    image: {
+                        label: 'wh01-green_main',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
                     stock_status: 'IN_STOCK',
@@ -1779,7 +1794,11 @@ export const outputProducts = [
                     sku: 'HOODIE-SP',
                     small_image: {
                         url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/56/653b166935ea7214964398-wh01-green_main.jpg',
-                        label: 'product_small',
+                        label: 'wh01-green_main',
+                    },
+                    image: {
+                        label: 'wh01-green_main',
+                        url: 'https://aligent.oro-cloud.com/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/56/653b166935ea7214964398-wh01-green_main.jpg',
                     },
                     staged: false,
                     stock_status: 'IN_STOCK',

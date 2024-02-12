@@ -133,6 +133,7 @@ export interface ImageAttribute extends Attributes {
     mimeType: string;
     types: string[];
     files: ImageFiles[];
+    altText: string;
 }
 
 export interface ImageFiles {
@@ -152,8 +153,8 @@ export interface ProductAttribute extends Attributes {
     featured: boolean;
     newArrival: boolean;
     name: string;
-    shortDescription: ComplexTextValue;
-    description: ComplexTextValue;
+    shortDescription: string;
+    description: string;
     unitPrecisions: UnitPrecision[];
     url: string;
     prices: Price[];
@@ -197,6 +198,7 @@ export interface ShoppingListAttribute extends ShoppingListInputAttribute {
     currency: string;
     total: string;
     subTotal: string;
+    default: boolean;
 }
 export interface ShoppingListRelationships extends Relationships {
     items: {
@@ -204,6 +206,18 @@ export interface ShoppingListRelationships extends Relationships {
             type: 'shoppinglistitems';
             id: string;
         }[];
+    };
+    customerUser?: {
+        data: {
+            type: 'customerusers';
+            id: string;
+        };
+    };
+    customer?: {
+        data: {
+            type: 'customers';
+            id: string;
+        };
     };
 }
 export interface ShoppingListItemInput extends Omit<ShoppingListItem, 'id'> {}

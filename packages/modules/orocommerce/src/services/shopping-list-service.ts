@@ -10,8 +10,12 @@ import { OroOrderLineItem } from '../types/order-line-item';
 import { OrderLineItemsToNewShoppingListTransformer } from '../transformers/shopping-list/order-line-items-to-new-shopping-list-transformer';
 import { OrderLineItemToShoppingListItemTransformer } from '../transformers/shopping-list/order-line-item-to-shopping-list-item-transformer';
 import { Transformer } from '@aligent/utils';
+import { StoreUrl } from '../providers';
+import { isProductImage } from '../utils/type-predicates';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ShoppingListService {
     constructor(
         @Inject(forwardRef(() => ShoppingListsClient))
@@ -27,7 +31,8 @@ export class ShoppingListService {
         protected readonly shoppingListItemTransformer: Transformer<
             OroOrderLineItem,
             ShoppingListItemInput
-        >
+        >,
+        @Inject(forwardRef(() => StoreUrl)) protected storeUrl: string
     ) {}
 
     /**
@@ -45,6 +50,11 @@ export class ShoppingListService {
      */
     async getShoppingListWithItems(id?: string): Promise<ShoppingListWithItems | null> {
         const { data, included } = await this.apiClient.getShoppingListsWithItems(id);
+        included?.filter(isProductImage).map((image) => {
+            image.attributes.files.map((file) => {
+                file.url = this.storeUrl + file.url;
+            });
+        });
         return data[0] !== undefined ? { data: data[0], included: included! } : null;
     }
 

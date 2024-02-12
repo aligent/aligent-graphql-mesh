@@ -3,7 +3,10 @@ import { ShoppingListsWithItems } from '../../types';
 import { RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list-with-items-to-requisition-list-transformer';
-@Injectable()
+
+@Injectable({
+    global: true,
+})
 export class ShoppingListsToRequisitionListsTransformer
     implements Transformer<ShoppingListsWithItems, RequisitionLists>
 {
@@ -20,7 +23,7 @@ export class ShoppingListsToRequisitionListsTransformer
             this.requisitionListTransformer.transform({
                 data: {
                     data: shoppingList,
-                    included: included!,
+                    included: included,
                 },
             })
         );
@@ -28,6 +31,12 @@ export class ShoppingListsToRequisitionListsTransformer
         return {
             items: requisitionLists,
             total_count: requisitionLists.length,
+            // This will be implemented in OTF-190 with filtering
+            page_info: {
+                current_page: 0,
+                page_size: 0,
+                total_pages: 0,
+            },
         };
     }
 }

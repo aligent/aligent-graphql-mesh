@@ -57,7 +57,9 @@ describe('transform-cart-data', () => {
             },
             prices: {
                 applied_taxes: null,
-                discounts: [{ label: 'sale', amount: { currency: 'AUD', value: 10 } }],
+                discounts: [
+                    { label: 'sale', code: 'sale', amount: { currency: 'AUD', value: 10 } },
+                ],
                 grand_total: null,
                 subtotal_excluding_tax: null,
                 subtotal_including_tax: null,

@@ -8,8 +8,9 @@ import {
     UpdateCustomer,
 } from '../../types';
 import { PasswordReset } from '../../types/password-reset';
-
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CustomerClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

@@ -2,7 +2,9 @@ import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
 import { OroLandingPage } from '../../types';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CmsPageClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

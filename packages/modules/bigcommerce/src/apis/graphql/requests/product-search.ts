@@ -17,6 +17,8 @@ export const getProductsSearchQuery = stripIgnoredCharacters(
             $includeTax: Boolean
             $sort: SearchProductsSortInput
             $pageSize: Int
+            # first used for satisfying productDetails fragment
+            $first: Int
         ) {
             site {
                 search {

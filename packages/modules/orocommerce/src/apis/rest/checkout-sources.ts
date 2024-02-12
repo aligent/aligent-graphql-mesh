@@ -10,7 +10,9 @@ import { getSearchParamStringFromSearchParams } from '@aligent/utils';
 
 const CHECKOUT_SOURCES_API = '/checkoutsources';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CheckoutSourcesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
