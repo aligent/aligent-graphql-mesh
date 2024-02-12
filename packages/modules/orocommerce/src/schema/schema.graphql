@@ -7425,6 +7425,11 @@ interface RequisitionListItemInterface {
     The unique ID for the requisition list item.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7450,6 +7455,11 @@ type SimpleRequisitionListItem implements RequisitionListItemInterface {
     The unique ID for the requisition list item.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7475,6 +7485,11 @@ type VirtualRequisitionListItem implements RequisitionListItemInterface {
     The unique ID for the requisition list item.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7510,6 +7525,11 @@ type DownloadableRequisitionListItem implements RequisitionListItemInterface {
     The unique ID of an item in a requisition list.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7540,6 +7560,11 @@ type BundleRequisitionListItem implements RequisitionListItemInterface {
     The unique ID of an item in a requisition list.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7570,6 +7595,11 @@ type ConfigurableRequisitionListItem implements RequisitionListItemInterface {
     The unique ID of an item in a requisition list.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7600,6 +7630,11 @@ type GiftCardRequisitionListItem implements RequisitionListItemInterface {
     The unique ID for the requisition list item.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7655,6 +7690,41 @@ type RequisitionList {
     The time of the last modification of the requisition list.
     """
     updated_at: String
+
+    """
+    Indicates whether this requisiton list is a default one or not for the current logged in user.
+    """
+    default: Boolean
+
+    """
+    The date and time of resource record creation.
+    """
+    created_at: String
+
+    """
+    A person who acts on behalf of the company to buy products using the storefront.
+    """
+    company_user: Int
+
+    """
+    A company that buys products using the storefront.
+    """
+    customer: Int
+
+    """
+    The currency for the requisiton list aggregated amounts, such as total and subTotal.
+    """
+    currency: String
+
+    """
+    The total cost of the items in the requisiton list.
+    """
+    sub_total: Money
+
+    """
+    The total amount that is due for payment of the items in the requisiton list.
+    """
+    total: Money
 }
 
 """

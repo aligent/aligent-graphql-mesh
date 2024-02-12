@@ -109,8 +109,8 @@ const productAttribute: ProductAttribute = {
     video_url_description: null,
     taa_compliant_flag: false,
     name: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
-    shortDescription: { html: '' },
-    description: { html: '' },
+    shortDescription: '',
+    description: '',
     productAttributes: {
         video_url: null,
         video_url_description: null,
@@ -227,10 +227,16 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
                     ],
                 },
                 customerUser: {
-                    data: null,
+                    data: {
+                        type: 'customerusers',
+                        id: '1',
+                    },
                 },
                 customer: {
-                    data: null,
+                    data: {
+                        type: 'customers',
+                        id: '1',
+                    },
                 },
             },
         },
