@@ -33,6 +33,7 @@ import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
 import { getEncodedCategoryUidFromCategoryData } from '../../utils';
+import { CategoriesTransformer } from '../../transformers';
 
 @Injectable({
     global: true,
@@ -44,6 +45,8 @@ export class ProductsTransformerChain extends ChainTransformer<
 
 @Injectable()
 export class ProductsTransformer implements Transformer<ProductsTransformerInput, Products> {
+    constructor(protected categoriesTransformer: CategoriesTransformer) {}
+
     public transform(context: TransformerContext<ProductsTransformerInput, Products>): Products {
         const { oroProductsData, pageSize, currentPage, productAttributes } = context.data;
         const { data, included, meta } = oroProductsData;
@@ -153,66 +156,24 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             variant.id
                         );
                     }
-                    const productPrice = this.getPriceData(
-                        variant.attributes.prices[0].currencyId,
-                        variant.attributes.prices[0].price
-                    );
+                    // const productPrice = this.getPriceData(
+                    //     variant.attributes.prices[0].currencyId,
+                    //     variant.attributes.prices[0].price
+                    // );
 
-                    const { origin } = new URL(variant.links.self);
-
-                    const smallImage = productsImages
-                        ? this.getImageByDimension(productsImages, 'product_small')
-                        : null;
-
-                    const originalImage = productsImages
-                        ? this.getImageByDimension(productsImages, 'product_original')
-                        : null;
+                    // const { origin } = new URL(variant.links.self);
+                    //
+                    // const smallImage = productsImages
+                    //     ? this.getImageByDimension(productsImages, 'product_small')
+                    //     : null;
+                    //
+                    // const originalImage = productsImages
+                    //     ? this.getImageByDimension(productsImages, 'product_original')
+                    //     : null;
 
                     return {
                         attributes: this.getTransformedProductsAttributes(variant),
-                        product: {
-                            id: Number(variant.id),
-                            // TODO: Do we need to return anything here?
-                            custom_attributes: [],
-                            media_gallery_entries: productsImages
-                                ? this.getMediaImages(productsImages, origin)
-                                : [],
-                            price_range: {
-                                minimum_price: {
-                                    regular_price: productPrice,
-                                    final_price: productPrice,
-                                },
-                                maximum_price: {
-                                    regular_price: productPrice,
-                                    final_price: productPrice,
-                                },
-                            },
-                            price_tiers: [], // TODO
-                            rating_summary: 0,
-                            redirect_code: 0,
-                            reviews: {
-                                // TODO
-                                items: [],
-                                page_info: {
-                                    current_page: 0,
-                                    page_size: 0,
-                                    total_pages: 0,
-                                },
-                            },
-                            review_count: 0,
-                            sku: variant.attributes.sku,
-                            small_image: {
-                                url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
-                                label: smallImage?.label || '',
-                            },
-                            image: {
-                                url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
-                                label: originalImage?.label,
-                            },
-                            staged: false,
-                            stock_status: getTransformedProductStockStatus(variant),
-                            uid: btoa(variant.id),
-                        },
+                        product: <SimpleProduct>this.getTransformedProductData(variant, true),
                         __typename: 'ConfigurableVariant',
                     } satisfies ConfigurableVariant;
                 }
@@ -269,53 +230,24 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         return mediaGalleryEntries;
     }
 
-    getCategoriesData(productCategories: Category[]): CategoryTree[] {
-        return productCategories.map((productCategory) => {
-            const {
-                title,
-                description,
-                metaDescription,
-                metaKeywords,
-                metaTitle,
-                url,
-                createdAt,
-                images,
-            } = productCategory.attributes;
-            const category = { type: productCategory.type, id: productCategory.id };
-            const level = 1;
-
-            return {
-                type: 'CATEGORY',
-                __typename: 'CategoryTree',
-                created_at: createdAt,
-                id: Number(productCategory.id),
-                uid: productCategory.relationships
-                    ? getEncodedCategoryUidFromCategoryData(category, productCategory.id)
-                    : '',
-                staged: true, // Couldnt see equivalent value in ORO
-                name: title,
-                level: productCategory.relationships
-                    ? productCategory.relationships.categoryPath.data.length + level
-                    : level,
-                redirect_code: 0, // Couldnt see equivalent value in ORO
-                description: description,
-                meta_title: metaTitle,
-                meta_description: metaDescription,
-                meta_keywords: metaKeywords,
-                url_path: url,
-                image: images.length === 0 ? null : images[0].url,
-            };
-        });
-    }
-
-    public getTransformedProductData(oroProduct: OroProduct): ConfigurableProduct | SimpleProduct {
+    public getTransformedProductData(
+        oroProduct: OroProduct,
+        isVariant: boolean = false
+    ): ConfigurableProduct | SimpleProduct {
         try {
             const productCategories = oroProduct.included?.filter(this.isProductCategory);
             const productsImages = oroProduct.included?.filter(this.isProductImage);
 
-            const currentProductsImages = productsImages?.filter(
-                (images) => images.relationships?.product.data.id === oroProduct.id
-            );
+            // The productimages data inside oroProductData.included only links to the parent product and not each variant
+            // Currently variant images arent correct, this will later need to be updated
+            let currentProductsImages;
+            if (isVariant) {
+                currentProductsImages = productsImages;
+            } else {
+                currentProductsImages = productsImages?.filter(
+                    (images) => images.relationships?.product.data.id === oroProduct.id
+                );
+            }
 
             // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
@@ -332,7 +264,9 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 : null;
 
             const baseProduct = {
-                categories: productCategories ? this.getCategoriesData(productCategories) : null,
+                categories: productCategories
+                    ? this.categoriesTransformer.transform({ data: productCategories })
+                    : null,
                 description: {
                     __typename: 'ComplexTextValue',
                     html: oroProduct.attributes.description ?? '',
