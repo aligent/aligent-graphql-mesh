@@ -1,6 +1,6 @@
 import { CategoryTreeResolvers } from '@aligent/orocommerce-resolvers';
 import { CategoriesClient } from '../../../apis/rest/category-client';
-import { BreadcrumbsTransformerChain } from '../../../transformers/categories/breadcrumbs-transformer';
+import { BreadcrumbsTransformerChain } from '@aligent/orocommerce-graphql-module';
 import { getIdFromCategoryUid, getWebcatalogIdFromCategoryUid } from '../../../utils';
 
 /**

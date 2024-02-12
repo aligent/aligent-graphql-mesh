@@ -27,12 +27,10 @@ import {
     ConfigurableVariant,
     Aggregation,
     MediaGalleryEntry,
-    CategoryTree,
 } from '@aligent/orocommerce-resolvers';
 import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
-import { getEncodedCategoryUidFromCategoryData } from '../../utils';
 import { CategoriesTransformer } from '../../transformers';
 
 @Injectable({
@@ -142,10 +140,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     getTransformedVariants = (oroProductData: OroProduct): ConfigurableVariant[] => {
         if (!oroProductData.included) return [];
 
-        // The productimages data inside oroProductData.included only links to the parent product and not each variant
-        // Currently variant images arent correct, this will later need to be updated
-        const productsImages = oroProductData.included?.filter(this.isProductImage);
-
         const variantsResults = oroProductData.included
             .map((entity) => {
                 if (entity.type === 'products') {
@@ -156,21 +150,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             variant.id
                         );
                     }
-                    // const productPrice = this.getPriceData(
-                    //     variant.attributes.prices[0].currencyId,
-                    //     variant.attributes.prices[0].price
-                    // );
-
-                    // const { origin } = new URL(variant.links.self);
-                    //
-                    // const smallImage = productsImages
-                    //     ? this.getImageByDimension(productsImages, 'product_small')
-                    //     : null;
-                    //
-                    // const originalImage = productsImages
-                    //     ? this.getImageByDimension(productsImages, 'product_original')
-                    //     : null;
-
                     return {
                         attributes: this.getTransformedProductsAttributes(variant),
                         product: <SimpleProduct>this.getTransformedProductData(variant, true),
