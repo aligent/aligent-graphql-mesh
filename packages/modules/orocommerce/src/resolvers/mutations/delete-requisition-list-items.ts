@@ -10,8 +10,8 @@ export const deleteRequisitionListItemsMutation: MutationResolvers['deleteRequis
         const clientShoppingList: ShoppingListsClient = context.injector.get(ShoppingListsClient);
         await clientShoppingList.deleteItemsInShoppingList(ids);
 
-        const shoppingListSerice: ShoppingListService = context.injector.get(ShoppingListService);
-        const shoppingList = await shoppingListSerice.getShoppingListWithItems(
+        const shoppingListService: ShoppingListService = context.injector.get(ShoppingListService);
+        const shoppingList = await shoppingListService.getShoppingListWithItems(
             atob(args.requisitionListUid)
         );
 
@@ -19,10 +19,10 @@ export const deleteRequisitionListItemsMutation: MutationResolvers['deleteRequis
             throw new Error('Shopping list not found.');
         }
 
-        const shoppingListTransformenr: ShoppingListWithItemsToRequisitionListTransformer =
+        const shoppingListTransformer: ShoppingListWithItemsToRequisitionListTransformer =
             context.injector.get(ShoppingListWithItemsToRequisitionListTransformer);
 
-        const requisitionList = shoppingListTransformenr.transform({
+        const requisitionList = shoppingListTransformer.transform({
             data: shoppingList,
         });
 

@@ -7843,6 +7843,16 @@ type DeleteRequisitionListOutput {
 }
 
 """
+Output of the request to remove items from the requisition list.
+"""
+type DeleteRequisitionListItemsOutput {
+    """
+    The requisition list after removing items.
+    """
+    requisition_list: RequisitionList
+}
+
+"""
 Output of the request to copy items to the destination requisition list.
 """
 type CopyItemsFromRequisitionListsOutput {
