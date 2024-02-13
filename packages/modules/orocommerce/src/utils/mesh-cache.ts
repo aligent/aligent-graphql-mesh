@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 // The time we want the cached data to live. 30 minutes
-export const TTL_IN_SECONDS: number = 108000;
+export const TTL_IN_MILLISECONDS: number = 108000;
 
 /**
  * Searches for data in the mesh context cache, otherwise makes a request for
@@ -22,7 +22,7 @@ export const getDataFromMeshCache = async (
         response = await query();
 
         if (!cacheKey) return response;
-        await context.cache.set(cacheKey, response, TTL_IN_SECONDS);
+        await context.cache.set(cacheKey, response, TTL_IN_MILLISECONDS);
     }
 
     return response;
