@@ -81,6 +81,10 @@ import { ShoppingListToRequisitionListTransformer } from '../transformers/shoppi
 import { RequisitionListInputToShoppingListTransformer } from '../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
 import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list/shopping-list-with-items-to-requisition-list-transformer';
 import { ShoppingListsToRequisitionListsTransformer } from './shopping-list/shopping-lists-to-requisition-lists-transformer';
+import {
+    AddProductsToRequisitionListArgsTransformer,
+    AddProductsToRequisitionListArgsTransformerChain,
+} from './shopping-list/add-products-to-list-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -184,6 +188,10 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: RequisitionListInputToShoppingListTransformer,
             useClass: RequisitionListInputToShoppingListTransformer,
+        },
+        {
+            provide: AddProductsToRequisitionListArgsTransformerChain,
+            useClass: AddProductsToRequisitionListArgsTransformerChain,
         },
         // Create default transformers and register them with their chain transformers
         {
@@ -347,6 +355,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return transformer;
             },
             deps: [ProductsTransformerChain],
+        },
+        {
+            provide: AddProductsToRequisitionListArgsTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new AddProductsToRequisitionListArgsTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [AddProductsToRequisitionListArgsTransformerChain],
         },
         {
             provide: AddProductsToCartTransformer,

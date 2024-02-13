@@ -1,4 +1,9 @@
-import { Transformer, TransformerContext, ChainTransformer } from '@aligent/utils';
+import {
+    Transformer,
+    TransformerContext,
+    ChainTransformer,
+    logAndThrowError,
+} from '@aligent/utils';
 import { ShoppingListItemInput } from '../../types';
 import { MutationAddProductsToRequisitionListArgs } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
@@ -6,36 +11,40 @@ import { Injectable } from 'graphql-modules';
 @Injectable({
     global: true,
 })
-export class AddProductsToListTransformerChain extends ChainTransformer<
-MutationAddProductsToRequisitionListArgs['requisitionListItems'],
+export class AddProductsToRequisitionListArgsTransformerChain extends ChainTransformer<
+    MutationAddProductsToRequisitionListArgs['requisitionListItems'],
     ShoppingListItemInput[]
 > {}
 
 @Injectable()
-export class AddProductsToListTransformer
-    implements Transformer<MutationAddProductsToRequisitionListArgs['requisitionListItems'], ShoppingListItemInput[]>
+export class AddProductsToRequisitionListArgsTransformer
+    implements
+        Transformer<
+            MutationAddProductsToRequisitionListArgs['requisitionListItems'],
+            ShoppingListItemInput[]
+        >
 {
     transform(
         context: TransformerContext<
-        MutationAddProductsToRequisitionListArgs['requisitionListItems'],
+            MutationAddProductsToRequisitionListArgs['requisitionListItems'],
             ShoppingListItemInput[]
         >
     ): ShoppingListItemInput[] {
         const shoppingListItemInput = context.data;
-        const transformed =  shoppingListItemInput.map((listItem) => {
+        const transformed = shoppingListItemInput.map((listItem) => {
+            if (!listItem.quantity) {
+                return logAndThrowError(`No quantity sent for adding item uid: ${listItem.uid}`);
+            }
             return {
                 type: 'shoppinglistitems',
                 attributes: {
                     quantity: listItem.quantity,
-
                 },
                 relationships: {
                     product: {
                         data: {
                             type: 'products',
-                            sku:listItem.sku, //atob(listItem.uid || '')
                             id: atob(String(listItem.uid || '')).replace('Product:', ''),
-                            
                         },
                     },
                     unit: {
@@ -46,8 +55,9 @@ export class AddProductsToListTransformer
                         },
                     },
                 },
-            };
+            } satisfies ShoppingListItemInput;
         });
-        return transformed as ShoppingListItemInput[]
+
+        return transformed;
     }
 }
