@@ -99,6 +99,8 @@ export * from './contact-us/contact-us-to-contact-request-transformer';
 export * from './products/products-data-transformer';
 export * from './products/reviews-transformer';
 export * from './products/stock-status-transformer';
+export * from './categories/categories-transformer';
+export * from './categories/breadcrumbs-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
@@ -355,12 +357,12 @@ export const getOroTransformers = (): Array<Provider> => {
         },
         {
             provide: ProductsTransformer,
-            useFactory: (transformerChain) => {
-                const transformer = new ProductsTransformer();
+            useFactory: (transformerChain, categoriesTransformer) => {
+                const transformer = new ProductsTransformer(categoriesTransformer);
                 transformerChain.addTransformer(transformer);
                 return transformer;
             },
-            deps: [ProductsTransformerChain],
+            deps: [ProductsTransformerChain, CategoriesTransformer],
         },
         {
             provide: AddProductsToRequisitionListArgsTransformer,
