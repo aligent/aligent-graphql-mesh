@@ -1,10 +1,5 @@
 import { Transformer, TransformerContext, logAndThrowError } from '@aligent/utils';
-import {
-    ShoppingListAttribute,
-    ShoppingListItem,
-    ShoppingListWithItems,
-    ShoppingListWithItemsIncluded,
-} from '../../types';
+import { ShoppingListAttribute, ShoppingListItem, ShoppingListWithItems } from '../../types';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
 import { isNull } from 'lodash';
@@ -31,7 +26,9 @@ export class ShoppingListWithItemsToRequisitionListTransformer
 
         const includedShoppingListItems = context.data.included?.filter(isShoppingListItem);
         if (!includedShoppingListItems) {
-            return logAndThrowError('sd');
+            return logAndThrowError(
+                'shoppinglistitems included data not found, this is needed to complete requisiton list items transform'
+            );
         }
         const items = this.transformItems(shoppingList, includedShoppingListItems);
 
