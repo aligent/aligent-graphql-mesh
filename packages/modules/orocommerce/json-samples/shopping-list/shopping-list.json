@@ -1,0 +1,766 @@
+{
+    "data": [
+        {
+            "type": "shoppinglists",
+            "id": "265",
+            "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglists/265" },
+            "attributes": {
+                "name": "jack new",
+                "notes": "hi description",
+                "currency": "AUD",
+                "createdAt": "2024-02-07T04:33:29Z",
+                "updatedAt": "2024-02-07T04:33:29Z",
+                "default": true,
+                "total": "36",
+                "subTotal": "36"
+            },
+            "relationships": {
+                "items": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/shoppinglists/265/relationships/items",
+                        "related": "https://aligent.oro-cloud.com/api/shoppinglists/265/items"
+                    },
+                    "data": [
+                        { "type": "shoppinglistitems", "id": "305" },
+                        { "type": "shoppinglistitems", "id": "311" }
+                    ]
+                },
+                "customerUser": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/shoppinglists/265/relationships/customerUser",
+                        "related": "https://aligent.oro-cloud.com/api/shoppinglists/265/customerUser"
+                    },
+                    "data": { "type": "customerusers", "id": "5" }
+                },
+                "customer": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/shoppinglists/265/relationships/customer",
+                        "related": "https://aligent.oro-cloud.com/api/shoppinglists/265/customer"
+                    },
+                    "data": { "type": "customers", "id": "5" }
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "productimages",
+            "id": "33",
+            "links": { "self": "https://aligent.oro-cloud.com/api/productimages/33" },
+            "attributes": {
+                "updatedAt": "2024-01-29T02:17:55Z",
+                "mimeType": "image/jpeg",
+                "types": ["main"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": 610,
+                        "maxHeight": 610,
+                        "dimension": "product_gallery_popup",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": 378,
+                        "maxHeight": "auto",
+                        "dimension": "product_gallery_main",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": 262,
+                        "maxHeight": "auto",
+                        "dimension": "product_medium",
+                        "url_webp": "/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/115/65b708a6d5aa6687070196-659e4f6c339a3876630074-DV_WebLarge_I_1600253.jpg.webp",
+                        "types": ["main"]
+                    }
+                ],
+                "altText": "Drummond™ Lubrication Kit for Ca and Mt"
+            },
+            "relationships": {
+                "product": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/productimages/33/relationships/product",
+                        "related": "https://aligent.oro-cloud.com/api/productimages/33/product"
+                    },
+                    "data": { "type": "products", "id": "19" }
+                }
+            }
+        },
+        {
+            "type": "mastercatalogcategories",
+            "id": "10",
+            "links": { "self": "https://aligent.oro-cloud.com/api/mastercatalogcategories/10" },
+            "attributes": {
+                "createdAt": "2024-01-15T06:30:15Z",
+                "updatedAt": "2024-01-25T01:24:22Z",
+                "title": "Chemicals",
+                "shortDescription": null,
+                "description": null,
+                "url": "/chemicals",
+                "urls": [],
+                "images": [],
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null
+            },
+            "relationships": {
+                "categoryPath": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/mastercatalogcategories/10/relationships/categoryPath",
+                        "related": "https://aligent.oro-cloud.com/api/mastercatalogcategories/10/categoryPath"
+                    },
+                    "data": [
+                        { "type": "mastercatalogcategories", "id": "1" },
+                        { "type": "mastercatalogcategories", "id": "9" }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "19",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/19" },
+            "attributes": {
+                "sku": "1600253",
+                "variantAttributeNames": [],
+                "createdAt": "2024-01-29T02:08:43Z",
+                "updatedAt": "2024-01-29T02:17:55Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "restrictions": [],
+                "category_sort_order": null,
+                "tech_specs": [],
+                "mat_freight_grp": null,
+                "prop65_message": null,
+                "unspsc": null,
+                "video_url": null,
+                "video_url_description": null,
+                "taa_compliant_flag": false,
+                "name": "Drummond™ Lubrication Kit for Ca and Mt",
+                "shortDescription": null,
+                "description": null,
+                "productAttributes": {
+                    "video_url": null,
+                    "video_url_description": null,
+                    "unspsc": null,
+                    "taa_compliant_flag": false,
+                    "prop65_message": null,
+                    "mat_freight_grp": null,
+                    "alternate_products": [],
+                    "required_accessories": [],
+                    "optional_accessories": [],
+                    "storefront_documents": []
+                },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/drummond-lubrication-kit-for-ca-and-mt",
+                "urls": [],
+                "prices": [],
+                "lowInventory": true,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null,
+                "attachments": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/images"
+                    },
+                    "data": [{ "type": "productimages", "id": "33" }]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "1" }
+                },
+                "brand": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/brand",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/brand"
+                    },
+                    "data": null
+                },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "10" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "in_stock" }
+                },
+                "alternate_products": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/alternate_products",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/alternate_products"
+                    },
+                    "data": []
+                },
+                "required_accessories": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/required_accessories",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/required_accessories"
+                    },
+                    "data": []
+                },
+                "optional_accessories": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/optional_accessories",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/optional_accessories"
+                    },
+                    "data": []
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/variantProducts"
+                    },
+                    "data": []
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/19/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/19/parentProducts"
+                    },
+                    "data": []
+                }
+            }
+        },
+        {
+            "type": "shoppinglistitems",
+            "id": "305",
+            "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglistitems/305" },
+            "attributes": {
+                "checksum": "eab6fa5c9b86dc75b426d56e001b539802cf3ce4",
+                "quantity": 2,
+                "notes": null,
+                "currency": null,
+                "value": null
+            },
+            "relationships": {
+                "product": { "data": { "type": "products", "id": "19" } },
+                "parentProduct": { "data": null },
+                "kitItems": { "data": [] },
+                "shoppingList": { "data": { "type": "shoppinglists", "id": "265" } },
+                "unit": { "data": { "type": "productunits", "id": "each" } }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "37",
+            "links": { "self": "https://aligent.oro-cloud.com/api/productimages/37" },
+            "attributes": {
+                "updatedAt": "2024-02-08T12:31:13Z",
+                "mimeType": "image/png",
+                "types": ["additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/122/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/122/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/122/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/122/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/122/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/122/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    }
+                ],
+                "altText": "Open and shut"
+            },
+            "relationships": {
+                "product": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/productimages/37/relationships/product",
+                        "related": "https://aligent.oro-cloud.com/api/productimages/37/product"
+                    },
+                    "data": { "type": "products", "id": "23" }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "38",
+            "links": { "self": "https://aligent.oro-cloud.com/api/productimages/38" },
+            "attributes": {
+                "updatedAt": "2024-02-08T12:31:13Z",
+                "mimeType": "image/png",
+                "types": ["additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/123/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/123/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/123/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/123/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/123/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/123/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    }
+                ],
+                "altText": "Open and shut"
+            },
+            "relationships": {
+                "product": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/productimages/38/relationships/product",
+                        "related": "https://aligent.oro-cloud.com/api/productimages/38/product"
+                    },
+                    "data": { "type": "products", "id": "23" }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "39",
+            "links": { "self": "https://aligent.oro-cloud.com/api/productimages/39" },
+            "attributes": {
+                "updatedAt": "2024-02-08T12:31:13Z",
+                "mimeType": "image/png",
+                "types": ["additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/124/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/124/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/124/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/124/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/124/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/124/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    }
+                ],
+                "altText": "Open and shut"
+            },
+            "relationships": {
+                "product": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/productimages/39/relationships/product",
+                        "related": "https://aligent.oro-cloud.com/api/productimages/39/product"
+                    },
+                    "data": { "type": "products", "id": "23" }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "40",
+            "links": { "self": "https://aligent.oro-cloud.com/api/productimages/40" },
+            "attributes": {
+                "updatedAt": "2024-02-08T12:31:13Z",
+                "mimeType": "image/png",
+                "types": ["additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/125/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/125/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/125/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/125/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/125/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/125/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["additional"]
+                    }
+                ],
+                "altText": "Open and shut"
+            },
+            "relationships": {
+                "product": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/productimages/40/relationships/product",
+                        "related": "https://aligent.oro-cloud.com/api/productimages/40/product"
+                    },
+                    "data": { "type": "products", "id": "23" }
+                }
+            }
+        },
+        {
+            "type": "productimages",
+            "id": "41",
+            "links": { "self": "https://aligent.oro-cloud.com/api/productimages/41" },
+            "attributes": {
+                "updatedAt": "2024-02-08T12:31:13Z",
+                "mimeType": "image/png",
+                "types": ["main", "listing", "additional"],
+                "files": [
+                    {
+                        "url": "/media/cache/attachment/filter/product_original/87ce74c18aefc3f765aae166bfe23016/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": null,
+                        "maxHeight": null,
+                        "dimension": "product_original",
+                        "url_webp": "/media/cache/attachment/filter/product_original/4dbc178c2ebed276168fb5a715adf9ec/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_popup/d84bbcea526f8f915cdbd36cc2fe4126/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 610,
+                        "maxHeight": 610,
+                        "dimension": "product_gallery_popup",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_popup/5e23e551f9c58b3ed2cbcdcaf72c28fc/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_gallery_main/5507b4acf749e257f536fcc5d77767f0/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 378,
+                        "maxHeight": "auto",
+                        "dimension": "product_gallery_main",
+                        "url_webp": "/media/cache/attachment/filter/product_gallery_main/9e256c59daf1c360fa2a692e1a4d8eeb/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_large/75933013ffe25c18a463107b226cebb3/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 316,
+                        "maxHeight": "auto",
+                        "dimension": "product_large",
+                        "url_webp": "/media/cache/attachment/filter/product_large/ca048c1dad6aff04975c90c926869a37/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main", "listing"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_extra_large/abe5781f01e0d4c0414089db5f53322a/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 378,
+                        "maxHeight": 378,
+                        "dimension": "product_extra_large",
+                        "url_webp": "/media/cache/attachment/filter/product_extra_large/de49a9f899e6dc68356803fcbffb2688/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main", "listing", "additional"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_medium/775d52fb6838e7916f0eababca044295/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 262,
+                        "maxHeight": "auto",
+                        "dimension": "product_medium",
+                        "url_webp": "/media/cache/attachment/filter/product_medium/418ba2755486ce8918a39c6116251ef5/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main"]
+                    },
+                    {
+                        "url": "/media/cache/attachment/filter/product_small/40d7094f39b9f0476463795a7e9ac339/126/65a79d0300ec8205817427-open-and-shut.png",
+                        "maxWidth": 82,
+                        "maxHeight": 82,
+                        "dimension": "product_small",
+                        "url_webp": "/media/cache/attachment/filter/product_small/0430df4fe419ef8f86126998d83a639e/126/65a79d0300ec8205817427-open-and-shut.png.webp",
+                        "types": ["main", "listing", "additional"]
+                    }
+                ],
+                "altText": "Open and shut"
+            },
+            "relationships": {
+                "product": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/productimages/41/relationships/product",
+                        "related": "https://aligent.oro-cloud.com/api/productimages/41/product"
+                    },
+                    "data": { "type": "products", "id": "23" }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "23",
+            "links": { "self": "https://aligent.oro-cloud.com/api/products/23" },
+            "attributes": {
+                "sku": "1574591-1",
+                "variantAttributeNames": [],
+                "createdAt": "2024-01-29T03:22:53Z",
+                "updatedAt": "2024-02-08T12:31:13Z",
+                "productType": "simple",
+                "featured": false,
+                "newArrival": false,
+                "restrictions": [
+                    {
+                        "startDate": "2024-01-01",
+                        "endDate": "2025-01-01",
+                        "restriction-region": { "country": "US", "region": "CA" }
+                    },
+                    {
+                        "startDate": "2024-01-01",
+                        "endDate": "2025-01-01",
+                        "restriction-region": { "country": "US", "region": "MT" }
+                    }
+                ],
+                "category_sort_order": null,
+                "tech_specs": [
+                    { "displayName": "Item#", "specValue": "DA6152Product", "priority": 1 },
+                    {
+                        "displayName": "Name",
+                        "specValue": "Drummond™ Open and Shut Nut/Bolt Loosener/Rust Penetrant",
+                        "priority": 3
+                    },
+                    { "displayName": "Size", "specValue": "20 Oz.", "priority": 5 },
+                    { "displayName": "Type", "specValue": "Aerosol", "priority": 7 },
+                    { "displayName": "Colour", "specValue": "Colorless", "priority": 9 },
+                    {
+                        "displayName": "Viscosity Kinematic",
+                        "specValue": "<0.205 cSt",
+                        "priority": 2
+                    },
+                    { "displayName": "Accessories", "specValue": "Yes", "priority": 4 },
+                    { "displayName": "Base Oil", "specValue": "Naphthenic", "priority": 6 },
+                    { "displayName": "Net Fill Weight", "specValue": "20 Oz.", "priority": 8 },
+                    {
+                        "displayName": "UNSPSC #",
+                        "specValue": "15121806TAA Compliant : Yes",
+                        "priority": 10
+                    },
+                    { "displayName": "Compliant", "specValue": "Yes", "priority": 11 }
+                ],
+                "mat_freight_grp": "GROUP1",
+                "prop65_message": "WARNING: Cancer and Reproductive Harm -",
+                "unspsc": null,
+                "video_url": "https://www.youtube.com/watch?v=zTgQ_VnrP_s",
+                "video_url_description": "Capybara brain washing song",
+                "taa_compliant_flag": true,
+                "name": "Drummond™ Open and Shut Nut/Bolt Loosener/Rust Penetrant (Duplicate) (Thomas test video)",
+                "shortDescription": "<p>Drummond™ - Open and Shut Nut and Bolt Loosener and Rust Penetrant, Colorless, 20oz Aerosol (Pack of 3)</p>",
+                "description": "<div id=\"isolation-scope-cxe9pedxq67fnt24h5s71588\" class=\"cms-wrapper\"><div id=\"iuv9\">Open and Shut is a high-performance penetrating oil, non-flammable per ASTM D-3065-1 flame extension test, that cleans, lubricates, protects, and displaces water. There is no better penetrating oil on the market today for working in damp, dirty, greasy conditions, or near ignition sources. Open and Shut penetrates easily through water, rust and grime to provide lubrication to loosen nuts and bolts.<div><br/></div><div>• Non-flammable</div><div>• High dielectric strength: 39,500V</div><div>• Body shop approved</div><div>• Quickly wicks</div><div>• Continually lubricates</div><div>• Frees rusts and grime quickly from bolts</div><div>• 20 oz. can size; 20 oz. net wt.</div></div></div>",
+                "productAttributes": {
+                    "video_url": "https://www.youtube.com/watch?v=zTgQ_VnrP_s",
+                    "video_url_description": "Capybara brain washing song",
+                    "unspsc": null,
+                    "taa_compliant_flag": true,
+                    "prop65_message": "WARNING: Cancer and Reproductive Harm -",
+                    "mat_freight_grp": "GROUP1",
+                    "alternate_products": [{ "id": "1", "targetValue": "TEST-1" }],
+                    "required_accessories": [],
+                    "optional_accessories": [],
+                    "storefront_documents": [
+                        { "id": "12", "targetValue": "12" },
+                        { "id": "13", "targetValue": "13" },
+                        { "id": "14", "targetValue": "14" },
+                        { "id": "15", "targetValue": "15" },
+                        { "id": "16", "targetValue": "16" },
+                        { "id": "17", "targetValue": "17" }
+                    ]
+                },
+                "unitPrecisions": [
+                    { "unit": "each", "precision": 0, "conversionRate": 1, "default": true }
+                ],
+                "url": "/drummond-open-and-shut-nutbolt-loosenerrust-penetrant-duplicate-thomas-test-video",
+                "urls": [],
+                "prices": [
+                    { "price": "9.0000", "currencyId": "AUD", "quantity": "0", "unit": "each" }
+                ],
+                "lowInventory": true,
+                "upcoming": false,
+                "availabilityDate": null,
+                "metaTitle": null,
+                "metaDescription": null,
+                "metaKeywords": null,
+                "attachments": null
+            },
+            "relationships": {
+                "images": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/images",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/images"
+                    },
+                    "data": [
+                        { "type": "productimages", "id": "37" },
+                        { "type": "productimages", "id": "38" },
+                        { "type": "productimages", "id": "39" },
+                        { "type": "productimages", "id": "40" },
+                        { "type": "productimages", "id": "41" }
+                    ]
+                },
+                "productFamily": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/productFamily",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/productFamily"
+                    },
+                    "data": { "type": "productfamilies", "id": "1" }
+                },
+                "brand": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/brand",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/brand"
+                    },
+                    "data": null
+                },
+                "kitItems": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/kitItems",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/kitItems"
+                    },
+                    "data": []
+                },
+                "category": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/category",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/category"
+                    },
+                    "data": { "type": "mastercatalogcategories", "id": "10" }
+                },
+                "inventoryStatus": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/inventoryStatus",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/inventoryStatus"
+                    },
+                    "data": { "type": "productinventorystatuses", "id": "in_stock" }
+                },
+                "alternate_products": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/alternate_products",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/alternate_products"
+                    },
+                    "data": [{ "type": "products", "id": "1" }]
+                },
+                "required_accessories": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/required_accessories",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/required_accessories"
+                    },
+                    "data": []
+                },
+                "optional_accessories": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/optional_accessories",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/optional_accessories"
+                    },
+                    "data": []
+                },
+                "variantProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/variantProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/variantProducts"
+                    },
+                    "data": []
+                },
+                "parentProducts": {
+                    "links": {
+                        "self": "https://aligent.oro-cloud.com/api/products/23/relationships/parentProducts",
+                        "related": "https://aligent.oro-cloud.com/api/products/23/parentProducts"
+                    },
+                    "data": []
+                }
+            }
+        },
+        {
+            "type": "shoppinglistitems",
+            "id": "311",
+            "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglistitems/311" },
+            "attributes": {
+                "checksum": "8bb87a39a612eb92f12f817ca7c2dd120dd95a38",
+                "quantity": 4,
+                "notes": null,
+                "currency": "AUD",
+                "value": "9"
+            },
+            "relationships": {
+                "product": { "data": { "type": "products", "id": "23" } },
+                "parentProduct": { "data": null },
+                "kitItems": { "data": [] },
+                "shoppingList": { "data": { "type": "shoppinglists", "id": "265" } },
+                "unit": { "data": { "type": "productunits", "id": "each" } }
+            }
+        }
+    ],
+    "links": { "self": "https://aligent.oro-cloud.com/api/shoppinglists" }
+}

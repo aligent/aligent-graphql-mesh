@@ -459,6 +459,19 @@ type Mutation {
         cartItems: [CartItemInput!]!
     ): AddProductsToCartOutput
     """
+    Add items to the specified requisition list.
+    """
+    addProductsToRequisitionList(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+        """
+        An array of products to be added to the requisition list.
+        """
+        requisitionListItems: [RequisitionListItemsInput!]!
+    ): AddProductsToRequisitionListOutput
+    """
     Add products to the specified compare list.
     """
     addProductsToCompareList(
@@ -7736,7 +7749,39 @@ type CreateRequisitionListOutput {
     """
     requisition_list: RequisitionList
 }
+"""
+Defines the items to add.
+"""
+input RequisitionListItemsInput {
+    """
+    Entered option IDs.
+    """
+    entered_options: [EnteredOptionInput]
 
+    """
+    For configurable products, the SKU of the parent product.
+    """
+    parent_sku: String
+
+    """
+    The quantity of the product to add.
+    """
+    quantity: Float
+
+    """
+    Selected option IDs.
+    """
+    selected_options: [String]
+
+    """
+    The product SKU.
+    """
+    sku: String!
+    """
+    Temporary parameter to allow for use of AC without mesh
+    """
+    uid: ID
+}
 """
 Output of the request to rename the requisition list.
 """
