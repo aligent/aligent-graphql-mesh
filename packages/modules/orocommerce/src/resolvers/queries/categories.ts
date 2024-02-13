@@ -1,6 +1,6 @@
 import { CategoriesClient } from '../../apis/rest';
 import { QueryResolvers } from '@aligent/orocommerce-resolvers';
-import { CategoriesTransformerChain } from '@aligent/orocommerce-graphql-module';
+import { CategoriesTransformerChain } from '../../transformers/index';
 import { getWebcatalogIdFromCategoryUid } from '../../utils';
 
 export const categoriesResolver = {
