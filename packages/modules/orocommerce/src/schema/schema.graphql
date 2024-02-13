@@ -459,6 +459,19 @@ type Mutation {
         cartItems: [CartItemInput!]!
     ): AddProductsToCartOutput
     """
+    Add items to the specified requisition list.
+    """
+    addProductsToRequisitionList(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+        """
+        An array of products to be added to the requisition list.
+        """
+        requisitionListItems: [RequisitionListItemsInput!]!
+    ): AddProductsToRequisitionListOutput
+    """
     Add products to the specified compare list.
     """
     addProductsToCompareList(
@@ -5891,7 +5904,26 @@ type Customer {
     """
     The customer's requisition lists.
     """
-    requisition_lists: RequisitionLists
+    requisition_lists(
+        """
+        The page of results to return. The default value is 1.
+        """
+        currentPage: Int = 1
+
+        """
+        The maximum number of results to return. The default value is 20.
+        """
+        pageSize: Int = 20
+
+        filter: RequisitionListFilterInput
+    ): RequisitionLists
+}
+
+input RequisitionListFilterInput {
+    """
+    Soon to be added filter.
+    """
+    coming_soon: String
 }
 
 """
@@ -7421,6 +7453,216 @@ interface RequisitionListItemInterface {
     The unique ID for the requisition list item.
     """
     uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
+}
+
+"""
+Contains details about simple products added to a requisition list.
+"""
+type SimpleRequisitionListItem implements RequisitionListItemInterface {
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The amount added.
+    """
+    quantity: Float!
+
+    """
+    The unique ID for the requisition list item.
+    """
+    uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
+}
+
+"""
+Contains details about virtual products added to a requisition list.
+"""
+type VirtualRequisitionListItem implements RequisitionListItemInterface {
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The amount added.
+    """
+    quantity: Float!
+
+    """
+    The unique ID for the requisition list item.
+    """
+    uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
+}
+
+"""
+Contains details about downloadable products added to a requisition list.
+"""
+type DownloadableRequisitionListItem implements RequisitionListItemInterface {
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    An array of links for downloadable products in the requisition list.
+    """
+    links: [DownloadableProductLinks]
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The quantity of the product added to the requisition list.
+    """
+    quantity: Float!
+
+    """
+    An array of links to downloadable product samples.
+    """
+    samples: [DownloadableProductSamples]
+
+    """
+    The unique ID of an item in a requisition list.
+    """
+    uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
+}
+
+"""
+Contains details about bundle products added to a requisition list.
+"""
+type BundleRequisitionListItem implements RequisitionListItemInterface {
+    """
+    An array of selected options for a bundle product.
+    """
+    bundle_options: [SelectedBundleOption]!
+
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The quantity of the product added to the requisition list.
+    """
+    quantity: Float!
+
+    """
+    The unique ID of an item in a requisition list.
+    """
+    uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
+}
+
+"""
+Contains details about configurable products added to a requisition list.
+"""
+type ConfigurableRequisitionListItem implements RequisitionListItemInterface {
+    """
+    Selected configurable options for an item in the requisition list.
+    """
+    configurable_options: [SelectedConfigurableOption]
+
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The quantity of the product added to the requisition list.
+    """
+    quantity: Float!
+
+    """
+    The unique ID of an item in a requisition list.
+    """
+    uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
+}
+
+"""
+Contains details about gift cards added to a requisition list.
+"""
+type GiftCardRequisitionListItem implements RequisitionListItemInterface {
+    """
+    Selected custom options for an item in the requisition list.
+    """
+    customizable_options: [SelectedCustomizableOption]!
+
+    """
+    An array that defines gift card properties.
+    """
+    gift_card_options: GiftCardOptions!
+
+    """
+    Details about a requisition list item.
+    """
+    product: ProductInterface!
+
+    """
+    The amount added.
+    """
+    quantity: Float!
+
+    """
+    The unique ID for the requisition list item.
+    """
+    uid: ID!
+
+    """
+    Any additional notes made by the buyer.
+    """
+    notes: String
 }
 
 """
@@ -7455,17 +7697,7 @@ type RequisitionList {
     """
     An array of products added to the requisition list.
     """
-    items(
-        """
-        The page of results to return. The default value is 1.
-        """
-        currentPage: Int = 1
-
-        """
-        The maximum number of results to return. The default value is 1.
-        """
-        pageSize: Int = 20
-    ): RequistionListItems
+    items: RequistionListItems
 
     """
     The number of items in the list.
@@ -7486,6 +7718,41 @@ type RequisitionList {
     The time of the last modification of the requisition list.
     """
     updated_at: String
+
+    """
+    Indicates whether this requisiton list is a default one or not for the current logged in user.
+    """
+    default: Boolean
+
+    """
+    The date and time of resource record creation.
+    """
+    created_at: String
+
+    """
+    A person who acts on behalf of the company to buy products using the storefront.
+    """
+    company_user: Int
+
+    """
+    A company that buys products using the storefront.
+    """
+    customer: Int
+
+    """
+    The currency for the requisiton list aggregated amounts, such as total and subTotal.
+    """
+    currency: String
+
+    """
+    The total cost of the items in the requisiton list.
+    """
+    sub_total: Money
+
+    """
+    The total amount that is due for payment of the items in the requisiton list.
+    """
+    total: Money
 }
 
 """
@@ -7497,13 +7764,65 @@ type CreateRequisitionListOutput {
     """
     requisition_list: RequisitionList
 }
+"""
+Defines the items to add.
+"""
+input RequisitionListItemsInput {
+    """
+    Entered option IDs.
+    """
+    entered_options: [EnteredOptionInput]
 
+    """
+    For configurable products, the SKU of the parent product.
+    """
+    parent_sku: String
+
+    """
+    The quantity of the product to add.
+    """
+    quantity: Float
+
+    """
+    Selected option IDs.
+    """
+    selected_options: [String]
+
+    """
+    The product SKU.
+    """
+    sku: String!
+    """
+    Temporary parameter to allow for use of AC without mesh
+    """
+    uid: ID
+}
 """
 Output of the request to rename the requisition list.
 """
 type UpdateRequisitionListOutput {
     """
     The renamed requisition list.
+    """
+    requisition_list: RequisitionList
+}
+
+"""
+Output of the request to update items in the specified requisition list.
+"""
+type UpdateRequisitionListItemsOutput {
+    """
+    The requisition list after updating items.
+    """
+    requisition_list: RequisitionList
+}
+
+"""
+Output of the request to add products to a requisition list.
+"""
+type AddProductsToRequisitionListOutput {
+    """
+    The requisition list after adding products.
     """
     requisition_list: RequisitionList
 }
@@ -7524,13 +7843,28 @@ type DeleteRequisitionListOutput {
 }
 
 """
-Output of the request to remove items from the requisition list.
+Output of the request to copy items to the destination requisition list.
 """
-type DeleteRequisitionListItemsOutput {
+type CopyItemsFromRequisitionListsOutput {
     """
-    The requisition list after removing items.
+    The destination requisition list after the items were copied.
     """
     requisition_list: RequisitionList
+}
+
+"""
+Output of the request to move items to another requisition list.
+"""
+type MoveItemsBetweenRequisitionListsOutput {
+    """
+    The destination requisition list after moving items.
+    """
+    destination_requisition_list: RequisitionList
+
+    """
+    The source requisition list after moving items.
+    """
+    source_requisition_list: RequisitionList
 }
 
 input ContactUsInput {

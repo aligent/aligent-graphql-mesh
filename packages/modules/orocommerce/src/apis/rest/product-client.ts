@@ -16,7 +16,9 @@ import { logAndThrowError, GraphqlError } from '@aligent/utils';
 import { lowerCase } from 'lodash';
 import { getIdFromCategoryUid } from '../../utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ProductsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

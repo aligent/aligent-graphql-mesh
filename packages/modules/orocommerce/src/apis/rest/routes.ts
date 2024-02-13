@@ -6,7 +6,9 @@ import { logAndThrowError } from '@aligent/utils';
 
 const ROUTE_URL = '/routes';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class RoutesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

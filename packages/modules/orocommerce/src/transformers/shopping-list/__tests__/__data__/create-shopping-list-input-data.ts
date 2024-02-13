@@ -24,10 +24,27 @@ export const shoppingListWithItems: ShoppingListWithItems = {
             name: 'Name1',
             notes: 'description',
             default: false,
+            createdAt: '2024-02-07T04:33:29Z',
+            updatedAt: '2024-02-07T04:33:29Z',
+            currency: 'AUD',
+            subTotal: '10',
+            total: '20',
         },
         relationships: {
             items: {
                 data: [],
+            },
+            customerUser: {
+                data: {
+                    type: 'customerusers',
+                    id: '5',
+                },
+            },
+            customer: {
+                data: {
+                    type: 'customers',
+                    id: '5',
+                },
             },
         },
     },

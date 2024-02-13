@@ -1,12 +1,13 @@
 import { getIdFromCategoryUid, getEncodedCategoryUidFromCategoryData } from '../categories';
 
-const decodedCategoryData = { id: '1', type: 'mastercatalogcategories' };
-const encodedCategoryData = 'eyJpZCI6IjEiLCJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMifQ==';
+const decodedCategoryData = { type: 'mastercatalogcategories', id: '8', webcatalogId: '23' };
+const encodedCategoryData =
+    'eyJ0eXBlIjoibWFzdGVyY2F0YWxvZ2NhdGVnb3JpZXMiLCJpZCI6IjgiLCJ3ZWJjYXRhbG9nSWQiOiIyMyJ9';
 
 describe('decodeCategoryId', () => {
     it('Return the encoded category uid from a "apiUrl" string', () => {
         const categoryUid = getIdFromCategoryUid(encodedCategoryData);
-        expect(categoryUid).toEqual(1);
+        expect(categoryUid).toEqual(8);
     });
 });
 

@@ -5,7 +5,9 @@ import { OroSocialLinkApiData } from '../../types/social-links';
 
 const STORE_CONFIG_ENDPOINT = '/tf_config';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class StoreConfigApiClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

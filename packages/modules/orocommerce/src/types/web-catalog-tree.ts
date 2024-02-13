@@ -5,6 +5,7 @@ export interface WebCatalogTree extends Entity {
     id: string;
     attributes: WebCatalogTreeAttributes;
     relationships: WebCatalogTreeRelationships;
+    included?: Array<WebCatalogTree>;
 }
 
 export interface WebCatalogTreeAttributes extends Attributes {

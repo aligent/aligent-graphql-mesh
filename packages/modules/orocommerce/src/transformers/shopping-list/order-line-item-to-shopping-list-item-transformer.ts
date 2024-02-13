@@ -6,7 +6,9 @@ import { Injectable } from 'graphql-modules';
 /**
  * This transformer is meant to convert a order line item into a new shopping list line item
  */
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class OrderLineItemToShoppingListItemTransformer
     implements Transformer<OroOrderLineItem, ShoppingListItemInput>
 {

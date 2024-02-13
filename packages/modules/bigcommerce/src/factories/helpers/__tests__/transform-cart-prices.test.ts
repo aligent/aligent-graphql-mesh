@@ -4,7 +4,7 @@ import { mockBcCart } from '../../../resolvers/mocks/cart.bc';
 
 const expectResult = {
     applied_taxes: [{ amount: { currency: 'AUD', value: 5.45 }, label: 'GST' }],
-    discounts: [{ label: 'sale', amount: { currency: 'AUD', value: 10 } }],
+    discounts: [{ label: 'sale', code: 'sale', amount: { currency: 'AUD', value: 10 } }],
     grand_total: { currency: 'AUD', value: 60 },
     subtotal_excluding_tax: { currency: 'AUD', value: 54.55 },
     subtotal_including_tax: { currency: 'AUD', value: 60 },

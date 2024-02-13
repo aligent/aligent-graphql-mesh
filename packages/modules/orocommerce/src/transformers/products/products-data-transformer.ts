@@ -139,6 +139,10 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
     getTransformedVariants = (oroProductData: OroProduct): ConfigurableVariant[] => {
         if (!oroProductData.included) return [];
 
+        // The productimages data inside oroProductData.included only links to the parent product and not each variant
+        // Currently variant images arent correct, this will later need to be updated
+        const productsImages = oroProductData.included?.filter(this.isProductImage);
+
         const variantsResults = oroProductData.included
             .map((entity) => {
                 if (entity.type === 'products') {
@@ -156,10 +160,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
                     const { origin } = new URL(variant.links.self);
 
-                    const productsImages = variant.included?.filter(this.isProductImage);
-
                     const smallImage = productsImages
                         ? this.getImageByDimension(productsImages, 'product_small')
+                        : null;
+
+                    const originalImage = productsImages
+                        ? this.getImageByDimension(productsImages, 'product_original')
                         : null;
 
                     return {
@@ -196,8 +202,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                             review_count: 0,
                             sku: variant.attributes.sku,
                             small_image: {
-                                url: `${origin}${smallImage?.url}`,
-                                label: smallImage?.dimension,
+                                url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
+                                label: smallImage?.label || '',
+                            },
+                            image: {
+                                url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
+                                label: originalImage?.label,
                             },
                             staged: false,
                             stock_status: getTransformedProductStockStatus(variant),
@@ -229,8 +239,13 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             const foundImage = image.attributes.files.find(
                 (image) => image.dimension === imageDimension
             );
-            if (foundImage) return foundImage;
+
+            if (foundImage) {
+                foundImage.label = image.attributes.altText;
+                return foundImage;
+            }
         }
+
         return;
     }
 
@@ -275,7 +290,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 created_at: createdAt,
                 id: Number(productCategory.id),
                 uid: productCategory.relationships
-                    ? getEncodedCategoryUidFromCategoryData(category)
+                    ? getEncodedCategoryUidFromCategoryData(category, productCategory.id)
                     : '',
                 staged: true, // Couldnt see equivalent value in ORO
                 name: title,
@@ -298,18 +313,22 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             const productCategories = oroProduct.included?.filter(this.isProductCategory);
             const productsImages = oroProduct.included?.filter(this.isProductImage);
 
+            const currentProductsImages = productsImages?.filter(
+                (images) => images.relationships?.product.data.id === oroProduct.id
+            );
+
             // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
             const price = oroProduct.attributes.prices[0]?.price || '0';
             const productPrice = this.getPriceData(currency, price);
             const { origin } = new URL(oroProduct.links.self);
 
-            const smallImage = productsImages
-                ? this.getImageByDimension(productsImages, 'product_small')
+            const smallImage = currentProductsImages
+                ? this.getImageByDimension(currentProductsImages, 'product_small')
                 : null;
 
-            const originalImage = productsImages
-                ? this.getImageByDimension(productsImages, 'product_original')
+            const originalImage = currentProductsImages
+                ? this.getImageByDimension(currentProductsImages, 'product_original')
                 : null;
 
             const baseProduct = {
@@ -348,12 +367,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
                 small_image: {
-                    url: `${origin}${smallImage?.url}`,
-                    label: smallImage?.dimension,
+                    url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
+                    label: smallImage?.label || '',
                 },
                 image: {
-                    url: `${origin}${originalImage?.url}`,
-                    label: originalImage?.dimension,
+                    url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
+                    label: originalImage?.label || '',
                 },
                 type: 'PRODUCT',
                 stock_status: getTransformedProductStockStatus(oroProduct),

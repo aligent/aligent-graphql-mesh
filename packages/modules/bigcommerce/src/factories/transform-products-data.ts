@@ -81,13 +81,15 @@ export const getTypeName = (
 /* istanbul ignore file */
 export const getTransformedProductData = (
     bcProduct: Product,
-    bundleItemProducts?: ProductInterface[] | undefined
+    bundleItemProducts?: ProductInterface[] | undefined,
+    variantEntityId?: number | null
 ): Maybe<ProductInterface & ConfigurableProduct & BundleProduct> => {
     if (!bcProduct) return null;
 
     try {
         const {
             availabilityV2,
+            brand,
             customFields,
             categories,
             defaultImage,
@@ -107,7 +109,9 @@ export const getTransformedProductData = (
             variants: bcVariants,
         } = bcProduct;
 
-        const productType = getTypeName(bcProduct, productOptions);
+        const productType = variantEntityId
+            ? 'ConfigurableProduct'
+            : getTypeName(bcProduct, productOptions);
 
         const fields = [...(customFields?.edges || []), ...(metafields?.edges || [])];
 
@@ -120,6 +124,7 @@ export const getTransformedProductData = (
 
         return {
             ...(availabilityV2?.status === 'Preorder' && { availability: availabilityV2 }),
+            brand: brand?.name || null,
             categories: getTransformedCategoriesData(categories),
             configurable_options: getTransformedConfigurableOptions(productOptions, productType),
             description: {

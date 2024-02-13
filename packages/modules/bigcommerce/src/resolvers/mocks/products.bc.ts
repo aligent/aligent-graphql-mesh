@@ -3,6 +3,7 @@ import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 export const mockBcProducts = [
     {
         __typename: 'Product',
+        brand: null,
         id: 'UHJvZHVjdDo0OTI=',
         entityId: 492,
         sku: 'WH01',
@@ -247,6 +248,10 @@ export const mockBcProducts = [
                 {
                     cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
+                        brand: {
+                            id: 'well',
+                            name: 'Weller',
+                        },
                         entityId: 491,
                         id: '10',
                         name: 'Rennsteig Individual Parallel Pin Punches - Multiple Sizes',
@@ -434,6 +439,7 @@ export const mockBcProducts = [
                 {
                     cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                     node: {
+                        brand: 'Weller',
                         id: 'VmFyaWFudDo1MTM=',
                         entityId: 513,
                         sku: 'WH01-S-Green',
@@ -610,6 +616,7 @@ export const mockBcProducts = [
                 {
                     cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                     node: {
+                        brand: 'Weller',
                         id: 'VmFyaWFudDo1MTQ=',
                         entityId: 514,
                         sku: 'WH01-M-Green',
@@ -786,6 +793,7 @@ export const mockBcProducts = [
                 {
                     cursor: 'YXJyYXljb25uZWN0aW9uOjI=',
                     node: {
+                        brand: 'Weller',
                         id: 'VmFyaWFudDo1MTU=',
                         entityId: 515,
                         sku: 'WH01-S-Purple',
@@ -959,6 +967,7 @@ export const mockBcProducts = [
                 {
                     cursor: 'YXJyYXljb25uZWN0aW9uOjM=',
                     node: {
+                        brand: 'Weller',
                         id: 'VmFyaWFudDo1MTY=',
                         entityId: 516,
                         sku: 'WH01-M-Purple',
