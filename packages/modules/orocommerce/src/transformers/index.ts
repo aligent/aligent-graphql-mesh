@@ -328,8 +328,14 @@ export const getOroTransformers = (): Array<Provider> => {
 
         {
             provide: ShoppingListToCartTransformer,
-            useClass: ShoppingListToCartTransformer,
+            useFactory: (transformerChain, productsTransformer) => {
+                const transformer = new ShoppingListToCartTransformer(productsTransformer);
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [UpdateCustomerTransformerChain, ProductsTransformer],
         },
+        
         {
             provide: OrderLineItemToShoppingListItemTransformer,
             useClass: OrderLineItemToShoppingListItemTransformer,

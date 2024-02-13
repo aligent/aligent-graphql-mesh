@@ -1,13 +1,11 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
-import { IncludedProductCategory, IncludedProductImages, ShoppingListWithItems } from '../../types';
+import { ShoppingListWithItems, Product as OroProduct } from '../../types';
 import {
     Cart,
     CurrencyEnum,
     Money,
     SimpleCartItem,
     CartItemError,
-    ProductImage,
-    CategoryTree,
 } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
@@ -17,60 +15,19 @@ import {
     isProductCategory,
 } from '../../utils/type-predicates';
 import { UNDEFINED_CART } from './constants';
-import { getEncodedCategoryUidFromCategoryData } from '../../utils';
+import { ProductsTransformer } from '../../transformers';
 
 @Injectable({
     global: true,
 })
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
+    constructor(protected productsTransformer: ProductsTransformer) {}
     getMoneyData(currency: string, price: string | number): Money {
         return {
             currency: currency as CurrencyEnum,
             value: Number(price),
         };
     }
-
-    getImageByDimension(
-        images: IncludedProductImages[],
-        productId: string,
-        imageDimension: string
-    ): ProductImage | undefined {
-        const productImages = images.find(
-            (item) => item.relationships.product.data.id === productId
-        );
-        if (!productImages)
-            return logAndThrowError(
-                `Could not find related product image to product id: ${productId}`
-            );
-
-        const foundImage = productImages.attributes.files.find(
-            (image) => image.dimension === imageDimension
-        );
-
-        return {
-            url: foundImage?.url,
-            label: productImages.attributes.altText,
-        };
-    }
-
-    getCategoriesData(productCategories: IncludedProductCategory[]): CategoryTree[] {
-        return productCategories.map((productCategory) => {
-            const category = { type: productCategory.type, id: productCategory.id };
-            return {
-                __typename: 'CategoryTree',
-                id: Number(productCategory.id),
-                uid: getEncodedCategoryUidFromCategoryData(category, productCategory.id),
-                staged: true, // Couldnt see equivalent value in ORO
-                name: productCategory.attributes.title,
-                level: 1, // Couldnt see equivalent value in ORO
-                redirect_code: 0, // Couldnt see equivalent value in ORO
-                description: String(productCategory.attributes.description),
-                url_path: productCategory.attributes.url,
-                image: productCategory.attributes.images[0]?.url,
-            };
-        });
-    }
-
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
@@ -110,6 +67,12 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
 
         const items: SimpleCartItem[] = [];
         for (const product of products) {
+            const baseProduct: OroProduct = {
+                ...product,
+                included: [...productsImages ?? [], ...productsCategories ?? []],
+                links: {self: ""},
+            }
+
             const errorMessage: CartItemError[] = [];
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
@@ -123,39 +86,13 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 );
             }
 
-            const productCategories = productsCategories?.filter(
-                (item) => item.id === product.relationships.category.data.id
-            );
-
-            if (!productCategories) {
-                errorMessage.push({
-                    message: `Related productCategories not found for product: ${product.id} `,
-                    code: 'UNDEFINED',
-                });
-            }
-
-            if (!productsImages) {
-                errorMessage.push({
-                    message: `Related productsImages not found for product: ${product.id} `,
-                    code: 'UNDEFINED',
-                });
-            }
-
-            const smallImage = productsImages
-                ? this.getImageByDimension(productsImages, product.id, 'product_small')
-                : null;
-
-            const originalImage = productsImages
-                ? this.getImageByDimension(productsImages, product.id, 'product_original')
-                : null;
-
             const currency = relatedShoppingListItem.attributes.currency as string;
             const price = this.getMoneyData(
                 currency,
                 Number(relatedShoppingListItem.attributes.value)
             );
 
-            const productAttributes = product.attributes;
+            //const productAttributes = product.attributes;
             const quantity = relatedShoppingListItem.attributes.quantity;
 
             items.push({
@@ -172,50 +109,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                     row_total_including_tax: price,
                 },
                 errors: errorMessage,
-                product: {
-                    __typename: 'SimpleProduct',
-                    id: Number(product.id),
-                    name: productAttributes.name,
-                    sku: productAttributes.sku,
-                    image: originalImage,
-                    small_image: smallImage,
-                    categories: productCategories ? this.getCategoriesData(productCategories) : [],
-                    canonical_url: productAttributes.url,
-                    description: {
-                        html: productAttributes.description ? productAttributes.description : '',
-                    },
-                    short_description: {
-                        html: productAttributes.shortDescription
-                            ? productAttributes.shortDescription
-                            : '',
-                    },
-                    meta_description: productAttributes.metaDescription,
-                    meta_keyword: productAttributes.metaKeywords,
-                    meta_title: productAttributes.metaTitle,
-                    redirect_code: 0,
-                    price_range: {
-                        minimum_price: {
-                            final_price: price,
-                            regular_price: price,
-                            discount: {
-                                // TODO
-                                amount_off: 0,
-                            },
-                        },
-                        maximum_price: {
-                            final_price: price,
-                            regular_price: price,
-                        },
-                    },
-                    stock_status: 'IN_STOCK', // Not sure about this, was able to add an out of stock item to the shoppinglist
-                    url_key: productAttributes.url,
-                    custom_attributes: [],
-                    review_count: 0,
-                    reviews: { items: [], page_info: {} },
-                    rating_summary: 0,
-                    staged: false,
-                    uid: btoa(product.id),
-                },
+                product: this.productsTransformer.getTransformedProductData(baseProduct),
             });
 
             cart.total_quantity += quantity;
