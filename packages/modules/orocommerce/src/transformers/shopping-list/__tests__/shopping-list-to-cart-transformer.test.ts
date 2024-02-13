@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 
 import { getShoppingListsWithItems, shoppingListItem } from './__data__/shopping-list-data';
-import { ShoppingListToCartTransformer } from '../shopping-list-to-cart-transformer';
+import { ProductsTransformer, ShoppingListToCartTransformer } from '../../../transformers';
 
 import { CurrencyEnum, Money } from '@aligent/orocommerce-resolvers';
 import { btoa } from '@aligent/utils';
 
 describe('Shopping List to Cart transformation tests', () => {
-    const cartTransformer = new ShoppingListToCartTransformer();
+    const cartTransformer = new ShoppingListToCartTransformer(new ProductsTransformer());
 
     const shoppingListWithItems = getShoppingListsWithItems();
 

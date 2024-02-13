@@ -1,17 +1,20 @@
 import {
-    CategoryAttribute,
-    ImageAttribute,
-    ProductAttribute,
     ShoppingListWithItems,
     ShoppingListItem,
 } from '../../../../types/shopping-list';
+import {
+    CategoryAttributes,
+    ProductImageAttributes,
+    ProductAttributes,
+} from '../../../../types/product';
 
-const imageAttribute: ImageAttribute = {
-    updatedAt: new Date('2024-01-29T02:17:11Z'),
+const imageAttribute: ProductImageAttributes = {
+    updatedAt: '2024-01-29T02:17:11Z',
     mimeType: 'image/jpeg',
     types: ['main'],
     files: [
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_original/1ce6569ddaa67bc2162be5030a1ac716/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: null,
             maxHeight: null,
@@ -21,6 +24,7 @@ const imageAttribute: ImageAttribute = {
             types: ['main'],
         },
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_gallery_popup/098f408deb471e628613685fa97b1968/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: 610,
             maxHeight: 610,
@@ -30,6 +34,7 @@ const imageAttribute: ImageAttribute = {
             types: ['main'],
         },
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_gallery_main/cfd646b508e8eaf0ad3fa52d426f48a6/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: 378,
             maxHeight: 'auto',
@@ -39,6 +44,7 @@ const imageAttribute: ImageAttribute = {
             types: ['main'],
         },
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_large/484cb95e4abcb58ccab27f13d1a6188b/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: 316,
             maxHeight: 'auto',
@@ -48,6 +54,7 @@ const imageAttribute: ImageAttribute = {
             types: ['main'],
         },
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_extra_large/611b34cf36199f7491b40a557dad14a9/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: 378,
             maxHeight: 378,
@@ -57,6 +64,7 @@ const imageAttribute: ImageAttribute = {
             types: ['main'],
         },
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_medium/c3f301e68dee27d69af5c17c4acfe7ea/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: 262,
             maxHeight: 'auto',
@@ -66,6 +74,7 @@ const imageAttribute: ImageAttribute = {
             types: ['main'],
         },
         {
+            label: '',
             url: '/media/cache/attachment/filter/product_small/5ffc023aed34cd80eccf6957058b520e/119/65b70923765c4378008006-659e53a8366b2160675969-DV_WebLarge_I_1637228.jpg',
             maxWidth: 82,
             maxHeight: 82,
@@ -78,12 +87,12 @@ const imageAttribute: ImageAttribute = {
     altText: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
 };
 
-const categoryAttributes: CategoryAttribute = {
-    createdAt: new Date('2024-01-15T06:30:15Z'),
-    updatedAt: new Date('2024-01-25T01:24:22Z'),
+const categoryAttributes: CategoryAttributes = {
+    createdAt: '2024-01-15T06:30:15Z',
+    updatedAt: '2024-01-25T01:24:22Z',
     title: 'Chemicals',
-    shortDescription: { html: '' },
-    description: { html: '' },
+    shortDescription: '',
+    description: '',
     url: '/chemicals',
     urls: [],
     images: [],
@@ -92,36 +101,19 @@ const categoryAttributes: CategoryAttribute = {
     metaKeywords: '',
 };
 
-const productAttribute: ProductAttribute = {
+const productAttribute: ProductAttributes = {
     sku: '1637228',
     variantAttributeNames: [],
-    createdAt: new Date('2024-01-29T02:10:47Z'),
-    updatedAt: new Date('2024-01-29T02:17:11Z'),
+    createdAt: '2024-01-29T02:10:47Z',
+    updatedAt: '2024-01-29T02:17:11Z',
     productType: 'simple',
     featured: false,
     newArrival: false,
-    restrictions: [],
     category_sort_order: null,
-    tech_specs: [],
-    prop65_message: null,
-    unspsc: null,
-    video_url: null,
-    video_url_description: null,
-    taa_compliant_flag: false,
     name: 'PB Blaster® Blaster Air Tool Lubricant 16oz',
     shortDescription: '',
     description: '',
-    productAttributes: {
-        video_url: null,
-        video_url_description: null,
-        unspsc: null,
-        taa_compliant_flag: false,
-        prop65_message: null,
-        alternate_products: [],
-        required_accessories: [],
-        optional_accessories: [],
-        storefront_documents: [],
-    },
+    productAttributes: {},
     unitPrecisions: [
         {
             unit: 'each',
@@ -134,9 +126,9 @@ const productAttribute: ProductAttribute = {
     urls: [],
     prices: [
         {
-            price: 10.0,
+            price: '10',
             currencyId: 'AUD',
-            quantity: 0,
+            quantity: '0',
             unit: 'each',
         },
     ],
@@ -245,6 +237,7 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
             {
                 type: 'productimages',
                 id: '35',
+                links: {self: ''},
                 attributes: imageAttribute,
                 relationships: {
                     product: {
@@ -261,20 +254,22 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
                 attributes: categoryAttributes,
                 relationships: {
                     categoryPath: {
-                        data: {
-                            type: 'mastercatalogcategories',
-                            id: '1',
-                        },
+                        data: [
+                            {
+                                type: 'mastercatalogcategories',
+                                id: '1',
+                            },
+                        ],
                     },
                 },
             },
             {
                 type: 'products',
                 id: '21',
+                links: {self: ''},
                 attributes: productAttribute,
                 relationships: {
                     images: {
-                        links: { self: '', related: '' },
                         data: [
                             {
                                 type: 'productimages',
@@ -283,36 +278,30 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
                         ],
                     },
                     productFamily: {
-                        links: { self: '', related: '' },
                         data: {
                             type: 'productfamilies',
                             id: '1',
                         },
                     },
                     kitItems: {
-                        links: { self: '', related: '' },
                         data: [],
                     },
                     category: {
-                        links: { self: '', related: '' },
                         data: {
                             type: 'mastercatalogcategories',
                             id: '10',
                         },
                     },
                     inventoryStatus: {
-                        links: { self: '', related: '' },
                         data: {
                             type: 'productinventorystatuses',
                             id: 'in_stock',
                         },
                     },
                     variantProducts: {
-                        links: { self: '', related: '' },
                         data: [],
                     },
                     parentProducts: {
-                        links: { self: '', related: '' },
                         data: [],
                     },
                 },
