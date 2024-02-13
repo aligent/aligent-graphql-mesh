@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
-import { AddProductsToRequisitionListArgsTransformerChain } from '../../transformers/shopping-list/add-products-to-list-transformer';
+import { AddProductsToRequisitionListArgsTransformerChain } from '../../transformers/shopping-list/add-products-to-requisition-list-args-transformer';
 import { ShoppingListsToRequisitionListsTransformer } from '../../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
 
 export const addProductsToRequisitionLisResolver: MutationResolvers['addProductsToRequisitionList'] =

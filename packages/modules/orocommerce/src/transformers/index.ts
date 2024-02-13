@@ -84,7 +84,7 @@ import { ShoppingListsToRequisitionListsTransformer } from './shopping-list/shop
 import {
     AddProductsToRequisitionListArgsTransformer,
     AddProductsToRequisitionListArgsTransformerChain,
-} from './shopping-list/add-products-to-list-transformer';
+} from './shopping-list/add-products-to-requisition-list-args-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
