@@ -1,12 +1,13 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
 import { AddProductsToRequisitionListArgsTransformerChain } from '../../transformers/shopping-list/add-products-to-requisition-list-args-transformer';
-import { ShoppingListsToRequisitionListsTransformer } from '../../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
+import { RequisitionListService } from '../../services/requisition-list-service';
 
 export const addProductsToRequisitionLisResolver: MutationResolvers['addProductsToRequisitionList'] =
     {
         resolve: async (_root, args, context, _info) => {
             const { requisitionListItems, requisitionListUid } = args;
+            const decodedRequisitionListId = atob(requisitionListUid);
 
             const addProductsToRequisitionListArgsTransformerChain: AddProductsToRequisitionListArgsTransformerChain =
                 context.injector.get(AddProductsToRequisitionListArgsTransformerChain);
@@ -20,25 +21,17 @@ export const addProductsToRequisitionLisResolver: MutationResolvers['addProducts
                 context.injector.get(ShoppingListsClient);
 
             await clientShoppingList.addItemsToShoppingList(
-                requisitionListUid,
+                decodedRequisitionListId,
                 transformedItemsForShoppingList
             );
 
-            const shoppingListsWithItems =
-                await clientShoppingList.getShoppingListsWithItems(requisitionListUid);
+            const requisitionListService: RequisitionListService =
+                context.injector.get(RequisitionListService);
 
-            const shoppingListWithItemsToRequisitionListTransformer: ShoppingListsToRequisitionListsTransformer =
-                context.injector.get(ShoppingListsToRequisitionListsTransformer);
-
-            const transformedRequisitionLists =
-                shoppingListWithItemsToRequisitionListTransformer.transform({
-                    data: shoppingListsWithItems,
-                });
+            const requisitionLists = await requisitionListService.getList(decodedRequisitionListId);
 
             return {
-                requisition_list: transformedRequisitionLists.items
-                    ? transformedRequisitionLists.items[0]
-                    : null,
+                requisition_list: requisitionLists?.items ? requisitionLists.items[0] : null,
             };
         },
     };
