@@ -1,5 +1,5 @@
 import { ShoppingListItem, ShoppingListWithItemsIncluded } from '../types/shopping-list';
-import { Product, Category, ProductImage, InventoryStatus } from '../types/product';
+import { Product, Category, ProductImage } from '../types/product';
 
 export const isShoppingListItem = (
     item: ShoppingListWithItemsIncluded
