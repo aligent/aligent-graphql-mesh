@@ -111,4 +111,15 @@ export class ShoppingListsClient {
         const response = await this.apiClient.delete(`/shoppinglists/${shoppingListId}`);
         return response;
     }
+
+    /**
+     * remove multiple item(s) from a shopping list
+     *
+     */
+    async deleteItemsInShoppingList(cartItemIds: string): Promise<boolean> {
+        const response = await this.apiClient.delete(
+            `/shoppinglistitems?filter[id]=${cartItemIds}`
+        );
+        return response;
+    }
 }
