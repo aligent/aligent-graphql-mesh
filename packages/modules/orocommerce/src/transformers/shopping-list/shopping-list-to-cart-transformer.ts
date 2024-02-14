@@ -92,7 +92,6 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 Number(relatedShoppingListItem.attributes.value)
             );
 
-            //const productAttributes = product.attributes;
             const quantity = relatedShoppingListItem.attributes.quantity;
 
             items.push({

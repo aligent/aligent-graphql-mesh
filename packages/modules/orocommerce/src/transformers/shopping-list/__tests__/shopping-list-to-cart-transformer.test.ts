@@ -18,7 +18,6 @@ describe('Shopping List to Cart transformation tests', () => {
     const shoppingListWithItems = getShoppingListsWithItems();
 
     const cart = cartTransformer.transform({ data: shoppingListWithItems });
-    console.log('CART: ', cart);
 
     test('Check whether the cart contains expected data', () => {
         expect(cart.id).toStrictEqual(shoppingListWithItems.data.id);
