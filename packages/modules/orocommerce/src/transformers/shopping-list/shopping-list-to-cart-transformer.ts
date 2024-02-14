@@ -73,7 +73,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 links: { self: product.links.self },
             };
 
-            const errorMessage: CartItemError[] = [];
+            const errorMessage: CartItemError[] | null = null;
             const relatedShoppingListItem = shoppingListItems.find(
                 (item) => item.relationships?.product.data.id === product.id
             );
