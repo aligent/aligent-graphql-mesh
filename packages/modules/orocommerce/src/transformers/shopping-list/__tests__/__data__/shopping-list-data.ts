@@ -1,7 +1,4 @@
-import {
-    ShoppingListWithItems,
-    ShoppingListItem,
-} from '../../../../types/shopping-list';
+import { ShoppingListWithItems, ShoppingListItem } from '../../../../types/shopping-list';
 import {
     CategoryAttributes,
     ProductImageAttributes,
@@ -237,7 +234,7 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
             {
                 type: 'productimages',
                 id: '35',
-                links: {self: ''},
+                links: { self: '' },
                 attributes: imageAttribute,
                 relationships: {
                     product: {
@@ -266,7 +263,7 @@ export const getShoppingListsWithItems = (): ShoppingListWithItems => {
             {
                 type: 'products',
                 id: '21',
-                links: {self: ''},
+                links: { self: 'https://aligent.oro-cloud.com/api/products/21' },
                 attributes: productAttribute,
                 relationships: {
                     images: {
