@@ -69,9 +69,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         for (const product of products) {
             const baseProduct: OroProduct = {
                 ...product,
-                included: [...productsImages ?? [], ...productsCategories ?? []],
-                links: {self: ""},
-            }
+                included: [...(productsImages ?? []), ...(productsCategories ?? [])],
+                links: { self: product.links.self },
+            };
 
             const errorMessage: CartItemError[] = [];
             const relatedShoppingListItem = shoppingListItems.find(

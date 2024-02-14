@@ -1,4 +1,12 @@
-import { Entity, Attributes, Relationships, Product, ProductImage, Category, InventoryStatus } from '.';
+import {
+    Entity,
+    Attributes,
+    Relationships,
+    Product,
+    ProductImage,
+    Category,
+    InventoryStatus,
+} from '.';
 
 export type ShoppingListWithItemsIncluded =
     | ShoppingListItem
