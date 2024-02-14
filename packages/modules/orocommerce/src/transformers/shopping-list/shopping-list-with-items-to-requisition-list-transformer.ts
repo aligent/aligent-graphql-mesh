@@ -83,6 +83,11 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 const foundShoppingListItem = includedShoppingListItems.find((includedItem) => {
                     return includedItem.relationships?.product.data.id === String(item.product.id);
                 });
+                if (!foundShoppingListItem) {
+                    return logAndThrowError(
+                        `The corresponding shoppinglistitem could not be found for product UID: ${item.product.uid}`
+                    );
+                }
 
                 items.push({
                     __typename: item.product.__typename
@@ -90,7 +95,7 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                         : 'SimpleRequisitionListItem',
                     customizable_options: item.customizable_options,
                     quantity: item.quantity,
-                    uid: foundShoppingListItem?.id ? btoa(foundShoppingListItem.id) : '',
+                    uid: btoa(foundShoppingListItem.id),
                     product: item.product,
                     notes: shoppingListWithItems.data.attributes.notes,
                 });
