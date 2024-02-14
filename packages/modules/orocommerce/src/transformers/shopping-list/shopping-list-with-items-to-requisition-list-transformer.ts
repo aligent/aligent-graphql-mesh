@@ -1,10 +1,11 @@
-import { Transformer, TransformerContext } from '@aligent/utils';
-import { ShoppingListAttribute, ShoppingListWithItems } from '../../types';
+import { Transformer, TransformerContext, logAndThrowError } from '@aligent/utils';
+import { ShoppingListAttribute, ShoppingListItem, ShoppingListWithItems } from '../../types';
 import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
 import { isNull } from 'lodash';
 import { Injectable } from 'graphql-modules';
 import { CurrencyEnum, RequisitionList } from '@aligent/orocommerce-resolvers';
+import { isShoppingListItem } from '../../utils/type-predicates';
 
 @Injectable({
     global: true,
@@ -18,10 +19,18 @@ export class ShoppingListWithItemsToRequisitionListTransformer
         context: TransformerContext<ShoppingListWithItems, RequisitionList>
     ): RequisitionList {
         const shoppingList = context.data;
+
         const { customerUser, customer } = shoppingList.data.relationships;
         const { createdAt, name, notes, currency, subTotal, total, updatedAt } = shoppingList.data
             .attributes as ShoppingListAttribute;
-        const items = this.transformItems(shoppingList);
+
+        const includedShoppingListItems = context.data.included?.filter(isShoppingListItem);
+        if (!includedShoppingListItems) {
+            return logAndThrowError(
+                'shoppinglistitems included data not found, this is needed to complete requisiton list items transform'
+            );
+        }
+        const items = this.transformItems(shoppingList, includedShoppingListItems);
 
         const subTotal_price = {
             currency: currency as CurrencyEnum,
@@ -59,7 +68,10 @@ export class ShoppingListWithItemsToRequisitionListTransformer
         };
     }
 
-    transformItems(shoppingListWithItems: ShoppingListWithItems) {
+    transformItems(
+        shoppingListWithItems: ShoppingListWithItems,
+        includedShoppingListItems: ShoppingListItem[]
+    ) {
         const cart = this.shoppingListToCartTransformer.transform({ data: shoppingListWithItems });
         const items = [];
         if (cart.items) {
@@ -67,13 +79,23 @@ export class ShoppingListWithItemsToRequisitionListTransformer
                 if (isNull(item)) {
                     continue;
                 }
+
+                const foundShoppingListItem = includedShoppingListItems.find((includedItem) => {
+                    return includedItem.relationships?.product.data.id === String(item.product.id);
+                });
+                if (!foundShoppingListItem) {
+                    return logAndThrowError(
+                        `The corresponding shoppinglistitem could not be found for product UID: ${item.product.uid}`
+                    );
+                }
+
                 items.push({
                     __typename: item.product.__typename
                         ? this.getTypeName(item.product.__typename)
                         : 'SimpleRequisitionListItem',
                     customizable_options: item.customizable_options,
                     quantity: item.quantity,
-                    uid: item.uid,
+                    uid: btoa(foundShoppingListItem.id),
                     product: item.product,
                     notes: shoppingListWithItems.data.attributes.notes,
                 });

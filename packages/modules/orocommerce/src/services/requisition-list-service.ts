@@ -31,4 +31,16 @@ export class RequisitionListService {
             data: shoppingListsWithItems,
         });
     }
+
+    /**
+     * Get the user's requisition list specified by the ID parameter
+     * @returns Promise<RequisitionList | null>
+     */
+    async getList(id: string): Promise<RequisitionLists | null> {
+        const shoppingListWithItem = await this.apiClient.getShoppingListsWithItems(id);
+
+        return this.shoppingListsToRequisitionListsTransformer.transform({
+            data: shoppingListWithItem,
+        });
+    }
 }
