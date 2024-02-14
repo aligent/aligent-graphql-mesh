@@ -18,7 +18,9 @@ export interface OrderLineItemsToNewShoppingListTransformerInput {
 /**
  * This transformer is meant to convert order line items into a new shopping list with the order line items
  */
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class OrderLineItemsToNewShoppingListTransformer
     implements Transformer<OrderLineItemsToNewShoppingListTransformerInput, ShoppingListWithItems>
 {

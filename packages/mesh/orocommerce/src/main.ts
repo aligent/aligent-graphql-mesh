@@ -28,12 +28,13 @@ const yoga = createYoga({
         EnvelopArmorPlugin({
             maxAliases: {
                 n: 70,
+                allowList: [],
             },
             maxDepth: {
                 n: 15000,
             },
             costLimit: {
-                maxCost: 15000,
+                maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
             },
         }),
     ],

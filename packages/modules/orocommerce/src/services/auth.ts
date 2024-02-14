@@ -9,7 +9,9 @@ import { decode } from 'jsonwebtoken';
 // @TOOO: Set version based on NPM package version
 const OAUTH_PATH = '/oauth2-token';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class Auth {
     protected client: AxiosInstance;
 

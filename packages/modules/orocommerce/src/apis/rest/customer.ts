@@ -8,8 +8,9 @@ import {
     UpdateCustomer,
 } from '../../types';
 import { PasswordReset } from '../../types/password-reset';
-
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CustomerClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
@@ -42,7 +43,8 @@ export class CustomerClient {
     }
 
     async getCustomerUser(
-        id: string = 'mine'
+        id: string = 'mine',
+        token: string
     ): Promise<{ data: CustomerUser; included?: OroCustomerAddress[] }> {
         const path = `/customerusers/${id}`;
         const params = {
@@ -50,6 +52,7 @@ export class CustomerClient {
         };
         const response = await this.apiClient.get<CustomerUser, OroCustomerAddress[]>(path, {
             params,
+            headers: { Authorization: token },
         });
         return response;
     }

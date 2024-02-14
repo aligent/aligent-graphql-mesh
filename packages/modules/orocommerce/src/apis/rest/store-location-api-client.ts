@@ -4,7 +4,9 @@ import { OroStoreLocation } from '../../types/store-location';
 import { QueryStoreLocationsArgs } from '@aligent/orocommerce-resolvers';
 import { StoreLocationClientArgs } from '../../types/store-location-api-client-args';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class StoreLocationClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

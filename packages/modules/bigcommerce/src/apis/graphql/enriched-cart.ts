@@ -55,7 +55,7 @@ export const getEnrichedCart = async (
             countriesRequest,
         ]);
 
-    const { tax: taxSettingsResponse } = storeConfig;
+    const { tax: taxSettingsResponse, paymentMethods } = storeConfig;
 
     if (!checkoutResponse?.entityId) return UNDEFINED_CART;
 
@@ -89,6 +89,7 @@ export const getEnrichedCart = async (
         checkoutResponse,
         flattenedProducts,
         storeFrontFormFields,
-        transformCountriesAndStates(countries, states)
+        transformCountriesAndStates(countries, states),
+        paymentMethods && JSON.parse(paymentMethods)
     );
 };

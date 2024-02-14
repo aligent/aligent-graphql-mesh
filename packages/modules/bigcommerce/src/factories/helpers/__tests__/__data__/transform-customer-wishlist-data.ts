@@ -46,6 +46,7 @@ export const transformedWishlistItems = [
         customizable_options: [],
         description: '',
         product: {
+            brand: 'Weller',
             categories: [
                 {
                     canonical_url: 'shop-all',
@@ -360,6 +361,34 @@ export const bcWishListItems: WishlistItemConnection = {
                 productEntityId: 492,
                 variantEntityId: null,
                 product: {
+                    brand: {
+                        entityId: 111,
+                        id: 'well',
+                        metaDesc: '',
+                        metafields: {
+                            edges: [],
+                            pageInfo: {
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                            },
+                        },
+                        metaKeywords: [],
+                        name: 'Weller',
+                        pageTitle: 'Weller',
+                        path: '/brands/weller',
+                        products: {
+                            pageInfo: {
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                            },
+                        },
+                        searchKeywords: [],
+                        seo: {
+                            metaDescription: '',
+                            metaKeywords: '',
+                            pageTitle: '',
+                        },
+                    },
                     id: 'UHJvZHVjdDo0OTI=',
                     entityId: 492,
                     sku: 'WH01',

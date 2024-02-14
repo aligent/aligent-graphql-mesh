@@ -2,7 +2,9 @@ import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { KeyMessage } from '../../types/key-messages';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class KeyMessagesClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

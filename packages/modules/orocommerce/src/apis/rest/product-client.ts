@@ -16,7 +16,9 @@ import { logAndThrowError, GraphqlError } from '@aligent/utils';
 import { lowerCase } from 'lodash';
 import { getIdFromCategoryUid } from '../../utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ProductsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
@@ -65,7 +67,7 @@ export class ProductsClient {
         const path = `/products`;
         const params = {
             'filter[slug]': url,
-            include: 'variantProducts,images',
+            include: 'variantProducts,images,category,category.categoryPath',
         };
         const response = await this.apiClient.get<Product[], ProductIncludeTypes[]>(path, {
             params,
@@ -161,7 +163,7 @@ export class ProductsSearchArgsBuilder {
 
             //add aggregations by product attributes
             productAttributes.forEach((attribute) => {
-                aggregationsArray.push(`${attribute.meta.id} count ${attribute.meta.label}+count`);
+                aggregationsArray.push(`${attribute.id} count ${attribute.attributes.label}+count`);
             });
 
             return aggregationsArray.join(',');

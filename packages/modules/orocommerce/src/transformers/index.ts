@@ -22,6 +22,10 @@ import {
 } from './categories/breadcrumbs-transformer';
 import { CmsPageTransformer, CmsPageTransformerChain } from './cms-page/transform-cms-page-data';
 import {
+    SocialLinksTransformer,
+    SocialLinksTransformerChain,
+} from './social-links/social-links-transformer';
+import {
     StoreConfigTransformer,
     StoreConfigTransformerChain,
 } from './store-config/store-config-transformer';
@@ -75,6 +79,12 @@ import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-
 
 import { ShoppingListToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
 import { RequisitionListInputToShoppingListTransformer } from '../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
+import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list/shopping-list-with-items-to-requisition-list-transformer';
+import { ShoppingListsToRequisitionListsTransformer } from './shopping-list/shopping-lists-to-requisition-lists-transformer';
+import {
+    AddProductsToRequisitionListArgsTransformer,
+    AddProductsToRequisitionListArgsTransformerChain,
+} from './shopping-list/add-products-to-requisition-list-args-transformer';
 
 export * from './cms-blocks/cms-blocks-transformer';
 export * from './country/country-transformer';
@@ -86,6 +96,11 @@ export * from './shopping-list/order-line-item-to-shopping-list-item-transformer
 export * from './shopping-list/order-line-items-to-new-shopping-list-transformer';
 export * from './shopping-list/shopping-list-to-cart-transformer';
 export * from './contact-us/contact-us-to-contact-request-transformer';
+export * from './products/products-data-transformer';
+export * from './products/reviews-transformer';
+export * from './products/stock-status-transformer';
+export * from './categories/categories-transformer';
+export * from './categories/breadcrumbs-transformer';
 
 export const getOroTransformers = (): Array<Provider> => {
     return [
@@ -93,43 +108,35 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: CmsBlocksTransformerChain,
             useClass: CmsBlocksTransformerChain,
-            global: true,
         },
         {
             provide: CmsPageTransformerChain,
             useClass: CmsPageTransformerChain,
-            global: true,
         },
         {
             provide: StoreLocationsTransformerChain,
             useClass: StoreLocationsTransformerChain,
-            global: true,
         },
         {
             provide: CategoriesTransformerChain,
             useClass: CategoriesTransformerChain,
-            global: true,
         },
         {
             provide: BreadcrumbsTransformerChain,
             useClass: BreadcrumbsTransformerChain,
-            global: true,
         },
         {
             provide: CustomerAddressTransformerChain,
             useClass: CustomerAddressTransformerChain,
-            global: true,
         },
 
         {
             provide: OroAddressTransformerChain,
             useClass: OroAddressTransformerChain,
-            global: true,
         },
         {
             provide: OroCustomerTransformerChain,
             useClass: OroCustomerTransformerChain,
-            global: true,
         },
 
         {
@@ -139,7 +146,6 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: UpdateCustomerAddressTransformerChain,
             useClass: UpdateCustomerAddressTransformerChain,
-            global: true,
         },
         {
             provide: UpdateCustomerTransformerChain,
@@ -148,45 +154,48 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: AddProductsToCartTransformerChain,
             useClass: AddProductsToCartTransformerChain,
-            global: true,
         },
         {
             provide: UpdateCartItemTransformerChain,
             useClass: UpdateCartItemTransformerChain,
-            global: true,
         },
-        // Create default transformers and register them with their chain transformers
-
         {
             provide: CurrencyTransformerChain,
             useClass: CurrencyTransformerChain,
-            global: true,
         },
         {
             provide: CustomerOrdersTransformerChain,
             useClass: CustomerOrdersTransformerChain,
-            global: true,
+        },
+        {
+            provide: SocialLinksTransformerChain,
+            useClass: SocialLinksTransformerChain,
         },
         {
             provide: StoreConfigTransformerChain,
             useClass: StoreConfigTransformerChain,
-            global: true,
         },
         {
             provide: ProductsTransformerChain,
             useClass: ProductsTransformerChain,
-            global: true,
         },
         {
             provide: ShoppingListToRequisitionListTransformer,
             useClass: ShoppingListToRequisitionListTransformer,
-            global: true,
+        },
+        {
+            provide: ShoppingListsToRequisitionListsTransformer,
+            useClass: ShoppingListsToRequisitionListsTransformer,
         },
         {
             provide: RequisitionListInputToShoppingListTransformer,
             useClass: RequisitionListInputToShoppingListTransformer,
-            global: true,
         },
+        {
+            provide: AddProductsToRequisitionListArgsTransformerChain,
+            useClass: AddProductsToRequisitionListArgsTransformerChain,
+        },
+        // Create default transformers and register them with their chain transformers
         {
             provide: StoreLocationsTransformer,
             useFactory: (transformerChain) => {
@@ -250,6 +259,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return customerOrdersTransfomer;
             },
             deps: [CustomerOrdersTransformerChain],
+        },
+        {
+            provide: SocialLinksTransformer,
+            useFactory: (transformerChain) => {
+                const socialLinksTransformer = new SocialLinksTransformer();
+                transformerChain.addTransformer(socialLinksTransformer);
+                return socialLinksTransformer;
+            },
+            deps: [SocialLinksTransformerChain],
         },
         {
             provide: StoreConfigTransformer,
@@ -333,12 +351,21 @@ export const getOroTransformers = (): Array<Provider> => {
         },
         {
             provide: ProductsTransformer,
-            useFactory: (transformerChain) => {
-                const transformer = new ProductsTransformer();
+            useFactory: (transformerChain, categoriesTransformer) => {
+                const transformer = new ProductsTransformer(categoriesTransformer);
                 transformerChain.addTransformer(transformer);
                 return transformer;
             },
-            deps: [ProductsTransformerChain],
+            deps: [ProductsTransformerChain, CategoriesTransformer],
+        },
+        {
+            provide: AddProductsToRequisitionListArgsTransformer,
+            useFactory: (transformerChain) => {
+                const transformer = new AddProductsToRequisitionListArgsTransformer();
+                transformerChain.addTransformer(transformer);
+                return transformer;
+            },
+            deps: [AddProductsToRequisitionListArgsTransformerChain],
         },
         {
             provide: AddProductsToCartTransformer,
@@ -361,6 +388,15 @@ export const getOroTransformers = (): Array<Provider> => {
                 return updateCartItemTransformer;
             },
             deps: [UpdateCartItemTransformerChain],
+        },
+        {
+            provide: ShoppingListWithItemsToRequisitionListTransformer,
+            useFactory: (shoppingListToCartTransformer) => {
+                return new ShoppingListWithItemsToRequisitionListTransformer(
+                    shoppingListToCartTransformer
+                );
+            },
+            deps: [ShoppingListToCartTransformer],
         },
     ];
 };

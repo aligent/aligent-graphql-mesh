@@ -1,14 +1,14 @@
 import { CategoriesClient } from '../../apis/rest';
 import { QueryResolvers } from '@aligent/orocommerce-resolvers';
-import { CategoriesTransformerChain } from '../../transformers/categories/categories-transformer';
-import { getIdFromCategoryUid } from '../../utils';
+import { CategoriesTransformerChain } from '../../transformers/index';
+import { getWebcatalogIdFromCategoryUid } from '../../utils';
 
 export const categoriesResolver = {
     resolve: async (_root, args, context, _info) => {
         const categoryUid = args?.filters?.category_uid?.eq;
-        const rootEntityId = getIdFromCategoryUid(categoryUid);
+        const rootEntityId = getWebcatalogIdFromCategoryUid(categoryUid);
         const api: CategoriesClient = context.injector.get(CategoriesClient);
-        const categories = await api.getCategories(rootEntityId);
+        const categories = await api.getWebcatalogCategories(rootEntityId);
         const transformer: CategoriesTransformerChain = context.injector.get(
             CategoriesTransformerChain
         );

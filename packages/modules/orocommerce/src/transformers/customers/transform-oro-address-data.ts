@@ -3,7 +3,9 @@ import { CustomerAddress, CountryCodeEnum } from '@aligent/orocommerce-resolvers
 import { OroCustomerAddress } from '../../types';
 import { Injectable } from 'graphql-modules';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class OroAddressTransformerChain extends ChainTransformer<
     OroCustomerAddress,
     CustomerAddress
@@ -15,6 +17,13 @@ export class OroAddressTransformer implements Transformer<OroCustomerAddress, Cu
         context: TransformerContext<OroCustomerAddress, CustomerAddress>
     ): CustomerAddress {
         const customerAddress = context.data;
+
+        const defaultBilling = customerAddress.attributes.types?.find(
+            (type) => type.addressType === 'billing'
+        );
+        const defaultShipping = customerAddress.attributes.types?.find(
+            (type) => type.addressType === 'shipping'
+        );
 
         return {
             id: parseInt(context.data.id),
@@ -31,8 +40,8 @@ export class OroAddressTransformer implements Transformer<OroCustomerAddress, Cu
                 region_id: null,
                 region_code: customerAddress.relationships.region.data.id,
             },
-            default_billing: customerAddress.attributes.types[0].default,
-            default_shipping: customerAddress.attributes.types[1].default,
+            default_billing: defaultBilling ? defaultBilling.default : false,
+            default_shipping: defaultShipping ? defaultShipping.default : false,
         };
     }
 }

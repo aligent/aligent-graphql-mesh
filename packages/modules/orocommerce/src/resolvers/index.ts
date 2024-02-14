@@ -6,7 +6,6 @@ import { generateCustomerTokenMutation } from './mutations/generate-customer-tok
 import { currencyResolver } from './queries/currency';
 import { keyMessagesResolver } from './queries/key-messages';
 import { categoriesResolver } from './queries/categories';
-import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { createEmptyCartMutation } from './mutations/create-empty-cart';
 import { cmsBlocksResolver } from './queries/cms-blocks';
 import { cmsPageResolver } from './queries/cms-page';
@@ -32,8 +31,14 @@ import { isEmailAvailableResolver } from './queries/is-email-available';
 import { requestPasswordResetEmailMutation } from './mutations/request-password-reset-email';
 import { resetPasswordMutation } from './mutations/reset-password';
 import { createRequisitionListMutation } from './mutations/create-requisition-list';
+import { deleteRequisitionListMutation } from './mutations/delete-requisition-list';
 import { customerCartResolver } from './queries/customer-cart';
 import { updateRequisitionListItemsMutation } from './mutations/update-requisition-list-items';
+import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
+import { updateRequisitionListMutation } from './mutations/update-requisition-list';
+import { deleteRequisitionListItemsMutation } from './mutations/delete-requisition-list-items';
+import { addProductsToRequisitionLisResolver } from './mutations/add-products-to-requisition-list';
+import { RequisitionListsResolver } from './queries/sub-resolvers/requisition-lists';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -55,6 +60,7 @@ export const resolvers: Resolvers = {
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
+        addProductsToRequisitionList: addProductsToRequisitionLisResolver,
         createCartRedirectUrls: createCartRedirectUrlsResolver,
         generateCustomerToken: generateCustomerTokenMutation,
         createEmptyCart: createEmptyCartMutation,
@@ -69,6 +75,9 @@ export const resolvers: Resolvers = {
         removeItemFromCart: removeItemFromCartMutation,
         updateCustomer: updateCustomerMutation,
         createRequisitionList: createRequisitionListMutation,
+        updateRequisitionList: updateRequisitionListMutation,
+        deleteRequisitionList: deleteRequisitionListMutation,
+        deleteRequisitionListItems: deleteRequisitionListItemsMutation,
         requestPasswordResetEmail: requestPasswordResetEmailMutation,
         resetPassword: resetPasswordMutation,
         updateRequisitionListItems: updateRequisitionListItemsMutation,
@@ -79,6 +88,7 @@ export const resolvers: Resolvers = {
     },
     Customer: {
         orders: customerOrdersResolver,
+        requisition_lists: RequisitionListsResolver,
     },
 };
 

@@ -3,7 +3,9 @@ import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ApiClient } from './client';
 import { ContactRequest } from '../../types';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ContactClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

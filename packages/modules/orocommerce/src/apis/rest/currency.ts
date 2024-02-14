@@ -2,7 +2,9 @@ import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
 import { OroCurrency } from '../../types';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CurrencyClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 

@@ -37,7 +37,7 @@ interface CustomerAddressesAttributes extends Attributes {
     street: string;
     street2: string | null;
     phone: string | null;
-    types: { default: boolean; addressType: string }[];
+    types?: { default: boolean; addressType: string }[];
 }
 
 interface CustomerAddressesRelationships extends Relationships {

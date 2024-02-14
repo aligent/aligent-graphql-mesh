@@ -8,7 +8,9 @@ import { GraphqlError } from '@aligent/utils';
 export const USER_AGENT = 'AligentMesh / 0.0.1';
 const API_PATH = '/api';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ApiClient {
     protected client: AxiosInstance;
 

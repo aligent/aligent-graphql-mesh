@@ -1,0 +1,31 @@
+{
+    "type": "mastercatalogcategories",
+    "id": "7",
+    "links": { "self": "https://aligent.oro-cloud.com/api/mastercatalogcategories/7" },
+    "attributes": {
+        "createdAt": "2023-10-27T01:41:50Z",
+        "updatedAt": "2023-10-27T01:57:11Z",
+        "title": "Hoodies & Sweatshirts",
+        "shortDescription": null,
+        "description": null,
+        "url": "/hoodies-sweatshirts",
+        "urls": [],
+        "images": [],
+        "metaTitle": null,
+        "metaDescription": null,
+        "metaKeywords": null
+    },
+    "relationships": {
+        "categoryPath": {
+            "links": {
+                "self": "https://aligent.oro-cloud.com/api/mastercatalogcategories/7/relationships/categoryPath",
+                "related": "https://aligent.oro-cloud.com/api/mastercatalogcategories/7/categoryPath"
+            },
+            "data": [
+                { "type": "mastercatalogcategories", "id": "1" },
+                { "type": "mastercatalogcategories", "id": "5" },
+                { "type": "mastercatalogcategories", "id": "6" }
+            ]
+        }
+    }
+}

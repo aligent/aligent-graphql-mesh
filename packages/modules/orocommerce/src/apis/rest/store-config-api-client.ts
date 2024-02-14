@@ -1,16 +1,27 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ApiClient } from './client';
-import { OroStoreConfig } from '../../types/store-config';
-import { getMockOroStoreConfig } from '../../transformers/store-config/__tests__/__data__/oro-store-config-data';
+import { OroStoreConfigApiData } from '../../types/store-config';
+import { OroSocialLinkApiData } from '../../types/social-links';
 
-@Injectable()
+const STORE_CONFIG_ENDPOINT = '/tf_config';
+
+@Injectable({
+    global: true,
+})
 export class StoreConfigApiClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
-    // TODO: we will implement Oro Api for store config in ticket OTF-96
-    async getStoreConfig(): Promise<OroStoreConfig> {
-        return new Promise((resolve, _) => {
-            resolve(getMockOroStoreConfig());
+    async getStoreConfig(accessToken: string): Promise<OroStoreConfigApiData[]> {
+        const response = await this.apiClient.get<OroStoreConfigApiData[]>(STORE_CONFIG_ENDPOINT, {
+            headers: { Authorization: accessToken },
         });
+        return response.data;
+    }
+
+    async getSocialLinks(): Promise<OroSocialLinkApiData[]> {
+        const response = await this.apiClient.get<OroSocialLinkApiData[]>(
+            `${STORE_CONFIG_ENDPOINT}?filter[id]=take_flight_social_links.social_links_urls`
+        );
+        return response.data;
     }
 }

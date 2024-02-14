@@ -21,6 +21,10 @@ export const ProductsDetails: DocumentNode = gql`
 
     fragment ProductDetails on Product {
         __typename
+        brand {
+            id
+            name
+        }
         id
         entityId
         sku
@@ -112,11 +116,14 @@ export const ProductsDetails: DocumentNode = gql`
         productOptions {
             ...ProductOptions
         }
-        variants {
+        variants(first: $first, after: $after) {
             edges {
                 node {
                     ...Variants
                 }
+            }
+            pageInfo {
+                ...PageInfo
             }
         }
         weight {

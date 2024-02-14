@@ -32,7 +32,7 @@ export const customer = stripIgnoredCharacters(
                     currencyCode
                     value
                 }
-                wishlists {
+                wishlists(first: 50) {
                     edges {
                         cursor
                         node {
@@ -111,6 +111,33 @@ export const customer = stripIgnoredCharacters(
                                                 ...ProductOptions
                                                 pageInfo {
                                                     ...PageInfo
+                                                }
+                                            }
+                                            variants {
+                                                edges {
+                                                    node {
+                                                        id
+                                                        entityId
+                                                        sku
+                                                        productOptions {
+                                                            edges {
+                                                                node {
+                                                                    entityId
+                                                                    displayName
+                                                                    isRequired
+                                                                    isVariantOption
+                                                                }
+                                                            }
+                                                        }
+                                                        options {
+                                                            edges {
+                                                                node {
+                                                                    entityId
+                                                                    displayName
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                             path

@@ -6,7 +6,9 @@ import { GetCheckoutsArgs } from '../../types';
 
 const CHECKOUTS_API = '/checkouts';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class CheckoutsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
     async getCheckouts(args: GetCheckoutsArgs) {

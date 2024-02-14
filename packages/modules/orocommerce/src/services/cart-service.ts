@@ -19,13 +19,16 @@ const UNDEFINED_CART: Cart = {
 
 const UNDEFINED_REQUISITION_LIST: RequisitionList = {
     description: '',
-    items: [],
+    items: null,
     items_count: 0,
     name: '',
     uid: '',
 };
 
 @Injectable()
+@Injectable({
+    global: true,
+})
 export class CartService {
     constructor(
         @Inject(forwardRef(() => ShoppingListService)) protected apiClient: ShoppingListService,

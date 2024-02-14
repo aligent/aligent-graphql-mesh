@@ -5,10 +5,13 @@ import {
     ShoppingListInputAttribute,
     ShoppingListItem,
     ShoppingListItemInput,
+    ShoppingListsWithItems,
     ShoppingListWithItems,
 } from '../../types';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ShoppingListsClient {
     constructor(@Inject(forwardRef(() => ApiClient)) protected apiClient: ApiClient) {}
 
@@ -16,14 +19,13 @@ export class ShoppingListsClient {
         return (await this.apiClient.get<ShoppingList[]>('/shoppinglists')).data;
     }
 
-    async getShoppingListsWithItems(id?: string): Promise<{
-        data: ShoppingList[];
-        included?: ShoppingListWithItems['included'];
-    }> {
-        const params = {
+    async getShoppingListsWithItems(id?: string): Promise<ShoppingListsWithItems> {
+        const params: Record<string, string> = {
             include: 'items.product.images,items.product.category',
-            'filter[id]': id,
         };
+        if (id) {
+            params['filter[id]'] = id;
+        }
         return this.apiClient.get<ShoppingList[], ShoppingListWithItems['included']>(
             '/shoppinglists',
             { params }
@@ -33,6 +35,16 @@ export class ShoppingListsClient {
     async postShoppingLists(data: ShoppingList): Promise<ShoppingList> {
         const res = await this.apiClient.post<{ data: ShoppingList }, { data: ShoppingList }>(
             '/shoppinglists',
+            {
+                data,
+            }
+        );
+        return res.data;
+    }
+
+    async updateShoppingLists(data: ShoppingList): Promise<ShoppingList> {
+        const res = await this.apiClient.patch<{ data: ShoppingList }, { data: ShoppingList }>(
+            `/shoppinglists/${data.id}`,
             {
                 data,
             }
@@ -86,8 +98,28 @@ export class ShoppingListsClient {
         return res.data;
     }
 
+    async getShoppingListByItemId(itemId: string): Promise<ShoppingListItem> {
+        return (await this.apiClient.get<ShoppingListItem>(`/shoppinglistitems/${itemId}`)).data;
+    }
+
     async deleteItemInShoppingList(cartItemId: string) {
         const response = await this.apiClient.delete(`/shoppinglistitems/${cartItemId}`);
+        return response;
+    }
+
+    async deleteShoppingList(shoppingListId: string): Promise<boolean> {
+        const response = await this.apiClient.delete(`/shoppinglists/${shoppingListId}`);
+        return response;
+    }
+
+    /**
+     * remove multiple item(s) from a shopping list
+     *
+     */
+    async deleteItemsInShoppingList(cartItemIds: string): Promise<boolean> {
+        const response = await this.apiClient.delete(
+            `/shoppinglistitems?filter[id]=${cartItemIds}`
+        );
         return response;
     }
 }

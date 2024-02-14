@@ -43,8 +43,12 @@ export const getTransformedWishListItems = (
     return wishListItems.edges
         .map((wishlistItem) => {
             if (!wishlistItem || !wishlistItem.node) return null;
-            const { entityId } = wishlistItem.node;
-            const transformedProduct = getTransformedProductData(wishlistItem.node.product);
+            const { entityId, variantEntityId: wishlistItemVariantId } = wishlistItem.node;
+            const transformedProduct = getTransformedProductData(
+                wishlistItem.node.product,
+                undefined,
+                wishlistItemVariantId
+            );
             return {
                 // This is a temporary fix until we can get the correct __typeOf or __resolveType functions working
                 __typename: getWishlistItemInterfaceType(transformedProduct),

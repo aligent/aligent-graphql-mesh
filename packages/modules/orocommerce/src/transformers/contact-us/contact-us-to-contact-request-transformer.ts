@@ -3,7 +3,9 @@ import { ContactRequest } from '../../types';
 import { Injectable } from 'graphql-modules';
 import { Transformer, TransformerContext } from '@aligent/utils';
 
-@Injectable()
+@Injectable({
+    global: true,
+})
 export class ContactUsInputToContactRequestTransformer
     implements Transformer<ContactUsInput, ContactRequest>
 {

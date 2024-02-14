@@ -499,3 +499,9 @@ export interface BcStorefrontFormFields {
     shippingAddress: BcStorefrontFormField[];
     billingAddress: BcStorefrontFormField[];
 }
+
+export type BcPaymentMethod = {
+    code: string;
+    name: string;
+    test_mode?: boolean;
+};

@@ -133,6 +133,7 @@ export interface ProductImageAttributes extends Attributes {
     mimeType: string;
     types: Array<string>;
     updatedAt: string;
+    altText: string;
 }
 
 export interface ProductImageFile {
@@ -142,11 +143,13 @@ export interface ProductImageFile {
     dimension: string;
     types: Array<string>;
     url_webp?: string;
+    label: string;
 }
 
-export interface ConfigurableProductAttribute {
-    meta: {
-        id: string;
+export interface ConfigurableProductAttribute extends Entity {
+    type: 'tf_product_attributes';
+    id: string;
+    attributes: {
         attrType: string;
         label: string;
     };
@@ -157,7 +160,7 @@ export interface Category extends Entity {
     id: string;
     attributes: CategoryAttributes;
     relationships?: {
-        categoryPath: { data: Resource };
+        categoryPath: { data: Resource[] };
     };
 }
 
@@ -168,13 +171,30 @@ export interface CategoryAttributes extends Attributes {
     shortDescription: string | null;
     description: string | null;
     url: string;
-    urls: Array<object>;
-    images: Array<object>;
+    urls: string[];
+    images: CategoryImage[];
     metaTitle: string | null;
     metaDescription: string | null;
     metaKeywords: string | null;
 }
 
+interface CategoryImage {
+    mimeType: string;
+    url: string;
+    type: string;
+}
+
 export type ProductIncludeTypes = InventoryStatus | ProductImage | Product | Category;
 export type MetaAllowedTypes = ProductSearchMeta;
 export type SupportedProductTypes = 'SimpleProduct' | 'ConfigurableProduct' | 'BundleProduct';
+
+export interface ProductsTransformerInput {
+    oroProductsData: {
+        data: Array<Product | ProductSearch>;
+        included?: Array<ProductIncludeTypes>;
+        meta?: ProductSearchMeta;
+    };
+    productAttributes?: ConfigurableProductAttribute[];
+    pageSize: number;
+    currentPage: number;
+}
