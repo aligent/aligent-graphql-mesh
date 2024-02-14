@@ -55,7 +55,7 @@ describe('Shopping List to Cart transformation tests', () => {
                     row_total: shoppingListItemPrice,
                     row_total_including_tax: shoppingListItemPrice,
                 },
-                errors: [],
+                errors: null,
                 product: {
                     __typename: 'SimpleProduct',
                     redirect_code: 0,
