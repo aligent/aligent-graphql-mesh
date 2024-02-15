@@ -23,10 +23,10 @@ describe('Order Line Item to Shopping List Item transformation tests', () => {
         expect(transformedLineItem.attributes.quantity).toStrictEqual(
             orderLineItem.attributes.quantity
         );
-        expect(transformedLineItem.relationships.product.data).toStrictEqual(
+        expect(transformedLineItem.relationships?.product.data).toStrictEqual(
             orderLineItem.relationships.product.data
         );
-        expect(transformedLineItem.relationships.unit.data).toStrictEqual(
+        expect(transformedLineItem.relationships?.unit.data).toStrictEqual(
             orderLineItem.relationships.productUnit.data
         );
     });
