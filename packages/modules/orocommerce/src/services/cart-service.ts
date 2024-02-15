@@ -16,7 +16,6 @@ const UNDEFINED_CART: Cart = {
     shipping_addresses: [],
 };
 
-@Injectable()
 @Injectable({
     global: true,
 })
