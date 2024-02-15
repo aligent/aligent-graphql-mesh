@@ -23,10 +23,9 @@ export const updateRequisitionListMutation: MutationResolvers['updateRequisition
         const shoppingListToRequisitionListTransformer: ShoppingListToRequisitionListTransformer =
             context.injector.get(ShoppingListToRequisitionListTransformer);
         return {
-            __typename: 'UpdateRequisitionListOutput',
             requisition_list: shoppingListToRequisitionListTransformer.transform({
                 data: updatedShoppingList,
-            }).requisition_list,
+            }),
         };
     },
 };

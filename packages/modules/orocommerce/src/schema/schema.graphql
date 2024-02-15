@@ -7681,7 +7681,7 @@ type GiftCardRequisitionListItem implements RequisitionListItemInterface {
 """
 Defines which items in a requisition list to update.
 """
-type UpdateRequisitionListItemsInput {
+input UpdateRequisitionListItemsInput {
     """
     An array of customer-entered options.
     """
@@ -7701,16 +7701,6 @@ type UpdateRequisitionListItemsInput {
     An array of selected option IDs.
     """
     selected_options: [ID]
-}
-
-"""
-Output of the request to update items in the specified requisition list.
-"""
-type UpdateRequisitionListItemsOutput {
-    """
-    The requisition list after updating items.
-    """
-    requisition_list: RequisitionList
 }
 
 """

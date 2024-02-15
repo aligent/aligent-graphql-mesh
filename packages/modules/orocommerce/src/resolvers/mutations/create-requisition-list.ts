@@ -6,7 +6,7 @@ import { RequisitionListInputToShoppingListTransformer } from '../../transformer
 /**
  * Create a new shopping list.
  */
-export const createRequisitionListMutation: MutationResolvers['createRequisitionList'] = {
+export const createRequisitionListMutation: MutationResolvers['createEven RequisitionList'] = {
     resolve: async (_root, args, context, _info) => {
         const requisitionListInputToShoppingListTransformer: RequisitionListInputToShoppingListTransformer =
             context.injector.get(RequisitionListInputToShoppingListTransformer);
@@ -20,8 +20,11 @@ export const createRequisitionListMutation: MutationResolvers['createRequisition
 
         const shoppingListToRequisitionListTransformer: ShoppingListToRequisitionListTransformer =
             context.injector.get(ShoppingListToRequisitionListTransformer);
-        return shoppingListToRequisitionListTransformer.transform({
-            data: createdShoppingList,
-        });
+
+        return {
+            requisition_list: shoppingListToRequisitionListTransformer.transform({
+                data: createdShoppingList,
+            }),
+        };
     },
 };
