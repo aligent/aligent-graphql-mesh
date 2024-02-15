@@ -14,8 +14,10 @@ export class StoreConfigApiClient {
         @Inject(CONTEXT) private context: GraphQLModules.ModuleContext
     ) {}
 
-    async getStoreConfig(): Promise<OroStoreConfigApiData[]> {
-        const response = await this.apiClient.get<OroStoreConfigApiData[]>(STORE_CONFIG_ENDPOINT);
+    async getStoreConfig(accessToken: string): Promise<OroStoreConfigApiData[]> {
+        const response = await this.apiClient.get<OroStoreConfigApiData[]>(STORE_CONFIG_ENDPOINT, {
+            headers: { Authorization: accessToken },
+        });
         return response.data;
     }
 
@@ -26,8 +28,8 @@ export class StoreConfigApiClient {
         return response.data;
     }
 
-    async retrieveStoreConfigFromCache(): Promise<OroStoreConfigApiData[]> {
-        const query = () => this.getStoreConfig();
+    async retrieveStoreConfigFromCache(accessToken: string): Promise<OroStoreConfigApiData[]> {
+        const query = () => this.getStoreConfig(accessToken);
         return getDataFromMeshCache(this.context, CACHE_KEY__STORE_CONFIG, query);
     }
 }
