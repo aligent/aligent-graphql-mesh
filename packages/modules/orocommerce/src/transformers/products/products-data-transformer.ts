@@ -198,7 +198,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     id: Number(includedImage.id) + index, // This ID just needs to be unique for the FE
                     label: image.dimension,
                     disabled: false,
-                    file: `${origin}${image.url}`,
+                    file: this.getImageUrl(origin, image?.url),
                     position: index, // This value doesnt exist in ORO
                     uid: btoa(`id:${includedImage.id}-dimension:${image.dimension}`),
                 };
@@ -207,6 +207,12 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         }
 
         return mediaGalleryEntries;
+    }
+
+    getImageUrl(origin?: string, url?: string): string {
+        if (!url) return '';
+        if (!origin || url.indexOf(origin) === 0) return url;
+        return `${origin}${url}`;
     }
 
     public getTransformedProductData(
@@ -280,11 +286,11 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 related_products: null, // ? TODO
                 sku: oroProduct.attributes.sku,
                 small_image: {
-                    url: smallImage?.url ? `${origin}${smallImage?.url}` : '',
+                    url: smallImage?.url ? this.getImageUrl(origin, smallImage?.url) : '',
                     label: smallImage?.label || '',
                 },
                 image: {
-                    url: originalImage?.url ? `${origin}${originalImage?.url}` : '',
+                    url: originalImage?.url ? this.getImageUrl(origin, originalImage?.url) : '',
                     label: originalImage?.label || '',
                 },
                 type: 'PRODUCT',
