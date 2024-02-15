@@ -12,7 +12,6 @@ export class ShoppingListToRequisitionListTransformer
 {
     transform(context: TransformerContext<ShoppingList, RequisitionList>): RequisitionList {
         const shoppingList = context.data;
-
         return {
             description: shoppingList.attributes.notes,
             items: {

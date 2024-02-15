@@ -25,7 +25,7 @@ export class CartService {
         @Inject(forwardRef(() => ShoppingListService)) protected apiClient: ShoppingListService,
 
         @Inject(forwardRef(() => ShoppingListToCartTransformer))
-        protected readonly cartTransformer: Transformer<ShoppingListWithItems, Cart>,
+        protected readonly cartTransformer: Transformer<ShoppingListWithItems, Cart>
     ) {}
 
     /**
@@ -47,6 +47,4 @@ export class CartService {
 
         return this.cartTransformer.transform({ data: shoppingListOrId });
     }
-
-
 }
