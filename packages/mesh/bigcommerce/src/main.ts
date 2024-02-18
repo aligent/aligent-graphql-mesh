@@ -21,6 +21,21 @@ const yoga = createYoga({
     logging: DEV_MODE ? 'info' : 'warn',
     landingPage: false,
     cors: false,
+    context: async ({ request }) => {
+        // Convert the headers object to a Record so we can maintain
+        // the same headers references in the resolvers
+        const headers: Record<string, string> = {};
+        request.headers.forEach((value, key) => {
+            headers[key] = value
+        })
+        
+        return {
+            headers,
+            cache: DEV_MODE
+                ? new Keyv({ namespace: 'application' })
+                : new Keyv(redisUri, { namespace: 'application' }),
+        }
+    },
     plugins: [
         useGraphQLModules(application),
         customerImpersonationPlugin,
