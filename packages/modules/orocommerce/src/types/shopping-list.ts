@@ -207,7 +207,7 @@ export interface ShoppingListRelationships extends Relationships {
         }[];
     };
 }
-export interface ShoppingListItemInput extends Omit<ShoppingListItem, 'id'> {}
+export type ShoppingListItemInput = Omit<ShoppingListItem, 'id'>
 
 export interface ShoppingListItem extends Entity {
     type: 'shoppinglistitems';

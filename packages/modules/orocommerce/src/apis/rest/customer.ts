@@ -43,7 +43,7 @@ export class CustomerClient {
     }
 
     async getCustomerUser(
-        id: string = 'mine',
+        id = 'mine',
         token: string
     ): Promise<{ data: CustomerUser; included?: OroCustomerAddress[] }> {
         const path = `/customerusers/${id}`;

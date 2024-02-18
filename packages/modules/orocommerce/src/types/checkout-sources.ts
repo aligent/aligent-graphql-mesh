@@ -27,7 +27,7 @@ export interface CheckoutSource {
     relationships: CheckoutSourceRelationships;
 }
 
-export interface CheckoutSources extends Array<CheckoutSource> {}
+export type CheckoutSources = Array<CheckoutSource>
 
 export type CreateCheckoutSourceArgs = { deleted?: boolean; shoppingList: number };
 
