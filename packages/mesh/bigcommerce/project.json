@@ -4,59 +4,78 @@
     "sourceRoot": "packages/mesh/bigcommerce/src",
     "projectType": "application",
     "targets": {
-        "mesh-build": {
-            "executor": "nx:run-commands",
-            "inputs": [],
-            "outputs": ["{options.outputPath}"],
-            "options": {
-                "command": "mesh build --throwOnInvalidConfiguration --dir packages/mesh/bigcommerce",
-                "runBuildTargetDependencies": true
-            },
-            "dependsOn": [
-                {
-                    "projects": [
-                        "bigcommerce-graphql-module",
-                        "bigcommerce-resolvers",
-                        "bigcommerce-operations"
-                    ],
-                    "target": "build"
-                }
-            ]
-        },
         "build": {
-            "executor": "@nx/js:tsc",
+            "executor": "@nx/esbuild:esbuild",
             "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
             "options": {
+                "platform": "node",
                 "outputPath": "dist/packages/mesh/bigcommerce",
+                "format": ["cjs"],
+                "bundle": false,
+                "main": "packages/mesh/bigcommerce/src/main.ts",
                 "tsConfig": "packages/mesh/bigcommerce/tsconfig.app.json",
-                "packageJson": "packages/mesh/bigcommerce/package.json",
-                "main": "packages/mesh/bigcommerce/src/server.ts",
-                "assets": ["packages/mesh/bigcommerce/.mesh/**/*.graphql"],
-                "external": "none",
-                "generateExportsField": true,
-                "generateLockfile": true
+                "assets": ["packages/modules/bigcommerce/src/schema/**/*.graphql"],
+                "generatePackageJson": true,
+                "runBuildTargetDependencies": true,
+                "sourcemap": true,
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "sourcesContent": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
             },
-            "dependsOn": ["mesh-build"]
+            "configurations": {
+                "development": {},
+                "production": {
+                    "generateLockfile": true,
+                    "esbuildOptions": {
+                        "sourcemap": false,
+                        "outExtension": {
+                            ".js": ".js"
+                        }
+                    }
+                }
+            }
         },
         "serve": {
-            "executor": "nx:run-commands",
-            "outputs": ["{options.outputPath}"],
+            "executor": "@nx/js:node",
+            "defaultConfiguration": "development",
             "options": {
-                "command": "STAGE=dev mesh dev --dir packages/mesh/bigcommerce",
-                "runBuildTargetDependencies": true
+                "buildTarget": "bigcommerce-mesh:build",
+                "runBuildTargetDependencies": true,
+                "debounce": 500
             },
-            "dependsOn": [
-                {
-                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations"],
-                    "target": "codegen"
+            "configurations": {
+                "development": {
+                    "buildTarget": "bigcommerce-mesh:build:development"
+                },
+                "production": {
+                    "buildTarget": "bigcommerce-mesh:build:production"
                 }
-            ]
+            }
         },
         "lint": {
             "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
                 "lintFilePatterns": ["packages/mesh/bigcommerce/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "packages/mesh/bigcommerce/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
             }
         },
         "docker-build": {
