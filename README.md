@@ -273,6 +273,10 @@ TBA
 
 In the future we will hopefully have a generator https://nx.dev/extending-nx/recipes/local-generators to do this
 
+#### Caching
+
+See [docs/cache.md](docs/cache.md).
+
 ## Hosting
 
 There are currently two methods for hosting the mesh.
