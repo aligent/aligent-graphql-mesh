@@ -21,7 +21,7 @@ By default this is how cache keys work, a single key has a single value:
 | --------- | ------------------- |
 | countries | {"au": "Australia"} |
 
-This works well for something like countries. AU is always going to be equal to Australia. But what happens if we want to get the current user's county? We can't use this same method anymore.
+This works well for something like countries. AU is always going to be equal to Australia. But what happens if we want to get the current user's country? We can't use this same method anymore.
 
 | Key     | Value     |
 | ------- | --------- |
@@ -61,7 +61,7 @@ Users will first hit the CloudFront cache layer. If no cache is found it will hi
 
 ### CloudFront
 
-CloudFront is the first layer of cache for mesh. This cache is stored across AWS edge locations. This not only reduces load on our mesh servers, but also reduces latency by serving content from servers that are close to the end user. See this [AWS developer guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-hit-ratio-explained.html) for more information on how edge location.
+CloudFront is the first layer of cache for mesh. This cache is stored across AWS edge locations. This not only reduces load on our mesh servers, but also reduces latency by serving content from servers that are close to the end user. See this [AWS developer guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-hit-ratio-explained.html) for more information on how caching works with edge locations.
 
 Queries to be stored in cache at this level are defined in the `cache.ts` file under the backend's src directory (e.g. [packages/mesh/bigcommerce/src/cache.ts](../packages/mesh/bigcommerce/src/cache.ts)). Operations are simply the specific operation to cache and their TTL. This layer of cache cannot vary on anything. Meaning if cache is defined here, the stored cache must be applicable to all users.
 
