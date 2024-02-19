@@ -19,7 +19,7 @@ export interface CustomerAddressUpdateValidated extends CustomerAddressValidated
     id: number;
 }
 
-export type OroCustomerAddressInput = Omit<OroCustomerAddress, 'id'>
+export type OroCustomerAddressInput = Omit<OroCustomerAddress, 'id'>;
 
 export interface OroCustomerAddress extends Entity {
     type: 'customeruseraddresses';

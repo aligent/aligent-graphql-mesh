@@ -11,7 +11,6 @@ import cachableObjects from './cache';
 import { customerImpersonationPlugin } from '@aligent/bigcommerce-graphql-module';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 
-
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
@@ -26,15 +25,15 @@ const yoga = createYoga({
         // the same headers references in the resolvers
         const headers: Record<string, string> = {};
         request.headers.forEach((value, key) => {
-            headers[key] = value
-        })
-        
+            headers[key] = value;
+        });
+
         return {
             headers,
             cache: DEV_MODE
                 ? new Keyv({ namespace: 'application' })
                 : new Keyv(redisUri, { namespace: 'application' }),
-        }
+        };
     },
     plugins: [
         useGraphQLModules(application),
