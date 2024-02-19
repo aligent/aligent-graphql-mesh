@@ -1,0 +1,14 @@
+sequenceDiagram
+    actor User
+    participant CF as CloudFront
+    participant Mesh
+    participant Redis
+    participant Backend
+    User->>+CF: Request data
+    CF->>+Mesh: Request data
+    Mesh->>+Backend: Request data
+    Backend->>-Mesh: Send requested data
+    Mesh->>+Redis: Cache data in Redis
+    Mesh->>-CF: Cache data in CloudFront
+    CF->>-User: Return data
+
