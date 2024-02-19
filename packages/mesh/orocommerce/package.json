@@ -1,6 +1,5 @@
 {
   "name": "orocommerce-mesh",
-  "version": "0.0.1",
   "dependencies": {
     "@envelop/core": "4.0.0",
     "@envelop/graphql-modules": "5.0.0",
