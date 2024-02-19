@@ -77,9 +77,8 @@ import {
 
 import { ContactUsInputToContactRequestTransformer } from './contact-us/contact-us-to-contact-request-transformer';
 
-import { ShoppingListToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
 import { RequisitionListInputToShoppingListTransformer } from '../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
-import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list/shopping-list-with-items-to-requisition-list-transformer';
+import { ShoppingListToRequisitionListTransformer } from './shopping-list/shopping-list-to-requisition-list-transformer';
 import { ShoppingListsToRequisitionListsTransformer } from './shopping-list/shopping-lists-to-requisition-lists-transformer';
 import {
     AddProductsToRequisitionListArgsTransformer,
@@ -95,6 +94,9 @@ export * from './store-locations/store-locations-transformer';
 export * from './shopping-list/order-line-item-to-shopping-list-item-transformer';
 export * from './shopping-list/order-line-items-to-new-shopping-list-transformer';
 export * from './shopping-list/shopping-list-to-cart-transformer';
+export * from './shopping-list/shopping-list-to-requisition-list-transformer';
+export * from './shopping-list/shopping-lists-to-requisition-lists-transformer';
+export * from './shopping-list/requisition-list-input-to-shopping-list-transformer';
 export * from './contact-us/contact-us-to-contact-request-transformer';
 export * from './products/products-data-transformer';
 export * from './products/reviews-transformer';
@@ -178,14 +180,6 @@ export const getOroTransformers = (): Array<Provider> => {
         {
             provide: ProductsTransformerChain,
             useClass: ProductsTransformerChain,
-        },
-        {
-            provide: ShoppingListToRequisitionListTransformer,
-            useClass: ShoppingListToRequisitionListTransformer,
-        },
-        {
-            provide: ShoppingListsToRequisitionListsTransformer,
-            useClass: ShoppingListsToRequisitionListsTransformer,
         },
         {
             provide: RequisitionListInputToShoppingListTransformer,
@@ -393,13 +387,20 @@ export const getOroTransformers = (): Array<Provider> => {
             deps: [UpdateCartItemTransformerChain],
         },
         {
-            provide: ShoppingListWithItemsToRequisitionListTransformer,
+            provide: ShoppingListToRequisitionListTransformer,
             useFactory: (shoppingListToCartTransformer) => {
-                return new ShoppingListWithItemsToRequisitionListTransformer(
-                    shoppingListToCartTransformer
-                );
+                return new ShoppingListToRequisitionListTransformer(shoppingListToCartTransformer);
             },
             deps: [ShoppingListToCartTransformer],
+        },
+        {
+            provide: ShoppingListsToRequisitionListsTransformer,
+            useFactory: (shoppingListToRequisitionListTransformer) => {
+                return new ShoppingListsToRequisitionListsTransformer(
+                    shoppingListToRequisitionListTransformer
+                );
+            },
+            deps: [ShoppingListToRequisitionListTransformer],
         },
     ];
 };

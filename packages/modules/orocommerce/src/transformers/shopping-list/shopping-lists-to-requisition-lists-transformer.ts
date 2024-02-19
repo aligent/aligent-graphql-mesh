@@ -2,7 +2,7 @@ import { Transformer, TransformerContext } from '@aligent/utils';
 import { ShoppingListsWithItems } from '../../types';
 import { RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
-import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-list-with-items-to-requisition-list-transformer';
+import { ShoppingListToRequisitionListTransformer } from '../../transformers';
 
 @Injectable({
     global: true,
@@ -10,9 +10,7 @@ import { ShoppingListWithItemsToRequisitionListTransformer } from './shopping-li
 export class ShoppingListsToRequisitionListsTransformer
     implements Transformer<ShoppingListsWithItems, RequisitionLists>
 {
-    constructor(
-        protected requisitionListTransformer: ShoppingListWithItemsToRequisitionListTransformer
-    ) {}
+    constructor(protected requisitionListTransformer: ShoppingListToRequisitionListTransformer) {}
 
     transform(
         context: TransformerContext<ShoppingListsWithItems, RequisitionLists>

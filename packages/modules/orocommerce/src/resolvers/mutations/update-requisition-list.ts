@@ -1,8 +1,8 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
-import { ShoppingListToRequisitionListTransformer } from '../../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
-import { RequisitionListInputToShoppingListTransformer } from '../../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
+import { RequisitionListInputToShoppingListTransformer } from '../../transformers';
 import { atob } from '@aligent/utils';
+import { RequisitionListService } from '../../services/requisition-list-service';
 
 /**
  * update a new shopping list.
@@ -18,14 +18,16 @@ export const updateRequisitionListMutation: MutationResolvers['updateRequisition
         shoppingList.id = atob(args.requisitionListUid);
 
         const client: ShoppingListsClient = context.injector.get(ShoppingListsClient);
-        const updatedShoppingList = await client.updateShoppingLists(shoppingList);
+        await client.updateShoppingLists(shoppingList);
 
-        const shoppingListToRequisitionListTransformer: ShoppingListToRequisitionListTransformer =
-            context.injector.get(ShoppingListToRequisitionListTransformer);
+        const requisitionListService: RequisitionListService =
+            context.injector.get(RequisitionListService);
+        const transformedRequisitionList = await requisitionListService.getList(
+            atob(args.requisitionListUid)
+        );
+
         return {
-            requisition_list: shoppingListToRequisitionListTransformer.transform({
-                data: updatedShoppingList,
-            }),
+            requisition_list: transformedRequisitionList,
         };
     },
 };

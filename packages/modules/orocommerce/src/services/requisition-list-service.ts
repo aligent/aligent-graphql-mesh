@@ -5,7 +5,7 @@ import { Transformer } from '@aligent/utils';
 import { RequisitionList, RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsToRequisitionListsTransformer } from '../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
 import { ShoppingListService } from './shopping-list-service';
-import { ShoppingListWithItemsToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-with-items-to-requisition-list-transformer';
+import { ShoppingListToRequisitionListTransformer } from '../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
 
 const UNDEFINED_REQUISITION_LIST: RequisitionList = {
     description: '',
@@ -32,8 +32,8 @@ export class RequisitionListService {
             RequisitionLists
         >,
 
-        @Inject(forwardRef(() => ShoppingListWithItemsToRequisitionListTransformer))
-        protected readonly shoppingListWithItemsToRequisitionListTransformer: Transformer<
+        @Inject(forwardRef(() => ShoppingListToRequisitionListTransformer))
+        protected readonly shoppingListToRequisitionListTransformer: Transformer<
             ShoppingListWithItems,
             RequisitionList
         >
@@ -65,12 +65,12 @@ export class RequisitionListService {
                 return UNDEFINED_REQUISITION_LIST;
             }
 
-            return this.shoppingListWithItemsToRequisitionListTransformer.transform({
+            return this.shoppingListToRequisitionListTransformer.transform({
                 data: shoppingListWithItems,
             });
         }
 
-        return this.shoppingListWithItemsToRequisitionListTransformer.transform({
+        return this.shoppingListToRequisitionListTransformer.transform({
             data: shoppingListOrId,
         });
     }
