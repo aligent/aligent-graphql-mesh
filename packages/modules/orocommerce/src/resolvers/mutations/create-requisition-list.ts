@@ -20,8 +20,11 @@ export const createRequisitionListMutation: MutationResolvers['createRequisition
 
         const shoppingListToRequisitionListTransformer: ShoppingListToRequisitionListTransformer =
             context.injector.get(ShoppingListToRequisitionListTransformer);
-        return shoppingListToRequisitionListTransformer.transform({
-            data: createdShoppingList,
-        });
+
+        return {
+            requisition_list: shoppingListToRequisitionListTransformer.transform({
+                data: createdShoppingList,
+            }),
+        };
     },
 };

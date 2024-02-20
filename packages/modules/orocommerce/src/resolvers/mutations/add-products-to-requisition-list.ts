@@ -28,10 +28,11 @@ export const addProductsToRequisitionLisResolver: MutationResolvers['addProducts
             const requisitionListService: RequisitionListService =
                 context.injector.get(RequisitionListService);
 
-            const requisitionLists = await requisitionListService.getList(decodedRequisitionListId);
+            const transformedRequisitionList =
+                await requisitionListService.getList(decodedRequisitionListId);
 
             return {
-                requisition_list: requisitionLists?.items ? requisitionLists.items[0] : null,
+                requisition_list: transformedRequisitionList,
             };
         },
     };

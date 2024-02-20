@@ -22,6 +22,7 @@ const UNDEFINED_CART: Cart = {
 export class CartService {
     constructor(
         @Inject(forwardRef(() => ShoppingListService)) protected apiClient: ShoppingListService,
+
         @Inject(forwardRef(() => ShoppingListToCartTransformer))
         protected readonly cartTransformer: Transformer<ShoppingListWithItems, Cart>
     ) {}

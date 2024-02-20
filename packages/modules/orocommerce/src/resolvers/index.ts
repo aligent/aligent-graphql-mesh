@@ -33,6 +33,7 @@ import { resetPasswordMutation } from './mutations/reset-password';
 import { createRequisitionListMutation } from './mutations/create-requisition-list';
 import { deleteRequisitionListMutation } from './mutations/delete-requisition-list';
 import { customerCartResolver } from './queries/customer-cart';
+import { updateRequisitionListItemsMutation } from './mutations/update-requisition-list-items';
 import { breadcrumbsSubResolver } from './queries/sub-resolvers/breadcrumbs';
 import { updateRequisitionListMutation } from './mutations/update-requisition-list';
 import { deleteRequisitionListItemsMutation } from './mutations/delete-requisition-list-items';
@@ -41,52 +42,53 @@ import { RequisitionListsResolver } from './queries/sub-resolvers/requisition-li
 
 export const resolvers: Resolvers = {
     Query: {
-        storeConfig: storeConfigResolver,
         cart: cartResolver,
+        categories: categoriesResolver,
+        customer: customerResolver,
+        customerCart: customerCartResolver,
         currency: currencyResolver,
         countries: countriesResolver,
-        keyMessages: keyMessagesResolver,
-        categories: categoriesResolver,
         cmsBlocks: cmsBlocksResolver,
         cmsPage: cmsPageResolver,
-        storeLocations: storeLocationsResolver,
-        customer: customerResolver,
-        route: routeResolver,
         getSocialLinks: getSocialLinksResolver,
-        products: productsResolver,
         isEmailAvailable: isEmailAvailableResolver,
-        customerCart: customerCartResolver,
+        keyMessages: keyMessagesResolver,
+        products: productsResolver,
+        route: routeResolver,
+        storeConfig: storeConfigResolver,
+        storeLocations: storeLocationsResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,
         addProductsToRequisitionList: addProductsToRequisitionLisResolver,
         createCartRedirectUrls: createCartRedirectUrlsResolver,
-        generateCustomerToken: generateCustomerTokenMutation,
+        createCustomer: createCustomerMutation,
+        createCustomerAddress: createCustomerAddressMutation,
+        createRequisitionList: createRequisitionListMutation,
         createEmptyCart: createEmptyCartMutation,
         contactUs: contactUsMutation,
-        createCustomer: createCustomerMutation,
-        reorderItems: reorderItemsResolver,
         deleteCustomerAddress: deleteCustomerAddressMutation,
-        createCustomerAddress: createCustomerAddressMutation,
-        login: loginMutation,
-        updateCustomerAddress: updateCustomerAddressMutation,
-        updateCartItems: updateCartItemsMutation,
-        removeItemFromCart: removeItemFromCartMutation,
-        updateCustomer: updateCustomerMutation,
-        createRequisitionList: createRequisitionListMutation,
-        updateRequisitionList: updateRequisitionListMutation,
         deleteRequisitionList: deleteRequisitionListMutation,
         deleteRequisitionListItems: deleteRequisitionListItemsMutation,
+        generateCustomerToken: generateCustomerTokenMutation,
+        login: loginMutation,
+        removeItemFromCart: removeItemFromCartMutation,
+        reorderItems: reorderItemsResolver,
         requestPasswordResetEmail: requestPasswordResetEmailMutation,
         resetPassword: resetPasswordMutation,
+        updateCartItems: updateCartItemsMutation,
+        updateCustomer: updateCustomerMutation,
+        updateCustomerAddress: updateCustomerAddressMutation,
+        updateRequisitionList: updateRequisitionListMutation,
+        updateRequisitionListItems: updateRequisitionListItemsMutation,
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
-    CategoryTree: {
-        breadcrumbs: breadcrumbsSubResolver,
-    },
     Customer: {
         orders: customerOrdersResolver,
         requisition_lists: RequisitionListsResolver,
+    },
+    CategoryTree: {
+        breadcrumbs: breadcrumbsSubResolver,
     },
 };
 

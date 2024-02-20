@@ -10,8 +10,6 @@ export const RequisitionListsResolver: CustomerResolvers['requisition_lists'] = 
         const requisitionListService: RequisitionListService =
             context.injector.get(RequisitionListService);
 
-        const requisitionLists = await requisitionListService.getLists();
-
-        return requisitionLists;
+        return requisitionListService.getLists();
     },
 };

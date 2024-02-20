@@ -1277,6 +1277,19 @@ type Mutation {
         wishlistItems: [WishlistItemUpdateInput!]!
     ): UpdateProductsInWishlistOutput
     """
+    Updates products in a requisition list.
+    """
+    updateRequisitionListItems(
+        """
+        The unique ID of the requisition list.
+        """
+        requisitionListUid: ID!
+        """
+        Items to be updated in the requisition list.
+        """
+        requisitionListItems: [UpdateRequisitionListItemsInput!]!
+    ): UpdateRequisitionListItemsOutput
+    """
     Change the name and visibility of the specified wish list.
     """
     updateWishlist(
@@ -7663,6 +7676,31 @@ type GiftCardRequisitionListItem implements RequisitionListItemInterface {
     Any additional notes made by the buyer.
     """
     notes: String
+}
+
+"""
+Defines which items in a requisition list to update.
+"""
+input UpdateRequisitionListItemsInput {
+    """
+    An array of customer-entered options.
+    """
+    entered_options: [EnteredOptionInput]
+
+    """
+    The ID of the requisition list item to update.
+    """
+    item_id: ID!
+
+    """
+    The new quantity of the item.
+    """
+    quantity: Float
+
+    """
+    An array of selected option IDs.
+    """
+    selected_options: [ID]
 }
 
 """

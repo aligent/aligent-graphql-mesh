@@ -1,3 +1,5 @@
+import { CartUserInputError, CheckoutUserInputError } from '@aligent/orocommerce-resolvers';
+
 import {
     Entity,
     Attributes,
@@ -122,3 +124,5 @@ interface ProductData {
         id: string;
     };
 }
+
+export type CartUserErrors = Array<CartUserInputError & CheckoutUserInputError>;

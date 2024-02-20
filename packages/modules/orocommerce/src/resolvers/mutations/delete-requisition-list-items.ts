@@ -12,12 +12,12 @@ export const deleteRequisitionListItemsMutation: MutationResolvers['deleteRequis
         const requisitionListService: RequisitionListService =
             context.injector.get(RequisitionListService);
 
-        const requisitionLists = await requisitionListService.getList(
+        const transformedRequisitionList = await requisitionListService.getList(
             atob(args.requisitionListUid)
         );
 
         return {
-            requisition_list: requisitionLists?.items ? requisitionLists.items[0] : null,
+            requisition_list: transformedRequisitionList,
         };
     },
 };
