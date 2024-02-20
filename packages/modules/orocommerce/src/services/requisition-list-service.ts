@@ -1,7 +1,7 @@
 import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ShoppingListsClient } from '../apis/rest/shopping-list-api-client';
 import { ShoppingListWithItems, ShoppingListsWithItems } from '../types';
-import { Transformer } from '@aligent/utils';
+import { logAndThrowError, Transformer } from '@aligent/utils';
 import { RequisitionList, RequisitionLists } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsToRequisitionListsTransformer } from '../transformers/shopping-list/shopping-lists-to-requisition-lists-transformer';
 import { ShoppingListService } from './shopping-list-service';
@@ -62,6 +62,10 @@ export class RequisitionListService {
                 await this.shoppingListService.getShoppingListWithItems(shoppingListOrId);
 
             if (!shoppingListWithItems) {
+                logAndThrowError(
+                    `No shopping list with ID = ${shoppingListOrId} found in Oro`,
+                    this.shoppingListService.getShoppingListWithItems.name
+                );
                 return UNDEFINED_REQUISITION_LIST;
             }
 
