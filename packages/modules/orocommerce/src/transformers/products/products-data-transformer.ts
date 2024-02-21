@@ -22,8 +22,6 @@ import {
     ConfigurableProduct,
     ConfigurableAttributeOption,
     Maybe,
-    CurrencyEnum,
-    Money,
     ConfigurableVariant,
     Aggregation,
     MediaGalleryEntry,
@@ -32,6 +30,7 @@ import { getTransformedProductStockStatus } from './stock-status-transformer';
 import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
 import { CategoriesTransformer } from '../../transformers';
+import { getMoneyData } from '../../utils';
 
 @Injectable({
     global: true,
@@ -105,13 +104,6 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 options: [],
             };
         });
-    }
-
-    getPriceData(currency: string, price: string): Money {
-        return {
-            currency: currency as CurrencyEnum,
-            value: Number(price),
-        };
     }
 
     getTransformedProductsAttributes = (
@@ -237,7 +229,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
             // Configurable products have empty array for prices with prices on the variants
             const currency = oroProduct.attributes.prices[0]?.currencyId || 'AUD';
             const price = oroProduct.attributes.prices[0]?.price || '0';
-            const productPrice = this.getPriceData(currency, price);
+            const productPrice = getMoneyData(currency, price);
             const { origin } = new URL(oroProduct.links.self);
 
             const smallImage = currentProductsImages

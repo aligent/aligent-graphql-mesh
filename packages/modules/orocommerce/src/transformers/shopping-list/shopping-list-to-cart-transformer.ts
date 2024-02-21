@@ -1,12 +1,11 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
-import { ShoppingListWithItems, Product as OroProduct } from '../../types';
 import {
-    Cart,
-    CurrencyEnum,
-    Money,
-    SimpleCartItem,
-    CartItemError,
-} from '@aligent/orocommerce-resolvers';
+    ShoppingListWithItems,
+    Product as OroProduct,
+    ShoppingListAttribute,
+    ShoppingListItemAttributes,
+} from '../../types';
+import { Cart, SimpleCartItem, CartItemError } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
     isShoppingListItem,
@@ -16,27 +15,24 @@ import {
 } from '../../utils/type-predicates';
 import { UNDEFINED_CART } from './constants';
 import { ProductsTransformer } from '../../transformers';
+import { getMoneyData } from '../../utils';
 
 @Injectable({
     global: true,
 })
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
     constructor(protected productsTransformer: ProductsTransformer) {}
-    getMoneyData(currency: string, price: string | number): Money {
-        return {
-            currency: currency as CurrencyEnum,
-            value: Number(price),
-        };
-    }
+
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
         cart.id = shoppingList.data.id;
         cart.total_quantity = 0;
 
-        const currency = shoppingList.data.attributes.currency as string;
+        const { currency, total } = shoppingList.data.attributes as ShoppingListAttribute;
+
         cart.prices = {
-            grand_total: this.getMoneyData(currency, Number(shoppingList.data.attributes.total)),
+            grand_total: getMoneyData(currency, total),
             applied_taxes: [
                 // TODO taxes
                 {
@@ -86,11 +82,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 );
             }
 
-            const currency = relatedShoppingListItem.attributes.currency as string;
-            const price = this.getMoneyData(
-                currency,
-                Number(relatedShoppingListItem.attributes.value)
-            );
+            const { currency, value } =
+                relatedShoppingListItem.attributes as ShoppingListItemAttributes;
+            const price = getMoneyData(currency, value);
 
             const quantity = relatedShoppingListItem.attributes.quantity;
 

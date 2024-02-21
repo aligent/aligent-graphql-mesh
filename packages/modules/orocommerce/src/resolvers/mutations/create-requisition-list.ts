@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { ShoppingListsClient } from '../../apis/rest/shopping-list-api-client';
-import { ShoppingListToRequisitionListTransformer } from '../../transformers/shopping-list/shopping-list-to-requisition-list-transformer';
-import { RequisitionListInputToShoppingListTransformer } from '../../transformers/shopping-list/requisition-list-input-to-shopping-list-transformer';
+import { RequisitionListInputToShoppingListTransformer } from '../../transformers';
+import { RequisitionListService } from '../../services/requisition-list-service';
 
 /**
  * Create a new shopping list.
@@ -18,13 +18,14 @@ export const createRequisitionListMutation: MutationResolvers['createRequisition
         const client: ShoppingListsClient = context.injector.get(ShoppingListsClient);
         const createdShoppingList = await client.postShoppingLists(shoppingList);
 
-        const shoppingListToRequisitionListTransformer: ShoppingListToRequisitionListTransformer =
-            context.injector.get(ShoppingListToRequisitionListTransformer);
+        const requisitionListService: RequisitionListService =
+            context.injector.get(RequisitionListService);
+        const transformedRequisitionList = await requisitionListService.getList(
+            createdShoppingList.id
+        );
 
         return {
-            requisition_list: shoppingListToRequisitionListTransformer.transform({
-                data: createdShoppingList,
-            }),
+            requisition_list: transformedRequisitionList,
         };
     },
 };

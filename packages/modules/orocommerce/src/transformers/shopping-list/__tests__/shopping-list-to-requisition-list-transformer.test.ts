@@ -1,16 +1,25 @@
 import 'reflect-metadata';
-import { ShoppingListToRequisitionListTransformer } from '../shopping-list-to-requisition-list-transformer';
-import { shoppingList } from './__data__/create-shopping-list-input-data';
-import { createShoppingListOutputData } from './__data__/create-shopping-list-output-data';
+import { shoppingListWithItems } from './__data__/create-shopping-list-input-data';
+import {
+    CategoriesTransformer,
+    ProductsTransformer,
+    ShoppingListToCartTransformer,
+    ShoppingListToRequisitionListTransformer,
+} from '../../../transformers';
+import { requisitionList } from './__data__/delete-shopping-list-data';
 
-describe('Shopping list to requisition list transform tests', () => {
-    test('Transform a shopping list into a requisition list test', () => {
+describe('Shopping list with items to requisition list transform tests', () => {
+    test('Transform a shopping list with items into a requisition list test', () => {
+        const shoppingListToCartTransformer = new ShoppingListToCartTransformer(
+            new ProductsTransformer(new CategoriesTransformer())
+        );
         const shoppingListToRequisitionListTransformer =
-            new ShoppingListToRequisitionListTransformer();
+            new ShoppingListToRequisitionListTransformer(shoppingListToCartTransformer);
+
         const transformed = shoppingListToRequisitionListTransformer.transform({
-            data: shoppingList,
+            data: shoppingListWithItems,
         });
 
-        expect(transformed).toEqual(createShoppingListOutputData);
+        expect(transformed).toEqual(requisitionList);
     });
 });
