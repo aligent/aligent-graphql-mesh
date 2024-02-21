@@ -6,6 +6,7 @@ import { isNull } from 'lodash';
 import { Injectable } from 'graphql-modules';
 import { CurrencyEnum, RequisitionList } from '@aligent/orocommerce-resolvers';
 import { isShoppingListItem } from '../../utils/type-predicates';
+import { getMoneyData } from '../../utils';
 
 @Injectable({
     global: true,
@@ -29,16 +30,6 @@ export class ShoppingListToRequisitionListTransformer
             ? this.transformItems(shoppingList, includedShoppingListItems)
             : [];
 
-        const subTotal_price = {
-            currency: currency as CurrencyEnum,
-            value: Number(subTotal),
-        };
-
-        const total_price = {
-            currency: currency as CurrencyEnum,
-            value: Number(total),
-        };
-
         return {
             description: notes,
             items: {
@@ -58,8 +49,8 @@ export class ShoppingListToRequisitionListTransformer
             updated_at: updatedAt,
             created_at: createdAt,
             currency,
-            sub_total: subTotal_price,
-            total: total_price,
+            sub_total: getMoneyData(currency, subTotal),
+            total: getMoneyData(currency, total),
             customer: Number(customer?.data.id),
             company_user: Number(customerUser?.data.id),
         };

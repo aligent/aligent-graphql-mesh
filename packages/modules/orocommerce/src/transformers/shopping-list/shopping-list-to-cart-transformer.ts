@@ -16,18 +16,14 @@ import {
 } from '../../utils/type-predicates';
 import { UNDEFINED_CART } from './constants';
 import { ProductsTransformer } from '../../transformers';
+import { getMoneyData } from '../../utils';
 
 @Injectable({
     global: true,
 })
 export class ShoppingListToCartTransformer implements Transformer<ShoppingListWithItems, Cart> {
     constructor(protected productsTransformer: ProductsTransformer) {}
-    getMoneyData(currency: string, price: string | number): Money {
-        return {
-            currency: currency as CurrencyEnum,
-            value: Number(price),
-        };
-    }
+
     transform(context: TransformerContext<ShoppingListWithItems, Cart>): Cart {
         const shoppingList = context.data;
         const cart = { ...UNDEFINED_CART };
@@ -36,7 +32,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
 
         const currency = shoppingList.data.attributes.currency as string;
         cart.prices = {
-            grand_total: this.getMoneyData(currency, Number(shoppingList.data.attributes.total)),
+            grand_total: getMoneyData(currency, Number(shoppingList.data.attributes.total)),
             applied_taxes: [
                 // TODO taxes
                 {
@@ -87,7 +83,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             }
 
             const currency = relatedShoppingListItem.attributes.currency as string;
-            const price = this.getMoneyData(
+            const price = getMoneyData(
                 currency,
                 Number(relatedShoppingListItem.attributes.value)
             );
