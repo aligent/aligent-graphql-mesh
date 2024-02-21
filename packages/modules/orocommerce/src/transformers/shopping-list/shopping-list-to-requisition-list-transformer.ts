@@ -4,7 +4,7 @@ import { btoa } from '@aligent/utils';
 import { ShoppingListToCartTransformer } from '../../transformers';
 import { isNull } from 'lodash';
 import { Injectable } from 'graphql-modules';
-import { CurrencyEnum, RequisitionList } from '@aligent/orocommerce-resolvers';
+import { RequisitionList } from '@aligent/orocommerce-resolvers';
 import { isShoppingListItem } from '../../utils/type-predicates';
 import { getMoneyData } from '../../utils';
 

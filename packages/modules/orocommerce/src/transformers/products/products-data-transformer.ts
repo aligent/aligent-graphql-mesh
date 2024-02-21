@@ -22,8 +22,6 @@ import {
     ConfigurableProduct,
     ConfigurableAttributeOption,
     Maybe,
-    CurrencyEnum,
-    Money,
     ConfigurableVariant,
     Aggregation,
     MediaGalleryEntry,

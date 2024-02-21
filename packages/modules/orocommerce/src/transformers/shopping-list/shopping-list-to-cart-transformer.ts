@@ -1,12 +1,6 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
 import { ShoppingListWithItems, Product as OroProduct } from '../../types';
-import {
-    Cart,
-    CurrencyEnum,
-    Money,
-    SimpleCartItem,
-    CartItemError,
-} from '@aligent/orocommerce-resolvers';
+import { Cart, SimpleCartItem, CartItemError } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
     isShoppingListItem,
@@ -83,10 +77,7 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
             }
 
             const currency = relatedShoppingListItem.attributes.currency as string;
-            const price = getMoneyData(
-                currency,
-                Number(relatedShoppingListItem.attributes.value)
-            );
+            const price = getMoneyData(currency, Number(relatedShoppingListItem.attributes.value));
 
             const quantity = relatedShoppingListItem.attributes.quantity;
 
