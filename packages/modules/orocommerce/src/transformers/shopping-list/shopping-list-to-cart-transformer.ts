@@ -1,5 +1,10 @@
 import { Transformer, TransformerContext, logAndThrowError, btoa } from '@aligent/utils';
-import { ShoppingListWithItems, Product as OroProduct } from '../../types';
+import {
+    ShoppingListWithItems,
+    Product as OroProduct,
+    ShoppingListAttribute,
+    ShoppingListItemAttributes,
+} from '../../types';
 import { Cart, SimpleCartItem, CartItemError } from '@aligent/orocommerce-resolvers';
 import { Injectable } from 'graphql-modules';
 import {
@@ -24,9 +29,10 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
         cart.id = shoppingList.data.id;
         cart.total_quantity = 0;
 
-        const currency = shoppingList.data.attributes.currency as string;
+        const { currency, total } = shoppingList.data.attributes as ShoppingListAttribute;
+
         cart.prices = {
-            grand_total: getMoneyData(currency, Number(shoppingList.data.attributes.total)),
+            grand_total: getMoneyData(currency, total),
             applied_taxes: [
                 // TODO taxes
                 {
@@ -76,8 +82,9 @@ export class ShoppingListToCartTransformer implements Transformer<ShoppingListWi
                 );
             }
 
-            const currency = relatedShoppingListItem.attributes.currency as string;
-            const price = getMoneyData(currency, Number(relatedShoppingListItem.attributes.value));
+            const { currency, value } =
+                relatedShoppingListItem.attributes as ShoppingListItemAttributes;
+            const price = getMoneyData(currency, value);
 
             const quantity = relatedShoppingListItem.attributes.quantity;
 
