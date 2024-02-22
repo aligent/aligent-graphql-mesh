@@ -7735,7 +7735,17 @@ type RequisitionList {
     """
     An array of products added to the requisition list.
     """
-    items: RequistionListItems
+    items(
+        """
+        The page of results to return. The default value is 1.
+        """
+        currentPage: Int = 1
+
+        """
+        The maximum number of results to return. The default value is 1.
+        """
+        pageSize: Int = 20
+    ): RequistionListItems
 
     """
     The number of items in the list.
