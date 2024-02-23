@@ -31,6 +31,8 @@
     "lodash": "^4.17.21",
     "module-alias": "^2.2.3",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "aws-xray-sdk": "^3.5.3",
+    "aws-sdk": "^2.1563.0"
   }
 }

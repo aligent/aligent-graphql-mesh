@@ -2,7 +2,11 @@ import 'module-alias/register';
 import { createBuiltMeshHTTPHandler } from './../.mesh';
 import express from 'express';
 import cors from 'cors';
+import http from 'http';
+import https from 'https';
 import cachableObjects from './cache';
+import * as xray from 'aws-xray-sdk';
+import * as aws from 'aws-sdk';
 
 const app = express();
 
@@ -40,6 +44,22 @@ app.use(cors(corsConfiguration));
  */
 app.options('*', cors(corsConfiguration));
 
+/**
+ * Load Balancer health check
+ */
+app.use('/healthcheck', (_req, res) => {
+    return res.send('ok');
+});
+
+/*
+ * Configure AWS X-Ray Tracing
+ */
+xray.captureAWS(aws);
+xray.captureHTTPsGlobal(http);
+xray.captureHTTPsGlobal(https);
+
+app.use(xray.express.openSegment('Mesh'));
+
 app.use((req, res, next) => {
     res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
 
@@ -74,12 +94,7 @@ app.use((req, res, next) => {
  */
 app.use('/graphql', createBuiltMeshHTTPHandler());
 
-/**
- * Load Balancer health check
- */
-app.use('/healthcheck', (_req, res) => {
-    return res.send('ok');
-});
+app.use(xray.express.closeSegment());
 
 app.listen(4000, () => {
     console.log(`Mesh listening on port 4000`);

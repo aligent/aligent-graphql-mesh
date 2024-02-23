@@ -83,6 +83,8 @@
     "module-alias": "^2.2.3",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.3.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "aws-xray-sdk": "^3.5.3",
+    "aws-sdk": "^2.1563.0"
   }
 }
