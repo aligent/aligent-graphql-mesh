@@ -90,7 +90,7 @@ definitions:
         script:
           - docker load --input ${APPLICATION}_latest.tar.gz
           - docker tag ${APPLICATION}:latest ${IMAGE_NAME}:latest
-          - pipe: atlassian/aws-ecr-push-image:2.2.0
+          - pipe: atlassian/aws-ecr-push-image:2.3.0
             variables:
               IMAGE_NAME: ${IMAGE_NAME}
 
