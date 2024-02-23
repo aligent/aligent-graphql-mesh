@@ -20,7 +20,9 @@
     "jsonwebtoken": "9.0.1",
     "keyv": "4.5.4",
     "reflect-metadata": "0.1.13",
-    "tslib": "2.6.2"
+    "tslib": "2.6.2",
+    "aws-xray-sdk": "^3.5.3",
+    "aws-sdk": "^2.1563.0"
   },
   "main": "./main.js",
   "type": "commonjs"
