@@ -1,3 +1,0 @@
-clientInfo:
-  name: '{env.HOSTNAME}'
-  version: '${COMMIT_HASH}'

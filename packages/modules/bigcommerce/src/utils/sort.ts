@@ -71,7 +71,7 @@ export const getSortedProducts = (
         ids?: Array<number>;
         skus?: Array<string>;
     },
-    sortDirection: string = 'asc'
+    sortDirection = 'asc'
 ): Array<Maybe<ProductEdge>> => {
     let sortedProducts = productsToSort;
 

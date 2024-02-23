@@ -1,4 +1,4 @@
-import { getDataFromMeshCache, TTL_IN_SECONDS } from '../mesh-cache';
+import { getDataFromMeshCache, TTL_IN_MILLI_SECONDS } from '../mesh-cache';
 
 const cache: {
     [key: string]: string;
@@ -54,9 +54,7 @@ describe('mesh-cache', () => {
         const expectedResponse = 'fresh data';
 
         expect(dataFromCache).toBe(expectedResponse);
-        expect(setCache).toBeCalledWith('no_cached_data_key', 'fresh data', {
-            ttl: TTL_IN_SECONDS,
-        });
+        expect(setCache).toBeCalledWith('no_cached_data_key', 'fresh data', TTL_IN_MILLI_SECONDS);
     });
 
     it(`Does not attempt to set new query data if there's no cache key`, async () => {

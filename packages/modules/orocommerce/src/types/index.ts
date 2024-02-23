@@ -48,7 +48,6 @@ export interface Entity extends Resource {
 declare global {
     namespace GraphQLModules {
         interface GlobalContext {
-            headers: Record<string, string>;
             injector: ReflectiveInjector;
             cache: Keyv;
             request: Request;

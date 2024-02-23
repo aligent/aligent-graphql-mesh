@@ -25,7 +25,7 @@ export const getCartUserErrors = (
         path: Array<string>;
         locations: Array<{ line: number; column: number }>;
     }>,
-    shouldThrowError: boolean = false
+    shouldThrowError = false
 ): CartUserErrors => {
     if (!errors) return [];
 

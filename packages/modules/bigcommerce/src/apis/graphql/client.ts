@@ -77,8 +77,8 @@ async function* fetchPaginatedGraphQLData(
         variables: { [key: string]: unknown };
     },
     pathToPaginationData: string,
-    pageSize: number = 24,
-    requestedPage: number = 0
+    pageSize = 24,
+    requestedPage = 0
 ) {
     const { headers, query, variables } = graphqlRequest;
 
