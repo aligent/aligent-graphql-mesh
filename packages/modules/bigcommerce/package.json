@@ -10,7 +10,6 @@
     "@graphql-tools/load-files": "^7.0.0",
     "@envelop/core": "^4.0.0",
     "graphql-request": "^6.1.0",
-    "@graphql-mesh/types": "^0.95.4",
     "jsonwebtoken": "^9.0.0",
     "uuid": "^9.0.0",
     "reflect-metadata": "^0.1.13",
