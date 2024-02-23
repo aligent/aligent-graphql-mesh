@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import { get } from 'lodash';
 import { GraphQlQuery } from '../../types';
 import { AxiosGraphqlError, logAndThrowError } from '@aligent/utils';
+import * as xray from 'aws-xray-sdk';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 
@@ -20,6 +21,8 @@ export const bcGraphQlRequest = async (
     data: GraphQlQuery,
     headers: Headers
 ): Promise<AxiosResponse['data']> => {
+    xray.getSegment()?.addAnnotation('query', data.query);
+
     headers['accept'] = 'application/json';
     try {
         const response = await axios.post(BC_GRAPHQL_API, data, { headers });
