@@ -12,7 +12,7 @@ const PAGINATOR_PAGE_SIZE = 50;
 
 interface Headers {
     Authorization: string;
-    [key: string]: string;
+    [key: string]: string | number;
 }
 
 // TODO: generic return type
