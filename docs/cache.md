@@ -39,6 +39,8 @@ This will now work as expected. However we can see that even if the values are t
 
 When we need custom cache keys it becomes much harder to store this cache at the edge layer (almost impossible). See [CloudFront](#cloudfront) for more information on why this is the case.
 
+Another point to note when caching is the time-to-live (TTL). All pieces of data at all layers of cache can have their own TTL. The TTL value will depend heavily on what you're caching and client requirements. For example, it would generally make sense to cache products for a reasonable length of time, say an hour. However some clients might be making frequent product changes and would like a less aggressive cache. For that use case we might lower the TTL to accommodate. However keep in mind the reasons that we cache. Lowering cache too far can result in hitting third party endpoints with too many requests. We need to carefully balance the TTL to ensure we are caching enough without causing a poor user experience. 
+
 It's impossible to cache mutations but we can potentially cache _parts_ of a mutation. As an example lets say we have a mutation to add a product to the cart. In this hypothetical mutation we need to first get additional information about the product before adding it to the cart. To perform an add to cart action we would need to make two requests: one that gets the additional product information and one that adds the product to the cart. We can't cache the mutation but we can cache the additional product information!
 
 ## Cache layers
@@ -67,7 +69,7 @@ Queries to be stored in cache at this level are defined in the `cache.ts` file u
 
 One of the big downsides of this cache method is clearing the cache. CloudFront doesn't have a way to clear cache for a single query, the only option we have is to clear all the GraphQL cache. This is due to how CloudFront cache invalidation works. You can only invalidate cache based on path. And as all GraphQL queries happen at the `/graphql` path, all of the cache will be cleared when invalidating.
 
-**CloudFront cache should be used for queries that return the same data for all users.** CloudFront cache should have a shorter TTL than application cache.
+**CloudFront cache should be used for queries that return the same data for all users.** CloudFront cache should have a shorter TTL than application cache due to having very limited control for invalidations.
 
 ### Redis
 
