@@ -10,11 +10,17 @@ const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
 /* This is the maximum page size for graphql queries*/
 const PAGINATOR_PAGE_SIZE = 50;
 
+interface Headers {
+    Authorization: string;
+    [key: string]: string | number;
+}
+
 // TODO: generic return type
 export const bcGraphQlRequest = async (
     data: GraphQlQuery,
-    headers: { Authorization: string }
+    headers: Headers
 ): Promise<AxiosResponse['data']> => {
+    headers['accept'] = 'application/json';
     try {
         const response = await axios.post(BC_GRAPHQL_API, data, { headers });
         return response.data;
@@ -33,7 +39,7 @@ export const bcGraphQlRequest = async (
  */
 export const graphqlPaginate = async (
     graphqlRequest: {
-        headers: { Authorization: string };
+        headers: Headers;
         query: string;
         variables: { [key: string]: unknown };
     },
@@ -66,7 +72,7 @@ export const graphqlPaginate = async (
  */
 async function* fetchPaginatedGraphQLData(
     graphqlRequest: {
-        headers: { Authorization: string };
+        headers: Headers;
         query: string;
         variables: { [key: string]: unknown };
     },
