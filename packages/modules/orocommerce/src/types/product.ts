@@ -1,7 +1,5 @@
 import { Entity, Resource, Relationships, Attributes, EntityAttributes } from '.';
 
-export interface ProductAggregations {}
-
 export interface ProductSearch extends Entity {
     type: 'productsearch';
     id: string;

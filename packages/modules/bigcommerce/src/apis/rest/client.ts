@@ -50,8 +50,8 @@ export const bcGet = async (path: string): Promise<AxiosResponse['data']> => {
  */
 export const bcPaginate = async function* (
     path: string,
-    page: number = 1,
-    limit: number = 50
+    page = 1,
+    limit = 50
 ): AsyncGenerator<AxiosResponse['data']> {
     const url = `${BC_REST_API}${path}`;
 

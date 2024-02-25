@@ -1,13 +1,10 @@
 {
   "name": "orocommerce-mesh",
-  "version": "0.0.1",
   "dependencies": {
     "@envelop/core": "4.0.0",
     "@envelop/graphql-modules": "5.0.0",
-    "@envelop/response-cache-redis": "3.3.2",
     "@escape.tech/graphql-armor": "2.3.2",
     "@graphql-tools/load-files": "7.0.0",
-    "@graphql-yoga/plugin-response-cache": "2.2.0",
     "@keyv/redis": "^2.8.0",
     "axios": "1.4.0",
     "buffer": "5.7.1",
@@ -15,7 +12,7 @@
     "express": "4.18.2",
     "graphql": "16.8.0",
     "graphql-modules": "2.2.0",
-    "graphql-yoga": "4.0.5",
+    "graphql-yoga": "^5.1.1",
     "ioredis": "5.3.2",
     "jsonwebtoken": "9.0.1",
     "keyv": "4.5.4",

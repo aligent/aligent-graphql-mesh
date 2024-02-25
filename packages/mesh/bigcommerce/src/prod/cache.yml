@@ -1,3 +1,0 @@
-redis:
-  host: '{env.REDIS_ENDPOINT}'
-  port: '{env.REDIS_PORT}'

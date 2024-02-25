@@ -7,7 +7,7 @@ import { STORE_CONFIG_PWA, STORE_CONFIG_ADMIN } from '../../resolvers/queries/st
 import { getTransformedChannelMetafieldsToStoreConfig } from '../../factories/transform-store-configs';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
-const CACHE_KEY__STORE_CONFIG: string = 'store_configs';
+const CACHE_KEY__STORE_CONFIG = 'store_configs';
 
 export type getStoreConfigsTypes = Promise<StoreConfig & Settings>;
 

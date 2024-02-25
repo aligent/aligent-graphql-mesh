@@ -10,8 +10,9 @@ import {
     CustomerAddressInput,
     Maybe,
 } from '@aligent/bigcommerce-resolvers';
-import { KeyValueCache, Logger } from '@graphql-mesh/types';
 import { ReflectiveInjector } from 'graphql-modules/di';
+import Keyv from 'keyv';
+
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
     channel_id: number;
@@ -255,9 +256,9 @@ declare global {
     namespace GraphQLModules {
         interface GlobalContext {
             headers: Record<string, string>;
-            cache: KeyValueCache;
-            logger: Logger;
             injector: ReflectiveInjector;
+            cache: Keyv;
+            request: Request;
         }
     }
 }

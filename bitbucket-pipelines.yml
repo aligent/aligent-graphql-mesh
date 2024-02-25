@@ -51,7 +51,7 @@ definitions:
         caches:
           - node
         script:
-          - STAGE=prod yarn nx run-many -t build
+          - yarn nx run-many -t build
         artifacts:
           - dist/**
 
@@ -60,14 +60,14 @@ definitions:
         services:
           - docker
         script:
-          - STAGE=prod yarn nx run-many -t docker-build
+          - yarn nx run-many -t docker-build
 
     - step: &build-container
         name: 🏗️ Build Docker Container
         services:
           - docker
         script:
-          - STAGE=prod yarn nx docker-build ${APPLICATION}
+          - yarn nx docker-build ${APPLICATION}
           - docker save ${APPLICATION}:latest | gzip > ${APPLICATION}_latest.tar.gz
         artifacts:
           - '*.tar.gz'
@@ -90,7 +90,7 @@ definitions:
         script:
           - docker load --input ${APPLICATION}_latest.tar.gz
           - docker tag ${APPLICATION}:latest ${IMAGE_NAME}:latest
-          - pipe: atlassian/aws-ecr-push-image:2.2.0
+          - pipe: atlassian/aws-ecr-push-image:2.3.0
             variables:
               IMAGE_NAME: ${IMAGE_NAME}
 

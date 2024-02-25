@@ -2,8 +2,8 @@ import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { checkMaintenanceMode } from '../../apis/helpers/maintenance-mode';
 import { retrieveStoreConfigsFromCache } from '../../apis/graphql';
 
-export const STORE_CONFIG_PWA: string = 'pwa_config';
-export const STORE_CONFIG_ADMIN: string = 'store_config';
+export const STORE_CONFIG_PWA = 'pwa_config';
+export const STORE_CONFIG_ADMIN = 'store_config';
 
 export const storeConfigResolver: QueryResolvers['storeConfig'] = {
     resolve: async (_root, _args, context, _info) => {
