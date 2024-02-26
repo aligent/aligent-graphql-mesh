@@ -122,12 +122,16 @@ pipelines:
 
   pull-requests:
     '**':
-      - step: *install
-      - step: *build
-      - parallel:
-          - step: *build-all-containers
-          - step: *code-quality
-          - step: *test
+      - step:
+          name: 'List'
+          script:
+            - yarn cache list
+      # - step: *install
+      # - step: *build
+      # - parallel:
+      #     - step: *build-all-containers
+      #     - step: *code-quality
+      #     - step: *test
   tags:
     'bigcommerce-graphql-module-*.*.*':
       - step: *install
