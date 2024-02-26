@@ -5,6 +5,7 @@ import {
     ShoppingListInputAttribute,
     ShoppingListItemInput,
     ShoppingListWithItems,
+    ShoppingListWithItemsIncluded,
 } from '../types';
 import { OroOrderLineItem } from '../types/order-line-item';
 import { OrderLineItemsToNewShoppingListTransformer } from '../transformers/shopping-list/order-line-items-to-new-shopping-list-transformer';
@@ -55,7 +56,9 @@ export class ShoppingListService {
                 file.url = this.storeUrl + file.url;
             });
         });
-        return data[0] !== undefined ? { data: data[0], included: included! } : null;
+        return data[0] !== undefined
+            ? { data: data[0], included: included as ShoppingListWithItemsIncluded[] }
+            : null;
     }
 
     /**
@@ -90,6 +93,6 @@ export class ShoppingListService {
 
         const updateShoppingList = await this.getShoppingListWithItems();
         // it shouldn't return null because items have been added to this shopping list previously
-        return updateShoppingList!;
+        return updateShoppingList as ShoppingListWithItems;
     }
 }

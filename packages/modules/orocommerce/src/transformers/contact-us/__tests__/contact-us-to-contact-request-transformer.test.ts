@@ -71,7 +71,7 @@ describe('Contact Us to Oro Contact Request transformation tests', () => {
                 lastName: 'Second Third Fourth Name',
                 emailAddress: request.email,
                 comment: request.comment,
-                phone: request.telephone!,
+                phone: request.telephone,
             },
         });
     });
