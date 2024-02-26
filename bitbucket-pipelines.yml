@@ -127,6 +127,7 @@ pipelines:
           name: 'List'
           script:
             - yarn cache list
+            - yarn cache dir
       # - step: *build
       # - parallel:
       #     - step: *build-all-containers
