@@ -50,7 +50,7 @@ export const customer = stripIgnoredCharacters(
                                             entityId
                                             sku
                                             name
-                                            brand{
+                                            brand {
                                                 id
                                                 name
                                             }
