@@ -2,7 +2,7 @@
   "name": "@aligent/orocommerce-graphql-module",
   "version": "0.0.22",
   "dependencies": {
-    "axios": "^1.4.0",
+    "axios": "1.6.7",
     "graphql": "^16.7.0",
     "lodash": "^4.17.21",
     "graphql-modules": "^2.2.0",
