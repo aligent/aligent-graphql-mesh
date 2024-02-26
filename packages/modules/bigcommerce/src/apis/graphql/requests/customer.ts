@@ -50,6 +50,10 @@ export const customer = stripIgnoredCharacters(
                                             entityId
                                             sku
                                             name
+                                            brand {
+                                                id
+                                                name
+                                            }
                                             addToCartUrl
                                             description
                                             defaultImage {
