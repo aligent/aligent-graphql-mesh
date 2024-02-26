@@ -16,8 +16,8 @@ describe('Key Messages data transformation tests', () => {
         expect(output.enabled).toStrictEqual(true);
         expect(output.__typename).toStrictEqual('KeyMessageResult');
 
-        for (const msgIndex in output.messages!) {
-            const transformedMsg = output.messages[msgIndex]!;
+        for (const msgIndex in output.messages as string[]) {
+            const transformedMsg = output.messages[msgIndex];
 
             expect(transformedMsg.link).toStrictEqual(mockMessages[msgIndex].link);
             expect(transformedMsg.message).toStrictEqual(mockMessages[msgIndex].message);

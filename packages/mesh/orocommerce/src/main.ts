@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import https from 'node:https';
+import http from 'http';
 import { createYoga } from 'graphql-yoga';
 import { useGraphQLModules } from '@envelop/graphql-modules';
 import application from './application';
@@ -8,6 +9,8 @@ import { readFileSync } from 'node:fs';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
 import Keyv from 'keyv';
 import cachableObjects from './cache';
+import * as xray from 'aws-xray-sdk';
+import * as aws from 'aws-sdk';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -63,6 +66,22 @@ const corsConfiguration: cors.CorsOptions = {
 };
 app.use(cors(corsConfiguration));
 
+/**
+ * Load Balancer health check
+ */
+app.use('/healthcheck', (_req, res) => {
+    return res.send('ok');
+});
+
+/*
+ * Configure AWS X-Ray Tracing
+ */
+xray.captureAWS(aws);
+xray.captureHTTPsGlobal(http);
+xray.captureHTTPsGlobal(https);
+
+app.use(xray.express.openSegment('Mesh'));
+
 /*
  * Respond to all OPTIONS requests with CORS headers
  */
@@ -105,15 +124,10 @@ app.use((req, res, next) => {
  */
 app.use(yoga.graphqlEndpoint, yoga);
 
-/**
- * Load Balancer health check
- */
-app.use('/healthcheck', (_req, res) => {
-    return res.send('ok');
-});
-
 // Disable powered by header
 app.disable('x-powered-by');
+
+app.use(xray.express.closeSegment());
 
 const port = 4000 || process.env.PORT;
 if (DEV_MODE) {

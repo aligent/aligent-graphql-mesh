@@ -5,7 +5,7 @@ import { OroSocialLinkApiData } from '../../types/social-links';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
 const STORE_CONFIG_ENDPOINT = '/tf_config';
-const CACHE_KEY__STORE_CONFIG: string = 'store_configs';
+const CACHE_KEY__STORE_CONFIG = 'store_configs';
 
 @Injectable({
     global: true,

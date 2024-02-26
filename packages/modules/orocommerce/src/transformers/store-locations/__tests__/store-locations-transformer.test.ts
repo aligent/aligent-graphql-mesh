@@ -18,9 +18,9 @@ describe('Store Locations data transformation tests', () => {
         expect(output.total_count).toStrictEqual(mockLocations.length);
         expect(output.__typename).toStrictEqual('StoreLocations');
 
-        for (const storeIndex in output.items!) {
-            const transformedStore = output.items[storeIndex]!;
-            const mockOroStore = mockLocations[storeIndex].attributes;
+        for (const storeIndex in output.items) {
+            const transformedStore = output.items[storeIndex];
+            const mockOroStore = mockLocations[Number(storeIndex)].attributes;
 
             expect(transformedStore.__typename).toStrictEqual('StoreLocation');
 

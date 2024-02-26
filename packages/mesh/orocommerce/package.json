@@ -6,7 +6,7 @@
     "@escape.tech/graphql-armor": "2.3.2",
     "@graphql-tools/load-files": "7.0.0",
     "@keyv/redis": "^2.8.0",
-    "axios": "1.4.0",
+    "axios": "1.6.7",
     "buffer": "5.7.1",
     "cors": "2.8.5",
     "express": "4.18.2",
@@ -17,7 +17,9 @@
     "jsonwebtoken": "9.0.1",
     "keyv": "4.5.4",
     "reflect-metadata": "0.1.13",
-    "tslib": "2.6.2"
+    "tslib": "2.6.2",
+    "aws-xray-sdk": "^3.5.3",
+    "aws-sdk": "^2.1563.0"
   },
   "main": "./main.js",
   "type": "commonjs"

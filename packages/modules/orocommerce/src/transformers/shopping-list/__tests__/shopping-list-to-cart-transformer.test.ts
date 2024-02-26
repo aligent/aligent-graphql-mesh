@@ -35,13 +35,13 @@ describe('Shopping List to Cart transformation tests', () => {
 
         expect(cart.total_quantity).toStrictEqual(1);
 
-        for (const index in cart.items!) {
+        for (const index in cart.items) {
             const shoppingListItemPrice: Money = {
                 currency: shoppingListItem.attributes.currency as CurrencyEnum,
                 value: Number(shoppingListItem.attributes.value),
             };
 
-            expect(cart.items[index]!).toStrictEqual({
+            expect(cart.items[index]).toStrictEqual({
                 __typename: 'SimpleCartItem',
                 id: '21',
                 uid: btoa('21'),

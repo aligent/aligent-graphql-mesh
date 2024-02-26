@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import http from 'http';
 import https from 'node:https';
 import { createYoga } from 'graphql-yoga';
 import { useGraphQLModules } from '@envelop/graphql-modules';
@@ -10,6 +11,8 @@ import Keyv from 'keyv';
 import cachableObjects from './cache';
 import { customerImpersonationPlugin } from '@aligent/bigcommerce-graphql-module';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
+import * as xray from 'aws-xray-sdk';
+import * as aws from 'aws-sdk';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -93,6 +96,22 @@ app.use(cors(corsConfiguration));
 app.options('*', cors(corsConfiguration));
 
 /**
+ * Load Balancer health check
+ */
+app.use('/healthcheck', (_req, res) => {
+    return res.send('ok');
+});
+
+/*
+ * Configure AWS X-Ray Tracing
+ */
+xray.captureAWS(aws);
+xray.captureHTTPsGlobal(http);
+xray.captureHTTPsGlobal(https);
+
+app.use(xray.express.openSegment('Mesh'));
+
+/**
  * Add cache headers for cloudfront
  */
 app.use((req, res, next) => {
@@ -129,12 +148,7 @@ app.use((req, res, next) => {
  */
 app.use(yoga.graphqlEndpoint, yoga);
 
-/**
- * Load Balancer health check
- */
-app.use('/healthcheck', (_req, res) => {
-    return res.send('ok');
-});
+app.use(xray.express.closeSegment());
 
 // Disable powered by header
 app.disable('x-powered-by');

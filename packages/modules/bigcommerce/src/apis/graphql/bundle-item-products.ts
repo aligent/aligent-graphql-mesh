@@ -1,5 +1,6 @@
 import {
     MultipleChoiceOption,
+    Prices,
     Product,
     ProductConnection,
     ProductPickListOptionValue,
@@ -64,7 +65,7 @@ const getModifiedProductPriceBasedOnPriceRules = ({
     return {
         ...bcPickListProduct,
         prices: {
-            ...bcPickListProduct.prices!,
+            ...(bcPickListProduct.prices as Prices),
             price: {
                 value: priceAfterDiscount,
                 currencyCode,

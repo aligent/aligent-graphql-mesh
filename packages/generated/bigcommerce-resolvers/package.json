@@ -1,8 +1,7 @@
 {
   "name": "@aligent/bigcommerce-resolvers",
   "version": "0.0.1",
-  "dependencies": {
-  },
+  "dependencies": {},
   "type": "commonjs",
   "main": "./src/index.js",
   "types": "./src/index.ts"
