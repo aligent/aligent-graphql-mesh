@@ -18,3 +18,4 @@ graphql.schema.json
 generated/
 additional-type-defs
 /coverage
+/.nx/cache
