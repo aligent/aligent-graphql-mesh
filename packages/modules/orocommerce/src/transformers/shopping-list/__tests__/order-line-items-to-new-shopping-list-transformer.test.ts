@@ -3,6 +3,11 @@ import 'reflect-metadata';
 import { getOroMockOrderLineItems } from './__data__/order-line-items-data';
 import { OrderLineItemToShoppingListItemTransformer } from '../order-line-item-to-shopping-list-item-transformer';
 import { OrderLineItemsToNewShoppingListTransformer } from '../order-line-items-to-new-shopping-list-transformer';
+import {
+    ShoppingListItemAttributes,
+    ShoppingListRelationships,
+    ShoppingListWithItemsIncluded,
+} from '../../../types';
 
 describe('Order Line Item to New Shopping List transformation tests', () => {
     const lineItemTransformer = new OrderLineItemToShoppingListItemTransformer();
@@ -49,23 +54,22 @@ describe('Order Line Item to New Shopping List transformation tests', () => {
     test('Check whether the new shopping list contains expected data', () => {
         expect(newShoppingList).toStrictEqual(newShoppingListWithItems.data.attributes);
 
-        const shoppingListItems = newShoppingListWithItems.included;
+        const shoppingListItems =
+            newShoppingListWithItems.included as ShoppingListWithItemsIncluded[];
 
         for (const index in shoppingListItems) {
             const shoppingListItem = shoppingListItems[index];
             const mockOrderLineItem = orderLineItems[index];
 
             expect(shoppingListItem.type).toStrictEqual('shoppinglistitems');
-            expect(shoppingListItem.attributes.quantity).toStrictEqual(
-                mockOrderLineItem.attributes.quantity
-            );
-            expect(shoppingListItem.relationships.product).toStrictEqual(
-                mockOrderLineItem.relationships.product
-            );
-            expect(shoppingListItem.relationships.unit).toStrictEqual(
-                mockOrderLineItem.relationships.productUnit
-            );
-            expect(shoppingListItem.relationships.shoppingList).toStrictEqual({
+
+            const attributes = shoppingListItem.attributes as ShoppingListItemAttributes;
+            expect(attributes.quantity).toStrictEqual(mockOrderLineItem.attributes.quantity);
+
+            const relationships = shoppingListItem.relationships as ShoppingListRelationships;
+            expect(relationships.product).toStrictEqual(mockOrderLineItem.relationships.product);
+            expect(relationships.unit).toStrictEqual(mockOrderLineItem.relationships.productUnit);
+            expect(relationships.shoppingList).toStrictEqual({
                 data: {
                     type: newShoppingListWithItems.data.type,
                     id: newShoppingListWithItems.data.id,
@@ -73,7 +77,7 @@ describe('Order Line Item to New Shopping List transformation tests', () => {
             });
 
             expect(
-                newShoppingListWithItems.data.relationships!.items.data[index].type
+                newShoppingListWithItems.data.relationships.items.data[index].type
             ).toStrictEqual('shoppinglistitems');
         }
     });

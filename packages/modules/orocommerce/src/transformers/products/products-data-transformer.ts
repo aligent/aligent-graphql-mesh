@@ -209,7 +209,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
     public getTransformedProductData(
         oroProduct: OroProduct,
-        isVariant: boolean = false
+        isVariant = false
     ): ConfigurableProduct | SimpleProduct {
         try {
             const productCategories = oroProduct.included?.filter(this.isProductCategory);

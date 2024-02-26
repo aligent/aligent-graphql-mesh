@@ -23,10 +23,10 @@ describe('Cms Blocks data transformation tests', () => {
     test('Check whether the transformed cms blocks contain expected data', () => {
         expect(output.__typename).toStrictEqual('CmsBlocks');
 
-        for (const blockIndex in output.items!) {
+        for (const blockIndex in output.items as string[]) {
             const blockAttrs = mockBlocks[blockIndex].attributes;
 
-            const transformedBlock = output.items[blockIndex]!;
+            const transformedBlock = output.items[blockIndex];
             expect(transformedBlock.content).toStrictEqual(
                 `${blockAttrs.contentVariant.content}<style>${blockAttrs.contentVariant.style}</style>`
             );
