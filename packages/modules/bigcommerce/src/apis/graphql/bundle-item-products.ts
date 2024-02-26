@@ -65,7 +65,7 @@ const getModifiedProductPriceBasedOnPriceRules = ({
     return {
         ...bcPickListProduct,
         prices: {
-            ...bcPickListProduct.prices as Prices,
+            ...(bcPickListProduct.prices as Prices),
             price: {
                 value: priceAfterDiscount,
                 currencyCode,
