@@ -15,6 +15,10 @@ const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
 
+const cache = DEV_MODE
+    ? new Keyv({ namespace: 'application' })
+    : new Keyv(redisUri, { namespace: 'application' });
+
 const yoga = createYoga({
     graphiql: DEV_MODE,
     logging: DEV_MODE ? 'info' : 'warn',
@@ -30,9 +34,7 @@ const yoga = createYoga({
 
         return {
             headers,
-            cache: DEV_MODE
-                ? new Keyv({ namespace: 'application' })
-                : new Keyv(redisUri, { namespace: 'application' }),
+            cache,
         };
     },
     plugins: [
