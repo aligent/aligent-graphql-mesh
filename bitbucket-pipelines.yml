@@ -1,6 +1,9 @@
 image: node:18
 
 definitions:
+  caches:
+    yarn:
+      path: /usr/local/share/.cache/yarn/v6
   services:
     docker-extra-memory:
       memory: 7168
@@ -9,7 +12,7 @@ definitions:
     - step: &install
         name: 🧶 Install
         caches:
-          - node
+          - yarn
         script:
           - yarn install
         artifacts:
@@ -17,8 +20,6 @@ definitions:
 
     - step: &test
         name: ⚙️ Test
-        caches:
-          - node
         script:
           - FORCE_COLOR=true
           - DESTINATION_BRANCH=origin/${DESTINATION_BRANCH:-$BITBUCKET_PR_DESTINATION_BRANCH} # Set DESTINATION_BRANCH to the PR destination branch if it is not already set
@@ -26,8 +27,6 @@ definitions:
 
     - step: &code-quality
         name: 🕵️‍♀️ Code Quality
-        caches:
-          - node
         script:
           - FORCE_COLOR=true
           - DESTINATION_BRANCH=origin/${DESTINATION_BRANCH:-$BITBUCKET_PR_DESTINATION_BRANCH} # Set DESTINATION_BRANCH to the PR destination branch if it is not already set
@@ -48,8 +47,6 @@ definitions:
 
     - step: &build
         name: 🏭 Build all packages
-        caches:
-          - node
         script:
           - yarn nx run-many -t build
         artifacts:
@@ -74,8 +71,6 @@ definitions:
 
     - step: &publish
         name: 📦 Publish package to the Aligent Repository
-        caches:
-          - node
         script:
           - VERSION=$(echo $BITBUCKET_TAG | sed 's/^.*[A-Za-z]-//g')
           - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
