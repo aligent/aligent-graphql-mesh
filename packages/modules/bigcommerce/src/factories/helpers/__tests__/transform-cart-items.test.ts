@@ -761,7 +761,7 @@ const expectResult = [
             stock_status: 'IN_STOCK',
         },
         quantity: 2,
-        uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzQ5Mi81MTM=',
+        uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzEwMzQvNTEz',
     },
 ];
 describe('transform-cart-items', () => {
