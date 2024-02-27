@@ -23,10 +23,12 @@ export const bcGraphQlRequest = async (
 ): Promise<AxiosResponse['data']> => {
     headers['accept'] = 'application/json';
     try {
-        const response = await xray.captureAsyncFunc('bcGraphQlRequest', (segment) => {
+        const response = await xray.captureAsyncFunc('bcGraphQlRequest', async (segment) => {
             // Add query annotation to axios request
             segment?.addAnnotation('query', data.query);
-            return axios.post(BC_GRAPHQL_API, data, { headers });
+            const response = await axios.post(BC_GRAPHQL_API, data, { headers });
+            segment?.close();
+            return response;
         });
         return response.data;
     } catch (error) {
