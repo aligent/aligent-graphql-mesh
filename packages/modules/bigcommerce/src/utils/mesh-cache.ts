@@ -14,12 +14,12 @@ export const TTL_IN_MILLI_SECONDS = 1800000;
 export const getDataFromMeshCache = async (
     context: GraphQLModules.ModuleContext,
     cacheKey: string,
-    query: unknown
+    query: () => unknown
 ): Promise<AxiosResponse['data']> => {
     let response = await context.cache.get(cacheKey);
 
     if (!response && query) {
-        response = await query;
+        response = await query();
 
         if (!cacheKey) return response;
         await context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);

@@ -50,7 +50,7 @@ export const getStoreConfigs = async (
 export const retrieveStoreConfigsFromCache = async (
     context: GraphQLModules.ModuleContext
 ): getStoreConfigsTypes => {
-    const query = getStoreConfigs(context);
+    const query = () => getStoreConfigs(context);
 
     return getDataFromMeshCache(context, CACHE_KEY__STORE_CONFIG, query);
 };

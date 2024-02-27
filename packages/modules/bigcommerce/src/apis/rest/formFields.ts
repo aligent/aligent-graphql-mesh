@@ -25,7 +25,7 @@ export const getStorefrontFormFields = async (): Promise<BcStorefrontFormFields>
 export const retrieveStorefrontFormFieldsFromCache = async (
     context: GraphQLModules.ModuleContext
 ): Promise<BcStorefrontFormFields> => {
-    const query = getStorefrontFormFields();
+    const query = () => getStorefrontFormFields();
 
     return getDataFromMeshCache(context, CACHE_KEY__STOREFRONT_FORM_FIELDS, query);
 };

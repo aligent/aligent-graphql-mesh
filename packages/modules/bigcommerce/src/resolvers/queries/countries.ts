@@ -17,7 +17,7 @@ export const countriesResolver: QueryResolvers['countries'] = {
 export const retrieveCountriesAndStatesFromCache = async (
     context: GraphQLModules.ModuleContext
 ) => {
-    const query = Promise.all([getCountries(), getAllStates(1)]);
+    const query = () => Promise.all([getCountries(), getAllStates(1)]);
 
     return getDataFromMeshCache(context, CACHE_KEY__COUNTRIES, query);
 };

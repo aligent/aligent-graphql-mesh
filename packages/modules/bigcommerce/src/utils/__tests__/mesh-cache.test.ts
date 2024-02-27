@@ -22,9 +22,10 @@ const mockContext = {
 };
 
 /* This is the query to be performed if no cached data exists*/
-const query = new Promise((resolve) => {
-    resolve('fresh data');
-});
+const query = () =>
+    new Promise((resolve) => {
+        resolve('fresh data');
+    });
 
 describe('mesh-cache', () => {
     afterEach(() => {
