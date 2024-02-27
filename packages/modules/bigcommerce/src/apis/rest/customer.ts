@@ -11,11 +11,13 @@ import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { logAndThrowError } from '@aligent/utils';
 import { CustomerAttributes } from '@aligent/bigcommerce-operations';
 import { CustomerInput } from '@aligent/bigcommerce-resolvers';
+import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
 const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 const CUSTOMER_FORM_FIELDS_API = `/v3/customers/form-field-values`;
+const CACHE_KEY__CUSTOMER_ATTRIBUTES = 'customer_attributes';
 
 /* istanbul ignore file */
 export const createCustomer = async (customerInput: CustomerInput): Promise<BcCustomer> => {
@@ -95,6 +97,39 @@ export const getCustomerAttributeId = async (name: string): Promise<number> => {
     }
 
     return response.data[0].id;
+};
+
+/**
+ * Requests for customer attributes
+ */
+export const getCustomerAttributes = async (): Promise<{ [key: string]: number }> => {
+    const path = `/v3/customers/attributes`;
+
+    const response = (await bcGet(path)) as { data: { [key: string]: number }[] };
+
+    if (response.data.length === 0) {
+        logAndThrowError(`Customer attributes not found`);
+    }
+
+    const formattedCustomerAttributes: { [key: string]: number } = response.data.reduce(
+        (carry, attribute) => {
+            const { id, name } = attribute;
+            return { ...carry, [name]: id };
+        },
+        {}
+    );
+
+    return formattedCustomerAttributes;
+};
+
+export const retrieveCustomerAttributesFromCache = async (
+    context: GraphQLModules.ModuleContext
+): Promise<{ [key: string]: number }> => {
+    const query = () => getCustomerAttributes();
+
+    const cacheKey = `${CACHE_KEY__CUSTOMER_ATTRIBUTES}`;
+
+    return getDataFromMeshCache(context, cacheKey, query);
 };
 
 export const upsertCustomerAttributeValue = async (

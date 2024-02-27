@@ -32,6 +32,7 @@ export const customerCartResolver: QueryResolvers['customerCart'] = {
         }
 
         const cartId = await getCartIdFromBcCustomerAttribute(
+            context,
             bcCustomerId,
             customerImpersonationToken
         );

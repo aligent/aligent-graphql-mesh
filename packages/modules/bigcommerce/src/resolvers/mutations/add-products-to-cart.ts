@@ -35,7 +35,7 @@ export const addProductsToCartResolver = {
                   customerImpersonationToken,
                   bcCustomerId
               )
-            : await createCart(lineItems, customerImpersonationToken, bcCustomerId);
+            : await createCart(context, lineItems, customerImpersonationToken, bcCustomerId);
 
         const hasFailedCreatingCart = !cartId && !cartMutationResponse?.entityId;
 

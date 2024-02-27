@@ -17,11 +17,12 @@ import {
     updateCartLineItemQuery,
 } from './requests';
 import { GraphqlError, logAndThrowError } from '@aligent/utils';
-import { getCustomerAttributeId, upsertCustomerAttributeValue } from '../rest/customer';
+import {
+    retrieveCustomerAttributesFromCache,
+    upsertCustomerAttributeValue,
+} from '../rest/customer';
 import { assignCartToCustomerMutation } from './requests/assign-cart';
 import { getCartUserErrors } from '../../utils/error-handling';
-
-const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
 export const addProductsToCart = async (
     cartId: string,
@@ -60,6 +61,7 @@ export const addProductsToCart = async (
 };
 
 export const createCart = async (
+    context: GraphQLModules.ModuleContext,
     lineItems: InputMaybe<Array<CartLineItemInput>>,
     customerImpersonationToken: string,
     bcCustomerId: number | null
@@ -91,7 +93,7 @@ export const createCart = async (
 
     // Save cart_id in customer attribute field for logged in users
     if (cart?.entityId) {
-        await updateCartIdAttribute({
+        await updateCartIdAttribute(context, {
             cartId: cart.entityId,
             customerId: bcCustomerId,
         });
@@ -192,19 +194,22 @@ export const updateCartLineItem = async (
 };
 
 // Update cart_id that is saved in customer attribute field
-export const updateCartIdAttribute = async (variables: {
-    cartId: string | null;
-    customerId: number | null;
-}): Promise<CustomerAttributes | undefined> => {
+export const updateCartIdAttribute = async (
+    context: GraphQLModules.ModuleContext,
+    variables: {
+        cartId: string | null;
+        customerId: number | null;
+    }
+): Promise<CustomerAttributes | undefined> => {
     const { cartId, customerId } = variables;
     /* If we're not dealing with a logged-in customer don't worry about trying to
      * store a cart id on a customer attribute.*/
     if (!customerId) return;
 
-    const attributeId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
+    const { cart_id: cartAttributeId } = await retrieveCustomerAttributesFromCache(context);
 
-    if (!attributeId || !cartId) return;
-    return upsertCustomerAttributeValue(attributeId, cartId, customerId);
+    if (!cartAttributeId || !cartId) return;
+    return upsertCustomerAttributeValue(cartAttributeId, cartId, customerId);
 };
 
 export const verifyCartEntityId = async (
@@ -242,6 +247,7 @@ export const verifyCartEntityId = async (
  * @param customerImpersonationToken
  */
 export const assignGuestCartToNewUserAccount = async (
+    context: GraphQLModules.ModuleContext,
     cartId: string,
     bcCustomerId: number,
     customerImpersonationToken: string
@@ -252,7 +258,7 @@ export const assignGuestCartToNewUserAccount = async (
         customerImpersonationToken
     );
 
-    const storeCartIdOnUserAccountQuery = updateCartIdAttribute({
+    const storeCartIdOnUserAccountQuery = updateCartIdAttribute(context, {
         cartId,
         customerId: bcCustomerId,
     });

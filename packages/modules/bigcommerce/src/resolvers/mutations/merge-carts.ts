@@ -34,13 +34,13 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
         const guestCheckoutQuery = getEnrichedCart({ cart_id: guestCartId }, context, null);
 
         // There may be a cart to merge provided by the FE or already attached to the customer
-        const customerCartIdQuery =
+        const customerCartIdQuery = () =>
             destination_cart_id ||
-            getCartIdFromBcCustomerAttribute(bcCustomerId, customerImpersonationToken);
+            getCartIdFromBcCustomerAttribute(context, bcCustomerId, customerImpersonationToken);
 
         const [guestCheckout, customerCartId] = await Promise.all([
             guestCheckoutQuery,
-            customerCartIdQuery,
+            customerCartIdQuery(),
         ]);
 
         /* This is for guest users who have a guest cart and are creating a new account.
@@ -48,6 +48,7 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
          * their guest cart to their new customer account */
         if (!customerCartId) {
             await assignGuestCartToNewUserAccount(
+                context,
                 guestCartId,
                 bcCustomerId,
                 customerImpersonationToken
