@@ -36,7 +36,7 @@ export const getTransformCartItems = (
         } = item;
 
         const matchingEnrichedData = additionalCartItemData?.find((enrichedItem) => {
-            return enrichedItem.sku === sku;
+            return enrichedItem.id === productEntityId;
         });
 
         if (!matchingEnrichedData) {
