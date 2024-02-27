@@ -20,7 +20,9 @@ export const getDataFromMeshCache = async (
     let response = await xray.captureAsyncFunc('getCache', (segment) => {
         segment?.addAnnotation('cacheKey', cacheKey);
 
-        return context.cache.get(cacheKey);
+        const cacheData = context.cache.get(cacheKey);
+        segment?.close();
+        return cacheData;
     });
 
     if (!response && query) {
@@ -31,7 +33,9 @@ export const getDataFromMeshCache = async (
         await xray.captureAsyncFunc('setCache', (segment) => {
             segment?.addAnnotation('cacheKey', cacheKey);
 
-            return context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
+            const cacheData = context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
+            segment?.close();
+            return cacheData;
         });
     }
 

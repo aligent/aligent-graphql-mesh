@@ -26,7 +26,9 @@ export const bcGraphQlRequest = async (
         const response = await xray.captureAsyncFunc('bcGraphQlRequest', (segment) => {
             // Add query annotation to axios request
             segment?.addAnnotation('query', data.query);
-            return axios.post(BC_GRAPHQL_API, data, { headers });
+            const response = axios.post(BC_GRAPHQL_API, data, { headers });
+            segment?.close();
+            return response;
         });
         return response.data;
     } catch (error) {
