@@ -49,6 +49,7 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
         )) as string;
 
         const cartId = await getCartIdFromBcCustomerAttribute(
+            context,
             bcCustomerId,
             customerImpersonationToken
         );

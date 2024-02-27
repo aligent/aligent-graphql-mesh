@@ -3,10 +3,8 @@ import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
 import { logAndThrowError } from '@aligent/utils';
 import { customerAttribute } from './requests/customer-attribute';
-import { getCustomerAttributeId } from '../rest/customer';
+import { retrieveCustomerAttributesFromCache } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
-
-const CART_ID_ATTRIBUTE_FILED_NAME = 'cart_id';
 
 export const getBcCustomer = async (
     bcCustomerId: number,
@@ -30,6 +28,7 @@ export const getBcCustomer = async (
 };
 
 export const getCartIdFromBcCustomerAttribute = async (
+    context: GraphQLModules.ModuleContext,
     bcCustomerId: number,
     customerImpersonationToken: string
 ): Promise<string | null> => {
@@ -38,21 +37,20 @@ export const getCartIdFromBcCustomerAttribute = async (
         'x-bc-customer-id': bcCustomerId,
     };
     try {
-        //TODO: Try to get this value from cache first before sending request
-        const cartAttributeFieldId = await getCustomerAttributeId(CART_ID_ATTRIBUTE_FILED_NAME);
+        const { cart_id: cartAttributeId } = await retrieveCustomerAttributesFromCache(context);
 
-        if (!cartAttributeFieldId) return null;
+        if (!cartAttributeId) return null;
 
         const customerAttributeQuery = {
             query: customerAttribute,
             variables: {
-                attributeId: cartAttributeFieldId,
+                attributeId: cartAttributeId,
             },
         };
 
-        const response = await bcGraphQlRequest(customerAttributeQuery, headers);
+        const getCustomerCartIdResponse = await bcGraphQlRequest(customerAttributeQuery, headers);
 
-        const entityId = response.data.customer.attributes.attribute.value;
+        const entityId = getCustomerCartIdResponse.data.customer.attributes.attribute.value;
 
         // Query checkout for verifying the cart_id we retrieved from customer attribute is valid
         const cartResponse = await verifyCartEntityId(
