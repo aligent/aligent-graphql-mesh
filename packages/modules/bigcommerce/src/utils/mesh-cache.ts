@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import * as xray from 'aws-xray-sdk';
 
 // The time we want the cached data to live. 30 minutes
 export const TTL_IN_MILLI_SECONDS = 1800000;
@@ -16,13 +17,22 @@ export const getDataFromMeshCache = async (
     cacheKey: string,
     query: unknown
 ): Promise<AxiosResponse['data']> => {
-    let response = await context.cache.get(cacheKey);
+    let response = await xray.captureAsyncFunc('getCache', (segment) => {
+        segment?.addAnnotation('cacheKey', cacheKey);
+
+        return context.cache.get(cacheKey);
+    });
 
     if (!response && query) {
         response = await query;
 
         if (!cacheKey) return response;
-        await context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
+
+        await xray.captureAsyncFunc('setCache', (segment) => {
+            segment?.addAnnotation('cacheKey', cacheKey);
+
+            return context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
+        });
     }
 
     return response;
