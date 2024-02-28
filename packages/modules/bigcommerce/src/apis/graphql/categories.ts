@@ -2,12 +2,21 @@ import { bcGraphQlRequest } from './client';
 import { getCategoryQuery } from './requests/category';
 import { getCategoryTreeQuery } from './requests/category-tree';
 import { BcCategory, BcCategoryTree } from '../../types';
+import { getDataFromMeshCache } from '../../utils/mesh-cache';
+
+const CACHE_KEY__CATEGORIES_PREFIX = 'categories';
+
+export type GetCategoriesTypes = Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }>;
 
 export const getCategories = async (
-    customerImpersonationToken: string,
+    context: GraphQLModules.ModuleContext,
     rootEntityId: number | null,
     variables: { productsPageSize: number }
-): Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }> => {
+): GetCategoriesTypes => {
+    const customerImpersonationToken = (await context.cache.get(
+        'customerImpersonationToken'
+    )) as string;
+
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
@@ -38,4 +47,14 @@ export const getCategories = async (
         categoryTree: categoryTreeResponse.data.site.categoryTree,
         category: categoryResponse ? categoryResponse?.data.site?.category : {},
     };
+};
+
+export const retrieveCategoriesFromCache = async (
+    context: GraphQLModules.ModuleContext,
+    rootEntityId: number | null,
+    variables: { productsPageSize: number }
+): GetCategoriesTypes => {
+    const query = () => getCategories(context, rootEntityId, variables);
+
+    return getDataFromMeshCache(context, `${CACHE_KEY__CATEGORIES_PREFIX}-${rootEntityId}`, query);
 };

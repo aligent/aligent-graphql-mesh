@@ -1,5 +1,5 @@
 import { atob } from '@aligent/utils';
-import { getCategories } from '../../apis/graphql/categories';
+import { retrieveCategoriesFromCache } from '../../apis/graphql/categories';
 import {
     getTransformedCategoryData,
     ROOT_PWA_CATEGORY,
@@ -10,9 +10,6 @@ import { STORE_CONFIG__GRID_PER_PAGE } from './constants';
 export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, context, _info) => {
         const categoryUid = args?.filters?.category_uid?.eq;
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
 
         const storeConfig = await retrieveStoreConfigsFromCache(context);
 
@@ -24,8 +21,8 @@ export const categoriesResolver: QueryResolvers['categories'] = {
          * data. */
         const rootEntityId =
             categoryUid && categoryUid !== 'null' ? Number(atob(categoryUid)) : null;
-        const { category, categoryTree } = await getCategories(
-            customerImpersonationToken,
+        const { category, categoryTree } = await retrieveCategoriesFromCache(
+            context,
             rootEntityId,
             { productsPageSize: grid_per_page || STORE_CONFIG__GRID_PER_PAGE }
         );
