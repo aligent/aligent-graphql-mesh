@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 
 // The time we want the cached data to live. 30 minutes
 export const TTL_IN_MILLI_SECONDS = 1800000;
+const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
 
 /**
  * Searches for data in the mesh context cache, otherwise makes a request for
@@ -35,7 +36,28 @@ export const getDataFromMeshCache = async (
         const ttl = config?.ttl && !!Number(config.ttl) ? Number(config.ttl) : TTL_IN_MILLI_SECONDS;
 
         await context.cache.set(cacheKey, response, ttl);
+
+        if (ENABLE_CACHE_LOGGING) {
+            logCachingTimesMessage(cacheKey, ttl);
+        }
     }
 
     return response;
+};
+
+/**
+ * Logs a message to the terminal at what time a cached item is set and set to expiry.
+ * e.g. "categories-23" cached on "28/02/2024, 10:04:05 am" and set to expire on "28/02/2024, 10:14:05 am"
+ *
+ * @param cacheKey
+ * @param ttl
+ */
+const logCachingTimesMessage = (cacheKey: string, ttl: number) => {
+    const currentTime = new Date();
+
+    const expiryTime = new Date(currentTime.getTime() + ttl);
+
+    console.info(
+        `CACHE ITEM: "${cacheKey}" cached on "${currentTime.toLocaleString()}" and set to expire on "${expiryTime.toLocaleString()}"`
+    );
 };
