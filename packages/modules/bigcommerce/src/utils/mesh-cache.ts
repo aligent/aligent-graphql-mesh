@@ -12,6 +12,7 @@ export const TTL_IN_MILLI_SECONDS = 1800000;
  * @param query - The query to be invoked should the corresponding response not be stored
  *                in the cache. This is required to an arrow function, so it can hold the
  *                arguments without being invoked. e.g. "() => myFunction(arg1: "arg", arg2: true)"
+ * @param {{ttl: number}} config - 'ttl' is a number representing time-to-live in milliseconds
  *
  * usage:
  * const uninvokedQuery = () => getStoreConfigs(context);
@@ -21,7 +22,8 @@ export const TTL_IN_MILLI_SECONDS = 1800000;
 export const getDataFromMeshCache = async (
     context: GraphQLModules.ModuleContext,
     cacheKey: string,
-    query: () => Promise<unknown>
+    query: () => Promise<unknown>,
+    config?: { ttl?: number | string }
 ): Promise<AxiosResponse['data']> => {
     let response = await context.cache.get(cacheKey);
 
@@ -29,7 +31,10 @@ export const getDataFromMeshCache = async (
         response = await query();
 
         if (!cacheKey) return response;
-        await context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
+
+        const ttl = config?.ttl && !!Number(config.ttl) ? Number(config.ttl) : TTL_IN_MILLI_SECONDS;
+
+        await context.cache.set(cacheKey, response, ttl);
     }
 
     return response;

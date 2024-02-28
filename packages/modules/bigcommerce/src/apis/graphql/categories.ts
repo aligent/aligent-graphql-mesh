@@ -5,6 +5,7 @@ import { BcCategory, BcCategoryTree } from '../../types';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
 const CACHE_KEY__CATEGORIES_PREFIX = 'categories';
+const CACHE_TTL__CATEGORIES = process.env.CACHE_TTL__CATEGORIES;
 
 export type GetCategoriesTypes = Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }>;
 
@@ -56,5 +57,7 @@ export const retrieveCategoriesFromCache = async (
 ): GetCategoriesTypes => {
     const query = () => getCategories(context, rootEntityId, variables);
 
-    return getDataFromMeshCache(context, `${CACHE_KEY__CATEGORIES_PREFIX}-${rootEntityId}`, query);
+    return getDataFromMeshCache(context, `${CACHE_KEY__CATEGORIES_PREFIX}-${rootEntityId}`, query, {
+        ttl: CACHE_TTL__CATEGORIES,
+    });
 };

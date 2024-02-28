@@ -4,6 +4,7 @@ import { transformCountriesAndStates } from '../../factories/transform-countries
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
 
 const CACHE_KEY__COUNTRIES = 'countries';
+const CACHE_TTL__COUNTRIES = process.env.CACHE_TTL__COUNTRIES;
 
 /* istanbul ignore next */
 export const countriesResolver: QueryResolvers['countries'] = {
@@ -19,5 +20,7 @@ export const retrieveCountriesAndStatesFromCache = async (
 ) => {
     const query = () => Promise.all([getCountries(), getAllStates(1)]);
 
-    return getDataFromMeshCache(context, CACHE_KEY__COUNTRIES, query);
+    return getDataFromMeshCache(context, CACHE_KEY__COUNTRIES, query, {
+        ttl: CACHE_TTL__COUNTRIES,
+    });
 };

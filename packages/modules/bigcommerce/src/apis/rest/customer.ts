@@ -18,6 +18,7 @@ const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
 const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 const CUSTOMER_FORM_FIELDS_API = `/v3/customers/form-field-values`;
 const CACHE_KEY__CUSTOMER_ATTRIBUTES = 'customer_attributes';
+const CACHE_TTL__CUSTOMER_ATTRIBUTES = process.env.CACHE_TTL__CUSTOMER_ATTRIBUTES;
 
 /* istanbul ignore file */
 export const createCustomer = async (customerInput: CustomerInput): Promise<BcCustomer> => {
@@ -129,7 +130,7 @@ export const retrieveCustomerAttributesFromCache = async (
 
     const cacheKey = `${CACHE_KEY__CUSTOMER_ATTRIBUTES}`;
 
-    return getDataFromMeshCache(context, cacheKey, query);
+    return getDataFromMeshCache(context, cacheKey, query, { ttl: CACHE_TTL__CUSTOMER_ATTRIBUTES });
 };
 
 export const upsertCustomerAttributeValue = async (
