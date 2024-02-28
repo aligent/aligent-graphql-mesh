@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import * as xray from 'aws-xray-sdk';
 
 // The time we want the cached data to live. 30 minutes
 export const TTL_IN_MILLI_SECONDS = 1800000;
@@ -26,7 +27,13 @@ export const getDataFromMeshCache = async (
     query: () => Promise<unknown>,
     config?: { ttl?: number | string }
 ): Promise<AxiosResponse['data']> => {
-    let response = await context.cache.get(cacheKey);
+    let response = await xray.captureAsyncFunc('getCache', async (segment) => {
+        segment?.addAnnotation('cacheKey', cacheKey);
+
+        const cacheData = await context.cache.get(cacheKey);
+        segment?.close();
+        return cacheData;
+    });
 
     if (!response && query) {
         response = await query();
@@ -35,7 +42,13 @@ export const getDataFromMeshCache = async (
 
         const ttl = config?.ttl && !!Number(config.ttl) ? Number(config.ttl) : TTL_IN_MILLI_SECONDS;
 
-        await context.cache.set(cacheKey, response, ttl);
+        await xray.captureAsyncFunc('setCache', async (segment) => {
+            segment?.addAnnotation('cacheKey', cacheKey);
+
+            const cacheData = await context.cache.set(cacheKey, response, ttl);
+            segment?.close();
+            return cacheData;
+        });
 
         if (ENABLE_CACHE_LOGGING) {
             logCachingTimesMessage(cacheKey, ttl);
