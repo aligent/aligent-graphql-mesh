@@ -27,51 +27,35 @@ export const getDataFromMeshCache = async (
     cacheKey: string,
     query: () => Promise<unknown>
 ): Promise<AxiosResponse['data']> => {
-    const segment = new xray.Segment('Cache');
-    const ns = xray.getNamespace();
+    let response = await xray.captureAsyncFunc('getCache', async (segment) => {
+        segment?.addAnnotation('cacheKey', cacheKey);
 
-    return ns.runAndReturn(async () => {
-        xray.setSegment(segment);
-
-        let response = await xray.captureAsyncFunc(
-            'getCache',
-            async (subSegment) => {
-                subSegment?.addAnnotation('cacheKey', cacheKey);
-
-                const cacheData = await context.cache.get(cacheKey);
-                subSegment?.close();
-                return cacheData;
-            },
-            segment
-        );
-
-        if (!response && query) {
-            response = await query();
-
-            if (!cacheKey) return response;
-
-            const ttl = getCacheItemTtl(context, cacheKey);
-
-            await xray.captureAsyncFunc(
-                'setCache',
-                async (subSegment) => {
-                    subSegment?.addAnnotation('cacheKey', cacheKey);
-
-                    const cacheData = await context.cache.set(cacheKey, response, ttl);
-                    subSegment?.close();
-                    return cacheData;
-                },
-                segment
-            );
-
-            if (ENABLE_CACHE_LOGGING) {
-                logCachingTimesMessage(cacheKey, ttl);
-            }
-        }
-        segment.close();
-
-        return response;
+        const cacheData = await context.cache.get(cacheKey);
+        segment?.close(undefined, true); // Set as remote
+        return cacheData;
     });
+
+    if (!response && query) {
+        response = await query();
+
+        if (!cacheKey) return response;
+
+        const ttl = getCacheItemTtl(context, cacheKey);
+
+        await xray.captureAsyncFunc('setCache', async (segment) => {
+            segment?.addAnnotation('cacheKey', cacheKey);
+
+            const cacheData = await context.cache.set(cacheKey, response, ttl);
+            segment?.close(undefined, true); // Set as remote
+            return cacheData;
+        });
+
+        if (ENABLE_CACHE_LOGGING) {
+            logCachingTimesMessage(cacheKey, ttl);
+        }
+    }
+
+    return response;
 };
 
 /**
