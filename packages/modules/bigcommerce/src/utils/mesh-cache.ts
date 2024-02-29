@@ -24,27 +24,47 @@ export const getDataFromMeshCache = async (
     cacheKey: string,
     query: () => Promise<unknown>
 ): Promise<AxiosResponse['data']> => {
-    let response = await xray.captureAsyncFunc('getCache', async (segment) => {
-        segment?.addAnnotation('cacheKey', cacheKey);
+    const segment = new xray.Segment('Cache');
+    const ns = xray.getNamespace();
 
-        const cacheData = await context.cache.get(cacheKey);
-        segment?.close();
-        return cacheData;
+    return ns.runAndReturn(async () => {
+        xray.setSegment(segment);
+
+        let response = await xray.captureAsyncFunc(
+            'getCache',
+            async (subSegment) => {
+                subSegment?.addAnnotation('cacheKey', cacheKey);
+
+                const cacheData = await context.cache.get(cacheKey);
+                subSegment?.close();
+                return cacheData;
+            },
+            segment
+        );
+
+        if (!response && query) {
+            response = await query();
+
+            if (!cacheKey) return response;
+
+            await xray.captureAsyncFunc(
+                'setCache',
+                async (subSegment) => {
+                    subSegment?.addAnnotation('cacheKey', cacheKey);
+
+                    const cacheData = await context.cache.set(
+                        cacheKey,
+                        response,
+                        TTL_IN_MILLI_SECONDS
+                    );
+                    subSegment?.close();
+                    return cacheData;
+                },
+                segment
+            );
+        }
+        segment.close();
+
+        return response;
     });
-
-    if (!response && query) {
-        response = await query();
-
-        if (!cacheKey) return response;
-
-        await xray.captureAsyncFunc('setCache', async (segment) => {
-            segment?.addAnnotation('cacheKey', cacheKey);
-
-            const cacheData = await context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
-            segment?.close();
-            return cacheData;
-        });
-    }
-
-    return response;
 };
