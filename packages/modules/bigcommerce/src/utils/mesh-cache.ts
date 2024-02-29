@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import * as xray from 'aws-xray-sdk';
 
 // The time we want the cached data to live. 30 minutes
-export const TTL_IN_MILLI_SECONDS = 1800000;
+export const DEFAULT_TTL_IN_MILLI_SECONDS = 1800000;
 const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
 
 /**
@@ -51,7 +51,9 @@ export const getDataFromMeshCache = async (
             if (!cacheKey) return response;
 
             const ttl =
-                config?.ttl && !!Number(config.ttl) ? Number(config.ttl) : TTL_IN_MILLI_SECONDS;
+                config?.ttl && !!Number(config.ttl)
+                    ? Number(config.ttl)
+                    : DEFAULT_TTL_IN_MILLI_SECONDS;
 
             await xray.captureAsyncFunc(
                 'setCache',
