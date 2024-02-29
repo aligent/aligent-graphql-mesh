@@ -2,9 +2,7 @@ import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getAllStates, getCountries } from '../../apis/rest/countries';
 import { transformCountriesAndStates } from '../../factories/transform-countries-data';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
-
-const CACHE_KEY__COUNTRIES = 'countries';
-const CACHE_TTL__COUNTRIES = process.env.CACHE_TTL__COUNTRIES;
+import { CACHE_KEY__COUNTRIES } from '../../constants';
 
 /* istanbul ignore next */
 export const countriesResolver: QueryResolvers['countries'] = {
@@ -20,7 +18,5 @@ export const retrieveCountriesAndStatesFromCache = async (
 ) => {
     const query = () => Promise.all([getCountries(), getAllStates(1)]);
 
-    return getDataFromMeshCache(context, CACHE_KEY__COUNTRIES, query, {
-        ttl: CACHE_TTL__COUNTRIES,
-    });
+    return getDataFromMeshCache(context, CACHE_KEY__COUNTRIES, query);
 };

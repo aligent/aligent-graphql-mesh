@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
 import * as xray from 'aws-xray-sdk';
+import { ModuleConfig } from '../providers';
+import { CACHE_ITEMS_TTL } from '../constants';
 
 // The time we want the cached data to live. 30 minutes
 export const DEFAULT_TTL_IN_MILLI_SECONDS = 1800000;
@@ -14,7 +16,6 @@ const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
  * @param query - The query to be invoked should the corresponding response not be stored
  *                in the cache. This is required to an arrow function, so it can hold the
  *                arguments without being invoked. e.g. "() => myFunction(arg1: "arg", arg2: true)"
- * @param {{ttl: number}} config - 'ttl' is a number representing time-to-live in milliseconds
  *
  * usage:
  * const uninvokedQuery = () => getStoreConfigs(context);
@@ -24,8 +25,7 @@ const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
 export const getDataFromMeshCache = async (
     context: GraphQLModules.ModuleContext,
     cacheKey: string,
-    query: () => Promise<unknown>,
-    config?: { ttl?: number | string }
+    query: () => Promise<unknown>
 ): Promise<AxiosResponse['data']> => {
     const segment = new xray.Segment('Cache');
     const ns = xray.getNamespace();
@@ -50,10 +50,7 @@ export const getDataFromMeshCache = async (
 
             if (!cacheKey) return response;
 
-            const ttl =
-                config?.ttl && !!Number(config.ttl)
-                    ? Number(config.ttl)
-                    : DEFAULT_TTL_IN_MILLI_SECONDS;
+            const ttl = getCacheItemTtl(context, cacheKey);
 
             await xray.captureAsyncFunc(
                 'setCache',
@@ -75,6 +72,35 @@ export const getDataFromMeshCache = async (
 
         return response;
     });
+};
+
+/**
+ * Gets the defined TTL (time to live) value for a cache item. TTL's can be set on the mesh "context"
+ * objects and adjust on a per product level. Go to "application.ts" to see where these are added.
+ * If a TTL isn't defined in the "context" object we check if one has been defined in "constants.ts".
+ * If not defined TTL's can be found then we default to a global fallback value.
+ *
+ * @param context - The Graphql module context instance.
+ * @param cacheKey - The key which the query response should be cached under in the context.cache
+ */
+export const getCacheItemTtl = (
+    context: GraphQLModules.ModuleContext,
+    cacheKey: string
+): number => {
+    // Cache keys will be defined with underscores "_" and if used as a prefix then anything that follows
+    // will begin with a hyphen "-". e.g. "categories-58"
+    const [cacheKeyPrefix] = cacheKey.split('-');
+
+    // Check for the "cacheKey" corresponding TTL value in the "context" object.
+    const ttlInContext = context.injector.get(ModuleConfig)?.cacheItemsTtl?.[cacheKeyPrefix];
+
+    // Check for the "cacheKey" corresponding TTL value in the "constants.ts" file.
+    const ttlInConstants = CACHE_ITEMS_TTL?.[cacheKeyPrefix];
+
+    const ttl = ttlInContext || ttlInConstants;
+
+    // Return the TTL or fallback to the global default TTL
+    return Number(ttl) ? Number(ttl) : DEFAULT_TTL_IN_MILLI_SECONDS;
 };
 
 /**

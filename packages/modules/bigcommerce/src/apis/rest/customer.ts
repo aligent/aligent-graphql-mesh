@@ -12,13 +12,12 @@ import { logAndThrowError } from '@aligent/utils';
 import { CustomerAttributes } from '@aligent/bigcommerce-operations';
 import { CustomerInput } from '@aligent/bigcommerce-resolvers';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
+import { CACHE_KEY__CUSTOMER_ATTRIBUTES } from '../../constants';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
 const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 const CUSTOMER_FORM_FIELDS_API = `/v3/customers/form-field-values`;
-const CACHE_KEY__CUSTOMER_ATTRIBUTES = 'customer_attributes';
-const CACHE_TTL__CUSTOMER_ATTRIBUTES = process.env.CACHE_TTL__CUSTOMER_ATTRIBUTES;
 
 /* istanbul ignore file */
 export const createCustomer = async (customerInput: CustomerInput): Promise<BcCustomer> => {
@@ -128,9 +127,7 @@ export const retrieveCustomerAttributesFromCache = async (
 ): Promise<{ [key: string]: number }> => {
     const query = () => getCustomerAttributes();
 
-    const cacheKey = `${CACHE_KEY__CUSTOMER_ATTRIBUTES}`;
-
-    return getDataFromMeshCache(context, cacheKey, query, { ttl: CACHE_TTL__CUSTOMER_ATTRIBUTES });
+    return getDataFromMeshCache(context, CACHE_KEY__CUSTOMER_ATTRIBUTES, query);
 };
 
 export const upsertCustomerAttributeValue = async (
