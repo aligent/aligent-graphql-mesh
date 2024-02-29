@@ -27,35 +27,52 @@ export const getDataFromMeshCache = async (
     query: () => Promise<unknown>,
     config?: { ttl?: number | string }
 ): Promise<AxiosResponse['data']> => {
-    let response = await xray.captureAsyncFunc('getCache', async (segment) => {
-        segment?.addAnnotation('cacheKey', cacheKey);
+    const segment = new xray.Segment('Cache');
+    const ns = xray.getNamespace();
 
-        const cacheData = await context.cache.get(cacheKey);
-        segment?.close();
-        return cacheData;
-    });
+    return ns.runAndReturn(async () => {
+        xray.setSegment(segment);
 
-    if (!response && query) {
-        response = await query();
+        let response = await xray.captureAsyncFunc(
+            'getCache',
+            async (subSegment) => {
+                subSegment?.addAnnotation('cacheKey', cacheKey);
 
-        if (!cacheKey) return response;
+                const cacheData = await context.cache.get(cacheKey);
+                subSegment?.close();
+                return cacheData;
+            },
+            segment
+        );
 
-        const ttl = config?.ttl && !!Number(config.ttl) ? Number(config.ttl) : TTL_IN_MILLI_SECONDS;
+        if (!response && query) {
+            response = await query();
 
-        await xray.captureAsyncFunc('setCache', async (segment) => {
-            segment?.addAnnotation('cacheKey', cacheKey);
+            if (!cacheKey) return response;
 
-            const cacheData = await context.cache.set(cacheKey, response, ttl);
-            segment?.close();
-            return cacheData;
-        });
+            const ttl =
+                config?.ttl && !!Number(config.ttl) ? Number(config.ttl) : TTL_IN_MILLI_SECONDS;
 
-        if (ENABLE_CACHE_LOGGING) {
-            logCachingTimesMessage(cacheKey, ttl);
+            await xray.captureAsyncFunc(
+                'setCache',
+                async (subSegment) => {
+                    subSegment?.addAnnotation('cacheKey', cacheKey);
+
+                    const cacheData = await context.cache.set(cacheKey, response, ttl);
+                    subSegment?.close();
+                    return cacheData;
+                },
+                segment
+            );
+
+            if (ENABLE_CACHE_LOGGING) {
+                logCachingTimesMessage(cacheKey, ttl);
+            }
         }
-    }
+        segment.close();
 
-    return response;
+        return response;
+    });
 };
 
 /**
