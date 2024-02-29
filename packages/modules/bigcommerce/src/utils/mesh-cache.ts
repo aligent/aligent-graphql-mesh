@@ -41,7 +41,7 @@ export const getDataFromMeshCache = async (
             segment?.addAnnotation('cacheKey', cacheKey);
 
             const cacheData = await context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
-            segment?.close(undefined, true);  // Set as remote
+            segment?.close(undefined, true); // Set as remote
             return cacheData;
         });
     }
