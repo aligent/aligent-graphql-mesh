@@ -4,7 +4,7 @@ import { loadFilesSync } from '@graphql-tools/load-files';
 import { resolve } from 'node:path';
 import resolvers from './resolvers';
 import { getProviders } from './providers';
-import { CacheItemTtlTypes } from './constants';
+import { CACHE_ITEMS_TTL, CacheItemTtlTypes } from './constants';
 
 const loadGraphQlFiles = () => loadFilesSync(resolve(__dirname, './schema/*.graphql'));
 
@@ -15,7 +15,7 @@ export interface BigCommerceModuleConfig {
     clientSecret: string;
     clientId: string;
     storeHash: string;
-    cacheItemsTtl: CacheItemTtlTypes;
+    cacheItemsTtl?: CacheItemTtlTypes;
 }
 
 export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
@@ -24,7 +24,7 @@ export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
         dirname: __dirname,
         typeDefs: loadGraphQlFiles(),
         resolvers,
-        providers: getProviders(config),
+        providers: getProviders({ ...config, cacheItemsTtl: CACHE_ITEMS_TTL }),
     });
 };
 
