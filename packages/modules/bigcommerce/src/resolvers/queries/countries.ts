@@ -2,8 +2,7 @@ import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getAllStates, getCountries } from '../../apis/rest/countries';
 import { transformCountriesAndStates } from '../../factories/transform-countries-data';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
-
-const CACHE_KEY__COUNTRIES = 'countries';
+import { CACHE_KEY__COUNTRIES } from '../../constants';
 
 /* istanbul ignore next */
 export const countriesResolver: QueryResolvers['countries'] = {

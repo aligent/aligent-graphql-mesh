@@ -1,9 +1,10 @@
-import { getDataFromMeshCache, TTL_IN_MILLI_SECONDS } from '../mesh-cache';
+import { getDataFromMeshCache } from '../mesh-cache';
+import { CACHE_KEY__STORE_CONFIG, CACHE_ITEMS_TTL, CACHE_KEY__COUNTRIES } from '../../constants';
 
 const cache: {
     [key: string]: string;
 } = {
-    data: 'cached data',
+    [CACHE_KEY__STORE_CONFIG]: 'cached data',
 };
 
 const getCache = jest.fn().mockImplementation(async (cacheKey: string): Promise<unknown> => {
@@ -14,12 +15,34 @@ const setCache = jest.fn().mockImplementation(async (cacheKey, response): Promis
     return (cache[cacheKey] = response);
 });
 
+const getInjectorMock = jest.fn().mockImplementation(async (): Promise<unknown> => {
+    return {
+        cacheItemsTtl: CACHE_ITEMS_TTL,
+    };
+});
+
 const mockContext = {
     cache: {
         get: getCache,
         set: setCache,
     },
+    injector: {
+        get: getInjectorMock,
+    },
 };
+
+/* Need to mock out ModuleConfig to avoid complaints in the bitbucket pipelines that getSdk isn't defined */
+jest.mock('../../providers/index.ts', () => {
+    return { ModuleConfig: jest.fn() };
+});
+
+jest.mock('aws-xray-sdk', () => {
+    return {
+        captureAsyncFunc: jest.fn().mockImplementation((name, segment) => {
+            segment();
+        }),
+    };
+});
 
 /* This is the query to be performed if no cached data exists*/
 const query = () =>
@@ -35,27 +58,29 @@ describe('mesh-cache', () => {
     it(`Can retrieve data from the cache`, async () => {
         const dataFromCache = await getDataFromMeshCache(
             mockContext as unknown as GraphQLModules.ModuleContext,
-            'data',
+            CACHE_KEY__STORE_CONFIG,
             query
         );
 
-        const expectedResponse = cache.data;
+        const expectedResponse = cache[CACHE_KEY__STORE_CONFIG];
 
         expect(dataFromCache).toBe(expectedResponse);
-        expect(getCache).toBeCalledTimes(1);
+        expect(getCache).toBeCalledWith(CACHE_KEY__STORE_CONFIG);
     });
 
     it(`can get fresh data when cached data doesn't exist`, async () => {
         const dataFromCache = await getDataFromMeshCache(
             mockContext as unknown as GraphQLModules.ModuleContext,
-            'no_cached_data_key',
+            CACHE_KEY__COUNTRIES,
             query
         );
 
-        const expectedResponse = 'fresh data';
+        const expectedCacheKey = CACHE_KEY__COUNTRIES;
+        const expectedDataToBeSet = 'fresh data';
+        const expectedCacheTtl = CACHE_ITEMS_TTL[CACHE_KEY__COUNTRIES];
 
-        expect(dataFromCache).toBe(expectedResponse);
-        expect(setCache).toBeCalledWith('no_cached_data_key', 'fresh data', TTL_IN_MILLI_SECONDS);
+        expect(dataFromCache).toBe(expectedDataToBeSet);
+        expect(setCache).toBeCalledWith(expectedCacheKey, expectedDataToBeSet, expectedCacheTtl);
     });
 
     it(`Does not attempt to set new query data if there's no cache key`, async () => {

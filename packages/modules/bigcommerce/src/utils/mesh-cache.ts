@@ -1,8 +1,11 @@
 import { AxiosResponse } from 'axios';
 import * as xray from 'aws-xray-sdk';
+import { ModuleConfig } from '../providers';
+import { CACHE_ITEMS_TTL } from '../constants';
 
 // The time we want the cached data to live. 30 minutes
-export const TTL_IN_MILLI_SECONDS = 1800000;
+export const DEFAULT_TTL_IN_MILLI_SECONDS = 1800000;
+const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
 
 /**
  * Searches for data in the mesh context cache, otherwise makes a request for
@@ -37,14 +40,66 @@ export const getDataFromMeshCache = async (
 
         if (!cacheKey) return response;
 
+        const ttl = getCacheItemTtl(context, cacheKey);
+
         await xray.captureAsyncFunc('setCache', async (segment) => {
             segment?.addAnnotation('cacheKey', cacheKey);
 
-            const cacheData = await context.cache.set(cacheKey, response, TTL_IN_MILLI_SECONDS);
+            const cacheData = await context.cache.set(cacheKey, response, ttl);
             segment?.close(undefined, true); // Set as remote
             return cacheData;
         });
+
+        if (ENABLE_CACHE_LOGGING) {
+            logCachingTimesMessage(cacheKey, ttl);
+        }
     }
 
     return response;
+};
+
+/**
+ * Gets the defined TTL (time to live) value for a cache item. TTL's can be set on the mesh "context"
+ * objects and adjust on a per product level. Go to "application.ts" to see where these are added.
+ * If a TTL isn't defined in the "context" object we check if one has been defined in "constants.ts".
+ * If not defined TTL's can be found then we default to a global fallback value.
+ *
+ * @param context - The Graphql module context instance.
+ * @param cacheKey - The key which the query response should be cached under in the context.cache
+ */
+export const getCacheItemTtl = (
+    context: GraphQLModules.ModuleContext,
+    cacheKey: string
+): number => {
+    // Cache keys will be defined with underscores "_" and if used as a prefix then anything that follows
+    // will begin with a hyphen "-". e.g. "categories-58"
+    const [cacheKeyPrefix] = cacheKey.split('-');
+
+    // Check for the "cacheKey" corresponding TTL value in the "context" object.
+    const ttlInContext = context.injector.get(ModuleConfig)?.cacheItemsTtl?.[cacheKeyPrefix];
+
+    // Check for the "cacheKey" corresponding TTL value in the "constants.ts" file.
+    const ttlInConstants = CACHE_ITEMS_TTL?.[cacheKeyPrefix];
+
+    const ttl = ttlInContext || ttlInConstants;
+
+    // Return the TTL or fallback to the global default TTL
+    return Number(ttl) ? Number(ttl) : DEFAULT_TTL_IN_MILLI_SECONDS;
+};
+
+/**
+ * Logs a message to the terminal at what time a cached item is set and set to expiry.
+ * e.g. "categories-23" cached on "28/02/2024, 10:04:05 am" and set to expire on "28/02/2024, 10:14:05 am"
+ *
+ * @param cacheKey
+ * @param ttl
+ */
+const logCachingTimesMessage = (cacheKey: string, ttl: number) => {
+    const currentTime = new Date();
+
+    const expiryTime = new Date(currentTime.getTime() + ttl);
+
+    console.info(
+        `CACHE ITEM: "${cacheKey}" cached on "${currentTime.toLocaleString()}" and set to expire on "${expiryTime.toLocaleString()}"`
+    );
 };
