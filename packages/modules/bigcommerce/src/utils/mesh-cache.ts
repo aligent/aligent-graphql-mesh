@@ -59,6 +59,8 @@ export const getDataFromMeshCache = async (
 
     const response = await query();
 
+    if (!cacheKey) return response;
+
     await ns.runAndReturn(async () => {
         // By passing the trace id and the parent segment it should link the two segments
         const segment = new xray.Segment('Cache', parentSegment?.trace_id, parentSegment?.id);

@@ -36,14 +36,6 @@ jest.mock('../../providers/index.ts', () => {
     return { ModuleConfig: jest.fn() };
 });
 
-jest.mock('aws-xray-sdk', () => {
-    return {
-        captureAsyncFunc: jest.fn().mockImplementation((name, segment) => {
-            segment();
-        }),
-    };
-});
-
 /* This is the query to be performed if no cached data exists*/
 const query = () =>
     new Promise((resolve) => {
