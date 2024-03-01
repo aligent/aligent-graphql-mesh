@@ -27,33 +27,65 @@ export const getDataFromMeshCache = async (
     cacheKey: string,
     query: () => Promise<unknown>
 ): Promise<AxiosResponse['data']> => {
-    let response = await xray.captureAsyncFunc('getCache', async (segment) => {
+    const ns = xray.getNamespace();
+
+    // The getSegment function does not know if it's a segment or a subsegment
+    // Subsegments do not contain trace ids and we need the trace id
+    // We know this will be the Mesh Segment, therefore not a subsegment
+    const parentSegment = xray.getSegment() as xray.Segment | undefined;
+
+    const cachedData = await ns.runAndReturn(async () => {
+        // By passing the trace id and the parent segment it should link the two segments
+        const segment = new xray.Segment('Cache', parentSegment?.trace_id, parentSegment?.id);
+        xray.setSegment(segment);
         segment?.addAnnotation('cacheKey', cacheKey);
 
-        const cacheData = await context.cache.get(cacheKey);
-        segment?.close(undefined, true); // Set as remote
-        return cacheData;
+        const data = await xray.captureAsyncFunc(
+            'getCache',
+            async (subSegment) => {
+                subSegment?.addAnnotation('cacheKey', cacheKey);
+
+                const cacheData = await context.cache.get(cacheKey);
+                subSegment?.close();
+                return cacheData;
+            },
+            segment
+        );
+        segment.close();
+        return data;
     });
 
-    if (!response && query) {
-        response = await query();
+    if (cachedData) return cachedData;
 
-        if (!cacheKey) return response;
+    const response = await query();
+
+    if (!cacheKey) return response;
+
+    await ns.runAndReturn(async () => {
+        // By passing the trace id and the parent segment it should link the two segments
+        const segment = new xray.Segment('Cache', parentSegment?.trace_id, parentSegment?.id);
+        xray.setSegment(segment);
+        segment?.addAnnotation('cacheKey', cacheKey);
 
         const ttl = getCacheItemTtl(context, cacheKey);
 
-        await xray.captureAsyncFunc('setCache', async (segment) => {
-            segment?.addAnnotation('cacheKey', cacheKey);
+        await xray.captureAsyncFunc(
+            'setCache',
+            async (subSegment) => {
+                subSegment?.addAnnotation('cacheKey', cacheKey);
 
-            const cacheData = await context.cache.set(cacheKey, response, ttl);
-            segment?.close(undefined, true); // Set as remote
-            return cacheData;
-        });
+                const cacheData = await context.cache.set(cacheKey, response, ttl);
+                subSegment?.close();
+                return cacheData;
+            },
+            segment
+        );
+        segment.close();
 
         if (ENABLE_CACHE_LOGGING) {
             logCachingTimesMessage(cacheKey, ttl);
         }
-    }
+    });
 
     return response;
 };
