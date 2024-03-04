@@ -1,7 +1,7 @@
 import { getTransformedBillingAddress, getTransformedAddress } from '../transform-address';
 import { CheckoutAddressCheckboxesCustomField } from '@aligent/bigcommerce-operations';
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
-import { transformedCountries } from '../../../resolvers/queries/__tests__/__data__/countries-transformed-data';
+import { transformedCountries } from '../../__tests__/__data__/countries-transformed-data';
 
 const expectShippingAddress = {
     firstname: 'John',

@@ -1,5 +1,5 @@
-import { transformCountriesAndStates } from '../../../factories/transform-countries-data';
-import { CountryStates } from '../../../types';
+import { transformCountriesAndStates } from '../transform-countries-data';
+import { CountryStates } from '../../types';
 import { bcCountry, bcStates } from './__data__/countries-input-data';
 import { transformedCountries, transformedStates } from './__data__/countries-transformed-data';
 
