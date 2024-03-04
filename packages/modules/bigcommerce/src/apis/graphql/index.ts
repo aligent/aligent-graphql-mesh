@@ -1,4 +1,5 @@
 export * from './available-product-search-filters';
+export * from './brands';
 export * from './cart';
 export * from './categories';
 export * from './channel';

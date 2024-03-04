@@ -55,6 +55,15 @@ type Query {
         useCurrentGroup: Boolean
     ): [StoreConfig]
     """
+    Fetch information about the stores Brands
+    """
+    brands(
+        """
+        Width of the Brand images fetched from the CDN
+        """
+        brandImageWidth: Int!
+    ): [Brand!]
+    """
     Return information about the specified shopping cart.
     """
     cart(
@@ -17232,4 +17241,67 @@ enum CartErrorType {
     EXISTING_CART_ERROR @deprecated(reason: "")
     NEW_CART_ERROR @deprecated(reason: "")
     NONE @deprecated(reason: "")
+}
+
+type Brand {
+    """
+    The ID of an object
+    """
+    id: ID!
+    """
+    Id of the brand.
+    """
+    entityId: Int!
+    """
+    Name of the brand.
+    """
+    name: String!
+    """
+    Default image for brand.
+    """
+    defaultImage: Image
+    """
+    Brand SEO details.
+    """
+    seo: SeoDetails!
+    """
+    Search keywords for the brand.
+    """
+    searchKeywords: [String!]!
+    """
+    Path for the brand page.
+    """
+    path: String!
+}
+type Image {
+    """
+    Absolute path to image using store CDN at the width requested.
+    """
+    url: String!
+    """
+    Absolute path to original image using store CDN.
+    """
+    urlOriginal: String!
+    """
+    Text description of an image that can be used for SEO and/or accessibility purposes.
+    """
+    altText: String!
+    """
+    Indicates whether this is the primary image.
+    """
+    isDefault: Boolean!
+}
+type SeoDetails {
+    """
+    Page title.
+    """
+    pageTitle: String!
+    """
+    Meta description.
+    """
+    metaDescription: String!
+    """
+    Meta keywords.
+    """
+    metaKeywords: String!
 }
