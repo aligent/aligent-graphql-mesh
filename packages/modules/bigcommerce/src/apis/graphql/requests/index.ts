@@ -1,5 +1,6 @@
 export * from './add-products-to-cart';
 export * from './available-product-search-filters';
+export * from './get-brands';
 export * from './cart';
 export * from './category';
 export * from './category-tree';
