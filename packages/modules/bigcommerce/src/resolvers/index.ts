@@ -3,6 +3,7 @@ import { addProductsToWishlistResolver } from './mutations/add-products-to-wishl
 import { addWishlistItemsToCartResolver } from './mutations/add-wishlist-items-to-cart';
 import { applyCouponToCartResolver } from './mutations/apply-coupon-to-cart';
 import { applyGiftCardToCartResolver } from './mutations/apply-gift-card-to-cart';
+import { brandsResolver } from './queries/brands';
 import { changeCustomerPasswordResolver } from './mutations/change-customer-password';
 import { createBraintreeClientTokenResolver } from './mutations/create-braintree-client-token';
 import { createCartRedirectUrlsResolver } from './mutations/create-cart-redirect-urls';
@@ -64,6 +65,7 @@ import { moveProductsBetweenWishlistsResolver } from './mutations/move-products-
 
 export const resolvers: Resolvers = {
     Query: {
+        brands: brandsResolver,
         categories: categoriesResolver,
         cart: cartResolver,
         customerCart: customerCartResolver,
