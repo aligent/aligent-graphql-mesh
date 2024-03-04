@@ -15,7 +15,7 @@ export const customerWishlists = stripIgnoredCharacters(
         ${prices}
         ${categoryDetails}
 
-        query customer {
+        query customerWishlists {
             customer {
                 wishlists(first: 50) {
                     edges {
