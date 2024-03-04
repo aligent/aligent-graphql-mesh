@@ -28,6 +28,14 @@ export const createCustomer = async (customerInput: CustomerInput): Promise<BcCu
     return response.data[0];
 };
 
+export const getACustomer = async (bcCustomerId: number): Promise<BcCustomer> => {
+    const response = await bcGet(
+        `${CUSTOMERS_API}?include=addresses,formfields&id:in=${bcCustomerId}`
+    );
+
+    return response.data[0];
+};
+
 export const updateCustomer = async (customer: BcMutationCustomer): Promise<BcMutationCustomer> => {
     const response = await bcPut(CUSTOMERS_API, [customer]);
     return response.data[0];
