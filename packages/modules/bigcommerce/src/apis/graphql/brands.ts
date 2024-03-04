@@ -6,7 +6,7 @@ type BrandNode = {
     node: Brand;
 };
 
-export const getBcBrands = async (
+export const getAllBrands = async (
     brandImageWidth: number,
     customerImpersonationToken: string
 ): Promise<Brand[]> => {
