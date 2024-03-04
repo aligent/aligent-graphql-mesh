@@ -14,14 +14,15 @@ import {
     acCustomerOutputWithName,
     acCustomerWithEmail,
     acCustomerWithName,
-    bcAddresses,
     bcCreateCustomerInputData,
     bcCustomer,
     bcCustomerForPasswordChange,
     bcMutationCustomerWithEmail,
     bcMutationCustomerWithName,
     bcValidatePasswordRequest,
+    bcWishlists,
 } from './__data__/customer-data';
+import { getTransformedWishlists } from '../helpers/transform-wishlists';
 
 describe('Customer Ac to Bc Transformation', () => {
     test('Transform Ac Customer to Bc Customer for Name update', () => {
@@ -105,18 +106,15 @@ describe('Customer Bc to Ac Transformation', () => {
 
     test('Transform entire customer object from BC to AC', () => {
         const bcCustomerInput = bcCustomer;
-        const bcAddressInput = bcAddresses;
-        const isSubscribed = true;
 
         const acCustomerExpected = acCustomer;
 
-        const transformedAcCustomer = transformBcCustomer(
-            bcCustomerInput,
-            bcAddressInput,
-            isSubscribed
-        );
+        const transformedAcCustomer = transformBcCustomer(bcCustomerInput);
+        const transformedAcWishlist = getTransformedWishlists(bcWishlists);
 
-        expect(transformedAcCustomer).toEqual(acCustomerExpected);
+        expect({ ...transformedAcCustomer, wishlists: transformedAcWishlist }).toEqual(
+            acCustomerExpected
+        );
     });
 
     test('Returns customer key in snake case', () => {
@@ -131,8 +129,8 @@ describe('Customer Bc to Ac Transformation', () => {
         const expectedFormat = { test_name_1: 'testValue1', test_name_2: 'testValue2' };
 
         const result = getCustomerAttributesFromFormFields([
-            { name: 'testName1', value: 'testValue1', customer_id: 1 },
-            { name: 'testName2', value: 'testValue2', customer_id: 2 },
+            { name: 'testName1', value: 'testValue1', id: 1 },
+            { name: 'testName2', value: 'testValue2', id: 2 },
         ]);
 
         expect(result).toEqual(expectedFormat);

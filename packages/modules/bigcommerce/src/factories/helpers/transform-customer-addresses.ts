@@ -2,8 +2,10 @@ import { CountryCodeEnum, CustomerAddress } from '@aligent/bigcommerce-resolvers
 import { BcAddressRest, DefaultBillingOrShippingField, FormField } from '../../types';
 
 export const getTransformedCustomerAddresses = (
-    bcAddresses: BcAddressRest[]
+    bcAddresses?: BcAddressRest[]
 ): CustomerAddress[] => {
+    if (!bcAddresses) return [];
+
     return bcAddresses.map((address) => {
         const {
             id,

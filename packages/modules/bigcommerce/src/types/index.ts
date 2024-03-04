@@ -24,35 +24,28 @@ export interface GraphQlQuery {
     variables?: { [key: string]: unknown };
 }
 export interface BcCustomer {
-    id: number;
-    authentication: {
+    id?: number;
+    addresses?: BcAddressRest[];
+    authentication?: {
         force_password_reset: boolean;
         new_password: string;
     };
     company: string;
-    customer_group_id: number;
+    customer_group_id?: number;
     email: string;
     first_name: string;
     last_name: string;
     notes: string;
     phone: string;
-    registration_ip_address: string;
-    tax_exempt_category: string;
-    date_created: string;
-    date_modified: string;
-    accepts_product_review_abandoned_cart_emails: false;
-    store_credit_amounts: [{ amount: number }];
-    origin_channel_id: number;
-    channel_ids: number[] | null;
-    form_fields?:
-        | [
-              {
-                  id: number;
-                  name: string;
-                  value: boolean;
-              },
-          ]
-        | null;
+    registration_ip_address?: string;
+    tax_exempt_category?: string;
+    date_created?: string;
+    date_modified?: string;
+    accepts_product_review_abandoned_cart_emails?: false;
+    store_credit_amounts?: [{ amount: number }];
+    origin_channel_id?: number;
+    channel_ids?: number[] | null;
+    form_fields?: { name: string; value: string; id: number }[];
 }
 
 export interface BcMutationCustomer {

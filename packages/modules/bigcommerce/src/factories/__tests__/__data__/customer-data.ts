@@ -117,42 +117,6 @@ export const bcMutationCustomerWithRemoteAssistanceSetToFalse: BcMutationCustome
     ],
 };
 
-export const bcCustomer = {
-    attributes: { attribute: { entityId: 1, name: 'name' } },
-    addressCount: 1,
-    attributeCount: 3,
-    company: '',
-    customerGroupId: 4,
-    email: 'jack.mesh@aligent.com.au',
-    entityId: 18,
-    firstName: 'jack',
-    lastName: 'mesh',
-    notes: '',
-    phone: '0432471111',
-    taxExemptCategory: '',
-    storeCredit: [{ currencyCode: 'AUD', value: 0 }],
-    wishlists: {
-        edges: [
-            {
-                cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-                node: {
-                    entityId: 5,
-                    isPublic: true,
-                    items: bcWishListItems,
-                    name: 'sample-list',
-                    token: 'bf1ed4dc-1724-48a6-92a3-bef2c1dd5868',
-                },
-            },
-        ],
-        pageInfo: {
-            hasNextPage: false,
-            hasPreviousPage: false,
-            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-            endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
-        },
-    },
-};
-
 export const bcAddresses = [
     {
         id: 46,
@@ -179,6 +143,45 @@ export const bcAddresses = [
     },
 ];
 
+export const bcWishlists = {
+    edges: [
+        {
+            cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+            node: {
+                entityId: 5,
+                isPublic: true,
+                items: bcWishListItems,
+                name: 'sample-list',
+                token: 'bf1ed4dc-1724-48a6-92a3-bef2c1dd5868',
+            },
+        },
+    ],
+    pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+        endCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+    },
+};
+
+export const bcCustomer = {
+    attributes: { attribute: { entityId: 1, name: 'name' } },
+    addressCount: 1,
+    addresses: bcAddresses,
+    attributeCount: 3,
+    company: '',
+    customerGroupId: 4,
+    email: 'jack.mesh@aligent.com.au',
+    entityId: 18,
+    first_name: 'jack',
+    last_name: 'mesh',
+    notes: '',
+    phone: '0432471111',
+    taxExemptCategory: '',
+    storeCredit: [{ currencyCode: 'AUD', value: 0 }],
+    wishlists: bcWishlists,
+};
+
 export const acCustomer = {
     addresses: [
         {
@@ -199,7 +202,6 @@ export const acCustomer = {
     email: 'jack.mesh@aligent.com.au',
     firstname: 'jack',
     lastname: 'mesh',
-    is_subscribed: true,
     allow_remote_shopping_assistance: null,
     wishlists: transformedWishlist,
     wishlist: { visibility: 'PUBLIC' },
