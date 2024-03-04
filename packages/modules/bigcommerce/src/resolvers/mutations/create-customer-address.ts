@@ -1,13 +1,17 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
-import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '../../utils';
+import {
+    getBcCustomerIdFromMeshToken,
+    getCountryStateByAddressInput,
+    isCustomerAddressValid,
+} from '../../utils';
 import { createCustomerAddress, getAllCustomerAddresses } from '../../apis/rest/customer';
 import {
     transformCustomerAddress,
     transformBcAddress,
 } from '../../factories/transform-customer-address-data';
-import { getStateByAddress } from '../../apis/rest/countries';
 import { checkIfAddressbookHasDefaultAddress } from '../../utils/checkIfAddressbookHasDefaultAddress';
+import { retrieveCountriesFromCache } from '../queries/countries';
 
 export const createCustomerAddressResolver: MutationResolvers['createCustomerAddress'] = {
     resolve: async (_root, { input }, context, _info) => {
@@ -32,7 +36,9 @@ export const createCustomerAddressResolver: MutationResolvers['createCustomerAdd
             }
         }
 
-        const state = await getStateByAddress(input);
+        const countriesData = await retrieveCountriesFromCache(context);
+        const state = getCountryStateByAddressInput(countriesData, input);
+
         const address = transformCustomerAddress(input, state, customerId);
         const response = await createCustomerAddress(address);
 

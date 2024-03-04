@@ -9,9 +9,13 @@ import {
     updateCustomerAddress,
 } from '../../apis/rest/customer';
 import { logAndThrowError } from '@aligent/utils';
-import { getBcCustomerIdFromMeshToken, isCustomerAddressValid } from '../../utils';
-import { getStateByAddress } from '../../apis/rest/countries';
+import {
+    getBcCustomerIdFromMeshToken,
+    getCountryStateByAddressInput,
+    isCustomerAddressValid,
+} from '../../utils';
 import { checkIfAddressbookHasDefaultAddress } from '../../utils/checkIfAddressbookHasDefaultAddress';
+import { retrieveCountriesFromCache } from '../queries/countries';
 
 export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAddress'] = {
     resolve: async (_root, { id: addressId, input: addressInput }, context, _info) => {
@@ -49,7 +53,9 @@ export const updateCustomerAddressResolver: MutationResolvers['updateCustomerAdd
             }
         }
 
-        const state = await getStateByAddress(addressInput);
+        const countriesData = await retrieveCountriesFromCache(context);
+        const state = getCountryStateByAddressInput(countriesData, addressInput);
+
         const address = transformCustomerAddress(addressInput, state, customerId, addressId);
         const response = await updateCustomerAddress(address);
         if (!response) {

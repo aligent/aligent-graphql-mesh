@@ -123,7 +123,7 @@ export interface BcAddress {
     city: string;
     country_code: string;
     address1: string;
-    state_or_province: string;
+    state_or_province?: string | null;
     postal_code: string;
     address2?: string;
     phone?: string;
