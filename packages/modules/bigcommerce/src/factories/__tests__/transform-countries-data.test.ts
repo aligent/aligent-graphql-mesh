@@ -1,11 +1,5 @@
-import {
-    bcCountry,
-    bcStates,
-} from '../../resolvers/queries/__tests__/__data__/countries-input-data';
-import {
-    transformedCountries,
-    transformedStates,
-} from '../../resolvers/queries/__tests__/__data__/countries-transformed-data';
+import { bcCountry, bcStates } from './__data__/countries-input-data';
+import { transformedCountries, transformedStates } from './__data__/countries-transformed-data';
 import { CountryStates } from '../../types';
 import { transformCountriesAndStates } from '../transform-countries-data';
 

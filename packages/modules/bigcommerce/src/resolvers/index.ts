@@ -11,7 +11,6 @@ import { createCustomerResolver } from './mutations/create-customer';
 import { createCustomerAddressResolver } from './mutations/create-customer-address';
 import { createEmptyCartResolver } from './mutations/create-empty-cart';
 import { createProductReviewResolver } from './mutations/create-product-review';
-import { customerTotalResolver } from './queries/sub-query-resolvers/customer-total';
 import { deleteCustomerAddressResolver } from './mutations/delete-customer-address';
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
@@ -51,10 +50,6 @@ import { routeResolver } from './queries/route';
 import { storeConfigResolver } from './queries/store-config';
 import { storeLocationsResolver } from './queries/store-locations';
 import { Resolvers } from '@aligent/bigcommerce-resolvers';
-import { customerOrdersResolver } from './queries/sub-query-resolvers/customerOrders';
-import { customerOrderItemsResolver } from './queries/sub-query-resolvers/customerOrderItems';
-import { customerOrderShippingMethodResolver } from './queries/sub-query-resolvers/customerOrderShippingMethod';
-import { customerOrderShippingAddressResolver } from './queries/sub-query-resolvers/customerOrderShippingAddress';
 import { productsBySkuResolver } from './queries/products-by-sku';
 import { clearCustomerCartResolver } from './mutations/clear-customer-cart';
 import { createWishListResolver } from './mutations/create-wishlist';
@@ -62,6 +57,15 @@ import { deleteWishListResolver } from './mutations/delete-wishlist';
 import { updateWishListResolver } from './mutations/update-wishlist';
 import { copyProductsBetweenWishlistsResolver } from './mutations/copy-products-between-wishlists';
 import { moveProductsBetweenWishlistsResolver } from './mutations/move-products-between-wishlists';
+import {
+    customerIsSubscribedResolver,
+    customerOrderItemsResolver,
+    customerOrderShippingAddressResolver,
+    customerOrderShippingMethodResolver,
+    customerTotalResolver,
+    customerOrdersResolver,
+    customerWishlistsResolver,
+} from './queries/sub-query-resolvers';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -128,7 +132,9 @@ export const resolvers: Resolvers = {
     },
     //sub-resolvers, used for nested queries from a query or a mutation resolver
     Customer: {
+        is_subscribed: customerIsSubscribedResolver,
         orders: customerOrdersResolver,
+        wishlists: customerWishlistsResolver,
     },
     CustomerOrder: {
         items: customerOrderItemsResolver,

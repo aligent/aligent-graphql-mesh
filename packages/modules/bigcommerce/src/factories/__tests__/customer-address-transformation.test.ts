@@ -2,7 +2,7 @@ import {
     bcAddress,
     bcAddressUpdated,
     bcAddressUpdatedShippingBillingFalse,
-    bcState,
+    acState,
     acCustomerAddressInput,
     customerAddressBillingFalse,
     customerAddressBillingShippingFalse,
@@ -12,19 +12,19 @@ import { transformBcAddress, transformCustomerAddress } from '../transform-custo
 
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress create into BCAddress', () => {
-        const transformed = transformCustomerAddress(acCustomerAddressInput, bcState, 123);
+        const transformed = transformCustomerAddress(acCustomerAddressInput, acState, 123);
         expect(transformed).toEqual(bcAddress);
     });
 
     test('Transform CustomerAddress create into BCAddress', () => {
-        const transformed = transformCustomerAddress(acCustomerAddressInput, bcState, 123, 5);
+        const transformed = transformCustomerAddress(acCustomerAddressInput, acState, 123, 5);
         expect(transformed).toEqual(bcAddressUpdated);
     });
 
     test('Transform CustomerAddress create into BCAddress with shipping and billing false', () => {
         const transformedAddress = transformCustomerAddress(
             customerAddressBillingShippingFalse,
-            bcState,
+            acState,
             123,
             5
         );

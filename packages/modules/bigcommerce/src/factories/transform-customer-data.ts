@@ -1,36 +1,24 @@
 import { snakeCase } from 'lodash';
-
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
-
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
-import { Customer as BC_Customer } from '@aligent/bigcommerce-operations';
-import { getTransformedWishlists } from './helpers/transform-wishlists';
-import {
-    BcAddressRest,
-    BcMutationCustomer,
-    ValidatePasswordRequest,
-    BCCustomerFormFields,
-} from '../types';
+import { BcMutationCustomer, ValidatePasswordRequest, BcCustomer } from '../types';
 
-export const transformBcCustomer = (
-    bcCustomer: BC_Customer,
-    bcAddresses: BcAddressRest[],
-    isSubscriber: boolean
-): Customer => {
-    const { firstName, lastName, email } = bcCustomer;
+export const transformBcCustomer = (bcCustomer: BcCustomer): Customer => {
+    const { addresses, first_name, last_name, email } = bcCustomer;
 
     return {
-        addresses: getTransformedCustomerAddresses(bcAddresses),
+        addresses: getTransformedCustomerAddresses(addresses),
         email,
-        firstname: firstName,
-        lastname: lastName,
-        is_subscribed: isSubscriber,
+        firstname: first_name,
+        lastname: last_name,
         allow_remote_shopping_assistance: null, // This is being forced to show the PWA that BC doesnt have this feature
-        wishlists: getTransformedWishlists(bcCustomer.wishlists),
         wishlist: {
             // Types say wishlist is deprecated, but is required and needs to have visibility
             visibility: 'PUBLIC',
         },
+        /* This has a sub-resolver to get wishlist information but have to defined it to tell
+         * typescript we're not leaving it out*/
+        wishlists: [],
         reviews: {
             // Types require this be here
             items: [],
@@ -150,9 +138,9 @@ export const getCustomerPropertyFromFormFieldKey = (key: string): string => {
  * @param formFields
  */
 export const getCustomerAttributesFromFormFields = (
-    formFields: BCCustomerFormFields
+    formFields: BcCustomer['form_fields']
 ): { [key: string]: string } => {
-    const customerAttributes = formFields.reduce((carry, formField) => {
+    const customerAttributes = (formFields || [])?.reduce((carry, formField) => {
         const { name, value } = formField;
 
         const propertyName = getCustomerPropertyFromFormFieldKey(name);

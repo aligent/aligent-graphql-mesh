@@ -4,14 +4,14 @@ import {
 } from '../../../factories/transform-customer-address-data';
 import {
     bcAddress,
-    bcState,
+    acState,
     acCustomerAddressInput,
     acCustomerAddressOutput,
 } from '../../../factories/__tests__/__data__/customer-address-tranformation-data';
 
 describe('Customer Address Transformation tests', () => {
     test('Transform CustomerAddress into BCAddress', () => {
-        const transformedBcAddress = transformCustomerAddress(acCustomerAddressInput, bcState, 123);
+        const transformedBcAddress = transformCustomerAddress(acCustomerAddressInput, acState, 123);
         expect(transformedBcAddress).toEqual(bcAddress);
     });
 

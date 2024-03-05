@@ -5,6 +5,7 @@ import { logAndThrowError } from '@aligent/utils';
 import { customerAttribute } from './requests/customer-attribute';
 import { retrieveCustomerAttributesFromCache } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
+import { customerWishlists } from './requests/customer-wishlists';
 
 export const getBcCustomer = async (
     bcCustomerId: number,
@@ -64,4 +65,25 @@ export const getCartIdFromBcCustomerAttribute = async (
         console.error(`Error from getCartIdFromBcCustomerAttribute: ${error}`);
         return null;
     }
+};
+
+export const getCustomerWishlists = async (
+    bcCustomerId: number,
+    customerImpersonationToken: string
+): Promise<Customer['wishlists']> => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+        'x-bc-customer-id': bcCustomerId,
+    };
+    const customerQuery = {
+        query: customerWishlists,
+    };
+
+    const response = await bcGraphQlRequest(customerQuery, headers);
+
+    if (response.errors) {
+        return logAndThrowError(response.errors);
+    }
+
+    return response.data.customer.wishlists;
 };

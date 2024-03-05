@@ -1,7 +1,7 @@
 import { mockBcCheckout } from '../../../resolvers/mocks/checkout.bc';
 import { MockedStorefrontFormFields } from '../../../resolvers/mocks/storefront-form-fields';
-import { transformedCountries } from '../../../resolvers/queries/__tests__/__data__/countries-transformed-data';
 import { getTransformedShippingAddresses } from '../transform-shipping-addresses';
+import { transformedCountries } from '../../__tests__/__data__/countries-transformed-data';
 
 const expectResult = [
     {
