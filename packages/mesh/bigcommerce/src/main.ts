@@ -9,7 +9,6 @@ import { readFileSync } from 'node:fs';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
 import Keyv from 'keyv';
 import cachableObjects from './cache';
-import { customerImpersonationPlugin } from '@aligent/bigcommerce-graphql-module';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
@@ -42,7 +41,6 @@ const yoga = createYoga({
     },
     plugins: [
         useGraphQLModules(application),
-        customerImpersonationPlugin,
         addIpAddressToAxiosHeaders,
         EnvelopArmorPlugin({
             maxAliases: {

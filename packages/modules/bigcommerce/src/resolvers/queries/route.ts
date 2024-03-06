@@ -18,6 +18,7 @@ import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
 import { getIncludesTax } from '../../utils/get-tax';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 interface TransformedRouteData {
     data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product;
@@ -100,9 +101,8 @@ const getTransformedRouteData = async ({
 export const routeResolver = {
     resolve: async (_root, args, context, _info) => {
         const urlParam = args.url === '/' ? '/home' : args.url;
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         const storeConfig = await retrieveStoreConfigsFromCache(context);
         const { tax: taxSettings } = storeConfig;

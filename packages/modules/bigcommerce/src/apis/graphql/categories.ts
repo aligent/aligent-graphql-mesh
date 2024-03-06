@@ -2,8 +2,9 @@ import { bcGraphQlRequest } from './client';
 import { getCategoryQuery } from './requests/category';
 import { getCategoryTreeQuery } from './requests/category-tree';
 import { BcCategory, BcCategoryTree } from '../../types';
-import { getDataFromMeshCache } from '../../utils/mesh-cache';
+import { getDataFromMeshCache } from '../../utils';
 import { CACHE_KEY__CATEGORIES } from '../../constants';
+import { retrieveCustomerImpersonationTokenFromCache } from '../rest';
 
 export type GetCategoriesTypes = Promise<{ category: BcCategory; categoryTree: BcCategoryTree[] }>;
 
@@ -12,9 +13,7 @@ export const getCategories = async (
     rootEntityId: number | null,
     variables: { productsPageSize: number }
 ): GetCategoriesTypes => {
-    const customerImpersonationToken = (await context.cache.get(
-        'customerImpersonationToken'
-    )) as string;
+    const customerImpersonationToken = await retrieveCustomerImpersonationTokenFromCache(context);
 
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

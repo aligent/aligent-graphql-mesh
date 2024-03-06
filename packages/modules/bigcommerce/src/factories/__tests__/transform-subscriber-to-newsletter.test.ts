@@ -1,5 +1,5 @@
-import { BcSubscriber } from '../../../types';
-import { transformSubscriberToNewsletterOutput } from '../subscribe-email-to-newsletter';
+import { BcSubscriber } from '../../types';
+import { transformSubscriberToNewsletterOutput } from '../../resolvers/mutations/subscribe-email-to-newsletter';
 
 describe('Transform SubscriberToNewsletter test', () => {
     test('Subscriber email exists', () => {

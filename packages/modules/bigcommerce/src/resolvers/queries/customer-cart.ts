@@ -2,6 +2,7 @@ import { Cart, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getBcCustomerId } from '../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -23,9 +24,8 @@ export const UNDEFINED_CART = {
 export const customerCartResolver: QueryResolvers['customerCart'] = {
     resolve: async (_root, _args, context, _info): Promise<Cart> => {
         const bcCustomerId = getBcCustomerId(context);
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         if (!bcCustomerId || !customerImpersonationToken) {
             throw new Error(`An authorized user is required to perform this query.`);

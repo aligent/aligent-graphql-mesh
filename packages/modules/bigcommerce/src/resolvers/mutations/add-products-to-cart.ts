@@ -4,12 +4,12 @@ import { transformSelectedOptions } from '../../factories/transform-selected-opt
 import { atob } from '@aligent/utils';
 import { getEnrichedCart, UNDEFINED_CART } from '../../apis/graphql/enriched-cart';
 import { getBcCustomerId } from '../../utils';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const addProductsToCartResolver = {
     resolve: async (_root, args, context, _info) => {
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
         const { cartId, cartItems } = args;
 
         const lineItems = cartItems.map((cartItem) => {

@@ -1,6 +1,6 @@
 import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
-import { getProducts } from '../../apis/rest/products';
+import { getProducts, retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 import { getBcProductsGraphql, retrieveStoreConfigsFromCache } from '../../apis/graphql';
 import { AxiosGraphqlError } from '@aligent/utils';
 import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../utils/sort';
@@ -18,9 +18,8 @@ const sortKeyMapping: { [index: string]: string } = {
 
 export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
     resolve: async (_root, args, context, _info): Promise<Products | null> => {
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
         const storeConfig = await retrieveStoreConfigsFromCache(context);
         const { tax: taxSettings } = storeConfig;
 

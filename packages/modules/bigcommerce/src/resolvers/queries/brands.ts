@@ -1,7 +1,8 @@
 import { Brand, QueryBrandsArgs, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getAllBrands } from '../../apis/graphql';
-import { getDataFromMeshCache } from '../../utils/mesh-cache';
+import { getDataFromMeshCache } from '../../utils';
 import { CACHE_KEY__BRANDS } from '../../constants';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const brandsResolver = {
     resolve: async (_root, args, context, _info) => {
@@ -13,9 +14,7 @@ export const retrieveBrandsFromCache = async (
     args: QueryBrandsArgs,
     context: GraphQLModules.ModuleContext
 ): Promise<Brand[]> => {
-    const customerImpersonationToken = (await context.cache.get(
-        'customerImpersonationToken'
-    )) as string;
+    const customerImpersonationToken = await retrieveCustomerImpersonationTokenFromCache(context);
 
     const query = async () => getAllBrands(args.brandImageWidth, customerImpersonationToken);
 

@@ -2,6 +2,7 @@ import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerId } from '../../utils';
 import { deleteCart } from '../../apis/graphql/delete-cart';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -19,9 +20,8 @@ export const clearCustomerCartResolver = {
         if (!args.cartUid) {
             return logAndThrowError('Missing cart uid');
         }
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         const bcCustomerId = getBcCustomerId(context);
 

@@ -1,23 +1,23 @@
 import { CustomerInput, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 import { transformCustomerForMutation } from '../../factories/transform-customer-data';
-import { updateCustomer } from '../../apis/rest/customer';
 import { getBcCustomer } from '../../apis/graphql';
 import { verifyCustomerCredentials } from '../../apis/helpers/verify-customer-credentials';
 import {
     createSubscriber,
     deleteSubscriberById,
     getSubscriberByEmail,
+    retrieveCustomerImpersonationTokenFromCache,
+    updateCustomer,
     updateSubscriber,
-} from '../../apis/rest/subscriber';
+} from '../../apis/rest';
 import { customerResolver } from '../queries/customer';
 
 export const updateCustomerResolver: MutationResolvers['updateCustomer'] = {
     resolve: async (root, { input: customerInput }, context, info) => {
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         if (!customerInput) {
             return null;

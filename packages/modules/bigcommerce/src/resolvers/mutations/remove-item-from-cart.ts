@@ -3,7 +3,7 @@ import { deleteCartLineItem } from '../../apis/graphql';
 import { getDeconstructedCartItemUid, logAndThrowError } from '@aligent/utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 import { getBcCustomerId } from '../../utils';
-
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 export const UNDEFINED_CART = {
     id: '',
     items: [],
@@ -14,7 +14,6 @@ export const UNDEFINED_CART = {
     printed_card_included: false,
     shipping_addresses: [],
 };
-
 export const removeItemFromCartResolver = {
     resolve: async (_root, args, context, _info) => {
         if (args.input?.cart_item_id) {
@@ -26,9 +25,8 @@ export const removeItemFromCartResolver = {
         if (!args.input?.cart_id || !args.input.cart_item_uid) {
             return logAndThrowError('Missing cart id or cart item uid');
         }
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         const bcCustomerId = getBcCustomerId(context);
 

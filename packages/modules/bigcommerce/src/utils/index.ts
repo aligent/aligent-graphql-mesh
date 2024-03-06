@@ -1,5 +1,6 @@
 export * from './authorization';
 export * from './countries';
+export * from './mesh-cache';
 export * from './tokens';
 export * from './products';
 export * from './validators/customer-address-validator';

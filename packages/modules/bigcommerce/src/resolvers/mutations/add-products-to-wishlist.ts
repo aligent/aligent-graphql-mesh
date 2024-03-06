@@ -5,6 +5,7 @@ import { getBcCustomerId, hasConfigurableWishlistItem } from '../../utils';
 import { addWishlistItems, getBcProductsGraphql } from '../../apis/graphql';
 import { customerWishlistsResolver } from '../queries/sub-query-resolvers';
 import { ProductConnection } from '@aligent/bigcommerce-operations';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const addProductsToWishlistResolver: MutationResolvers['addProductsToWishlist'] = {
     resolve: async (root, args, context, info) => {
@@ -12,9 +13,8 @@ export const addProductsToWishlistResolver: MutationResolvers['addProductsToWish
             return logAndThrowError(new Error('Wishlist id is missing'));
         }
 
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
         const bcCustomerId = getBcCustomerId(context);
 
         let bcDetailedProducts: ProductConnection | null = null;

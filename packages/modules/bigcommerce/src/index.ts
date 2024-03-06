@@ -28,7 +28,6 @@ export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
     });
 };
 
-export * from './plugins/customer-impersonation-token';
 export * from './plugins/add-ip-address-to-axios-headers';
 
 // Export Globally accessible DI Tokens so other modules can use them

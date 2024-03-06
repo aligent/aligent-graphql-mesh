@@ -4,12 +4,12 @@ import { createWishlist } from '../../apis/graphql/create-wishlist';
 import { customerWishlistsResolver } from '../queries/sub-query-resolvers';
 import { logAndThrowError } from '@aligent/utils';
 import { getTransformedCreateWishlistArgs } from '../../factories/helpers/transform-wishlist-arguments';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const createWishListResolver: MutationResolvers['createWishlist'] = {
     resolve: async (root, { input }, context, info) => {
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
         const bcCustomerId = getBcCustomerId(context);
 
         const transformedArgs = getTransformedCreateWishlistArgs(input);
