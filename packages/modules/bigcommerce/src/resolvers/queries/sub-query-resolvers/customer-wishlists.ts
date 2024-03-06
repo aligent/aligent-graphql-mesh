@@ -3,7 +3,7 @@ import { getTransformedWishlists } from '../../../factories/helpers/transform-wi
 import { getCustomerWishlists } from '../../../apis/graphql';
 import { getBcCustomerIdFromMeshToken } from '../../../utils';
 
-export const customerWishlistsResolver: CustomerResolvers['wishlists'] = {
+export const customerWishlistsResolver = {
     resolve: async (_root, _args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
@@ -15,4 +15,4 @@ export const customerWishlistsResolver: CustomerResolvers['wishlists'] = {
 
         return getTransformedWishlists(wishlists);
     },
-};
+} satisfies CustomerResolvers['wishlists'];
