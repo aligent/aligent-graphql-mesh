@@ -5,17 +5,16 @@ import { logAndThrowError } from '@aligent/utils';
 import { storeConfigsQuery } from './requests/store-configs';
 import { STORE_CONFIG_PWA, STORE_CONFIG_ADMIN } from '../../resolvers/queries/store-config';
 import { getTransformedChannelMetafieldsToStoreConfig } from '../../factories/transform-store-configs';
-import { getDataFromMeshCache } from '../../utils/mesh-cache';
+import { getDataFromMeshCache } from '../../utils';
 import { CACHE_KEY__STORE_CONFIG } from '../../constants';
+import { retrieveCustomerImpersonationTokenFromCache } from '../rest';
 
 export type getStoreConfigsTypes = Promise<StoreConfig & Settings>;
 
 export const getStoreConfigs = async (
     context: GraphQLModules.ModuleContext
 ): getStoreConfigsTypes => {
-    const customerImpersonationToken = (await context.cache.get(
-        'customerImpersonationToken'
-    )) as string;
+    const customerImpersonationToken = await retrieveCustomerImpersonationTokenFromCache(context);
 
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,

@@ -7,6 +7,7 @@ import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerId } from '../../utils';
 import { addWishlistItems, deleteWishlistItems } from '../../apis/graphql';
 import { customerResolver } from '../queries/customer';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const moveProductsBetweenWishlistsResolver: MutationResolvers['moveProductsBetweenWishlists'] =
     {
@@ -17,9 +18,8 @@ export const moveProductsBetweenWishlistsResolver: MutationResolvers['moveProduc
                 return logAndThrowError(new Error('Wishlist id is missing'));
             }
 
-            const customerImpersonationToken = (await context.cache.get(
-                'customerImpersonationToken'
-            )) as string;
+            const customerImpersonationToken =
+                await retrieveCustomerImpersonationTokenFromCache(context);
             const bcCustomerId = getBcCustomerId(context);
 
             const currentCustomerInfo = await customerResolver.resolve(root, {}, context, info);

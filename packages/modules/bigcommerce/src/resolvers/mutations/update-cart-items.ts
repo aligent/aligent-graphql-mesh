@@ -3,12 +3,12 @@ import { updateCartLineItem } from '../../apis/graphql/cart';
 import { getDeconstructedCartItemUid } from '@aligent/utils';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 import { getBcCustomerId } from '../../utils';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const updateCartItemsResolver: MutationResolvers['updateCartItems'] = {
     resolve: async (_root, args, context, _info): Promise<UpdateCartItemsOutput | null> => {
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
         const { cart_id, cart_items } = args.input || {};
 
         if (!cart_id || !cart_items?.[0]?.cart_item_uid) {

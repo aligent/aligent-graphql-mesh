@@ -4,12 +4,12 @@ import {
     getTransformedStoreLocationItems,
     getTransformedStoreLocationsArgs,
 } from '../../factories/transform-store-locations';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const storeLocationsResolver: QueryResolvers['storeLocations'] = {
     resolve: async (_root, args, context, _info) => {
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
         const variables = getTransformedStoreLocationsArgs(args, customerImpersonationToken);
         const bcStoreLocations = await getBcStoreLocationsGraphql(
             variables,

@@ -8,6 +8,7 @@ import { getIncludesTax } from '../../utils/get-tax';
 import { Cart, QueryCartArgs } from '@aligent/bigcommerce-resolvers';
 import { retrieveStorefrontFormFieldsFromCache } from '../rest/formFields';
 import { retrieveCountriesFromCache } from '../../resolvers/queries/countries';
+import { retrieveCustomerImpersonationTokenFromCache } from '../rest/customer-impersonation-token';
 
 export const UNDEFINED_CART = {
     id: '',
@@ -34,9 +35,7 @@ export const getEnrichedCart = async (
     context: GraphQLModules.ModuleContext,
     bcCustomerId: number | null
 ): Promise<Cart> => {
-    const customerImpersonationToken = (await context.cache.get(
-        'customerImpersonationToken'
-    )) as string;
+    const customerImpersonationToken = await retrieveCustomerImpersonationTokenFromCache(context);
 
     const [checkoutResponse, storeConfig, storeFrontFormFields, countries] = await Promise.all([
         getCheckout(args.cart_id, bcCustomerId, customerImpersonationToken),

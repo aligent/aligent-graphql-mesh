@@ -1,6 +1,6 @@
 import { MutationResolvers, CartItemInput } from '@aligent/bigcommerce-resolvers';
 import { addProductsToCartResolver } from './add-products-to-cart';
-import { getLineItems } from '../../apis/rest/order';
+import { getLineItems, retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 import { getBcCustomerId } from '../../utils';
 import { getCartIdFromBcCustomerAttribute } from '../../apis/graphql';
 import { transformRestCartLineItems } from '../../factories/transform-rest-cart-line-items';
@@ -44,9 +44,8 @@ export const reorderItemsResolver: MutationResolvers['reorderItems'] = {
             cartItems.push(transformRestCartLineItems(lineItem));
         }
 
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         const cartId = await getCartIdFromBcCustomerAttribute(
             context,

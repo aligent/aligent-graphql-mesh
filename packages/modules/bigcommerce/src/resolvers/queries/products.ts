@@ -17,12 +17,12 @@ import {
 import { getIncludesTax } from '../../utils/get-tax';
 import { getProductSearchPagination } from '../../apis/graphql/helpers/products-pagination';
 import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const productsResolver: QueryResolvers['products'] = {
     resolve: async (root, args, context, _info): Promise<Products | null> => {
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         const storeConfig = await retrieveStoreConfigsFromCache(context);
         const { tax: taxSettings } = storeConfig;

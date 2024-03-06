@@ -13,6 +13,7 @@ import {
 import { getBcCustomerId } from '../../utils';
 import { transformCartItemsToLineItems } from '../../factories/transform-cart-items-to-line-items';
 import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
+import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
     resolve: async (_root, args, context, _info) => {
@@ -27,9 +28,8 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
                 "The current customer isn't authorized to perform merge cart"
             );
 
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         const guestCheckoutQuery = getEnrichedCart({ cart_id: guestCartId }, context, null);
 

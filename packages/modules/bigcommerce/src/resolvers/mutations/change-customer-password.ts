@@ -3,16 +3,15 @@ import {
     transformBcCustomerToAcCustomerForMutation,
     transformAcCustomerPasswordChange,
 } from '../../factories/transform-customer-data';
-import { updateCustomer } from '../../apis/rest/customer';
+import { retrieveCustomerImpersonationTokenFromCache, updateCustomer } from '../../apis/rest';
 import { verifyCustomerCredentials } from '../../apis/helpers/verify-customer-credentials';
 import { getBcCustomerIdFromMeshToken } from '../../utils';
 
 export const changeCustomerPasswordResolver: MutationResolvers['changeCustomerPassword'] = {
     resolve: async (_root, { newPassword, currentPassword }, context, _info) => {
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
-        const customerImpersonationToken = (await context.cache.get(
-            'customerImpersonationToken'
-        )) as string;
+        const customerImpersonationToken =
+            await retrieveCustomerImpersonationTokenFromCache(context);
 
         await verifyCustomerCredentials(customerId, customerImpersonationToken, currentPassword);
 
