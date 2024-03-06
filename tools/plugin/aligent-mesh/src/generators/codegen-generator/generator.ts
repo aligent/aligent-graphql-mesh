@@ -1,20 +1,65 @@
-import { addProjectConfiguration, formatFiles, generateFiles, Tree } from '@nx/devkit';
+import {
+    addProjectConfiguration,
+    formatFiles,
+    generateFiles,
+    Tree,
+    offsetFromRoot,
+    updateJson,
+} from '@nx/devkit';
 import * as path from 'path';
-import { CodegenGeneratorGeneratorSchema } from './schema';
+import { CodegenGeneratorSchema } from './schema';
+import _ from 'lodash';
 
-export async function codegenGeneratorGenerator(
-    tree: Tree,
-    options: CodegenGeneratorGeneratorSchema
-) {
-    const projectRoot = `libs/${options.name}`;
+export async function codegenGenerator(tree: Tree, options: CodegenGeneratorSchema) {
+    let command = `graphql-codegen --config {options.directory}/codegen.ts`;
+
+    if (options.envFilePath) {
+        command = `env-cmd -f ${options.envFilePath} --silent ${command}`;
+    }
+
     addProjectConfiguration(tree, options.name, {
-        root: projectRoot,
+        root: options.directory,
         projectType: 'library',
-        sourceRoot: `${projectRoot}/src`,
-        targets: {},
+        sourceRoot: `${options.directory}/src`,
+        targets: {
+            codegen: {
+                executor: 'nx:run-commands',
+                inputs: ['codegen'],
+                outputs: ['{options.outputPath}'],
+                options: {
+                    outputPath: `${options.directory}/src`,
+                    command,
+                },
+            },
+            build: {
+                executor: '@nx/js:tsc',
+                outputs: ['{options.outputPath}'],
+                options: {
+                    outputPath: `dist/${options.directory}`,
+                    tsConfig: `packages/${options.directory}/tsconfig.lib.json`,
+                    packageJson: `packages/${options.directory}/package.json`,
+                    main: `packages/${options.directory}/src/index.ts`,
+                },
+                dependsOn: ['codegen'],
+            },
+        },
+        namedInputs: {
+            codegen: ['{options.directory}/codegen.ts'],
+        },
     });
-    generateFiles(tree, path.join(__dirname, 'files'), projectRoot, options);
+
+    updateJson(tree, 'tsconfig.base.json', (json) => {
+        json.compilerOptions.paths[
+            options.importPath
+        ] = `packages/${options.directory}/src/index.ts`;
+        return json;
+    });
+
+    generateFiles(tree, path.join(__dirname, 'files'), options.directory, {
+        ...options,
+        offsetFromRoot: offsetFromRoot(options.directory),
+    });
     await formatFiles(tree);
 }
 
-export default codegenGeneratorGenerator;
+export default codegenGenerator;

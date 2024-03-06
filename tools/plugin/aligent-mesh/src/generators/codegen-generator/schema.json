@@ -11,7 +11,43 @@
                 "$source": "argv",
                 "index": 0
             },
-            "x-prompt": "What name would you like to use?"
+            "x-prompt": ""
+        },
+        "importPath": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": ""
+        },
+        "directory": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            },
+            "x-prompt": ""
+        },
+        "schemaGlob": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 3
+            },
+            "x-prompt": ""
+        },
+        "envFilePath": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 4
+            },
+            "x-prompt": ""
         }
     },
     "required": ["name"]
