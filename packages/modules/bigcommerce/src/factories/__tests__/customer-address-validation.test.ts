@@ -1,4 +1,4 @@
-import { isCustomerAddressValid } from '../../../utils';
+import { isCustomerAddressValid } from '../../utils';
 import {
     acCustomerAddress,
     customerAddressMissingRequiredFields,

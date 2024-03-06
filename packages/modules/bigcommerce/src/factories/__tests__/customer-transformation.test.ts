@@ -1,9 +1,9 @@
-import { transformCustomerData } from '../create-customer';
+import { transformCustomerData } from '../../resolvers/mutations/create-customer';
 import { bcCustomerCreated } from './__data__/customer-input-data';
-import { transformedCreatedCustomer } from './__data__/customer-transformed-data';
+import { transformedCreatedCustomer } from './__data__/countries-transformed-data';
 
 /* Need to mock out ModuleConfig to avoid complaints in the bitbucket pipelines that getSdk isn't defined */
-jest.mock('../../../providers/index.ts', () => {
+jest.mock('../../providers/index.ts', () => {
     return { ModuleConfig: jest.fn() };
 });
 
