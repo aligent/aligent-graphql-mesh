@@ -1,9 +1,9 @@
-import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
+import { Customer, MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedDeleteWishlistItemsArgs } from '../../factories/helpers/transform-wishlist-arguments';
 import { logAndThrowError } from '@aligent/utils';
 import { getBcCustomerId } from '../../utils';
 import { deleteWishlistItems } from '../../apis/graphql';
-import { customerResolver } from '../queries/customer';
+import { customerWishlistsResolver } from '../queries/sub-query-resolvers';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const removeProductsFromWishlistResolver: MutationResolvers['removeProductsFromWishlist'] = {
@@ -28,9 +28,12 @@ export const removeProductsFromWishlistResolver: MutationResolvers['removeProduc
 
         // Have to use Customer resolver to fetch fresh wishlist data
         // as BC wishlist mutations run into max depth of query error if requesting item->product
-        const currentCustomerInfo = await customerResolver.resolve(root, {}, context, info);
-
-        const { wishlists } = currentCustomerInfo;
+        const wishlists = await customerWishlistsResolver.resolve(
+            root as Customer,
+            { currentPage: 1, pageSize: 50 },
+            context,
+            info
+        );
 
         const wishlist = wishlists.find((wishlist) => wishlist?.id === String(entityId));
 

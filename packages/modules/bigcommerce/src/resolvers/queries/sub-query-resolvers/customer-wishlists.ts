@@ -4,7 +4,7 @@ import { getCustomerWishlists } from '../../../apis/graphql';
 import { getBcCustomerIdFromMeshToken } from '../../../utils';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../../apis/rest';
 
-export const customerWishlistsResolver: CustomerResolvers['wishlists'] = {
+export const customerWishlistsResolver = {
     resolve: async (_root, _args, context, _info) => {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
         const customerImpersonationToken =
@@ -13,4 +13,4 @@ export const customerWishlistsResolver: CustomerResolvers['wishlists'] = {
 
         return getTransformedWishlists(wishlists);
     },
-};
+} satisfies CustomerResolvers['wishlists'];
