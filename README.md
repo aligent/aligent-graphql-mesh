@@ -265,13 +265,12 @@ TBA
 
 #### Adding a new module
 
-1. Copy an existing module e.g. `cp packages/modules/orocommerce packages/modules/<new module>`
-2. Remove exisiting platform specific code and rename references to orocommerce to your new modules name
-3. Copy an existing resolvers codegen project e.g. `cp packages/generated/orocommerce-resolvers packages/generated/<new module>-resolvers`
-4. Update all references to orocommerce
-5. Update the tsconfig.base.json to include the two new packages alias in the paths section
+Run the generator command
 
-In the future we will hopefully have a generator https://nx.dev/extending-nx/recipes/local-generators to do this
+Example:
+`yarn nx g @aligent/mesh:graphql-module --name=yotpo-graphql-module --shortName=yotpo --directory=packages/modules/yotpo --importPath=@aligent/yotpo-graphql-module --envFilePath=packages/mesh/bigcommerce/.env`
+
+You will then need to update the mesh application to load the module e.g. Add the `createModule` function of the new graphql module to the modules array in `packages/mesh/bigcommerce/src/application.ts`.
 
 #### Caching
 
