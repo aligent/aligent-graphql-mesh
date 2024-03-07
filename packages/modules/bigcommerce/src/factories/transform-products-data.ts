@@ -107,6 +107,7 @@ export const getTransformedProductData = (
             seo,
             sku,
             variants: bcVariants,
+            warranty,
         } = bcProduct;
 
         const productType = variantEntityId
@@ -160,6 +161,7 @@ export const getTransformedProductData = (
             url_suffix: '',
             reviews: getTransformedReviews(reviews),
             variants: getTransformedVariants(bcVariants),
+            warranty,
             // @ts-expect-error: this isn't included in the category prop types but is needed to prevent graphql from complaining
             __typename: productType,
             ...attributesFromCustomAndMetaFields,
