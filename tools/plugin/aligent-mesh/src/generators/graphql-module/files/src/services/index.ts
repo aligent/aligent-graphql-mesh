@@ -1,4 +1,4 @@
-import { Provider, Scope } from 'graphql-modules';
+import { Provider } from 'graphql-modules';
 
 export const getServices = (): Array<Provider> => {
     return [];

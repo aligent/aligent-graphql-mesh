@@ -8,7 +8,6 @@ import {
 } from '@nx/devkit';
 import * as path from 'path';
 import { CodegenGeneratorSchema } from './schema';
-import _ from 'lodash';
 
 export async function codegenGenerator(tree: Tree, options: CodegenGeneratorSchema) {
     let command = 'graphql-codegen --config {projectRoot}/codegen.ts';
