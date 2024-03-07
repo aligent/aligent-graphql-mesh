@@ -107,7 +107,7 @@ export const getTransformedProductData = (
             seo,
             sku,
             variants: bcVariants,
-            warranty
+            warranty,
         } = bcProduct;
 
         const productType = variantEntityId
