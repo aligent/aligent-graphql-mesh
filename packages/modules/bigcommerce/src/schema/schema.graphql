@@ -3063,6 +3063,10 @@ interface ProductInterface {
     """
     url_suffix: String
     """
+    The product's warranty details.
+    """
+    warranty: String
+    """
     An array of websites in which the product is available.
     """
     websites: [Website] @deprecated(reason: "The field should not be used on the storefront.")
@@ -4445,6 +4449,10 @@ type VirtualProduct implements ProductInterface & RoutableInterface & Customizab
     """
     url_suffix: String
     """
+    The product's warranty details.
+    """
+    warranty: String
+    """
     An array of websites in which the product is available.
     """
     websites: [Website] @deprecated(reason: "The field should not be used on the storefront.")
@@ -4744,6 +4752,10 @@ type SimpleProduct implements ProductInterface & RoutableInterface & PhysicalPro
     The part of the product URL that is appended after the url key
     """
     url_suffix: String
+    """
+    The product's warranty details.
+    """
+    warranty: String
     """
     An array of websites in which the product is available.
     """
@@ -5176,6 +5188,10 @@ input ProductFilterInput {
     """
     url_key: FilterTypeInput
     url_path: FilterTypeInput
+    """
+    The product's warranty details.
+    """
+    warranty: FilterTypeInput
     """
     The weight of the item, in units defined by the store.
     """
@@ -7940,6 +7956,10 @@ type DownloadableProduct implements ProductInterface & RoutableInterface & Custo
     """
     url_suffix: String
     """
+    The product's warranty details.
+    """
+    warranty: String
+    """
     An array of websites in which the product is available.
     """
     websites: [Website] @deprecated(reason: "The field should not be used on the storefront.")
@@ -10197,6 +10217,10 @@ type BundleProduct implements ProductInterface & RoutableInterface & PhysicalPro
     The part of the product URL that is appended after the url key
     """
     url_suffix: String
+    """
+    The product's warranty details.
+    """
+    warranty: String
     """
     An array of websites in which the product is available.
     """
@@ -12576,6 +12600,10 @@ type GroupedProduct implements ProductInterface & RoutableInterface & PhysicalPr
     """
     url_suffix: String
     """
+    The product's warranty details.
+    """
+    warranty: String
+    """
     An array of websites in which the product is available.
     """
     websites: [Website] @deprecated(reason: "The field should not be used on the storefront.")
@@ -12914,6 +12942,10 @@ type ConfigurableProduct implements ProductInterface & RoutableInterface & Physi
     An array of websites in which the product is available.
     """
     websites: [Website] @deprecated(reason: "The field should not be used on the storefront.")
+    """
+    The product's warranty details.
+    """
+    warranty: String
     """
     The weight of the item, in units defined by the store.
     """
@@ -16218,6 +16250,10 @@ type GiftCardProduct implements ProductInterface & PhysicalProductInterface & Cu
     The part of the product URL that is appended after the url key
     """
     url_suffix: String
+    """
+    The product's warranty details.
+    """
+    warranty: String
     """
     An array of websites in which the product is available.
     """

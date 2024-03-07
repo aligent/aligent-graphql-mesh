@@ -126,6 +126,7 @@ export const ProductsDetails: DocumentNode = gql`
                 ...PageInfo
             }
         }
+        warranty
         weight {
             value
             unit

@@ -328,6 +328,7 @@ export const transformedWishlistItems = [
                 },
             },
             variants: [],
+            warranty: 'warranty',
             __typename: 'SimpleProduct',
         },
     },
