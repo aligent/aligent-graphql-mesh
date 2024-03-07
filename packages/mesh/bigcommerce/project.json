@@ -15,7 +15,7 @@
                 "bundle": false,
                 "main": "packages/mesh/bigcommerce/src/main.ts",
                 "tsConfig": "packages/mesh/bigcommerce/tsconfig.app.json",
-                "assets": ["packages/modules/bigcommerce/src/schema/**/*.graphql"],
+                "assets": ["packages/modules/**/src/schema/**/*.graphql"],
                 "generatePackageJson": true,
                 "runBuildTargetDependencies": true,
                 "sourcemap": true,

@@ -1,0 +1,14 @@
+import { Resolvers } from '@aligent/<%= shortName %>-resolvers';
+import { echoMutation } from './mutations/echo';
+import { helloResolver } from './queries/hello';
+
+export const resolvers: Resolvers = {
+    Query: {
+        hello: helloResolver,
+    },
+    Mutation: {
+        echo: echoMutation,
+    },
+};
+
+export default resolvers;
