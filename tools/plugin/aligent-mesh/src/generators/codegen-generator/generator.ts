@@ -11,7 +11,7 @@ import { CodegenGeneratorSchema } from './schema';
 import _ from 'lodash';
 
 export async function codegenGenerator(tree: Tree, options: CodegenGeneratorSchema) {
-    let command = `graphql-codegen --config {options.directory}/codegen.ts`;
+    let command = 'graphql-codegen --config {projectRoot}/codegen.ts';
 
     if (options.envFilePath) {
         command = `env-cmd -f ${options.envFilePath} --silent ${command}`;
@@ -36,22 +36,20 @@ export async function codegenGenerator(tree: Tree, options: CodegenGeneratorSche
                 outputs: ['{options.outputPath}'],
                 options: {
                     outputPath: `dist/${options.directory}`,
-                    tsConfig: `packages/${options.directory}/tsconfig.lib.json`,
-                    packageJson: `packages/${options.directory}/package.json`,
-                    main: `packages/${options.directory}/src/index.ts`,
+                    tsConfig: `${options.directory}/tsconfig.lib.json`,
+                    packageJson: `${options.directory}/package.json`,
+                    main: `${options.directory}/src/index.ts`,
                 },
                 dependsOn: ['codegen'],
             },
         },
         namedInputs: {
-            codegen: ['{options.directory}/codegen.ts'],
+            codegen: ['{projectRoot}/codegen.ts'],
         },
     });
 
     updateJson(tree, 'tsconfig.base.json', (json) => {
-        json.compilerOptions.paths[
-            options.importPath
-        ] = `packages/${options.directory}/src/index.ts`;
+        json.compilerOptions.paths[options.importPath] = [`${options.directory}/src/index.ts`];
         return json;
     });
 
