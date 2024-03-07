@@ -6,7 +6,12 @@ import { CodegenGeneratorSchema } from './schema';
 
 describe('codegen-generator generator', () => {
     let tree: Tree;
-    const options: CodegenGeneratorSchema = { name: 'test' };
+    const options: CodegenGeneratorSchema = {
+        name: 'test',
+        importPath: '@aligent/some-resolvers',
+        schemaGlob: 'packages/modules/some-package/src/schema/*.graphql',
+        directory: 'packages/generated/some-resolvers',
+    };
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();

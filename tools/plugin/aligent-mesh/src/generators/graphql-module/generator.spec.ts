@@ -6,7 +6,12 @@ import { GraphqlModuleGeneratorSchema } from './schema';
 
 describe('graphql-module generator', () => {
     let tree: Tree;
-    const options: GraphqlModuleGeneratorSchema = { name: 'test' };
+    const options: GraphqlModuleGeneratorSchema = {
+        name: 'test',
+        shortName: 'test',
+        importPath: '@aligent/test',
+        directory: 'packages/modules/test',
+    };
 
     beforeEach(() => {
         tree = createTreeWithEmptyWorkspace();
