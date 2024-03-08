@@ -1,6 +1,6 @@
 import { bcGraphQlRequest } from './client';
 import { getBrands } from './requests';
-import { transformBrands } from '../../factories/helpers/transform-metafields';
+import { transformBrands } from '../../factories/helpers/transform-brands';
 import { Brand, QueryBrandsArgs } from '@aligent/bigcommerce-resolvers';
 
 export const getAllBrands = async (

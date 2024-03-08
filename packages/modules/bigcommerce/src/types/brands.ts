@@ -18,8 +18,3 @@ export type BrandNode = {
 export type BrandsEdge = {
     edges: BrandNode[];
 };
-
-export type BrandsInputTypes = {
-    brandImageWidth: number;
-    metafieldNamespace?: string[];
-};
