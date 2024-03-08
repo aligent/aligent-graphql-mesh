@@ -26,8 +26,8 @@ export const bcLogin = async (
 
     if (!entityId || result !== 'success') {
         throw new GraphqlError(
-            'authentication',
-            `The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.`
+            `The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.`,
+            'authentication'
         );
     }
 

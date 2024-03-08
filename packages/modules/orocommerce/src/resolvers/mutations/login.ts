@@ -15,7 +15,7 @@ export const loginMutation: MutationResolvers['login'] = {
 
             return authData;
         } catch (error) {
-            throw new GraphqlError('authentication', 'Failed to generate an auth token.');
+            throw new GraphqlError('Failed to generate an auth token.', 'authentication');
         }
     },
 };

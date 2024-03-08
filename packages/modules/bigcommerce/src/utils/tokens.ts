@@ -1,7 +1,7 @@
 import {
     logAndThrowError,
     getUnixTimeStampInSecondsForMidnightTonight,
-    AuthorizationError,
+    GraphqlError,
 } from '@aligent/utils';
 import { decode, sign, verify } from 'jsonwebtoken';
 import { DecodedCustomerImpersonationToken, MeshToken } from '../types';
@@ -43,7 +43,7 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
          * possible error.messages 'jwt expired', 'jwt malformed', 'invalid signature'
          * */
 
-        throw new AuthorizationError('User session has expired');
+        throw new GraphqlError('User session has expired', 'authorization');
     }
 };
 

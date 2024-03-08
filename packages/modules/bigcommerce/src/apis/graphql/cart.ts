@@ -270,8 +270,8 @@ export const assignGuestCartToNewUserAccount = async (
 
     if (assignedCartResponse.entityId !== cartId || !storedCartIdResponse) {
         throw new GraphqlError(
-            'no-such-entity',
-            "The guest cart couldn't properly be assigned to the new user account"
+            "The guest cart couldn't properly be assigned to the new user account",
+            'no-such-entity'
         );
     }
 };

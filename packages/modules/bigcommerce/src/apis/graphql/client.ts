@@ -3,7 +3,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { get } from 'lodash';
 import { GraphQlQuery } from '../../types';
-import { AxiosGraphqlError, logAndThrowError } from '@aligent/utils';
+import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import * as xray from 'aws-xray-sdk';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
@@ -120,14 +120,14 @@ async function* fetchPaginatedGraphQLData(
         const pageInfo = get(data, pathToPaginationData);
 
         if (!pageInfo) {
-            throw new AxiosGraphqlError('Could not find pageInfo');
+            throw new GraphqlError('Could not find pageInfo', 'no-such-entity');
         }
 
         const newEndCursor = pageInfo.endCursor;
 
         /* Safeguard against infinite loops */
         if (newEndCursor === endCursor) {
-            throw new AxiosGraphqlError(`GraphQL request errors: Duplicate cursors`);
+            throw new GraphqlError(`GraphQL request errors: Duplicate cursors`, 'already-exists');
         }
 
         yield data;

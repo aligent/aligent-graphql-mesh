@@ -51,16 +51,16 @@ export class ApiClient {
                     switch (httpStatus) {
                         // 400 errors - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
                         case HttpStatusCode.BadRequest:
-                            throw new GraphqlError('input', graphqlErrorMessage);
+                            throw new GraphqlError(graphqlErrorMessage, 'input');
                         case HttpStatusCode.Unauthorized:
                         case HttpStatusCode.Forbidden:
-                            throw new GraphqlError('authorization', graphqlErrorMessage);
+                            throw new GraphqlError(graphqlErrorMessage, 'authorization');
                         case HttpStatusCode.NotFound:
-                            throw new GraphqlError('no-such-entity', graphqlErrorMessage);
+                            throw new GraphqlError(graphqlErrorMessage, 'no-such-entity');
                         case HttpStatusCode.Conflict:
-                            throw new GraphqlError('already-exists', graphqlErrorMessage);
+                            throw new GraphqlError(graphqlErrorMessage, 'already-exists');
                         case HttpStatusCode.InternalServerError:
-                            throw new GraphqlError('server-internal-error', graphqlErrorMessage);
+                            throw new GraphqlError(graphqlErrorMessage, 'server-internal-error');
                         default:
                             throw new Error(graphqlErrorMessage);
                     }
