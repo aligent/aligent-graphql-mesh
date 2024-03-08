@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@aligent/orocommerce-resolvers';
 import { Auth } from '../../services/auth';
-import { AuthorizationError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 
 export const generateCustomerTokenMutation: MutationResolvers['generateCustomerToken'] = {
     resolve: async (_root, { email, password }, context: GraphQLModules.Context, _info) => {
@@ -12,7 +12,7 @@ export const generateCustomerTokenMutation: MutationResolvers['generateCustomerT
                 token: (await token).access_token,
             };
         } catch (error) {
-            throw new AuthorizationError('Login failed.');
+            throw new GraphqlError('Login failed.', 'authorization');
         }
     },
 };

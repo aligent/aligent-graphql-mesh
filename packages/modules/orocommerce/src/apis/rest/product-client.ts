@@ -73,7 +73,7 @@ export class ProductsClient {
             params,
         });
         if (response.data.length > 1)
-            throw new GraphqlError('input', `More than 1 product found with the same url: ${url}`);
+            throw new GraphqlError(`More than 1 product found with the same url: ${url}`, 'input');
 
         return response;
     }

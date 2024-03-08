@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { AxiosGraphqlError } from './index';
+import { GraphqlError } from './index';
 /* istanbul ignore file */
 //TODO: MICRO-142: add tests for this file at later point
 
@@ -15,13 +15,11 @@ export const logAndThrowAxiosError = (
     const data = response?.data;
     if (message) console.error({ message });
 
-    if (!data) {
-        logAndThrowUnknownError(functionName, 'No data object on on axiosError.response');
-    } else if (data.errors) {
+    if (data?.errors) {
         logAndThrowErrorsFromGraphQlResponse(response, functionName);
-    } else if (data.title) {
+    } else if (data?.title) {
         logAndThrowErrorsFromBCRESTApiResponse(response, functionName);
-    } else if (data.data?.errMsg) {
+    } else if (data?.data?.errMsg) {
         logAndThrowErrorsFromRESTApiResponse(response, functionName);
     } else if (data) {
         console.error(
@@ -29,10 +27,11 @@ export const logAndThrowAxiosError = (
                 response.statusText
             }, function name: ${functionName}.`
         );
-        throw new Error(`Response data: ${data}`);
+        throw new GraphqlError(`Response data: ${data}`);
     }
 
-    return logAndThrowUnknownError(axiosError, functionName);
+    const unknownErrorMsg = 'No data object in the axiosError.response';
+    return logAndThrowUnknownError(axiosError, functionName, unknownErrorMsg);
 };
 
 export const logAndThrowUnknownError = (
@@ -42,10 +41,10 @@ export const logAndThrowUnknownError = (
 ): never => {
     if (!functionName || !message) {
         console.error(JSON.stringify(error));
-        throw new Error(JSON.stringify(error));
+        throw new GraphqlError(JSON.stringify(error));
     } else {
         console.error(`${error} ${functionName} ${message}`);
-        throw new Error(`${error} ${functionName} ${message}`);
+        throw new GraphqlError(`${JSON.stringify(error)} ${functionName} ${message}`);
     }
 };
 
@@ -65,15 +64,21 @@ const logAndThrowErrorsFromGraphQlResponse = (
         errorResponse = response.data.errors[0];
 
         logErrorAndFunctionName(response.status, functionName, errorResponse.message);
-        throw new Error(errorResponse.message);
+        throw new GraphqlError(errorResponse.message);
     } else if (typeof errorResponse === 'object' && Object.values(errorResponse).length > 0) {
         logErrorAndFunctionName(response.status, functionName, errorResponse.message);
         console.error(`Whole Error: ${JSON.stringify(errorResponse)}`);
 
-        throw new AxiosGraphqlError(JSON.stringify(Object.values(errorResponse)[0]));
+        const message =
+            typeof Object.values(errorResponse)[0] === 'string'
+                ? (Object.values(errorResponse)[0] as string)
+                : 'An error occurred! Please try again later.';
+
+        throw new GraphqlError(message, 'server-internal-error');
     }
 
     return logAndThrowUnknownError(
+        response,
         functionName,
         `Unknown error from ${logAndThrowErrorsFromGraphQlResponse.name}`
     );
@@ -88,7 +93,7 @@ const logAndThrowErrorsFromRESTApiResponse = (
     if (errorResponse) {
         logErrorAndFunctionName(response.data.code, functionName, errorResponse);
         console.error(`Whole Error: ${JSON.stringify(response.data)}`);
-        throw new Error(errorResponse);
+        throw new GraphqlError(errorResponse);
     }
 
     return logAndThrowUnknownError(
@@ -106,7 +111,7 @@ const logAndThrowErrorsFromBCRESTApiResponse = (
     if (errorResponse) {
         logErrorAndFunctionName(response.data.status, functionName, errorResponse);
         console.error(`Whole Error: ${JSON.stringify(response.data)}`);
-        throw new Error(errorResponse);
+        throw new GraphqlError(errorResponse);
     }
 
     return logAndThrowUnknownError(
