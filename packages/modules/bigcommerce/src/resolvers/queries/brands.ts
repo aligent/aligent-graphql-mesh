@@ -16,7 +16,7 @@ export const retrieveBrandsFromCache = async (
 ): Promise<Brand[]> => {
     const customerImpersonationToken = await retrieveCustomerImpersonationTokenFromCache(context);
 
-    const query = async () => getAllBrands(args.brandImageWidth, customerImpersonationToken);
+    const query = async () => getAllBrands(args, customerImpersonationToken);
 
     return getDataFromMeshCache(context, CACHE_KEY__BRANDS, query);
 };

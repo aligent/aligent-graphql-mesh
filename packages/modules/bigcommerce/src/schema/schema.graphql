@@ -62,6 +62,10 @@ type Query {
         Width of the Brand images fetched from the CDN
         """
         brandImageWidth: Int!
+        """
+        namespace for brand metafields
+        """
+        metafieldNamespace: String
     ): [Brand!]
     """
     Return information about the specified shopping cart.
@@ -17279,6 +17283,11 @@ enum CartErrorType {
     NONE @deprecated(reason: "")
 }
 
+type BrandMetafield {
+    name: String
+    value: String
+}
+
 type Brand {
     """
     The ID of an object
@@ -17308,6 +17317,10 @@ type Brand {
     Path for the brand page.
     """
     path: String!
+    """
+    Extra properties defined in the Brands metafield
+    """
+    metafields: [BrandMetafield]
 }
 type Image {
     """
