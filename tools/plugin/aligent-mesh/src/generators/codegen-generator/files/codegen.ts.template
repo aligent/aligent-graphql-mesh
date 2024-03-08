@@ -1,0 +1,28 @@
+import type { CodegenConfig } from '@graphql-codegen/cli';
+
+const config: CodegenConfig = {
+    overwrite: true,
+    config: {
+        enumsAsTypes: true,
+    },
+    generates: {
+        '<%= directory %>/src/index.ts': {
+            schema: '<%= schemaGlob %>',
+            plugins: [
+                {
+                    add: {
+                        content: 'import * as gm from "graphql-modules";',
+                    },
+                },
+                'typescript',
+                'typescript-resolvers',
+            ],
+            config: {
+                contextType: 'GraphQLModules.ModuleContext',
+                useImplementingTypes: true,
+            },
+        },
+    },
+};
+
+export default config;

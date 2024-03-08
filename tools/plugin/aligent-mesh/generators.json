@@ -1,0 +1,14 @@
+{
+    "generators": {
+        "codegen-generator": {
+            "factory": "./src/generators/codegen-generator/generator",
+            "schema": "./src/generators/codegen-generator/schema.json",
+            "description": "Generate Codegen package"
+        },
+        "graphql-module": {
+            "factory": "./src/generators/graphql-module/generator",
+            "schema": "./src/generators/graphql-module/schema.json",
+            "description": "Generate graphql module"
+        }
+    }
+}

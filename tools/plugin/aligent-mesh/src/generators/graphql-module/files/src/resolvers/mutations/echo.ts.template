@@ -1,0 +1,7 @@
+import { MutationResolvers } from '@aligent/<%= shortName %>-resolvers';
+
+export const echoMutation: MutationResolvers['echo'] = {
+    resolve: async (_root, { input }, _context: GraphQLModules.Context, _info) => {
+        return input;
+    },
+};

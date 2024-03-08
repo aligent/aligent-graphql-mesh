@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/schema",
+    "$id": "GraphqlModule",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What name would you like to use for the graphql module? E.g. orocommerce-graphql-module",
+            "pattern": "(?:^@[a-zA-Z0-9-*~][a-zA-Z0-9-*._~]*\\/[a-zA-Z0-9-~][a-zA-Z0-9-._~]*|^[a-zA-Z][^:]*)$"
+        },
+        "shortName": {
+            "type": "string",
+            "description": "",
+            "x-prompt": "What is the shortend version of the name? E.g. orocommerce",
+            "pattern": "(?:^@[a-zA-Z0-9-*~][a-zA-Z0-9-*._~]*\\/[a-zA-Z0-9-~][a-zA-Z0-9-._~]*|^[a-zA-Z][^:]*)$"
+        },
+        "importPath": {
+            "type": "string",
+            "description": "The name used to import it, like @aligent/orocommerce-graphql-module.",
+            "x-priority": "important"
+        },
+        "directory": {
+            "type": "string",
+            "description": "A directory where the package is placed.",
+            "x-priority": "important"
+        },
+        "envFilePath": {
+            "type": "string",
+            "description": "A path to a .env file that should be included when executing codegen. [Optional]",
+            "x-priority": "important"
+        }
+    },
+    "required": ["name", "shortName", "importPath", "directory"]
+}

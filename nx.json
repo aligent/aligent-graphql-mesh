@@ -42,6 +42,11 @@
                 "{workspaceRoot}/eslint.config.js"
             ],
             "cache": true
+        },
+        "@nx/js:tsc": {
+            "cache": true,
+            "dependsOn": ["^build"],
+            "inputs": ["default", "^default"]
         }
     },
     "namedInputs": {

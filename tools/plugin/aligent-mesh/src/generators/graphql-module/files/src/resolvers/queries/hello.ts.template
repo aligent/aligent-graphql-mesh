@@ -1,0 +1,7 @@
+import { QueryResolvers } from '@aligent/<%= shortName %>-resolvers';
+
+export const helloResolver: QueryResolvers['hello'] = {
+    resolve: async (_root, _args, _context, _info) => {
+        return 'Hello, World!';
+    },
+};
