@@ -13,6 +13,7 @@ export const getBrands = stripIgnoredCharacters(
             $last: Int
             $productEntityIds: [Int!]
             $entityIds: [Int!]
+            $metafieldNamespace: String = ""
         ) {
             site {
                 brands(
@@ -39,6 +40,16 @@ export const getBrands = stripIgnoredCharacters(
                                 urlOriginal
                                 altText
                                 isDefault
+                            }
+                            metafields(namespace: $metafieldNamespace) {
+                                edges {
+                                    node {
+                                        value
+                                        key
+                                        id
+                                        entityId
+                                    }
+                                }
                             }
                             seo {
                                 pageTitle
