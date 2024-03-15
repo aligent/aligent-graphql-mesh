@@ -12,6 +12,8 @@ import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
+import type { Plugin } from '@envelop/core';
+import { accessSync, constants, existsSync, stat } from 'fs';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -20,6 +22,29 @@ const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT
 const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
+
+const checkMaintenanceMode: Plugin = {
+    onParse({ params }) {
+        const query = JSON.stringify(params.source);
+        console.log(query, __dirname);
+        // const regexForGraphQlOperations = new RegExp(/mutation|query|subscription/);
+        // console.log(regexForGraphQlOperations.test(query));
+
+        // Getting information for a file
+        stat(`./test.txt`, (error, stats) => {
+            if (error) {
+                console.log(error);
+                throw new Error('failed');
+            } else {
+                console.log(stats);
+
+                // Using methods of the Stats object
+                console.log('Path is file:', stats.isFile());
+                console.log('Path is directory:', stats.isDirectory());
+            }
+        });
+    },
+};
 
 const yoga = createYoga({
     graphiql: DEV_MODE,
@@ -54,6 +79,7 @@ const yoga = createYoga({
                 maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
             },
         }),
+        checkMaintenanceMode,
     ],
 });
 
