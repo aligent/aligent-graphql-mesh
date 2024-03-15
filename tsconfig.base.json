@@ -29,6 +29,10 @@
         "forceConsistentCasingInFileNames": true,
         "baseUrl": ".",
         "paths": {
+            "@aligent/auth-module": ["packages/modules/auth/src/index.ts"],
+            "@aligent/auth-resolvers": [
+                "packages/generated/auth-resolvers/src/index.ts"
+            ],
             "@aligent/bigcommerce-graphql-module": ["packages/modules/bigcommerce/src/index.ts"],
             "@aligent/bigcommerce-operations": [
                 "packages/generated/bigcommerce-operations/src/index.ts"

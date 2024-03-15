@@ -1,0 +1,33 @@
+schema {
+    mutation: Mutation
+}
+
+type Mutation {
+    """
+    Generate a token for specified customer.
+    """
+    generateCustomerToken(
+        """
+        The customer's email address.
+        """
+        email: String!
+        """
+        The customer's password.
+        """
+        password: String!
+        """
+        Determines if the users session should be extended
+        """
+        remember_me: Boolean
+    ): CustomerToken
+}
+
+"""
+Contains a customer authorization token.
+"""
+type CustomerToken {
+    """
+    The customer authorization token.
+    """
+    token: String
+}

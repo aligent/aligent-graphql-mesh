@@ -1,0 +1,31 @@
+{
+    "name": "auth-resolvers",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "packages/generated/auth-resolvers/src",
+    "targets": {
+        "codegen": {
+            "executor": "nx:run-commands",
+            "inputs": ["codegen"],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "packages/generated/auth-resolvers/src",
+                "command": "env-cmd -f packages/mesh/auth/.env --silent graphql-codegen --config {projectRoot}/codegen.ts"
+            }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/generated/auth-resolvers",
+                "tsConfig": "packages/generated/auth-resolvers/tsconfig.lib.json",
+                "packageJson": "packages/generated/auth-resolvers/package.json",
+                "main": "packages/generated/auth-resolvers/src/index.ts"
+            },
+            "dependsOn": ["codegen"]
+        }
+    },
+    "namedInputs": {
+        "codegen": ["{projectRoot}/codegen.ts"]
+    }
+}
