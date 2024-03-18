@@ -1,4 +1,4 @@
-import { useExtendContext, Plugin, envelop } from '@envelop/core';
+import { useExtendContext, Plugin} from '@envelop/core';
 import { existsSync, readFileSync, open, close } from 'fs';
 import { Netmask } from 'netmask';
 
