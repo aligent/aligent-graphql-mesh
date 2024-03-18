@@ -12,7 +12,7 @@ import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module'
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
 import {  readFileSync } from 'fs';
-import { checkIfInMaintenanceMode, maintenanceModePlugin } from './maintenance-plugin';
+import { maintenanceModePlugin } from './maintenance-plugin';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -42,8 +42,7 @@ const yoga = createYoga({
         };
     },
     plugins: [
-        checkIfInMaintenanceMode,
-        maintenanceModePlugin,
+        ...maintenanceModePlugin,
         useGraphQLModules(application),
         addIpAddressToAxiosHeaders,
         EnvelopArmorPlugin({

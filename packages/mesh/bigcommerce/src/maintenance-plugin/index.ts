@@ -1,10 +1,10 @@
-import { useExtendContext, Plugin } from '@envelop/core';
+import { useExtendContext, Plugin, envelop } from '@envelop/core';
 import { existsSync, readFileSync, open, close } from 'fs';
 import { Netmask } from 'netmask';
 
 const maintenanceFilePath = `/home/jack.mcloughlin/aligent/oro-aligent-graphql-mesh/maintenance.txt`;
 
-export const checkIfInMaintenanceMode: Plugin = {
+const checkIfInMaintenanceModePlugin: Plugin = {
     onParse({ extendContext }) {
         if (existsSync(maintenanceFilePath)) {
             console.log('exists');
@@ -15,7 +15,7 @@ export const checkIfInMaintenanceMode: Plugin = {
     },
 };
 
-export const maintenanceModePlugin = useExtendContext(async (context) => {
+const checkIfIpAddressInWhiteListPlugin = useExtendContext(async (context) => {
     console.log('running');
 
     if (context.isMaintenanceMode) {
@@ -68,3 +68,8 @@ const checkIfIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): b
 
     return isInWhiteList;
 };
+
+export const maintenanceModePlugin = [
+    checkIfIpAddressInWhiteListPlugin,
+    checkIfInMaintenanceModePlugin,
+];
