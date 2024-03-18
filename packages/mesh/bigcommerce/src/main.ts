@@ -12,8 +12,11 @@ import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
-import type { Plugin } from '@envelop/core';
-import { accessSync, constants, existsSync, stat } from 'fs';
+import { useExtendContext, type Plugin } from '@envelop/core';
+import { readFile } from 'fs';
+import fs from 'fs';
+import util from 'util';
+// import { Plugin } from 'graphql-yoga';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -23,28 +26,38 @@ const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
 
-const checkMaintenanceMode: Plugin = {
-    onParse({ params }) {
-        const query = JSON.stringify(params.source);
-        console.log(query, __dirname);
-        // const regexForGraphQlOperations = new RegExp(/mutation|query|subscription/);
-        // console.log(regexForGraphQlOperations.test(query));
+const maintenanceModePlugin = useExtendContext(async (context) => {
+    console.log('running');
 
-        // Getting information for a file
-        stat(`./test.txt`, (error, stats) => {
-            if (error) {
-                console.log(error);
-                throw new Error('failed');
-            } else {
-                console.log(stats);
+    // check if in maintenance mode by the existence of file
+    readFile(`${__dirname}/maintenance.js`, (_error, stats) => {
+        if (stats) {
+            console.log('In maintenance mode checking IP address in whitelist');
 
-                // Using methods of the Stats object
-                console.log('Path is file:', stats.isFile());
-                console.log('Path is directory:', stats.isDirectory());
-            }
-        });
-    },
-};
+            // check if User can access with their IP
+            readFile(`${__dirname}/white-listed-ips.js`, 'utf8', (_error, data) => {
+                if (data) {
+                    // Compare IP address in file with clientIP
+                    const clientIp = context.headers['x-forwarded-for'];
+
+                    console.log(data, clientIp);
+                    console.log('IP addresses');
+
+                    // if they are in whitelist return
+                    // if not return status: 502
+                    return;
+                } else {
+                    throw new Error('White list Ip file missing');
+                }
+            });
+
+            return;
+        } else {
+            // No maintenance file exists allow them to continue
+            return;
+        }
+    });
+});
 
 const yoga = createYoga({
     graphiql: DEV_MODE,
@@ -65,6 +78,7 @@ const yoga = createYoga({
         };
     },
     plugins: [
+        maintenanceModePlugin,
         useGraphQLModules(application),
         addIpAddressToAxiosHeaders,
         EnvelopArmorPlugin({
@@ -79,7 +93,6 @@ const yoga = createYoga({
                 maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
             },
         }),
-        checkMaintenanceMode,
     ],
 });
 
