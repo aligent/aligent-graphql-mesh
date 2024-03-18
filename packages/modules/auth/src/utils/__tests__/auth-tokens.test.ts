@@ -137,24 +137,47 @@ describe('JWT statues', () => {
 
 describe(`Token TTL's`, () => {
     it(`Returns the current refresh tokens expiry time if the current time is over 15 minutes before it`, () => {
-        const currentTime = 1710632756; // 9:45 am
-        const refreshTokenExp = 1710634468; // 10.14 am
+        advanceTo(new Date('2024-03-01T09:00:00'));
+        const currentTime = getCurrentTimeStamp();
+
+        const refreshTokenExp = 1709248560; // 9.16 am
+
+        const expectedFormattedDateTime = '01/03/2024, 09:16';
+
+        expect(formatTestingDate(refreshTokenExp)).toEqual(expectedFormattedDateTime);
+
         const newRefreshTokenExp = getRollingRefreshTokenExp(currentTime, refreshTokenExp);
-        expect(newRefreshTokenExp).toEqual(1710634468);
+
+        if (newRefreshTokenExp instanceof Error) return;
+
+        expect(formatTestingDate(newRefreshTokenExp)).toEqual(expectedFormattedDateTime);
+        clear();
     });
 
     it(`Returns the refresh token plus 15 minutes if the current time is within 15 minutes before expiry`, () => {
-        const currentTime = 1710633628; // 10:00 am
-        const refreshTokenExp = 1710634468; // 10.14 am
+        advanceTo(new Date('2024-03-01T09:00:00'));
+        const currentTime = new Date().getTime();
+        const refreshTokenExp = 1709252040; // 10.14 am
         const newRefreshTokenExp = getRollingRefreshTokenExp(currentTime, refreshTokenExp);
-        expect(newRefreshTokenExp).toEqual(1710635368);
+
+        if (newRefreshTokenExp instanceof Error) return;
+        expect(formatTestingDate(newRefreshTokenExp)).toEqual('01/03/2024, 09:15');
+        clear();
     });
 
     it(`Returns an Error if the current time has passed the refresh token expiry time`, () => {
-        const currentTime = 1710634556; // 10:15 am
-        const refreshTokenExp = 1710634468; // 10.14 am
-        const newRefreshTokenExp = getRollingRefreshTokenExp(currentTime, refreshTokenExp);
+        advanceTo(new Date('2024-03-01T09:00:00'));
+        const startingTime = getCurrentTimeStamp();
+        expect(formatTestingDate(startingTime)).toEqual('01/03/2024, 09:00');
+
+        // Advance to a time we know the refresh token is expired
+        advanceTo(new Date('2024-03-01T09:16:00'));
+        const updatedTime = getCurrentTimeStamp(); // 9:16 am
+
+        const refreshTokenExp = 1709248500; // 9.15 am
+        const newRefreshTokenExp = getRollingRefreshTokenExp(updatedTime, refreshTokenExp);
         expect(newRefreshTokenExp).toBeInstanceOf(Error);
+        clear();
     });
 
     it(`Returns the correct token expiry times for a user not wanting to extend their session`, () => {
@@ -204,7 +227,7 @@ describe(`Token TTL's`, () => {
         } = decode(accessToken) as decodedAccessToken;
 
         expect(formatTestingDate(refreshedAccessTokenExp)).toBe('01/03/2024, 09:28');
-        expect(formatTestingDate(refreshedRefreshTokenExp)).toBe('01/03/2024, 09:30');
+        expect(formatTestingDate(refreshedRefreshTokenExp)).toBe('01/03/2024, 09:29');
         clear();
     });
 

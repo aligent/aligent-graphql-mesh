@@ -197,7 +197,9 @@ export const getRollingRefreshTokenExp = (currentTimeStamp: number, refreshExp: 
     );
 
     const shouldExtendRefresh = timeDifference < nonExtendedRefreshExpInSeconds;
-    return shouldExtendRefresh ? refreshExp + nonExtendedRefreshExpInSeconds : refreshExp;
+    return shouldExtendRefresh
+        ? getTokenExpiryFromMinutes(REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED)
+        : refreshExp;
 };
 
 /**
