@@ -40,7 +40,7 @@ const checkIfIpAddressInWhiteListPlugin = useExtendContext(async (context) => {
                 }).split(',');
                 console.log(ipAddressesAllowed);
 
-                if (!checkIfIpInWhiteList(ipAddressesAllowed, clientIp)) {
+                if (!allowIpInWhiteList(ipAddressesAllowed, clientIp)) {
                     // Return status: 502
                     throw new Error('IP not allowed');
                 }
@@ -55,7 +55,7 @@ const checkIfIpAddressInWhiteListPlugin = useExtendContext(async (context) => {
     console.log('end');
 });
 
-const checkIfIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
+const allowIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
     let isInWhiteList = false;
 
     for (const ip of ipAddressesAllowed) {
