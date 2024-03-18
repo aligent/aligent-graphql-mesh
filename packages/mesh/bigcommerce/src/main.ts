@@ -11,61 +11,17 @@ import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
-import { useExtendContext, type Plugin } from '@envelop/core';
-import { existsSync, readFileSync } from 'fs';
-import { Netmask } from 'netmask';
+import {  readFileSync } from 'fs';
+import { checkIfInMaintenanceMode, maintenanceModePlugin } from './maintenance-plugin';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
-const maintenanceFilePath = `/home/jack.mcloughlin/aligent/oro-aligent-graphql-mesh/maintenance.txt`;
 
 const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
 
-const checkIfInMaintenanceMode: Plugin = {
-    onParse({ extendContext }) {
-        if (existsSync(maintenanceFilePath)) {
-            console.log('exists');
-            extendContext({
-                isMaintenanceMode: true,
-            });
-        }
-    },
-};
-
-const maintenanceModePlugin = useExtendContext(async (context) => {
-    console.log('running');
-
-    if (context.isMaintenanceMode) {
-        console.log('yes');
-        const clientIp = context.headers['x-forwarded-for'];
-
-        const file = readFileSync(maintenanceFilePath, { encoding: 'utf-8' });
-        console.log(file);
-
-        const ipsAllowed = file.split(',');
-        console.log(ipsAllowed);
-
-        let allow = false;
-
-        for (const ip of ipsAllowed) {
-            const block = new Netmask(ip);
-            if (block.contains(clientIp)) {
-                allow = true;
-                break;
-            }
-        }
-    
-        if (!allow) {
-            throw new Error('IP not allowed')
-        }
-
-    }
-
-    console.log('end');
-});
 
 const yoga = createYoga({
     graphiql: DEV_MODE,
