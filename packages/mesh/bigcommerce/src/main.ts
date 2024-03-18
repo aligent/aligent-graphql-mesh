@@ -5,7 +5,6 @@ import https from 'node:https';
 import { createYoga } from 'graphql-yoga';
 import { useGraphQLModules } from '@envelop/graphql-modules';
 import application from './application';
-import { readFileSync } from 'node:fs';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
 import Keyv from 'keyv';
 import cachableObjects from './cache';
@@ -13,50 +12,59 @@ import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module'
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
 import { useExtendContext, type Plugin } from '@envelop/core';
-import { readFile } from 'fs';
-import fs from 'fs';
-import util from 'util';
-// import { Plugin } from 'graphql-yoga';
+import { existsSync, readFileSync } from 'fs';
+import { Netmask } from 'netmask';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
+const maintenanceFilePath = `/home/jack.mcloughlin/aligent/oro-aligent-graphql-mesh/maintenance.txt`;
 
 const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
 
+const checkIfInMaintenanceMode: Plugin = {
+    onParse({ extendContext }) {
+        if (existsSync(maintenanceFilePath)) {
+            console.log('exists');
+            extendContext({
+                isMaintenanceMode: true,
+            });
+        }
+    },
+};
+
 const maintenanceModePlugin = useExtendContext(async (context) => {
     console.log('running');
 
-    // check if in maintenance mode by the existence of file
-    readFile(`${__dirname}/maintenance.js`, (_error, stats) => {
-        if (stats) {
-            console.log('In maintenance mode checking IP address in whitelist');
+    if (context.isMaintenanceMode) {
+        console.log('yes');
+        const clientIp = context.headers['x-forwarded-for'];
 
-            // check if User can access with their IP
-            readFile(`${__dirname}/white-listed-ips.js`, 'utf8', (_error, data) => {
-                if (data) {
-                    // Compare IP address in file with clientIP
-                    const clientIp = context.headers['x-forwarded-for'];
+        const file = readFileSync(maintenanceFilePath, { encoding: 'utf-8' });
+        console.log(file);
 
-                    console.log(data, clientIp);
-                    console.log('IP addresses');
+        const ipsAllowed = file.split(',');
+        console.log(ipsAllowed);
 
-                    // if they are in whitelist return
-                    // if not return status: 502
-                    return;
-                } else {
-                    throw new Error('White list Ip file missing');
-                }
-            });
+        let allow = false;
 
-            return;
-        } else {
-            // No maintenance file exists allow them to continue
-            return;
+        for (const ip of ipsAllowed) {
+            const block = new Netmask(ip);
+            if (block.contains(clientIp)) {
+                allow = true;
+                break;
+            }
         }
-    });
+    
+        if (!allow) {
+            throw new Error('IP not allowed')
+        }
+
+    }
+
+    console.log('end');
 });
 
 const yoga = createYoga({
@@ -78,6 +86,7 @@ const yoga = createYoga({
         };
     },
     plugins: [
+        checkIfInMaintenanceMode,
         maintenanceModePlugin,
         useGraphQLModules(application),
         addIpAddressToAxiosHeaders,
