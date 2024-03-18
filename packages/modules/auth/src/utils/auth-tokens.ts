@@ -79,10 +79,12 @@ export const createAccessJWT = (userId: number, exp: number, refreshExp: number)
 /**
  * Creates a refresh token used to ask for a new access token
  * @param userId
- * @param ttl
+ * @param accessTokenExp - used to make the refresh token unique when refreshed
  */
-export const createRefreshToken = (userId: number, ttl: number) => {
-    return pbkdf2Sync(`${userId}${ttl}`, JWT_PRIVATE_KEY, 10000, 64, 'sha512').toString('hex');
+export const createRefreshToken = (userId: number, accessTokenExp: number) => {
+    return pbkdf2Sync(`${userId}${accessTokenExp}`, JWT_PRIVATE_KEY, 10000, 64, 'sha512').toString(
+        'hex'
+    );
 };
 
 /**
@@ -108,13 +110,13 @@ export const getVerifiedRefreshToken = (
     decodedAccessToken: decodedAccessToken,
     oldRefreshToken: string
 ) => {
-    const { bc_customer_id, refresh_exp } = decodedAccessToken;
+    const { bc_customer_id, exp, refresh_exp } = decodedAccessToken;
 
     if (!oldRefreshToken) {
         return Error("refresh token doesn't exist");
     }
 
-    const recreatedRefreshToken = createRefreshToken(bc_customer_id, refresh_exp);
+    const recreatedRefreshToken = createRefreshToken(bc_customer_id, exp);
 
     if (recreatedRefreshToken !== oldRefreshToken) {
         return Error("recreated refresh token doesn't match actual token");
@@ -179,7 +181,7 @@ export const generateLoginTokens = (
             : REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED
     );
 
-    const refreshToken = createRefreshToken(userId, refreshTokenExp);
+    const refreshToken = createRefreshToken(userId, accessTokenExp);
 
     return {
         accessToken: createAccessJWT(userId, accessTokenExp, refreshTokenExp),
@@ -236,15 +238,15 @@ export const generateRefreshedTokens = (
     const { bc_customer_id, refresh_exp } = decodedAccessToken;
 
     const currentTimeStamp = getCurrentTimeStamp();
+    const accessTokenExp = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
     const refreshTokenExp = getRollingRefreshTokenExp(currentTimeStamp, refresh_exp);
 
     if (refreshTokenExp instanceof Error) {
         throw new GraphqlError("Refresh tokens couldn't be generated", 'authorization');
     }
 
-    const newRefreshToken = createRefreshToken(bc_customer_id, refreshTokenExp);
-
-    const newAccessToken = createAccessJWT(bc_customer_id, refreshTokenExp);
+    const newAccessToken = createAccessJWT(bc_customer_id, accessTokenExp, refreshTokenExp);
+    const newRefreshToken = createRefreshToken(bc_customer_id, accessTokenExp);
 
     return {
         accessToken: newAccessToken,

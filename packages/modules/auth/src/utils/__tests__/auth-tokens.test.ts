@@ -109,7 +109,7 @@ describe('JWT statues', () => {
         const refreshTokenExp = getTokenExpiryFromMinutes(5);
 
         const invalidAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const validRefreshToken = createRefreshToken(userId, refreshTokenExp);
+        const validRefreshToken = createRefreshToken(userId, accessTokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
         expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID]);

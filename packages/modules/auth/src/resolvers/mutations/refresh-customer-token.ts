@@ -1,7 +1,4 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-// import { retrieveCustomerImpersonationTokenFromCache } from '@aligent/bigcommerce-graphql-module/src/apis/rest';
-
-import { retrieveCustomerImpersonationTokenFromCache } from '../../../../bigcommerce/src/apis/rest';
 import { generateRefreshedTokens, getAuthTokenStatus } from '../../utils';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
@@ -14,10 +11,8 @@ import { GraphqlError } from '@aligent/utils';
 
 export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
-        const customerImpersonationToken =
-            await retrieveCustomerImpersonationTokenFromCache(context);
-
-        const { access_token, refresh_token } = args;
+        const { refresh_token } = args;
+        const authToken = context.headers.authorization;
 
         /**
          * 1. Check that the refresh token from args matches the refresh token stored in the dyno database
@@ -30,7 +25,7 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
          * 5. Generate a new access token
          */
 
-        const authTokenStatus = await getAuthTokenStatus(access_token, refresh_token);
+        const authTokenStatus = getAuthTokenStatus(authToken, refresh_token);
 
         if (
             [
@@ -44,12 +39,16 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
             throw new GraphqlError('Authorization token is no longer valid', 'authorization');
         }
 
-        if (
-            [
-                JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID],
-                JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID],
-            ].includes(authTokenStatus)
-        ) {
+        /* Prevents new tokens being generated if both refresh and access tokens are still valid */
+        if (authTokenStatus === JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID]) {
+            const [, accessToken] = context.headers.authorization.split(' ');
+            return {
+                token: accessToken,
+                refresh_token: args.refresh_token,
+            };
+        }
+
+        if (authTokenStatus === JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID]) {
             /**
              * @todo make query to the dynodb database to check if the "refresh_token" in the "authToken"
              * matches one we have stored in the database.
@@ -61,10 +60,10 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
              * @todo 1. Generate new access and refresh token
              * @todo 2. update dynodb database to remove the old "refresh_token" and add the new one
              */
-            const { accessToken, refreshToken } = generateRefreshedTokens(access_token);
+            const { accessToken, refreshToken } = generateRefreshedTokens(authToken);
 
             return {
-                access_token: accessToken,
+                token: accessToken,
                 refresh_token: refreshToken,
             };
         }
