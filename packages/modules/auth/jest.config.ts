@@ -9,6 +9,7 @@ export default {
             { tsconfig: '<rootDir>/tsconfig.spec.json', isolatedModules: true },
         ],
     },
+    setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/packages/modules/auth',
 };
