@@ -9,40 +9,18 @@ import {
     JWT_AUTH_STATUSES,
 } from '../constants';
 import { GraphqlError } from '@aligent/utils';
+import { getCurrentTimeStamp, getTtlIsExpired, getMinutesToSeconds } from './';
 
-type decodedAccessToken = {
+export type decodedAccessToken = {
     bc_customer_id: number;
     exp: number;
     refresh_exp: number;
 };
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
-const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 43200; // 30 days
-const REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED = 16;
-const ACCESS_TOKEN_EXPIRY_IN_MINUTES = 15;
-
-/**
- * Gets the current time timestamp
- */
-const getCurrentTimeStamp = () => {
-    return Math.floor(new Date().getTime() / 1000);
-};
-
-/**
- * Converts minutes to milliseconds
- * @param minutes
- */
-const minutesToMilliseconds = (minutes: number) => {
-    return minutes * 60;
-};
-
-/**
- * Determines if a token ttl has elapsed the current time
- * @param tokenTtl
- */
-const getTtlIsExpired = (tokenTtl: number) => {
-    return tokenTtl < new Date().getTime() / 1000;
-};
+export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 43200; // 30 days
+export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED = 15;
+export const ACCESS_TOKEN_EXPIRY_IN_MINUTES = 14;
 
 /**
  * Gets a tokens expiry based on the current time and adding the
@@ -171,7 +149,7 @@ export const getAuthTokenStatus = (
  */
 export const generateLoginTokens = (
     userId: number,
-    isExtendedLogin: boolean
+    isExtendedLogin?: boolean
 ): { accessToken: string; refreshToken: string } => {
     const accessTokenExp = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
 
@@ -214,7 +192,7 @@ export const getRollingRefreshTokenExp = (currentTimeStamp: number, refreshExp: 
         return Error('Refresh token has expired');
     }
 
-    const nonExtendedRefreshExpInSeconds = minutesToMilliseconds(
+    const nonExtendedRefreshExpInSeconds = getMinutesToSeconds(
         REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED
     );
 

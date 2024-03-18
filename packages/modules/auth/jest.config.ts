@@ -9,7 +9,7 @@ export default {
             { tsconfig: '<rootDir>/tsconfig.spec.json', isolatedModules: true },
         ],
     },
-    setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
+    setupFiles: ['<rootDir>/.jest/setEnvVars.js', 'jest-date-mock'],
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/packages/modules/auth',
 };
