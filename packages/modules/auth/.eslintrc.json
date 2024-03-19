@@ -22,7 +22,12 @@
                     "error",
                     {
                         "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"],
-                        "ignoredDependencies": [],
+                        "ignoredDependencies": [
+                            "@aligent/auth-resolvers",
+                            "@aligent/utils",
+                            "@aligent/bigcommerce-operations",
+                            "@aligent/bigcommerce-resolvers"
+                        ],
                         "includeTransitiveDependencies": true // collect dependencies transitively from children
                     }
                 ]
