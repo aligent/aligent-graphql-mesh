@@ -1,4 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
+import { getBcCustomerId } from '@aligent/bigcommerce-graphql-module';
+import { GraphqlError } from '@aligent/utils';
+
 import { generateRefreshedTokens, getAuthTokenStatus } from '../../utils';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
@@ -7,9 +10,7 @@ import {
     ACCESS_VALID_REFRESH_VALID,
     JWT_AUTH_STATUSES,
 } from '../../constants';
-import { GraphqlError } from '@aligent/utils';
-import { AuthService } from '@aligent/auth-module';
-import { getBcCustomerId } from '@aligent/bigcommerce-graphql-module';
+import { AuthService } from '../../services';
 
 export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {

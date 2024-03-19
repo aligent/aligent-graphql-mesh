@@ -4,9 +4,9 @@ import {
     GetItemCommand,
     PutItemCommand,
 } from '@aws-sdk/client-dynamodb';
-import { ModuleConfigToken } from '../providers';
 import { Inject, Injectable, forwardRef, CONTEXT } from 'graphql-modules';
-import { ModuleConfig } from '@aligent/auth-module';
+import { ModuleConfig } from '../../';
+import { ModuleConfigToken } from '../providers';
 
 @Injectable({
     global: true,

@@ -1,12 +1,11 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-
 import {
     bcLogin,
     retrieveCustomerImpersonationTokenFromCache,
 } from '@aligent/bigcommerce-graphql-module';
-import { generateLoginTokens } from '../../utils';
-import { AuthService } from '@aligent/auth-module';
 import { GraphqlError } from '@aligent/utils';
+import { generateLoginTokens } from '../../utils';
+import { AuthService } from '../../services';
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
