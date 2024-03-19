@@ -3,14 +3,15 @@ import { advanceTo, clear } from 'jest-date-mock';
 import {
     createAccessJWT,
     createRefreshToken,
-    decodedAccessToken,
+    formatTestingDate,
+    getCurrentTimeStamp,
     generateLoginTokens,
     generateRefreshedTokens,
     getAuthTokenStatus,
     getRollingRefreshTokenExp,
     getTokenExpiryFromMinutes,
     getVerifiedAccessToken,
-} from '../auth-tokens';
+} from '../';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
     ACCESS_INVALID_REFRESH_VALID,
@@ -18,7 +19,7 @@ import {
     ACCESS_VALID_REFRESH_VALID,
     JWT_AUTH_STATUSES,
 } from '../../constants';
-import { formatTestingDate, getCurrentTimeStamp } from '../';
+import { decodedAccessToken } from '../../types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const userId = 23;
