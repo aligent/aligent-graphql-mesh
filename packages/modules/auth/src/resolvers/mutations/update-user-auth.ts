@@ -1,5 +1,4 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
 import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
 
@@ -11,21 +10,15 @@ export const updateUserAuthResolver: MutationResolvers['updateUserAuth'] = {
             throw new GraphqlError('Unauthorised access', 'authorization');
         }
 
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
+        const { refresh_token, user_id } = args;
 
-        const { refresh_token } = args;
-
-        if (!refresh_token) {
-            throw new Error('no refresh_token');
+        if (!refresh_token || !user_id) {
+            throw new Error('no refresh_token or user id provided');
         }
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const response = await authService.updateUserAuth(
-            String(bcCustomerId),
-            refresh_token,
-            100000
-        );
+        const response = await authService.updateUserAuth(user_id, refresh_token, 100000);
 
         if (response instanceof Error) {
             throw new GraphqlError(

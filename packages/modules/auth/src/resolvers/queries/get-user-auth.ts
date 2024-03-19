@@ -11,17 +11,15 @@ export const getUserAuthResolver: QueryResolvers['getUserAuth'] = {
             throw new GraphqlError('Unauthorised access', 'authorization');
         }
 
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
+        const { refresh_token, user_id } = args;
 
-        const { refresh_token } = args;
-
-        if (!refresh_token) {
-            throw new Error('no refresh_token');
+        if (!refresh_token || !user_id) {
+            throw new Error('no refresh_token or user id provided');
         }
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const response = await authService.getUserAuth(String(bcCustomerId), refresh_token);
+        const response = await authService.getUserAuth(user_id, refresh_token);
 
         if (response instanceof Error) {
             throw new GraphqlError(

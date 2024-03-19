@@ -1,5 +1,4 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
 import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
 
@@ -11,17 +10,15 @@ export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
             throw new GraphqlError('Unauthorised access', 'authorization');
         }
 
-        const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
+        const { refresh_token, user_id } = args;
 
-        const { refresh_token } = args;
-
-        if (!refresh_token) {
-            throw new Error('no refresh_token');
+        if (!refresh_token || !user_id) {
+            throw new Error('no refresh_token or user id provided');
         }
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const response = await authService.removeUserAuth(String(bcCustomerId), refresh_token);
+        const response = await authService.removeUserAuth(user_id, refresh_token);
 
         if (response instanceof Error) {
             throw new GraphqlError(
@@ -30,7 +27,12 @@ export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
             );
         }
 
+        const { customer_id, refresh_token_hash, ttl } = response?.Attributes || {};
+
         return {
+            customer_id: customer_id?.S,
+            refresh_token_hash: refresh_token_hash?.S,
+            ttl: ttl?.S,
             success: response?.$metadata?.httpStatusCode === 200,
         };
     },
