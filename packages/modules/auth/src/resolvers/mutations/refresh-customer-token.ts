@@ -8,36 +8,16 @@ import {
     JWT_AUTH_STATUSES,
 } from '../../constants';
 import { GraphqlError } from '@aligent/utils';
+import { AuthService } from '@aligent/auth-module';
+import { getBcCustomerId } from '@aligent/bigcommerce-graphql-module';
 
 export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
         const { refresh_token } = args;
         const authToken = context.headers.authorization;
-
-        /**
-         * 1. Check that the refresh token from args matches the refresh token stored in the dyno database
-         *    - If there's no matching token throw an authorization error to tell the PWA to kill its
-         *      user session.
-         * 2. Check the expiry time of the
-         * 2. If there's a match generate a new auth token.
-         * 3. remove the old refresh token from the dyno db
-         * 4. add the new refresh token to the dyno db.
-         * 5. Generate a new access token
-         */
+        const bcCustomerId = getBcCustomerId(context);
 
         const authTokenStatus = getAuthTokenStatus(authToken, refresh_token);
-
-        if (
-            [
-                JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID],
-                JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID],
-            ].includes(authTokenStatus)
-        ) {
-            /**
-             * @todo Remove the matching "refresh_token" in the authToken from the dynodb database
-             */
-            throw new GraphqlError('Authorization token is no longer valid', 'authorization');
-        }
 
         /* Prevents new tokens being generated if both refresh and access tokens are still valid */
         if (authTokenStatus === JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID]) {
@@ -48,26 +28,75 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
             };
         }
 
+        const authService: AuthService = context.injector.get(AuthService);
+
+        const usersAuthDataInDb = await authService.getUserAuth(
+            String(bcCustomerId),
+            refresh_token
+        );
+
+        /* Remove the users refresh token from the DB as from this point onwards
+         * we will either be ending the users session or generating new tokens */
+        const removeUserAuthResponse = await authService.removeUserAuth(
+            String(bcCustomerId),
+            refresh_token
+        );
+
+        if (usersAuthDataInDb instanceof Error) {
+            throw new GraphqlError(
+                'There was an issue getting the users current refresh token',
+                'authorization'
+            );
+        }
+
+        const usersDbRefreshToken = usersAuthDataInDb?.Item?.refresh_token_hash?.S;
+
+        if (
+            removeUserAuthResponse instanceof Error ||
+            removeUserAuthResponse?.$metadata?.httpStatusCode !== 200
+        ) {
+            console.error('There was an issue removing the users refresh token from the database');
+        }
+
+        /**
+         * Potentially something malicious has happened to hit this condition.
+         * Any token passed to this mutation should have a corresponding db refresh
+         * token.
+         */
+        if (usersDbRefreshToken !== refresh_token) {
+            throw new GraphqlError(`A matching refresh token couldn't be found`, 'authorization');
+        }
+
+        if (
+            [
+                JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID],
+                JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID],
+            ].includes(authTokenStatus)
+        ) {
+            throw new GraphqlError('Refresh token is no longer valid', 'authorization');
+        }
+
         if (authTokenStatus === JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID]) {
-            /**
-             * @todo make query to the dynodb database to check if the "refresh_token" in the "authToken"
-             * matches one we have stored in the database.
-             *
-             * If there's a match then proceed to the next part
-             * If there's no match then clear all stored for a user in the dynodb database and
-             * "throw new GraphqlError('...', 'authorization');"
-             *
-             * @todo 1. Generate new access and refresh token
-             * @todo 2. update dynodb database to remove the old "refresh_token" and add the new one
-             */
-            const { accessToken, refreshToken } = generateRefreshedTokens(authToken);
+            const {
+                accessToken,
+                refreshToken: newRefreshToken,
+                refreshTokenExp: newRefreshTokenExp,
+            } = generateRefreshedTokens(authToken);
+
+            /* Update the newly generated refresh token in the database*/
+            await authService.updateUserAuth(
+                String(bcCustomerId),
+                newRefreshToken,
+                newRefreshTokenExp
+            );
 
             return {
                 token: accessToken,
-                refresh_token: refreshToken,
+                refresh_token: newRefreshToken,
             };
         }
 
+        /* Fall back to ending the user session should none of the conditions be met. */
         throw new GraphqlError('Authorization token is no longer valid', 'authorization');
     },
 };

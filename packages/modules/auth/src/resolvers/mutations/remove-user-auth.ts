@@ -1,6 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
 import { AuthService } from '../../services';
+import { GraphqlError } from '@aligent/utils';
 
 export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
     resolve: async (_root, args, context, _info) => {
@@ -17,10 +18,15 @@ export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
 
         const response = await authService.removeUserAuth(String(bcCustomerId), refresh_token);
 
-        console.dir(response);
+        if (response instanceof Error) {
+            throw new GraphqlError(
+                'There was an issue deleting the users refresh token',
+                'authorization'
+            );
+        }
 
         return {
-            token: '',
+            success: response?.$metadata?.httpStatusCode === 200,
         };
     },
 };

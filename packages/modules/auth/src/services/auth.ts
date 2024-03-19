@@ -1,4 +1,9 @@
-import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
+import {
+    DeleteItemCommand,
+    DynamoDBClient,
+    GetItemCommand,
+    PutItemCommand,
+} from '@aws-sdk/client-dynamodb';
 import { ModuleConfigToken } from '../providers';
 import { Inject, Injectable, forwardRef, CONTEXT } from 'graphql-modules';
 import { ModuleConfig } from '@aligent/auth-module';
@@ -23,9 +28,27 @@ export class AuthService {
         });
     }
 
-    async getUserAuth(userId: string | number, refreshToken: string) {
+    async getUserAuth(
+        userId: string | number,
+        refreshToken: string
+    ): Promise<
+        | {
+              Item: {
+                  customer_id: {
+                      S: string;
+                  };
+                  refresh_token_hash: {
+                      S: string;
+                  };
+                  ttl: {
+                      S: string;
+                  };
+              };
+          }
+        | Error
+    > {
         const command = new GetItemCommand({
-            TableName: 'authentication-table',
+            TableName: this.config.dynamoDbTableName,
             Key: {
                 customer_id: {
                     S: String(userId),
@@ -35,41 +58,84 @@ export class AuthService {
                 },
             },
         });
-        const response = await this.client.send(command);
+        const response = await this.client
+            .send(command)
+            .then((res) => {
+                console.dir(res);
+                return res;
+            })
+            .catch((e) => e);
+
+        if (response instanceof Error) {
+            console.error(response);
+        }
 
         return response;
     }
 
-    async updateUserAuth(userId: string | number, refreshToken: string) {
-        const command = new GetItemCommand({
-            TableName: 'authentication-table',
+    async updateUserAuth(
+        userId: string | number,
+        refreshToken: string,
+        refreshTokenTTl: number | string
+    ): Promise<
+        | {
+              $metadata: {
+                  httpStatusCode: number;
+              };
+          }
+        | Error
+    > {
+        const command = new PutItemCommand({
+            TableName: this.config.dynamoDbTableName,
+            Item: {
+                customer_id: {
+                    S: String(userId),
+                },
+                refresh_token_hash: {
+                    S: refreshToken,
+                },
+                ttl: {
+                    S: String(refreshTokenTTl),
+                },
+            },
+        });
+
+        const response = await this.client.send(command).catch((e) => e);
+
+        if (response instanceof Error) {
+            console.error(response);
+        }
+
+        return response;
+    }
+
+    async removeUserAuth(
+        userId: string | number,
+        refreshToken: string
+    ): Promise<
+        | {
+              $metadata: {
+                  httpStatusCode: number;
+              };
+          }
+        | Error
+    > {
+        const command = new DeleteItemCommand({
+            TableName: this.config.dynamoDbTableName,
             Key: {
                 customer_id: {
                     S: String(userId),
                 },
                 refresh_token_hash: {
-                    S: 'dfgreagearg',
+                    S: refreshToken,
                 },
             },
         });
-        const response = await this.client.send(command);
+        const response = await this.client.send(command).catch((e) => e);
 
-        return response;
-    }
-
-    async removeUserAuth(userId: string | number, refreshToken: string) {
-        const command = new GetItemCommand({
-            TableName: 'authentication-table',
-            Key: {
-                customer_id: {
-                    S: String(userId),
-                },
-                refresh_token_hash: {
-                    S: 'dfgreagearg',
-                },
-            },
-        });
-        const response = await this.client.send(command);
+        if (response instanceof Error) {
+            console.error(response);
+        }
 
         return response;
     }

@@ -5,6 +5,8 @@ import {
     retrieveCustomerImpersonationTokenFromCache,
 } from '@aligent/bigcommerce-graphql-module';
 import { generateLoginTokens } from '../../utils';
+import { AuthService } from '@aligent/auth-module';
+import { GraphqlError } from '@aligent/utils';
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
@@ -15,7 +17,21 @@ export const generateCustomerTokenResolver: MutationResolvers['generateCustomerT
 
         const isExtendedLogin = !!args?.remember_me;
 
-        const { accessToken, refreshToken } = generateLoginTokens(entityId, isExtendedLogin);
+        const { accessToken, refreshToken, refreshTokenExp } = generateLoginTokens(
+            entityId,
+            isExtendedLogin
+        );
+
+        const authService: AuthService = context.injector.get(AuthService);
+        const updateResponse = await authService.updateUserAuth(
+            String(entityId),
+            refreshToken,
+            refreshTokenExp
+        );
+
+        if (updateResponse instanceof Error || updateResponse?.$metadata?.httpStatusCode !== 200) {
+            throw new GraphqlError('There was an issue updating the refresh token');
+        }
 
         return {
             token: accessToken,

@@ -34,12 +34,28 @@ type Mutation {
         """
         refresh_token: String!
     ): CustomerToken
-    removeUserAuth(refresh_token: String): GetAuthUser
-    updateUserAuth(refresh_token: String): GetAuthUser
+    removeUserAuth(refresh_token: String): RemoveUserAuth
+    updateUserAuth(refresh_token: String): UpdateUserAuth
 }
 
 type GetAuthUser {
-    token: String
+    customer_id: String
+    refresh_token_hash: String
+    ttl: String
+}
+
+type RemoveUserAuth {
+    """
+    status of removing a user refresh token
+    """
+    success: Boolean
+}
+
+type UpdateUserAuth {
+    """
+    status of updating a user refresh token
+    """
+    success: Boolean
 }
 
 """

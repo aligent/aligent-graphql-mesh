@@ -150,7 +150,7 @@ export const getAuthTokenStatus = (
 export const generateLoginTokens = (
     userId: number,
     isExtendedLogin?: boolean
-): { accessToken: string; refreshToken: string } => {
+): { accessToken: string; refreshToken: string; refreshTokenExp: number } => {
     const accessTokenExp = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
 
     const refreshTokenExp = getTokenExpiryFromMinutes(
@@ -163,7 +163,8 @@ export const generateLoginTokens = (
 
     return {
         accessToken: createAccessJWT(userId, accessTokenExp, refreshTokenExp),
-        refreshToken: refreshToken,
+        refreshToken,
+        refreshTokenExp,
     };
 };
 
@@ -210,7 +211,7 @@ export const getRollingRefreshTokenExp = (currentTimeStamp: number, refreshExp: 
  */
 export const generateRefreshedTokens = (
     oldAccessToken: string
-): { accessToken: string; refreshToken: string } => {
+): { accessToken: string; refreshToken: string; refreshTokenExp: number } => {
     const [, accessToken] = oldAccessToken.split(' ');
 
     const decodedAccessToken = decode(accessToken) as decodedAccessToken;
@@ -231,5 +232,6 @@ export const generateRefreshedTokens = (
     return {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
+        refreshTokenExp: refreshTokenExp,
     };
 };
