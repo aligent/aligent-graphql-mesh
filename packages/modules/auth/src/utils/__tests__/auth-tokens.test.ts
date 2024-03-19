@@ -1,7 +1,6 @@
 import { decode, JsonWebTokenError, sign, TokenExpiredError } from 'jsonwebtoken';
-import { advanceBy, advanceTo, clear } from 'jest-date-mock';
+import { advanceTo, clear } from 'jest-date-mock';
 import {
-    ACCESS_TOKEN_EXPIRY_IN_MINUTES,
     createAccessJWT,
     createRefreshToken,
     decodedAccessToken,
@@ -11,8 +10,6 @@ import {
     getRollingRefreshTokenExp,
     getTokenExpiryFromMinutes,
     getVerifiedAccessToken,
-    REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED,
-    REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED,
 } from '../auth-tokens';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
@@ -21,7 +18,7 @@ import {
     ACCESS_VALID_REFRESH_VALID,
     JWT_AUTH_STATUSES,
 } from '../../constants';
-import { formatTestingDate, getCurrentTimeStamp, getMinutesToSeconds } from '../';
+import { formatTestingDate, getCurrentTimeStamp } from '../';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const userId = 23;
@@ -184,7 +181,7 @@ describe(`Token TTL's`, () => {
         advanceTo(new Date('2024-03-01T09:00:00'));
 
         const isExtendedLogin = false;
-        const { accessToken, refreshToken } = generateLoginTokens(userId, isExtendedLogin);
+        const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
         const { exp, refresh_exp } = decode(accessToken) as decodedAccessToken;
 
         expect(formatTestingDate(exp)).toBe('01/03/2024, 09:14');
@@ -195,7 +192,7 @@ describe(`Token TTL's`, () => {
         advanceTo(new Date('2024-03-01T09:00:00'));
 
         const isExtendedLogin = true;
-        const { accessToken, refreshToken } = generateLoginTokens(userId, isExtendedLogin);
+        const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
         const { exp, refresh_exp } = decode(accessToken) as decodedAccessToken;
 
         expect(formatTestingDate(exp)).toBe('01/03/2024, 09:14');

@@ -1,6 +1,6 @@
 import { QueryResolvers } from '@aligent/auth-resolvers';
 import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
-import { AuthService } from '@aligent/auth-module';
+import { AuthService } from '../../services';
 
 export const getUserAuthResolver: QueryResolvers['getUserAuth'] = {
     resolve: async (_root, args, context, _info) => {

@@ -1,6 +1,6 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
-import { AuthService } from '@aligent/auth-module';
+import { AuthService } from '../../services';
 
 export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
     resolve: async (_root, args, context, _info) => {

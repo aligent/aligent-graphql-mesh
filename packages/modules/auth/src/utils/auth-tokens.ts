@@ -69,7 +69,7 @@ export const createRefreshToken = (userId: number, accessTokenExp: number) => {
  * Returns a verified token or throws an error
  * @param accessToken
  */
-export const getVerifiedAccessToken = (accessToken: string = '') => {
+export const getVerifiedAccessToken = (accessToken: string) => {
     /* If the access token is expired then an error will be thrown, and we will
      * end up in the catch "statement" */
     try {
