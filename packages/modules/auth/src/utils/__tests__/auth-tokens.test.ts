@@ -133,8 +133,12 @@ describe('JWT statues', () => {
 });
 
 describe(`Token TTL's`, () => {
+    afterEach(() => {
+        clear();
+    });
+
     it(`Returns the current refresh tokens expiry time if the current time is over 15 minutes before it`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
         const currentTime = getCurrentTimeStamp();
 
         const refreshTokenExp = 1709248560; // 9.16 am
@@ -148,37 +152,34 @@ describe(`Token TTL's`, () => {
         if (newRefreshTokenExp instanceof Error) return;
 
         expect(formatTestingDate(newRefreshTokenExp)).toEqual(expectedFormattedDateTime);
-        clear();
     });
 
     it(`Returns the refresh token plus 15 minutes if the current time is within 15 minutes before expiry`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
         const currentTime = new Date().getTime();
         const refreshTokenExp = 1709252040; // 10.14 am
         const newRefreshTokenExp = getRollingRefreshTokenExp(currentTime, refreshTokenExp);
 
         if (newRefreshTokenExp instanceof Error) return;
         expect(formatTestingDate(newRefreshTokenExp)).toEqual('01/03/2024, 09:15');
-        clear();
     });
 
     it(`Returns an Error if the current time has passed the refresh token expiry time`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
         const startingTime = getCurrentTimeStamp();
         expect(formatTestingDate(startingTime)).toEqual('01/03/2024, 09:00');
 
         // Advance to a time we know the refresh token is expired
-        advanceTo(new Date('2024-03-01T09:16:00'));
+        advanceTo(new Date('Mar 01 2024 09:16:00 GMT+1000'));
         const updatedTime = getCurrentTimeStamp(); // 9:16 am
 
         const refreshTokenExp = 1709248500; // 9.15 am
         const newRefreshTokenExp = getRollingRefreshTokenExp(updatedTime, refreshTokenExp);
         expect(newRefreshTokenExp).toBeInstanceOf(Error);
-        clear();
     });
 
     it(`Returns the correct token expiry times for a user not wanting to extend their session`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
 
         const isExtendedLogin = false;
         const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
@@ -189,7 +190,7 @@ describe(`Token TTL's`, () => {
     });
 
     it(`Returns the correct token expiry times for a user wanting to extend their session`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
 
         const isExtendedLogin = true;
         const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
@@ -197,7 +198,6 @@ describe(`Token TTL's`, () => {
 
         expect(formatTestingDate(exp)).toBe('01/03/2024, 09:14');
         expect(formatTestingDate(refresh_exp)).toBe('31/03/2024, 09:00');
-        clear();
     });
 
     /**
@@ -206,14 +206,14 @@ describe(`Token TTL's`, () => {
      * access token it will have an expiry of another additional 15 minutes.
      */
     it(`Returns the correct token expiry times when tokens are regenerated`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
         } = generateLoginTokens(userId, false);
 
         // Advance the current time by 15 minutes
-        advanceTo(new Date('2024-03-01T09:14:00'));
+        advanceTo(new Date('Mar 01 2024 09:14:00 GMT+1000'));
 
         const { accessToken } = generateRefreshedTokens(`Bearer ${loginAccessToken}`);
         const {
@@ -225,14 +225,13 @@ describe(`Token TTL's`, () => {
 
         expect(formatTestingDate(refreshedAccessTokenExp)).toBe('01/03/2024, 09:28');
         expect(formatTestingDate(refreshedRefreshTokenExp)).toBe('01/03/2024, 09:29');
-        clear();
     });
 
     /**
      * This tests that the refresh token exp is applied to the next regenerated refresh token
      */
     it(`Returns the correct token expiry times when tokens are regenerated with an extended session`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
@@ -244,7 +243,7 @@ describe(`Token TTL's`, () => {
         expect(formatTestingDate(loginRefreshTokenExp)).toBe('31/03/2024, 09:00');
 
         // Advance the current time by 15 minutes
-        advanceTo(new Date('2024-03-01T09:14:00'));
+        advanceTo(new Date('Mar 01 2024 09:14:00 GMT+1000'));
 
         const { accessToken } = generateRefreshedTokens(`Bearer ${loginAccessToken}`);
 
@@ -257,21 +256,20 @@ describe(`Token TTL's`, () => {
 
         expect(formatTestingDate(refreshedAccessTokenExp)).toBe('01/03/2024, 09:28');
         expect(formatTestingDate(refreshedRefreshTokenExp)).toBe('31/03/2024, 09:00');
-        clear();
     });
 
     /**
      * This tests that the refresh token exp is applied to the next regenerated refresh token
      */
     it(`Check the session extends 15 minutes if the session is active when the extended session time expires`, () => {
-        advanceTo(new Date('2024-03-01T09:00:00'));
+        advanceTo(new Date('Mar 01 2024 09:00:00 GMT+1000'));
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
         } = generateLoginTokens(userId, true);
 
         /* Advance the time by 30 day when the extended session will expire */
-        advanceTo(new Date('2024-03-31T09:00:00'));
+        advanceTo(new Date('Mar 31 2024 09:00:00 GMT+1000'));
         const { accessToken: refreshedAccessToken } = generateRefreshedTokens(
             `Bearer ${loginAccessToken}`
         );
@@ -285,7 +283,5 @@ describe(`Token TTL's`, () => {
 
         expect(formatTestingDate(refreshedAccessTokenExp)).toBe('31/03/2024, 09:14');
         expect(formatTestingDate(refreshedRefreshTokenExp)).toBe('31/03/2024, 09:15');
-
-        clear();
     });
 });
