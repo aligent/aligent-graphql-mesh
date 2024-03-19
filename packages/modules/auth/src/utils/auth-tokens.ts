@@ -10,7 +10,7 @@ import {
 } from '../constants';
 import { GraphqlError } from '@aligent/utils';
 import { getCurrentTimeStamp, getTtlIsExpired, getMinutesToSeconds } from './';
-import { decodedAccessToken } from '@aligent/auth-module';
+import { decodedAccessToken } from '../types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 43200; // 30 days

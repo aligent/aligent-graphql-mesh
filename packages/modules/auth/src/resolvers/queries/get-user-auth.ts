@@ -1,5 +1,4 @@
 import { QueryResolvers } from '@aligent/auth-resolvers';
-import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
 import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
 
