@@ -35,6 +35,7 @@ type Mutation {
         refresh_token: String!
     ): CustomerToken
     removeUserAuth(refresh_token: String): RemoveUserAuth
+    revokeCustomerToken(refresh_token: String): RevokeCustomerTokenOutput
     updateUserAuth(refresh_token: String): UpdateUserAuth
 }
 
@@ -70,4 +71,14 @@ type CustomerToken {
     The customers refresh token used to generate a new access token
     """
     refresh_token: String
+}
+
+"""
+Contains the result of a request to revoke a customer token.
+"""
+type RevokeCustomerTokenOutput {
+    """
+    The result of a request to revoke a customer token.
+    """
+    result: Boolean!
 }

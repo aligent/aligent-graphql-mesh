@@ -107,6 +107,13 @@ export const getVerifiedRefreshToken = (
     return oldRefreshToken;
 };
 
+export const getDecodedAuthToken = (authToken: string): decodedAccessToken | null => {
+    if (!authToken || !authToken?.toLowerCase().startsWith('bearer ')) return null;
+    const [, accessToken] = authToken.split(' ');
+
+    return (decode(accessToken) as decodedAccessToken) || JsonWebTokenError;
+};
+
 /**
  * Returns various status based on the access token and refresh token validity
  * @param oldAuthToken
