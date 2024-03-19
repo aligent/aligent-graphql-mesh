@@ -1,5 +1,10 @@
 schema {
     mutation: Mutation
+    query: Query
+}
+
+type Query {
+    getUserAuth(refresh_token: String): GetAuthUser
 }
 
 type Mutation {
@@ -29,6 +34,12 @@ type Mutation {
         """
         refresh_token: String!
     ): CustomerToken
+    removeUserAuth(refresh_token: String): GetAuthUser
+    updateUserAuth(refresh_token: String): GetAuthUser
+}
+
+type GetAuthUser {
+    token: String
 }
 
 """
