@@ -3,8 +3,14 @@ import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-modul
 import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
 
+const NODE_ENV = process.env?.NODE_ENV;
+
 export const updateUserAuthResolver: MutationResolvers['updateUserAuth'] = {
     resolve: async (_root, args, context, _info) => {
+        if (NODE_ENV !== 'development') {
+            throw new GraphqlError('Unauthorised access', 'authorization');
+        }
+
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         const { refresh_token } = args;
