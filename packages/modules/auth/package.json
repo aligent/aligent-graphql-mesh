@@ -2,11 +2,7 @@
   "name": "@aligent/auth-module",
   "version": "0.0.1",
   "dependencies": {
-    "@aligent/auth-resolvers": "0.0.1",
-    "@aligent/bigcommerce-graphql-module": "0.0.9",
-    "@aligent/utils": "0.0.1",
-    "@aligent/bigcommerce-operations": "0.0.1",
-    "@aligent/bigcommerce-resolvers": "0.0.1",
+    "@aligent/bigcommerce-graphql-module": "0.0.27",
     "aws-xray-sdk": "^3.5.4",
     "graphql-tag": "^2.12.0",
     "@envelop/core": "^4.0.0",
