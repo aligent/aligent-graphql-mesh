@@ -5,13 +5,13 @@ import https from 'node:https';
 import { createYoga } from 'graphql-yoga';
 import { useGraphQLModules } from '@envelop/graphql-modules';
 import application from './application';
+import { readFileSync } from 'node:fs';
 import { EnvelopArmorPlugin } from '@escape.tech/graphql-armor';
 import Keyv from 'keyv';
 import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
-import { readFileSync } from 'fs';
 import { maintenanceModePlugin } from './maintenance-mode-plugin';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
