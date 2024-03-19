@@ -1,6 +1,7 @@
 import { useExtendContext, Plugin } from '@envelop/core';
 import { existsSync, readFileSync, open, close } from 'fs';
 import { Netmask } from 'netmask';
+import { GraphqlError } from '@aligent/utils';
 
 const maintenanceFilePath = `/home/jack.mcloughlin/aligent/oro-aligent-graphql-mesh/maintenance.txt`;
 
@@ -18,51 +19,48 @@ const checkIfInMaintenanceModePlugin: Plugin = {
 };
 
 const checkIfIpAddressInWhiteListPlugin = useExtendContext(async (context) => {
-    if (context.isMaintenanceMode) {
-        open(maintenanceFilePath, 'r', (error, fd) => {
-            if (error) {
-                if (error.code === 'ENOENT') {
-                    throw new Error(
-                        `maintenance.txt was found during onParse phase but not during useExtendedContext phase, error ${error}`
-                    );
-                }
-            }
-
-            try {
-                const clientIp = context.headers['x-forwarded-for'] || '192.168.1.5';
-
-                const allowedIpAddresses = readFileSync(maintenanceFilePath, {
-                    encoding: 'utf-8',
-                }).split(',');
-
-                if (!allowIpInWhiteList(allowedIpAddresses, clientIp)) {
-                    throw new Error('In Maintenance Mode');
-                }
-            } finally {
-                close(fd, (error) => {
-                    if (error) {
-                        throw new Error(
-                            `Failed to readfile or check allowed IP in whitelist, error: ${error}`
-                        );
-                    }
-                });
-            }
-        });
+    if (!context.isMaintenanceMode) {
+        return;
     }
+
+    open(maintenanceFilePath, 'r', (error, fileData) => {
+        if (error?.code === 'ENOENT') {
+            console.error(
+                `maintenance.txt was found during onParse phase but not during useExtendedContext phase, error ${error}`
+            );
+            throw new GraphqlError('In Maintenance Mode', 'maintenance-mode');
+        }
+
+        try {
+            const clientIp = context.headers['x-forwarded-for'] || '192.168.1.5';
+
+            const allowedIpAddresses = readFileSync(maintenanceFilePath, {
+                encoding: 'utf-8',
+            }).split(',');
+
+            if (!allowIpInWhiteList(allowedIpAddresses, clientIp)) {
+                throw new GraphqlError('In Maintenance Mode', 'maintenance-mode');
+            }
+        } finally {
+            close(fileData, (error) => {
+                if (error) {
+                    console.error(`Failed to read file or check IP in whitelist, error: ${error}`);
+                    throw new GraphqlError('In Maintenance Mode', 'maintenance-mode');
+                }
+            });
+        }
+    });
 });
 
 const allowIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
-    let isInWhiteList = false;
-
     for (const ip of ipAddressesAllowed) {
         const block = new Netmask(ip);
         if (block.contains(clientIp)) {
-            isInWhiteList = true;
-            break;
+            return true;
         }
     }
 
-    return isInWhiteList;
+    return false;
 };
 
 export const maintenanceModePlugin = [
