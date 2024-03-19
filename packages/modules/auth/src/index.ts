@@ -8,7 +8,9 @@ import { getProviders } from './providers';
 
 const loadGraphQlFiles = () => loadFilesSync(resolve(__dirname, './schema/*.graphql'));
 
-export interface ModuleConfig {}
+export interface ModuleConfig {
+    [key: string]: string;
+}
 
 export const createAuthModule = (config: ModuleConfig) => {
     return createGraphqlModule({
