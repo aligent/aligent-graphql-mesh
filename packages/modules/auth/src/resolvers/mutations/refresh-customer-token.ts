@@ -1,8 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-import { getBcCustomerId } from '@aligent/bigcommerce-graphql-module';
 import { GraphqlError } from '@aligent/utils';
 
-import { generateRefreshedTokens, getAuthTokenStatus } from '../../utils';
+import { generateRefreshedTokens, getAuthTokenStatus, getDecodedAuthToken } from '../../utils';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
     ACCESS_INVALID_REFRESH_VALID,
@@ -16,8 +15,8 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
     resolve: async (_root, args, context, _info) => {
         const { refresh_token } = args;
         const authToken = context.headers.authorization;
-        const bcCustomerId = getBcCustomerId(context);
 
+        /* Validates the access token and refresh token, and returns a status*/
         const authTokenStatus = getAuthTokenStatus(authToken, refresh_token);
 
         /* Prevents new tokens being generated if both refresh and access tokens are still valid */
@@ -31,15 +30,17 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
 
         const authService: AuthService = context.injector.get(AuthService);
 
+        const { bc_customer_id } = getDecodedAuthToken(authToken) || {};
+
         const usersAuthDataInDb = await authService.getUserAuth(
-            String(bcCustomerId),
+            String(bc_customer_id),
             refresh_token
         );
 
         /* Remove the users refresh token from the DB as from this point onwards
          * we will either be ending the users session or generating new tokens */
         const removeUserAuthResponse = await authService.removeUserAuth(
-            String(bcCustomerId),
+            String(bc_customer_id),
             refresh_token
         );
 
@@ -86,7 +87,7 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
 
             /* Update the newly generated refresh token in the database*/
             await authService.updateUserAuth(
-                String(bcCustomerId),
+                String(bc_customer_id),
                 newRefreshToken,
                 newRefreshTokenExp
             );

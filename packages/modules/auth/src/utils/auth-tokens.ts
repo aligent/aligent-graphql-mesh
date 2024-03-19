@@ -111,7 +111,7 @@ export const getDecodedAuthToken = (authToken: string): decodedAccessToken | nul
     if (!authToken || !authToken?.toLowerCase().startsWith('bearer ')) return null;
     const [, accessToken] = authToken.split(' ');
 
-    return (decode(accessToken) as decodedAccessToken) || JsonWebTokenError;
+    return decode(accessToken) as decodedAccessToken;
 };
 
 /**
@@ -127,8 +127,9 @@ export const getAuthTokenStatus = (
         return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
     const [, accessToken] = oldAuthToken.split(' ');
 
-    const verifiedAccessToken =
-        (getVerifiedAccessToken(accessToken) as decodedAccessToken) || JsonWebTokenError;
+    const verifiedAccessToken = getVerifiedAccessToken(accessToken) as
+        | decodedAccessToken
+        | JsonWebTokenError;
 
     const decodedAccessToken = (decode(accessToken) as decodedAccessToken) || JsonWebTokenError;
     const verifiedRefreshToken = getVerifiedRefreshToken(decodedAccessToken, oldRefreshToken);
@@ -137,12 +138,12 @@ export const getAuthTokenStatus = (
         return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
     }
 
-    if (verifiedRefreshToken instanceof Error) {
-        return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID];
-    }
-
     if (verifiedAccessToken instanceof JsonWebTokenError) {
         return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID];
+    }
+
+    if (verifiedRefreshToken instanceof Error) {
+        return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID];
     }
 
     return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID];
