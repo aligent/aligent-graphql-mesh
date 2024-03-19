@@ -1,5 +1,6 @@
 export const formatTestingDate = (timestamp: number) => {
-    const newDateTime = new Date(timestamp * 1000);
+    const gmtOffset = 10 * 60 * 60 * 1000;
+    const newDateTime = new Date(timestamp * 1000 + gmtOffset);
     return newDateTime.toLocaleString('en-AU', {
         day: '2-digit',
         month: '2-digit',
