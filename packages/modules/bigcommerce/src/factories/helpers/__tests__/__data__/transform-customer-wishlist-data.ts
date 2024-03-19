@@ -413,7 +413,7 @@ export const bcWishListItems: WishlistItemConnection = {
                                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/401/wh01-green_main__96543.1690452070.jpg',
                                     altText: '',
                                     isDefault: true,
-                                    urlTemplate: ''
+                                    urlTemplate: '',
                                 },
                             },
                             {
@@ -424,7 +424,7 @@ export const bcWishListItems: WishlistItemConnection = {
                                         'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/402/wh01-purple_main__43854.1690452461.jpg',
                                     altText: '',
                                     isDefault: false,
-                                    urlTemplate: ''
+                                    urlTemplate: '',
                                 },
                             },
                         ],
