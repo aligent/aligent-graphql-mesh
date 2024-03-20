@@ -3,19 +3,12 @@ import { Netmask } from 'netmask';
 import { Plugin } from 'graphql-yoga';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
-const maintenanceFilePath = `/home/jack.mcloughlin/aligent/oro-aligent-graphql-mesh/maintenance.txt`;
 
-export function maintenanceMode(): Plugin {
+export function maintenanceMode(maintenanceFilePath: string): Plugin {
     return {
         onRequest({ request, fetchAPI, endResponse }) {
-            if (!existsSync(maintenanceFilePath)) {
-                return;
-            } else {
-                const clientIp = DEV_MODE
-                    ? '27.33.208.246'
-                    : request.headers.get('x-forwarded-for') !== null
-                    ? (request.headers.get('x-forwarded-for') as string)
-                    : 'no-ip';
+            if (existsSync(maintenanceFilePath)) {
+                const clientIp = getClientIp(request.headers.get('x-forwarded-for'), DEV_MODE);
 
                 const allowedIpAddresses = readFileSync(maintenanceFilePath, {
                     encoding: 'utf-8',
@@ -33,6 +26,16 @@ export function maintenanceMode(): Plugin {
         },
     };
 }
+
+const getClientIp = (xForwardedForHeader: string | null, devMode: boolean): string => {
+    if (devMode) {
+        return '27.33.208.246';
+    } else if (xForwardedForHeader !== null) {
+        return xForwardedForHeader;
+    } else {
+        return 'no-ip';
+    }
+};
 
 const allowIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
     for (const ip of ipAddressesAllowed) {
