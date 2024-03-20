@@ -1,4 +1,4 @@
-import { decode, JsonWebTokenError, sign, verify } from 'jsonwebtoken';
+import { decode, JsonWebTokenError, sign, TokenExpiredError, verify } from 'jsonwebtoken';
 import { pbkdf2Sync } from 'crypto';
 
 import {
@@ -129,18 +129,32 @@ export const getAuthTokenStatus = (
     const decodedAccessToken = (decode(accessToken) as decodedAccessToken) || JsonWebTokenError;
     const verifiedRefreshToken = getVerifiedRefreshToken(decodedAccessToken, oldRefreshToken);
 
+    /* Both tokens are invalid*/
     if (verifiedAccessToken instanceof JsonWebTokenError && verifiedRefreshToken instanceof Error) {
         return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
     }
 
-    if (verifiedAccessToken instanceof JsonWebTokenError) {
-        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID];
+    /* The "verifiedAccessToken" is an error but isn't a TTL ralated error
+     * which can mean the JWT was manipulated */
+    if (
+        verifiedAccessToken instanceof JsonWebTokenError &&
+        !(verifiedAccessToken instanceof TokenExpiredError)
+    ) {
+        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
     }
 
+    /* For whatever reason the "verifiedRefreshToken" causes an error */
     if (verifiedRefreshToken instanceof Error) {
         return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID];
     }
 
+    /* The verifiedAccessToken TTL has expired, but we can
+     * generate a new one because the refresh token is still valid */
+    if (verifiedAccessToken instanceof TokenExpiredError) {
+        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID];
+    }
+
+    /* Both tokens are valid */
     return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID];
 };
 
