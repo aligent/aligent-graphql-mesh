@@ -1,0 +1,31 @@
+{
+    "name": "maintenance-mode-resolvers",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "packages/generated/maintenance-mode-resolvers/src",
+    "targets": {
+        "codegen": {
+            "executor": "nx:run-commands",
+            "inputs": ["codegen"],
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "packages/generated/maintenance-mode-resolvers/src",
+                "command": "env-cmd -f packages/mesh/bigcommerce/.env --silent graphql-codegen --config {projectRoot}/codegen.ts"
+            }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/generated/maintenance-mode-resolvers",
+                "tsConfig": "packages/generated/maintenance-mode-resolvers/tsconfig.lib.json",
+                "packageJson": "packages/generated/maintenance-mode-resolvers/package.json",
+                "main": "packages/generated/maintenance-mode-resolvers/src/index.ts"
+            },
+            "dependsOn": ["codegen"]
+        }
+    },
+    "namedInputs": {
+        "codegen": ["{projectRoot}/codegen.ts"]
+    }
+}

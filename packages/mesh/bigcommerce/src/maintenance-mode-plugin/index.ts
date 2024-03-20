@@ -3,6 +3,7 @@ import { Netmask } from 'netmask';
 import { Plugin } from 'graphql-yoga';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
+const ALIGENT_VPN_IP = '27.33.208.246'
 
 export function maintenanceMode(maintenanceFilePath: string): Plugin {
     return {
@@ -35,7 +36,7 @@ export function maintenanceMode(maintenanceFilePath: string): Plugin {
 
 const getClientIp = (xForwardedForHeader: string | undefined, devMode: boolean): string => {
     if (devMode) {
-        return '27.33.208.246';
+        return ALIGENT_VPN_IP;
     } else if (xForwardedForHeader) {
         return xForwardedForHeader;
     } else {
