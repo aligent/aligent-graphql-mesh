@@ -3,7 +3,7 @@ import { Netmask } from 'netmask';
 import { Plugin } from 'graphql-yoga';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
-const ALIGENT_VPN_IP = '27.33.208.246'
+const ALIGENT_VPN_IP = '27.33.208.246';
 
 export function maintenanceMode(maintenanceFilePath: string): Plugin {
     return {
