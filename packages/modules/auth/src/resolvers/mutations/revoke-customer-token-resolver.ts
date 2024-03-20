@@ -1,5 +1,4 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-import { getBcCustomerIdFromMeshToken } from '@aligent/bigcommerce-graphql-module';
 import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
 import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils';
@@ -7,7 +6,6 @@ import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils';
 export const revokeCustomerTokenResolver: MutationResolvers['revokeCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
         const authToken = context.headers.authorization;
-        const bcCustomerId = getBcCustomerIdFromMeshToken(authToken);
 
         const { refresh_token } = args;
 
@@ -20,6 +18,8 @@ export const revokeCustomerTokenResolver: MutationResolvers['revokeCustomerToken
         if (decodedAuthToken === null) {
             throw new GraphqlError('There was an issue decoding the access token', 'authorization');
         }
+
+        const { bc_customer_id } = decodedAuthToken;
 
         /* The "getVerifiedRefreshToken" recreates the old refresh token. If this can't be done
          * then the refresh token may not belong to the user. */
@@ -34,7 +34,7 @@ export const revokeCustomerTokenResolver: MutationResolvers['revokeCustomerToken
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const response = await authService.removeUserAuth(String(bcCustomerId), refresh_token);
+        const response = await authService.removeUserAuth(bc_customer_id, refresh_token);
 
         if (response instanceof Error) {
             throw new GraphqlError(
