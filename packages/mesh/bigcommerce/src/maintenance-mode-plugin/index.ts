@@ -3,6 +3,7 @@ import { existsSync, readFileSync, open, close } from 'fs';
 import { Netmask } from 'netmask';
 import { GraphqlError } from '@aligent/utils';
 
+const DEV_MODE = process.env?.NODE_ENV == 'development';
 const maintenanceFilePath = `/home/jack.mcloughlin/aligent/oro-aligent-graphql-mesh/maintenance.txt`;
 
 const checkIfInMaintenanceModePlugin: Plugin = {
@@ -24,7 +25,7 @@ const checkIfIpAddressInWhiteListPlugin = useExtendContext(async (context) => {
     }
 
     open(maintenanceFilePath, 'r', (error, fileData) => {
-        if (error?.code === 'ENOENT') {
+        if (error instanceof Error && error.code === 'ENOENT') {
             console.error(
                 `maintenance.txt was found during onParse phase but not during useExtendedContext phase, error ${error}`
             );
@@ -32,7 +33,7 @@ const checkIfIpAddressInWhiteListPlugin = useExtendContext(async (context) => {
         }
 
         try {
-            const clientIp = context.headers['x-forwarded-for'] || '192.168.1.5';
+            const clientIp = DEV_MODE ? '27.33.208.246' : context.headers['x-forwarded-for'];
 
             const allowedIpAddresses = readFileSync(maintenanceFilePath, {
                 encoding: 'utf-8',
