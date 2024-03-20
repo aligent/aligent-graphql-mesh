@@ -61,6 +61,18 @@ export const createRefreshToken = (userId: number, accessTokenExp: number) => {
 };
 
 /**
+ * Creates a hash of the refresh token
+ *
+ * Note: This hashed version of the token should not be exposed to the public
+ * and only for storing in the db and recreating hashes for comparison.
+ *
+ * @param refreshToken
+ */
+export const getHashedRefreshToken = (refreshToken: string) => {
+    return pbkdf2Sync(refreshToken, JWT_PRIVATE_KEY, 10000, 64, 'sha512').toString('hex');
+};
+
+/**
  * Returns a verified token or throws an error
  * @param accessToken
  */

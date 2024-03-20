@@ -1,7 +1,12 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { GraphqlError } from '@aligent/utils';
 
-import { generateRefreshedTokens, getAuthTokenStatus, getDecodedAuthToken } from '../../utils';
+import {
+    generateRefreshedTokens,
+    getAuthTokenStatus,
+    getDecodedAuthToken,
+    getHashedRefreshToken,
+} from '../../utils';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
     ACCESS_INVALID_REFRESH_VALID,
@@ -65,7 +70,7 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
          * Any token passed to this mutation should have a corresponding db refresh
          * token.
          */
-        if (usersDbRefreshToken !== refresh_token) {
+        if (usersDbRefreshToken !== getHashedRefreshToken(refresh_token)) {
             throw new GraphqlError(`A matching refresh token couldn't be found`, 'authorization');
         }
 

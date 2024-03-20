@@ -12,6 +12,7 @@ import {
     UpdateUserAuthResponse,
 } from '../../';
 import { ModuleConfigToken } from '../providers';
+import { getHashedRefreshToken } from '../utils';
 
 @Injectable({
     global: true,
@@ -34,6 +35,8 @@ export class AuthService {
     }
 
     async getUserAuth(userId: string | number, refreshToken: string): GetUserAuthResponse {
+        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
+
         const command = new GetItemCommand({
             TableName: this.config.dynamoDbTableName,
             Key: {
@@ -41,17 +44,11 @@ export class AuthService {
                     S: String(userId),
                 },
                 refresh_token_hash: {
-                    S: refreshToken,
+                    S: hashedRefreshToken,
                 },
             },
         });
-        const response = await this.client
-            .send(command)
-            .then((res) => {
-                console.dir(res);
-                return res;
-            })
-            .catch((e) => e);
+        const response = await this.client.send(command).catch((e) => e);
 
         if (response instanceof Error) {
             console.error(response);
@@ -65,6 +62,8 @@ export class AuthService {
         refreshToken: string,
         refreshTokenTTl: number | string
     ): UpdateUserAuthResponse {
+        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
+
         const command = new PutItemCommand({
             TableName: this.config.dynamoDbTableName,
             Item: {
@@ -72,7 +71,7 @@ export class AuthService {
                     S: String(userId),
                 },
                 refresh_token_hash: {
-                    S: refreshToken,
+                    S: hashedRefreshToken,
                 },
                 ttl: {
                     S: String(refreshTokenTTl),
@@ -90,6 +89,8 @@ export class AuthService {
     }
 
     async removeUserAuth(userId: string | number, refreshToken: string): RemoveUserAuthResponse {
+        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
+
         const command = new DeleteItemCommand({
             TableName: this.config.dynamoDbTableName,
             Key: {
@@ -97,7 +98,7 @@ export class AuthService {
                     S: String(userId),
                 },
                 refresh_token_hash: {
-                    S: refreshToken,
+                    S: hashedRefreshToken,
                 },
             },
             ConditionExpression: 'attribute_exists(refresh_token_hash)',

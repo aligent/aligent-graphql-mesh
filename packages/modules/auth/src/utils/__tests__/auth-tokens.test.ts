@@ -12,6 +12,7 @@ import {
     getUTCTimeStamp,
     getTokenExpiryFromMinutes,
     getVerifiedAccessToken,
+    getHashedRefreshToken,
 } from '../';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
@@ -298,5 +299,15 @@ describe(`Token TTL's`, () => {
 
         expect(getFormattedUTCDate(refreshedAccessTokenExp)).toBe('31/3/2024, 9:14');
         expect(getFormattedUTCDate(refreshedRefreshTokenExp)).toBe('31/3/2024, 9:15');
+    });
+});
+
+describe('Hashing', () => {
+    it("Checks the refresh token to be returned in the request doesn't match the one stored in the DB", () => {
+        const refreshToken = createRefreshToken(userId, 1710905708);
+
+        const hashedTokenForDb = getHashedRefreshToken(refreshToken);
+
+        expect(hashedTokenForDb).not.toEqual(refreshToken);
     });
 });

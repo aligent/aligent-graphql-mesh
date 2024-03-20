@@ -23,7 +23,7 @@ export const generateCustomerTokenResolver: MutationResolvers['generateCustomerT
 
         const authService: AuthService = context.injector.get(AuthService);
         const updateResponse = await authService.updateUserAuth(
-            String(entityId),
+            entityId,
             refreshToken,
             refreshTokenExp
         );

@@ -4,8 +4,12 @@ import { GraphqlError } from '@aligent/utils';
 
 const NODE_ENV = process.env?.NODE_ENV;
 
+/**
+ * Gets an item from the Dynamo DB table based on a users id and refresh token
+ */
 export const getUserAuthResolver: QueryResolvers['getUserAuth'] = {
     resolve: async (_root, args, context, _info) => {
+        /* We do not want this query available to the public */
         if (NODE_ENV !== 'development') {
             throw new GraphqlError('Unauthorised access', 'authorization');
         }
