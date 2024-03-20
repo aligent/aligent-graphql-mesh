@@ -11,35 +11,39 @@ export function maintenanceMode(maintenanceFilePath: string): Plugin {
                 return;
             }
 
-            const clientIp = getClientIp(request.headers.get('x-forwarded-for'), DEV_MODE);
+            const requestIps = request.headers.get('x-forwarded-for')?.split(',')[0];
+
+            const clientIp = getClientIp(requestIps, DEV_MODE);
 
             const allowedIpAddresses = readFileSync(maintenanceFilePath, {
                 encoding: 'utf-8',
             }).split(',');
 
-            if (!allowIpInWhiteList(allowedIpAddresses, clientIp)) {
-                console.error('In Maintenance Mode');
-                endResponse(
-                    new fetchAPI.Response(null, {
-                        status: 502,
-                    })
-                );
+            if (isIpInWhiteList(allowedIpAddresses, clientIp)) {
+                return;
             }
+
+            console.error('In Maintenance Mode');
+            endResponse(
+                new fetchAPI.Response(null, {
+                    status: 502,
+                })
+            );
         },
     };
 }
 
-const getClientIp = (xForwardedForHeader: string | null, devMode: boolean): string => {
+const getClientIp = (xForwardedForHeader: string | undefined, devMode: boolean): string => {
     if (devMode) {
         return '27.33.208.246';
-    } else if (xForwardedForHeader !== null) {
+    } else if (xForwardedForHeader) {
         return xForwardedForHeader;
     } else {
         return 'no-ip';
     }
 };
 
-const allowIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
+const isIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
     for (const ip of ipAddressesAllowed) {
         const block = new Netmask(ip);
         if (block.contains(clientIp)) {
