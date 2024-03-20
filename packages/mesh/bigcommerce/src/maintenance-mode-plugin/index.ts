@@ -12,7 +12,7 @@ export function maintenanceMode(): Plugin {
                 return;
             } else {
                 const clientIp = DEV_MODE
-                    ? '27.33.208.241'
+                    ? '27.33.208.246'
                     : request.headers.get('x-forwarded-for') !== null
                     ? (request.headers.get('x-forwarded-for') as string)
                     : 'no-ip';
