@@ -6,7 +6,7 @@ The module provides updated mutations to allow a user to extend their login sess
 
 - Go to the application.ts file located in the corresponding `packages/mesh/<client_project>/src/application.ts` file.
 - Add the `createAuthModule` from `packages/modules/auth/src/index.ts` to the modules array with any
-required configs
+  required configs
 
 ```
 // e.g. BigCommerce Module
@@ -34,7 +34,7 @@ export default createApplication({
 ```
 
 - Copy env variables from `packages/mesh/auth/.env.template` and paste into the corresponding project .env file.
-  -  e.g. For the BigCommerce module you would paste the Auth .env.template vars into `packages/mesh/bigcommerce/.env`
+  - e.g. For the BigCommerce module you would paste the Auth .env.template vars into `packages/mesh/bigcommerce/.env`
 
 #### Jest testing
 
