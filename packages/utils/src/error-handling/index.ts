@@ -38,8 +38,6 @@ export class GraphqlError extends GraphQLError {
             | 'no-such-entity'
             /* Internal server error */
             | 'server-internal-error'
-            /* Maintenance Mode */
-            | 'maintenance-mode'
     ) {
         super(message, {
             extensions: {
