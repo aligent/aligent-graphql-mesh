@@ -1,21 +1,22 @@
 import { decode, JsonWebTokenError, sign, TokenExpiredError, verify } from 'jsonwebtoken';
 import { pbkdf2Sync } from 'crypto';
 
-import {
-    ACCESS_INVALID_REFRESH_INVALID,
-    ACCESS_INVALID_REFRESH_VALID,
-    ACCESS_VALID_REFRESH_INVALID,
-    ACCESS_VALID_REFRESH_VALID,
-    JWT_AUTH_STATUSES,
-} from '../constants';
+import { JWT_AUTH_STATUSES } from '../constants';
 import { GraphqlError } from '@aligent/utils';
-import { getCurrentTimeStamp, getTtlIsExpired, getMinutesToSeconds } from './';
+import { getCurrentTimeStamp, getMinutesToSeconds, getTtlIsExpired } from './index';
 import { decodedAccessToken } from '../types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 43200; // 30 days
 export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED = 15;
 export const ACCESS_TOKEN_EXPIRY_IN_MINUTES = 14;
+
+const {
+    ACCESS_VALID_REFRESH_VALID,
+    ACCESS_INVALID_REFRESH_VALID,
+    ACCESS_VALID_REFRESH_INVALID,
+    ACCESS_INVALID_REFRESH_INVALID,
+} = JWT_AUTH_STATUSES;
 
 /**
  * Gets a tokens expiry based on the current time and adding the
@@ -131,7 +132,7 @@ export const getAuthTokenStatus = (
     oldRefreshToken: string
 ): JWT_AUTH_STATUSES => {
     if (!oldAuthToken || !oldAuthToken?.toLowerCase().startsWith('bearer '))
-        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
+        return ACCESS_INVALID_REFRESH_INVALID;
     const [, accessToken] = oldAuthToken.split(' ');
 
     const verifiedAccessToken = getVerifiedAccessToken(accessToken) as
@@ -143,7 +144,7 @@ export const getAuthTokenStatus = (
 
     /* Both tokens are invalid*/
     if (verifiedAccessToken instanceof JsonWebTokenError && verifiedRefreshToken instanceof Error) {
-        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
+        return ACCESS_INVALID_REFRESH_INVALID;
     }
 
     /* The "verifiedAccessToken" is an error but isn't a TTL ralated error
@@ -152,22 +153,22 @@ export const getAuthTokenStatus = (
         verifiedAccessToken instanceof JsonWebTokenError &&
         !(verifiedAccessToken instanceof TokenExpiredError)
     ) {
-        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID];
+        return ACCESS_INVALID_REFRESH_INVALID;
     }
 
     /* For whatever reason the "verifiedRefreshToken" causes an error */
     if (verifiedRefreshToken instanceof Error) {
-        return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID];
+        return ACCESS_VALID_REFRESH_INVALID;
     }
 
     /* The verifiedAccessToken TTL has expired, but we can
      * generate a new one because the refresh token is still valid */
     if (verifiedAccessToken instanceof TokenExpiredError) {
-        return JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID];
+        return ACCESS_INVALID_REFRESH_VALID;
     }
 
     /* Both tokens are valid */
-    return JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID];
+    return ACCESS_VALID_REFRESH_VALID;
 };
 
 /**

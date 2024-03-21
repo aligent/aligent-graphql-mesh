@@ -7,14 +7,15 @@ import {
     getDecodedAuthToken,
     getHashedRefreshToken,
 } from '../../utils';
-import {
-    ACCESS_INVALID_REFRESH_INVALID,
+import { JWT_AUTH_STATUSES } from '../../constants';
+import { AuthService } from '../../services';
+
+const {
+    ACCESS_VALID_REFRESH_VALID,
     ACCESS_INVALID_REFRESH_VALID,
     ACCESS_VALID_REFRESH_INVALID,
-    ACCESS_VALID_REFRESH_VALID,
-    JWT_AUTH_STATUSES,
-} from '../../constants';
-import { AuthService } from '../../services';
+    ACCESS_INVALID_REFRESH_INVALID,
+} = JWT_AUTH_STATUSES;
 
 export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
@@ -25,7 +26,7 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
         const authTokenStatus = getAuthTokenStatus(authToken, refresh_token);
 
         /* Prevents new tokens being generated if both refresh and access tokens are still valid */
-        if (authTokenStatus === JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID]) {
+        if (authTokenStatus === ACCESS_VALID_REFRESH_VALID) {
             const [, accessToken] = context.headers.authorization.split(' ');
             return {
                 token: accessToken,
@@ -75,15 +76,12 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
         }
 
         if (
-            [
-                JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID],
-                JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID],
-            ].includes(authTokenStatus)
+            [ACCESS_INVALID_REFRESH_INVALID, ACCESS_VALID_REFRESH_INVALID].includes(authTokenStatus)
         ) {
             throw new GraphqlError('Refresh token is no longer valid', 'authorization');
         }
 
-        if (authTokenStatus === JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID]) {
+        if (authTokenStatus === ACCESS_INVALID_REFRESH_VALID) {
             const {
                 accessToken,
                 refreshToken: newRefreshToken,

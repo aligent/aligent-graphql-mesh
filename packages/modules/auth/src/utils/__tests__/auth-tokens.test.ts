@@ -14,15 +14,15 @@ import {
     getVerifiedAccessToken,
     getHashedRefreshToken,
 } from '../index';
-import {
-    ACCESS_INVALID_REFRESH_INVALID,
-    ACCESS_INVALID_REFRESH_VALID,
-    ACCESS_VALID_REFRESH_INVALID,
-    ACCESS_VALID_REFRESH_VALID,
-    JWT_AUTH_STATUSES,
-} from '../../constants';
+import { JWT_AUTH_STATUSES } from '../../constants';
 import { decodedAccessToken } from '../../types';
 
+const {
+    ACCESS_VALID_REFRESH_VALID,
+    ACCESS_INVALID_REFRESH_VALID,
+    ACCESS_VALID_REFRESH_INVALID,
+    ACCESS_INVALID_REFRESH_INVALID,
+} = JWT_AUTH_STATUSES;
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const userId = 23;
 
@@ -82,7 +82,7 @@ describe('JWT statues', () => {
 
         const tokenStatus = getAuthTokenStatus(expiredToken, expiredRefreshToken);
 
-        expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID]);
+        expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when both access and refresh tokens are invalid`, () => {
@@ -93,7 +93,7 @@ describe('JWT statues', () => {
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${expiredToken}`, expiredRefreshToken);
 
-        expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_INVALID]);
+        expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_VALID_REFRESH_INVALID" status when the access token is valid and refresh token is invalid`, () => {
@@ -105,7 +105,7 @@ describe('JWT statues', () => {
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${validAccessToken}`, expiredRefreshToken);
 
-        expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID]);
+        expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_VALID_REFRESH_INVALID" status if a "refresh_token" is missing`, () => {
@@ -119,7 +119,7 @@ describe('JWT statues', () => {
         );
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${validAccessToken}`, missingRefreshToken);
-        expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_INVALID]);
+        expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_INVALID_REFRESH_VALID" status when access token is invalid but the refresh token is valid`, () => {
@@ -130,7 +130,7 @@ describe('JWT statues', () => {
         const validRefreshToken = createRefreshToken(userId, accessTokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
-        expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_INVALID_REFRESH_VALID]);
+        expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_VALID);
     });
 
     it(`Returns a "ACCESS_VALID_REFRESH_VALID" status when both access and refresh tokens are invalid`, () => {
@@ -141,7 +141,7 @@ describe('JWT statues', () => {
         const validRefreshToken = createRefreshToken(userId, refreshTokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
-        expect(tokenStatus).toEqual(JWT_AUTH_STATUSES[ACCESS_VALID_REFRESH_VALID]);
+        expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_VALID);
     });
 });
 
