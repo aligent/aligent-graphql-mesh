@@ -13,7 +13,7 @@ import {
     getTokenExpiryFromMinutes,
     getVerifiedAccessToken,
     getHashedRefreshToken,
-} from '../';
+} from '../index';
 import {
     ACCESS_INVALID_REFRESH_INVALID,
     ACCESS_INVALID_REFRESH_VALID,

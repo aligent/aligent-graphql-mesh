@@ -7,10 +7,10 @@ import {
 import { Inject, Injectable, forwardRef, CONTEXT } from 'graphql-modules';
 import {
     GetUserAuthResponse,
-    ModuleConfig,
     RemoveUserAuthResponse,
     UpdateUserAuthResponse,
-} from '../../';
+} from '../types/index';
+import { ModuleConfig } from '../index';
 import { ModuleConfigToken } from '../providers';
 import { getHashedRefreshToken } from '../utils';
 

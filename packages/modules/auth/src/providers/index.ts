@@ -2,7 +2,7 @@ import { InjectionToken, Provider, Scope } from 'graphql-modules';
 import { getTransformers } from '../transformers';
 import { getServices } from '../services';
 import { getClients } from '../apis';
-import { ModuleConfig } from '..';
+import { ModuleConfig } from '../index';
 import { ModuleConfig as BigcommerceModuleConfig } from '@aligent/bigcommerce-graphql-module';
 
 export const ModuleConfigToken = new InjectionToken<ModuleConfig>(
