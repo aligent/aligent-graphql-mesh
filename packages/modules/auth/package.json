@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@aligent/bigcommerce-graphql-module": "0.0.27",
+    "@aws-sdk/client-dynamodb": "^3.535.0",
     "aws-xray-sdk": "^3.5.4",
     "graphql-tag": "^2.12.0",
     "@envelop/core": "^4.0.0",
@@ -12,6 +13,7 @@
     "graphql": "^16.7.0",
     "graphql-modules": "^2.2.0",
     "graphql-request": "^6.1.0",
+    "jest-date-mock": "^1.0.8",
     "jsonwebtoken": "^9.0.0",
     "keyv": "^4.5.4",
     "lodash": "^4.17.21",

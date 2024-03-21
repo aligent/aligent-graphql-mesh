@@ -9,7 +9,10 @@ import { getProviders } from './providers';
 const loadGraphQlFiles = () => loadFilesSync(resolve(__dirname, './schema/*.graphql'));
 
 export interface ModuleConfig {
-    [key: string]: string;
+    dynamoDbRegion: string;
+    dynamoDbAccessKeyId: string;
+    dynamoDbSecretAccessKey: string;
+    dynamoDbAuthTable: string;
 }
 
 export const createAuthModule = (config: ModuleConfig) => {
