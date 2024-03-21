@@ -12,7 +12,7 @@ export interface ModuleConfig {
     dynamoDbRegion: string;
     dynamoDbAccessKeyId: string;
     dynamoDbSecretAccessKey: string;
-    dynamoDbTableName: string;
+    dynamoDbAuthTable: string;
 }
 
 export const createAuthModule = (config: ModuleConfig) => {

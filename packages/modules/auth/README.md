@@ -28,7 +28,7 @@ export default createApplication({
       dynamoDbRegion: process.env.DYNAMO_DB__REGION as string,
       dynamoDbAccessKeyId: process.env.DYNAMO_DB__ACCESS_KEY_ID as string,
       dynamoDbSecretAccessKey: process.env.DYNAMO_DB__SECRET_ACCESS_KEY as string,
-      dynamoDbTableName: process.env.DYNAMO_DB__TABLE_NAME as string,
+      dynamoDbAuthTable: process.env.DYNAMO_DB_AUTH_TABLE as string,
     }),
   ],
 });

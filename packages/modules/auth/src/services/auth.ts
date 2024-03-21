@@ -38,7 +38,7 @@ export class AuthService {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new GetItemCommand({
-            TableName: this.config.dynamoDbTableName,
+            TableName: this.config.dynamoDbAuthTable,
             Key: {
                 customer_id: {
                     S: String(userId),
@@ -65,7 +65,7 @@ export class AuthService {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new PutItemCommand({
-            TableName: this.config.dynamoDbTableName,
+            TableName: this.config.dynamoDbAuthTable,
             Item: {
                 customer_id: {
                     S: String(userId),
@@ -92,7 +92,7 @@ export class AuthService {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new DeleteItemCommand({
-            TableName: this.config.dynamoDbTableName,
+            TableName: this.config.dynamoDbAuthTable,
             Key: {
                 customer_id: {
                     S: String(userId),
