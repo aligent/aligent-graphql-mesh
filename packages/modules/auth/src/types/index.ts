@@ -1,7 +1,7 @@
 export type decodedAccessToken = {
     bc_customer_id: number;
     exp: number;
-    refresh_exp: number;
+    refresh_expiry: number;
 };
 
 export type GetUserAuthResponse = Promise<

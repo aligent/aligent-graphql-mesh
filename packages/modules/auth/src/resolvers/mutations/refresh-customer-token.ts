@@ -85,14 +85,14 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
             const {
                 accessToken,
                 refreshToken: newRefreshToken,
-                refreshTokenExp: newRefreshTokenExp,
+                refreshTokenExpiry: newRefreshTokenExpiry,
             } = generateRefreshedTokens(authToken);
 
             /* Update the newly generated refresh token in the database*/
             await authService.updateUserAuth(
                 String(bc_customer_id),
                 newRefreshToken,
-                newRefreshTokenExp
+                newRefreshTokenExpiry
             );
 
             return {

@@ -37,14 +37,14 @@ export const getTokenExpiryFromMinutes = (minutes: number) => {
  * Creates an access token which is used for user authentication
  * @param userId
  * @param exp
- * @param refreshExp
+ * @param refreshExpiry
  */
-export const createAccessJWT = (userId: number, exp: number, refreshExp: number) => {
+export const createAccessJWT = (userId: number, exp: number, refreshExpiry: number) => {
     return sign(
         {
             bc_customer_id: userId,
             exp,
-            refresh_exp: refreshExp,
+            refresh_expiry: refreshExpiry,
         },
         JWT_PRIVATE_KEY
     );
@@ -53,12 +53,16 @@ export const createAccessJWT = (userId: number, exp: number, refreshExp: number)
 /**
  * Creates a refresh token used to ask for a new access token
  * @param userId
- * @param accessTokenExp - used to make the refresh token unique when refreshed
+ * @param accessTokenExpiry - used to make the refresh token unique when refreshed
  */
-export const createRefreshToken = (userId: number, accessTokenExp: number) => {
-    return pbkdf2Sync(`${userId}${accessTokenExp}`, JWT_PRIVATE_KEY, 10000, 64, 'sha512').toString(
-        'hex'
-    );
+export const createRefreshToken = (userId: number, accessTokenExpiry: number) => {
+    return pbkdf2Sync(
+        `${userId}${accessTokenExpiry}`,
+        JWT_PRIVATE_KEY,
+        10000,
+        64,
+        'sha512'
+    ).toString('hex');
 };
 
 /**
@@ -96,7 +100,7 @@ export const getVerifiedRefreshToken = (
     decodedAccessToken: decodedAccessToken,
     oldRefreshToken: string
 ) => {
-    const { bc_customer_id, exp, refresh_exp } = decodedAccessToken;
+    const { bc_customer_id, exp, refresh_expiry } = decodedAccessToken;
 
     if (!oldRefreshToken) {
         return Error("refresh token doesn't exist");
@@ -108,7 +112,7 @@ export const getVerifiedRefreshToken = (
         return Error("recreated refresh token doesn't match actual token");
     }
 
-    if (getTtlIsExpired(refresh_exp)) {
+    if (getTtlIsExpired(refresh_expiry)) {
         return Error('Refresh token has expired');
     }
 
@@ -180,21 +184,21 @@ export const getAuthTokenStatus = (
 export const generateLoginTokens = (
     userId: number,
     isExtendedLogin?: boolean
-): { accessToken: string; refreshToken: string; refreshTokenExp: number } => {
-    const accessTokenExp = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
+): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } => {
+    const accessTokenExpiry = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
 
-    const refreshTokenExp = getTokenExpiryFromMinutes(
+    const refreshTokenExpiry = getTokenExpiryFromMinutes(
         isExtendedLogin
             ? REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED
             : REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED
     );
 
-    const refreshToken = createRefreshToken(userId, accessTokenExp);
+    const refreshToken = createRefreshToken(userId, accessTokenExpiry);
 
     return {
-        accessToken: createAccessJWT(userId, accessTokenExp, refreshTokenExp),
+        accessToken: createAccessJWT(userId, accessTokenExpiry, refreshTokenExpiry),
         refreshToken,
-        refreshTokenExp,
+        refreshTokenExpiry,
     };
 };
 
@@ -214,7 +218,7 @@ export const generateLoginTokens = (
  * @param currentTimeStamp
  * @param refreshExp
  */
-export const getRollingRefreshTokenExp = (currentTimeStamp: number, refreshExp: number) => {
+export const getRollingRefreshTokenExpiry = (currentTimeStamp: number, refreshExp: number) => {
     const timeDifference = refreshExp - currentTimeStamp;
 
     /* Validation should prevent us getting here but in case the timeDifference
@@ -241,27 +245,27 @@ export const getRollingRefreshTokenExp = (currentTimeStamp: number, refreshExp: 
  */
 export const generateRefreshedTokens = (
     oldAccessToken: string
-): { accessToken: string; refreshToken: string; refreshTokenExp: number } => {
+): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } => {
     const [, accessToken] = oldAccessToken.split(' ');
 
     const decodedAccessToken = decode(accessToken) as decodedAccessToken;
 
-    const { bc_customer_id, refresh_exp } = decodedAccessToken;
+    const { bc_customer_id, refresh_expiry } = decodedAccessToken;
 
     const currentTimeStamp = getCurrentTimeStamp();
-    const accessTokenExp = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
-    const refreshTokenExp = getRollingRefreshTokenExp(currentTimeStamp, refresh_exp);
+    const accessTokenExpiry = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
+    const refreshTokenExpiry = getRollingRefreshTokenExpiry(currentTimeStamp, refresh_expiry);
 
-    if (refreshTokenExp instanceof Error) {
+    if (refreshTokenExpiry instanceof Error) {
         throw new GraphqlError("Refresh tokens couldn't be generated", 'authorization');
     }
 
-    const newAccessToken = createAccessJWT(bc_customer_id, accessTokenExp, refreshTokenExp);
-    const newRefreshToken = createRefreshToken(bc_customer_id, accessTokenExp);
+    const newAccessToken = createAccessJWT(bc_customer_id, accessTokenExpiry, refreshTokenExpiry);
+    const newRefreshToken = createRefreshToken(bc_customer_id, accessTokenExpiry);
 
     return {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
-        refreshTokenExp: refreshTokenExp,
+        refreshTokenExpiry: refreshTokenExpiry,
     };
 };

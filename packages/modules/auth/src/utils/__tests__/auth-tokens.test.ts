@@ -8,7 +8,7 @@ import {
     generateLoginTokens,
     generateRefreshedTokens,
     getAuthTokenStatus,
-    getRollingRefreshTokenExp,
+    getRollingRefreshTokenExpiry,
     getUTCTimeStamp,
     getTokenExpiryFromMinutes,
     getVerifiedAccessToken,
@@ -37,8 +37,8 @@ describe('TimeZone', () => {
 });
 
 describe('Json web token errors', () => {
-    const tokenExp = getTokenExpiryFromMinutes(-5);
-    const expiredToken = createAccessJWT(userId, tokenExp, tokenExp);
+    const tokenExpiry = getTokenExpiryFromMinutes(-5);
+    const expiredToken = createAccessJWT(userId, tokenExpiry, tokenExpiry);
 
     it(`Throws an "invalid signature" error when verifying a malformed JWT`, () => {
         const malformedJwt = 'ae6r4h16sat56th';
@@ -56,7 +56,7 @@ describe('Json web token errors', () => {
 
     it(`Throws an "invalid signature" error for a JWT with a signature other than the one being used`, () => {
         const tokenWithDifferentSignature = sign(
-            { bc_customer_id: userId, exp: tokenExp, refresh_exp: tokenExp },
+            { bc_customer_id: userId, exp: tokenExpiry, refresh_expiry: tokenExpiry },
             'different_signature'
         );
         const tokenStatus = getVerifiedAccessToken(tokenWithDifferentSignature) as {
@@ -114,7 +114,7 @@ describe('JWT statues', () => {
 
         const missingRefreshToken = '';
         const validAccessToken = sign(
-            { bc_customer_id: userId, exp: accessTokenExp, refresh_exp: refreshTokenExp },
+            { bc_customer_id: userId, exp: accessTokenExp, refresh_expiry: refreshTokenExp },
             JWT_PRIVATE_KEY
         );
 
@@ -159,7 +159,7 @@ describe(`Token TTL's`, () => {
 
         expect(getFormattedUTCDate(refreshTokenExp)).toEqual('1/3/2024, 9:16');
 
-        const newRefreshTokenExp = getRollingRefreshTokenExp(currentTime, refreshTokenExp);
+        const newRefreshTokenExp = getRollingRefreshTokenExpiry(currentTime, refreshTokenExp);
 
         if (newRefreshTokenExp instanceof Error) return;
 
@@ -171,7 +171,7 @@ describe(`Token TTL's`, () => {
         const currentTime = getCurrentTimeStamp();
         const refreshTokenExp = getUTCTimeStamp('2024-03-01T09:14:00Z'); // 9.14
 
-        const newRefreshTokenExp = getRollingRefreshTokenExp(currentTime, refreshTokenExp);
+        const newRefreshTokenExp = getRollingRefreshTokenExpiry(currentTime, refreshTokenExp);
 
         if (newRefreshTokenExp instanceof Error) return;
 
@@ -188,7 +188,7 @@ describe(`Token TTL's`, () => {
         const updatedTime = getCurrentTimeStamp(); // 9:16 am
 
         const refreshTokenExp = getUTCTimeStamp('2024-03-01T09:15:00Z'); // 9.15 am
-        const newRefreshTokenExp = getRollingRefreshTokenExp(updatedTime, refreshTokenExp);
+        const newRefreshTokenExp = getRollingRefreshTokenExpiry(updatedTime, refreshTokenExp);
         expect(newRefreshTokenExp).toBeInstanceOf(Error);
     });
 
@@ -197,10 +197,10 @@ describe(`Token TTL's`, () => {
 
         const isExtendedLogin = false;
         const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
-        const { exp, refresh_exp } = decode(accessToken) as decodedAccessToken;
+        const { exp, refresh_expiry } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(exp)).toBe('1/3/2024, 9:14');
-        expect(getFormattedUTCDate(refresh_exp)).toBe('1/3/2024, 9:15');
+        expect(getFormattedUTCDate(refresh_expiry)).toBe('1/3/2024, 9:15');
     });
 
     it(`Returns the correct token expiry times for a user wanting to extend their session`, () => {
@@ -208,10 +208,10 @@ describe(`Token TTL's`, () => {
 
         const isExtendedLogin = true;
         const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
-        const { exp, refresh_exp } = decode(accessToken) as decodedAccessToken;
+        const { exp, refresh_expiry } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(exp)).toBe('1/3/2024, 9:14');
-        expect(getFormattedUTCDate(refresh_exp)).toBe('31/3/2024, 9:00'); // 30 days later
+        expect(getFormattedUTCDate(refresh_expiry)).toBe('31/3/2024, 9:00'); // 30 days later
     });
 
     /**
@@ -234,7 +234,7 @@ describe(`Token TTL's`, () => {
             // "exp" will be 15 minutes after the "currentTime" and another 15 minutes after the
             // loginAccessToken.exp. This means the exp will be 30 minutes after the "currentTime"
             exp: refreshedAccessTokenExp,
-            refresh_exp: refreshedRefreshTokenExp,
+            refresh_expiry: refreshedRefreshTokenExp,
         } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(refreshedAccessTokenExp)).toBe('1/3/2024, 9:28');
@@ -251,7 +251,7 @@ describe(`Token TTL's`, () => {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
         } = generateLoginTokens(userId, true);
 
-        const { refresh_exp: loginRefreshTokenExp } = decode(
+        const { refresh_expiry: loginRefreshTokenExp } = decode(
             loginAccessToken
         ) as decodedAccessToken;
 
@@ -266,7 +266,7 @@ describe(`Token TTL's`, () => {
             // "exp" will be 15 minutes after the "currentTime" and another 15 minutes after the
             // loginAccessToken.exp. This means the exp will be 30 minutes after the "currentTime"
             exp: refreshedAccessTokenExp,
-            refresh_exp: refreshedRefreshTokenExp,
+            refresh_expiry: refreshedRefreshTokenExp,
         } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(refreshedAccessTokenExp)).toBe('1/3/2024, 9:28');
@@ -294,7 +294,7 @@ describe(`Token TTL's`, () => {
             // "exp" will be 15 minutes after the "currentTime" and another 15 minutes after the
             // loginAccessToken.exp. This means the exp will be 30 minutes after the "currentTime"
             exp: refreshedAccessTokenExp,
-            refresh_exp: refreshedRefreshTokenExp,
+            refresh_expiry: refreshedRefreshTokenExp,
         } = decode(refreshedAccessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(refreshedAccessTokenExp)).toBe('31/3/2024, 9:14');

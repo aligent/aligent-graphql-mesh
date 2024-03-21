@@ -16,7 +16,7 @@ export const generateCustomerTokenResolver: MutationResolvers['generateCustomerT
 
         const isExtendedLogin = !!args?.remember_me;
 
-        const { accessToken, refreshToken, refreshTokenExp } = generateLoginTokens(
+        const { accessToken, refreshToken, refreshTokenExpiry } = generateLoginTokens(
             entityId,
             isExtendedLogin
         );
@@ -25,7 +25,7 @@ export const generateCustomerTokenResolver: MutationResolvers['generateCustomerT
         const updateResponse = await authService.updateUserAuth(
             entityId,
             refreshToken,
-            refreshTokenExp
+            refreshTokenExpiry
         );
 
         if (updateResponse instanceof Error || updateResponse?.$metadata?.httpStatusCode !== 200) {
