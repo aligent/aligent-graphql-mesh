@@ -4,19 +4,21 @@ export type decodedAccessToken = {
     refresh_expiry: number;
 };
 
+export type AuthItem = {
+    customer_id: {
+        S: string;
+    };
+    refresh_token_hash: {
+        S: string;
+    };
+    ttl: {
+        S: string;
+    };
+};
+
 export type GetUserAuthResponse = Promise<
     | {
-          Item: {
-              customer_id: {
-                  S: string;
-              };
-              refresh_token_hash: {
-                  S: string;
-              };
-              ttl: {
-                  S: string;
-              };
-          };
+          Item: AuthItem;
       }
     | Error
 >;
@@ -35,11 +37,22 @@ export type RemoveUserAuthResponse = Promise<
           $metadata: {
               httpStatusCode: number;
           };
-          Attributes: {
-              customer_id: { S: string };
-              refresh_token_hash: { S: string };
-              ttl: { S: string };
-          };
+          Attributes: AuthItem;
       }
     | Error
 >;
+
+export type BatchRemoveItems =
+    | {
+          DeleteRequest: {
+              Key: {
+                  customer_id: {
+                      S: string;
+                  };
+                  refresh_token_hash: {
+                      S: string;
+                  };
+              };
+          };
+      }[]
+    | never[];

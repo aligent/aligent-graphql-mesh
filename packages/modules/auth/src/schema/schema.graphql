@@ -4,7 +4,14 @@ schema {
 }
 
 type Query {
+    """
+    Gets a user auth item by id and refresh_token. Restricted access
+    """
     getUserAuth(user_id: String, refresh_token: String): GetAuthUser
+    """
+    Gets all a users auth items by id. Restricted access
+    """
+    getAllAuthItemsById(user_id: String): [GetAuthUser]
 }
 
 type Mutation {
@@ -35,11 +42,27 @@ type Mutation {
         refresh_token: String!
     ): CustomerToken
     revokeCustomerToken(refresh_token: String): RevokeCustomerTokenOutput
+    """
+    removes a user auth item. Restricted access
+    """
     removeUserAuth(user_id: String, refresh_token: String): RemoveUserAuth
+    """
+    Removes all user auth items by id. Restricted access
+    """
+    removeAllUserAuthItems(user_id: String): RemoveAllUserAuthItems
+    """
+    adds a user auth item. Restricted access
+    """
     updateUserAuth(user_id: String, refresh_token: String): UpdateUserAuth
 }
 
 type GetAuthUser {
+    customer_id: String
+    refresh_token_hash: String
+    ttl: String
+}
+
+type GetAllAuthItemsById {
     customer_id: String
     refresh_token_hash: String
     ttl: String
@@ -55,6 +78,13 @@ type RemoveUserAuth {
 type UpdateUserAuth {
     """
     status of updating a user refresh token
+    """
+    success: Boolean
+}
+
+type RemoveAllUserAuthItems {
+    """
+    status of removing all users refresh tokens
     """
     success: Boolean
 }

@@ -69,9 +69,14 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
         /**
          * Potentially something malicious has happened to hit this condition.
          * Any token passed to this mutation should have a corresponding db refresh
-         * token.
+         * token if it's truly valid.
          */
         if (usersDbRefreshToken !== getHashedRefreshToken(refresh_token)) {
+            if (bc_customer_id) {
+                /* Remove all user auth items from the DB which are associated to the user id */
+                await authService.removeAllUserAuthItems(bc_customer_id);
+            }
+
             throw new GraphqlError(`A matching refresh token couldn't be found`, 'authorization');
         }
 
