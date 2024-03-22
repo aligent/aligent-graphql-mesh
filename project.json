@@ -10,14 +10,6 @@
                     "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certificates/cert.key -out certificates/cert.crt -subj \"/C=AU/ST=South Australia/L=Adelaide/O=Aligent/CN=mesh.local.pwadev\""
                 ]
             }
-        },
-        "local-registry": {
-            "executor": "@nx/js:verdaccio",
-            "options": {
-                "port": 4873,
-                "config": ".verdaccio/config.yml",
-                "storage": "tmp/local-registry/storage"
-            }
         }
     },
     "tags": []
