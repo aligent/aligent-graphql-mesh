@@ -1,3 +1,5 @@
+import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types/commands/BatchWriteItemCommand';
+
 export type decodedAccessToken = {
     bc_customer_id: number;
     exp: number;
@@ -56,3 +58,5 @@ export type BatchRemoveItems =
           };
       }[]
     | never[];
+
+export type BatchWriteItemResponse = BatchWriteItemCommandOutput | Error;

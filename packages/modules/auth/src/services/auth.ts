@@ -4,12 +4,14 @@ import {
     DynamoDBClient,
     GetItemCommand,
     PutItemCommand,
-    ScanCommand,
-    ScanCommandOutput,
+    QueryCommandOutput,
+    QueryCommand,
 } from '@aws-sdk/client-dynamodb';
 import { Inject, Injectable, forwardRef, CONTEXT } from 'graphql-modules';
+import { chunk } from 'lodash';
 import {
     BatchRemoveItems,
+    BatchWriteItemResponse,
     GetUserAuthResponse,
     RemoveUserAuthResponse,
     UpdateUserAuthResponse,
@@ -17,6 +19,9 @@ import {
 import { ModuleConfig } from '../index';
 import { ModuleConfigToken } from '../providers';
 import { getHashedRefreshToken } from '../utils';
+import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types/commands/BatchWriteItemCommand';
+
+const BATCH_WRITE_LIMIT = 25;
 
 @Injectable({
     global: true,
@@ -147,37 +152,55 @@ export class AuthService {
             ];
         }, [] as BatchRemoveItems);
 
-        const deleteCommand = new BatchWriteItemCommand({
-            RequestItems: {
-                [this.config.dynamoDbAuthTable]: items,
-            },
-        });
+        /* Creates and array of arrays where each array items holds a max of 25 auth items.
+           e.g. [[{}, {}, {}, ...], [{}, {}, {}, ...], ...]
 
-        const response = await this.client.send(deleteCommand).catch((e) => e);
+           25 is the maximum number of items we can pass to the BatchWriteItem method. Using this
+           we can loop over each array of items passing them to "BatchWriteItemCommand"
+       */
+        const batchItemChunks = chunk(items, BATCH_WRITE_LIMIT);
 
-        if (response instanceof Error) {
-            console.error(response);
+        const responses: BatchWriteItemResponse[] = [];
+        for (const batchItemChunk of batchItemChunks) {
+            const deleteCommand = new BatchWriteItemCommand({
+                RequestItems: {
+                    [this.config.dynamoDbAuthTable]: batchItemChunk,
+                },
+            });
+
+            const response: BatchWriteItemCommandOutput & Error = await this.client
+                .send(deleteCommand)
+                .catch((e) => e);
+
+            responses.push(response);
+        }
+
+        if (responses.some((response) => response instanceof Error)) {
+            responses.forEach((error) => {
+                console.error(error);
+            });
+
             return { success: false };
         }
 
         return { success: true };
     }
 
-    async getAllAuthItemsById(userId: string | number): Promise<ScanCommandOutput | Error> {
-        const scanInput = new ScanCommand({
+    async getAllAuthItemsById(userId: string | number): Promise<QueryCommandOutput | Error> {
+        const queryInput = new QueryCommand({
             TableName: this.config.dynamoDbAuthTable,
-            FilterExpression: `customer_id = :partitionKeyValue`,
+            KeyConditionExpression: `customer_id = :partitionKeyValue`,
             ExpressionAttributeValues: {
                 ':partitionKeyValue': { S: String(userId) },
             },
         });
 
-        const scanResults = await this.client.send(scanInput).catch((e) => e as Error);
+        const queryResults = await this.client.send(queryInput).catch((e) => e as Error);
 
-        if (scanResults instanceof Error) {
-            console.error(scanResults);
+        if (queryResults instanceof Error) {
+            console.error(queryResults);
         }
 
-        return scanResults;
+        return queryResults;
     }
 }
