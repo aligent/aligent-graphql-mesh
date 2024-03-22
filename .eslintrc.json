@@ -1,6 +1,6 @@
 {
     "ignorePatterns": ["**/*"],
-    "extends": ["eslint:recommended", "prettier", "./.eslintrc.base.json"],
+    "extends": ["eslint:recommended", "prettier"],
     "overrides": [
         {
             "files": "*.json",

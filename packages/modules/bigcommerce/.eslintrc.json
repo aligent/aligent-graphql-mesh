@@ -27,7 +27,7 @@
                             "@aligent/bigcommerce-operations",
                             "@aligent/bigcommerce-resolvers"
                         ],
-                        "includeTransitiveDependencies": true
+                        "includeTransitiveDependencies": true // collect dependencies transitively from children
                     }
                 ]
             }
