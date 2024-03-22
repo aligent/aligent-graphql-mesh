@@ -1,17 +1,17 @@
 {
     "name": "maintenance-mode-plugin",
-    "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/mesh/bigcommerce/src/maintenance-mode-plugin/src",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/maintenance-mode-plugin/src",
     "projectType": "library",
     "targets": {
         "build": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/packages/mesh/bigcommerce/src/maintenance-mode-plugin",
-                "main": "packages/mesh/bigcommerce/src/maintenance-mode-plugin/src/index.ts",
-                "tsConfig": "packages/mesh/bigcommerce/src/maintenance-mode-plugin/tsconfig.lib.json",
-                "assets": ["packages/mesh/bigcommerce/src/maintenance-mode-plugin/*.md"]
+                "outputPath": "dist/packages/maintenance-mode-plugin",
+                "main": "packages/maintenance-mode-plugin/src/index.ts",
+                "tsConfig": "packages/maintenance-mode-plugin/tsconfig.lib.json",
+                "assets": ["packages/maintenance-mode-plugin/*.md"]
             }
         },
         "publish": {
@@ -22,7 +22,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "packages/mesh/bigcommerce/src/maintenance-mode-plugin/jest.config.ts"
+                "jestConfig": "packages/maintenance-mode-plugin/jest.config.ts"
             }
         }
     },

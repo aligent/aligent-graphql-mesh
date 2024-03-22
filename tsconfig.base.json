@@ -37,14 +37,14 @@
                 "packages/generated/bigcommerce-resolvers/src/index.ts"
             ],
             "@aligent/maintenance-mode-plugin": [
-                "packages/mesh/bigcommerce/src/maintenance-mode-plugin/src/index.ts"
+                "packages/maintenance-mode-plugin/src/index.ts"
             ],
             "@aligent/mesh": ["tools/plugin/aligent-mesh/src/index.ts"],
             "@aligent/orocommerce-graphql-module": ["packages/modules/orocommerce/src/index.ts"],
             "@aligent/orocommerce-resolvers": [
                 "packages/generated/orocommerce-resolvers/src/index.ts"
             ],
-            "@aligent/utils": ["packages/utils/src/index.ts"]
+            "@aligent/utils": ["packages/utils/src/index.ts"],
         }
     },
     "exclude": ["node_modules", "tmp"]

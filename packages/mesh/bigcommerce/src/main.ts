@@ -12,6 +12,7 @@ import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
+import { maintenanceModePlugin } from '@aligent/maintenance-mode-plugin';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';

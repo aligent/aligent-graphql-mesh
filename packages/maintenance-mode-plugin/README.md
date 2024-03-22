@@ -1,11 +1,10 @@
 # maintenance-mode-plugin
 
-This library was generated with [Nx](https://nx.dev).
+This plugin will check for the existence of a file e.g sample.txt, in the root directory, if this file exists the GraphQL Server is in maintenance mode. This file contains a list of IP addresses or subnet masks that are allowed to access the GraphQL Server when maintenance mode is enabled. 
 
-## Building
+The `maintenanceModePlugin()` function accepts the path to the file that contains the list of IP addresses.
 
-Run `nx build maintenance-mode-plugin` to build the library.
+`DEV_MODE` This value will bypass maintenance mode when it is set to `DEV_MODE=true`.
 
-## Running unit tests
+`ALIGENT_VPN_IP` This contains the Aligent company IP address that will allow access when in maintenance mode.
 
-Run `nx test maintenance-mode-plugin` to execute the unit tests via [Jest](https://jestjs.io).
