@@ -1,5 +1,5 @@
 {
-    "extends": ["../../../.eslintrc.json"],
+    "extends": ["../../../.eslintrc.json", "../../../.eslintrc.base.json"],
     "ignorePatterns": ["!**/*"],
     "overrides": [
         {
@@ -27,7 +27,7 @@
                             "@aligent/bigcommerce-operations",
                             "@aligent/bigcommerce-resolvers"
                         ],
-                        "includeTransitiveDependencies": true // collect dependencies transitively from children
+                        "includeTransitiveDependencies": true
                     }
                 ]
             }

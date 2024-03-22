@@ -1,8 +1,6 @@
 {
-    "root": true,
     "ignorePatterns": ["**/*"],
-    "plugins": ["@nx"],
-    "extends": ["eslint:recommended", "prettier"],
+    "extends": ["eslint:recommended", "prettier", "./.eslintrc.base.json"],
     "overrides": [
         {
             "files": "*.json",
@@ -33,7 +31,6 @@
                 "project": ["./tsconfig.base.json"]
             },
             "extends": [
-                "plugin:@nx/typescript",
                 "plugin:@typescript-eslint/eslint-recommended",
                 "plugin:@typescript-eslint/recommended"
             ],
@@ -56,7 +53,6 @@
         },
         {
             "files": ["*.js", "*.jsx"],
-            "extends": ["plugin:@nx/javascript"],
             "rules": {}
         },
         {

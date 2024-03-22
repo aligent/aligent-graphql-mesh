@@ -12,7 +12,6 @@ import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
-import { maintenanceMode } from './maintenance-mode-plugin';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -42,7 +41,7 @@ const yoga = createYoga({
         };
     },
     plugins: [
-        maintenanceMode(maintenanceFilePath),
+        maintenanceModePlugin(maintenanceFilePath),
         useGraphQLModules(application),
         addIpAddressToAxiosHeaders,
         EnvelopArmorPlugin({
