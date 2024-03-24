@@ -130,6 +130,9 @@ pipelines:
     'orocommerce-graphql-module-*.*.*':
       - step: *install
       - step: *publish
+    'maintenance-mode-plugin-*.*.*':
+      - step: *install
+      - step: *publish
 
   branches:
     main:

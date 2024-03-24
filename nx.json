@@ -51,13 +51,5 @@
     },
     "namedInputs": {
         "default": ["{projectRoot}/**/*"]
-    },
-    "plugins": [
-        {
-            "plugin": "@nx/eslint/plugin",
-            "options": {
-                "targetName": "lint"
-            }
-        }
-    ]
+    }
 }
