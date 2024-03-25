@@ -124,16 +124,16 @@ export class AuthService {
     }
 
     async removeAllUserAuthItems(userId: string | number): Promise<{ success: boolean }> {
-        const scanItemsResponse = await this.getAllAuthItemsById(userId);
+        const queryItemsResponse = await this.queryAuthItemsById(userId);
 
-        if (scanItemsResponse instanceof Error) {
-            console.error(scanItemsResponse);
+        if (queryItemsResponse instanceof Error) {
+            console.error(queryItemsResponse);
             return { success: false };
         }
 
-        if (!scanItemsResponse?.Items?.length) return { success: true };
+        if (!queryItemsResponse?.Items?.length) return { success: true };
 
-        const items = scanItemsResponse.Items.reduce((carry, item) => {
+        const items = queryItemsResponse.Items.reduce((carry, item) => {
             if (!item.refresh_token_hash?.S) return carry;
             return [
                 ...carry,
@@ -186,7 +186,7 @@ export class AuthService {
         return { success: true };
     }
 
-    async getAllAuthItemsById(userId: string | number): Promise<QueryCommandOutput | Error> {
+    async queryAuthItemsById(userId: string | number): Promise<QueryCommandOutput | Error> {
         const queryInput = new QueryCommand({
             TableName: this.config.dynamoDbAuthTable,
             KeyConditionExpression: `customer_id = :partitionKeyValue`,

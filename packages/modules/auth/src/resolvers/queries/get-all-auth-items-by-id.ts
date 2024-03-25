@@ -19,7 +19,7 @@ export const getAllAuthItemsByIdResolver: QueryResolvers['getAllAuthItemsById'] 
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const response = await authService.getAllAuthItemsById(user_id);
+        const response = await authService.queryAuthItemsById(user_id);
 
         if (response instanceof Error) {
             throw new GraphqlError('There was an issue getting the users auth items', 'input');
