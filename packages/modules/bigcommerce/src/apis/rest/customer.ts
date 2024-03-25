@@ -10,7 +10,6 @@ import {
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import { CustomerAttributes } from '@aligent/bigcommerce-operations';
-import { CustomerInput } from '@aligent/bigcommerce-resolvers';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
 import { CACHE_KEY__CUSTOMER_ATTRIBUTES } from '../../constants';
 
@@ -20,32 +19,6 @@ const CUSTOMER_VALIDATE_CREDENTIALS_API = `/v3/customers/validate-credentials`;
 const CUSTOMER_FORM_FIELDS_API = `/v3/customers/form-field-values`;
 
 /* istanbul ignore file */
-export const createCustomer = async (customerInput: CustomerInput): Promise<BcCustomer> => {
-    const data = [customerInput];
-
-    try {
-        const response = await bcPost(CUSTOMERS_API, data);
-        return response.data[0];
-    } catch (error) {
-        /*
-         * Watch for error messages from the bc rest create customer post. If we receive an error
-         * related to an email already being in use, update the returned error we want the user to see.
-         *
-         * Example error message from bc rest create customer post:
-         * "Error creating customers: email john.doe@aligent.com.au already in use"
-         * */
-        if (error instanceof Error && error.message.includes('already in use')) {
-            throw new GraphqlError(
-                'A customer with the same email address already exists in an associated website.',
-                'input'
-            );
-        }
-
-        /* Throw the error which was formed in the "bcPost" function */
-        throw logAndThrowError(error, createCustomer.name);
-    }
-};
-
 export const getACustomer = async (bcCustomerId: number): Promise<BcCustomer> => {
     const response = await bcGet(
         `${CUSTOMERS_API}?include=addresses,formfields&id:in=${bcCustomerId}`

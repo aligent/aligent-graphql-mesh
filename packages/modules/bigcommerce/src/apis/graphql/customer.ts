@@ -6,6 +6,7 @@ import { customerAttribute } from './requests/customer-attribute';
 import { retrieveCustomerAttributesFromCache } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
 import { customerWishlists } from './requests/customer-wishlists';
+import { createCustomerMutation } from './requests/create-customer';
 
 export const getBcCustomer = async (
     bcCustomerId: number,
@@ -86,4 +87,30 @@ export const getCustomerWishlists = async (
     }
 
     return response.data.customer.wishlists;
+};
+
+export const createCustomer = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    customerImpersonationToken: string
+) => {
+    const headers = {
+        Authorization: `Bearer ${customerImpersonationToken}`,
+    };
+
+    const createCustomerQuery = {
+        query: createCustomerMutation,
+        variables: {
+            email,
+            firstName,
+            lastName,
+            password,
+        },
+    };
+
+    const createCustomerResponse = await bcGraphQlRequest(createCustomerQuery, headers);
+
+    console.log(JSON.stringify(createCustomerResponse))
 };
