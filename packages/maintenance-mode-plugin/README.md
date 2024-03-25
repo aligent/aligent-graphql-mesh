@@ -8,7 +8,7 @@ This plugin will check for the existence of a file to determine if the server is
 
 The `maintenanceModePlugin()` function accepts the path to the file that contains the list of IP addresses.
 
-`DEV_MODE` will bypass maintenance mode when it is set to `DEV_MODE=true` in the .env file. `ALIGENT_VPN_IP` This contains the Aligent company IP address that will allow access when in maintenance mode.
+`NODE_ENV` will bypass maintenance mode when it is set to `NODE_ENV=true` in the .env file.
 
 ## Usage
 

@@ -3,7 +3,6 @@ import { Netmask } from 'netmask';
 import { Plugin } from 'graphql-yoga';
 
 const DEV_MODE = process.env?.['NODE_ENV'] == 'development';
-const ALIGENT_VPN_IP = '27.33.208.246';
 
 export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
     return {
@@ -12,19 +11,22 @@ export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
                 return;
             }
 
-            const requestIps = request.headers.get('x-forwarded-for')?.split(',')[0];
-
-            const clientIp = getClientIp(requestIps, DEV_MODE);
-
-            const allowedIpAddresses = readFileSync(maintenanceFilePath, {
-                encoding: 'utf-8',
-            }).split(',');
-
-            if (isIpInWhiteList(allowedIpAddresses, clientIp)) {
+            if (DEV_MODE) {
                 return;
             }
 
-            console.error('In Maintenance Mode');
+            const requestIp = request.headers.get('x-forwarded-for')?.split(',')[0];
+
+            if (requestIp) {
+                const allowedIpAddresses = readFileSync(maintenanceFilePath, {
+                    encoding: 'utf-8',
+                }).split(',');
+
+                if (isIpInWhiteList(allowedIpAddresses, requestIp)) {
+                    return;
+                }
+            }
+
             endResponse(
                 new fetchAPI.Response(null, {
                     status: 502,
@@ -33,16 +35,6 @@ export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
         },
     };
 }
-
-const getClientIp = (xForwardedForHeader: string | undefined, devMode: boolean): string => {
-    if (devMode) {
-        return ALIGENT_VPN_IP;
-    } else if (xForwardedForHeader) {
-        return xForwardedForHeader;
-    } else {
-        return 'no-ip';
-    }
-};
 
 const isIpInWhiteList = (ipAddressesAllowed: string[], clientIp: string): boolean => {
     for (const ip of ipAddressesAllowed) {
