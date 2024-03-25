@@ -29,6 +29,7 @@
     "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.198",
     "@types/luxon": "^3.3.3",
+    "@types/netmask": "^2.0.5",
     "@types/node": "18.16.9",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "6.21.0",
@@ -73,6 +74,7 @@
     "keyv": "^4.5.4",
     "lodash": "^4.17.21",
     "luxon": "^3.4.3",
+    "netmask": "^2.0.2",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0"
