@@ -28,7 +28,7 @@ export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
             }
 
             endResponse(
-                new fetchAPI.Response(null, {
+                new fetchAPI.Response('In Maintenance Mode', {
                     status: 502,
                 })
             );
