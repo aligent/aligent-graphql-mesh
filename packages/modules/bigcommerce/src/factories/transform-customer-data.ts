@@ -47,7 +47,6 @@ export const transformAcCustomerInputToBcCustomerInput = (
         lastName: lastname,
         email,
         password,
-        phone: '0123456789', //This needs to be here for the API to work, the Docs say its not required, currently waiting on support from BC to confirm
     };
 };
 

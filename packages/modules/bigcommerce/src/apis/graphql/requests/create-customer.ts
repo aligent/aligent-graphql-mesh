@@ -9,7 +9,6 @@ export const createCustomerMutation = stripIgnoredCharacters(
             $firstName: String!
             $lastName: String!
             $password: String!
-            $phone: String
         ) {
             customer {
                 registerCustomer(
@@ -18,7 +17,6 @@ export const createCustomerMutation = stripIgnoredCharacters(
                         firstName: $firstName
                         lastName: $lastName
                         password: $password
-                        phone: $phone
                     }
                 ) {
                     customer {
@@ -26,7 +24,6 @@ export const createCustomerMutation = stripIgnoredCharacters(
                         email
                         firstName
                         lastName
-                        phone
                     }
                     errors {
                         __typename

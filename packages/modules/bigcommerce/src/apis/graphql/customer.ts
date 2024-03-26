@@ -94,7 +94,7 @@ export const createCustomer = async (
     customerInputData: BcCreateCustomerMutationInput,
     customerImpersonationToken: string
 ): Promise<AcCreateCustomerResponse> => {
-    const { firstName, lastName, email, password, phone } = customerInputData;
+    const { firstName, lastName, email, password } = customerInputData;
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
@@ -106,7 +106,6 @@ export const createCustomer = async (
             firstName,
             lastName,
             password,
-            phone,
         },
     };
 

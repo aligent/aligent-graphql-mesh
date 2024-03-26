@@ -57,5 +57,4 @@ export const transformedCreatedCustomer = {
     lastName: 'mac',
     email: 'jack.mcloughlin+test2@aligent.com.au',
     password: 'PASSWORD',
-    phone: '0123456789',
 };
