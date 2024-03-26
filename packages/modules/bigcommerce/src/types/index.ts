@@ -66,6 +66,14 @@ export interface BcMutationCustomer {
     ];
 }
 
+export interface BcCreateCustomerMutationInput {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phone: string;
+}
+
 export interface Country {
     id: number;
     country: string;
@@ -499,3 +507,14 @@ export type BcPaymentMethod = {
     name: string;
     test_mode?: boolean;
 };
+
+export interface AcCreateCustomerResponse {
+    customer: {
+        entityId: number;
+        email: string;
+        firstName: string;
+        lastName: string;
+        phone: string;
+    };
+    errors: { message: string };
+}

@@ -7,6 +7,7 @@ import { retrieveCustomerAttributesFromCache } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
 import { customerWishlists } from './requests/customer-wishlists';
 import { createCustomerMutation } from './requests/create-customer';
+import { AcCreateCustomerResponse, BcCreateCustomerMutationInput } from '../../types';
 
 export const getBcCustomer = async (
     bcCustomerId: number,
@@ -90,12 +91,10 @@ export const getCustomerWishlists = async (
 };
 
 export const createCustomer = async (
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
+    customerInputData: BcCreateCustomerMutationInput,
     customerImpersonationToken: string
-) => {
+): Promise<AcCreateCustomerResponse> => {
+    const { firstName, lastName, email, password, phone } = customerInputData;
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
@@ -107,10 +106,18 @@ export const createCustomer = async (
             firstName,
             lastName,
             password,
+            phone,
         },
     };
 
     const createCustomerResponse = await bcGraphQlRequest(createCustomerQuery, headers);
 
-    console.log(JSON.stringify(createCustomerResponse))
+    if (createCustomerResponse.errors) {
+        return logAndThrowError(createCustomerResponse.errors);
+    }
+    if (createCustomerResponse.data.customer.registerCustomer.errors.length > 0) {
+        return logAndThrowError(createCustomerResponse.data.customer.registerCustomer.errors);
+    }
+
+    return createCustomerResponse.data.customer.registerCustomer;
 };

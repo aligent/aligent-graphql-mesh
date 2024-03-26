@@ -1,7 +1,12 @@
 import { snakeCase } from 'lodash';
 import { Customer, CustomerInput, CustomerOutput } from '@aligent/bigcommerce-resolvers';
 import { getTransformedCustomerAddresses } from './helpers/transform-customer-addresses';
-import { BcMutationCustomer, ValidatePasswordRequest, BcCustomer } from '../types';
+import {
+    BcMutationCustomer,
+    ValidatePasswordRequest,
+    BcCustomer,
+    BcCreateCustomerMutationInput,
+} from '../types';
 
 export const transformBcCustomer = (bcCustomer: BcCustomer): Customer => {
     const { addresses, first_name, last_name, email } = bcCustomer;
@@ -28,6 +33,21 @@ export const transformBcCustomer = (bcCustomer: BcCustomer): Customer => {
                 total_pages: null,
             },
         },
+    };
+};
+
+export const transformAcCustomerInputToBcCustomerInput = (
+    firstname: string,
+    lastname: string,
+    email: string,
+    password: string
+): BcCreateCustomerMutationInput => {
+    return {
+        firstName: firstname,
+        lastName: lastname,
+        email,
+        password,
+        phone: '0123456789', //This needs to be here for the API to work, the Docs say its not required, currently waiting on support from BC to confirm
     };
 };
 
