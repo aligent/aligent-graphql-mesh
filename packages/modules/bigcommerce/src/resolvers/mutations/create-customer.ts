@@ -2,7 +2,7 @@ import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { logAndThrowError } from '@aligent/utils';
 import { createSubscriber } from '../../apis/rest/subscriber';
 import { transformAcCustomerInputToBcCustomerInput } from '../../factories/transform-customer-data';
-import { createCustomer } from '../../apis/graphql';
+import { createBcCustomer } from '../../apis/graphql';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 /* istanbul ignore next */
@@ -24,7 +24,7 @@ export const createCustomerResolver: MutationResolvers['createCustomer'] = {
         const customerImpersonationToken =
             await retrieveCustomerImpersonationTokenFromCache(context);
 
-        const bcCustomer = await createCustomer(
+        const bcCustomer = await createBcCustomer(
             transformedCreateCustomerData,
             customerImpersonationToken
         );

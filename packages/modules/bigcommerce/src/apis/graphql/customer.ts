@@ -1,7 +1,7 @@
 import { Customer } from '@aligent/bigcommerce-operations';
 import { bcGraphQlRequest } from './client';
 import { customer } from './requests/customer';
-import { logAndThrowError } from '@aligent/utils';
+import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import { customerAttribute } from './requests/customer-attribute';
 import { retrieveCustomerAttributesFromCache } from '../rest/customer';
 import { verifyCartEntityId } from './cart';
@@ -90,7 +90,7 @@ export const getCustomerWishlists = async (
     return response.data.customer.wishlists;
 };
 
-export const createCustomer = async (
+export const createBcCustomer = async (
     customerInputData: BcCreateCustomerMutationInput,
     customerImpersonationToken: string
 ): Promise<AcCreateCustomerResponse> => {
@@ -109,14 +109,28 @@ export const createCustomer = async (
         },
     };
 
-    const createCustomerResponse = await bcGraphQlRequest(createCustomerQuery, headers);
+    try {
+        const createCustomerResponse = await bcGraphQlRequest(createCustomerQuery, headers);
 
-    if (createCustomerResponse.errors) {
-        return logAndThrowError(createCustomerResponse.errors);
-    }
-    if (createCustomerResponse.data.customer.registerCustomer.errors.length > 0) {
-        return logAndThrowError(createCustomerResponse.data.customer.registerCustomer.errors);
-    }
+        if (createCustomerResponse.data.customer.registerCustomer.errors.length > 0) {
+            if (
+                createCustomerResponse.data.customer.registerCustomer.errors[0].__typename ===
+                'EmailAlreadyInUseError'
+            ) {
+                throw new GraphqlError(
+                    'A customer with the same email address already exists in an associated website.',
+                    'input'
+                );
+            }
 
-    return createCustomerResponse.data.customer.registerCustomer;
+            return logAndThrowError(
+                createCustomerResponse.data.customer.registerCustomer.errors,
+                'createBcCustomer'
+            );
+        }
+
+        return createCustomerResponse.data.customer.registerCustomer;
+    } catch (error) {
+        return logAndThrowError(error, 'createBcCustomer');
+    }
 };

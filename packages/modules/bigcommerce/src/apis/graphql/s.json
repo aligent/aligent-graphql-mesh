@@ -1,0 +1,15 @@
+{
+    "data": {
+        "customer": {
+            "registerCustomer": {
+                "customer": null,
+                "errors": [
+                    {
+                        "__typename": "EmailAlreadyInUseError",
+                        "message": "The email address is already in use."
+                    }
+                ]
+            }
+        }
+    }
+}
