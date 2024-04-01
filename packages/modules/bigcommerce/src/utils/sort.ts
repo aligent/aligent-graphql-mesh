@@ -66,13 +66,14 @@ const sortByIdentifier = (
  * @param sortDirection
  */
 export const getSortedProducts = (
-    productsToSort: Array<Maybe<ProductEdge>>,
+    productsToSort: Maybe<Array<ProductEdge>>,
     identifiers: {
         ids?: Array<number>;
         skus?: Array<string>;
     },
     sortDirection = 'asc'
-): Array<Maybe<ProductEdge>> => {
+): Maybe<Array<ProductEdge>> => {
+    if (!productsToSort) return [];
     let sortedProducts = productsToSort;
 
     if (identifiers.ids) {
