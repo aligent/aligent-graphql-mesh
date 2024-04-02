@@ -111,22 +111,17 @@ export const createBcCustomer = async (
 
     try {
         const createCustomerResponse = await bcGraphQlRequest(createCustomerQuery, headers);
+        const { errors } = createCustomerResponse.data.customer.registerCustomer;
 
-        if (createCustomerResponse.data.customer.registerCustomer.errors.length > 0) {
-            if (
-                createCustomerResponse.data.customer.registerCustomer.errors[0].__typename ===
-                'EmailAlreadyInUseError'
-            ) {
+        if (errors.length > 0) {
+            if (errors[0].__typename === 'EmailAlreadyInUseError') {
                 throw new GraphqlError(
                     'A customer with the same email address already exists in an associated website.',
                     'input'
                 );
             }
 
-            return logAndThrowError(
-                createCustomerResponse.data.customer.registerCustomer.errors,
-                'createBcCustomer'
-            );
+            return logAndThrowError(errors, 'createBcCustomer');
         }
 
         return createCustomerResponse.data.customer.registerCustomer;
