@@ -10,9 +10,9 @@ import {
 import { bcDelete, bcGet, bcPost, bcPut } from './client';
 import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import { CustomerAttributes } from '@aligent/bigcommerce-operations';
-import { CustomerInput } from '@aligent/bigcommerce-resolvers';
 import { getDataFromMeshCache } from '../../utils/mesh-cache';
 import { CACHE_KEY__CUSTOMER_ATTRIBUTES } from '../../constants';
+import { CustomerInput } from '@aligent/bigcommerce-resolvers';
 
 const CUSTOMERS_API = `/v3/customers`;
 const CUSTOMER_ADDRESS_API = `/v3/customers/addresses`;
