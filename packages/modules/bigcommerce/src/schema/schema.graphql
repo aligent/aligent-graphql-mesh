@@ -4978,6 +4978,10 @@ input ProductAttributeFilterInput {
     The part of the URL that identifies the product
     """
     url_key: FilterEqualTypeInput
+    """
+    The namespace value that points to the BC product metafields
+    """
+    metafield_namespace: FilterEqualTypeInput
 }
 
 """
