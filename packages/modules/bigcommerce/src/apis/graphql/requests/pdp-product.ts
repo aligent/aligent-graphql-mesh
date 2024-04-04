@@ -14,7 +14,7 @@ export const getPdpProductQuery = stripIgnoredCharacters(
             $includeTax: Boolean
             $first: Int
             $after: String
-            $namespace: String! = "custom_attributes"
+            $namespace: String!
         ) {
             site {
                 route(path: $path) {
