@@ -3,7 +3,7 @@ import { graphqlPaginate } from './client';
 import { getPdpProductQuery } from './requests/pdp-product';
 
 export const getBcProductByPathGraphql = async (
-    variables: SiteRouteArgs & { includeTax?: boolean },
+    variables: SiteRouteArgs & { includeTax?: boolean; namespace?: string | null },
     customerImpersonationToken: string,
     pageSize?: number,
     requestedPage?: number
@@ -15,7 +15,10 @@ export const getBcProductByPathGraphql = async (
     const productQuery = {
         headers,
         query: getPdpProductQuery,
-        variables: variables,
+        variables: {
+            ...variables,
+            namespace: variables.namespace || 'custom_attributes', //namespace is a required arg for querying product metafields
+        },
     };
 
     const responsePages = await graphqlPaginate(
