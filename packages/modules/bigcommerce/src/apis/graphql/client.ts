@@ -26,7 +26,11 @@ export const bcGraphQlRequest = async (
         const response = await xray.captureAsyncFunc('bcGraphQlRequest', async (segment) => {
             // Add query annotation to axios request
             segment?.addAnnotation('query', data.query);
-            const response = await axios.post(BC_GRAPHQL_API, data, { headers });
+            const response = await axios.post(BC_GRAPHQL_API, data, {
+                headers,
+                timeout: 10000,
+                timeoutErrorMessage: 'BigCommerce GraphQL request timed out',
+            });
             segment?.close();
             return response;
         });
