@@ -4,6 +4,7 @@ export * from './countries';
 export * from './customer';
 export * from './customer-impersonation-token';
 export * from './formFields';
+export * from './google';
 export * from './order';
 export * from './products';
 export * from './resetPassword';
