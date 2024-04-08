@@ -30,6 +30,7 @@ export const bcGraphQlRequest = async (
                 headers,
                 timeout: 10000,
                 timeoutErrorMessage: 'BigCommerce GraphQL request timed out',
+                signal: AbortSignal.timeout(10000)
             });
             segment?.close();
             return response;
