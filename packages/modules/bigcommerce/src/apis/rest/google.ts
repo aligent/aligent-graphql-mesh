@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { retrieveStoreConfigsFromCache } from '../graphql';
 import { GraphqlError, logAndThrowError } from '@aligent/utils';
+import { retrieveStoreConfigsFromCache } from '../graphql';
+import { ReCaptchaValidationAreas } from '../../types';
 
 const GOOGLE = 'https://www.google.com/';
 
@@ -14,16 +15,24 @@ const googlePost = async (path: string): Promise<AxiosResponse['data']> => {
     }
 };
 
-export const verifyReCaptcha = async (context: GraphQLModules.ModuleContext): Promise<boolean> => {
+export const verifyReCaptcha = async (
+    context: GraphQLModules.ModuleContext,
+    reCaptchaType: ReCaptchaValidationAreas
+): Promise<boolean> => {
+    if (!reCaptchaType) {
+        throw new GraphqlError('Please define a "reCaptchaType" for the area being validated');
+    }
     const requestCaptchaToken = context.headers['x-recaptcha'];
 
-    const {
-        reCaptcha: { isEnabledOnStorefront, siteKey },
-    } = await retrieveStoreConfigsFromCache(context);
+    const storeConfigs = await retrieveStoreConfigsFromCache(context);
 
-    // If recaptcha isn't enabled then return "true" which indicates we're good to continue
-    // with requests
-    if (!isEnabledOnStorefront) return true;
+    const {
+        reCaptcha: { siteKey },
+    } = storeConfigs;
+
+    /* If a value hasn't been defined for the ReCaptcha type in store config it
+     * means we don't want Recaptcha validation enabled for that area. */
+    if (!storeConfigs[reCaptchaType]) return true;
 
     if (!siteKey || !requestCaptchaToken) {
         throw new GraphqlError('Site key or token is missing!');
