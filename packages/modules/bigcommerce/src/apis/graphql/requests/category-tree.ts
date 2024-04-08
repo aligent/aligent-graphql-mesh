@@ -21,11 +21,6 @@ export const getCategoryTreeQuery = stripIgnoredCharacters(
                                     ...CategoryTreeItem
                                     children {
                                         ...CategoryTreeItem
-                                        children {
-                                            ...CategoryTreeItem
-                                            children {
-                                                ...CategoryTreeItem
-                                            }
                                             # If you need your menu to be deeper, just continue this chain
                                         }
                                     }
