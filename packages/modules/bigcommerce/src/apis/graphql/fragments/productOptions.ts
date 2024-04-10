@@ -27,6 +27,7 @@ export const productOptions = gql`
                                 }
                                 ... on SwatchOptionValue {
                                     hexColors
+                                    imageUrl(width: 36)
                                 }
                             }
                         }
