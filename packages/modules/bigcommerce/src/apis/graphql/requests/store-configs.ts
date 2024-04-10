@@ -79,6 +79,7 @@ export const storeConfigsQuery = stripIgnoredCharacters(
                         }
                     }
                     reCaptcha {
+                        isEnabledOnStorefront
                         siteKey
                     }
                     search {

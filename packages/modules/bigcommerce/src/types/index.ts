@@ -1,3 +1,5 @@
+export * from './google';
+
 import {
     BreadcrumbConnection,
     MetafieldConnection,
