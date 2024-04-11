@@ -7,7 +7,7 @@ const NODE_ENV = process.env?.NODE_ENV;
 /**
  * Gets an item from the Dynamo DB table based on a users id and refresh token
  */
-export const getUserAuthResolver: QueryResolvers['getUserAuth'] = {
+export const getUserAuthResolver = {
     resolve: async (_root, args, context, _info) => {
         /* We do not want this query available to the public */
         if (NODE_ENV !== 'development') {
@@ -39,4 +39,4 @@ export const getUserAuthResolver: QueryResolvers['getUserAuth'] = {
             ttl: ttl?.S,
         };
     },
-};
+} satisfies QueryResolvers['getUserAuth'];

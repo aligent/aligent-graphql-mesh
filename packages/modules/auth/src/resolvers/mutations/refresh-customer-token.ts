@@ -17,7 +17,7 @@ const {
     ACCESS_INVALID_REFRESH_INVALID,
 } = JWT_AUTH_STATUSES;
 
-export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerToken'] = {
+export const refreshCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
         const { refresh_token } = args;
         const authToken = context.headers.authorization;
@@ -109,4 +109,4 @@ export const refreshCustomerTokenResolver: MutationResolvers['refreshCustomerTok
         /* Fall back to ending the user session should none of the conditions be met. */
         throw new GraphqlError('Authorization token is no longer valid', 'authorization');
     },
-};
+} satisfies MutationResolvers['refreshCustomerToken'];

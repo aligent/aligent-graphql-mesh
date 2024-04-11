@@ -7,7 +7,7 @@ import { GraphqlError } from '@aligent/utils';
 import { generateLoginTokens } from '../../utils';
 import { AuthService } from '../../services';
 
-export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
+export const generateCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
         const customerImpersonationToken =
             await retrieveCustomerImpersonationTokenFromCache(context);
@@ -37,4 +37,4 @@ export const generateCustomerTokenResolver: MutationResolvers['generateCustomerT
             refresh_token: refreshToken,
         };
     },
-};
+} satisfies MutationResolvers['generateCustomerToken'];

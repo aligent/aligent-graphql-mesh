@@ -7,7 +7,7 @@ const NODE_ENV = process.env?.NODE_ENV;
 /**
  * Add an item to the Dynamo DB table based on a users id and refresh token
  */
-export const updateUserAuthResolver: MutationResolvers['updateUserAuth'] = {
+export const updateUserAuthResolver = {
     resolve: async (_root, args, context, _info) => {
         /* We do not want this mutation available to the public */
         if (NODE_ENV !== 'development') {
@@ -35,4 +35,4 @@ export const updateUserAuthResolver: MutationResolvers['updateUserAuth'] = {
             success: response?.$metadata?.httpStatusCode === 200,
         };
     },
-};
+} satisfies MutationResolvers['updateUserAuth'];
