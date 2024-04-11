@@ -3,7 +3,7 @@ import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
 import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils';
 
-export const revokeCustomerTokenResolver: MutationResolvers['revokeCustomerToken'] = {
+export const revokeCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
         const authToken = context.headers.authorization;
 
@@ -47,4 +47,4 @@ export const revokeCustomerTokenResolver: MutationResolvers['revokeCustomerToken
             result: response?.$metadata?.httpStatusCode === 200,
         };
     },
-};
+} satisfies MutationResolvers['revokeCustomerToken'];

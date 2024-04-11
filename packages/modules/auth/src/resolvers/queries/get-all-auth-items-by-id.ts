@@ -4,7 +4,7 @@ import { QueryResolvers } from '@aligent/auth-resolvers';
 
 const NODE_ENV = process.env?.NODE_ENV;
 
-export const getAllAuthItemsByIdResolver: QueryResolvers['getAllAuthItemsById'] = {
+export const getAllAuthItemsByIdResolver = {
     resolve: async (_root, args, context, _info) => {
         /* We do not want this mutation available to the public */
         if (NODE_ENV !== 'development') {
@@ -37,4 +37,4 @@ export const getAllAuthItemsByIdResolver: QueryResolvers['getAllAuthItemsById'] 
 
         return items;
     },
-};
+} satisfies QueryResolvers['getAllAuthItemsById'];

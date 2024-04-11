@@ -7,7 +7,7 @@ const NODE_ENV = process.env?.NODE_ENV;
 /**
  * Removes an item from the Dynamo DB table based on a users id and refresh token
  */
-export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
+export const removeUserAuthResolver = {
     resolve: async (_root, args, context, _info) => {
         /* We do not want this mutation available to the public */
         if (NODE_ENV !== 'development') {
@@ -40,4 +40,4 @@ export const removeUserAuthResolver: MutationResolvers['removeUserAuth'] = {
             success: response?.$metadata?.httpStatusCode === 200,
         };
     },
-};
+} satisfies MutationResolvers['removeUserAuth'];

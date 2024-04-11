@@ -4,7 +4,7 @@ import { MutationResolvers } from '@aligent/auth-resolvers';
 
 const NODE_ENV = process.env?.NODE_ENV;
 
-export const removeAllUserAuthItemsResolver: MutationResolvers['removeAllUserAuthItems'] = {
+export const removeAllUserAuthItemsResolver = {
     resolve: async (_root, args, context, _info) => {
         /* We do not want this mutation available to the public */
         if (NODE_ENV !== 'development') {
@@ -25,4 +25,4 @@ export const removeAllUserAuthItemsResolver: MutationResolvers['removeAllUserAut
             success: response.success,
         };
     },
-};
+} satisfies MutationResolvers['removeAllUserAuthItems'];

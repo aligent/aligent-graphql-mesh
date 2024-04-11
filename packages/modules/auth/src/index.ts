@@ -10,8 +10,6 @@ const loadGraphQlFiles = () => loadFilesSync(resolve(__dirname, './schema/*.grap
 
 export interface ModuleConfig {
     dynamoDbRegion: string;
-    dynamoDbAccessKeyId: string;
-    dynamoDbSecretAccessKey: string;
     dynamoDbAuthTable: string;
 }
 
