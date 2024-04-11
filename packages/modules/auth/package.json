@@ -1,6 +1,6 @@
 {
   "name": "@aligent/auth-module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "@aligent/bigcommerce-graphql-module": "0.0.27",
     "@aws-sdk/client-dynamodb": "^3.535.0",
