@@ -26,8 +26,6 @@ export default createApplication({
     }),
     createAuthModule({
       dynamoDbRegion: process.env.DYNAMO_DB__REGION as string,
-      dynamoDbAccessKeyId: process.env.DYNAMO_DB__ACCESS_KEY_ID as string,
-      dynamoDbSecretAccessKey: process.env.DYNAMO_DB__SECRET_ACCESS_KEY as string,
       dynamoDbAuthTable: process.env.DYNAMO_DB_AUTH_TABLE as string,
     }),
   ],
@@ -36,6 +34,9 @@ export default createApplication({
 
 - Copy env variables from `packages/mesh/auth/.env.template` and paste into the corresponding project .env file.
   - e.g. For the BigCommerce module you would paste the Auth .env.template vars into `packages/mesh/bigcommerce/.env`
+  - Note: "AWS_ACCESS_KEY_ID" and "AWS_SECRET_ACCESS_KEY" env vars need to be defined in the .env file. AWS do the
+    rest of the work to ensure the var values get to AWS sdk. "credentials" variables get picked up by the AWS skd
+    performing process.env behind the scenes and why they don't directly need to be passed along.
 
 #### Auth Query/Mutations
 

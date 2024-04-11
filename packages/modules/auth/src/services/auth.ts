@@ -36,10 +36,9 @@ export class AuthService {
     ) {
         this.client = new DynamoDBClient({
             region: this.config.dynamoDbRegion,
-            credentials: {
-                accessKeyId: this.config.dynamoDbAccessKeyId,
-                secretAccessKey: this.config.dynamoDbSecretAccessKey,
-            },
+            /* Note: Credentials are not required as long as "AWS_ACCESS_KEY_ID" and
+             * "AWS_SECRET_ACCESS_KEY" variables are defined in the ".env" file.
+             * This sdk will pick them up from ".env" being calling "process.env" */
         });
     }
 
