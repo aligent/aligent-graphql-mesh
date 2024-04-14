@@ -1,5 +1,5 @@
 import { getBcCustomerId } from '../authorization';
-import { AuthorizationError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 
 describe('authorization', () => {
     test(`Returns "null" if there's no authorization header`, () => {
@@ -15,6 +15,6 @@ describe('authorization', () => {
             getBcCustomerId({
                 headers: { authorization: 'Bearer abcd' },
             } as unknown as GraphQLModules.ModuleContext);
-        }).toThrow(new AuthorizationError('User session has expired'));
+        }).toThrow(new GraphqlError('User session has expired', 'authentication'));
     });
 });

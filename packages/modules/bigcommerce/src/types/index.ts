@@ -1,3 +1,5 @@
+export * from './google';
+
 import {
     BreadcrumbConnection,
     MetafieldConnection,
@@ -64,6 +66,13 @@ export interface BcMutationCustomer {
             value: string | string[];
         },
     ];
+}
+
+export interface BcCreateCustomerMutationInput {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
 }
 
 export interface Country {
@@ -499,3 +508,13 @@ export type BcPaymentMethod = {
     name: string;
     test_mode?: boolean;
 };
+
+export interface AcCreateCustomerResponse {
+    customer: {
+        entityId: number;
+        email: string;
+        firstName: string;
+        lastName: string;
+    };
+    errors: { message: string };
+}

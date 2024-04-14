@@ -27,6 +27,7 @@ definitions:
 
     - step: &code-quality
         name: 🕵️‍♀️ Code Quality
+        size: 2x
         script:
           - FORCE_COLOR=true
           - DESTINATION_BRANCH=origin/${DESTINATION_BRANCH:-$BITBUCKET_PR_DESTINATION_BRANCH} # Set DESTINATION_BRANCH to the PR destination branch if it is not already set
@@ -128,6 +129,9 @@ pipelines:
       - step: *install
       - step: *publish
     'orocommerce-graphql-module-*.*.*':
+      - step: *install
+      - step: *publish
+    'maintenance-mode-plugin-*.*.*':
       - step: *install
       - step: *publish
 

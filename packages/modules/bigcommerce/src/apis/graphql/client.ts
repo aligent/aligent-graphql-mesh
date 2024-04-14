@@ -3,7 +3,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { get } from 'lodash';
 import { GraphQlQuery } from '../../types';
-import { AxiosGraphqlError, logAndThrowError } from '@aligent/utils';
+import { GraphqlError, logAndThrowError } from '@aligent/utils';
 import * as xray from 'aws-xray-sdk';
 
 const BC_GRAPHQL_API = process.env.BC_GRAPHQL_API as string;
@@ -26,7 +26,12 @@ export const bcGraphQlRequest = async (
         const response = await xray.captureAsyncFunc('bcGraphQlRequest', async (segment) => {
             // Add query annotation to axios request
             segment?.addAnnotation('query', data.query);
-            const response = await axios.post(BC_GRAPHQL_API, data, { headers });
+            const response = await axios.post(BC_GRAPHQL_API, data, {
+                headers,
+                timeout: 10000,
+                timeoutErrorMessage: 'BigCommerce GraphQL request timed out',
+                signal: AbortSignal.timeout(10000)
+            });
             segment?.close();
             return response;
         });
@@ -120,14 +125,14 @@ async function* fetchPaginatedGraphQLData(
         const pageInfo = get(data, pathToPaginationData);
 
         if (!pageInfo) {
-            throw new AxiosGraphqlError('Could not find pageInfo');
+            throw new GraphqlError('Could not find pageInfo', 'no-such-entity');
         }
 
         const newEndCursor = pageInfo.endCursor;
 
         /* Safeguard against infinite loops */
         if (newEndCursor === endCursor) {
-            throw new AxiosGraphqlError(`GraphQL request errors: Duplicate cursors`);
+            throw new GraphqlError(`GraphQL request errors: Duplicate cursors`, 'already-exists');
         }
 
         yield data;

@@ -1,7 +1,7 @@
 import { getBcCustomer } from '../graphql';
 import { transformAcCustomerValidatePassword } from '../../factories/transform-customer-data';
 import { validateCustomerCredentials as validateCustomerCredentialsPost } from '../rest/customer';
-import { AuthorizationError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 import { Customer } from '@aligent/bigcommerce-operations';
 
 /**
@@ -32,7 +32,7 @@ export const verifyCustomerCredentials = async (
     /* If the password doesn't belong to the email address return an error which flags the PWA
      * to end the users session */
     if (!verifyPasswordResponse.is_valid) {
-        throw new AuthorizationError('Invalid login or password.');
+        throw new GraphqlError('Invalid login or password.', 'authorization');
     }
 
     return currentCustomer;

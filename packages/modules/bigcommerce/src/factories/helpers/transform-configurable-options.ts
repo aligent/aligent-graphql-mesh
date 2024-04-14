@@ -37,10 +37,11 @@ export const getTransformedConfigurableOptions = (
                         hexColors,
                         isDefault,
                         label,
+                        imageUrl,
                     } = value.node as SwatchOptionValue;
                     const swatch_data =
-                        hexColors && hexColors.length > 0
-                            ? { value: hexColors[0], __typename: 'ColorSwatchData' }
+                        (hexColors && hexColors.length > 0) || imageUrl
+                            ? { value: hexColors[0] || imageUrl, __typename: 'ColorSwatchData' }
                             : null;
 
                     // This uid gets formed the same way as Adobe Commerce configurable products. We

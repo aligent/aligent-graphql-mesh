@@ -29,6 +29,9 @@ export const createBigCommerceModule = (config: BigCommerceModuleConfig) => {
 };
 
 export * from './plugins/add-ip-address-to-axios-headers';
+export * from './apis/graphql';
+export * from './apis/rest';
+export * from './utils';
 
 // Export Globally accessible DI Tokens so other modules can use them
 export { ModuleConfig, BigCommerceSdk } from './providers';

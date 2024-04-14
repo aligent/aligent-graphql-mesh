@@ -24,8 +24,8 @@ export const mergeCartsResolver: MutationResolvers['mergeCarts'] = {
         //  Merge cart can be only performed by a logged-in user
         if (!bcCustomerId)
             throw new GraphqlError(
-                'authorization',
-                "The current customer isn't authorized to perform merge cart"
+                "The current customer isn't authorized to perform merge cart",
+                'authorization'
             );
 
         const customerImpersonationToken =

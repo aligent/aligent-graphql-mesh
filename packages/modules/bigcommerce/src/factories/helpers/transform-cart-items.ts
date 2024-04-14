@@ -5,7 +5,7 @@ import {
     Maybe,
     ProductInterface,
 } from '@aligent/bigcommerce-resolvers';
-import { AxiosGraphqlError, createCartItemUid } from '@aligent/utils';
+import { GraphqlError, createCartItemUid } from '@aligent/utils';
 import { getTransformedPrice } from './transform-price';
 import { getTransformedCartItemErrors } from './transform-cart-item-errors';
 
@@ -40,7 +40,7 @@ export const getTransformCartItems = (
         });
 
         if (!matchingEnrichedData) {
-            throw new AxiosGraphqlError(`Missing additional data for product ${sku}`);
+            throw new GraphqlError(`Missing additional data for product ${sku}`, 'input');
         }
 
         const configurable_options = selectedOptions.map((option) => {

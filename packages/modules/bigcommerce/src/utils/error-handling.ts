@@ -45,7 +45,7 @@ export const getCartUserErrors = (
         /* Used in "update" cart flows where there's stock issues. The PWA is expecting a
          * thrown error over "user_errors" */
         if (shouldThrowError) {
-            throw new GraphqlError('input', insufficientStockError);
+            throw new GraphqlError(insufficientStockError, 'input');
         }
 
         return [
@@ -73,7 +73,7 @@ export const getCartUserErrors = (
         /* Used in "update" cart flows where there's stock issues. The PWA is expecting a
          * thrown error over "user_errors" */
         if (shouldThrowError) {
-            throw new GraphqlError('input', notPurchasableError);
+            throw new GraphqlError(notPurchasableError, 'input');
         }
 
         return [
@@ -99,7 +99,7 @@ export const getCartUserErrors = (
         /* Used in "update" cart flows where there's stock issues. The PWA is expecting a
          * thrown error over "user_errors" */
         if (shouldThrowError) {
-            throw new GraphqlError('input', notPurchasableError);
+            throw new GraphqlError(notPurchasableError, 'input');
         }
 
         return [

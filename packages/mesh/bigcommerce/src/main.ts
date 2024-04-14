@@ -12,10 +12,12 @@ import cachableObjects from './cache';
 import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module';
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
+import { maintenanceModePlugin } from '@aligent/maintenance-mode-plugin';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
+const maintenanceFilePath = process.env.MAINTENANCE_FILE_PATH as string;
 
 const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
@@ -40,6 +42,7 @@ const yoga = createYoga({
         };
     },
     plugins: [
+        maintenanceModePlugin(maintenanceFilePath),
         useGraphQLModules(application),
         addIpAddressToAxiosHeaders,
         EnvelopArmorPlugin({

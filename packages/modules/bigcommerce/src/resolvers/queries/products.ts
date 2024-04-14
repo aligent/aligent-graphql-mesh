@@ -37,6 +37,7 @@ export const productsResolver: QueryResolvers['products'] = {
                     {
                         includeTax: getIncludesTax(taxSettings?.pdp),
                         path: url_key,
+                        namespace: args.filter?.metafield_namespace?.eq,
                     },
                     customerImpersonationToken
                 );

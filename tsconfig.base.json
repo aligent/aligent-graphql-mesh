@@ -29,6 +29,8 @@
         "forceConsistentCasingInFileNames": true,
         "baseUrl": ".",
         "paths": {
+            "@aligent/auth-module": ["packages/modules/auth/src/index.ts"],
+            "@aligent/auth-resolvers": ["packages/generated/auth-resolvers/src/index.ts"],
             "@aligent/bigcommerce-graphql-module": ["packages/modules/bigcommerce/src/index.ts"],
             "@aligent/bigcommerce-operations": [
                 "packages/generated/bigcommerce-operations/src/index.ts"
@@ -36,6 +38,7 @@
             "@aligent/bigcommerce-resolvers": [
                 "packages/generated/bigcommerce-resolvers/src/index.ts"
             ],
+            "@aligent/maintenance-mode-plugin": ["packages/maintenance-mode-plugin/src/index.ts"],
             "@aligent/mesh": ["tools/plugin/aligent-mesh/src/index.ts"],
             "@aligent/orocommerce-graphql-module": ["packages/modules/orocommerce/src/index.ts"],
             "@aligent/orocommerce-resolvers": [

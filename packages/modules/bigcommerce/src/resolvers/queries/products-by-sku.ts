@@ -2,7 +2,7 @@ import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getProducts, retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 import { getBcProductsGraphql, retrieveStoreConfigsFromCache } from '../../apis/graphql';
-import { AxiosGraphqlError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../utils/sort';
 import { getIncludesTax } from '../../utils/get-tax';
 
@@ -39,7 +39,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         const skuLength = uniqueSkus.length;
 
         if (skuLength > MAX_SKU_QUERY_LIMIT) {
-            throw new AxiosGraphqlError('Cannot have more than 50 skus');
+            throw new GraphqlError('Cannot have more than 50 skus', 'input');
         }
 
         /* This whole query is based on getting products by sku so if we don't have an array of skus

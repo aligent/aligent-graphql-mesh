@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { logAndThrowAxiosError, logAndThrowUnknownError } from './axios-errors';
+import { GraphQLError } from 'graphql/error';
 /* istanbul ignore file */
 
 /**
@@ -20,13 +21,10 @@ export const logAndThrowError = (
     }
 };
 
-export class GraphqlError extends Error {
-    extensions: {
-        category: string;
-    };
-
+export class GraphqlError extends GraphQLError {
     constructor(
-        category:
+        message: string,
+        category?:
             | 'already-exists'
             // When user authentication fails. e.g. Attempting to log in
             | 'authentication'
@@ -39,49 +37,12 @@ export class GraphqlError extends Error {
             /* When an expected resource doesn't exist*/
             | 'no-such-entity'
             /* Internal server error */
-            | 'server-internal-error',
-        message: string
+            | 'server-internal-error'
     ) {
-        super(message);
-        this.extensions = {
-            category: `graphql-${category}`,
-        };
-    }
-}
-
-/**
- * A specific error when decrypting the meshToken fails
- */
-export class AuthorizationError extends Error {
-    extensions: {
-        category: string;
-    };
-
-    constructor(message: string) {
-        super(message);
-
-        /* Adding this "extensions" object tells the PWA that the users authorization token
-         * has expired. Actions will follow in the PWA to log the user out and remove
-         * session related data from browser storage. */
-        this.extensions = {
-            category: 'graphql-authorization',
-        };
-    }
-}
-
-/**
- * The error returned to the PWA when axios errors
- */
-export class AxiosGraphqlError extends Error {
-    extensions: {
-        category: string;
-    };
-
-    constructor(message: string) {
-        super(message);
-
-        this.extensions = {
-            category: 'graphql-input',
-        };
+        super(message, {
+            extensions: {
+                category: `graphql-${category}`,
+            },
+        });
     }
 }

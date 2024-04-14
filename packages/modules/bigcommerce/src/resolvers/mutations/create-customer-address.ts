@@ -1,5 +1,5 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
-import { logAndThrowError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 import {
     getBcCustomerIdFromMeshToken,
     getCountryStateByAddressInput,
@@ -18,7 +18,7 @@ export const createCustomerAddressResolver: MutationResolvers['createCustomerAdd
         const customerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
 
         if (!isCustomerAddressValid(input)) {
-            return logAndThrowError(
+            throw new GraphqlError(
                 'ValidationError: Failed to validate CustomerAddressInput, Required field is missing'
             );
         }
@@ -28,11 +28,11 @@ export const createCustomerAddressResolver: MutationResolvers['createCustomerAdd
             const hasDefaultAddress = checkIfAddressbookHasDefaultAddress(bcAddresses);
 
             if (hasDefaultAddress.hasDefaultShipping && input.default_shipping) {
-                return logAndThrowError('Already have a default shipping address');
+                throw new GraphqlError('Already have a default shipping address');
             }
 
             if (hasDefaultAddress.hasDefaultBilling && input.default_billing) {
-                return logAndThrowError('Already have a default billing address');
+                throw new GraphqlError('Already have a default billing address');
             }
         }
 

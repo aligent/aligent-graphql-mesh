@@ -1,13 +1,10 @@
 import { bcGraphQlRequest } from './client';
 import { getBrands } from './requests';
-import { Brand } from '@aligent/bigcommerce-resolvers';
-
-type BrandNode = {
-    node: Brand;
-};
+import { transformBrands } from '../../factories/helpers/transform-brands';
+import { Brand, QueryBrandsArgs } from '@aligent/bigcommerce-resolvers';
 
 export const getAllBrands = async (
-    brandImageWidth: number,
+    variables: QueryBrandsArgs,
     customerImpersonationToken: string
 ): Promise<Brand[]> => {
     const headers = {
@@ -16,9 +13,7 @@ export const getAllBrands = async (
 
     const brandQuery = {
         query: getBrands,
-        variables: {
-            brandImageWidth,
-        },
+        variables,
     };
 
     const brandArrayAggregator = [];
@@ -38,7 +33,7 @@ export const getAllBrands = async (
                 {
                     ...brandQuery,
                     variables: {
-                        brandImageWidth,
+                        ...variables,
                         after: endCursor,
                     },
                 },
@@ -46,9 +41,11 @@ export const getAllBrands = async (
             );
         }
 
-        const brandEdges: BrandNode[] = response.data.site.brands.edges;
+        const brandEdges = response.data.site.brands;
 
-        brandArrayAggregator.push(...brandEdges.map((brand) => brand.node));
+        const transformedBrands = transformBrands(brandEdges);
+
+        brandArrayAggregator.push(...transformedBrands);
     }
 
     return brandArrayAggregator;

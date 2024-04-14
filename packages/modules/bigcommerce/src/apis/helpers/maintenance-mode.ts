@@ -1,6 +1,6 @@
 import { getChannelMetafields } from '../graphql';
 import { findMetafieldValueByKey } from '../../utils/metafields';
-import { AxiosGraphqlError } from '@aligent/utils';
+import { GraphqlError } from '@aligent/utils';
 
 const MAINTENANCE_MODE_NAMESPACE = 'maintenance_mode';
 const IP_ADDRESSES_KEY = 'allowed_ip_addresses';
@@ -49,6 +49,6 @@ export const checkMaintenanceMode = async (
      * ip address in the incoming request, throw an error.
      *  */
     if (!isAllowedAccess) {
-        throw new AxiosGraphqlError('Maintenance mode is active');
+        throw new GraphqlError('Maintenance mode is active', 'input');
     }
 };
