@@ -16,4 +16,4 @@ export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {
             ...transformCmsPagesToCmsBlocks(response.filter(Boolean) as CmsPage[]),
         };
     },
-}
+};
