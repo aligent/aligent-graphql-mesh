@@ -1,6 +1,6 @@
 import { CmsPage, QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { cmsPageResolver } from '../../../../bigcommerce/src/resolvers/queries/cms-page';
 import { transformCmsPagesToCmsBlocks } from '../../factories/transform-cms-pages-to-cms-blocks';
+import { cmsPageResolver } from './cms-page';
 
 export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {
     resolve: async (root, args, context, info) => {
