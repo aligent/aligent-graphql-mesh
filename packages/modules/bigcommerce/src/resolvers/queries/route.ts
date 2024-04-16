@@ -6,13 +6,14 @@ import {
     ContactPage,
     NormalPage,
     Product,
+    RawHtmlPage,
     Settings,
     TaxDisplaySettings,
 } from '@aligent/bigcommerce-operations';
 import { getRoute, retrieveStoreConfigsFromCache } from '../../apis/graphql';
 import { getTransformedCategoryData } from '../../factories/transform-category-data';
 import { getTransformedProductData } from '../../factories/transform-products-data';
-import { getTransformedNormalPageData } from '../../factories/get-transformed-normal-page-data';
+import { getTransformedPageData } from '../../factories/get-transformed-page-data';
 import { productsMock } from '../mocks/products';
 import { mockCmsPage } from '../mocks/cms-page';
 import { Category } from '../../types';
@@ -62,10 +63,10 @@ const getTransformedRouteData = async ({
         };
     }
 
-    if (__typename === 'NormalPage') {
+    if (__typename === 'NormalPage' || __typename === 'RawHtmlPage') {
         const cdnUrl = storeConfig.url.cdnUrl;
         return {
-            ...getTransformedNormalPageData(data as NormalPage, cdnUrl),
+            ...getTransformedPageData(data as NormalPage | RawHtmlPage, cdnUrl),
             type: 'CMS_PAGE',
         };
     }
