@@ -80,6 +80,20 @@ export const getRouteQuery = stripIgnoredCharacters(
                             }
                             __typename
                         }
+                        ... on RawHtmlPage {
+                            id
+                            name
+                            entityId
+                            htmlBody
+                            isVisibleInNavigation
+                            parentEntityId
+                            path
+                            plainTextSummary
+                            seo {
+                                ...SeoDetails
+                            }
+                            __typename
+                        }
                     }
                 }
             }
