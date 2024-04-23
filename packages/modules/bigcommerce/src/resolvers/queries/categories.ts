@@ -34,7 +34,7 @@ export const categoriesResolver: QueryResolvers['categories'] = {
         // the data returned will correspond to the first "categoryTree" item so merge them together.
         categoryTree[0] = { ...categoryTree[0], ...category };
         const transformedData = categoryTree.map((child) =>
-            getTransformedCategoryData(child, undefined, restCategories)
+            getTransformedCategoryData(child, undefined, restCategories) //skip the second parameter
         );
 
         /* If there's no "rootEntityId" then the PWA is most likely asking for the mega menu category tree

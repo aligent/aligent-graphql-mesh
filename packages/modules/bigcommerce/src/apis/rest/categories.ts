@@ -20,8 +20,6 @@ export const getAllCategories = async (page: number): Promise<CategoryRest[]> =>
         return getAllCategories(page + 1);
     }
 
-    // console.dir(categories, {depth: 10});
-
     return categories;
 };
 

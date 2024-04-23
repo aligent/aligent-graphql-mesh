@@ -46,7 +46,6 @@ export const getTransformedCategoryData = (
 ): CategoryTree => {
     const { children, description, entityId, image, metafields, name, path, products, seo } =
         category;
-    console.log(parentCategories);
     const productCount = products?.collectionInfo?.totalItems || category.productCount;
     const { metaDescription, pageTitle } = seo || {};
 

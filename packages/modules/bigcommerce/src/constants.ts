@@ -25,7 +25,7 @@ export type CacheItemTtlTypes = {
 export const CACHE_ITEMS_TTL: CacheItemTtlTypes = {
     [CACHE_KEY__BRANDS]: 1800000, // 30 minutes
     [CACHE_KEY__CATEGORIES]: 600000, // 10 minutes
-    [CACHE_KEY__CATEGORIES_REST]: 1800000, // 10 minutes
+    [CACHE_KEY__CATEGORIES_REST]: 1800000, // 30 minutes
     [CACHE_KEY__COUNTRIES]: 1800000, // 30 minutes
     [CACHE_KEY__CUSTOMER_ATTRIBUTES]: 1800000, // 30 minutes
     [CACHE_KEY__CUSTOMER_IMPERSONATION_TOKEN]: 86400000, // 24 hours
