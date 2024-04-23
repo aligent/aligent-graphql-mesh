@@ -42,7 +42,7 @@ export const ROOT_PWA_CATEGORY = {
 export const getTransformedCategoryData = (
     category: Category,
     parentCategories: Category[] | Array<never> = [ROOT_BIGCOMMERCE_CATEGORY],
-    restCategories?: CategoryRest[]
+    restfulCategories?: CategoryRest[]
 ): CategoryTree => {
     const { children, description, entityId, image, metafields, name, path, products, seo } =
         category;
@@ -78,12 +78,12 @@ export const getTransformedCategoryData = (
 
     let parentCategory = null;
 
-    const matchedCurrentCategoryInRest = restCategories?.find(
+    const matchedCurrentCategoryInRest = restfulCategories?.find(
         (restCategory) => restCategory.category_id === category.entityId
     );
 
     if (matchedCurrentCategoryInRest) {
-        const matchedParentCategory = restCategories?.find(
+        const matchedParentCategory = restfulCategories?.find(
             (restCategory) => restCategory.category_id === matchedCurrentCategoryInRest.parent_id
         );
 
@@ -92,7 +92,7 @@ export const getTransformedCategoryData = (
                 id: matchedParentCategory.category_id,
                 uid: btoa(String(matchedParentCategory.category_id)),
                 name: matchedParentCategory.name,
-                url_path: matchedParentCategory.url.path,
+                url_path: matchedParentCategory.url.path.replace(slashAtStartOrEnd, ''),
             };
         }
     }
@@ -100,7 +100,9 @@ export const getTransformedCategoryData = (
     return {
         canonical_url: urlPath,
         children: children
-            ? children.map((child) => getTransformedCategoryData(child, newParentCategories))
+            ? children.map((child) =>
+                  getTransformedCategoryData(child, newParentCategories, restfulCategories)
+              )
             : [],
         children_count: String(children_count),
         description,
@@ -121,7 +123,7 @@ export const getTransformedCategoryData = (
         url_suffix: '',
         staged: false,
         breadcrumbs,
-        parent_category: parentCategory,
+        ...(parentCategory && { parent_category: parentCategory }),
         __typename: 'CategoryTree',
         ...attributesFromMetaFields,
     };

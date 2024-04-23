@@ -23,7 +23,7 @@ export const categoriesResolver: QueryResolvers['categories'] = {
          * data. */
         const rootEntityId =
             categoryUid && categoryUid !== 'null' ? Number(atob(categoryUid)) : null;
-        const [{ category, categoryTree }, restCategories] = await Promise.all([
+        const [{ category, categoryTree }, restfulCategories] = await Promise.all([
             retrieveCategoriesFromCache(context, rootEntityId, {
                 productsPageSize: grid_per_page || STORE_CONFIG__GRID_PER_PAGE,
             }),
@@ -33,8 +33,8 @@ export const categoriesResolver: QueryResolvers['categories'] = {
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,
         // the data returned will correspond to the first "categoryTree" item so merge them together.
         categoryTree[0] = { ...categoryTree[0], ...category };
-        const transformedData = categoryTree.map((child) =>
-            getTransformedCategoryData(child, undefined, restCategories) //skip the second parameter
+        const transformedData = categoryTree.map(
+            (child) => getTransformedCategoryData(child, undefined, restfulCategories) //skip the second parameter
         );
 
         /* If there's no "rootEntityId" then the PWA is most likely asking for the mega menu category tree
