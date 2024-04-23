@@ -4,20 +4,17 @@ import { getDataFromMeshCache } from '../../utils';
 import { bcGet } from './client';
 
 export const getAllCategories = async (page: number): Promise<CategoryRest[]> => {
-    const path = '/v3/catalog/trees/categories';
-
-    const data = {
-        page,
-    };
+    const path = `/v3/catalog/trees/categories?page=${page}`;
 
     let categories: CategoryRest[] | [] = [];
 
-    const response = await bcGet(path, data);
+    const response = await bcGet(path);
 
-    categories = [...categories, ...response.data];
+    categories = response.data;
 
-    if (page < response.meta.pagination.total.total_pages) {
-        return getAllCategories(page + 1);
+    if (page < response.meta.pagination.total_pages) {
+        const nextPageCategories = await getAllCategories(page + 1);
+        categories = [...categories, ...nextPageCategories]
     }
 
     return categories;
