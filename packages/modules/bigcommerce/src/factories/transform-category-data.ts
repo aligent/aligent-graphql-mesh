@@ -5,6 +5,7 @@ import { CategoryTree, Maybe } from '@aligent/bigcommerce-resolvers';
 import { getTransformedBreadcrumbsData } from './transform-breadcrumb-data';
 import { getAttributesFromMetaAndCustomFields } from '../utils/metafields';
 import { getTransformedProductsData } from './transform-products-data';
+import { CategoryRest } from '../types/rest-prop-types';
 
 export const ROOT_BIGCOMMERCE_CATEGORY = {
     id: btoa('0'),
@@ -40,11 +41,12 @@ export const ROOT_PWA_CATEGORY = {
  */
 export const getTransformedCategoryData = (
     category: Category,
-    parentCategories: Category[] | Array<never> = [ROOT_BIGCOMMERCE_CATEGORY]
+    parentCategories: Category[] | Array<never> = [ROOT_BIGCOMMERCE_CATEGORY],
+    restCategories?: CategoryRest[]
 ): CategoryTree => {
     const { children, description, entityId, image, metafields, name, path, products, seo } =
         category;
-
+    console.log(parentCategories);
     const productCount = products?.collectionInfo?.totalItems || category.productCount;
     const { metaDescription, pageTitle } = seo || {};
 
@@ -75,6 +77,27 @@ export const getTransformedCategoryData = (
 
     const urlPath = path.replace(slashAtStartOrEnd, '');
 
+    let parentCategory = null;
+
+    const matchedCurrentCategoryInRest = restCategories?.find(
+        (restCategory) => restCategory.category_id === category.entityId
+    );
+
+    if (matchedCurrentCategoryInRest) {
+        const matchedParentCategory = restCategories?.find(
+            (restCategory) => restCategory.category_id === matchedCurrentCategoryInRest.parent_id
+        );
+
+        if (matchedParentCategory) {
+            parentCategory = {
+                id: matchedParentCategory.category_id,
+                uid: btoa(String(matchedParentCategory.category_id)),
+                name: matchedParentCategory.name,
+                url_path: matchedParentCategory.url.path,
+            };
+        }
+    }
+
     return {
         canonical_url: urlPath,
         children: children
@@ -99,6 +122,7 @@ export const getTransformedCategoryData = (
         url_suffix: '',
         staged: false,
         breadcrumbs,
+        parent_category: parentCategory,
         __typename: 'CategoryTree',
         ...attributesFromMetaFields,
     };

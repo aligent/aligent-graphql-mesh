@@ -49,3 +49,26 @@ export type ProductRule = {
     };
     conditions: RuleCondition[];
 };
+
+export type CategoryRest = {
+    category_id: number;
+    category_uuid: string;
+    parent_id: number;
+    tree_id: number;
+    name: string;
+    description: string;
+    views: number;
+    sort_order: number;
+    page_title: string;
+    search_keywords: string;
+    meta_keywords: [string];
+    meta_description: string;
+    layout_file: string;
+    is_visible: boolean;
+    default_product_sort: string;
+    url: {
+        path: string;
+        is_customized: boolean;
+    };
+    image_url: string;
+};

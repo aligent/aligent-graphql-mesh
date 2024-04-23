@@ -32,10 +32,10 @@ export const bcPut = async (path: string, data?: unknown): Promise<AxiosResponse
     }
 };
 
-export const bcGet = async (path: string): Promise<AxiosResponse['data']> => {
+export const bcGet = async (path: string, data?: unknown): Promise<AxiosResponse['data']> => {
     const url = `${BC_REST_API}${path}`;
     try {
-        const response = await axios.get(url, { headers });
+        const response = await axios.get(url, { headers, data });
         return response.data;
     } catch (error) {
         return logAndThrowError(error, bcGet.name);
