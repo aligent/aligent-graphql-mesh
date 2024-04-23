@@ -14,7 +14,7 @@ export const getAllCategories = async (page: number): Promise<CategoryRest[]> =>
 
     if (page < response.meta.pagination.total_pages) {
         const nextPageCategories = await getAllCategories(page + 1);
-        categories = [...categories, ...nextPageCategories]
+        categories = [...categories, ...nextPageCategories];
     }
 
     return categories;
