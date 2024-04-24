@@ -27,7 +27,7 @@ const cache = DEV_MODE
 
 const operationLog: Plugin<{
     starttime: number;
-    headers: Record<string, string>
+    headers: Record<string, string>;
 }> = {
     onParse({ extendContext }) {
         extendContext({
@@ -47,7 +47,7 @@ const operationLog: Plugin<{
                     latency,
                     operation: args.operationName ?? 'Unknown',
                     errors: result.errors?.length ?? 0,
-                    useragent: args.contextValue.headers['user-agent']
+                    useragent: args.contextValue.headers['user-agent'],
                 });
             },
         };
