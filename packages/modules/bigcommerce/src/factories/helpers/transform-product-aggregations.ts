@@ -106,6 +106,7 @@ const getAggregationsFromPriceFilter = (
     products?: ProductConnection
 ): Maybe<Aggregation> => {
     const { name } = filter;
+    const prices: number[] = [];
 
     const aggregation: Aggregation = {
         attribute_code: name.toLowerCase(),
@@ -115,12 +116,18 @@ const getAggregationsFromPriceFilter = (
         filterType: getFilterInputType(filter.__typename),
     };
 
-    if (products) {
-        const prices = products.edges?.map((product) => {
-            return product?.node.prices?.price.value;
-        });
+    if (products?.edges) {
+        for (const product of products.edges) {
+            const priceOfVariants = product.node.variants.edges?.map((variant) => {
+                return variant?.node.prices?.price.value;
+            });
 
-        if (!prices) return aggregation;
+            if (priceOfVariants) {
+                prices.push(...priceOfVariants);
+            }
+        }
+
+        if (prices.length === 0) return aggregation;
 
         aggregation.count = products.edges?.length;
 
