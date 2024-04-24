@@ -37,8 +37,6 @@ testem.log
 test-results
 .DS_Store
 .env
-*.env
-.star.env
 build-stats.json
 lastCachedGraphQLSchema.json
 test-report.xml
