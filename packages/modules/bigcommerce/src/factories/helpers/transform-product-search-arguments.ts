@@ -140,7 +140,7 @@ export const getTransformedProductArgs = (
         }
 
         if (filterType === 'PriceSearchFilter') {
-            bcProductFilters.price = { minPrice: from, maxPrice: to };
+            bcProductFilters.price = { minPrice: Number(from), maxPrice: Number(to) };
             continue;
         }
 

@@ -84,7 +84,7 @@ describe('get-product-search-filter', () => {
     it(`Transforms Adobe Commerce search filter arguments with "eq" arg values into Big Commerce product search arguments`, () => {
         expect(getTransformedProductArgs(filtersEqArgs, availableFilters)).toEqual({
             brandEntityIds: [23],
-            price: { minPrice: '20', maxPrice: '30' },
+            price: { minPrice: 20, maxPrice: 30 },
             productAttributes: [
                 { attribute: 'Color', values: ['Purple'] },
                 { attribute: 'Size', values: ['M'] },
@@ -98,7 +98,7 @@ describe('get-product-search-filter', () => {
     it(`Transforms Adobe Commerce search filter arguments with "in" arg values into Big Commerce product search arguments`, () => {
         expect(getTransformedProductArgs(filtersInArgs, availableFilters)).toEqual({
             brandEntityIds: [23, 60],
-            price: { minPrice: '20', maxPrice: '30' },
+            price: { minPrice: 20, maxPrice: 30 },
             productAttributes: [
                 { attribute: 'Color', values: ['Green', 'Purple'] },
                 { attribute: 'Size', values: ['M', 'L'] },
