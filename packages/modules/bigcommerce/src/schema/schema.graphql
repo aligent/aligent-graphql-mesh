@@ -3477,6 +3477,10 @@ type CategoryTree implements CategoryInterface & RoutableInterface {
     The part of the category URL that is appended after the url key
     """
     url_suffix: String
+    """
+    The parent category info
+    """
+    parent_category: ParentCategory
 }
 
 """
@@ -17357,4 +17361,23 @@ type SeoDetails {
     Meta keywords.
     """
     metaKeywords: String!
+}
+
+type ParentCategory {
+    """
+    Category id.
+    """
+    id: Int!
+    """
+    Category uid.
+    """
+    uid: String!
+    """
+    Category name.
+    """
+    name: String!
+    """
+    Category url.
+    """
+    url_path: String!
 }

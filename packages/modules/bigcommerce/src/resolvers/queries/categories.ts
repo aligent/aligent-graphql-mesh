@@ -7,6 +7,8 @@ import {
 import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { retrieveStoreConfigsFromCache } from '../../apis/graphql';
 import { STORE_CONFIG__GRID_PER_PAGE } from './constants';
+import { retrieveRESTCategoriesFromCache } from '../../apis/rest';
+
 export const categoriesResolver: QueryResolvers['categories'] = {
     resolve: async (_root, args, context, _info) => {
         const categoryUid = args?.filters?.category_uid?.eq;
@@ -21,16 +23,19 @@ export const categoriesResolver: QueryResolvers['categories'] = {
          * data. */
         const rootEntityId =
             categoryUid && categoryUid !== 'null' ? Number(atob(categoryUid)) : null;
-        const { category, categoryTree } = await retrieveCategoriesFromCache(
-            context,
-            rootEntityId,
-            { productsPageSize: grid_per_page || STORE_CONFIG__GRID_PER_PAGE }
-        );
+        const [{ category, categoryTree }, restfulCategories] = await Promise.all([
+            retrieveCategoriesFromCache(context, rootEntityId, {
+                productsPageSize: grid_per_page || STORE_CONFIG__GRID_PER_PAGE,
+            }),
+            retrieveRESTCategoriesFromCache(context),
+        ]);
 
         // Because we make a "category" query based on the "categoryUid" passed to this resolver,
         // the data returned will correspond to the first "categoryTree" item so merge them together.
         categoryTree[0] = { ...categoryTree[0], ...category };
-        const transformedData = categoryTree.map((child) => getTransformedCategoryData(child));
+        const transformedData = categoryTree.map(
+            (child) => getTransformedCategoryData(child, undefined, restfulCategories) //skip the second parameter
+        );
 
         /* If there's no "rootEntityId" then the PWA is most likely asking for the mega menu category tree
          * which doesn't require an id.*/
