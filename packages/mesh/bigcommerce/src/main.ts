@@ -13,6 +13,8 @@ import { addIpAddressToAxiosHeaders } from '@aligent/bigcommerce-graphql-module'
 import * as xray from 'aws-xray-sdk';
 import * as aws from 'aws-sdk';
 import { maintenanceModePlugin } from '@aligent/maintenance-mode-plugin';
+import { isAsyncIterable, type Plugin } from '@envelop/core';
+import { logger } from './logger';
 
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
@@ -23,6 +25,34 @@ const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
 
+const operationLog: Plugin<{
+    starttime: number;
+    headers: Record<string, string>;
+}> = {
+    onParse({ extendContext }) {
+        extendContext({
+            starttime: Date.now(),
+        });
+    },
+    onExecute({ args }) {
+        args.contextValue.starttime;
+
+        return {
+            onExecuteDone({ result }) {
+                const latency = (Date.now() - args.contextValue.starttime) / 1000;
+
+                if (isAsyncIterable(result)) return;
+
+                logger.info({
+                    latency,
+                    operation: args.operationName ?? 'Unknown',
+                    errors: result.errors?.length ?? 0,
+                    useragent: args.contextValue.headers['user-agent'],
+                });
+            },
+        };
+    },
+};
 const yoga = createYoga({
     graphiql: DEV_MODE,
     logging: DEV_MODE ? 'info' : 'warn',
@@ -42,6 +72,7 @@ const yoga = createYoga({
         };
     },
     plugins: [
+        operationLog,
         maintenanceModePlugin(maintenanceFilePath),
         useGraphQLModules(application),
         addIpAddressToAxiosHeaders,
