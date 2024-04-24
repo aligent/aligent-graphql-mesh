@@ -184,9 +184,10 @@ export const getTransformedProductsData = (
 > => {
     const { products, filters } = bcProducts;
     const { collectionInfo, edges } = products;
-
+    console.log(JSON.stringify(filters))
+    console.log(JSON.stringify(products))
     return {
-        aggregations: filters?.edges ? getTransformedProductAggregations(filters) : null,
+        aggregations: filters?.edges ? getTransformedProductAggregations(filters, products) : null,
         items: edges
             ? edges.map((product) => {
                   if (!product) return null;

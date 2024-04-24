@@ -7,6 +7,7 @@ import {
     ProductAttributeSearchFilterItemConnection,
     SearchProductFilterConnection,
     CategorySearchFilter,
+    ProductConnection,
 } from '@aligent/bigcommerce-operations';
 import { Aggregation, FilterTypeEnum, AggregationOption } from '@aligent/bigcommerce-resolvers';
 
@@ -95,20 +96,43 @@ export const getAggregationsFromBrandFilter = (filter: BrandSearchFilter): Maybe
 
 /**
  * @todo potentially find how to populate with filter pricing options.
+ * Added Min and Max price for price slider filter.
  * Big Commerce doesn't provide price options according to the filtered products but more so
  * based on providing a price range.
  * @param filter
  */
-const getAggregationsFromPriceFilter = (filter: PriceSearchFilter): Maybe<Aggregation> => {
+const getAggregationsFromPriceFilter = (
+    filter: PriceSearchFilter,
+    products?: ProductConnection
+): Maybe<Aggregation> => {
     const { name } = filter;
 
-    return {
+    const aggregation: Aggregation = {
         attribute_code: name.toLowerCase(),
         count: null,
         label: name,
         options: [],
         filterType: getFilterInputType(filter.__typename),
     };
+
+    if (products) {
+        const prices = products.edges?.map((product) => {
+            return product?.node.prices?.price.value;
+        });
+
+        if (!prices) return aggregation;
+
+        aggregation.count = products.edges?.length;
+
+        aggregation.options?.push({
+            count: products?.edges?.length,
+            label: `${Math.min(...prices)}-${Math.max(...prices)}`,
+            swatch_data: null,
+            value: `${Math.min(...prices)}_${Math.max(...prices)}`,
+        });
+    }
+
+    return aggregation;
 };
 
 const getAggregationsFromCategoryFilter = (filter: CategorySearchFilter): Maybe<Aggregation> => {
@@ -166,7 +190,8 @@ export const getAggregationsFromRatingFilter = (filter: RatingSearchFilter): May
 };
 
 export const getTransformedProductAggregations = (
-    filters: SearchProductFilterConnection
+    filters: SearchProductFilterConnection,
+    products?: ProductConnection
 ): Maybe<Array<Maybe<Aggregation>>> => {
     if (!filters?.edges) return [];
     return filters.edges
@@ -184,7 +209,7 @@ export const getTransformedProductAggregations = (
             }
 
             if (typename === 'PriceSearchFilter') {
-                return getAggregationsFromPriceFilter(filter.node);
+                return getAggregationsFromPriceFilter(filter.node, products);
             }
 
             if (typename === 'ProductAttributeSearchFilter') {

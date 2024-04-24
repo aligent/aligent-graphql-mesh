@@ -1,0 +1,1429 @@
+{
+    "edges": [
+        {
+            "node": {
+                "__typename": "Product",
+                "brand": { "id": "QnJhbmQ6Mzk=", "name": "Corona" },
+                "id": "UHJvZHVjdDoxMTA4",
+                "entityId": 1108,
+                "sku": "CORONA-BEER",
+                "name": "Extra Beer Bottles 355mL (test)",
+                "addToCartUrl": "https://star-group-management-pty-ltd-store-1.mybigcommerce.com/cart.php?action=add&product_id=1108",
+                "description": "<p>Corona is yum</p>",
+                "defaultImage": {
+                    "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1108/398/357480-2_1__85595.1713339745.png",
+                    "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1108/398/357480-2_1__85595.1713339745.png",
+                    "altText": "",
+                    "isDefault": true
+                },
+                "seo": {
+                    "pageTitle": "Extra Beer Bottles 355mL (test)",
+                    "metaDescription": "",
+                    "metaKeywords": ""
+                },
+                "images": {
+                    "edges": [
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1108/386/coronita_extra_bottles_210ml__93484.1713339744.jpg",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1108/386/coronita_extra_bottles_210ml__93484.1713339744.jpg",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1108/398/357480-2_1__85595.1713339745.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1108/398/357480-2_1__85595.1713339745.png",
+                                "altText": "",
+                                "isDefault": true
+                            }
+                        }
+                    ]
+                },
+                "inventory": {
+                    "hasVariantInventory": false,
+                    "isInStock": true,
+                    "aggregated": null
+                },
+                "categories": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6MjU=",
+                                "entityId": 25,
+                                "name": "Beer & Cider",
+                                "path": "/beer-cider/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6NTY=",
+                                "entityId": 56,
+                                "name": "International Beer",
+                                "path": "/beer-cider/international-beer/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        },
+                                        {
+                                            "node": {
+                                                "name": "International Beer",
+                                                "path": "/beer-cider/international-beer/",
+                                                "entityId": 56
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        }
+                    ]
+                },
+                "availabilityV2": { "status": "Available" },
+                "reviewSummary": { "numberOfReviews": 0, "summationOfRatings": 0 },
+                "reviews": {
+                    "edges": [],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": null,
+                        "endCursor": null
+                    }
+                },
+                "customFields": {
+                    "edges": [
+                        { "node": { "name": "awards", "value": "Big award" } },
+                        { "node": { "name": "standard_drinks", "value": "1.1" } },
+                        { "node": { "name": "alcohol_volume", "value": "4.1" } },
+                        { "node": { "name": "style_profile", "value": "Weekend beer" } },
+                        { "node": { "name": "product_specifications", "value": "Glass bottle" } },
+                        { "node": { "name": "volume", "value": "355ml" } },
+                        { "node": { "name": "quantity_type", "value": "Bottle" } }
+                    ]
+                },
+                "metafields": { "edges": [] },
+                "path": "/extra-beer-bottles-355ml-test/",
+                "prices": {
+                    "basePrice": { "currencyCode": "AUD", "value": 6 },
+                    "bulkPricing": [],
+                    "mapPrice": null,
+                    "price": { "currencyCode": "AUD", "value": 6 },
+                    "priceRange": {
+                        "min": { "currencyCode": "AUD", "value": 6 },
+                        "max": { "currencyCode": "AUD", "value": 6 }
+                    },
+                    "retailPrice": null,
+                    "retailPriceRange": null,
+                    "salePrice": null,
+                    "saved": null
+                },
+                "productOptions": { "edges": [] },
+                "variants": {
+                    "edges": [
+                        {
+                            "node": {
+                                "id": "VmFyaWFudDoxMDgx",
+                                "entityId": 1081,
+                                "sku": "CORONA-BEER",
+                                "defaultImage": null,
+                                "prices": {
+                                    "basePrice": { "currencyCode": "AUD", "value": 6 },
+                                    "bulkPricing": [],
+                                    "mapPrice": null,
+                                    "price": { "currencyCode": "AUD", "value": 6 },
+                                    "priceRange": {
+                                        "min": { "currencyCode": "AUD", "value": 6 },
+                                        "max": { "currencyCode": "AUD", "value": 6 }
+                                    },
+                                    "retailPrice": null,
+                                    "retailPriceRange": null,
+                                    "salePrice": null,
+                                    "saved": null
+                                },
+                                "metafields": { "edges": [] },
+                                "options": { "edges": [] },
+                                "productOptions": { "edges": [] },
+                                "inventory": {
+                                    "isInStock": true,
+                                    "aggregated": null,
+                                    "byLocation": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 1,
+                                                    "locationEntityCode": "BC-LOCATION-1",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 96,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 2,
+                                                    "locationEntityCode": "bc-2",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 50,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 3,
+                                                    "locationEntityCode": "st-3",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 0,
+                                                    "warningLevel": 0,
+                                                    "isInStock": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "isPurchasable": false
+                            }
+                        }
+                    ],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                    }
+                },
+                "warranty": "",
+                "weight": { "value": 1, "unit": "kg" }
+            }
+        },
+        {
+            "node": {
+                "__typename": "Product",
+                "brand": { "id": "QnJhbmQ6MjM0Nw==", "name": "Better Beer" },
+                "id": "UHJvZHVjdDoxMTA5",
+                "entityId": 1109,
+                "sku": "BB-1253",
+                "name": "Zero Carb Lager Can 355mL (test)",
+                "addToCartUrl": "https://star-group-management-pty-ltd-store-1.mybigcommerce.com/cart.php?action=add&product_id=1109",
+                "description": "<p><span>When you want a beer, but it needs to be Better. Crisp, refreshing and hitting all the right notes, Better Beer is zero carb and easy drinking.</span><br /><span>We made Better Beer for you &ndash; 87 calories, everyday drinking &ndash; You are Welcome.</span></p>",
+                "defaultImage": {
+                    "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1109/409/182464-2_1__27206.1713340607.png",
+                    "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1109/409/182464-2_1__27206.1713340607.png",
+                    "altText": "",
+                    "isDefault": true
+                },
+                "seo": {
+                    "pageTitle": "Zero Carb Lager Can 355mL (test)",
+                    "metaDescription": "",
+                    "metaKeywords": ""
+                },
+                "images": {
+                    "edges": [
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1109/408/182464-3_1__25204.1713340607.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1109/408/182464-3_1__25204.1713340607.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1109/409/182464-2_1__27206.1713340607.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1109/409/182464-2_1__27206.1713340607.png",
+                                "altText": "",
+                                "isDefault": true
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1109/407/182464-1_1__55668.1713340607.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1109/407/182464-1_1__55668.1713340607.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        }
+                    ]
+                },
+                "inventory": {
+                    "hasVariantInventory": false,
+                    "isInStock": true,
+                    "aggregated": null
+                },
+                "categories": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6MjU=",
+                                "entityId": 25,
+                                "name": "Beer & Cider",
+                                "path": "/beer-cider/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6NTg=",
+                                "entityId": 58,
+                                "name": "Beer Light",
+                                "path": "/beer-cider/beer-light/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        },
+                                        {
+                                            "node": {
+                                                "name": "Beer Light",
+                                                "path": "/beer-cider/beer-light/",
+                                                "entityId": 58
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        }
+                    ]
+                },
+                "availabilityV2": { "status": "Available" },
+                "reviewSummary": { "numberOfReviews": 0, "summationOfRatings": 0 },
+                "reviews": {
+                    "edges": [],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": null,
+                        "endCursor": null
+                    }
+                },
+                "customFields": {
+                    "edges": [{ "node": { "name": "quantity_type", "value": "Pack (6)" } }]
+                },
+                "metafields": { "edges": [] },
+                "path": "/zero-carb-lager-can-355ml-test/",
+                "prices": {
+                    "basePrice": { "currencyCode": "AUD", "value": 20.99 },
+                    "bulkPricing": [],
+                    "mapPrice": null,
+                    "price": { "currencyCode": "AUD", "value": 20.99 },
+                    "priceRange": {
+                        "min": { "currencyCode": "AUD", "value": 20.99 },
+                        "max": { "currencyCode": "AUD", "value": 20.99 }
+                    },
+                    "retailPrice": null,
+                    "retailPriceRange": null,
+                    "salePrice": null,
+                    "saved": null
+                },
+                "productOptions": { "edges": [] },
+                "variants": {
+                    "edges": [
+                        {
+                            "node": {
+                                "id": "VmFyaWFudDoxMDgy",
+                                "entityId": 1082,
+                                "sku": "BB-1253",
+                                "defaultImage": null,
+                                "prices": {
+                                    "basePrice": { "currencyCode": "AUD", "value": 20.99 },
+                                    "bulkPricing": [],
+                                    "mapPrice": null,
+                                    "price": { "currencyCode": "AUD", "value": 20.99 },
+                                    "priceRange": {
+                                        "min": { "currencyCode": "AUD", "value": 20.99 },
+                                        "max": { "currencyCode": "AUD", "value": 20.99 }
+                                    },
+                                    "retailPrice": null,
+                                    "retailPriceRange": null,
+                                    "salePrice": null,
+                                    "saved": null
+                                },
+                                "metafields": { "edges": [] },
+                                "options": { "edges": [] },
+                                "productOptions": { "edges": [] },
+                                "inventory": {
+                                    "isInStock": true,
+                                    "aggregated": null,
+                                    "byLocation": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 1,
+                                                    "locationEntityCode": "BC-LOCATION-1",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 100,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 2,
+                                                    "locationEntityCode": "bc-2",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 50,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 3,
+                                                    "locationEntityCode": "st-3",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 0,
+                                                    "warningLevel": 0,
+                                                    "isInStock": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "isPurchasable": false
+                            }
+                        }
+                    ],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                    }
+                },
+                "warranty": "",
+                "weight": { "value": 1, "unit": "kg" }
+            }
+        },
+        {
+            "node": {
+                "__typename": "Product",
+                "brand": { "id": "QnJhbmQ6MjMwMA==", "name": "CARLTON" },
+                "id": "UHJvZHVjdDoxMTEw",
+                "entityId": 1110,
+                "sku": "CD-2345",
+                "name": "Twist Top Bottle 330mL (test)",
+                "addToCartUrl": "https://star-group-management-pty-ltd-store-1.mybigcommerce.com/cart.php?action=add&product_id=1110",
+                "description": "<div class=\"product-skeleton__details-description\">\n<div class=\"product-skeleton__details-description-reg product-skeleton__details-description--desktop\">Carlton Dry is clean filtered for a refreshingly crisp, dry lager. Low in bitterness, it delivers superior drinkability from the first sip to the last.</div>\n</div>\n<div class=\"product-skeleton__details-beer ng-star-inserted\">&nbsp;</div>",
+                "defaultImage": {
+                    "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1110/406/809797-2_1__42002.1713340443.png",
+                    "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1110/406/809797-2_1__42002.1713340443.png",
+                    "altText": "",
+                    "isDefault": true
+                },
+                "seo": {
+                    "pageTitle": "Twist Top Bottle 330mL (test)",
+                    "metaDescription": "",
+                    "metaKeywords": ""
+                },
+                "images": {
+                    "edges": [
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1110/406/809797-2_1__42002.1713340443.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1110/406/809797-2_1__42002.1713340443.png",
+                                "altText": "",
+                                "isDefault": true
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1110/405/809797-1_1__70586.1713340442.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1110/405/809797-1_1__70586.1713340442.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        }
+                    ]
+                },
+                "inventory": {
+                    "hasVariantInventory": false,
+                    "isInStock": true,
+                    "aggregated": null
+                },
+                "categories": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6MjU=",
+                                "entityId": 25,
+                                "name": "Beer & Cider",
+                                "path": "/beer-cider/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6NTc=",
+                                "entityId": 57,
+                                "name": "Beer Heavy",
+                                "path": "/beer-cider/beer-heavy/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        },
+                                        {
+                                            "node": {
+                                                "name": "Beer Heavy",
+                                                "path": "/beer-cider/beer-heavy/",
+                                                "entityId": 57
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        }
+                    ]
+                },
+                "availabilityV2": { "status": "Available" },
+                "reviewSummary": { "numberOfReviews": 0, "summationOfRatings": 0 },
+                "reviews": {
+                    "edges": [],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": null,
+                        "endCursor": null
+                    }
+                },
+                "customFields": {
+                    "edges": [{ "node": { "name": "quantity_type", "value": "Case (24)" } }]
+                },
+                "metafields": { "edges": [] },
+                "path": "/twist-top-bottle-330ml-test/",
+                "prices": {
+                    "basePrice": { "currencyCode": "AUD", "value": 51.95 },
+                    "bulkPricing": [],
+                    "mapPrice": null,
+                    "price": { "currencyCode": "AUD", "value": 51.95 },
+                    "priceRange": {
+                        "min": { "currencyCode": "AUD", "value": 51.95 },
+                        "max": { "currencyCode": "AUD", "value": 51.95 }
+                    },
+                    "retailPrice": null,
+                    "retailPriceRange": null,
+                    "salePrice": null,
+                    "saved": null
+                },
+                "productOptions": { "edges": [] },
+                "variants": {
+                    "edges": [
+                        {
+                            "node": {
+                                "id": "VmFyaWFudDoxMDgz",
+                                "entityId": 1083,
+                                "sku": "CD-2345",
+                                "defaultImage": null,
+                                "prices": {
+                                    "basePrice": { "currencyCode": "AUD", "value": 51.95 },
+                                    "bulkPricing": [],
+                                    "mapPrice": null,
+                                    "price": { "currencyCode": "AUD", "value": 51.95 },
+                                    "priceRange": {
+                                        "min": { "currencyCode": "AUD", "value": 51.95 },
+                                        "max": { "currencyCode": "AUD", "value": 51.95 }
+                                    },
+                                    "retailPrice": null,
+                                    "retailPriceRange": null,
+                                    "salePrice": null,
+                                    "saved": null
+                                },
+                                "metafields": { "edges": [] },
+                                "options": { "edges": [] },
+                                "productOptions": { "edges": [] },
+                                "inventory": {
+                                    "isInStock": true,
+                                    "aggregated": null,
+                                    "byLocation": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 1,
+                                                    "locationEntityCode": "BC-LOCATION-1",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 99,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 2,
+                                                    "locationEntityCode": "bc-2",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 50,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 3,
+                                                    "locationEntityCode": "st-3",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 0,
+                                                    "warningLevel": 0,
+                                                    "isInStock": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "isPurchasable": false
+                            }
+                        }
+                    ],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                    }
+                },
+                "warranty": "",
+                "weight": { "value": 1, "unit": "kg" }
+            }
+        },
+        {
+            "node": {
+                "__typename": "Product",
+                "brand": { "id": "QnJhbmQ6MjM0OA==", "name": "Largo" },
+                "id": "UHJvZHVjdDoxMTEx",
+                "entityId": 1111,
+                "sku": "TDL-242",
+                "name": "The Dawdler Low Carb Lager Cans 375mL (test)",
+                "addToCartUrl": "https://star-group-management-pty-ltd-store-1.mybigcommerce.com/cart.php?action=add&product_id=1111",
+                "description": "<p><span>LARGO The Dawdler is a refreshing, easy-drinking lager for people who like to feel good about the choices they make. This low-carb beer is crisp and clean in more ways than one, Largo is committed to balancing its carbon footprint. Expect a slightly hazy appearance with light cereal malt notes and a crisp dry finish.</span></p>",
+                "defaultImage": {
+                    "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1111/402/267855-2_1__61188.1713340241.png",
+                    "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1111/402/267855-2_1__61188.1713340241.png",
+                    "altText": "",
+                    "isDefault": true
+                },
+                "seo": {
+                    "pageTitle": "The Dawdler Low Carb Lager Cans 375mL (test)",
+                    "metaDescription": "",
+                    "metaKeywords": ""
+                },
+                "images": {
+                    "edges": [
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1111/403/267855-3_1__04232.1713340241.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1111/403/267855-3_1__04232.1713340241.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1111/402/267855-2_1__61188.1713340241.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1111/402/267855-2_1__61188.1713340241.png",
+                                "altText": "",
+                                "isDefault": true
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1111/404/267855-1_1__38505.1713340241.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1111/404/267855-1_1__38505.1713340241.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        }
+                    ]
+                },
+                "inventory": {
+                    "hasVariantInventory": false,
+                    "isInStock": true,
+                    "aggregated": null
+                },
+                "categories": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6MjU=",
+                                "entityId": 25,
+                                "name": "Beer & Cider",
+                                "path": "/beer-cider/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6NTg=",
+                                "entityId": 58,
+                                "name": "Beer Light",
+                                "path": "/beer-cider/beer-light/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        },
+                                        {
+                                            "node": {
+                                                "name": "Beer Light",
+                                                "path": "/beer-cider/beer-light/",
+                                                "entityId": 58
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        }
+                    ]
+                },
+                "availabilityV2": { "status": "Available" },
+                "reviewSummary": { "numberOfReviews": 0, "summationOfRatings": 0 },
+                "reviews": {
+                    "edges": [],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": null,
+                        "endCursor": null
+                    }
+                },
+                "customFields": {
+                    "edges": [{ "node": { "name": "quantity_type", "value": "Pack (6)" } }]
+                },
+                "metafields": { "edges": [] },
+                "path": "/the-dawdler-low-carb-lager-cans-375ml-test/",
+                "prices": {
+                    "basePrice": { "currencyCode": "AUD", "value": 17.99 },
+                    "bulkPricing": [],
+                    "mapPrice": null,
+                    "price": { "currencyCode": "AUD", "value": 17.99 },
+                    "priceRange": {
+                        "min": { "currencyCode": "AUD", "value": 17.99 },
+                        "max": { "currencyCode": "AUD", "value": 17.99 }
+                    },
+                    "retailPrice": null,
+                    "retailPriceRange": null,
+                    "salePrice": null,
+                    "saved": null
+                },
+                "productOptions": { "edges": [] },
+                "variants": {
+                    "edges": [
+                        {
+                            "node": {
+                                "id": "VmFyaWFudDoxMDg0",
+                                "entityId": 1084,
+                                "sku": "TDL-242",
+                                "defaultImage": null,
+                                "prices": {
+                                    "basePrice": { "currencyCode": "AUD", "value": 17.99 },
+                                    "bulkPricing": [],
+                                    "mapPrice": null,
+                                    "price": { "currencyCode": "AUD", "value": 17.99 },
+                                    "priceRange": {
+                                        "min": { "currencyCode": "AUD", "value": 17.99 },
+                                        "max": { "currencyCode": "AUD", "value": 17.99 }
+                                    },
+                                    "retailPrice": null,
+                                    "retailPriceRange": null,
+                                    "salePrice": null,
+                                    "saved": null
+                                },
+                                "metafields": { "edges": [] },
+                                "options": { "edges": [] },
+                                "productOptions": { "edges": [] },
+                                "inventory": {
+                                    "isInStock": true,
+                                    "aggregated": null,
+                                    "byLocation": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 1,
+                                                    "locationEntityCode": "BC-LOCATION-1",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 100,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 2,
+                                                    "locationEntityCode": "bc-2",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 50,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 3,
+                                                    "locationEntityCode": "st-3",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 0,
+                                                    "warningLevel": 0,
+                                                    "isInStock": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "isPurchasable": false
+                            }
+                        }
+                    ],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                    }
+                },
+                "warranty": "",
+                "weight": { "value": 1, "unit": "kg" }
+            }
+        },
+        {
+            "node": {
+                "__typename": "Product",
+                "brand": { "id": "QnJhbmQ6MjM0OQ==", "name": "Coopers" },
+                "id": "UHJvZHVjdDoxMTEy",
+                "entityId": 1112,
+                "sku": "CO-242",
+                "name": "Pale Ale Bottles 375mL (test)",
+                "addToCartUrl": "https://star-group-management-pty-ltd-store-1.mybigcommerce.com/cart.php?action=add&product_id=1112",
+                "description": "<p><span>Coopers Pale Ale The Original Pale Ale. Beware of pale imitations. Guaranteed to turn heads, this is the beer that inspired a new generation of ale drinkers. With its fruity and floral characters, balanced with a crisp bitterness, Coopers Pale Ale has a compelling flavour which is perfect for every occasion.</span></p>",
+                "defaultImage": {
+                    "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1112/399/25620-3_1__60630.1713340041.png",
+                    "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1112/399/25620-3_1__60630.1713340041.png",
+                    "altText": "",
+                    "isDefault": true
+                },
+                "seo": {
+                    "pageTitle": "Pale Ale Bottles 375mL (test)",
+                    "metaDescription": "",
+                    "metaKeywords": ""
+                },
+                "images": {
+                    "edges": [
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1112/399/25620-3_1__60630.1713340041.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1112/399/25620-3_1__60630.1713340041.png",
+                                "altText": "",
+                                "isDefault": true
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1112/401/25620-2_1__08814.1713340041.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1112/401/25620-2_1__08814.1713340041.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        },
+                        {
+                            "node": {
+                                "url": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/500x245/products/1112/400/25620-1_1__46104.1713340041.png",
+                                "urlOriginal": "https://cdn11.bigcommerce.com/s-m0zvdbuhet/images/stencil/original/products/1112/400/25620-1_1__46104.1713340041.png",
+                                "altText": "",
+                                "isDefault": false
+                            }
+                        }
+                    ]
+                },
+                "inventory": {
+                    "hasVariantInventory": false,
+                    "isInStock": true,
+                    "aggregated": null
+                },
+                "categories": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6MjU=",
+                                "entityId": 25,
+                                "name": "Beer & Cider",
+                                "path": "/beer-cider/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6NjE=",
+                                "entityId": 61,
+                                "name": "Low Carb Beer",
+                                "path": "/beer-cider/low-carb-beer/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        },
+                                        {
+                                            "node": {
+                                                "name": "Low Carb Beer",
+                                                "path": "/beer-cider/low-carb-beer/",
+                                                "entityId": 61
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjE="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        }
+                    ]
+                },
+                "availabilityV2": { "status": "Available" },
+                "reviewSummary": { "numberOfReviews": 0, "summationOfRatings": 0 },
+                "reviews": {
+                    "edges": [],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": null,
+                        "endCursor": null
+                    }
+                },
+                "customFields": {
+                    "edges": [
+                        { "node": { "name": "quantity_type", "value": "Case (24)" } },
+                        { "node": { "name": "alcohol_volume", "value": "4.3" } },
+                        { "node": { "name": "standard_drinks", "value": "1.1" } }
+                    ]
+                },
+                "metafields": { "edges": [] },
+                "path": "/pale-ale-bottles-375ml-test/",
+                "prices": {
+                    "basePrice": { "currencyCode": "AUD", "value": 54 },
+                    "bulkPricing": [],
+                    "mapPrice": null,
+                    "price": { "currencyCode": "AUD", "value": 54 },
+                    "priceRange": {
+                        "min": { "currencyCode": "AUD", "value": 54 },
+                        "max": { "currencyCode": "AUD", "value": 54 }
+                    },
+                    "retailPrice": null,
+                    "retailPriceRange": null,
+                    "salePrice": null,
+                    "saved": null
+                },
+                "productOptions": { "edges": [] },
+                "variants": {
+                    "edges": [
+                        {
+                            "node": {
+                                "id": "VmFyaWFudDoxMDg1",
+                                "entityId": 1085,
+                                "sku": "CO-242",
+                                "defaultImage": null,
+                                "prices": {
+                                    "basePrice": { "currencyCode": "AUD", "value": 54 },
+                                    "bulkPricing": [],
+                                    "mapPrice": null,
+                                    "price": { "currencyCode": "AUD", "value": 54 },
+                                    "priceRange": {
+                                        "min": { "currencyCode": "AUD", "value": 54 },
+                                        "max": { "currencyCode": "AUD", "value": 54 }
+                                    },
+                                    "retailPrice": null,
+                                    "retailPriceRange": null,
+                                    "salePrice": null,
+                                    "saved": null
+                                },
+                                "metafields": { "edges": [] },
+                                "options": { "edges": [] },
+                                "productOptions": { "edges": [] },
+                                "inventory": {
+                                    "isInStock": true,
+                                    "aggregated": null,
+                                    "byLocation": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 1,
+                                                    "locationEntityCode": "BC-LOCATION-1",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 100,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 2,
+                                                    "locationEntityCode": "bc-2",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 50,
+                                                    "warningLevel": 0,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 3,
+                                                    "locationEntityCode": "st-3",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 0,
+                                                    "warningLevel": 0,
+                                                    "isInStock": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "isPurchasable": false
+                            }
+                        }
+                    ],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                    }
+                },
+                "warranty": "",
+                "weight": { "value": 1, "unit": "kg" }
+            }
+        },
+        {
+            "node": {
+                "__typename": "Product",
+                "brand": null,
+                "id": "UHJvZHVjdDoxMjgx",
+                "entityId": 1281,
+                "sku": "brewdog-punk-xpa-test",
+                "name": "BrewDog Punk XPA (test)",
+                "addToCartUrl": "https://star-group-management-pty-ltd-store-1.mybigcommerce.com/cart.php?action=add&product_id=1281",
+                "description": "",
+                "defaultImage": null,
+                "seo": {
+                    "pageTitle": "BrewDog Punk XPA (test)",
+                    "metaDescription": "",
+                    "metaKeywords": ""
+                },
+                "images": { "edges": [] },
+                "inventory": {
+                    "hasVariantInventory": false,
+                    "isInStock": true,
+                    "aggregated": null
+                },
+                "categories": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "Category",
+                                "id": "Q2F0ZWdvcnk6MjU=",
+                                "entityId": 25,
+                                "name": "Beer & Cider",
+                                "path": "/beer-cider/",
+                                "defaultImage": null,
+                                "description": "",
+                                "breadcrumbs": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "name": "Beer & Cider",
+                                                "path": "/beer-cider/",
+                                                "entityId": 25
+                                            },
+                                            "cursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                        }
+                                    ],
+                                    "pageInfo": {
+                                        "hasNextPage": false,
+                                        "hasPreviousPage": false,
+                                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                                    }
+                                },
+                                "metafields": { "edges": [] },
+                                "seo": {
+                                    "pageTitle": "",
+                                    "metaDescription": "",
+                                    "metaKeywords": ""
+                                },
+                                "defaultProductSort": "FEATURED"
+                            }
+                        }
+                    ]
+                },
+                "availabilityV2": { "status": "Available" },
+                "reviewSummary": { "numberOfReviews": 0, "summationOfRatings": 0 },
+                "reviews": {
+                    "edges": [],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": null,
+                        "endCursor": null
+                    }
+                },
+                "customFields": { "edges": [] },
+                "metafields": { "edges": [] },
+                "path": "/brewdog-punk-xpa-test/",
+                "prices": {
+                    "basePrice": { "currencyCode": "AUD", "value": 25 },
+                    "bulkPricing": [],
+                    "mapPrice": null,
+                    "price": { "currencyCode": "AUD", "value": 25 },
+                    "priceRange": {
+                        "min": { "currencyCode": "AUD", "value": 25 },
+                        "max": { "currencyCode": "AUD", "value": 25 }
+                    },
+                    "retailPrice": null,
+                    "retailPriceRange": null,
+                    "salePrice": null,
+                    "saved": null
+                },
+                "productOptions": { "edges": [] },
+                "variants": {
+                    "edges": [
+                        {
+                            "node": {
+                                "id": "VmFyaWFudDoxMjU0",
+                                "entityId": 1254,
+                                "sku": "brewdog-punk-xpa-test",
+                                "defaultImage": null,
+                                "prices": {
+                                    "basePrice": { "currencyCode": "AUD", "value": 25 },
+                                    "bulkPricing": [],
+                                    "mapPrice": null,
+                                    "price": { "currencyCode": "AUD", "value": 25 },
+                                    "priceRange": {
+                                        "min": { "currencyCode": "AUD", "value": 25 },
+                                        "max": { "currencyCode": "AUD", "value": 25 }
+                                    },
+                                    "retailPrice": null,
+                                    "retailPriceRange": null,
+                                    "salePrice": null,
+                                    "saved": null
+                                },
+                                "metafields": { "edges": [] },
+                                "options": { "edges": [] },
+                                "productOptions": { "edges": [] },
+                                "inventory": {
+                                    "isInStock": true,
+                                    "aggregated": null,
+                                    "byLocation": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 1,
+                                                    "locationEntityCode": "BC-LOCATION-1",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 1000,
+                                                    "warningLevel": 100,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 2,
+                                                    "locationEntityCode": "bc-2",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 200,
+                                                    "warningLevel": 100,
+                                                    "isInStock": true
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "locationEntityId": 3,
+                                                    "locationEntityCode": "st-3",
+                                                    "locationEntityTypeId": "PHYSICAL",
+                                                    "locationDistance": null,
+                                                    "availableToSell": 500,
+                                                    "warningLevel": 15,
+                                                    "isInStock": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "isPurchasable": false
+                            }
+                        }
+                    ],
+                    "pageInfo": {
+                        "hasNextPage": false,
+                        "hasPreviousPage": false,
+                        "startCursor": "YXJyYXljb25uZWN0aW9uOjA=",
+                        "endCursor": "YXJyYXljb25uZWN0aW9uOjA="
+                    }
+                },
+                "warranty": "",
+                "weight": { "value": 0.5, "unit": "kg" }
+            }
+        }
+    ],
+    "pageInfo": {
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WzIuMCwxMTA4XQ==",
+        "endCursor": "WzIuMCwxMjgxXQ=="
+    },
+    "collectionInfo": { "totalItems": 6 }
+}

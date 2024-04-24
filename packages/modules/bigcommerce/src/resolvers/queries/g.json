@@ -1,0 +1,94 @@
+{
+    "edges": [
+        {
+            "node": {
+                "name": "Color",
+                "__typename": "ProductAttributeSearchFilter",
+                "displayProductCount": true,
+                "filterName": "Color",
+                "attributes": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Blue",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Green",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Red",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Yellow",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        }
+                    ]
+                },
+                "isCollapsedByDefault": false
+            }
+        },
+        {
+            "node": {
+                "name": "Size",
+                "__typename": "ProductAttributeSearchFilter",
+                "displayProductCount": true,
+                "filterName": "Size",
+                "attributes": {
+                    "edges": [
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Large",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Medium",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        },
+                        {
+                            "node": {
+                                "__typename": "ProductAttributeSearchFilterItem",
+                                "value": "Small",
+                                "isSelected": false,
+                                "productCount": 1
+                            }
+                        }
+                    ]
+                },
+                "isCollapsedByDefault": false
+            }
+        },
+        {
+            "node": {
+                "name": "Price",
+                "__typename": "PriceSearchFilter",
+                "selected": { "minPrice": null, "maxPrice": null },
+                "isCollapsedByDefault": false
+            }
+        }
+    ]
+}
