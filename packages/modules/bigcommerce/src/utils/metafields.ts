@@ -65,13 +65,7 @@ export const getAttributesFromMetaAndCustomFields = (
 
         /* If we know a value should be a json object, parse the property value string to an object*/
         if (jsonStringProperties.includes(propertyName)) {
-            try {
-                if (typeof value === 'string' && isJsonString(value)) {
-                    value = JSON.parse(value);
-                }
-            } catch {
-                value = null;
-            }
+            value = typeof value === 'string' && isJsonString(value) ? JSON.parse(value) : null;
         }
 
         if (htmlStringProperties.includes(propertyName)) {

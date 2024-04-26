@@ -4,7 +4,7 @@ import {
     booleanStoreConfigProperties,
     integerStoreConfigProperties,
     jsonStringStoreConfigProperties,
-} from '../../modules/bigcommerce/src/resolvers/queries/constants';
+} from '../../resolvers/queries/constants';
 
 const propertyTypes = {
     booleanProperties: booleanStoreConfigProperties,
