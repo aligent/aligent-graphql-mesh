@@ -1,4 +1,6 @@
+import { snakeCase } from 'lodash';
 import { Maybe, MetafieldEdge } from '@aligent/bigcommerce-operations';
+import { isJsonString } from '@aligent/utils';
 
 /**
  * de-nests channel metafields into key/value pairs and parses the value to be its intended type
@@ -64,7 +66,7 @@ export const getAttributesFromMetaAndCustomFields = (
         /* If we know a value should be a json object, parse the property value string to an object*/
         if (jsonStringProperties.includes(propertyName)) {
             try {
-                if (typeof value === 'string') {
+                if (typeof value === 'string' && isJsonString(value)) {
                     value = JSON.parse(value);
                 }
             } catch {
@@ -78,7 +80,7 @@ export const getAttributesFromMetaAndCustomFields = (
             };
         }
 
-        return { ...carry, [propertyName]: value };
+        return { ...carry, [snakeCase(propertyName)]: value };
     }, {});
 };
 
