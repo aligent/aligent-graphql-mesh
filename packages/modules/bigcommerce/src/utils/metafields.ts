@@ -74,7 +74,7 @@ export const getAttributesFromMetaAndCustomFields = (
             };
         }
 
-        return { ...carry, [snakeCase(propertyName)]: value };
+        return { ...carry, [snakeCase(propertyName)]: value, [propertyName]: value };
     }, {});
 };
 
