@@ -1,0 +1,81 @@
+query getCartDetails($cartId: String!, $isInCheckout: Boolean!) {
+    cart(cart_id: $cartId) {
+        ...CartFragment
+    }
+}
+fragment CartFragment on Cart {
+    id
+    total_quantity
+    error_type
+    items {
+        id
+        uid
+        errors {
+            code
+            message
+        }
+        prices {
+            price_including_tax {
+                currency
+                value
+            }
+        }
+        product {
+            id
+            name
+            sku
+            small_image {
+                url
+                label
+            }
+            categories {
+                id
+                breadcrumbs {
+                    category_id
+                    category_name
+                }
+                name
+                level
+            }
+            price_range {
+                minimum_price {
+                    final_price {
+                        currency
+                        value
+                    }
+                    discount {
+                        amount_off
+                    }
+                    regular_price {
+                        currency
+                        value
+                    }
+                }
+            }
+            rating_summary
+            review_count
+            stock_status
+            uid
+            url_key
+            url_suffix
+        }
+        quantity
+    }
+    is_virtual
+    prices {
+        applied_taxes {
+            amount {
+                currency
+                value
+            }
+        }
+        grand_total {
+            currency
+            value
+        }
+        subtotal_including_tax {
+            currency
+            value
+        }
+    }
+}

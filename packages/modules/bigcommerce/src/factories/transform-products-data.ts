@@ -186,7 +186,7 @@ export const getTransformedProductsData = (
     const { collectionInfo, edges } = products;
 
     return {
-        aggregations: filters?.edges ? getTransformedProductAggregations(filters, products) : null,
+        aggregations: filters?.edges ? getTransformedProductAggregations(filters) : null,
         items: edges
             ? edges.map((product) => {
                   if (!product) return null;
