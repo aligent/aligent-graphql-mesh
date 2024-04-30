@@ -53,6 +53,7 @@ export const productsResolver: QueryResolvers['products'] = {
                 return { items: [getTransformedProductData(bcProduct, bundleItemProducts?.items)] };
             }
 
+            const priceFilterFrom = args.filter?.price?.from || undefined;
             const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
             const searchTerm = args?.search || '';
             const pageSize = args?.pageSize || 24;
@@ -60,16 +61,19 @@ export const productsResolver: QueryResolvers['products'] = {
 
             /* These base filters will help the "getBcAvailableProductFilters" get the available filters for search and
              * category pages
+             * The { maxPrice: 10, minPrice: 1 } just needed to know this filter has been sent
              * */
             const availableProductFiltersVariables = {
                 ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
                 ...(searchTerm && { searchTerm: searchTerm }),
+                ...(priceFilterFrom && { price: { maxPrice: 10, minPrice: 1 } }),
             };
 
             const availableBcProductFilters = await getBcAvailableProductFilters(
                 availableProductFiltersVariables,
                 customerImpersonationToken
             );
+
             const transformedFilterArguments = getTransformedProductArgs(
                 args,
                 availableBcProductFilters
