@@ -389,6 +389,36 @@ type Query {
     """
     Return details about the store's configuration.
     """
+    storeAvailability(
+        """
+        Perform search by location using radius and search term.
+        """
+        area: AreaInput
+        """
+        Apply filters by attributes.
+        """
+        filters: PickupLocationFilterInput
+        """
+        Specifies which attribute to sort on, and whether to return the results in ascending or descending order.
+        """
+        sort: PickupLocationSortInput
+        """
+        Array of skus and quantities to check stock availability for
+        """
+        skus: [StoreLocationsItemQuantityInput!]!
+        """
+        The maximum number of pickup locations to return at once. The attribute is optional.
+        """
+        pageSize: Int = 20
+        """
+        Specifies which page of results to return. The default value is 1.
+        """
+        currentPage: Int = 1
+        """
+        Indicates if the query is for find in store
+        """
+        findInStore: Boolean
+    ): StoreAvailabilities
     storeConfig: StoreConfig
     storeLocations(
         """
@@ -13085,6 +13115,29 @@ type ConfigurableProductOptionsValues {
     value_index: Int @deprecated(reason: "Use `uid` instead.")
 }
 
+type StoreAvailabilities {
+    items: [StoreAvailability]
+    """
+    An object that includes the page_info and currentPage values specified in the query.
+    """
+    page_info: SearchResultPageInfo
+    """
+    The number of products returned.
+    """
+    total_count: Int
+}
+
+type StoreAvailability {
+    location: StoreLocation
+    locationAvailabilityStatus: StockAvailabilityStatus
+    skuAvailability: [StoreLocationsItemQuantityOutput]
+}
+
+type StoreLocationsItemQuantityOutput {
+    sku: String
+    stockAvailabilityStatus: StockAvailabilityStatus
+}
+
 """
 Defines the configurable products to add to the cart.
 """
@@ -15922,6 +15975,15 @@ type FixedProductTax {
     label: String
 }
 
+enum StockAvailabilityStatus {
+    AVAILABLE @deprecated(reason: "")
+    LOW @deprecated(reason: "")
+    TRANSFER @deprecated(reason: "")
+    SPECIAL_ORDER @deprecated(reason: "")
+    LIMITED @deprecated(reason: "")
+    UNAVAILABLE @deprecated(reason: "")
+}
+
 """
 Lists display settings for the Fixed Product Tax.
 """
@@ -17283,6 +17345,11 @@ type ClearCustomerCartOutput {
     Indicates whether cart was cleared.
     """
     status: Boolean!
+}
+
+input StoreLocationsItemQuantityInput {
+    quantity: Int!
+    sku: String!
 }
 
 enum CartErrorType {
