@@ -67,7 +67,7 @@ export const productsResolver: QueryResolvers['products'] = {
                 ...(searchTerm && { searchTerm: searchTerm }),
                 // priceFilterFrom is not used in the getBcAvailableProductFilters but is provided because at least one filter is required
                 ...(priceFilterFrom && {
-                    price: { maxPrice: 10, minPrice: Number(priceFilterFrom) },
+                    price: { maxPrice: 1000, minPrice: 0 },
                 }),
             };
 
