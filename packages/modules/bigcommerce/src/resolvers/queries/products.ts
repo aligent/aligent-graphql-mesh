@@ -61,12 +61,14 @@ export const productsResolver: QueryResolvers['products'] = {
 
             /* These base filters will help the "getBcAvailableProductFilters" get the available filters for search and
              * category pages
-             * The { maxPrice: 10, minPrice: 1 } just needed to know this filter has been sent
              * */
             const availableProductFiltersVariables = {
                 ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
                 ...(searchTerm && { searchTerm: searchTerm }),
-                ...(priceFilterFrom && { price: { maxPrice: 10, minPrice: 1 } }),
+                // priceFilterFrom is not used in the getBcAvailableProductFilters but is provided because at least one filter is required
+                ...(priceFilterFrom && {
+                    price: { maxPrice: 1000, minPrice: 0 },
+                }),
             };
 
             const availableBcProductFilters = await getBcAvailableProductFilters(
