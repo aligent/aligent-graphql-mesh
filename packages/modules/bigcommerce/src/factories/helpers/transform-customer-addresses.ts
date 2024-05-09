@@ -1,4 +1,4 @@
-import { CountryCodeEnum, CustomerAddress } from '@aligent/bigcommerce-resolvers';
+import { CartAddressInput, CountryCodeEnum, CustomerAddress, InputMaybe } from '@aligent/bigcommerce-resolvers';
 import { BcAddressRest, DefaultBillingOrShippingField, FormField } from '../../types';
 
 export const getTransformedCustomerAddresses = (
@@ -56,4 +56,23 @@ export const checkIfDefaultAddress = (
 
     if (isDefaultBilling?.value[0] === 'Yes') return true;
     return false;
+};
+
+export const customerAddressToCartAddress = (
+    address?: CustomerAddress | null
+): InputMaybe<CartAddressInput> | undefined => {
+    if (!address) {
+        return;
+    }
+
+    return {
+        ...address,
+        city: address.city || '',
+        country_code: address.country_code || '',
+        firstname: address.firstname || '',
+        lastname: address.lastname || '',
+        street: address.street || [''],
+        region: address.region?.region_code || '',
+        region_id: address.region?.region_id,
+    };
 };
