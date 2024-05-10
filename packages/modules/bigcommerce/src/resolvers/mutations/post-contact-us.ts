@@ -12,7 +12,6 @@ export const postContactFormResolver: MutationResolvers['postContactForm'] = {
             return logAndThrowError('Form data is missing');
         }
 
-        //this is having an issue and
         const response = await postContactForm(contactFormInput, customerImpersonationToken);
 
         return response;
