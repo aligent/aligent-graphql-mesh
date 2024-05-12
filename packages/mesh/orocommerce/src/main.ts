@@ -17,23 +17,23 @@ const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
 
 const client = new aws.SecretsManager({
-    region: process.env.AWS_REGION ?? 'ap-southeast-2', credentials: {
+    region: process.env.AWS_REGION ?? 'ap-southeast-2',
+    credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? ''
-    }
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
+    },
 });
-
 
 const retrieveSecret = async (): Promise<void> => {
     const params = {
-        SecretId: process.env.SECRET_ARN ?? ''
+        SecretId: process.env.SECRET_ARN ?? '',
     };
 
     try {
         const data = await client.getSecretValue(params).promise();
         if (data.SecretString) {
             const keys = JSON.parse(data.SecretString);
-            Object.keys(keys).forEach(key => {
+            Object.keys(keys).forEach((key) => {
                 process.env[key] = keys[key];
             });
         }
@@ -41,7 +41,7 @@ const retrieveSecret = async (): Promise<void> => {
         console.error('Error retrieving secret:', err);
         throw err;
     }
-}
+};
 
 retrieveSecret()
     .then(() => {
@@ -91,7 +91,13 @@ retrieveSecret()
         const corsConfiguration: cors.CorsOptions = {
             origin: allowedOrigins,
             credentials: true,
-            allowedHeaders: ['Content-Type', 'Authorization', 'preview-version', 'x-recaptcha', 'store'],
+            allowedHeaders: [
+                'Content-Type',
+                'Authorization',
+                'preview-version',
+                'x-recaptcha',
+                'store',
+            ],
         };
         app.use(cors(corsConfiguration));
 
@@ -122,7 +128,11 @@ retrieveSecret()
         app.use((req, res, next) => {
             res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
 
-            if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
+            if (
+                req.method == 'GET' &&
+                /^\/graphql/.test(req.path) &&
+                !req.header('Authorization')
+            ) {
                 if (
                     typeof req.query.operationName === 'string' &&
                     Object.prototype.hasOwnProperty.call(
@@ -176,6 +186,7 @@ retrieveSecret()
                 console.log(`Mesh listening at https://localhost:${port}/graphql`);
             });
         }
-    }).catch(err => {
-        console.log(err)
+    })
+    .catch((err) => {
+        console.log(err);
     });

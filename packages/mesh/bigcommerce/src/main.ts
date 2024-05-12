@@ -26,22 +26,23 @@ const cache = DEV_MODE
     : new Keyv(redisUri, { namespace: 'application' });
 
 const client = new aws.SecretsManager({
-    region: process.env.AWS_REGION ?? 'ap-southeast-2', credentials: {
+    region: process.env.AWS_REGION ?? 'ap-southeast-2',
+    credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? ''
-    }
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
+    },
 });
 
 const retrieveSecret = async (): Promise<void> => {
     const params = {
-        SecretId: process.env.SECRET_ARN ?? ''
+        SecretId: process.env.SECRET_ARN ?? '',
     };
 
     try {
         const data = await client.getSecretValue(params).promise();
         if (data.SecretString) {
             const keys = JSON.parse(data.SecretString);
-            Object.keys(keys).forEach(key => {
+            Object.keys(keys).forEach((key) => {
                 process.env[key] = keys[key];
             });
         }
@@ -49,7 +50,7 @@ const retrieveSecret = async (): Promise<void> => {
         console.error('Error retrieving secret:', err);
         throw err;
     }
-}
+};
 
 retrieveSecret()
     .then(() => {
@@ -177,7 +178,11 @@ retrieveSecret()
         app.use((req, res, next) => {
             res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
 
-            if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
+            if (
+                req.method == 'GET' &&
+                /^\/graphql/.test(req.path) &&
+                !req.header('Authorization')
+            ) {
                 if (
                     typeof req.query.operationName === 'string' &&
                     Object.prototype.hasOwnProperty.call(
@@ -232,6 +237,6 @@ retrieveSecret()
             });
         }
     })
-    .catch(err => {
-        console.log(err)
+    .catch((err) => {
+        console.log(err);
     });
