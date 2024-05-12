@@ -23,7 +23,8 @@ const client = new aws.SecretsManager({
     }
 });
 
-const retrieveSecret = async () => {
+
+const retrieveSecret = async (): Promise<void> => {
     const params = {
         SecretId: process.env.SECRET_ARN ?? ''
     };
@@ -31,19 +32,19 @@ const retrieveSecret = async () => {
     try {
         const data = await client.getSecretValue(params).promise();
         if (data.SecretString) {
-            return JSON.parse(data.SecretString);
+            const keys = JSON.parse(data.SecretString);
+            Object.keys(keys).forEach(key => {
+                process.env[key] = keys[key];
+            });
         }
     } catch (err) {
         console.error('Error retrieving secret:', err);
-        return err;
+        throw err;
     }
-    return;
 }
 
 retrieveSecret()
-    .then((secret) => {
-        console.log(secret)
-
+    .then(() => {
         const yoga = createYoga({
             graphiql: DEV_MODE,
             logging: DEV_MODE ? 'info' : 'warn',
