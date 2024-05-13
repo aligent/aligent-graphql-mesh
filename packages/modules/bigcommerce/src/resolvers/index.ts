@@ -15,7 +15,6 @@ import { deleteCustomerAddressResolver } from './mutations/delete-customer-addre
 import { generateCustomerTokenResolver } from './mutations/generate-customer-token';
 import { mergeCartsResolver } from './mutations/merge-carts';
 import { placeOrderResolver } from './mutations/place-order';
-import { postContactFormResolver } from './mutations/post-contact-form';
 import { removeCouponFromCartResolver } from './mutations/remove-coupon-from-cart';
 import { removeGiftCardFromCartResolver } from './mutations/remove-gift-card-from-cart';
 import { removeItemFromCartResolver } from './mutations/remove-item-from-cart';
@@ -66,6 +65,7 @@ import {
     customerOrdersResolver,
     customerWishlistsResolver,
 } from './queries/sub-query-resolvers';
+import { contactUsResolver } from './mutations/contact-us';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -107,7 +107,7 @@ export const resolvers: Resolvers = {
         generateCustomerToken: generateCustomerTokenResolver,
         mergeCarts: mergeCartsResolver,
         placeOrder: placeOrderResolver,
-        postContactForm: postContactFormResolver,
+        contactUs: contactUsResolver,
         removeCouponFromCart: removeCouponFromCartResolver,
         removeGiftCardFromCart: removeGiftCardFromCartResolver,
         removeItemFromCart: removeItemFromCartResolver,

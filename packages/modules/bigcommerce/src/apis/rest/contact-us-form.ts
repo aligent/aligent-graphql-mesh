@@ -9,7 +9,6 @@ export const postContactForm = async (
     customerImpersonationToken: string
 ): Promise<boolean> => {
     const BC_STENCIL_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');
-    //IS THIS URL CORRECT -> Need to confirm
     const url = `${BC_STENCIL_URL}/pages.php?action=sendContactForm`;
     const headers = {
         'content-type': 'application/x-www-form-urlencoded',
@@ -51,6 +50,5 @@ const getBcPageIdByPath = async (
         return logAndThrowError(response.errors);
     }
 
-    console.log(response.data.site.route.node.entityId);
     return response.data.site.route.node.entityId;
 };

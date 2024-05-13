@@ -1,8 +1,8 @@
 import { logAndThrowError } from '@aligent/utils';
-import { postContactForm } from '../../apis/rest/post-contact-form';
+import { postContactForm } from '../../apis/rest/contact-us-form';
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 
-export const postContactFormResolver: MutationResolvers['postContactForm'] = {
+export const contactUsResolver: MutationResolvers['contactUs'] = {
     resolve: async (_root, { input: contactFormInput }, context, _info) => {
         const customerImpersonationToken = (await context.cache.get(
             'customerImpersonationToken'
@@ -14,6 +14,8 @@ export const postContactFormResolver: MutationResolvers['postContactForm'] = {
 
         const response = await postContactForm(contactFormInput, customerImpersonationToken);
 
-        return response;
+        return {
+            status: response,
+        };
     },
 };
