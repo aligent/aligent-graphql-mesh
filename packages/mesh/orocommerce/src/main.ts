@@ -16,134 +16,176 @@ const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
 
-const yoga = createYoga({
-    graphiql: DEV_MODE,
-    logging: DEV_MODE ? 'info' : 'warn',
-    landingPage: false,
-    cors: false,
-    context: {
-        cache: DEV_MODE
-            ? new Keyv({ namespace: 'application' })
-            : new Keyv(redisUri, { namespace: 'application' }),
-    },
-    plugins: [
-        useGraphQLModules(application),
-        EnvelopArmorPlugin({
-            maxAliases: {
-                n: 70,
-                allowList: [],
-            },
-            maxDepth: {
-                n: 15000,
-            },
-            costLimit: {
-                maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
-            },
-        }),
-    ],
-});
+const main = () => {
+    const yoga = createYoga({
+        graphiql: DEV_MODE,
+        logging: DEV_MODE ? 'info' : 'warn',
+        landingPage: false,
+        cors: false,
+        context: {
+            cache: DEV_MODE
+                ? new Keyv({ namespace: 'application' })
+                : new Keyv(redisUri, { namespace: 'application' }),
+        },
+        plugins: [
+            useGraphQLModules(application),
+            EnvelopArmorPlugin({
+                maxAliases: {
+                    n: 70,
+                    allowList: [],
+                },
+                maxDepth: {
+                    n: 15000,
+                },
+                costLimit: {
+                    maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
+                },
+            }),
+        ],
+    });
 
-const app = express();
+    const app = express();
 
-let allowedOrigins: (string | RegExp)[] = [
-    new RegExp('.*.dev.aligent.consulting$'),
-    new RegExp('.*.local.pwadev(:\\d{4})?$'),
-    new RegExp('.*.pwa.aligent.com.au$'),
-];
+    let allowedOrigins: (string | RegExp)[] = [
+        new RegExp('.*.dev.aligent.consulting$'),
+        new RegExp('.*.local.pwadev(:\\d{4})?$'),
+        new RegExp('.*.pwa.aligent.com.au$'),
+    ];
 
-if (process.env.ORIGINS) {
-    const origins = process.env.ORIGINS.split(',');
-    allowedOrigins = allowedOrigins.concat(origins);
-}
-
-/*
- * Configure CORS and add middleware for use on all routes
- */
-const corsConfiguration: cors.CorsOptions = {
-    origin: allowedOrigins,
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'preview-version', 'x-recaptcha', 'store'],
-};
-app.use(cors(corsConfiguration));
-
-/**
- * Load Balancer health check
- */
-app.use('/healthcheck', (_req, res) => {
-    return res.send('ok');
-});
-
-/*
- * Configure AWS X-Ray Tracing
- */
-xray.captureAWS(aws);
-xray.captureHTTPsGlobal(http);
-xray.captureHTTPsGlobal(https);
-
-app.use(xray.express.openSegment('Mesh'));
-
-/*
- * Respond to all OPTIONS requests with CORS headers
- */
-app.options('*', cors(corsConfiguration));
-
-/**
- * Add cache headers for cloudfront
- */
-app.use((req, res, next) => {
-    res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
-
-    if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
-        if (
-            typeof req.query.operationName === 'string' &&
-            Object.prototype.hasOwnProperty.call(
-                cachableObjects.operations,
-                req.query.operationName
-            )
-        ) {
-            res.setHeader(
-                'Cache-Control',
-                `s-maxage=${cachableObjects.operations[req.query.operationName]}`
-            );
-            return next();
-        }
-
-        for (const rule of cachableObjects.rules) {
-            if (rule.pattern.test(req.url)) {
-                res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
-                return next();
-            }
-        }
+    if (process.env.ORIGINS) {
+        const origins = process.env.ORIGINS.split(',');
+        allowedOrigins = allowedOrigins.concat(origins);
     }
 
-    return next();
-});
+    /*
+     * Configure CORS and add middleware for use on all routes
+     */
+    const corsConfiguration: cors.CorsOptions = {
+        origin: allowedOrigins,
+        credentials: true,
+        allowedHeaders: [
+            'Content-Type',
+            'Authorization',
+            'preview-version',
+            'x-recaptcha',
+            'store',
+        ],
+    };
+    app.use(cors(corsConfiguration));
 
-/**
- * Add GraphQL Mesh route
- */
-app.use(yoga.graphqlEndpoint, yoga);
+    /**
+     * Load Balancer health check
+     */
+    app.use('/healthcheck', (_req, res) => {
+        return res.send('ok');
+    });
 
-// Disable powered by header
-app.disable('x-powered-by');
+    /*
+     * Configure AWS X-Ray Tracing
+     */
+    xray.captureAWS(aws);
+    xray.captureHTTPsGlobal(http);
+    xray.captureHTTPsGlobal(https);
 
-app.use(xray.express.closeSegment());
+    app.use(xray.express.openSegment('Mesh'));
 
-const port = 4000 || process.env.PORT;
+    /*
+     * Respond to all OPTIONS requests with CORS headers
+     */
+    app.options('*', cors(corsConfiguration));
+
+    /**
+     * Add cache headers for cloudfront
+     */
+    app.use((req, res, next) => {
+        res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
+
+        if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
+            if (
+                typeof req.query.operationName === 'string' &&
+                Object.prototype.hasOwnProperty.call(
+                    cachableObjects.operations,
+                    req.query.operationName
+                )
+            ) {
+                res.setHeader(
+                    'Cache-Control',
+                    `s-maxage=${cachableObjects.operations[req.query.operationName]}`
+                );
+                return next();
+            }
+
+            for (const rule of cachableObjects.rules) {
+                if (rule.pattern.test(req.url)) {
+                    res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
+                    return next();
+                }
+            }
+        }
+
+        return next();
+    });
+
+    /**
+     * Add GraphQL Mesh route
+     */
+    app.use(yoga.graphqlEndpoint, yoga);
+
+    // Disable powered by header
+    app.disable('x-powered-by');
+
+    app.use(xray.express.closeSegment());
+
+    const port = 4000 || process.env.PORT;
+    if (DEV_MODE) {
+        const server = https.createServer(
+            {
+                key: readFileSync('./certificates/cert.key'),
+                cert: readFileSync('./certificates/cert.crt'),
+            },
+            app
+        );
+
+        server.listen(port, () => {
+            console.log(`Mesh listening at https://localhost:${port}/graphql`);
+        });
+    } else {
+        app.listen(port, () => {
+            console.log(`Mesh listening at https://localhost:${port}/graphql`);
+        });
+    }
+};
+
 if (DEV_MODE) {
-    const server = https.createServer(
-        {
-            key: readFileSync('./certificates/cert.key'),
-            cert: readFileSync('./certificates/cert.crt'),
-        },
-        app
-    );
-
-    server.listen(port, () => {
-        console.log(`Mesh listening at https://localhost:${port}/graphql`);
-    });
+    main();
 } else {
-    app.listen(port, () => {
-        console.log(`Mesh listening at https://localhost:${port}/graphql`);
+    const client = new aws.SecretsManager({
+        region: process.env.AWS_REGION ?? 'ap-southeast-2',
     });
+
+    const retrieveSecret = async (): Promise<void> => {
+        const params = {
+            SecretId: process.env.SECRET_ARN ?? '',
+        };
+        try {
+            const data = await client.getSecretValue(params).promise();
+            if (data.SecretString) {
+                const keys = JSON.parse(data.SecretString);
+                Object.keys(keys).forEach((key) => {
+                    process.env[key] = keys[key];
+                });
+            }
+        } catch (err) {
+            console.error('Error retrieving secret:', err);
+            throw err;
+        }
+    };
+
+    retrieveSecret() // This is used to get secrets synchronously from Secret Manager. It's ugly don't hate me.
+        .then(() => {
+            main();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
