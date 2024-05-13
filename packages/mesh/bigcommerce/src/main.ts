@@ -50,184 +50,188 @@ const retrieveSecret = async (): Promise<void> => {
 
 retrieveSecret()
     .then(() => {
-const operationLog: Plugin<{
-    starttime: number;
-    headers: Record<string, string>;
-}> = {
-    onParse({ extendContext }) {
-        extendContext({
-            starttime: Date.now(),
-        });
-    },
-    onExecute({ args }) {
-        args.contextValue.starttime;
-
-        return {
-            onExecuteDone({ result }) {
-                const latency = (Date.now() - args.contextValue.starttime) / 1000;
-
-                if (isAsyncIterable(result)) return;
-
-                logger.info({
-                    latency,
-                    operation: args.operationName ?? 'Unknown',
-                    errors: result.errors?.length ?? 0,
-                    useragent: args.contextValue.headers['user-agent'],
+        const operationLog: Plugin<{
+            starttime: number;
+            headers: Record<string, string>;
+        }> = {
+            onParse({ extendContext }) {
+                extendContext({
+                    starttime: Date.now(),
                 });
             },
+            onExecute({ args }) {
+                args.contextValue.starttime;
+
+                return {
+                    onExecuteDone({ result }) {
+                        const latency = (Date.now() - args.contextValue.starttime) / 1000;
+
+                        if (isAsyncIterable(result)) return;
+
+                        logger.info({
+                            latency,
+                            operation: args.operationName ?? 'Unknown',
+                            errors: result.errors?.length ?? 0,
+                            useragent: args.contextValue.headers['user-agent'],
+                        });
+                    },
+                };
+            },
         };
-    },
-};
-const yoga = createYoga({
-    graphiql: DEV_MODE,
-    logging: DEV_MODE ? 'info' : 'warn',
-    landingPage: false,
-    cors: false,
-    context: async ({ request }) => {
-        // Convert the headers object to a Record so we can maintain
-        // the same headers references in the resolvers
-        const headers: Record<string, string> = {};
-        request.headers.forEach((value, key) => {
-            headers[key] = value;
+        const yoga = createYoga({
+            graphiql: DEV_MODE,
+            logging: DEV_MODE ? 'info' : 'warn',
+            landingPage: false,
+            cors: false,
+            context: async ({ request }) => {
+                // Convert the headers object to a Record so we can maintain
+                // the same headers references in the resolvers
+                const headers: Record<string, string> = {};
+                request.headers.forEach((value, key) => {
+                    headers[key] = value;
+                });
+
+                return {
+                    headers,
+                    cache,
+                };
+            },
+            plugins: [
+                operationLog,
+                maintenanceModePlugin(maintenanceFilePath),
+                useGraphQLModules(application),
+                addIpAddressToAxiosHeaders,
+                EnvelopArmorPlugin({
+                    maxAliases: {
+                        n: 70,
+                        allowList: [],
+                    },
+                    maxDepth: {
+                        n: 15000,
+                    },
+                    costLimit: {
+                        maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
+                    },
+                }),
+            ],
         });
 
-        return {
-            headers,
-            cache,
+        const app = express();
+
+        let allowedOrigins: (string | RegExp)[] = [
+            new RegExp('.*.dev.aligent.consulting(:\\d{4})?$'),
+            new RegExp('.*.local.pwadev(:\\d{4})?$'),
+            new RegExp('.*.pwa.aligent.com.au$'),
+        ];
+
+        if (process.env.ORIGINS) {
+            const origins = process.env.ORIGINS.split(',');
+            allowedOrigins = allowedOrigins.concat(origins);
+        }
+
+        /*
+         * Configure CORS and add middleware for use on all routes
+         */
+        const corsConfiguration: cors.CorsOptions = {
+            origin: allowedOrigins,
+            credentials: true,
+            allowedHeaders: [
+                'Content-Type',
+                'Authorization',
+                'Content-Currency',
+                'preview-version',
+                'x-recaptcha',
+                'mesh-token',
+                'store',
+            ],
         };
-    },
-    plugins: [
-        operationLog,
-        maintenanceModePlugin(maintenanceFilePath),
-        useGraphQLModules(application),
-        addIpAddressToAxiosHeaders,
-        EnvelopArmorPlugin({
-            maxAliases: {
-                n: 70,
-                allowList: [],
-            },
-            maxDepth: {
-                n: 15000,
-            },
-            costLimit: {
-                maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
-            },
-        }),
-    ],
-});
+        app.use(cors(corsConfiguration));
 
-const app = express();
+        /*
+         * Respond to all OPTIONS requests with CORS headers
+         */
+        app.options('*', cors(corsConfiguration));
 
-let allowedOrigins: (string | RegExp)[] = [
-    new RegExp('.*.dev.aligent.consulting(:\\d{4})?$'),
-    new RegExp('.*.local.pwadev(:\\d{4})?$'),
-    new RegExp('.*.pwa.aligent.com.au$'),
-];
+        /**
+         * Load Balancer health check
+         */
+        app.use('/healthcheck', (_req, res) => {
+            return res.send('ok');
+        });
 
-if (process.env.ORIGINS) {
-    const origins = process.env.ORIGINS.split(',');
-    allowedOrigins = allowedOrigins.concat(origins);
-}
+        /*
+         * Configure AWS X-Ray Tracing
+         */
+        xray.captureAWS(aws);
+        xray.captureHTTPsGlobal(http);
+        xray.captureHTTPsGlobal(https);
 
-/*
- * Configure CORS and add middleware for use on all routes
- */
-const corsConfiguration: cors.CorsOptions = {
-    origin: allowedOrigins,
-    credentials: true,
-    allowedHeaders: [
-        'Content-Type',
-        'Authorization',
-        'Content-Currency',
-        'preview-version',
-        'x-recaptcha',
-        'mesh-token',
-        'store',
-    ],
-};
-app.use(cors(corsConfiguration));
+        app.use(xray.express.openSegment('Mesh'));
 
-/*
- * Respond to all OPTIONS requests with CORS headers
- */
-app.options('*', cors(corsConfiguration));
+        /**
+         * Add cache headers for cloudfront
+         */
+        app.use((req, res, next) => {
+            res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
 
-/**
- * Load Balancer health check
- */
-app.use('/healthcheck', (_req, res) => {
-    return res.send('ok');
-});
+            if (
+                req.method == 'GET' &&
+                /^\/graphql/.test(req.path) &&
+                !req.header('Authorization')
+            ) {
+                if (
+                    typeof req.query.operationName === 'string' &&
+                    Object.prototype.hasOwnProperty.call(
+                        cachableObjects.operations,
+                        req.query.operationName
+                    )
+                ) {
+                    res.setHeader(
+                        'Cache-Control',
+                        `s-maxage=${cachableObjects.operations[req.query.operationName]}`
+                    );
+                    return next();
+                }
 
-/*
- * Configure AWS X-Ray Tracing
- */
-xray.captureAWS(aws);
-xray.captureHTTPsGlobal(http);
-xray.captureHTTPsGlobal(https);
-
-app.use(xray.express.openSegment('Mesh'));
-
-/**
- * Add cache headers for cloudfront
- */
-app.use((req, res, next) => {
-    res.setHeader('Vary', `Origin,Accept-Encoding,Store,Content-Currency,Authorization`);
-
-    if (req.method == 'GET' && /^\/graphql/.test(req.path) && !req.header('Authorization')) {
-        if (
-            typeof req.query.operationName === 'string' &&
-            Object.prototype.hasOwnProperty.call(
-                cachableObjects.operations,
-                req.query.operationName
-            )
-        ) {
-            res.setHeader(
-                'Cache-Control',
-                `s-maxage=${cachableObjects.operations[req.query.operationName]}`
-            );
-            return next();
-        }
-
-        for (const rule of cachableObjects.rules) {
-            if (rule.pattern.test(req.url)) {
-                res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
-                return next();
+                for (const rule of cachableObjects.rules) {
+                    if (rule.pattern.test(req.url)) {
+                        res.setHeader('Cache-Control', `s-maxage=${rule.maxAge}`);
+                        return next();
+                    }
+                }
             }
+
+            return next();
+        });
+
+        /**
+         * Add GraphQL Mesh route
+         */
+        app.use(yoga.graphqlEndpoint, yoga);
+
+        app.use(xray.express.closeSegment());
+
+        // Disable powered by header
+        app.disable('x-powered-by');
+
+        const port = 4000 || process.env.PORT;
+        if (DEV_MODE) {
+            const server = https.createServer(
+                {
+                    key: readFileSync('./certificates/cert.key'),
+                    cert: readFileSync('./certificates/cert.crt'),
+                },
+                app
+            );
+
+            server.listen(port, () => {
+                console.log(`Mesh listening at https://localhost:${port}/graphql`);
+            });
+        } else {
+            app.listen(port, () => {
+                console.log(`Mesh listening at https://localhost:${port}/graphql`);
+            });
         }
-    }
-
-    return next();
-});
-
-/**
- * Add GraphQL Mesh route
- */
-app.use(yoga.graphqlEndpoint, yoga);
-
-app.use(xray.express.closeSegment());
-
-// Disable powered by header
-app.disable('x-powered-by');
-
-const port = 4000 || process.env.PORT;
-if (DEV_MODE) {
-    const server = https.createServer(
-        {
-            key: readFileSync('./certificates/cert.key'),
-            cert: readFileSync('./certificates/cert.crt'),
-        },
-        app
-    );
-
-    server.listen(port, () => {
-        console.log(`Mesh listening at https://localhost:${port}/graphql`);
-    });
-} else {
-    app.listen(port, () => {
-        console.log(`Mesh listening at https://localhost:${port}/graphql`);
-    });
-}
     })
     .catch((err) => {
         console.log(err);
