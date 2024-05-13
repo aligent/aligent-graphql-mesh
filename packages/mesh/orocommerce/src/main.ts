@@ -15,7 +15,31 @@ import * as aws from 'aws-sdk';
 const DEV_MODE = process.env?.NODE_ENV == 'development';
 const redisDb = process.env?.REDIS_DATABASE || '0';
 const redisUri = `redis://${process.env.REDIS_ENDPOINT}:${process.env.REDIS_PORT}/${redisDb}`;
+const client = new aws.SecretsManager({
+    region: process.env.AWS_REGION ?? 'ap-southeast-2',
+});
 
+const retrieveSecret = async (): Promise<void> => {
+    const params = {
+        SecretId: process.env.SECRET_ARN ?? '',
+    };
+    try {
+        if (DEV_MODE) return;
+        const data = await client.getSecretValue(params).promise();
+        if (data.SecretString) {
+            const keys = JSON.parse(data.SecretString);
+            Object.keys(keys).forEach((key) => {
+                process.env[key] = keys[key];
+            });
+        }
+    } catch (err) {
+        console.error('Error retrieving secret:', err);
+        throw err;
+    }
+};
+
+retrieveSecret()
+    .then(() => {
 const yoga = createYoga({
     graphiql: DEV_MODE,
     logging: DEV_MODE ? 'info' : 'warn',
@@ -147,3 +171,8 @@ if (DEV_MODE) {
         console.log(`Mesh listening at https://localhost:${port}/graphql`);
     });
 }
+
+    })
+    .catch ((err) => {
+    console.log(err);
+});

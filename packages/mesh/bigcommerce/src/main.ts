@@ -25,6 +25,31 @@ const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
 
+const client = new aws.SecretsManager({
+    region: process.env.AWS_REGION ?? 'ap-southeast-2',
+});
+
+const retrieveSecret = async (): Promise<void> => {
+    const params = {
+        SecretId: process.env.SECRET_ARN ?? '',
+    };
+    try {
+        if (!DEV_MODE) return;
+        const data = await client.getSecretValue(params).promise();
+        if (data.SecretString) {
+            const keys = JSON.parse(data.SecretString);
+            Object.keys(keys).forEach((key) => {
+                process.env[key] = keys[key];
+            });
+        }
+    } catch (err) {
+        console.error('Error retrieving secret:', err);
+        throw err;
+    }
+};
+
+retrieveSecret()
+    .then(() => {
 const operationLog: Plugin<{
     starttime: number;
     headers: Record<string, string>;
@@ -203,3 +228,7 @@ if (DEV_MODE) {
         console.log(`Mesh listening at https://localhost:${port}/graphql`);
     });
 }
+    })
+    .catch((err) => {
+        console.log(err);
+    });
