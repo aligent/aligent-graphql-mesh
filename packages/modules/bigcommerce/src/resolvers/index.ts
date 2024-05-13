@@ -66,6 +66,7 @@ import {
     customerWishlistsResolver,
 } from './queries/sub-query-resolvers';
 import { contactUsResolver } from './mutations/contact-us';
+import { storeAvailabilityResolver } from './queries/store-availability';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -87,6 +88,7 @@ export const resolvers: Resolvers = {
         route: routeResolver,
         storeConfig: storeConfigResolver,
         storeLocations: storeLocationsResolver,
+        storeAvailability: storeAvailabilityResolver,
     },
     Mutation: {
         addProductsToCart: addProductsToCartResolver,

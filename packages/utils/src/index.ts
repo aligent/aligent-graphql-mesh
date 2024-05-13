@@ -5,6 +5,7 @@ export * from './get-url';
 export * from './time-and-date';
 export * from './regex/slash-at-start-or-end';
 export * from './is-not-null';
+export * from './is-type';
 export * from './error-handling/axios-errors';
 export * from './error-handling';
 export * from './search-params';

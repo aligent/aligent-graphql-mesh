@@ -1,9 +1,19 @@
-import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
-import { createCmsBlocksMock } from '../mocks/cms-blocks';
+import { CmsPage, QueryResolvers } from '@aligent/bigcommerce-resolvers';
+import { transformCmsPagesToCmsBlocks } from '../../factories/transform-cms-pages-to-cms-blocks';
+import { cmsPageResolver } from './cms-page';
 
 export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {
-    resolve: (_root, args, _context, _info) => {
+    resolve: async (root, args, context, info) => {
         const { identifiers } = args as { identifiers: string[] };
-        return createCmsBlocksMock(identifiers);
+        const response = await Promise.all(
+            identifiers.map((identifier) =>
+                cmsPageResolver.resolve(root, { identifier }, context, info)
+            )
+        );
+
+        return {
+            __typename: 'CmsBlocks',
+            ...transformCmsPagesToCmsBlocks(response.filter(Boolean) as CmsPage[]),
+        };
     },
 };

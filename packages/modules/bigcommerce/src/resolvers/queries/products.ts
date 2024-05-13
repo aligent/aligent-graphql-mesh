@@ -53,6 +53,7 @@ export const productsResolver: QueryResolvers['products'] = {
                 return { items: [getTransformedProductData(bcProduct, bundleItemProducts?.items)] };
             }
 
+            const priceFilterFrom = args.filter?.price?.from || undefined;
             const categoryEntityId = atob(args?.filter?.category_uid?.eq || '');
             const searchTerm = args?.search || '';
             const pageSize = args?.pageSize || 24;
@@ -64,12 +65,17 @@ export const productsResolver: QueryResolvers['products'] = {
             const availableProductFiltersVariables = {
                 ...(categoryEntityId && { categoryEntityId: Number(categoryEntityId) }),
                 ...(searchTerm && { searchTerm: searchTerm }),
+                // priceFilterFrom is not used in the getBcAvailableProductFilters but is provided because at least one filter is required
+                ...(priceFilterFrom && {
+                    price: { maxPrice: 1000, minPrice: 0 },
+                }),
             };
 
             const availableBcProductFilters = await getBcAvailableProductFilters(
                 availableProductFiltersVariables,
                 customerImpersonationToken
             );
+
             const transformedFilterArguments = getTransformedProductArgs(
                 args,
                 availableBcProductFilters
