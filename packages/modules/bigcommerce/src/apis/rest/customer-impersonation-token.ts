@@ -27,6 +27,7 @@ export const getCustomerImpersonationToken = async (context: GraphQLModules.Modu
     const currentDatePlusTokenTtl = new Date(currentTime + tokenTtlWithBuffer).getTime();
     const expiresAt = Number((currentDatePlusTokenTtl / 1000).toFixed(0));
 
+    console.log('hello');
     return createCustomerImpersonationToken(expiresAt);
 };
 
