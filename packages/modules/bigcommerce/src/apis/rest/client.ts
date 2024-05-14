@@ -84,7 +84,6 @@ export const createCustomerImpersonationToken = async (expiresAt: number): Promi
         channel_id: 1,
         expires_at: expiresAt,
     };
-
     const response = await bcPost(path, data);
     return response.data.token;
 };
