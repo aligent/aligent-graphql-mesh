@@ -16,10 +16,8 @@ export const bcPost = async (path: string, data?: unknown): Promise<AxiosRespons
     const url = `${BC_REST_API}${path}`;
     try {
         const response = await axios.post(url, data, { headers });
-        console.log(response);
         return response.data;
     } catch (error) {
-        console.log(error);
         return logAndThrowError(error, bcPost.name);
     }
 };
@@ -86,8 +84,6 @@ export const createCustomerImpersonationToken = async (expiresAt: number): Promi
         channel_id: 1,
         expires_at: expiresAt,
     };
-    console.log('he');
     const response = await bcPost(path, data);
-    console.log('man');
     return response.data.token;
 };

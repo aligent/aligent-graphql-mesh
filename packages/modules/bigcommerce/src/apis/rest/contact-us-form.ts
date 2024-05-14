@@ -24,8 +24,6 @@ export const postContactForm = async (
         contact_phone: input.telephone,
     };
 
-    console.log(data, url);
-
     try {
         const response = await axios.post(url, data, { headers });
         return !!response;
