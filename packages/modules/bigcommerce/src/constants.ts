@@ -1,3 +1,6 @@
+const STORE_HASH = process.env.STORE_HASH;
+export const DEFAULT_IMAGE = `https://cdn11.bigcommerce.com/s-${STORE_HASH}/stencil/15eec2b0-e387-0138-ad46-0242ac110007/e/ec579c80-7d66-0139-f0a8-5273ac5aab0b/img/ProductDefault.gif`;
+
 export const CACHE_KEY__BRANDS = 'brands';
 export const CACHE_KEY__CATEGORIES = 'categories';
 export const CACHE_KEY__CATEGORIES_REST = 'categories-rest';

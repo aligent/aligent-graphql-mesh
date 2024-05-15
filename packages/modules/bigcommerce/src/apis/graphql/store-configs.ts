@@ -1,15 +1,19 @@
 import { bcGraphQlRequest } from './client';
-import { StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { Settings } from '@aligent/bigcommerce-operations';
 import { logAndThrowError } from '@aligent/utils';
 import { storeConfigsQuery } from './requests/store-configs';
 import { STORE_CONFIG_PWA, STORE_CONFIG_ADMIN } from '../../resolvers/queries/store-config';
-import { getTransformedChannelMetafieldsToStoreConfig } from '../../factories/transform-store-configs';
+import {
+    getTransformedChannelMetafieldsToStoreConfig,
+    MetafieldStoreConfigs,
+} from '../../factories/transform-store-configs';
 import { getDataFromMeshCache } from '../../utils';
 import { CACHE_KEY__STORE_CONFIG } from '../../constants';
 import { retrieveCustomerImpersonationTokenFromCache } from '../rest';
 
-export type getStoreConfigsTypes = Promise<StoreConfig & Settings>;
+export type getStoreConfigsTypes = Promise<
+    MetafieldStoreConfigs & Settings & { fallback_product_image_url: string }
+>;
 
 export const getStoreConfigs = async (
     context: GraphQLModules.ModuleContext
@@ -35,12 +39,11 @@ export const getStoreConfigs = async (
     }
 
     const { channel, site } = response.data;
-    const { pwaMetafields, storeConfigMetafields } = channel;
+
+    const transformedChannelMetafields = getTransformedChannelMetafieldsToStoreConfig(channel);
 
     return {
-        ...getTransformedChannelMetafieldsToStoreConfig({
-            edges: [...(pwaMetafields?.edges || []), ...(storeConfigMetafields?.edges || [])],
-        }),
+        ...transformedChannelMetafields,
         ...site.settings,
     };
 };
