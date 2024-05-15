@@ -1,9 +1,5 @@
 import { mockBcProducts } from '../../../resolvers/mocks/products.bc';
-import {
-    DEFAULT_IMAGE,
-    getTransformedMediaGalleryEntries,
-    getTransformedSmallImage,
-} from '../transform-images';
+import { getTransformedMediaGalleryEntries, getTransformedSmallImage } from '../transform-images';
 import { ImageEdge } from '@aligent/bigcommerce-operations';
 
 describe('transform-image', () => {
@@ -11,13 +7,6 @@ describe('transform-image', () => {
         expect(getTransformedSmallImage(mockBcProducts[0].defaultImage)).toEqual({
             label: '',
             url: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
-        });
-    });
-
-    it(`Returns a default image when no default image exists`, () => {
-        expect(getTransformedSmallImage(null)).toEqual({
-            label: '',
-            url: DEFAULT_IMAGE,
         });
     });
 

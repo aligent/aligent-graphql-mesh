@@ -64,6 +64,7 @@ import {
     customerTotalResolver,
     customerOrdersResolver,
     customerWishlistsResolver,
+    smallImageResolver,
 } from './queries/sub-query-resolvers';
 import { contactUsResolver } from './mutations/contact-us';
 import { storeAvailabilityResolver } from './queries/store-availability';
@@ -143,6 +144,9 @@ export const resolvers: Resolvers = {
         shipping_address: customerOrderShippingAddressResolver,
         shipping_method: customerOrderShippingMethodResolver,
         total: customerTotalResolver,
+    },
+    ProductImage: {
+        url: smallImageResolver,
     },
 };
 

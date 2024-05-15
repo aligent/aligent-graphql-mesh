@@ -1,11 +1,10 @@
-import { MetafieldConnection } from '@aligent/bigcommerce-operations';
 import { StoreConfig } from '@aligent/bigcommerce-resolvers';
 import { getTransformedChannelMetafieldsToStoreConfig } from '../transform-store-configs';
 
 describe('Transform StoreConfig tests', () => {
     test('Mandatory StoreConfig exits', () => {
         const transformedConfig: StoreConfig =
-            getTransformedChannelMetafieldsToStoreConfig(bcStoreConfigData);
+            getTransformedChannelMetafieldsToStoreConfig(channelMetafields);
 
         expect(transformedConfig.contact_enabled).toEqual(false);
         expect(transformedConfig.newsletter_enabled).toEqual(false);
@@ -14,57 +13,63 @@ describe('Transform StoreConfig tests', () => {
     });
     test('Specified StoreConfig exits', () => {
         const transformedConfig: StoreConfig =
-            getTransformedChannelMetafieldsToStoreConfig(bcStoreConfigData);
+            getTransformedChannelMetafieldsToStoreConfig(channelMetafields);
 
         expect(transformedConfig.category_url_suffix).toEqual('.html');
         expect(transformedConfig.grid_per_page).toEqual(24);
     });
     test('Bad metafield data given', () => {
         const transformedConfig: StoreConfig =
-            getTransformedChannelMetafieldsToStoreConfig(bcStoreConfigBadData);
+            getTransformedChannelMetafieldsToStoreConfig(channelMetafieldsBadData);
 
         expect(transformedConfig.category_url_suffix).toEqual('');
     });
 });
 
-const bcStoreConfigData: MetafieldConnection = {
-    edges: [
-        {
-            // @ts-expect-error: Type expects `entityId`
-            node: {
-                id: 'TWV0YWZpZWxkczoxODk=',
-                key: 'category_url_suffix',
-                value: '.html',
+const channelMetafields = {
+    pwaMetafields: {
+        edges: [
+            {
+                node: {
+                    id: 'TWV0YWZpZWxkczoxODk=',
+                    key: 'category_url_suffix',
+                    name: 'category_url_suffix',
+                    value: '.html',
+                },
             },
-        },
-        {
-            // @ts-expect-error: Type expects `entityId`
-            node: {
-                id: 'TWV0YWZpZWxkczoxOTA=',
-                key: 'grid_per_page',
-                value: '24',
+            {
+                node: {
+                    id: 'TWV0YWZpZWxkczoxOTA=',
+                    key: 'grid_per_page',
+                    name: 'grid_per_page',
+                    value: '24',
+                },
             },
-        },
-    ],
+        ],
+    },
+    storeConfigMetafields: { edges: undefined },
 };
 
-const bcStoreConfigBadData: MetafieldConnection = {
-    edges: [
-        {
-            // @ts-expect-error: Type expects `entityId`
-            node: {
-                id: '',
-                key: '',
-                value: '',
+const channelMetafieldsBadData = {
+    pwaMetafields: {
+        edges: [
+            {
+                node: {
+                    id: '',
+                    key: '',
+                    name: '',
+                    value: '',
+                },
             },
-        },
-        {
-            // @ts-expect-error: Type expects `entityId`
-            node: {
-                id: '',
-                key: '',
-                value: '',
+            {
+                node: {
+                    id: '',
+                    key: '',
+                    name: '',
+                    value: '',
+                },
             },
-        },
-    ],
+        ],
+    },
+    storeConfigMetafields: { edges: undefined },
 };
