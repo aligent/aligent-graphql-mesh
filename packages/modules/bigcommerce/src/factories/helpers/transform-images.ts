@@ -2,9 +2,6 @@ import crypto from 'crypto';
 import { ImageEdge, Image } from '@aligent/bigcommerce-operations';
 import { Maybe, MediaGalleryEntry, ProductImage } from '@aligent/bigcommerce-resolvers';
 
-export const DEFAULT_IMAGE =
-    'https://cdn11.bigcommerce.com/s-xxazhvt7gd/stencil/15eec2b0-e387-0138-ad46-0242ac110007/e/ec579c80-7d66-0139-f0a8-5273ac5aab0b/img/ProductDefault.gif';
-
 /**
  * Creates an image id from the image url
  *
@@ -52,7 +49,27 @@ export const getTransformedMediaGalleryEntries = (images: {
         .filter(Boolean);
 };
 
-export const getTransformedSmallImage = (defaultImage?: Maybe<Image>): Maybe<ProductImage> => ({
-    label: defaultImage?.altText || '',
-    url: defaultImage?.url || DEFAULT_IMAGE,
-});
+export const getTransformedSmallImage = (
+    defaultImage?: Maybe<Image>,
+    images?: {
+        edges?: Maybe<Array<Maybe<ImageEdge>>>;
+    }
+): Maybe<ProductImage> => {
+    let label = defaultImage?.altText;
+    let url = defaultImage?.url;
+
+    /* Fallback to the finding an image in the "images" array if one can't be found with "defaultImage"*/
+    if (!url && images) {
+        const mediaGalleryEntries = getTransformedMediaGalleryEntries(images);
+        url = mediaGalleryEntries?.[0]?.file || '';
+        label = mediaGalleryEntries?.[0]?.label || '';
+    }
+
+    /* There is a sub resolver at packages/modules/bigcommerce/src/resolvers/queries/sub-query-resolvers/small-image.ts
+     * which will fill the "url" with a default image url defined in store configs metafield
+     * or another defined in constants.ts */
+    return {
+        label: label || '',
+        url: url || '',
+    };
+};

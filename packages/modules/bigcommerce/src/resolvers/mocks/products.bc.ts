@@ -17,6 +17,7 @@ export const mockBcProducts = [
                 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/401/wh01-green_main__96543.1690452070.jpg',
             altText: '',
             isDefault: true,
+            urlTemplate: '',
         },
         seo: {
             pageTitle: 'Mona Pullover Hoodlie',
@@ -32,6 +33,7 @@ export const mockBcProducts = [
                             'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/401/wh01-green_main__96543.1690452070.jpg',
                         altText: '',
                         isDefault: true,
+                        urlTemplate: '',
                     },
                     cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
                 },
@@ -42,6 +44,7 @@ export const mockBcProducts = [
                             'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/original/products/492/402/wh01-purple_main__43854.1690452461.jpg',
                         altText: '',
                         isDefault: false,
+                        urlTemplate: '',
                     },
                     cursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                 },

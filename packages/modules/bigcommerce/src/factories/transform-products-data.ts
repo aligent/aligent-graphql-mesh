@@ -155,7 +155,7 @@ export const getTransformedProductData = (
             review_count: reviewSummary?.numberOfReviews || 0,
             related_products: getTransformedRelatedProducts(relatedProducts),
             sku,
-            small_image: getTransformedSmallImage(defaultImage),
+            small_image: getTransformedSmallImage(defaultImage, bcProduct.images),
             stock_status: getTransformedSimpleStockStatus(availabilityV2, inventory),
             url_key: path.replace(slashAtStartOrEnd, ''),
             url_suffix: '',

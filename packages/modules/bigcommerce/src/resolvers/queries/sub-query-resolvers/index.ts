@@ -5,3 +5,4 @@ export * from './customerOrderShippingAddress';
 export * from './customerOrderShippingMethod';
 export * from './customer-total';
 export * from './customer-wishlists';
+export * from './small-image';
