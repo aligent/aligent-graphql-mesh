@@ -12,7 +12,8 @@ import { CACHE_KEY__STORE_CONFIG } from '../../constants';
 import { retrieveCustomerImpersonationTokenFromCache } from '../rest';
 
 export type getStoreConfigsTypes = Promise<
-    MetafieldStoreConfigs & Settings & { fallback_product_image_url: string }
+    MetafieldStoreConfigs &
+        Settings & { fallback_product_image_url: string; recaptcha_secret_key: string }
 >;
 
 export const getStoreConfigs = async (

@@ -8,4 +8,5 @@ export type ReCaptchaValidationAreas =
     | 'captcha_type_place_order'
     | 'captcha_type_product_review'
     | 'captcha_type_sendfriend'
-    | 'captcha_type_wishlist_sharing';
+    | 'captcha_type_wishlist_sharing'
+    | 'captcha_type_contact';

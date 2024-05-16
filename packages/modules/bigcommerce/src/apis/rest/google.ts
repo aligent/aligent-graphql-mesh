@@ -26,20 +26,18 @@ export const verifyReCaptcha = async (
 
     const storeConfigs = await retrieveStoreConfigsFromCache(context);
 
-    const {
-        reCaptcha: { siteKey },
-    } = storeConfigs;
+    const { recaptcha_secret_key } = storeConfigs;
 
     /* If a value hasn't been defined for the ReCaptcha type in store config it
      * means we don't want Recaptcha validation enabled for that area. */
     if (!storeConfigs[reCaptchaType]) return true;
 
-    if (!siteKey || !requestCaptchaToken) {
-        throw new GraphqlError('Site key or token is missing!');
+    if (!recaptcha_secret_key || !requestCaptchaToken) {
+        throw new GraphqlError('Secret key or token is missing!');
     }
 
     const response = await googlePost(
-        `recaptcha/api/siteverify?secret=${siteKey}&response=${requestCaptchaToken}`
+        `recaptcha/api/siteverify?secret=${recaptcha_secret_key}&response=${requestCaptchaToken}`
     );
 
     if (!response.success) {
