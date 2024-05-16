@@ -33,7 +33,7 @@ export const verifyReCaptcha = async (
     if (!storeConfigs[reCaptchaType]) return true;
 
     if (!recaptcha_secret_key || !requestCaptchaToken) {
-        throw new GraphqlError('Site key or token is missing!');
+        throw new GraphqlError('Secret key or token is missing!');
     }
 
     const response = await googlePost(
