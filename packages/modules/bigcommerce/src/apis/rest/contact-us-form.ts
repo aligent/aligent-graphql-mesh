@@ -6,6 +6,7 @@ import { getRouteQuery } from '../graphql/requests';
 
 export const postContactForm = async (
     input: ContactUsInput,
+    path: string,
     customerImpersonationToken: string
 ): Promise<boolean> => {
     const BC_STENCIL_URL = process.env.BC_GRAPHQL_API?.replace('/graphql', '');
@@ -14,13 +15,13 @@ export const postContactForm = async (
         'content-type': 'application/x-www-form-urlencoded',
     };
 
-    const pageId = await getBcPageIdByPath(input.path, customerImpersonationToken);
+    const pageId = await getBcPageIdByPath(path, customerImpersonationToken);
 
     const data = {
         page_id: pageId,
-        contact_comment: input.comment,
+        contact_question: input.comment,
         contact_email: input.email,
-        contact_name: input.name,
+        contact_fullname: input.name,
         contact_phone: input.telephone,
     };
 
