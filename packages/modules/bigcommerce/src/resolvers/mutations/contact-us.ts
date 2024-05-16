@@ -13,7 +13,9 @@ export const contactUsResolver: MutationResolvers['contactUs'] = {
 
         await verifyReCaptcha(context, 'captcha_type_contact');
 
-        const response = await postContactForm(contactFormInput, customerImpersonationToken);
+        const path = '/contact-us/';
+
+        const response = await postContactForm(contactFormInput, path, customerImpersonationToken);
 
         return {
             status: response,
