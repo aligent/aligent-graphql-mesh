@@ -47,7 +47,7 @@ export const mockBcCart = {
                 entityId: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
                 variantEntityId: 513,
                 parentEntityId: null,
-                productEntityId: 1034,
+                productEntityId: 492,
                 discounts: [
                     {
                         entityId: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
