@@ -22,10 +22,7 @@ export const getCheckout = async (
         },
     };
 
-    // console.log(JSON.stringify(checkoutQuery))
-
     const response = await bcGraphQlRequest(checkoutQuery, cartHeaders);
-console.log(JSON.stringify(response))
     if (response.errors) {
         return logAndThrowError(response.errors);
     }

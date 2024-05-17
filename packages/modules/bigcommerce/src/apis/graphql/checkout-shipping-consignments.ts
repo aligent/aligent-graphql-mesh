@@ -1,9 +1,13 @@
-import { AddCheckoutShippingConsignmentsInput, Checkout, UpdateCheckoutShippingConsignmentInput } from "@aligent/bigcommerce-operations";
-import { bcGraphQlRequest } from "./client";
-import { getCartUserErrors } from "../../utils/error-handling";
-import { logAndThrowError } from "@aligent/utils";
-import { updateCheckoutShippingConsignmentMutation } from "./requests/update-checkout-shipping-consignment";
-import { addCheckoutShippingConsignmentsMutation } from "./requests/add-checkout-shipping-consignments";
+import {
+    AddCheckoutShippingConsignmentsInput,
+    Checkout,
+    UpdateCheckoutShippingConsignmentInput,
+} from '@aligent/bigcommerce-operations';
+import { bcGraphQlRequest } from './client';
+import { getCartUserErrors } from '../../utils/error-handling';
+import { logAndThrowError } from '@aligent/utils';
+import { updateCheckoutShippingConsignmentMutation } from './requests/update-checkout-shipping-consignment';
+import { addCheckoutShippingConsignmentsMutation } from './requests/add-checkout-shipping-consignments';
 
 export const setCheckoutShippingConsignment = async (
     input: AddCheckoutShippingConsignmentsInput | UpdateCheckoutShippingConsignmentInput,
@@ -15,7 +19,7 @@ export const setCheckoutShippingConsignment = async (
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
-
+    
     const checkoutShippingConsignmentMutation = {
         query: hasShippingConsignmentAttached
             ? updateCheckoutShippingConsignmentMutation
