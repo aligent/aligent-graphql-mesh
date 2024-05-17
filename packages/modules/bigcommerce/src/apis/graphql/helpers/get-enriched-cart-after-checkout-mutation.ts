@@ -1,4 +1,3 @@
-
 import { GraphQLResolveInfo } from 'graphql/type';
 import { getEnrichedCart } from '../enriched-cart';
 import { Checkout, Metafields } from '@aligent/bigcommerce-operations';

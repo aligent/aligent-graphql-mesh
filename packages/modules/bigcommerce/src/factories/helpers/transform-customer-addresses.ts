@@ -1,4 +1,9 @@
-import { CartAddressInput, CountryCodeEnum, CustomerAddress, InputMaybe } from '@aligent/bigcommerce-resolvers';
+import {
+    CartAddressInput,
+    CountryCodeEnum,
+    CustomerAddress,
+    InputMaybe,
+} from '@aligent/bigcommerce-resolvers';
 import { BcAddressRest, DefaultBillingOrShippingField, FormField } from '../../types';
 
 export const getTransformedCustomerAddresses = (

@@ -19,7 +19,7 @@ export const setCheckoutShippingConsignment = async (
         Authorization: `Bearer ${customerImpersonationToken}`,
         ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
     };
-    
+
     const checkoutShippingConsignmentMutation = {
         query: hasShippingConsignmentAttached
             ? updateCheckoutShippingConsignmentMutation
