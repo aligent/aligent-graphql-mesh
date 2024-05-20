@@ -35,9 +35,18 @@ export const getTransformCartItems = (
             selectedOptions,
         } = item;
 
-        const matchingEnrichedData = additionalCartItemData?.find((enrichedItem) => {
+        /* Get both product and variant data as the product data will supplement properties the variant data is missing */
+        const matchingVariantData = additionalCartItemData?.find((enrichedItem) => {
+            return enrichedItem.id === variantEntityId;
+        });
+
+        const matchingProductData = additionalCartItemData?.find((enrichedItem) => {
             return enrichedItem.id === productEntityId;
         });
+
+        const matchingEnrichedData = matchingVariantData
+            ? matchingVariantData
+            : matchingProductData;
 
         if (!matchingEnrichedData) {
             throw new GraphqlError(`Missing additional data for product ${sku}`, 'input');
@@ -66,13 +75,18 @@ export const getTransformCartItems = (
         );
 
         const cartItemUid = createCartItemUid(cartItemId, productEntityId, variantEntityId);
+
+        const smallImage = matchingVariantData?.small_image?.url
+            ? matchingVariantData?.small_image
+            : matchingProductData?.small_image;
+
         return {
             id: cartItemId, // cart item id
             uid: cartItemUid,
             errors: getTransformedCartItemErrors(
                 quantity,
-                matchingEnrichedData?.stock_status,
-                matchingEnrichedData?.only_x_left_in_stock
+                matchingVariantData?.stock_status,
+                matchingVariantData?.only_x_left_in_stock
             ),
             prices: {
                 /* "Price" this will depend on excluding or including tax admin configurable */
@@ -86,8 +100,13 @@ export const getTransformCartItems = (
                 total_item_discount,
             },
             product: {
-                brand,
                 ...matchingEnrichedData,
+                brand,
+                categories: matchingProductData?.categories,
+                name: matchingProductData?.name,
+                small_image: smallImage,
+                url_key: matchingProductData?.url_key,
+                url_suffix: matchingProductData?.url_suffix,
                 __typename: 'SimpleProduct',
             },
             quantity: quantity,
