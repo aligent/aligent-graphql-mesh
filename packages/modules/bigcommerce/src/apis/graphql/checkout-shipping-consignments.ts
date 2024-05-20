@@ -6,8 +6,10 @@ import {
 import { bcGraphQlRequest } from './client';
 import { getCartUserErrors } from '../../utils/error-handling';
 import { logAndThrowError } from '@aligent/utils';
-import { updateCheckoutShippingConsignmentMutation } from './requests/update-checkout-shipping-consignment';
-import { addCheckoutShippingConsignmentsMutation } from './requests/add-checkout-shipping-consignments';
+import {
+    addCheckoutShippingConsignmentsMutation,
+    updateCheckoutShippingConsignmentMutation,
+} from './requests';
 
 export const setCheckoutShippingConsignment = async (
     input: AddCheckoutShippingConsignmentsInput | UpdateCheckoutShippingConsignmentInput,

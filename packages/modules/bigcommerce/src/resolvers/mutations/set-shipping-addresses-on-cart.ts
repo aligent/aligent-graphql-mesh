@@ -10,7 +10,7 @@ import {
     getTransformedUpdateShippingConsignmentArgs,
 } from '../../factories/transform-shipping-consignment-args';
 import { setCheckoutShippingConsignment } from '../../apis/graphql/checkout-shipping-consignments';
-import { getEnrichedCartAfterCheckoutMutation } from '../../apis/graphql/helpers/get-enriched-cart-after-checkout-mutation';
+import { getEnrichedCart } from '../../apis/graphql/enriched-cart';
 
 export const setShippingAddressesOnCartResolver: MutationResolvers['setShippingAddressesOnCart'] = {
     resolve: async (root, args, context, info) => {
@@ -69,21 +69,14 @@ export const setShippingAddressesOnCartResolver: MutationResolvers['setShippingA
               )
             : getTransformedAddShippingConsignmentArgs(cart_id, acShippingAddress, cart?.lineItems);
 
-        const shippingConsignmentMutation = () =>
-            setCheckoutShippingConsignment(
-                transformedShippingConsignmentArgs,
-                hasShippingConsignmentAttached,
-                customerImpersonationToken,
-                bcCustomerId
-            );
-
-        const enrichedCart = await getEnrichedCartAfterCheckoutMutation(
-            shippingConsignmentMutation,
-            args?.input?.cart_id,
-            context,
-            info,
+        await setCheckoutShippingConsignment(
+            transformedShippingConsignmentArgs,
+            hasShippingConsignmentAttached,
+            customerImpersonationToken,
             bcCustomerId
         );
+
+        const enrichedCart = await getEnrichedCart({ cart_id: cart_id }, context, bcCustomerId);
 
         return {
             cart: enrichedCart,
