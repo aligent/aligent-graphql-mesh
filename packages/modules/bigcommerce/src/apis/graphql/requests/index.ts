@@ -21,3 +21,5 @@ export * from './delete-wishlist';
 export * from './update-wishlist';
 export * from './add-wishlist-items';
 export * from './delete-wishlist-items';
+export * from './add-checkout-shipping-consignments';
+export * from './update-checkout-shipping-consignment';
