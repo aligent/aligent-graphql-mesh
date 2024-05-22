@@ -20,10 +20,11 @@ export const getTransformedStoreAvailabilityData = (
 
             if (!detailedLocation?.node.address || !location) return;
 
-            const { address, label, distance, code } = detailedLocation.node;
+            const { entityId, address, label, distance, code } = detailedLocation.node;
 
             const item = {
                 location: {
+                    id: entityId,
                     city: address.city,
                     distance: distance?.value,
                     email: address.email,
