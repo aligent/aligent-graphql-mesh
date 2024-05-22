@@ -14,7 +14,7 @@ describe('transform-image', () => {
         expect(getTransformedMediaGalleryEntries(mockBcProducts[0].images)).toEqual([
             {
                 disabled: false,
-                file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/401/wh01-green_main__96543.1690452070.jpg',
+                file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/{:size}/products/492/401/wh01-green_main__96543.1690452070.jpg',
                 id: 12573090,
                 label: '',
                 position: 0,
@@ -22,7 +22,7 @@ describe('transform-image', () => {
             },
             {
                 disabled: false,
-                file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/products/492/402/wh01-purple_main__43854.1690452461.jpg',
+                file: 'https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/{:size}/products/492/402/wh01-purple_main__43854.1690452461.jpg',
                 id: 13020129,
                 label: '',
                 position: 1,

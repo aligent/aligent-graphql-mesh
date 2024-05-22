@@ -22,13 +22,13 @@ export const getTransformedImage = (
     position?: number | undefined
 ): Maybe<MediaGalleryEntry> => {
     if (!image) return null;
-    const { altText, url } = image;
+    const { altText, url, urlTemplate } = image;
 
     const id = createImageIdFromUrl(url);
 
     return {
         disabled: false,
-        file: url,
+        file: urlTemplate || url,
         id,
         label: altText,
         position: position || 0,
