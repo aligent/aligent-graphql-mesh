@@ -214,6 +214,8 @@ if (DEV_MODE) {
     });
 
     const retrieveSecret = async (): Promise<void> => {
+        console.log(process.env.SECRET_ARN);
+
         const params = {
             SecretId: process.env.SECRET_ARN ?? '',
         };
