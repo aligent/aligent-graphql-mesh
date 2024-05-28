@@ -1,3 +1,4 @@
+import './bootstrap';
 import express from 'express';
 import cors from 'cors';
 import http from 'http';
@@ -24,16 +25,6 @@ const maintenanceFilePath = process.env.MAINTENANCE_FILE_PATH as string;
 const cache = DEV_MODE
     ? new Keyv({ namespace: 'application' })
     : new Keyv(redisUri, { namespace: 'application' });
-
-const secrets = process.env.SECRETS;
-
-if (secrets) {
-    const keys = JSON.parse(secrets);
-
-    Object.keys(keys).forEach((key) => {
-        process.env[key] = keys[key];
-    });
-}
 
 const operationLog: Plugin<{
     starttime: number;
