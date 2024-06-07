@@ -177,5 +177,16 @@ export const getTransformedSortArguments = (
         return 'HIGHEST_PRICE';
     }
 
+    if ('name' in sortArgs) {
+        if (sortArgs.name === 'ASC') {
+            return 'A_TO_Z';
+        }
+        return 'Z_TO_A';
+    }
+
+    if ('relevance' in sortArgs) {
+        return 'RELEVANCE';
+    }
+
     return 'RELEVANCE';
 };

@@ -1,4 +1,7 @@
-import { SearchProductsFiltersInput } from '@aligent/bigcommerce-operations';
+import {
+    SearchProductsFiltersInput,
+    SearchProductsSortInput,
+} from '@aligent/bigcommerce-operations';
 import { getProductsPaginationQuery } from '../requests/products-pagination';
 import { graphqlPaginate } from '../client';
 
@@ -7,6 +10,7 @@ const DEFAULT_PAGINATION_RESPONSE = { startCursor: '', currentPage: 1 };
 export const getProductSearchPagination = async (
     variables: {
         filters: SearchProductsFiltersInput;
+        sort: SearchProductsSortInput;
     },
     customerImpersonationToken: string,
     pageSize: number,
