@@ -4,7 +4,6 @@
 
 Overview of changes
 
-Name of the PR 
+Name of the PR
 
 link's -> PR's and ticket's
-
