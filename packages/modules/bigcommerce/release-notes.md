@@ -9,7 +9,7 @@ The products resolvers filtering is being patched.
 #### Changes:
 
 - Products resolver
-  - Update to price filter → Fix for requesting pages greater than 1
+  - Update the price filter → Fix for requesting pages greater than 1
   - Added in name filter
   - Added in relevance filter (Default value if no sort requested)
 

@@ -152,7 +152,7 @@ describe('get transformed BC sort arguments', () => {
         expect(result).toEqual('LOWEST_PRICE');
     });
 
-    it(`Transformed Adobe Commerce price ascending sort args into BC sort args`, () => {
+    it(`Transformed Adobe Commerce price descending sort args into BC sort args`, () => {
         const result = getTransformedSortArguments({ price: 'DESC' });
 
         expect(result).toEqual('HIGHEST_PRICE');
