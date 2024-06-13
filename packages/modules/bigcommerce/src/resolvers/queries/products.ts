@@ -20,7 +20,7 @@ import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 export const productsResolver: QueryResolvers['products'] = {
-    resolve: async (root, args, context, _info): Promise<Products | null> => {
+    resolve: async (_root, args, context, _info): Promise<Products | null> => {
         const customerImpersonationToken =
             await retrieveCustomerImpersonationTokenFromCache(context);
 
@@ -81,16 +81,16 @@ export const productsResolver: QueryResolvers['products'] = {
                 availableBcProductFilters
             );
 
+            const transformedSortArguments = getTransformedSortArguments(sort);
+
             /* Retrieve the pagination cursor for the next set of products we
              * want to query */
             const paginationPage = await getProductSearchPagination(
-                { filters: transformedFilterArguments },
+                { filters: transformedFilterArguments, sort: transformedSortArguments },
                 customerImpersonationToken,
                 pageSize,
                 args?.currentPage
             );
-
-            const transformedSortArguments = getTransformedSortArguments(sort);
 
             const bcProducts = await getBcProductSearchGraphql(
                 {
