@@ -171,10 +171,15 @@ export const getTransformedSortArguments = (
     }
 
     if ('price' in sortArgs) {
-        if (sortArgs.price === 'ASC') {
-            return 'LOWEST_PRICE';
-        }
-        return 'HIGHEST_PRICE';
+        return sortArgs.price === 'ASC' ? 'LOWEST_PRICE' : 'HIGHEST_PRICE';
+    }
+
+    if ('name' in sortArgs) {
+        return sortArgs.name === 'ASC' ? 'A_TO_Z' : 'Z_TO_A';
+    }
+
+    if ('relevance' in sortArgs) {
+        return 'RELEVANCE';
     }
 
     return 'RELEVANCE';

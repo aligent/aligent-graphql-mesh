@@ -1,4 +1,7 @@
-import { getTransformedProductArgs } from '../transform-product-search-arguments';
+import {
+    getTransformedProductArgs,
+    getTransformedSortArguments,
+} from '../transform-product-search-arguments';
 import { SearchProductFilterConnection } from '@aligent/bigcommerce-operations';
 
 const availableFilters = {
@@ -127,5 +130,43 @@ describe('get-product-search-filter', () => {
             searchTerm: 'Mona',
             categoryEntityId: 23,
         });
+    });
+});
+
+describe('get transformed BC sort arguments', () => {
+    it(`Transformed Adobe Commerce name ascending sort args into BC sort args`, () => {
+        const result = getTransformedSortArguments({ name: 'ASC' });
+
+        expect(result).toEqual('A_TO_Z');
+    });
+
+    it(`Transformed Adobe Commerce name descending sort args into BC sort args`, () => {
+        const result = getTransformedSortArguments({ name: 'DESC' });
+
+        expect(result).toEqual('Z_TO_A');
+    });
+
+    it(`Transformed Adobe Commerce price ascending sort args into BC sort args`, () => {
+        const result = getTransformedSortArguments({ price: 'ASC' });
+
+        expect(result).toEqual('LOWEST_PRICE');
+    });
+
+    it(`Transformed Adobe Commerce price descending sort args into BC sort args`, () => {
+        const result = getTransformedSortArguments({ price: 'DESC' });
+
+        expect(result).toEqual('HIGHEST_PRICE');
+    });
+
+    it(`Transformed Adobe Commerce relevance sort args into BC sort args`, () => {
+        const result = getTransformedSortArguments({ relevance: 'ASC' });
+
+        expect(result).toEqual('RELEVANCE');
+    });
+
+    it(`Transformed null input into BC sort args`, () => {
+        const result = getTransformedSortArguments(null);
+
+        expect(result).toEqual('RELEVANCE');
     });
 });

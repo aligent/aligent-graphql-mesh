@@ -11,10 +11,11 @@ export const getProductsPaginationQuery = stripIgnoredCharacters(
             $filters: SearchProductsFiltersInput!
             $first: Int = 50
             $after: String
+            $sort: SearchProductsSortInput
         ) {
             site {
                 search {
-                    searchProducts(filters: $filters, sort: RELEVANCE) {
+                    searchProducts(filters: $filters, sort: $sort) {
                         products(first: $first, after: $after) {
                             edges {
                                 cursor
