@@ -84,10 +84,10 @@ const yoga = createYoga({
                 allowList: [],
             },
             maxDepth: {
-                n: 15000,
+                n: 20,
             },
             costLimit: {
-                maxCost: 50000, //@TODO: Being updated to get staging working OTF-277
+                maxCost: 15000,
             },
         }),
     ],

@@ -362,6 +362,15 @@ export const bcWishListItems: WishlistItemConnection = {
                 productEntityId: 492,
                 variantEntityId: null,
                 product: {
+                    videos: {
+                        pageInfo: {
+                            __typename: undefined,
+                            endCursor: undefined,
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                            startCursor: undefined,
+                        },
+                    },
                     brand: {
                         entityId: 111,
                         id: 'well',
