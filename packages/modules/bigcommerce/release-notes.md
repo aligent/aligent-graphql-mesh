@@ -29,6 +29,8 @@ The orders resolver is being patched to return only orders that are for that cus
   - https://aligent.atlassian.net/browse/MICRO-369
   - https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/438
 
+---
+
 ## bigcommerce-graphql-module-1.0.1
 
 ### Overview of changes
