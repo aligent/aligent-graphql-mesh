@@ -27,7 +27,7 @@ The orders resolver is being patched to return only orders that are for that cus
 
 - MICRO-369 Security - Customers resolver can fetch any order by Id
   - https://aligent.atlassian.net/browse/MICRO-369
-  - https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/438
+  - https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/441
 
 ---
 
