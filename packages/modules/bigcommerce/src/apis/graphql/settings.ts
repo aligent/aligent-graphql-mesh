@@ -47,7 +47,10 @@ export const getCdnUrl = async (
             }
         );
 
-        const originUrl = response.site.settings?.url.cdnUrl;
+        const originUrl = response.data?.site.settings?.url.cdnUrl;
+        if (!originUrl) {
+            throw new Error('No originUrl found');
+        }
         return `https://${originUrl}/s-${config.storeHash}`;
     } catch (error) {
         return logAndThrowError(error);

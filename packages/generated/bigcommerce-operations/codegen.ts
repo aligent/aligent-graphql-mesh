@@ -27,7 +27,7 @@ const config: CodegenConfig = {
                 },
                 'typescript',
                 'typescript-operations',
-                'typescript-graphql-request'
+                'typescript-generic-sdk'
             ],
             documents: [
                 'packages/modules/bigcommerce/src/apis/graphql/requests/*.{graphql,ts}',
@@ -35,6 +35,7 @@ const config: CodegenConfig = {
             ],
             config: {
                 useImplementingTypes: true,
+                rawRequest: true
             },
         },
     },
