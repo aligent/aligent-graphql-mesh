@@ -54,6 +54,7 @@
     "@envelop/graphql-modules": "^5.0.0",
     "@envelop/sentry": "^6.0.0",
     "@escape.tech/graphql-armor": "2.3.2",
+    "@graphql-codegen/typescript-generic-sdk": "^4.0.1",
     "@graphql-tools/load-files": "^7.0.0",
     "@keyv/redis": "^2.8.0",
     "@nx/devkit": "18.0.7",
