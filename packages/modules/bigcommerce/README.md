@@ -51,7 +51,7 @@ import { Sdk } from '@aligent/bigcommerce-operations';
 
 export const someResolver: QueryResolvers['a-resolver-type'] = {
   resolve: async (_root, _args, context, _info) => {
-    const sdk: Sdk = _context.injector.get(BigCommerceSdk);
+    const sdk: Sdk = context.injector.get(BigCommerceSdk);
 
     const response = sdk.login({
       email,
