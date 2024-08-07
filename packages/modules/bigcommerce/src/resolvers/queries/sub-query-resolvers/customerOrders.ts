@@ -28,7 +28,10 @@ export const customerOrdersResolver: CustomerResolvers['orders'] = {
         let bcOrders: BCOrder[] = [];
         if (orderNumber) {
             const bcOrder = await getOrder(orderNumber);
-            bcOrders.push(bcOrder);
+
+            if (bcOrder.customer_id === bcCustomerId) {
+                bcOrders.push(bcOrder);
+            }
         }
         if (!orderNumber) {
             bcOrders = await getAllOrders(bcCustomerId);
