@@ -3,12 +3,6 @@ import * as xray from 'aws-xray-sdk';
 import axios, { AxiosRequestConfig } from 'axios';
 import { print } from 'graphql';
 
-type ErrorHandler = (error: unknown, label: string) => never;
-
-// Only including mutations and queries as we have not
-// tested subscriptions and can't guarantee support for them
-const validDocumentTypes = ['mutation', 'query'];
-
 /**
  * Factory to generate requester for passing to codegen getSDK functions
  *
@@ -20,7 +14,7 @@ const validDocumentTypes = ['mutation', 'query'];
 export const requesterFactory = (config: {
     graphqlEndpoint: string;
     timeout: { seconds: number; message: string };
-    onError: ErrorHandler;
+    onError: (error: unknown, label: string) => never;
 }) => {
     const client = axios.create({
         baseURL: config.graphqlEndpoint,
@@ -37,22 +31,6 @@ export const requesterFactory = (config: {
         variables: V,
         options?: AxiosRequestConfig
     ): Promise<R> => {
-        // Valid document should contain *single* query or mutation unless it's has a fragment
-        if (
-            doc.definitions.filter(
-                (d) => d.kind === 'OperationDefinition' && validDocumentTypes.includes(d.operation)
-            ).length !== 1
-        ) {
-            throw new Error('DocumentNode must contain a single query or mutation');
-        }
-
-        const definition = doc.definitions[0];
-
-        // Valid document should contain *OperationDefinition*
-        if (definition.kind !== 'OperationDefinition') {
-            throw new Error('DocumentNode must contain a single query or mutation');
-        }
-
         const data = {
             query: print(doc),
             variables,

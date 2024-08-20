@@ -1,8 +1,7 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
 import { BigCommerceModuleConfig } from '../index';
 import { getSdk } from '@aligent/bigcommerce-operations';
-import { requesterFactory } from './axios-requester';
-import { logAndThrowError } from '@aligent/utils';
+import { logAndThrowError, requesterFactory } from '@aligent/utils';
 import { Get, Paths } from 'type-fest';
 
 export const ModuleConfig = new InjectionToken<BigCommerceModuleConfig>(
