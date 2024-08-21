@@ -13,7 +13,8 @@
     "tslib": "^2.3.0",
     "@graphql-codegen/cli": "^5.0.0",
     "luxon": "^3.4.3",
-    "keyv": "^4.5.4"
+    "keyv": "^4.5.4",
+    "aws-xray-sdk": "^3.5.4"
   },
   "type": "commonjs",
   "main": "./src/index.js",

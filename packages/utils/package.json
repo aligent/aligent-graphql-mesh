@@ -6,7 +6,8 @@
     "axios": "1.6.7",
     "lodash": "^4.17.21",
     "luxon": "^3.4.3",
-    "graphql": "^16.7.0"
+    "graphql": "^16.7.0",
+    "aws-xray-sdk": "^3.5.4"
   },
   "type": "commonjs",
   "main": "./src/index.js",
