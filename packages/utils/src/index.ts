@@ -2,6 +2,7 @@ export * from './cart';
 export * from './encode-decode';
 export * from './get-path-from-url-key';
 export * from './get-url';
+export * from './graphql-sdk';
 export * from './time-and-date';
 export * from './regex/slash-at-start-or-end';
 export * from './is-not-null';

@@ -46,6 +46,7 @@
     "prettier": "^3.0.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
+    "type-fest": "^4.23.0",
     "typescript": "5.3.3"
   },
   "dependencies": {
@@ -54,6 +55,7 @@
     "@envelop/graphql-modules": "^5.0.0",
     "@envelop/sentry": "^6.0.0",
     "@escape.tech/graphql-armor": "2.3.2",
+    "@graphql-codegen/typescript-generic-sdk": "^4.0.1",
     "@graphql-tools/load-files": "^7.0.0",
     "@keyv/redis": "^2.8.0",
     "@nx/devkit": "18.0.7",
