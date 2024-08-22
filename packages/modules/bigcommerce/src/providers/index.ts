@@ -80,17 +80,7 @@ export const getProviders = (config: BigCommerceModuleConfig): Array<Provider> =
         },
         {
             provide: BigCommerceSdk,
-            useFactory: (config: BigCommerceModuleConfig) =>
-                getSdk(
-                    requesterFactory({
-                        graphqlEndpoint: config.graphqlEndpoint,
-                        timeout: {
-                            seconds: 10_000,
-                            message: 'BigCommerce GraphQL request timed out',
-                        },
-                        onError: logAndThrowError,
-                    })
-                ),
+            useFactory: sdkFactory,
             deps: [ModuleConfig],
             global: true,
         },
