@@ -36,6 +36,11 @@ export class AuthTokenService {
         // eslint-disable-next-line no-unused-vars
         @Inject(CONTEXT) private context: GraphQLModules.GlobalContext
     ) {
+        /*
+         * Expiry times can be defined in the module config when creating the auth module.
+         * If no expiry time is defined in the auth module config, the corresponding fallback expiry time
+         * from constants.ts will be used.
+         * */
         this.extendRefreshTokenExpiry =
             this.config.extendRefreshTokenExpiry || REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED;
         this.nonExtendRefreshTokenExpiry =
@@ -46,6 +51,9 @@ export class AuthTokenService {
         this.verifyExpiryTimes();
     }
 
+    /**
+     * A check to ensure the defined expiry times are not less
+     */
     verifyExpiryTimes() {
         if (this.accessTokenExpiry >= this.nonExtendRefreshTokenExpiry) {
             throw new GraphqlError(
