@@ -17,7 +17,7 @@ const sdkFactory = (config: BigCommerceModuleConfig) =>
         requesterFactory({
             graphqlEndpoint: config.graphqlEndpoint,
             timeout: {
-                seconds: 10_000,
+                milliseconds: 10_000,
                 message: 'BigCommerce GraphQL request timed out',
             },
             onError: logAndThrowError,
