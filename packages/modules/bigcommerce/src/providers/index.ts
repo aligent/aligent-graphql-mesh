@@ -15,9 +15,10 @@ export const ModuleConfig = new InjectionToken<BigCommerceModuleConfig>(
 const sdkFactory = (config: BigCommerceModuleConfig) =>
     getSdk(
         requesterFactory({
+            name: 'bcGraphQlRequest',
             graphqlEndpoint: config.graphqlEndpoint,
             timeout: {
-                seconds: 10_000,
+                milliseconds: 10_000,
                 message: 'BigCommerce GraphQL request timed out',
             },
             onError: logAndThrowError,

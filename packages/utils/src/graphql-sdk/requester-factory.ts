@@ -17,9 +17,10 @@ import { print } from 'graphql';
  * const sdkFactory = (config: BigCommerceModuleConfig) =>
  *  getSdk(
  *      requesterFactory({
+ *          name: 'bcGraphQlRequest',
  *          graphqlEndpoint: config.graphqlEndpoint,
  *          timeout: {
- *              seconds: 10_000,
+ *              milliseconds: 10_000,
  *              message: 'BigCommerce GraphQL request timed out',
  *          },
  *          onError: logAndThrowError,
@@ -27,8 +28,9 @@ import { print } from 'graphql';
  *  );
  */
 export const requesterFactory = (config: {
+    name: string;
     graphqlEndpoint: string;
-    timeout: { seconds: number; message: string };
+    timeout: { milliseconds: number; message: string };
     onError: (error: unknown, label: string) => never;
 }) => {
     const client = axios.create({
@@ -36,9 +38,9 @@ export const requesterFactory = (config: {
         headers: {
             accept: 'application/json',
         },
-        timeout: config.timeout.seconds,
+        timeout: config.timeout.milliseconds,
         timeoutErrorMessage: config.timeout.message,
-        signal: AbortSignal.timeout(config.timeout.seconds),
+        signal: AbortSignal.timeout(config.timeout.milliseconds),
     });
 
     const requester = async <R, V>(
@@ -52,7 +54,7 @@ export const requesterFactory = (config: {
         };
 
         try {
-            const response = await xray.captureAsyncFunc('bcGraphQlRequest', async (segment) => {
+            const response = await xray.captureAsyncFunc(config.name, async (segment) => {
                 // Add query annotation to axios request
                 segment?.addAnnotation('query', data.query);
                 const response = await client.post<R>('', data, options);
