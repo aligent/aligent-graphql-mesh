@@ -1,14 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { GraphqlError } from '@aligent/utils';
-
-import {
-    generateRefreshedTokens,
-    getAuthTokenStatus,
-    getDecodedAuthToken,
-    getHashedRefreshToken,
-} from '../../utils';
 import { JWT_AUTH_STATUSES } from '../../constants';
-import { AuthService } from '../../services';
+import { AuthService, AuthTokenService } from '../../services';
 
 const {
     ACCESS_VALID_REFRESH_VALID,
@@ -22,8 +15,10 @@ export const refreshCustomerTokenResolver = {
         const { refresh_token } = args;
         const authToken = context.headers.authorization;
 
+        const authTokenService: AuthTokenService = context.injector.get(AuthTokenService);
+
         /* Validates the access token and refresh token, and returns a status*/
-        const authTokenStatus = getAuthTokenStatus(authToken, refresh_token);
+        const authTokenStatus = authTokenService.getAuthTokenStatus(authToken, refresh_token);
 
         /* Prevents new tokens being generated if both refresh and access tokens are still valid */
         if (authTokenStatus === ACCESS_VALID_REFRESH_VALID) {
@@ -36,7 +31,7 @@ export const refreshCustomerTokenResolver = {
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const { bc_customer_id } = getDecodedAuthToken(authToken) || {};
+        const { bc_customer_id } = authTokenService.getDecodedAuthToken(authToken) || {};
 
         const usersAuthDataInDb = await authService.getUserAuth(
             String(bc_customer_id),
@@ -71,7 +66,7 @@ export const refreshCustomerTokenResolver = {
          * Any token passed to this mutation should have a corresponding db refresh
          * token if it's truly valid.
          */
-        if (usersDbRefreshToken !== getHashedRefreshToken(refresh_token)) {
+        if (usersDbRefreshToken !== authTokenService.getHashedRefreshToken(refresh_token)) {
             if (bc_customer_id) {
                 /* Remove all user auth items from the DB which are associated to the user id */
                 await authService.removeAllUserAuthItems(bc_customer_id);
@@ -91,7 +86,7 @@ export const refreshCustomerTokenResolver = {
                 accessToken,
                 refreshToken: newRefreshToken,
                 refreshTokenExpiry: newRefreshTokenExpiry,
-            } = generateRefreshedTokens(authToken);
+            } = authTokenService.generateRefreshedTokens(authToken);
 
             /* Update the newly generated refresh token in the database*/
             await authService.updateUserAuth(

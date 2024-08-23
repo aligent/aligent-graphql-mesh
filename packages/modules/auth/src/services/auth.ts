@@ -18,7 +18,7 @@ import {
 } from '../types/index';
 import { ModuleConfig } from '../index';
 import { ModuleConfigToken } from '../providers';
-import { getHashedRefreshToken } from '../utils';
+import { AuthTokenService } from './auth-tokens';
 import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types/commands/BatchWriteItemCommand';
 
 const BATCH_WRITE_LIMIT = 25;
@@ -31,6 +31,8 @@ export class AuthService {
 
     constructor(
         @Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig,
+        @Inject(forwardRef(() => AuthTokenService))
+        protected authTokenService: AuthTokenService,
         // eslint-disable-next-line no-unused-vars
         @Inject(CONTEXT) private context: GraphQLModules.GlobalContext
     ) {
@@ -43,7 +45,7 @@ export class AuthService {
     }
 
     async getUserAuth(userId: string | number, refreshToken: string): GetUserAuthResponse {
-        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
+        const hashedRefreshToken = this.authTokenService.getHashedRefreshToken(refreshToken);
 
         const command = new GetItemCommand({
             TableName: this.config.dynamoDbAuthTable,
@@ -70,7 +72,7 @@ export class AuthService {
         refreshToken: string,
         refreshTokenTTl: number | string
     ): UpdateUserAuthResponse {
-        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
+        const hashedRefreshToken = this.authTokenService.getHashedRefreshToken(refreshToken);
 
         const command = new PutItemCommand({
             TableName: this.config.dynamoDbAuthTable,
@@ -97,7 +99,7 @@ export class AuthService {
     }
 
     async removeUserAuth(userId: string | number, refreshToken: string): RemoveUserAuthResponse {
-        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
+        const hashedRefreshToken = this.authTokenService.getHashedRefreshToken(refreshToken);
 
         const command = new DeleteItemCommand({
             TableName: this.config.dynamoDbAuthTable,

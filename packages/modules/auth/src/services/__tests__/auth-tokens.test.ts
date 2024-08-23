@@ -1,21 +1,9 @@
 import { decode, JsonWebTokenError, sign, TokenExpiredError } from 'jsonwebtoken';
 import { advanceTo, clear } from 'jest-date-mock';
-import {
-    createAccessJWT,
-    createRefreshToken,
-    getFormattedUTCDate,
-    getCurrentTimeStamp,
-    generateLoginTokens,
-    generateRefreshedTokens,
-    getAuthTokenStatus,
-    getRollingRefreshTokenExpiry,
-    getUTCTimeStamp,
-    getTokenExpiryFromMinutes,
-    getVerifiedAccessToken,
-    getHashedRefreshToken,
-} from '../index';
+import { getFormattedUTCDate, getCurrentTimeStamp, getUTCTimeStamp } from '../../utils';
 import { JWT_AUTH_STATUSES } from '../../constants';
 import { decodedAccessToken } from '../../types';
+import { AuthTokenService } from '../../services';
 
 const {
     ACCESS_VALID_REFRESH_VALID,
@@ -25,6 +13,16 @@ const {
 } = JWT_AUTH_STATUSES;
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const userId = 23;
+
+const mockContextConfig = {
+    dynamoDbRegion: 'mock-region',
+    dynamoDbAuthTable: 'mock-table',
+};
+
+const authTokenService = new AuthTokenService(
+    mockContextConfig,
+    {} as GraphQLModules.GlobalContext
+);
 
 describe('TimeZone', () => {
     it('Checks the jest TZ env variable is set to UTC', () => {
@@ -37,19 +35,23 @@ describe('TimeZone', () => {
 });
 
 describe('Json web token errors', () => {
-    const tokenExpiry = getTokenExpiryFromMinutes(-5);
-    const expiredToken = createAccessJWT(userId, tokenExpiry, tokenExpiry);
+    const tokenExpiry = authTokenService.getTokenExpiryFromMinutes(-5);
+    const expiredToken = authTokenService.createAccessJWT(userId, tokenExpiry, tokenExpiry);
 
     it(`Throws an "invalid signature" error when verifying a malformed JWT`, () => {
         const malformedJwt = 'ae6r4h16sat56th';
-        const tokenStatus = getVerifiedAccessToken(malformedJwt) as { message: string };
+        const tokenStatus = authTokenService.getVerifiedAccessToken(malformedJwt) as {
+            message: string;
+        };
         expect(tokenStatus).toBeInstanceOf(JsonWebTokenError);
         expect(tokenStatus.message).toBe('jwt malformed');
     });
 
     it(`Throws an "invalid signature" error when verifying a modified JWT`, () => {
         const malformedJwt = expiredToken + 'a';
-        const tokenStatus = getVerifiedAccessToken(malformedJwt) as { message: string };
+        const tokenStatus = authTokenService.getVerifiedAccessToken(malformedJwt) as {
+            message: string;
+        };
         expect(tokenStatus).toBeInstanceOf(JsonWebTokenError);
         expect(tokenStatus.message).toBe('invalid signature');
     });
@@ -59,7 +61,9 @@ describe('Json web token errors', () => {
             { bc_customer_id: userId, exp: tokenExpiry, refresh_expiry: tokenExpiry },
             'different_signature'
         );
-        const tokenStatus = getVerifiedAccessToken(tokenWithDifferentSignature) as {
+        const tokenStatus = authTokenService.getVerifiedAccessToken(
+            tokenWithDifferentSignature
+        ) as {
             message: string;
         };
         expect(tokenStatus).toBeInstanceOf(JsonWebTokenError);
@@ -67,7 +71,9 @@ describe('Json web token errors', () => {
     });
 
     it(`Throws a "jwt expired" error when a JWTs ttl has elapsed`, () => {
-        const tokenStatus = getVerifiedAccessToken(expiredToken) as { message: string };
+        const tokenStatus = authTokenService.getVerifiedAccessToken(expiredToken) as {
+            message: string;
+        };
         expect(tokenStatus).toBeInstanceOf(TokenExpiredError);
         expect(tokenStatus.message).toBe('jwt expired');
     });
@@ -75,42 +81,52 @@ describe('Json web token errors', () => {
 
 describe('JWT statues', () => {
     it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when the auth token is missing the bearer string`, () => {
-        const tokenExp = getTokenExpiryFromMinutes(-5);
+        const tokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
 
-        const expiredToken = createAccessJWT(userId, tokenExp, tokenExp);
-        const expiredRefreshToken = createRefreshToken(userId, tokenExp);
+        const expiredToken = authTokenService.createAccessJWT(userId, tokenExp, tokenExp);
+        const expiredRefreshToken = authTokenService.createRefreshToken(userId, tokenExp);
 
-        const tokenStatus = getAuthTokenStatus(expiredToken, expiredRefreshToken);
+        const tokenStatus = authTokenService.getAuthTokenStatus(expiredToken, expiredRefreshToken);
 
         expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when both access and refresh tokens are invalid`, () => {
-        const tokenExp = getTokenExpiryFromMinutes(-5);
+        const tokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
 
-        const expiredToken = createAccessJWT(userId, tokenExp, tokenExp);
-        const expiredRefreshToken = createRefreshToken(userId, tokenExp);
+        const expiredToken = authTokenService.createAccessJWT(userId, tokenExp, tokenExp);
+        const expiredRefreshToken = authTokenService.createRefreshToken(userId, tokenExp);
 
-        const tokenStatus = getAuthTokenStatus(`Bearer ${expiredToken}`, expiredRefreshToken);
+        const tokenStatus = authTokenService.getAuthTokenStatus(
+            `Bearer ${expiredToken}`,
+            expiredRefreshToken
+        );
 
         expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_VALID_REFRESH_INVALID" status when the access token is valid and refresh token is invalid`, () => {
-        const accessTokenExp = getTokenExpiryFromMinutes(5);
-        const refreshTokenExp = getTokenExpiryFromMinutes(-5);
+        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
+        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
 
-        const validAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const expiredRefreshToken = createRefreshToken(userId, refreshTokenExp);
+        const validAccessToken = authTokenService.createAccessJWT(
+            userId,
+            accessTokenExp,
+            refreshTokenExp
+        );
+        const expiredRefreshToken = authTokenService.createRefreshToken(userId, refreshTokenExp);
 
-        const tokenStatus = getAuthTokenStatus(`Bearer ${validAccessToken}`, expiredRefreshToken);
+        const tokenStatus = authTokenService.getAuthTokenStatus(
+            `Bearer ${validAccessToken}`,
+            expiredRefreshToken
+        );
 
         expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_VALID_REFRESH_INVALID" status if a "refresh_token" is missing`, () => {
-        const accessTokenExp = getTokenExpiryFromMinutes(5);
-        const refreshTokenExp = getTokenExpiryFromMinutes(-5);
+        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
+        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
 
         const missingRefreshToken = '';
         const validAccessToken = sign(
@@ -118,29 +134,46 @@ describe('JWT statues', () => {
             JWT_PRIVATE_KEY
         );
 
-        const tokenStatus = getAuthTokenStatus(`Bearer ${validAccessToken}`, missingRefreshToken);
+        const tokenStatus = authTokenService.getAuthTokenStatus(
+            `Bearer ${validAccessToken}`,
+            missingRefreshToken
+        );
         expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_INVALID);
     });
 
     it(`Returns a "ACCESS_INVALID_REFRESH_VALID" status when access token is invalid but the refresh token is valid`, () => {
-        const accessTokenExp = getTokenExpiryFromMinutes(-5);
-        const refreshTokenExp = getTokenExpiryFromMinutes(5);
+        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
+        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
 
-        const invalidAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const validRefreshToken = createRefreshToken(userId, accessTokenExp);
+        const invalidAccessToken = authTokenService.createAccessJWT(
+            userId,
+            accessTokenExp,
+            refreshTokenExp
+        );
+        const validRefreshToken = authTokenService.createRefreshToken(userId, accessTokenExp);
 
-        const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
+        const tokenStatus = authTokenService.getAuthTokenStatus(
+            `Bearer ${invalidAccessToken}`,
+            validRefreshToken
+        );
         expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_VALID);
     });
 
     it(`Returns a "ACCESS_VALID_REFRESH_VALID" status when both access and refresh tokens are invalid`, () => {
-        const accessTokenExp = getTokenExpiryFromMinutes(5);
-        const refreshTokenExp = getTokenExpiryFromMinutes(5);
+        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
+        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
 
-        const invalidAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const validRefreshToken = createRefreshToken(userId, refreshTokenExp);
+        const invalidAccessToken = authTokenService.createAccessJWT(
+            userId,
+            accessTokenExp,
+            refreshTokenExp
+        );
+        const validRefreshToken = authTokenService.createRefreshToken(userId, refreshTokenExp);
 
-        const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
+        const tokenStatus = authTokenService.getAuthTokenStatus(
+            `Bearer ${invalidAccessToken}`,
+            validRefreshToken
+        );
         expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_VALID);
     });
 });
@@ -159,7 +192,10 @@ describe(`Token TTL's`, () => {
 
         expect(getFormattedUTCDate(refreshTokenExp)).toEqual('1/3/2024, 9:16');
 
-        const newRefreshTokenExp = getRollingRefreshTokenExpiry(currentTime, refreshTokenExp);
+        const newRefreshTokenExp = authTokenService.getRollingRefreshTokenExpiry(
+            currentTime,
+            refreshTokenExp
+        );
 
         if (newRefreshTokenExp instanceof Error) return;
 
@@ -171,7 +207,10 @@ describe(`Token TTL's`, () => {
         const currentTime = getCurrentTimeStamp();
         const refreshTokenExp = getUTCTimeStamp('2024-03-01T09:14:00Z'); // 9.14
 
-        const newRefreshTokenExp = getRollingRefreshTokenExpiry(currentTime, refreshTokenExp);
+        const newRefreshTokenExp = authTokenService.getRollingRefreshTokenExpiry(
+            currentTime,
+            refreshTokenExp
+        );
 
         if (newRefreshTokenExp instanceof Error) return;
 
@@ -188,7 +227,10 @@ describe(`Token TTL's`, () => {
         const updatedTime = getCurrentTimeStamp(); // 9:16 am
 
         const refreshTokenExp = getUTCTimeStamp('2024-03-01T09:15:00Z'); // 9.15 am
-        const newRefreshTokenExp = getRollingRefreshTokenExpiry(updatedTime, refreshTokenExp);
+        const newRefreshTokenExp = authTokenService.getRollingRefreshTokenExpiry(
+            updatedTime,
+            refreshTokenExp
+        );
         expect(newRefreshTokenExp).toBeInstanceOf(Error);
     });
 
@@ -196,7 +238,7 @@ describe(`Token TTL's`, () => {
         advanceTo(new Date('2024-03-01T09:00:00Z'));
 
         const isExtendedLogin = false;
-        const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
+        const { accessToken } = authTokenService.generateLoginTokens(userId, isExtendedLogin);
         const { exp, refresh_expiry } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(exp)).toBe('1/3/2024, 9:14');
@@ -207,7 +249,7 @@ describe(`Token TTL's`, () => {
         advanceTo(new Date('2024-03-01T09:00:00Z'));
 
         const isExtendedLogin = true;
-        const { accessToken } = generateLoginTokens(userId, isExtendedLogin);
+        const { accessToken } = authTokenService.generateLoginTokens(userId, isExtendedLogin);
         const { exp, refresh_expiry } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(exp)).toBe('1/3/2024, 9:14');
@@ -224,12 +266,14 @@ describe(`Token TTL's`, () => {
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
-        } = generateLoginTokens(userId, false);
+        } = authTokenService.generateLoginTokens(userId, false);
 
         // Advance the current time by 15 minutes
         advanceTo(new Date('2024-03-01T09:14:00Z'));
 
-        const { accessToken } = generateRefreshedTokens(`Bearer ${loginAccessToken}`);
+        const { accessToken } = authTokenService.generateRefreshedTokens(
+            `Bearer ${loginAccessToken}`
+        );
         const {
             // "exp" will be 15 minutes after the "currentTime" and another 15 minutes after the
             // loginAccessToken.exp. This means the exp will be 30 minutes after the "currentTime"
@@ -249,7 +293,7 @@ describe(`Token TTL's`, () => {
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
-        } = generateLoginTokens(userId, true);
+        } = authTokenService.generateLoginTokens(userId, true);
 
         const { refresh_expiry: loginRefreshTokenExp } = decode(
             loginAccessToken
@@ -260,7 +304,9 @@ describe(`Token TTL's`, () => {
         // Advance the current time by 15 minutes
         advanceTo(new Date('2024-03-01T09:14:00Z'));
 
-        const { accessToken } = generateRefreshedTokens(`Bearer ${loginAccessToken}`);
+        const { accessToken } = authTokenService.generateRefreshedTokens(
+            `Bearer ${loginAccessToken}`
+        );
 
         const {
             // "exp" will be 15 minutes after the "currentTime" and another 15 minutes after the
@@ -281,12 +327,12 @@ describe(`Token TTL's`, () => {
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
-        } = generateLoginTokens(userId, true);
+        } = authTokenService.generateLoginTokens(userId, true);
 
         /* Advance the time by 30 day when the extended session will expire */
         advanceTo(new Date('2024-03-31T09:00:00Z'));
 
-        const { accessToken: refreshedAccessToken } = generateRefreshedTokens(
+        const { accessToken: refreshedAccessToken } = authTokenService.generateRefreshedTokens(
             `Bearer ${loginAccessToken}`
         );
 
@@ -304,9 +350,9 @@ describe(`Token TTL's`, () => {
 
 describe('Hashing', () => {
     it("Checks the refresh token to be returned in the request doesn't match the one stored in the DB", () => {
-        const refreshToken = createRefreshToken(userId, 1710905708);
+        const refreshToken = authTokenService.createRefreshToken(userId, 1710905708);
 
-        const hashedTokenForDb = getHashedRefreshToken(refreshToken);
+        const hashedTokenForDb = authTokenService.getHashedRefreshToken(refreshToken);
 
         expect(hashedTokenForDb).not.toEqual(refreshToken);
     });

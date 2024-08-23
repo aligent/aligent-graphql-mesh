@@ -4,8 +4,7 @@ import {
     retrieveCustomerImpersonationTokenFromCache,
 } from '@aligent/bigcommerce-graphql-module';
 import { GraphqlError } from '@aligent/utils';
-import { generateLoginTokens } from '../../utils';
-import { AuthService } from '../../services';
+import { AuthService, AuthTokenService } from '../../services';
 
 export const generateCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
@@ -16,10 +15,10 @@ export const generateCustomerTokenResolver = {
 
         const isExtendedLogin = !!args?.remember_me;
 
-        const { accessToken, refreshToken, refreshTokenExpiry } = generateLoginTokens(
-            entityId,
-            isExtendedLogin
-        );
+        const authTokenService: AuthTokenService = context.injector.get(AuthTokenService);
+
+        const { accessToken, refreshToken, refreshTokenExpiry } =
+            authTokenService.generateLoginTokens(entityId, isExtendedLogin);
 
         const authService: AuthService = context.injector.get(AuthService);
         const updateResponse = await authService.updateUserAuth(
