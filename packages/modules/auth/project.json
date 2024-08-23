@@ -15,7 +15,11 @@
             },
             "dependsOn": [
                 {
-                    "projects": ["bigcommerce-graphql-module", "auth-resolvers"],
+                    "projects": [
+                        "bigcommerce-graphql-module",
+                        "bigcommerce-operations",
+                        "auth-resolvers"
+                    ],
                     "target": "build"
                 }
             ]
@@ -36,7 +40,11 @@
             },
             "dependsOn": [
                 {
-                    "projects": ["bigcommerce-graphql-module", "auth-resolvers"],
+                    "projects": [
+                        "bigcommerce-graphql-module",
+                        "bigcommerce-operations",
+                        "auth-resolvers"
+                    ],
                     "target": "build"
                 }
             ]
