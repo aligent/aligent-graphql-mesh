@@ -15,11 +15,7 @@
             },
             "dependsOn": [
                 {
-                    "projects": [
-                        "bigcommerce-graphql-module",
-                        "bigcommerce-operations",
-                        "auth-resolvers"
-                    ],
+                    "projects": ["bigcommerce-graphql-module", "auth-resolvers"],
                     "target": "build"
                 }
             ]
@@ -40,11 +36,7 @@
             },
             "dependsOn": [
                 {
-                    "projects": [
-                        "bigcommerce-graphql-module",
-                        "bigcommerce-operations",
-                        "auth-resolvers"
-                    ],
+                    "projects": ["bigcommerce-graphql-module", "auth-resolvers"],
                     "target": "build"
                 }
             ]
@@ -62,7 +54,13 @@
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
                 "jestConfig": "packages/modules/auth/jest.config.ts"
-            }
+            },
+            "dependsOn": [
+                {
+                    "projects": ["bigcommerce-operations"],
+                    "target": "build"
+                }
+            ]
         }
     }
 }
