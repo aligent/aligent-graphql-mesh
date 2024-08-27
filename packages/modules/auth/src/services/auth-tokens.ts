@@ -27,9 +27,9 @@ const {
     global: true,
 })
 export class AuthTokenService {
-    protected extendRefreshTokenExpiry: number;
-    protected nonExtendRefreshTokenExpiry: number;
-    protected accessTokenExpiry: number;
+    protected extendRefreshTokenExpiryInMinutes: number;
+    protected nonExtendRefreshTokenExpiryInMinutes: number;
+    protected accessTokenExpiryInMinutes: number;
 
     constructor(
         @Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig,
@@ -41,12 +41,14 @@ export class AuthTokenService {
          * If no expiry time is defined in the auth module config, the corresponding fallback expiry time
          * from constants.ts will be used.
          * */
-        this.extendRefreshTokenExpiry =
-            this.config.extendRefreshTokenExpiry || REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED;
-        this.nonExtendRefreshTokenExpiry =
-            this.config.nonExtendRefreshTokenExpiry ||
+        this.extendRefreshTokenExpiryInMinutes =
+            this.config.extendRefreshTokenExpiryInMinutes ||
+            REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED;
+        this.nonExtendRefreshTokenExpiryInMinutes =
+            this.config.nonExtendRefreshTokenExpiryInMinutes ||
             REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED;
-        this.accessTokenExpiry = this.config.accessTokenExpiry || ACCESS_TOKEN_EXPIRY_IN_MINUTES;
+        this.accessTokenExpiryInMinutes =
+            this.config.accessTokenExpiryInMinutes || ACCESS_TOKEN_EXPIRY_IN_MINUTES;
 
         this.verifyExpiryTimes();
     }
@@ -55,16 +57,16 @@ export class AuthTokenService {
      * A check to ensure the defined expiry times are not less
      */
     verifyExpiryTimes() {
-        if (this.accessTokenExpiry >= this.nonExtendRefreshTokenExpiry) {
+        if (this.accessTokenExpiryInMinutes >= this.nonExtendRefreshTokenExpiryInMinutes) {
             throw new GraphqlError(
-                `"accessTokenExpiry" needs to be less than "nonExtendRefreshTokenExpiry"`,
+                `"accessTokenExpiryInMinutes" needs to be less than "nonExtendRefreshTokenExpiryInMinutes"`,
                 'input'
             );
         }
 
-        if (this.nonExtendRefreshTokenExpiry >= this.extendRefreshTokenExpiry) {
+        if (this.nonExtendRefreshTokenExpiryInMinutes >= this.extendRefreshTokenExpiryInMinutes) {
             throw new GraphqlError(
-                `"nonExtendRefreshTokenExpiry" needs to be less than "extendRefreshTokenExpiry"`,
+                `"nonExtendRefreshTokenExpiryInMinutes" needs to be less than "extendRefreshTokenExpiryInMinutes"`,
                 'input'
             );
         }
@@ -237,10 +239,12 @@ export class AuthTokenService {
         userId: number,
         isExtendedLogin?: boolean
     ): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } {
-        const accessTokenExpiry = this.getTokenExpiryFromMinutes(this.accessTokenExpiry);
+        const accessTokenExpiry = this.getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
 
         const refreshTokenExpiry = this.getTokenExpiryFromMinutes(
-            isExtendedLogin ? this.extendRefreshTokenExpiry : this.nonExtendRefreshTokenExpiry
+            isExtendedLogin
+                ? this.extendRefreshTokenExpiryInMinutes
+                : this.nonExtendRefreshTokenExpiryInMinutes
         );
 
         const refreshToken = this.createRefreshToken(userId, accessTokenExpiry);
@@ -278,12 +282,12 @@ export class AuthTokenService {
         }
 
         const nonExtendedRefreshExpInSeconds = getMinutesToSeconds(
-            this.nonExtendRefreshTokenExpiry
+            this.nonExtendRefreshTokenExpiryInMinutes
         );
 
         const shouldExtendRefresh = timeDifference < nonExtendedRefreshExpInSeconds;
         return shouldExtendRefresh
-            ? this.getTokenExpiryFromMinutes(this.nonExtendRefreshTokenExpiry)
+            ? this.getTokenExpiryFromMinutes(this.nonExtendRefreshTokenExpiryInMinutes)
             : refreshExp;
     }
 
@@ -305,7 +309,7 @@ export class AuthTokenService {
         const { bc_customer_id, refresh_expiry } = decodedAccessToken;
 
         const currentTimeStamp = getCurrentTimeStamp();
-        const accessTokenExpiry = this.getTokenExpiryFromMinutes(this.accessTokenExpiry);
+        const accessTokenExpiry = this.getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
         const refreshTokenExpiry = this.getRollingRefreshTokenExpiry(
             currentTimeStamp,
             refresh_expiry

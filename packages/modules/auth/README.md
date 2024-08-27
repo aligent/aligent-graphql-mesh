@@ -27,9 +27,9 @@ export default createApplication({
     createAuthModule({
       dynamoDbRegion: process.env.DYNAMO_DB__REGION as string,
       dynamoDbAuthTable: process.env.DYNAMO_DB_AUTH_TABLE as string,
-      extendRefreshTokenExpiry: 43200,                                // The time in minutes an extended user session should end in - optional
-      nonExtendRefreshTokenExpiry: 15,                                // The time in minutes a non-extended user session should end in - optional
-      accessTokenExpiry: 10,                                          // The time in minutes an access token is valid for - optional
+      extendRefreshTokenExpiryInMinutes: 43200 | 30 * 24 * 60,                                // The time in minutes an extended user session should end in - optional
+      nonExtendRefreshTokenExpiryInMinutes: 15,                                // The time in minutes a non-extended user session should end in - optional
+      accessTokenExpiryInMinutes: 10,                                          // The time in minutes an access token is valid for - optional
     }),
   ],
 });

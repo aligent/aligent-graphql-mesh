@@ -6,7 +6,7 @@ export enum JWT_AUTH_STATUSES {
 }
 
 /* The time in minutes an extended user session should end in */
-export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 43200; // 30 days
+export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 30 * 24 * 60; // 30 days
 /* The time in minutes a non-extended user session should end in */
 export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED = 15;
 /* The time in minutes an access token is valid for */
