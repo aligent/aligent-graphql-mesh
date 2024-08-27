@@ -19,10 +19,7 @@ const mockContextConfig = {
     dynamoDbAuthTable: 'mock-table',
 };
 
-const authTokenService = new AuthTokenService(
-    mockContextConfig,
-    {} as GraphQLModules.GlobalContext
-);
+const authTokenService = new AuthTokenService(mockContextConfig);
 
 describe('TimeZone', () => {
     it('Checks the jest TZ env variable is set to UTC', () => {

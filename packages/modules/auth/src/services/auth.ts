@@ -7,7 +7,7 @@ import {
     QueryCommandOutput,
     QueryCommand,
 } from '@aws-sdk/client-dynamodb';
-import { Inject, Injectable, forwardRef, CONTEXT } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { chunk } from 'lodash';
 import {
     BatchRemoveItems,
@@ -32,9 +32,7 @@ export class AuthService {
     constructor(
         @Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig,
         @Inject(forwardRef(() => AuthTokenService))
-        protected authTokenService: AuthTokenService,
-        // eslint-disable-next-line no-unused-vars
-        @Inject(CONTEXT) private context: GraphQLModules.GlobalContext
+        protected authTokenService: AuthTokenService
     ) {
         this.client = new DynamoDBClient({
             region: this.config.dynamoDbRegion,

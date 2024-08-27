@@ -10,7 +10,7 @@ import {
 import { GraphqlError } from '@aligent/utils';
 import { getCurrentTimeStamp, getMinutesToSeconds, getTtlIsExpired } from '../utils';
 import { decodedAccessToken } from '../types';
-import { CONTEXT, forwardRef, Inject, Injectable } from 'graphql-modules';
+import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ModuleConfigToken } from '../providers';
 import { ModuleConfig } from '../index';
 
@@ -31,11 +31,7 @@ export class AuthTokenService {
     protected nonExtendRefreshTokenExpiryInMinutes: number;
     protected accessTokenExpiryInMinutes: number;
 
-    constructor(
-        @Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig,
-        // eslint-disable-next-line no-unused-vars
-        @Inject(CONTEXT) private context: GraphQLModules.GlobalContext
-    ) {
+    constructor(@Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig) {
         /*
          * Expiry times can be defined in the module config when creating the auth module.
          * If no expiry time is defined in the auth module config, the corresponding fallback expiry time
