@@ -12,13 +12,13 @@ export const getServices = (): Array<Provider> => {
             useClass: AuthService,
             provide: AuthService,
             deps: [ModuleConfigToken],
-            scope: Scope.Operation,
+            scope: Scope.Singleton,
         },
         {
             useClass: AuthTokenService,
             provide: AuthTokenService,
             deps: [ModuleConfigToken],
-            scope: Scope.Operation,
+            scope: Scope.Singleton,
         },
     ];
 };
