@@ -6,7 +6,7 @@ import {
     getHashedRefreshToken,
     getTokenExpiryFromMinutes,
     getVerifiedAccessToken,
-} from '../auth-tokens';
+} from '../index';
 import { JWT_AUTH_STATUSES } from '../../constants';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;

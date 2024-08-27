@@ -1,8 +1,8 @@
 import { decode, JsonWebTokenError, sign, TokenExpiredError, verify } from 'jsonwebtoken';
 import { pbkdf2Sync } from 'crypto';
 import { JWT_AUTH_STATUSES } from '../constants';
+import { getTtlIsExpired } from './index';
 import { decodedAccessToken } from '../types';
-import { getTtlIsExpired } from './date-time';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 

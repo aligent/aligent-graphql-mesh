@@ -18,7 +18,7 @@ import {
 } from '../types/index';
 import { ModuleConfig } from '../index';
 import { ModuleConfigToken } from '../providers';
-import { getHashedRefreshToken } from '../utils/auth-tokens';
+import { getHashedRefreshToken } from '../utils';
 import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types/commands/BatchWriteItemCommand';
 
 const BATCH_WRITE_LIMIT = 25;

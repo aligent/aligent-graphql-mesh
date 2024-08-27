@@ -1,8 +1,8 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { GraphqlError } from '@aligent/utils';
+import { getAuthTokenStatus, getDecodedAuthToken, getHashedRefreshToken } from '../../utils';
 import { JWT_AUTH_STATUSES } from '../../constants';
 import { AuthService, AuthTokenService } from '../../services';
-import { getAuthTokenStatus, getDecodedAuthToken, getHashedRefreshToken } from '../../utils';
 
 const {
     ACCESS_VALID_REFRESH_VALID,
