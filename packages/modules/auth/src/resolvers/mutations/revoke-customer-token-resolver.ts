@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
-import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils/auth-tokens';
+import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils';
 
 export const revokeCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {

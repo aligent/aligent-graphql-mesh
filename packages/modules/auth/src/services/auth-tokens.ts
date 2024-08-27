@@ -6,7 +6,6 @@ import {
     REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED,
 } from '../constants';
 import { GraphqlError } from '@aligent/utils';
-import { getCurrentTimeStamp, getMinutesToSeconds } from '../utils';
 import { decodedAccessToken } from '../types';
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ModuleConfigToken } from '../providers';
@@ -14,8 +13,10 @@ import { ModuleConfig } from '../index';
 import {
     createAccessJWT,
     createRefreshToken,
+    getCurrentTimeStamp,
+    getMinutesToSeconds,
     getTokenExpiryFromMinutes,
-} from '../utils/auth-tokens';
+} from '../utils';
 
 @Injectable({
     global: true,
