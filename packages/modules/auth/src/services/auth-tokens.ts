@@ -255,13 +255,14 @@ export class AuthTokenService {
     /**
      * Determines what the next rolling refresh token expiry should be.
      * There are 3 outcomes
-     * 1. The current time is over 15 minutes before the refresh expiry time.
+     *
+     * 1. The current time is more than "nonExtendRefreshTokenExpiryInMinutes" minutes away from the refreshExp time.
      *    - We return the current refresh tokens ttl
      *
-     * 2. The current time is within 15 minutes of the refresh expiry time.
-     *    - Extend the refresh token expiry time by another 15 minutes.
+     * 2. The current time is within "nonExtendRefreshTokenExpiryInMinutes" minutes of the refreshExp time.
+     *    - Extend the refresh token expiry time by another "extendRefreshTokenExpiryInMinutes" minutes.
      *
-     * 3. The current time has passed the refresh token expiry time
+     * 3. The current time has surpassed the refreshExp time
      *    - Throw an error as the refresh token has expired and need to
      *      invalidate the session.
      *
@@ -288,9 +289,10 @@ export class AuthTokenService {
     }
 
     /**
-     * Gets new tokens to extend the users login session. A new access token of 15
-     * minutes will be generated and a new refresh token with either its previous
-     * expiry time or it expiry time plus 16 minutes.
+     * Gets new tokens to extend the users login session. A new access token of minutes defined
+     * by the "accessTokenExpiryInMinutes" variable will be generated and a new refresh token
+     * with either its previous expiry time or its expiry time plus the minutes defined by the
+     * "nonExtendRefreshTokenExpiryInMinutes" variable.
      * @param oldAccessToken
      */
     generateRefreshedTokens(oldAccessToken: string): {
