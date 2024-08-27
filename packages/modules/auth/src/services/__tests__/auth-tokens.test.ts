@@ -1,17 +1,9 @@
-import { decode, JsonWebTokenError, sign, TokenExpiredError } from 'jsonwebtoken';
+import { decode } from 'jsonwebtoken';
 import { advanceTo, clear } from 'jest-date-mock';
 import { getFormattedUTCDate, getCurrentTimeStamp, getUTCTimeStamp } from '../../utils';
-import { JWT_AUTH_STATUSES } from '../../constants';
 import { decodedAccessToken } from '../../types';
 import { AuthTokenService } from '../../services';
 
-const {
-    ACCESS_VALID_REFRESH_VALID,
-    ACCESS_INVALID_REFRESH_VALID,
-    ACCESS_VALID_REFRESH_INVALID,
-    ACCESS_INVALID_REFRESH_INVALID,
-} = JWT_AUTH_STATUSES;
-const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 const userId = 23;
 
 const mockContextConfig = {
@@ -20,160 +12,6 @@ const mockContextConfig = {
 };
 
 const authTokenService = new AuthTokenService(mockContextConfig);
-
-describe('TimeZone', () => {
-    it('Checks the jest TZ env variable is set to UTC', () => {
-        const timezone = Intl.DateTimeFormat().resolvedOptions();
-
-        // Log out timezone info in the test so we know what we're working under
-        console.info(timezone);
-        expect(process.env.TZ).toBe('UTC');
-    });
-});
-
-describe('Json web token errors', () => {
-    const tokenExpiry = authTokenService.getTokenExpiryFromMinutes(-5);
-    const expiredToken = authTokenService.createAccessJWT(userId, tokenExpiry, tokenExpiry);
-
-    it(`Throws an "invalid signature" error when verifying a malformed JWT`, () => {
-        const malformedJwt = 'ae6r4h16sat56th';
-        const tokenStatus = authTokenService.getVerifiedAccessToken(malformedJwt) as {
-            message: string;
-        };
-        expect(tokenStatus).toBeInstanceOf(JsonWebTokenError);
-        expect(tokenStatus.message).toBe('jwt malformed');
-    });
-
-    it(`Throws an "invalid signature" error when verifying a modified JWT`, () => {
-        const malformedJwt = expiredToken + 'a';
-        const tokenStatus = authTokenService.getVerifiedAccessToken(malformedJwt) as {
-            message: string;
-        };
-        expect(tokenStatus).toBeInstanceOf(JsonWebTokenError);
-        expect(tokenStatus.message).toBe('invalid signature');
-    });
-
-    it(`Throws an "invalid signature" error for a JWT with a signature other than the one being used`, () => {
-        const tokenWithDifferentSignature = sign(
-            { bc_customer_id: userId, exp: tokenExpiry, refresh_expiry: tokenExpiry },
-            'different_signature'
-        );
-        const tokenStatus = authTokenService.getVerifiedAccessToken(
-            tokenWithDifferentSignature
-        ) as {
-            message: string;
-        };
-        expect(tokenStatus).toBeInstanceOf(JsonWebTokenError);
-        expect(tokenStatus.message).toBe('invalid signature');
-    });
-
-    it(`Throws a "jwt expired" error when a JWTs ttl has elapsed`, () => {
-        const tokenStatus = authTokenService.getVerifiedAccessToken(expiredToken) as {
-            message: string;
-        };
-        expect(tokenStatus).toBeInstanceOf(TokenExpiredError);
-        expect(tokenStatus.message).toBe('jwt expired');
-    });
-});
-
-describe('JWT statues', () => {
-    it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when the auth token is missing the bearer string`, () => {
-        const tokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
-
-        const expiredToken = authTokenService.createAccessJWT(userId, tokenExp, tokenExp);
-        const expiredRefreshToken = authTokenService.createRefreshToken(userId, tokenExp);
-
-        const tokenStatus = authTokenService.getAuthTokenStatus(expiredToken, expiredRefreshToken);
-
-        expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_INVALID);
-    });
-
-    it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when both access and refresh tokens are invalid`, () => {
-        const tokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
-
-        const expiredToken = authTokenService.createAccessJWT(userId, tokenExp, tokenExp);
-        const expiredRefreshToken = authTokenService.createRefreshToken(userId, tokenExp);
-
-        const tokenStatus = authTokenService.getAuthTokenStatus(
-            `Bearer ${expiredToken}`,
-            expiredRefreshToken
-        );
-
-        expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_INVALID);
-    });
-
-    it(`Returns a "ACCESS_VALID_REFRESH_INVALID" status when the access token is valid and refresh token is invalid`, () => {
-        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
-        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
-
-        const validAccessToken = authTokenService.createAccessJWT(
-            userId,
-            accessTokenExp,
-            refreshTokenExp
-        );
-        const expiredRefreshToken = authTokenService.createRefreshToken(userId, refreshTokenExp);
-
-        const tokenStatus = authTokenService.getAuthTokenStatus(
-            `Bearer ${validAccessToken}`,
-            expiredRefreshToken
-        );
-
-        expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_INVALID);
-    });
-
-    it(`Returns a "ACCESS_VALID_REFRESH_INVALID" status if a "refresh_token" is missing`, () => {
-        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
-        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
-
-        const missingRefreshToken = '';
-        const validAccessToken = sign(
-            { bc_customer_id: userId, exp: accessTokenExp, refresh_expiry: refreshTokenExp },
-            JWT_PRIVATE_KEY
-        );
-
-        const tokenStatus = authTokenService.getAuthTokenStatus(
-            `Bearer ${validAccessToken}`,
-            missingRefreshToken
-        );
-        expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_INVALID);
-    });
-
-    it(`Returns a "ACCESS_INVALID_REFRESH_VALID" status when access token is invalid but the refresh token is valid`, () => {
-        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(-5);
-        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
-
-        const invalidAccessToken = authTokenService.createAccessJWT(
-            userId,
-            accessTokenExp,
-            refreshTokenExp
-        );
-        const validRefreshToken = authTokenService.createRefreshToken(userId, accessTokenExp);
-
-        const tokenStatus = authTokenService.getAuthTokenStatus(
-            `Bearer ${invalidAccessToken}`,
-            validRefreshToken
-        );
-        expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_VALID);
-    });
-
-    it(`Returns a "ACCESS_VALID_REFRESH_VALID" status when both access and refresh tokens are invalid`, () => {
-        const accessTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
-        const refreshTokenExp = authTokenService.getTokenExpiryFromMinutes(5);
-
-        const invalidAccessToken = authTokenService.createAccessJWT(
-            userId,
-            accessTokenExp,
-            refreshTokenExp
-        );
-        const validRefreshToken = authTokenService.createRefreshToken(userId, refreshTokenExp);
-
-        const tokenStatus = authTokenService.getAuthTokenStatus(
-            `Bearer ${invalidAccessToken}`,
-            validRefreshToken
-        );
-        expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_VALID);
-    });
-});
 
 describe(`Token TTL's`, () => {
     afterEach(() => {
@@ -342,15 +180,5 @@ describe(`Token TTL's`, () => {
 
         expect(getFormattedUTCDate(refreshedAccessTokenExp)).toBe('31/3/2024, 9:14');
         expect(getFormattedUTCDate(refreshedRefreshTokenExp)).toBe('31/3/2024, 9:15');
-    });
-});
-
-describe('Hashing', () => {
-    it("Checks the refresh token to be returned in the request doesn't match the one stored in the DB", () => {
-        const refreshToken = authTokenService.createRefreshToken(userId, 1710905708);
-
-        const hashedTokenForDb = authTokenService.getHashedRefreshToken(refreshToken);
-
-        expect(hashedTokenForDb).not.toEqual(refreshToken);
     });
 });

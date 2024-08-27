@@ -1,6 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-import { AuthService, AuthTokenService } from '../../services';
+import { AuthService } from '../../services';
 import { GraphqlError } from '@aligent/utils';
+import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils/auth-tokens';
 
 export const revokeCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
@@ -12,9 +13,7 @@ export const revokeCustomerTokenResolver = {
             throw new GraphqlError('Missing refresh token', 'authorization');
         }
 
-        const authTokenService: AuthTokenService = context.injector.get(AuthTokenService);
-
-        const decodedAuthToken = authTokenService.getDecodedAuthToken(authToken);
+        const decodedAuthToken = getDecodedAuthToken(authToken);
 
         if (decodedAuthToken === null) {
             throw new GraphqlError('There was an issue decoding the access token', 'authorization');
@@ -24,10 +23,7 @@ export const revokeCustomerTokenResolver = {
 
         /* The "getVerifiedRefreshToken" recreates the old refresh token. If this can't be done
          * then the refresh token may not belong to the user. */
-        const verifiedRefreshToken = authTokenService.getVerifiedRefreshToken(
-            decodedAuthToken,
-            refresh_token
-        );
+        const verifiedRefreshToken = getVerifiedRefreshToken(decodedAuthToken, refresh_token);
 
         if (
             verifiedRefreshToken instanceof Error &&

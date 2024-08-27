@@ -1,27 +1,21 @@
-import { decode, JsonWebTokenError, sign, TokenExpiredError, verify } from 'jsonwebtoken';
-import { pbkdf2Sync } from 'crypto';
+import { decode } from 'jsonwebtoken';
 
 import {
     ACCESS_TOKEN_EXPIRY_IN_MINUTES,
-    JWT_AUTH_STATUSES,
     REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED,
     REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED,
 } from '../constants';
 import { GraphqlError } from '@aligent/utils';
-import { getCurrentTimeStamp, getMinutesToSeconds, getTtlIsExpired } from '../utils';
+import { getCurrentTimeStamp, getMinutesToSeconds } from '../utils';
 import { decodedAccessToken } from '../types';
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ModuleConfigToken } from '../providers';
 import { ModuleConfig } from '../index';
-
-const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
-
-const {
-    ACCESS_VALID_REFRESH_VALID,
-    ACCESS_INVALID_REFRESH_VALID,
-    ACCESS_VALID_REFRESH_INVALID,
-    ACCESS_INVALID_REFRESH_INVALID,
-} = JWT_AUTH_STATUSES;
+import {
+    createAccessJWT,
+    createRefreshToken,
+    getTokenExpiryFromMinutes,
+} from '../utils/auth-tokens';
 
 @Injectable({
     global: true,
@@ -69,163 +63,6 @@ export class AuthTokenService {
     }
 
     /**
-     * Gets a tokens expiry based on the current time and adding the
-     * minutes a token should expiry
-     * @param minutes
-     */
-    getTokenExpiryFromMinutes(minutes: number) {
-        const currentTime = new Date().getTime();
-
-        const minutesInMilliseconds = minutes * 60000;
-
-        const newTimeInMillis = currentTime + minutesInMilliseconds;
-
-        return Math.floor(newTimeInMillis / 1000);
-    }
-
-    /**
-     * Creates an access token which is used for user authentication
-     * @param userId
-     * @param exp
-     * @param refreshExpiry
-     */
-    createAccessJWT(userId: number, exp: number, refreshExpiry: number) {
-        return sign(
-            {
-                bc_customer_id: userId,
-                exp,
-                refresh_expiry: refreshExpiry,
-            },
-            JWT_PRIVATE_KEY
-        );
-    }
-
-    /**
-     * Creates a refresh token used to ask for a new access token
-     * @param userId
-     * @param accessTokenExpiry - used to make the refresh token unique when refreshed
-     */
-    createRefreshToken(userId: number, accessTokenExpiry: number) {
-        return pbkdf2Sync(
-            `${userId}${accessTokenExpiry}`,
-            JWT_PRIVATE_KEY,
-            10000,
-            64,
-            'sha512'
-        ).toString('hex');
-    }
-
-    /**
-     * Creates a hash of the refresh token
-     *
-     * Note: This hashed version of the token should not be exposed to the public
-     * and only for storing in the db and recreating hashes for comparison.
-     *
-     * @param refreshToken
-     */
-    getHashedRefreshToken(refreshToken: string) {
-        return pbkdf2Sync(refreshToken, JWT_PRIVATE_KEY, 10000, 64, 'sha512').toString('hex');
-    }
-
-    /**
-     * Returns a verified token or throws an error
-     * @param accessToken
-     */
-    getVerifiedAccessToken(accessToken: string) {
-        /* If the access token is expired then an error will be thrown, and we will
-         * end up in the catch "statement" */
-        try {
-            return verify(accessToken, JWT_PRIVATE_KEY);
-        } catch (e) {
-            return e;
-        }
-    }
-
-    /**
-     * Returns a verified refresh token or returns an error
-     * @param decodedAccessToken
-     * @param oldRefreshToken
-     */
-    getVerifiedRefreshToken(decodedAccessToken: decodedAccessToken, oldRefreshToken: string) {
-        const { bc_customer_id, exp, refresh_expiry } = decodedAccessToken;
-
-        if (!oldRefreshToken) {
-            return Error("refresh token doesn't exist");
-        }
-
-        const recreatedRefreshToken = this.createRefreshToken(bc_customer_id, exp);
-
-        if (recreatedRefreshToken !== oldRefreshToken) {
-            return Error("recreated refresh token doesn't match actual token");
-        }
-
-        if (getTtlIsExpired(refresh_expiry)) {
-            return Error('Refresh token has expired');
-        }
-
-        return oldRefreshToken;
-    }
-
-    getDecodedAuthToken(authToken: string): decodedAccessToken | null {
-        if (!authToken || !authToken?.toLowerCase().startsWith('bearer ')) return null;
-        const [, accessToken] = authToken.split(' ');
-
-        return decode(accessToken) as decodedAccessToken;
-    }
-
-    /**
-     * Returns various status based on the access token and refresh token validity
-     * @param oldAuthToken
-     * @param oldRefreshToken
-     */
-    getAuthTokenStatus(oldAuthToken: string, oldRefreshToken: string): JWT_AUTH_STATUSES {
-        if (!oldAuthToken || !oldAuthToken?.toLowerCase().startsWith('bearer '))
-            return ACCESS_INVALID_REFRESH_INVALID;
-        const [, accessToken] = oldAuthToken.split(' ');
-
-        const verifiedAccessToken = this.getVerifiedAccessToken(accessToken) as
-            | decodedAccessToken
-            | JsonWebTokenError;
-
-        const decodedAccessToken = (decode(accessToken) as decodedAccessToken) || JsonWebTokenError;
-        const verifiedRefreshToken = this.getVerifiedRefreshToken(
-            decodedAccessToken,
-            oldRefreshToken
-        );
-
-        /* Both tokens are invalid*/
-        if (
-            verifiedAccessToken instanceof JsonWebTokenError &&
-            verifiedRefreshToken instanceof Error
-        ) {
-            return ACCESS_INVALID_REFRESH_INVALID;
-        }
-
-        /* The "verifiedAccessToken" is an error but isn't a TTL ralated error
-         * which can mean the JWT was manipulated */
-        if (
-            verifiedAccessToken instanceof JsonWebTokenError &&
-            !(verifiedAccessToken instanceof TokenExpiredError)
-        ) {
-            return ACCESS_INVALID_REFRESH_INVALID;
-        }
-
-        /* For whatever reason the "verifiedRefreshToken" causes an error */
-        if (verifiedRefreshToken instanceof Error) {
-            return ACCESS_VALID_REFRESH_INVALID;
-        }
-
-        /* The verifiedAccessToken TTL has expired, but we can
-         * generate a new one because the refresh token is still valid */
-        if (verifiedAccessToken instanceof TokenExpiredError) {
-            return ACCESS_INVALID_REFRESH_VALID;
-        }
-
-        /* Both tokens are valid */
-        return ACCESS_VALID_REFRESH_VALID;
-    }
-
-    /**
      * Gets an access token used for user authentication and refresh token to ask
      * for a new access token
      * @param userId
@@ -235,18 +72,18 @@ export class AuthTokenService {
         userId: number,
         isExtendedLogin?: boolean
     ): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } {
-        const accessTokenExpiry = this.getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
+        const accessTokenExpiry = getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
 
-        const refreshTokenExpiry = this.getTokenExpiryFromMinutes(
+        const refreshTokenExpiry = getTokenExpiryFromMinutes(
             isExtendedLogin
                 ? this.extendRefreshTokenExpiryInMinutes
                 : this.nonExtendRefreshTokenExpiryInMinutes
         );
 
-        const refreshToken = this.createRefreshToken(userId, accessTokenExpiry);
+        const refreshToken = createRefreshToken(userId, accessTokenExpiry);
 
         return {
-            accessToken: this.createAccessJWT(userId, accessTokenExpiry, refreshTokenExpiry),
+            accessToken: createAccessJWT(userId, accessTokenExpiry, refreshTokenExpiry),
             refreshToken,
             refreshTokenExpiry,
         };
@@ -284,7 +121,7 @@ export class AuthTokenService {
 
         const shouldExtendRefresh = timeDifference < nonExtendedRefreshExpInSeconds;
         return shouldExtendRefresh
-            ? this.getTokenExpiryFromMinutes(this.nonExtendRefreshTokenExpiryInMinutes)
+            ? getTokenExpiryFromMinutes(this.nonExtendRefreshTokenExpiryInMinutes)
             : refreshExp;
     }
 
@@ -307,7 +144,7 @@ export class AuthTokenService {
         const { bc_customer_id, refresh_expiry } = decodedAccessToken;
 
         const currentTimeStamp = getCurrentTimeStamp();
-        const accessTokenExpiry = this.getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
+        const accessTokenExpiry = getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
         const refreshTokenExpiry = this.getRollingRefreshTokenExpiry(
             currentTimeStamp,
             refresh_expiry
@@ -317,12 +154,12 @@ export class AuthTokenService {
             throw new GraphqlError("Refresh tokens couldn't be generated", 'authorization');
         }
 
-        const newAccessToken = this.createAccessJWT(
+        const newAccessToken = createAccessJWT(
             bc_customer_id,
             accessTokenExpiry,
             refreshTokenExpiry
         );
-        const newRefreshToken = this.createRefreshToken(bc_customer_id, accessTokenExpiry);
+        const newRefreshToken = createRefreshToken(bc_customer_id, accessTokenExpiry);
 
         return {
             accessToken: newAccessToken,

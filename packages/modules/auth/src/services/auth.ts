@@ -18,7 +18,7 @@ import {
 } from '../types/index';
 import { ModuleConfig } from '../index';
 import { ModuleConfigToken } from '../providers';
-import { AuthTokenService } from './auth-tokens';
+import { getHashedRefreshToken } from '../utils/auth-tokens';
 import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types/commands/BatchWriteItemCommand';
 
 const BATCH_WRITE_LIMIT = 25;
@@ -29,11 +29,7 @@ const BATCH_WRITE_LIMIT = 25;
 export class AuthService {
     protected client: DynamoDBClient;
 
-    constructor(
-        @Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig,
-        @Inject(forwardRef(() => AuthTokenService))
-        protected authTokenService: AuthTokenService
-    ) {
+    constructor(@Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig) {
         this.client = new DynamoDBClient({
             region: this.config.dynamoDbRegion,
             /* Note: Credentials are not required as long as "AWS_ACCESS_KEY_ID" and
@@ -43,7 +39,7 @@ export class AuthService {
     }
 
     async getUserAuth(userId: string | number, refreshToken: string): GetUserAuthResponse {
-        const hashedRefreshToken = this.authTokenService.getHashedRefreshToken(refreshToken);
+        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new GetItemCommand({
             TableName: this.config.dynamoDbAuthTable,
@@ -70,7 +66,7 @@ export class AuthService {
         refreshToken: string,
         refreshTokenTTl: number | string
     ): UpdateUserAuthResponse {
-        const hashedRefreshToken = this.authTokenService.getHashedRefreshToken(refreshToken);
+        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new PutItemCommand({
             TableName: this.config.dynamoDbAuthTable,
@@ -97,7 +93,7 @@ export class AuthService {
     }
 
     async removeUserAuth(userId: string | number, refreshToken: string): RemoveUserAuthResponse {
-        const hashedRefreshToken = this.authTokenService.getHashedRefreshToken(refreshToken);
+        const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new DeleteItemCommand({
             TableName: this.config.dynamoDbAuthTable,
