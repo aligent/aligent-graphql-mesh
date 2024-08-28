@@ -1,14 +1,8 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { GraphqlError } from '@aligent/utils';
-
-import {
-    generateRefreshedTokens,
-    getAuthTokenStatus,
-    getDecodedAuthToken,
-    getHashedRefreshToken,
-} from '../../utils';
+import { getAuthTokenStatus, getDecodedAuthToken, getHashedRefreshToken } from '../../utils';
 import { JWT_AUTH_STATUSES } from '../../constants';
-import { AuthService } from '../../services';
+import { AuthService, AuthTokenService } from '../../services';
 
 const {
     ACCESS_VALID_REFRESH_VALID,
@@ -21,6 +15,8 @@ export const refreshCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
         const { refresh_token } = args;
         const authToken = context.headers.authorization;
+
+        const authTokenService: AuthTokenService = context.injector.get(AuthTokenService);
 
         /* Validates the access token and refresh token, and returns a status*/
         const authTokenStatus = getAuthTokenStatus(authToken, refresh_token);
@@ -91,7 +87,7 @@ export const refreshCustomerTokenResolver = {
                 accessToken,
                 refreshToken: newRefreshToken,
                 refreshTokenExpiry: newRefreshTokenExpiry,
-            } = generateRefreshedTokens(authToken);
+            } = authTokenService.generateRefreshedTokens(authToken);
 
             /* Update the newly generated refresh token in the database*/
             await authService.updateUserAuth(

@@ -1,15 +1,10 @@
 import { decode, JsonWebTokenError, sign, TokenExpiredError, verify } from 'jsonwebtoken';
 import { pbkdf2Sync } from 'crypto';
-
 import { JWT_AUTH_STATUSES } from '../constants';
-import { GraphqlError } from '@aligent/utils';
-import { getCurrentTimeStamp, getMinutesToSeconds, getTtlIsExpired } from './index';
+import { getTtlIsExpired } from './index';
 import { decodedAccessToken } from '../types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
-export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED = 43200; // 30 days
-export const REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED = 15;
-export const ACCESS_TOKEN_EXPIRY_IN_MINUTES = 14;
 
 const {
     ACCESS_VALID_REFRESH_VALID,
@@ -173,99 +168,4 @@ export const getAuthTokenStatus = (
 
     /* Both tokens are valid */
     return ACCESS_VALID_REFRESH_VALID;
-};
-
-/**
- * Gets an access token used for user authentication and refresh token to ask
- * for a new access token
- * @param userId
- * @param isExtendedLogin
- */
-export const generateLoginTokens = (
-    userId: number,
-    isExtendedLogin?: boolean
-): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } => {
-    const accessTokenExpiry = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
-
-    const refreshTokenExpiry = getTokenExpiryFromMinutes(
-        isExtendedLogin
-            ? REFRESH_TOKEN_EXPIRY_IN_MINUTES__EXTENDED
-            : REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED
-    );
-
-    const refreshToken = createRefreshToken(userId, accessTokenExpiry);
-
-    return {
-        accessToken: createAccessJWT(userId, accessTokenExpiry, refreshTokenExpiry),
-        refreshToken,
-        refreshTokenExpiry,
-    };
-};
-
-/**
- * Determines what the next rolling refresh token expiry should be.
- * There are 3 outcomes
- * 1. The current time is over 15 minutes before the refresh expiry time.
- *    - We return the current refresh tokens ttl
- *
- * 2. The current time is within 15 minutes of the refresh expiry time.
- *    - Extend the refresh token expiry time by another 15 minutes.
- *
- * 3. The current time has passed the refresh token expiry time
- *    - Throw an error as the refresh token has expired and need to
- *      invalidate the session.
- *
- * @param currentTimeStamp
- * @param refreshExp
- */
-export const getRollingRefreshTokenExpiry = (currentTimeStamp: number, refreshExp: number) => {
-    const timeDifference = refreshExp - currentTimeStamp;
-
-    /* Validation should prevent us getting here but in case the timeDifference
-     * is in the negative, throw an error. */
-    if (timeDifference < 0) {
-        return Error('Refresh token has expired');
-    }
-
-    const nonExtendedRefreshExpInSeconds = getMinutesToSeconds(
-        REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED
-    );
-
-    const shouldExtendRefresh = timeDifference < nonExtendedRefreshExpInSeconds;
-    return shouldExtendRefresh
-        ? getTokenExpiryFromMinutes(REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED)
-        : refreshExp;
-};
-
-/**
- * Gets new tokens to extend the users login session. A new access token of 15
- * minutes will be generated and a new refresh token with either its previous
- * expiry time or it expiry time plus 16 minutes.
- * @param oldAccessToken
- */
-export const generateRefreshedTokens = (
-    oldAccessToken: string
-): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } => {
-    const [, accessToken] = oldAccessToken.split(' ');
-
-    const decodedAccessToken = decode(accessToken) as decodedAccessToken;
-
-    const { bc_customer_id, refresh_expiry } = decodedAccessToken;
-
-    const currentTimeStamp = getCurrentTimeStamp();
-    const accessTokenExpiry = getTokenExpiryFromMinutes(ACCESS_TOKEN_EXPIRY_IN_MINUTES);
-    const refreshTokenExpiry = getRollingRefreshTokenExpiry(currentTimeStamp, refresh_expiry);
-
-    if (refreshTokenExpiry instanceof Error) {
-        throw new GraphqlError("Refresh tokens couldn't be generated", 'authorization');
-    }
-
-    const newAccessToken = createAccessJWT(bc_customer_id, accessTokenExpiry, refreshTokenExpiry);
-    const newRefreshToken = createRefreshToken(bc_customer_id, accessTokenExpiry);
-
-    return {
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-        refreshTokenExpiry: refreshTokenExpiry,
-    };
 };

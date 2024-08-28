@@ -7,7 +7,7 @@ import {
     QueryCommandOutput,
     QueryCommand,
 } from '@aws-sdk/client-dynamodb';
-import { Inject, Injectable, forwardRef, CONTEXT } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { chunk } from 'lodash';
 import {
     BatchRemoveItems,
@@ -29,11 +29,7 @@ const BATCH_WRITE_LIMIT = 25;
 export class AuthService {
     protected client: DynamoDBClient;
 
-    constructor(
-        @Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig,
-        // eslint-disable-next-line no-unused-vars
-        @Inject(CONTEXT) private context: GraphQLModules.GlobalContext
-    ) {
+    constructor(@Inject(forwardRef(() => ModuleConfigToken)) protected config: ModuleConfig) {
         this.client = new DynamoDBClient({
             region: this.config.dynamoDbRegion,
             /* Note: Credentials are not required as long as "AWS_ACCESS_KEY_ID" and

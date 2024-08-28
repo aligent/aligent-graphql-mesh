@@ -54,7 +54,13 @@
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
                 "jestConfig": "packages/modules/auth/jest.config.ts"
-            }
+            },
+            "dependsOn": [
+                {
+                    "projects": ["bigcommerce-operations"],
+                    "target": "build"
+                }
+            ]
         }
     }
 }

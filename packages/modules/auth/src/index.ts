@@ -11,6 +11,9 @@ const loadGraphQlFiles = () => loadFilesSync(resolve(__dirname, './schema/*.grap
 export interface ModuleConfig {
     dynamoDbRegion: string;
     dynamoDbAuthTable: string;
+    extendRefreshTokenExpiryInMinutes?: number;
+    nonExtendRefreshTokenExpiryInMinutes?: number;
+    accessTokenExpiryInMinutes?: number;
 }
 
 export const createAuthModule = (config: ModuleConfig) => {
