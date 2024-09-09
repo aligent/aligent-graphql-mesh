@@ -18,6 +18,8 @@ export const getRouteQuery = stripIgnoredCharacters(
             # first, after used for satisfying productDetails fragment
             $first: Int
             $after: String
+            # variantAfter used for satisfying variant fragment
+            $variantAfter: String
         ) {
             site {
                 route(path: $path) {

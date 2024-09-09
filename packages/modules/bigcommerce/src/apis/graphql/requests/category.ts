@@ -14,6 +14,8 @@ export const getCategoryQuery = stripIgnoredCharacters(
             # first, after used for satisfying productDetails fragment
             $first: Int
             $after: String
+            # variantAfter used for satisfying variant fragment
+            $variantAfter: String
         ) {
             site {
                 category(entityId: $entityId) {
