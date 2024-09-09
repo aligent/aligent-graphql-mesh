@@ -19,6 +19,8 @@ export const getProductsSearchQuery = stripIgnoredCharacters(
             $pageSize: Int
             # first used for satisfying productDetails fragment
             $first: Int
+            # variantAfter used for satisfying variant fragment
+            $variantAfter: String
         ) {
             site {
                 search {
