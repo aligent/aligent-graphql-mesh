@@ -17,7 +17,6 @@ export const getRouteQuery = stripIgnoredCharacters(
             $includeTax: Boolean
             # first, after used for satisfying productDetails fragment
             $first: Int
-            $after: String
             # variantAfter used for satisfying variant fragment
             $variantAfter: String
         ) {
