@@ -11,9 +11,8 @@ export const getCategoryQuery = stripIgnoredCharacters(
             $entityId: Int!
             $productsPageSize: Int = 24
             $includeTax: Boolean
-            # first, after used for satisfying productDetails fragment
+            # first used for satisfying productDetails fragment
             $first: Int
-            $after: String
             # variantAfter used for satisfying variant fragment
             $variantAfter: String
         ) {
