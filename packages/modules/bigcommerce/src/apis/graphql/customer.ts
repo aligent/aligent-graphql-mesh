@@ -71,7 +71,8 @@ export const getCartIdFromBcCustomerAttribute = async (
 
 export const getCustomerWishlists = async (
     bcCustomerId: number,
-    customerImpersonationToken: string
+    customerImpersonationToken: string,
+    variables: { includeTax: boolean }
 ): Promise<Customer['wishlists']> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
@@ -79,6 +80,7 @@ export const getCustomerWishlists = async (
     };
     const customerQuery = {
         query: customerWishlists,
+        variables,
     };
 
     const response = await bcGraphQlRequest(customerQuery, headers);
