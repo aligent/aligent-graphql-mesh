@@ -7,6 +7,7 @@
 - Updates the customerWishlist subresolver to pass an includesTax variable to the corresponding BigCommerce customer wishlist graphql request.
 
 #### Pull requests / Tickets
+
 - MI-44: Update customer wishlists products to return the inc/ex price depending on config
   - https://aligent.atlassian.net/browse/MI-44
   - https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/450/overview
