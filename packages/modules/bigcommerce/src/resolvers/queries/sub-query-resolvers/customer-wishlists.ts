@@ -1,9 +1,8 @@
 import { CustomerResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedWishlists } from '../../../factories/helpers/transform-wishlists';
 import { getCustomerWishlists, retrieveStoreConfigsFromCache } from '../../../apis/graphql';
-import { getBcCustomerIdFromMeshToken } from '../../../utils';
+import { getBcCustomerIdFromMeshToken, getIncludesTax } from '../../../utils';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../../apis/rest';
-import { getIncludesTax } from '../../../utils/get-tax';
 
 export const customerWishlistsResolver = {
     resolve: async (_root, _args, context, _info) => {
