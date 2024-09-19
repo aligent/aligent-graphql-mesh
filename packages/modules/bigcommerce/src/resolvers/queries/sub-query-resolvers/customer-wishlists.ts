@@ -1,7 +1,7 @@
 import { CustomerResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedWishlists } from '../../../factories/helpers/transform-wishlists';
-import { getCustomerWishlists } from '../../../apis/graphql';
-import { getBcCustomerIdFromMeshToken } from '../../../utils';
+import { getCustomerWishlists, retrieveStoreConfigsFromCache } from '../../../apis/graphql';
+import { getBcCustomerIdFromMeshToken, getIncludesTax } from '../../../utils';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../../apis/rest';
 
 export const customerWishlistsResolver = {
@@ -9,7 +9,13 @@ export const customerWishlistsResolver = {
         const bcCustomerId = getBcCustomerIdFromMeshToken(context.headers.authorization);
         const customerImpersonationToken =
             await retrieveCustomerImpersonationTokenFromCache(context);
-        const wishlists = await getCustomerWishlists(bcCustomerId, customerImpersonationToken);
+
+        const storeConfig = await retrieveStoreConfigsFromCache(context);
+        const { tax: taxSettings } = storeConfig;
+
+        const wishlists = await getCustomerWishlists(bcCustomerId, customerImpersonationToken, {
+            includeTax: getIncludesTax(taxSettings?.pdp),
+        });
 
         return getTransformedWishlists(wishlists);
     },

@@ -15,7 +15,7 @@ export const customerWishlists = stripIgnoredCharacters(
         ${prices}
         ${categoryDetails}
 
-        query customerWishlists {
+        query customerWishlists($includeTax: Boolean = false) {
             customer {
                 wishlists(first: 50) {
                     edges {
@@ -77,7 +77,7 @@ export const customerWishlists = stripIgnoredCharacters(
                                                 status
                                                 description
                                             }
-                                            prices {
+                                            prices(includeTax: $includeTax) {
                                                 ...Prices
                                             }
                                             customFields {
