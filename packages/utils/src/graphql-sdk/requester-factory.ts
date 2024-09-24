@@ -33,6 +33,11 @@ export const requesterFactory = (config: {
     timeout: { milliseconds: number; message: string };
     onError: (error: unknown, label: string) => never;
 }) => {
+    // The connection timeout should be slightly longer to
+    // allow servers to respond with a timeout failure before
+    // we directly cancel a connection
+    const connectionTimeout = config.timeout.milliseconds + 50;
+
     const client = axios.create({
         baseURL: config.graphqlEndpoint,
         headers: {
@@ -40,7 +45,6 @@ export const requesterFactory = (config: {
         },
         timeout: config.timeout.milliseconds,
         timeoutErrorMessage: config.timeout.message,
-        signal: AbortSignal.timeout(config.timeout.milliseconds),
     });
 
     const requester = async <R, V>(
@@ -57,7 +61,10 @@ export const requesterFactory = (config: {
             const response = await xray.captureAsyncFunc(config.name, async (segment) => {
                 // Add query annotation to axios request
                 segment?.addAnnotation('query', data.query);
-                const response = await client.post<R>('', data, options);
+                const response = await client.post<R>('', data, {
+                    signal: AbortSignal.timeout(connectionTimeout),
+                    ...options,
+                });
                 segment?.close();
                 return response;
             });
