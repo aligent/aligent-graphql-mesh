@@ -1,4 +1,3 @@
-import { ReflectiveInjector } from 'graphql-modules/di';
 import Keyv from 'keyv';
 
 export interface Resource {
@@ -48,7 +47,6 @@ export interface Entity extends Resource {
 declare global {
     namespace GraphQLModules {
         interface GlobalContext {
-            injector: ReflectiveInjector;
             cache: Keyv;
             request: Request;
         }
