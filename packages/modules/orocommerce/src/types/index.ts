@@ -1,5 +1,16 @@
 import Keyv from 'keyv';
 
+// Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace GraphQLModules {
+        interface GlobalContext {
+            cache: Keyv;
+            request: Request;
+        }
+    }
+}
+
 export interface Resource {
     readonly type: string;
     id: string;
@@ -41,18 +52,6 @@ export interface Entity extends Resource {
     attributes: Attributes;
     relationships?: Relationships;
 }
-
-// Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
-/* eslint-disable */
-declare global {
-    namespace GraphQLModules {
-        interface GlobalContext {
-            cache: Keyv;
-            request: Request;
-        }
-    }
-}
-/* eslint-enable */
 
 export * from './checkouts';
 export * from './checkout-sources';
