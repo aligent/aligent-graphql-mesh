@@ -7170,10 +7170,10 @@ graphql-import-node@^0.0.5:
   resolved "https://registry.npmjs.org/graphql-import-node/-/graphql-import-node-0.0.5.tgz"
   integrity sha512-OXbou9fqh9/Lm7vwXT0XoRN9J5+WCYKnbiTalgFDvkQERITRmcfncZs6aVABedd5B85yQU5EULS4a5pnbpuI0Q==
 
-graphql-modules@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/graphql-modules/-/graphql-modules-2.2.0.tgz"
-  integrity sha512-iWFyqP+jZqlwPkM4zVI0A/GDgQErxCTZeiz/jVv0MNzKut+ZEV6Dx8TlLhHd6VLqrqHZmib4NybG5Me8E03jDg==
+graphql-modules@2.3.x:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/graphql-modules/-/graphql-modules-2.3.0.tgz#6b0c4ea97838a64c1900e61e28ec571cb0922d12"
+  integrity sha512-CcrjUjMYHy3zelnffldhR3h6t4ndCVJEzdqBAv/mp4ZGEA/izirOKZB2lnRwpXNqOtVwIz2O/E1Cg/UH8dFNaQ==
   dependencies:
     "@graphql-tools/schema" "^10.0.0"
     "@graphql-tools/wrap" "^10.0.0"
