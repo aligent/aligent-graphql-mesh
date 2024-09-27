@@ -1,10 +1,10 @@
 import { ByLocation, Maybe } from '@aligent/bigcommerce-resolvers';
 import { VariantInventory } from '@aligent/bigcommerce-operations';
-import { isNotNull } from '@aligent/utils';
+import { isTruthy } from '@aligent/utils';
 
 export const getTransformProductLocations = (
     inventory: Maybe<VariantInventory> | undefined
-): Maybe<Array<Maybe<ByLocation>>> => {
+): Maybe<Array<ByLocation>> => {
     return (
         inventory?.byLocation?.edges
             ?.map((location) => {
@@ -16,6 +16,6 @@ export const getTransformProductLocations = (
                     __typename: 'ByLocation' as const,
                 };
             })
-            .filter(isNotNull) || []
+            .filter(isTruthy) || []
     );
 };

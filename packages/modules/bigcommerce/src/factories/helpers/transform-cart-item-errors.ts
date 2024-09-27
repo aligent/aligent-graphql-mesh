@@ -1,4 +1,5 @@
 import { CartItemErrorType } from '@aligent/bigcommerce-resolvers';
+import { isTruthy } from '@aligent/utils';
 
 /**
  * Determines if an items quantity in the cart is allowed and returns an error
@@ -57,6 +58,6 @@ export const getTransformedCartItemErrors = (
     const inStockError = getInStockError(stockStatus);
 
     return insufficientQtyError || inStockError
-        ? [insufficientQtyError, inStockError].filter(Boolean)
+        ? [insufficientQtyError, inStockError].filter(isTruthy)
         : null;
 };

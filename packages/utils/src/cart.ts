@@ -1,4 +1,5 @@
 import { atob, btoa } from './encode-decode';
+import { isTruthy } from './is-truthy';
 
 /**
  * @module createCartItemUid
@@ -17,7 +18,9 @@ export const createCartItemUid = (
     productEntityId: number,
     variantEntityId?: number | null
 ): string => {
-    const uidItems = [lineItemEntityId, productEntityId, variantEntityId].filter(Boolean).join('/');
+    const uidItems = [lineItemEntityId, productEntityId, variantEntityId]
+        .filter(isTruthy)
+        .join('/');
 
     return btoa(uidItems);
 };

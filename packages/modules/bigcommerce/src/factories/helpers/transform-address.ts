@@ -9,6 +9,7 @@ import {
     Country as AcCountry,
 } from '@aligent/bigcommerce-resolvers';
 import { getTransformedRegionId } from './transform-regions';
+import { isTruthy } from '@aligent/utils';
 
 export const getTransformedAddress = (
     bcAddress: CheckoutConsignmentAddress | CheckoutBillingAddress,
@@ -43,7 +44,7 @@ export const getTransformedAddress = (
             label: stateOrProvince,
             region_id: getTransformedRegionId(bcAddress, countries),
         },
-        street: [address1 || null, address2 || null].filter(Boolean),
+        street: [address1 || null, address2 || null].filter(isTruthy),
         telephone: phone,
         uid: '',
     };

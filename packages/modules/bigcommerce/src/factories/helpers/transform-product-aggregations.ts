@@ -9,6 +9,7 @@ import {
     CategorySearchFilter,
 } from '@aligent/bigcommerce-operations';
 import { Aggregation, FilterTypeEnum, AggregationOption } from '@aligent/bigcommerce-resolvers';
+import { isTruthy } from '@aligent/utils';
 
 const getFilterInputType = (typename?: string): FilterTypeEnum => {
     if (typename === 'PriceSearchFilter') {
@@ -21,7 +22,7 @@ const getFilterInputType = (typename?: string): FilterTypeEnum => {
 export const getTransformedAggregationOptions = (
     attributes: ProductAttributeSearchFilterItemConnection,
     filterName: string
-): Maybe<Array<Maybe<AggregationOption>>> => {
+): Maybe<Array<AggregationOption>> => {
     if (!filterName || attributes.edges?.length === 0) return [];
 
     const aggregationOptions = attributes?.edges
@@ -43,7 +44,7 @@ export const getTransformedAggregationOptions = (
                           : null,
                   };
               })
-              .filter(Boolean)
+              .filter(isTruthy)
         : [];
 
     return aggregationOptions;
@@ -81,7 +82,7 @@ export const getAggregationsFromBrandFilter = (filter: BrandSearchFilter): Maybe
                       value: String(entityId),
                   };
               })
-              .filter(Boolean)
+              .filter(isTruthy)
         : [];
 
     return {
@@ -127,7 +128,7 @@ const getAggregationsFromCategoryFilter = (filter: CategorySearchFilter): Maybe<
                       value: String(entityId),
                   };
               })
-              .filter(Boolean)
+              .filter(isTruthy)
         : [];
 
     return {
@@ -153,7 +154,7 @@ export const getAggregationsFromRatingFilter = (filter: RatingSearchFilter): May
                       value,
                   };
               })
-              .filter(Boolean)
+              .filter(isTruthy)
         : [];
 
     return {
@@ -167,7 +168,7 @@ export const getAggregationsFromRatingFilter = (filter: RatingSearchFilter): May
 
 export const getTransformedProductAggregations = (
     filters: SearchProductFilterConnection
-): Maybe<Array<Maybe<Aggregation>>> => {
+): Maybe<Array<Aggregation>> => {
     if (!filters?.edges) return [];
     return filters.edges
         .map((filter) => {
@@ -197,5 +198,5 @@ export const getTransformedProductAggregations = (
 
             return null;
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 };

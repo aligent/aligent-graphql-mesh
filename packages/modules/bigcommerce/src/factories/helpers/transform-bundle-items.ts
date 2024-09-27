@@ -7,7 +7,7 @@ import {
     VariantConnection,
 } from '@aligent/bigcommerce-operations';
 import { BundleItem, Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
-import { btoa, isNotNull } from '@aligent/utils';
+import { btoa, isTruthy } from '@aligent/utils';
 import { SupportedProductTypes } from '../../types';
 import { getTransformedPriceRange } from './transform-product-prices';
 
@@ -86,7 +86,7 @@ export const getTransformBundleItems = ({
                 uid: btoa(String(optionId)),
             };
         })
-        .filter(isNotNull);
+        .filter(isTruthy);
 
     return items;
 };

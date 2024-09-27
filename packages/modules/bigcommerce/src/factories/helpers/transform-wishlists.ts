@@ -8,8 +8,9 @@ import {
 } from '@aligent/bigcommerce-resolvers';
 import { WishlistConnection, WishlistItemConnection } from '@aligent/bigcommerce-operations';
 import { getTransformedProductData } from '../transform-products-data';
+import { isTruthy } from '@aligent/utils';
 
-export const getTransformedWishlists = (wishlists: WishlistConnection): Array<Maybe<Wishlist>> => {
+export const getTransformedWishlists = (wishlists: WishlistConnection): Array<Wishlist> => {
     if (!wishlists.edges) return [];
     return wishlists.edges
         .map((edge) => {
@@ -33,12 +34,12 @@ export const getTransformedWishlists = (wishlists: WishlistConnection): Array<Ma
                 updated_at: '',
             };
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 };
 
 export const getTransformedWishListItems = (
     wishListItems: WishlistItemConnection
-): Array<Maybe<WishlistItemInterface>> => {
+): Array<WishlistItemInterface> => {
     if (!wishListItems.edges) return [];
     return wishListItems.edges
         .map((wishlistItem) => {
@@ -60,7 +61,7 @@ export const getTransformedWishListItems = (
                 product: transformedProduct,
             };
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 };
 
 export const getWishListVisibility = (visibility: boolean): WishlistVisibilityEnum => {

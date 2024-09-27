@@ -1,5 +1,4 @@
 import {
-    Category,
     ConfigurableProductAttribute,
     Product as OroProduct,
     ProductImage,
@@ -12,7 +11,7 @@ import {
     Transformer,
     TransformerContext,
     btoa,
-    isNotNull,
+    isTruthy,
     logAndThrowError,
     slashAtStartOrEnd,
 } from '@aligent/utils';
@@ -31,6 +30,7 @@ import { getTransformedReviews } from './reviews-transformer';
 import { Injectable } from 'graphql-modules';
 import { CategoriesTransformer } from '../../transformers';
 import { getMoneyData } from '../../utils';
+import { isProductCategory, isProductImage } from '../../utils/type-predicates';
 
 @Injectable({
     global: true,
@@ -108,7 +108,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
 
     getTransformedProductsAttributes = (
         oroProductData: OroProduct
-    ): Maybe<Array<Maybe<ConfigurableAttributeOption>>> => {
+    ): Maybe<Array<ConfigurableAttributeOption>> => {
         const productAttributesWithValues = oroProductData.attributes.productAttributes;
         const productAttributes = Object.keys(productAttributesWithValues);
 
@@ -125,7 +125,7 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                     uid: btoa(String(attributeValue.id)),
                 };
             })
-            .filter(Boolean);
+            .filter(isTruthy);
         return attributes;
     };
 
@@ -150,17 +150,9 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
                 }
                 return null;
             })
-            .filter(isNotNull);
+            .filter(isTruthy);
 
         return variantsResults;
-    };
-
-    isProductImage = (item: ProductIncludeTypes): item is ProductImage => {
-        return item.type === 'productimages';
-    };
-
-    isProductCategory = (item: ProductIncludeTypes): item is Category => {
-        return item.type === 'mastercatalogcategories';
     };
 
     getImageByDimension(
@@ -212,8 +204,8 @@ export class ProductsTransformer implements Transformer<ProductsTransformerInput
         isVariant = false
     ): ConfigurableProduct | SimpleProduct {
         try {
-            const productCategories = oroProduct.included?.filter(this.isProductCategory);
-            const productsImages = oroProduct.included?.filter(this.isProductImage);
+            const productCategories = oroProduct.included?.filter(isProductCategory);
+            const productsImages = oroProduct.included?.filter(isProductImage);
 
             // The productimages data inside oroProductData.included only links to the parent product and not each variant
             // Currently variant images arent correct, this will later need to be updated

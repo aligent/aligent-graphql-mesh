@@ -6,6 +6,7 @@ export * from './graphql-sdk';
 export * from './time-and-date';
 export * from './regex/slash-at-start-or-end';
 export * from './is-not-null';
+export * from './is-truthy';
 export * from './is-type';
 export * from './error-handling/axios-errors';
 export * from './error-handling';

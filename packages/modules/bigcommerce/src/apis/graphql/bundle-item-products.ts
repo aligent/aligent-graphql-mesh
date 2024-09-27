@@ -7,7 +7,7 @@ import {
     TaxDisplaySettings,
 } from '@aligent/bigcommerce-operations';
 import { Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
-import { isNotNull } from '@aligent/utils';
+import { isTruthy } from '@aligent/utils';
 import { getIncludesTax } from '../../utils/get-tax';
 import {
     getHasPickListItems,
@@ -116,7 +116,7 @@ export const getBundleItemProducts = async (
             });
         })
         .flat()
-        .filter(isNotNull);
+        .filter(isTruthy);
 
     // Here we fetch full product payload from BC as Adobe commerce schema expose all
     // the product data which product interface supports
@@ -151,6 +151,6 @@ export const getBundleItemProducts = async (
                 });
                 return getTransformedProductData(priceModifiedPickListProduct);
             })
-            .filter(isNotNull),
+            .filter(isTruthy),
     };
 };

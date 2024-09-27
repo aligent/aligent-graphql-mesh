@@ -5,6 +5,7 @@ import {
     ProductReview,
     ProductReviews,
 } from '@aligent/bigcommerce-resolvers';
+import { isTruthy } from '@aligent/utils';
 
 export const getTransformedReview = (review: Review): Maybe<ProductReview> => {
     const { author, createdAt, rating, text, title } = review;
@@ -32,7 +33,7 @@ export const getTransformedReviews = (reviews: ReviewConnection): ProductReviews
                   if (!review?.node) return null;
                   return getTransformedReview(review.node);
               })
-              .filter(Boolean)
+              .filter(isTruthy)
         : [];
 
     /*

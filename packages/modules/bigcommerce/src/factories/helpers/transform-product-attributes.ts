@@ -1,10 +1,10 @@
 import { ConfigurableAttributeOption, Maybe } from '@aligent/bigcommerce-resolvers';
 import { OptionEdge } from '@aligent/bigcommerce-operations';
-import { btoa } from '@aligent/utils';
+import { btoa, isTruthy } from '@aligent/utils';
 
 export const getTransformedProductsAttributes = (options: {
     edges?: Maybe<Array<Maybe<OptionEdge>>>;
-}): Array<Maybe<ConfigurableAttributeOption>> => {
+}): Array<ConfigurableAttributeOption> => {
     if (!options?.edges) return [];
 
     const optionsResult = options.edges
@@ -21,7 +21,7 @@ export const getTransformedProductsAttributes = (options: {
                 uid: btoa(String(valueEntityId)),
             };
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 
     return optionsResult;
 };
