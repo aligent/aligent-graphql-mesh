@@ -136,7 +136,7 @@ const main = () => {
 
     app.use(xray.express.closeSegment());
 
-    const port = 4000 || process.env.PORT;
+    const port = process.env.PORT || 4000;
     if (DEV_MODE) {
         const server = https.createServer(
             {
