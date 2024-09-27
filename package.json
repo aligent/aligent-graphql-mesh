@@ -47,7 +47,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "type-fest": "^4.23.0",
-    "typescript": "5.2.x"
+    "typescript": "5.6.x"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.535.0",
