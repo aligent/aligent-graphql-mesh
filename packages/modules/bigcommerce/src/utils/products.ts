@@ -17,7 +17,7 @@ export const getFlattenedProducts = (
         // Type guard to only do the next bit on configurable products
         if ('variants' in item) {
             const variants = (item.variants || [])
-                .map((variant) => variant?.product ?? null)
+                .map((variant) => variant?.product)
                 .filter(isTruthy);
             return [...carry, item, ...variants];
         }
