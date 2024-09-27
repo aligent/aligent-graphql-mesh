@@ -5,10 +5,11 @@ import { getTransformedPriceRange, getTransformedPriceTiers } from './transform-
 import { getTransformedProductsAttributes } from './transform-product-attributes';
 import { getTransformedAvailableStock, getTransformedVariantStockStatus } from './transform-stock';
 import { getTransformProductLocations } from './transform-product-locations';
+import { isTruthy } from '@aligent/utils';
 
 export const getTransformedVariants = (
     variants: Maybe<VariantConnection>
-): Maybe<Array<Maybe<ConfigurableVariant>>> => {
+): Maybe<Array<ConfigurableVariant>> => {
     if (!variants?.edges || variants?.edges.length === 0) return [];
 
     const variantsResults = variants.edges
@@ -23,7 +24,7 @@ export const getTransformedVariants = (
                     by_location: getTransformProductLocations(inventory),
                     custom_attributes: [],
                     id: entityId,
-                    media_gallery_entries: [getTransformedImage(defaultImage)].filter(Boolean),
+                    media_gallery_entries: [getTransformedImage(defaultImage)].filter(isTruthy),
                     only_x_left_in_stock: getTransformedAvailableStock(inventory),
                     price_range: getTransformedPriceRange(prices || null, 'SimpleProduct', null),
                     price_tiers: getTransformedPriceTiers(prices || null),
@@ -46,7 +47,7 @@ export const getTransformedVariants = (
                 },
             };
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 
     return variantsResults;
 };

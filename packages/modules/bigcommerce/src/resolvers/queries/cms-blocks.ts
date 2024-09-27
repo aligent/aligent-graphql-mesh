@@ -1,6 +1,7 @@
-import { CmsPage, QueryResolvers } from '@aligent/bigcommerce-resolvers';
+import { QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { transformCmsPagesToCmsBlocks } from '../../factories/transform-cms-pages-to-cms-blocks';
 import { cmsPageResolver } from './cms-page';
+import { isTruthy } from '@aligent/utils';
 
 export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {
     resolve: async (root, args, context, info) => {
@@ -13,7 +14,7 @@ export const cmsBlocksResolver: QueryResolvers['cmsBlocks'] = {
 
         return {
             __typename: 'CmsBlocks',
-            ...transformCmsPagesToCmsBlocks(response.filter(Boolean) as CmsPage[]),
+            ...transformCmsPagesToCmsBlocks(response.filter(isTruthy)),
         };
     },
 };

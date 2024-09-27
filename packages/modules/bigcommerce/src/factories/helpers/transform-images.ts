@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { ImageEdge, Image } from '@aligent/bigcommerce-operations';
 import { Maybe, MediaGalleryEntry, ProductImage } from '@aligent/bigcommerce-resolvers';
+import { isTruthy } from '@aligent/utils';
 
 /**
  * Creates an image id from the image url
@@ -38,7 +39,7 @@ export const getTransformedImage = (
 
 export const getTransformedMediaGalleryEntries = (images: {
     edges?: Maybe<Array<Maybe<ImageEdge>>>;
-}): Array<Maybe<MediaGalleryEntry>> => {
+}): Array<MediaGalleryEntry> => {
     if (!images?.edges || !images?.edges.length) return [];
 
     return images?.edges
@@ -46,7 +47,7 @@ export const getTransformedMediaGalleryEntries = (images: {
             if (!image?.node) return null;
             return getTransformedImage(image.node, index);
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 };
 
 export const getTransformedSmallImage = (

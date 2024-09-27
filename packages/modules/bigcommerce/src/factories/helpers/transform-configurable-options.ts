@@ -4,7 +4,7 @@ import {
     SwatchOptionValue,
 } from '@aligent/bigcommerce-operations';
 import { ConfigurableProductOptions, Maybe } from '@aligent/bigcommerce-resolvers';
-import { btoa } from '@aligent/utils';
+import { btoa, isTruthy } from '@aligent/utils';
 import { SupportedProductTypes } from '../../types';
 
 export const getTransformedConfigurableOptions = (
@@ -59,7 +59,7 @@ export const getTransformedConfigurableOptions = (
                         ...(swatch_data && { swatch_data }),
                     };
                 })
-                .filter(Boolean);
+                .filter(isTruthy);
 
             return {
                 attribute_code,
@@ -72,7 +72,7 @@ export const getTransformedConfigurableOptions = (
                 uid: btoa(String(optionId)),
             };
         })
-        .filter(Boolean);
+        .filter(isTruthy);
 
     return options;
 };

@@ -2,7 +2,7 @@ import { Products, QueryResolvers } from '@aligent/bigcommerce-resolvers';
 import { getTransformedProductsData } from '../../factories/transform-products-data';
 import { getProducts, retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 import { getBcProductsGraphql, retrieveStoreConfigsFromCache } from '../../apis/graphql';
-import { GraphqlError } from '@aligent/utils';
+import { GraphqlError, isTruthy } from '@aligent/utils';
 import { getSortedProducts, transformGQLSortArgsToRestSortArgs } from '../../utils/sort';
 import { getIncludesTax } from '../../utils/get-tax';
 
@@ -31,7 +31,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
         /* This whole query is based on getting products by sku so if we don't receive a sku arg return null*/
         if (!skus) return null;
 
-        const combinedSkus = [skus.eq, ...(skus.in || [])].filter(Boolean);
+        const combinedSkus = [skus.eq, ...(skus.in || [])].filter(isTruthy);
 
         /* Collects unique skus to pass the the rest Products query*/
         const uniqueSkus = [...new Set(combinedSkus)];
@@ -51,7 +51,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
          * We also sort the products here so the rest request returns the products id in the desired sort order */
         const productsBySku = await getProducts({
             ...(skuLength === 1 && { sku: uniqueSkus[0] || '' }),
-            ...(skuLength > 1 && { 'sku:in': uniqueSkus as string[] }),
+            ...(skuLength > 1 && { 'sku:in': uniqueSkus }),
             include_fields: 'id,name,sku',
             limit: args.pageSize,
             sort: transformedSort.sort,
@@ -83,9 +83,7 @@ export const productsBySkuResolver: QueryResolvers['productsBySku'] = {
          * the skus listed in the "sku" arg.
          * Any other sort arg we will use the order of the product ids returned from the products rest request.
          * */
-        const sortByIdentifiers = args.sort?.position
-            ? { skus: uniqueSkus as string[] }
-            : { ids: productIds };
+        const sortByIdentifiers = args.sort?.position ? { skus: uniqueSkus } : { ids: productIds };
 
         /* The "graphql" products query doesn't return products in the same order as the ids passed as arguments
          * and doesn't have a sorting argument option, so we have to work out the sorting with our own functions

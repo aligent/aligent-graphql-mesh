@@ -1,9 +1,8 @@
 import { BreadcrumbConnection } from '@aligent/bigcommerce-operations';
 import { Maybe, Breadcrumb } from '@aligent/bigcommerce-resolvers';
 import { Category } from '../types';
-import { slashAtStartOrEnd } from '@aligent/utils';
+import { isTruthy, slashAtStartOrEnd } from '@aligent/utils';
 import { ROOT_BIGCOMMERCE_CATEGORY } from './transform-category-data';
-import { removeFalseyValues } from '../utils/remove-falsey-values';
 
 /**
  * Transforms breadcrumb data into a structure the PWA is expecting.
@@ -31,7 +30,7 @@ export const getTransformedBreadcrumbsData = (
                 if (name === currentCategory.name && path === currentCategory.path) return null;
 
                 const urlPath = path?.replace(slashAtStartOrEnd, '');
-                const categoryLevel = path?.split('/').filter(removeFalseyValues).length;
+                const categoryLevel = path?.split('/').filter(isTruthy).length;
 
                 return {
                     category_id: entityId,
@@ -42,7 +41,7 @@ export const getTransformedBreadcrumbsData = (
                     category_uid: btoa(String(entityId)),
                 };
             })
-            .filter(removeFalseyValues);
+            .filter(isTruthy);
     }
 
     /* As we nest our way down a root category to its children, we

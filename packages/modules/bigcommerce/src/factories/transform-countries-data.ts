@@ -1,5 +1,6 @@
 import { Country as AcCountry } from '@aligent/bigcommerce-resolvers';
 import { BcState, Country } from '../types';
+import { isTruthy } from '@aligent/utils';
 
 export const transformCountriesAndStates = (
     bcCountries: Country[],
@@ -17,7 +18,7 @@ export const transformCountriesAndStates = (
                 }
                 return null;
             })
-            .filter(Boolean);
+            .filter(isTruthy);
         return {
             full_name_english: country.country,
             full_name_locale: null,

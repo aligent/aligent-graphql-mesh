@@ -1,9 +1,5 @@
-import {
-    ConfigurableProduct,
-    Maybe,
-    ProductInterface,
-    SimpleProduct,
-} from '@aligent/bigcommerce-resolvers';
+import { ConfigurableProduct, Maybe, ProductInterface } from '@aligent/bigcommerce-resolvers';
+import { isTruthy } from '@aligent/utils';
 
 /**
  * De nests product variants to be their own item in an array along with their
@@ -21,9 +17,8 @@ export const getFlattenedProducts = (
         // Type guard to only do the next bit on configurable products
         if ('variants' in item) {
             const variants = (item.variants || [])
-                .map((variant) => variant?.product)
-                // Type guard to help filter get rid of the Maybe, undefined etc
-                .filter((product): product is SimpleProduct => Boolean(product));
+                .map((variant) => variant?.product ?? null)
+                .filter(isTruthy);
             return [...carry, item, ...variants];
         }
 
