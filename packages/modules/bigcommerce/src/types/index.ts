@@ -12,8 +12,19 @@ import {
     CustomerAddressInput,
     Maybe,
 } from '@aligent/bigcommerce-resolvers';
-import { ReflectiveInjector } from 'graphql-modules/di';
 import Keyv from 'keyv';
+
+// Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace GraphQLModules {
+        interface GlobalContext {
+            headers: Record<string, string>;
+            cache: Keyv;
+            request: Request;
+        }
+    }
+}
 
 export interface BcGraphqlTokenData {
     allowed_cors_origins: [] | string[];
@@ -252,19 +263,6 @@ export interface ValidatePasswordRequest {
     channel_id: number;
 }
 
-// Extend Global context type see: https://the-guild.dev/graphql/modules/docs/essentials/type-safety#shaping-context-type
-/* eslint-disable */
-declare global {
-    namespace GraphQLModules {
-        interface GlobalContext {
-            headers: Record<string, string>;
-            injector: ReflectiveInjector;
-            cache: Keyv;
-            request: Request;
-        }
-    }
-}
-/* eslint-enable */
 export interface BCOrder {
     id: number;
     customer_id: number;
