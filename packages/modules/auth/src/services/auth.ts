@@ -23,6 +23,9 @@ import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types
 
 const BATCH_WRITE_LIMIT = 25;
 
+/**
+ * Repository service for user authentication details
+ */
 @Injectable({
     global: true,
 })
@@ -38,6 +41,13 @@ export class AuthService {
         });
     }
 
+    /**
+     * Get an existing user authentication session
+     *
+     * @param userId
+     * @param refreshToken
+     * @returns
+     */
     async getUserAuth(userId: string | number, refreshToken: string): GetUserAuthResponse {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
@@ -61,6 +71,14 @@ export class AuthService {
         return response;
     }
 
+    /**
+     * Upsert a user authentication session with a time to live
+     *
+     * @param userId
+     * @param refreshToken
+     * @param refreshTokenTTl
+     * @returns
+     */
     async updateUserAuth(
         userId: string | number,
         refreshToken: string,
@@ -92,6 +110,13 @@ export class AuthService {
         return response;
     }
 
+    /**
+     * Remove a user authentication session
+     *
+     * @param userId
+     * @param refreshToken
+     * @returns
+     */
     async removeUserAuth(userId: string | number, refreshToken: string): RemoveUserAuthResponse {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
@@ -118,6 +143,12 @@ export class AuthService {
         return response;
     }
 
+    /**
+     * Remove all user authentication sessions
+     *
+     * @param userId
+     * @returns
+     */
     async removeAllUserAuthItems(userId: string | number): Promise<{ success: boolean }> {
         const queryItemsResponse = await this.queryAuthItemsById(userId);
 
@@ -181,6 +212,12 @@ export class AuthService {
         return { success: true };
     }
 
+    /**
+     * Get all user authentication sessions for a given user id
+     *
+     * @param userId
+     * @returns
+     */
     async queryAuthItemsById(userId: string | number): Promise<QueryCommandOutput | Error> {
         const queryInput = new QueryCommand({
             TableName: this.config.dynamoDbAuthTable,
