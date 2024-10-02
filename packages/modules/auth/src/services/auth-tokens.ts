@@ -18,6 +18,9 @@ import {
     getTokenExpiryFromMinutes,
 } from '../utils';
 
+/**
+ * Service for generating JWT authentication and refresh tokens
+ */
 @Injectable({
     global: true,
 })
@@ -47,7 +50,7 @@ export class AuthTokenService {
     /**
      * A check to ensure the defined expiry times are not less
      */
-    verifyExpiryTimes() {
+    protected verifyExpiryTimes() {
         if (this.accessTokenExpiryInMinutes >= this.nonExtendRefreshTokenExpiryInMinutes) {
             throw new GraphqlError(
                 `"accessTokenExpiryInMinutes" needs to be less than "nonExtendRefreshTokenExpiryInMinutes"`,
