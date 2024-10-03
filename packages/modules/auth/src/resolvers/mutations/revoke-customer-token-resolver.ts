@@ -5,7 +5,10 @@ import { getDecodedAuthToken, getVerifiedRefreshToken } from '../../utils';
 
 export const revokeCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
-        const authToken = context.headers.authorization;
+        const authToken = context.request.headers.get('authorization');
+        if (!authToken) {
+            throw new GraphqlError('Missing authorization header', 'authorization');
+        }
 
         const { refresh_token } = args;
 

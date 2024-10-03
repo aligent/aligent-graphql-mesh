@@ -1,17 +1,12 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
-import {
-    bcLogin,
-    retrieveCustomerImpersonationTokenFromCache,
-} from '@aligent/bigcommerce-graphql-module';
 import { GraphqlError } from '@aligent/utils';
 import { AuthService, AuthTokenService } from '../../services';
+import { LoginService } from '../../services/login';
 
 export const generateCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
-        const customerImpersonationToken =
-            await retrieveCustomerImpersonationTokenFromCache(context);
-
-        const entityId = await bcLogin(args.email, args.password, customerImpersonationToken);
+        const loginService = context.injector.get(LoginService);
+        const entityId = await loginService.login(args);
 
         const isExtendedLogin = !!args?.remember_me;
 

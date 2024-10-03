@@ -3,6 +3,7 @@ import { BigCommerceModuleConfig } from '../index';
 import { getSdk } from '@aligent/bigcommerce-operations';
 import { logAndThrowError, requesterFactory } from '@aligent/utils';
 import { Get, Paths } from 'type-fest';
+import { LoginCredentials, LoginService } from '@aligent/auth-module';
 
 export const ModuleConfig = new InjectionToken<BigCommerceModuleConfig>(
     'Configuration for the BigCommerce GraphQL Module'
@@ -66,6 +67,17 @@ export const BigCommerceSdk = new InjectionToken<BcSdk>(
  */
 export type GetProperty<T, Path extends Paths<T>> = NonNullable<Get<T, `${Path}`>>;
 
+class BasicLoginService extends LoginService {
+    constructor() {
+        super();
+        console.log('BasicLoginService - Application');
+    }
+    override async login(credentials: LoginCredentials): Promise<number> {
+        console.log('Logging in - Application', credentials);
+        return 1;
+    }
+}
+
 /**
  * Dependency injection setup for GraphQl Modules
  * See documentation for more details:
@@ -84,6 +96,10 @@ export const getProviders = (config: BigCommerceModuleConfig): Array<Provider> =
             useFactory: sdkFactory,
             deps: [ModuleConfig],
             global: true,
+        },
+        {
+            useClass: BasicLoginService,
+            provide: LoginService,
         },
     ];
 };

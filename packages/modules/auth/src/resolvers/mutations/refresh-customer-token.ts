@@ -14,7 +14,11 @@ const {
 export const refreshCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
         const { refresh_token } = args;
-        const authToken = context.headers.authorization;
+        const authToken = context.request.headers.get('authorization');
+
+        if (!authToken) {
+            throw new GraphqlError('Missing authorization header', 'authorization');
+        }
 
         const authTokenService: AuthTokenService = context.injector.get(AuthTokenService);
 
@@ -23,7 +27,7 @@ export const refreshCustomerTokenResolver = {
 
         /* Prevents new tokens being generated if both refresh and access tokens are still valid */
         if (authTokenStatus === ACCESS_VALID_REFRESH_VALID) {
-            const [, accessToken] = context.headers.authorization.split(' ');
+            const [, accessToken] = authToken.split(' ');
             return {
                 token: accessToken,
                 refresh_token: args.refresh_token,
