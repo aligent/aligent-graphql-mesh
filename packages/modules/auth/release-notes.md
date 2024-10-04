@@ -16,7 +16,7 @@ This module can then be agnostic of the login implementation required for a spec
 
 #### Pull requests
 
-- TBA
+- https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/457
 
 ## auth-module-0.0.4
 
