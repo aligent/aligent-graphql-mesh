@@ -145,7 +145,7 @@ export class AuthService {
     }
 
     /**
-     * Remove all user authentication sessions
+     * Remove all user authentication sessions for one customer
      *
      * @param customerId
      * @returns
