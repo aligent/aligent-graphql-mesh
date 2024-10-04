@@ -15,12 +15,7 @@
             },
             "dependsOn": [
                 {
-                    "projects": [
-                        "bigcommerce-resolvers",
-                        "bigcommerce-operations",
-                        "utils",
-                        "aligent-auth-module"
-                    ],
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations", "utils"],
                     "target": "build"
                 }
             ]
@@ -41,12 +36,7 @@
             },
             "dependsOn": [
                 {
-                    "projects": [
-                        "bigcommerce-resolvers",
-                        "bigcommerce-operations",
-                        "utils",
-                        "aligent-auth-module"
-                    ],
+                    "projects": ["bigcommerce-resolvers", "bigcommerce-operations", "utils"],
                     "target": "build"
                 }
             ]
