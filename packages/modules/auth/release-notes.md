@@ -1,6 +1,24 @@
 # Auth Module Release Notes
 
-## auth-module-1.0.4
+## auth-module 1.0.0
+
+### Overview of changes
+
+Removes BigCommerce specific login logic from `generate-customer-token` and instead defines
+a stub LoginService class. This service must be extended by other modules and provided via dependency injection.
+
+This module can then be agnostic of the login implementation required for a specific client/platofmr and handle only the logic required for generating, refreshing, caching, and revoking tokens.
+
+#### Tickets
+
+- MI-73: Refactor Authentication GraphQL Module so it isn't tied to the BigCommerce Module
+  - https://aligent.atlassian.net/browse/MI-73
+
+#### Pull requests
+
+- TBA
+
+## auth-module-0.0.4
 
 ### Overview of changes
 
