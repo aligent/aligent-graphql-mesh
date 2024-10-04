@@ -10,8 +10,10 @@ declare global {
     }
 }
 
+export type CustomerId = number | string;
+
 export type decodedAccessToken = {
-    bc_customer_id: number;
+    customer_id: CustomerId;
     exp: number;
     refresh_expiry: number;
 };

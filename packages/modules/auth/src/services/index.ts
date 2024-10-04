@@ -2,7 +2,7 @@ import { Provider, Scope } from 'graphql-modules';
 import { ModuleConfigToken } from '../providers';
 import { AuthService } from './auth';
 import { AuthTokenService } from './auth-tokens';
-export * from './login';
+export * from './login-service';
 
 export * from './auth';
 export * from './auth-tokens';

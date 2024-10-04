@@ -36,17 +36,14 @@ export const refreshCustomerTokenResolver = {
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const { bc_customer_id } = getDecodedAuthToken(authToken) || {};
+        const { customer_id } = getDecodedAuthToken(authToken) || {};
 
-        const usersAuthDataInDb = await authService.getUserAuth(
-            String(bc_customer_id),
-            refresh_token
-        );
+        const usersAuthDataInDb = await authService.getUserAuth(String(customer_id), refresh_token);
 
         /* Remove the users refresh token from the DB as from this point onwards
          * we will either be ending the users session or generating new tokens */
         const removeUserAuthResponse = await authService.removeUserAuth(
-            String(bc_customer_id),
+            String(customer_id),
             refresh_token
         );
 
@@ -72,9 +69,9 @@ export const refreshCustomerTokenResolver = {
          * token if it's truly valid.
          */
         if (usersDbRefreshToken !== getHashedRefreshToken(refresh_token)) {
-            if (bc_customer_id) {
+            if (customer_id) {
                 /* Remove all user auth items from the DB which are associated to the user id */
-                await authService.removeAllUserAuthItems(bc_customer_id);
+                await authService.removeAllUserAuthItems(customer_id);
             }
 
             throw new GraphqlError(`A matching refresh token couldn't be found`, 'authorization');
@@ -95,7 +92,7 @@ export const refreshCustomerTokenResolver = {
 
             /* Update the newly generated refresh token in the database*/
             await authService.updateUserAuth(
-                String(bc_customer_id),
+                String(customer_id),
                 newRefreshToken,
                 newRefreshTokenExpiry
             );

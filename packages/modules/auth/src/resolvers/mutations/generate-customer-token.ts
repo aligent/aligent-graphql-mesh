@@ -1,7 +1,7 @@
 import { MutationResolvers } from '@aligent/auth-resolvers';
 import { GraphqlError } from '@aligent/utils';
 import { AuthService, AuthTokenService } from '../../services';
-import { LoginService } from '../../services/login';
+import { LoginService } from '../../services/login-service';
 
 export const generateCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {

@@ -22,7 +22,7 @@ export const revokeCustomerTokenResolver = {
             throw new GraphqlError('There was an issue decoding the access token', 'authorization');
         }
 
-        const { bc_customer_id } = decodedAuthToken;
+        const { customer_id } = decodedAuthToken;
 
         /* The "getVerifiedRefreshToken" recreates the old refresh token. If this can't be done
          * then the refresh token may not belong to the user. */
@@ -37,7 +37,7 @@ export const revokeCustomerTokenResolver = {
 
         const authService: AuthService = context.injector.get(AuthService);
 
-        const response = await authService.removeUserAuth(bc_customer_id, refresh_token);
+        const response = await authService.removeUserAuth(customer_id, refresh_token);
 
         if (response instanceof Error) {
             throw new GraphqlError(

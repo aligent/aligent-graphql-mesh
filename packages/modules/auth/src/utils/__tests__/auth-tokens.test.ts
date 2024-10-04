@@ -10,7 +10,7 @@ import {
 import { JWT_AUTH_STATUSES } from '../../constants';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
-const userId = 23;
+const customerId = 23;
 
 const {
     ACCESS_VALID_REFRESH_VALID,
@@ -31,7 +31,7 @@ describe('TimeZone', () => {
 
 describe('Json web token errors', () => {
     const tokenExpiry = getTokenExpiryFromMinutes(-5);
-    const expiredToken = createAccessJWT(userId, tokenExpiry, tokenExpiry);
+    const expiredToken = createAccessJWT(customerId, tokenExpiry, tokenExpiry);
 
     it(`Throws an "invalid signature" error when verifying a malformed JWT`, () => {
         const malformedJwt = 'ae6r4h16sat56th';
@@ -53,7 +53,7 @@ describe('Json web token errors', () => {
 
     it(`Throws an "invalid signature" error for a JWT with a signature other than the one being used`, () => {
         const tokenWithDifferentSignature = sign(
-            { bc_customer_id: userId, exp: tokenExpiry, refresh_expiry: tokenExpiry },
+            { customer_id: customerId, exp: tokenExpiry, refresh_expiry: tokenExpiry },
             'different_signature'
         );
         const tokenStatus = getVerifiedAccessToken(tokenWithDifferentSignature) as {
@@ -76,8 +76,8 @@ describe('JWT statues', () => {
     it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when the auth token is missing the bearer string`, () => {
         const tokenExp = getTokenExpiryFromMinutes(-5);
 
-        const expiredToken = createAccessJWT(userId, tokenExp, tokenExp);
-        const expiredRefreshToken = createRefreshToken(userId, tokenExp);
+        const expiredToken = createAccessJWT(customerId, tokenExp, tokenExp);
+        const expiredRefreshToken = createRefreshToken(customerId, tokenExp);
 
         const tokenStatus = getAuthTokenStatus(expiredToken, expiredRefreshToken);
 
@@ -87,8 +87,8 @@ describe('JWT statues', () => {
     it(`Returns a "ACCESS_INVALID_REFRESH_INVALID" status when both access and refresh tokens are invalid`, () => {
         const tokenExp = getTokenExpiryFromMinutes(-5);
 
-        const expiredToken = createAccessJWT(userId, tokenExp, tokenExp);
-        const expiredRefreshToken = createRefreshToken(userId, tokenExp);
+        const expiredToken = createAccessJWT(customerId, tokenExp, tokenExp);
+        const expiredRefreshToken = createRefreshToken(customerId, tokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${expiredToken}`, expiredRefreshToken);
 
@@ -99,8 +99,8 @@ describe('JWT statues', () => {
         const accessTokenExp = getTokenExpiryFromMinutes(5);
         const refreshTokenExp = getTokenExpiryFromMinutes(-5);
 
-        const validAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const expiredRefreshToken = createRefreshToken(userId, refreshTokenExp);
+        const validAccessToken = createAccessJWT(customerId, accessTokenExp, refreshTokenExp);
+        const expiredRefreshToken = createRefreshToken(customerId, refreshTokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${validAccessToken}`, expiredRefreshToken);
 
@@ -113,7 +113,7 @@ describe('JWT statues', () => {
 
         const missingRefreshToken = '';
         const validAccessToken = sign(
-            { bc_customer_id: userId, exp: accessTokenExp, refresh_expiry: refreshTokenExp },
+            { customer_id: customerId, exp: accessTokenExp, refresh_expiry: refreshTokenExp },
             JWT_PRIVATE_KEY
         );
 
@@ -125,8 +125,8 @@ describe('JWT statues', () => {
         const accessTokenExp = getTokenExpiryFromMinutes(-5);
         const refreshTokenExp = getTokenExpiryFromMinutes(5);
 
-        const invalidAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const validRefreshToken = createRefreshToken(userId, accessTokenExp);
+        const invalidAccessToken = createAccessJWT(customerId, accessTokenExp, refreshTokenExp);
+        const validRefreshToken = createRefreshToken(customerId, accessTokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
         expect(tokenStatus).toEqual(ACCESS_INVALID_REFRESH_VALID);
@@ -136,8 +136,8 @@ describe('JWT statues', () => {
         const accessTokenExp = getTokenExpiryFromMinutes(5);
         const refreshTokenExp = getTokenExpiryFromMinutes(5);
 
-        const invalidAccessToken = createAccessJWT(userId, accessTokenExp, refreshTokenExp);
-        const validRefreshToken = createRefreshToken(userId, refreshTokenExp);
+        const invalidAccessToken = createAccessJWT(customerId, accessTokenExp, refreshTokenExp);
+        const validRefreshToken = createRefreshToken(customerId, refreshTokenExp);
 
         const tokenStatus = getAuthTokenStatus(`Bearer ${invalidAccessToken}`, validRefreshToken);
         expect(tokenStatus).toEqual(ACCESS_VALID_REFRESH_VALID);
@@ -146,7 +146,7 @@ describe('JWT statues', () => {
 
 describe('Hashing', () => {
     it("Checks the refresh token to be returned in the request doesn't match the one stored in the DB", () => {
-        const refreshToken = createRefreshToken(userId, 1710905708);
+        const refreshToken = createRefreshToken(customerId, 1710905708);
 
         const hashedTokenForDb = getHashedRefreshToken(refreshToken);
 

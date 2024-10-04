@@ -2,7 +2,7 @@ import { decode, JsonWebTokenError, sign, TokenExpiredError, verify } from 'json
 import { pbkdf2Sync } from 'crypto';
 import { JWT_AUTH_STATUSES } from '../constants';
 import { getTtlIsExpired } from './index';
-import { decodedAccessToken } from '../types';
+import { CustomerId, decodedAccessToken } from '../types';
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY as string;
 
@@ -30,14 +30,14 @@ export const getTokenExpiryFromMinutes = (minutes: number) => {
 
 /**
  * Creates an access token which is used for user authentication
- * @param userId
+ * @param customerId
  * @param exp
  * @param refreshExpiry
  */
-export const createAccessJWT = (userId: number, exp: number, refreshExpiry: number) => {
+export const createAccessJWT = (customerId: CustomerId, exp: number, refreshExpiry: number) => {
     return sign(
         {
-            bc_customer_id: userId,
+            customer_id: customerId,
             exp,
             refresh_expiry: refreshExpiry,
         },
@@ -47,12 +47,12 @@ export const createAccessJWT = (userId: number, exp: number, refreshExpiry: numb
 
 /**
  * Creates a refresh token used to ask for a new access token
- * @param userId
+ * @param customerId
  * @param accessTokenExpiry - used to make the refresh token unique when refreshed
  */
-export const createRefreshToken = (userId: number, accessTokenExpiry: number) => {
+export const createRefreshToken = (customerId: CustomerId, accessTokenExpiry: number) => {
     return pbkdf2Sync(
-        `${userId}${accessTokenExpiry}`,
+        `${customerId}${accessTokenExpiry}`,
         JWT_PRIVATE_KEY,
         10000,
         64,
@@ -95,13 +95,13 @@ export const getVerifiedRefreshToken = (
     decodedAccessToken: decodedAccessToken,
     oldRefreshToken: string
 ) => {
-    const { bc_customer_id, exp, refresh_expiry } = decodedAccessToken;
+    const { customer_id, exp, refresh_expiry } = decodedAccessToken;
 
     if (!oldRefreshToken) {
         return Error("refresh token doesn't exist");
     }
 
-    const recreatedRefreshToken = createRefreshToken(bc_customer_id, exp);
+    const recreatedRefreshToken = createRefreshToken(customer_id, exp);
 
     if (recreatedRefreshToken !== oldRefreshToken) {
         return Error("recreated refresh token doesn't match actual token");
