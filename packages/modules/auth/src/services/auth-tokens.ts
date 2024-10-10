@@ -6,7 +6,7 @@ import {
     REFRESH_TOKEN_EXPIRY_IN_MINUTES__NON_EXTENDED,
 } from '../constants';
 import { GraphqlError } from '@aligent/utils';
-import { decodedAccessToken } from '../types';
+import { CustomerId, decodedAccessToken } from '../types';
 import { forwardRef, Inject, Injectable } from 'graphql-modules';
 import { ModuleConfigToken } from '../providers';
 import { ModuleConfig } from '../index';
@@ -18,6 +18,9 @@ import {
     getTokenExpiryFromMinutes,
 } from '../utils';
 
+/**
+ * Service for generating JWT authentication and refresh tokens
+ */
 @Injectable({
     global: true,
 })
@@ -47,7 +50,7 @@ export class AuthTokenService {
     /**
      * A check to ensure the defined expiry times are not less
      */
-    verifyExpiryTimes() {
+    protected verifyExpiryTimes() {
         if (this.accessTokenExpiryInMinutes >= this.nonExtendRefreshTokenExpiryInMinutes) {
             throw new GraphqlError(
                 `"accessTokenExpiryInMinutes" needs to be less than "nonExtendRefreshTokenExpiryInMinutes"`,
@@ -66,11 +69,11 @@ export class AuthTokenService {
     /**
      * Gets an access token used for user authentication and refresh token to ask
      * for a new access token
-     * @param userId
+     * @param customerId
      * @param isExtendedLogin
      */
     generateLoginTokens(
-        userId: number,
+        customerId: CustomerId,
         isExtendedLogin?: boolean
     ): { accessToken: string; refreshToken: string; refreshTokenExpiry: number } {
         const accessTokenExpiry = getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
@@ -81,10 +84,10 @@ export class AuthTokenService {
                 : this.nonExtendRefreshTokenExpiryInMinutes
         );
 
-        const refreshToken = createRefreshToken(userId, accessTokenExpiry);
+        const refreshToken = createRefreshToken(customerId, accessTokenExpiry);
 
         return {
-            accessToken: createAccessJWT(userId, accessTokenExpiry, refreshTokenExpiry),
+            accessToken: createAccessJWT(customerId, accessTokenExpiry, refreshTokenExpiry),
             refreshToken,
             refreshTokenExpiry,
         };
@@ -142,7 +145,7 @@ export class AuthTokenService {
 
         const decodedAccessToken = decode(accessToken) as decodedAccessToken;
 
-        const { bc_customer_id, refresh_expiry } = decodedAccessToken;
+        const { customer_id, refresh_expiry } = decodedAccessToken;
 
         const currentTimeStamp = getCurrentTimeStamp();
         const accessTokenExpiry = getTokenExpiryFromMinutes(this.accessTokenExpiryInMinutes);
@@ -155,12 +158,8 @@ export class AuthTokenService {
             throw new GraphqlError("Refresh tokens couldn't be generated", 'authorization');
         }
 
-        const newAccessToken = createAccessJWT(
-            bc_customer_id,
-            accessTokenExpiry,
-            refreshTokenExpiry
-        );
-        const newRefreshToken = createRefreshToken(bc_customer_id, accessTokenExpiry);
+        const newAccessToken = createAccessJWT(customer_id, accessTokenExpiry, refreshTokenExpiry);
+        const newRefreshToken = createRefreshToken(customer_id, accessTokenExpiry);
 
         return {
             accessToken: newAccessToken,

@@ -12,6 +12,7 @@ import { chunk } from 'lodash';
 import {
     BatchRemoveItems,
     BatchWriteItemResponse,
+    CustomerId,
     GetUserAuthResponse,
     RemoveUserAuthResponse,
     UpdateUserAuthResponse,
@@ -23,6 +24,9 @@ import { BatchWriteItemCommandOutput } from '@aws-sdk/client-dynamodb/dist-types
 
 const BATCH_WRITE_LIMIT = 25;
 
+/**
+ * Repository service for user authentication details
+ */
 @Injectable({
     global: true,
 })
@@ -38,14 +42,21 @@ export class AuthService {
         });
     }
 
-    async getUserAuth(userId: string | number, refreshToken: string): GetUserAuthResponse {
+    /**
+     * Get an existing user authentication session
+     *
+     * @param customerId
+     * @param refreshToken
+     * @returns
+     */
+    async getUserAuth(customerId: CustomerId, refreshToken: string): GetUserAuthResponse {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new GetItemCommand({
             TableName: this.config.dynamoDbAuthTable,
             Key: {
                 customer_id: {
-                    S: String(userId),
+                    S: String(customerId),
                 },
                 refresh_token_hash: {
                     S: hashedRefreshToken,
@@ -61,8 +72,16 @@ export class AuthService {
         return response;
     }
 
+    /**
+     * Upsert a user authentication session with a time to live
+     *
+     * @param customerId
+     * @param refreshToken
+     * @param refreshTokenTTl
+     * @returns
+     */
     async updateUserAuth(
-        userId: string | number,
+        customerId: CustomerId,
         refreshToken: string,
         refreshTokenTTl: number | string
     ): UpdateUserAuthResponse {
@@ -72,7 +91,7 @@ export class AuthService {
             TableName: this.config.dynamoDbAuthTable,
             Item: {
                 customer_id: {
-                    S: String(userId),
+                    S: String(customerId),
                 },
                 refresh_token_hash: {
                     S: hashedRefreshToken,
@@ -92,14 +111,21 @@ export class AuthService {
         return response;
     }
 
-    async removeUserAuth(userId: string | number, refreshToken: string): RemoveUserAuthResponse {
+    /**
+     * Remove a user authentication session
+     *
+     * @param customerId
+     * @param refreshToken
+     * @returns
+     */
+    async removeUserAuth(customerId: CustomerId, refreshToken: string): RemoveUserAuthResponse {
         const hashedRefreshToken = getHashedRefreshToken(refreshToken);
 
         const command = new DeleteItemCommand({
             TableName: this.config.dynamoDbAuthTable,
             Key: {
                 customer_id: {
-                    S: String(userId),
+                    S: String(customerId),
                 },
                 refresh_token_hash: {
                     S: hashedRefreshToken,
@@ -118,8 +144,14 @@ export class AuthService {
         return response;
     }
 
-    async removeAllUserAuthItems(userId: string | number): Promise<{ success: boolean }> {
-        const queryItemsResponse = await this.queryAuthItemsById(userId);
+    /**
+     * Remove all user authentication sessions for one customer
+     *
+     * @param customerId
+     * @returns
+     */
+    async removeAllUserAuthItems(customerId: CustomerId): Promise<{ success: boolean }> {
+        const queryItemsResponse = await this.queryAuthItemsById(customerId);
 
         if (queryItemsResponse instanceof Error) {
             console.error(queryItemsResponse);
@@ -136,7 +168,7 @@ export class AuthService {
                     DeleteRequest: {
                         Key: {
                             customer_id: {
-                                S: String(userId),
+                                S: String(customerId),
                             },
                             refresh_token_hash: {
                                 S: item.refresh_token_hash.S,
@@ -181,12 +213,18 @@ export class AuthService {
         return { success: true };
     }
 
-    async queryAuthItemsById(userId: string | number): Promise<QueryCommandOutput | Error> {
+    /**
+     * Get all user authentication sessions for a given user id
+     *
+     * @param customerId
+     * @returns
+     */
+    async queryAuthItemsById(customerId: CustomerId): Promise<QueryCommandOutput | Error> {
         const queryInput = new QueryCommand({
             TableName: this.config.dynamoDbAuthTable,
             KeyConditionExpression: `customer_id = :partitionKeyValue`,
             ExpressionAttributeValues: {
-                ':partitionKeyValue': { S: String(userId) },
+                ':partitionKeyValue': { S: String(customerId) },
             },
         });
 

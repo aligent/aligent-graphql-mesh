@@ -2,9 +2,9 @@ import { Provider, Scope } from 'graphql-modules';
 import { ModuleConfigToken } from '../providers';
 import { AuthService } from './auth';
 import { AuthTokenService } from './auth-tokens';
-
 export * from './auth';
 export * from './auth-tokens';
+export * from './login-service';
 
 export const getServices = (): Array<Provider> => {
     return [

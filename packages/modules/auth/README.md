@@ -1,9 +1,9 @@
-# authentication GraphQl Module
+# Authentication GraphQl Module
 
-A module allowing users to extend their authenticated login session without the need to reenter
+A GraphQL module allowing users to extend their authenticated login session without the need to reenter
 and email or password.
 
-### How to add to client modules
+## Adding to a GraphQL Modules Application
 
 - Go to the application.ts file located in the corresponding `packages/mesh/<client_project>/src/application.ts` file.
 - Add the `createAuthModule` from `packages/modules/auth/src/index.ts` to the modules array with any
@@ -40,8 +40,45 @@ export default createApplication({
   - Note: "AWS_ACCESS_KEY_ID" and "AWS_SECRET_ACCESS_KEY" env vars need to be defined in the .env file. AWS do the
     rest of the work to ensure the var values get to AWS sdk. "credentials" variables get picked up by the AWS skd
     performing process.env behind the scenes and why they don't directly need to be passed along.
+- Provide a platform specific override of the `LoginService` for your project. See [Providing the LoginService](#providing-the-loginservice) for more details.
 
-#### Auth Query/Mutations
+### Providing the LoginService
+
+The `LoginService` is a base service intended to be extended by your project to implement the actual login logic for your backend platform. It provides a structure for logging a user into the primary backend platform.
+
+To use the `LoginService`, you need to create a subclass that implements the `login` method with your specific logic. Here's an example of how you can extend the `LoginService`:
+
+```typescript
+import { LoginService } from '@aligent/auth-module';
+import { ClientSdk } from 'your-sdk-path';
+
+class ClientLoginService extends LoginService {
+  constructor(private sdk: ClientSdk) {
+    super();
+  }
+
+  override async login(args: LoginCredentials) {
+    // Implement your login logic here
+    return await this.sdk.login(args);
+  }
+}
+
+// Register the service in your module
+createModule({
+  providers: [
+    {
+      provide: LoginService,
+      useClass: ClientLoginService,
+    },
+  ],
+});
+```
+
+The override will be used by the `generateCustomerToken` mutation to log in to the platform prior to generating a JWT.
+
+For more details, you can view the [LoginService source file](../../src/services/login-service.ts).
+
+## Supported GraphQL Operations
 
 - `generateCustomerToken`
   - Called to verify a users credentials and if valid returns authentication tokens allowing access
@@ -50,6 +87,7 @@ export default createApplication({
     `remember_me` to `true` tells our logic to keep track of an extended refresh token
     expiry time (ttl). The `refresh_token` gets stored in the dynamo database, so it can be
     compared against when validating a user sessions.
+  - **This mutation requires the a platform-specific override of the `LoginService` to be provided by another module in order to function**. See [Providing the LoginService](#providing-the-loginservice).
 - `refreshCustomerToken`
   - Intended to be called after a user session has expired due to a users `access_token` becoming
     invalid. This mutation is responsible for determining if new tokens get generated for a user to
@@ -73,14 +111,7 @@ export default createApplication({
   - Directly talks to the Dynamo DB "authentication-table" via the mesh to remove an Item. This
     is only available for local development environments and can't be available to the public.
 
-#### Jest testing
-
-Jest has been configured to use UTC time. To avoid DateTime timezone issues between the bitbucket tests
-and local tests provide a UTC formatted date time string to the new Date constructor e.g. `new Date('2024-03-01T09:16:00Z'))`.
-Additionally the `.jest/setEnvVars.js` file mocks `process.env.TZ = 'UTC';` to help enforce this is our
-tests.
-
-#### Validation states
+### Validation states
 
 When verifying the access and refresh tokens there are four states we work by. You can find them
 in `packages/modules/auth/src/constants.ts`. These states are:
@@ -98,3 +129,10 @@ in `packages/modules/auth/src/constants.ts`. These states are:
     been manipulated or expired.
 - `ACCESS_INVALID_REFRESH_INVALID`
   - Both access and refresh token is valid. These haven't expired or been manipulated.
+
+## Jest testing
+
+Jest has been configured to use UTC time. To avoid DateTime timezone issues between the bitbucket tests
+and local tests provide a UTC formatted date time string to the new Date constructor e.g. `new Date('2024-03-01T09:16:00Z'))`.
+Additionally the `.jest/setEnvVars.js` file mocks `process.env.TZ = 'UTC';` to help enforce this is our
+tests.

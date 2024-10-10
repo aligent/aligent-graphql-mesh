@@ -4,7 +4,7 @@ import { getFormattedUTCDate, getCurrentTimeStamp, getUTCTimeStamp } from '../..
 import { decodedAccessToken } from '../../types';
 import { AuthTokenService } from '../../services';
 
-const userId = 23;
+const customerId = 23;
 
 const mockContextConfig = {
     dynamoDbRegion: 'mock-region',
@@ -73,7 +73,7 @@ describe(`Token TTL's`, () => {
         advanceTo(new Date('2024-03-01T09:00:00Z'));
 
         const isExtendedLogin = false;
-        const { accessToken } = authTokenService.generateLoginTokens(userId, isExtendedLogin);
+        const { accessToken } = authTokenService.generateLoginTokens(customerId, isExtendedLogin);
         const { exp, refresh_expiry } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(exp)).toBe('1/3/2024, 9:14');
@@ -84,7 +84,7 @@ describe(`Token TTL's`, () => {
         advanceTo(new Date('2024-03-01T09:00:00Z'));
 
         const isExtendedLogin = true;
-        const { accessToken } = authTokenService.generateLoginTokens(userId, isExtendedLogin);
+        const { accessToken } = authTokenService.generateLoginTokens(customerId, isExtendedLogin);
         const { exp, refresh_expiry } = decode(accessToken) as decodedAccessToken;
 
         expect(getFormattedUTCDate(exp)).toBe('1/3/2024, 9:14');
@@ -101,7 +101,7 @@ describe(`Token TTL's`, () => {
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
-        } = authTokenService.generateLoginTokens(userId, false);
+        } = authTokenService.generateLoginTokens(customerId, false);
 
         // Advance the current time by 15 minutes
         advanceTo(new Date('2024-03-01T09:14:00Z'));
@@ -128,7 +128,7 @@ describe(`Token TTL's`, () => {
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
-        } = authTokenService.generateLoginTokens(userId, true);
+        } = authTokenService.generateLoginTokens(customerId, true);
 
         const { refresh_expiry: loginRefreshTokenExp } = decode(
             loginAccessToken
@@ -162,7 +162,7 @@ describe(`Token TTL's`, () => {
 
         const {
             accessToken: loginAccessToken, // "exp" will be 15 minutes after the "currentTime"
-        } = authTokenService.generateLoginTokens(userId, true);
+        } = authTokenService.generateLoginTokens(customerId, true);
 
         /* Advance the time by 30 day when the extended session will expire */
         advanceTo(new Date('2024-03-31T09:00:00Z'));
