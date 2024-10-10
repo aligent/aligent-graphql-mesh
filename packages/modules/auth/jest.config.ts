@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: 'aligent-auth-module',
+    displayName: 'auth-module',
     preset: '../../../jest.preset.js',
     testEnvironment: 'node',
     transform: {
