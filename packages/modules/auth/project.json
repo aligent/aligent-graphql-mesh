@@ -1,5 +1,5 @@
 {
-    "name": "aligent-auth-module",
+    "name": "auth-module",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "projectType": "library",
     "sourceRoot": "packages/modules/auth/src",
@@ -42,7 +42,7 @@
             ]
         },
         "publish": {
-            "command": "node tools/scripts/publish.mjs aligent-auth-module {args.ver} {args.tag}",
+            "command": "node tools/scripts/publish.mjs auth-module {args.ver} {args.tag}",
             "dependsOn": ["build"]
         },
         "lint": {
