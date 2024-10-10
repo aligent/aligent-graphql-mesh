@@ -1,6 +1,5 @@
 {
   "name": "@aligent/auth-module",
-  "version": "0.0.4",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.535.0",
     "aws-xray-sdk": "^3.5.4",
