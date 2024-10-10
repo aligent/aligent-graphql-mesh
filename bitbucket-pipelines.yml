@@ -134,6 +134,9 @@ pipelines:
     'maintenance-mode-plugin-*.*.*':
       - step: *install
       - step: *publish
+    'auth-module-*.*.*':
+      - step: *install
+      - step: *publish
 
   branches:
     main:
