@@ -13,12 +13,7 @@
                     }
                 ]
             },
-            "dependsOn": [
-                {
-                    "projects": ["auth-resolvers"],
-                    "target": "build"
-                }
-            ]
+            "dependsOn": ["^codegen"]
         },
         "build": {
             "executor": "@nx/js:tsc",
@@ -33,13 +28,7 @@
                     "packages/modules/auth/src/schema/*.graphql"
                 ],
                 "external": "none"
-            },
-            "dependsOn": [
-                {
-                    "projects": ["auth-resolvers"],
-                    "target": "build"
-                }
-            ]
+            }
         },
         "publish": {
             "command": "node tools/scripts/publish.mjs auth-module {args.ver} {args.tag}",
