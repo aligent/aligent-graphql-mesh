@@ -14,10 +14,6 @@ This module can then be agnostic of the login implementation required for a spec
 - MI-73: Refactor Authentication GraphQL Module so it isn't tied to the BigCommerce Module
   - https://aligent.atlassian.net/browse/MI-73
 
-#### Pull requests
-
-- https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/457
-
 ## auth-module-0.0.4
 
 ### Overview of changes
@@ -34,7 +30,3 @@ a refresh token has fully expired.
   - https://aligent.atlassian.net/browse/MI-17
 - AM-1554: [QA] The user's login session is getting expired (after 15 minutes) during the time when user is still accessing the website
   - https://matsuyaginza.atlassian.net/browse/AM-1554
-
-#### Pull requests
-
-- https://bitbucket.org/aligent/aligent-graphql-mesh/pull-requests/446
