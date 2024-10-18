@@ -36,7 +36,6 @@ export class BigCommerceGraphQlClient {
     @ExecutionContext() private context: ExecutionContext;
 
     constructor(@Inject(forwardRef(() => ModuleConfig)) private config: BigCommerceModuleConfig) {
-        console.log('Constructing bigcomm client');
         const timeout = {
             milliseconds: 10_000,
             message: 'BigCommerce GraphQL request timed out',
