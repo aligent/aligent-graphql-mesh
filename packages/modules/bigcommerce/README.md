@@ -60,12 +60,12 @@ export class SomeService {
 Fetching the sdk in a resolver:
 
 ```typescript
-import { BigCommerceSdk } from '../../providers';
+import { BigCommerceGraphQlClient } from '../../providers/clients';
 import { Sdk } from '@aligent/bigcommerce-operations';
 
 export const someResolver: QueryResolvers['a-resolver-type'] = {
   resolve: async (_root, _args, context, _info) => {
-    const sdk: Sdk = context.injector.get(BigCommerceSdk);
+    const sdk: Sdk = context.injector.get(BigCommerceGraphQlClient);
 
     const response = sdk.login({
       email,
