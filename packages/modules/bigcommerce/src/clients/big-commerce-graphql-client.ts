@@ -3,7 +3,7 @@ import * as xray from 'aws-xray-sdk';
 import axios, { AxiosRequestConfig } from 'axios';
 import { print } from 'graphql';
 import { ExecutionContext, Inject, Injectable, forwardRef } from 'graphql-modules';
-import { ModuleConfig } from '..';
+import { getBcCustomerId, ModuleConfig } from '..';
 import { BigCommerceModuleConfig, retrieveCustomerImpersonationTokenFromCache } from '../';
 import { getSdk } from '@aligent/bigcommerce-operations';
 import { logAndThrowError } from '@aligent/utils';
@@ -66,7 +66,12 @@ export class BigCommerceGraphQlClient {
             try {
                 const customerImpersonationToken =
                     await retrieveCustomerImpersonationTokenFromCache(this.context);
-                const authHeaders = { Authorization: `Bearer ${customerImpersonationToken}` };
+                const bcCustomerId = getBcCustomerId(this.context);
+
+                const authHeaders = {
+                    Authorization: `Bearer ${customerImpersonationToken}`,
+                    ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
+                };
 
                 const data = {
                     query: print(doc),
