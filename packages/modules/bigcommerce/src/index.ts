@@ -34,4 +34,5 @@ export * from './apis/rest';
 export * from './utils';
 
 // Export Globally accessible DI Tokens so other modules can use them
-export { ModuleConfig, BigCommerceSdk } from './providers';
+export { ModuleConfig } from './providers';
+export { BigCommerceGraphQlClient } from './clients/';
