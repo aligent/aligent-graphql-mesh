@@ -1,0 +1,26 @@
+name: OWASP Dependency Check
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
+  workflow_dispatch:  # Allows manual trigger from the GitHub Actions tab
+
+jobs:
+  owasp_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: OWASP Dependency Check
+        uses: jeremylong/gh-dependency-check-action@v4
+        with:
+          scanPath: './yarn.lock'
+          suppressionFile: './suppression.xml'
+          failOnCVSS: 1  # Fail if CVSS score > 1
+
+      - name: Upload OWASP report
+        uses: actions/upload-artifact@v3
+        with:
+          name: owasp-dependency-check-report
+          path: dependency-check-report.html
