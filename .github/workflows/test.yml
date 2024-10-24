@@ -1,0 +1,64 @@
+name: Test on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - '**' # Trigger on all branches
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+
+jobs:
+  test:
+    name: ⚙️ Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Fetch target
+        run: git fetch origin ${{ github.event.pull_request.base.ref }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install
+        run: yarn install
+
+      - name: Run Tests
+        run: |
+          FORCE_COLOR=true
+          DESTINATION_BRANCH=origin/${{ github.event.pull_request.base.ref }}  # Set branch
+          yarn nx affected:test --base=$DESTINATION_BRANCH --ci --code-coverage --parallel --max-parallel=3
+
+  code-quality:
+    name: 🕵️‍♀️ Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Fetch target
+        run: git fetch origin ${{ github.event.pull_request.base.ref }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install
+        run: yarn install
+
+      - name: Code Quality Check
+        run: |
+          FORCE_COLOR=true
+          DESTINATION_BRANCH=origin/${{ github.event.pull_request.base.ref }}  # Set branch
+          yarn nx affected:lint --base=$DESTINATION_BRANCH --parallel --max-parallel=3
+          yarn nx format:check --base=$DESTINATION_BRANCH --parallel --max-parallel=3
+          yarn nx affected -t check-types --base=$DESTINATION_BRANCH --parallel --max-parallel=3
