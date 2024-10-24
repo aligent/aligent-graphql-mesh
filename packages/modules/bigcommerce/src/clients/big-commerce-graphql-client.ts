@@ -78,10 +78,6 @@ export class BigCommerceGraphQlClient {
                 const customerImpersonationToken =
                     await retrieveCustomerImpersonationTokenFromCache(this.context);
 
-                const authHeaders = {
-                    Authorization: `Bearer ${customerImpersonationToken}`,
-                };
-
                 const data = {
                     query: print(doc),
                     variables,
@@ -91,8 +87,8 @@ export class BigCommerceGraphQlClient {
                     signal: AbortSignal.timeout(connectionTimeout),
                     ...options,
                     headers: {
+                        Authorization: `Bearer ${customerImpersonationToken}`,
                         ...options?.headers,
-                        ...authHeaders,
                     },
                 };
 
