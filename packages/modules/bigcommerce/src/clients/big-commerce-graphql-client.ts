@@ -3,7 +3,7 @@ import * as xray from 'aws-xray-sdk';
 import axios, { AxiosRequestConfig } from 'axios';
 import { print } from 'graphql';
 import { ExecutionContext, Inject, Injectable, forwardRef } from 'graphql-modules';
-import { getBcCustomerId, ModuleConfig } from '..';
+import { ModuleConfig } from '..';
 import { BigCommerceModuleConfig, retrieveCustomerImpersonationTokenFromCache } from '../';
 import { getSdk } from '@aligent/bigcommerce-operations';
 import { logAndThrowError } from '@aligent/utils';
@@ -24,11 +24,22 @@ export interface BigCommerceGraphQlClient extends ReturnType<typeof getSdk> {}
  * This abstracts the axios and xray specific implementation details, and also
  * automatically injects the customerImpersonationToken from the request context
  *
- * @example
+ * @example Basic use for making a GraphQL Request
+ * ```ts
  * import { BigCommerceGraphQlClient } from '../../clients/big-commerce-graphql-client';
  *
  * const bigCommerce = context.injector.get(BigCommerceGraphQlClient);
  * const response = await bigCommerce.getBrands(variables);
+ * ```
+ *
+ * @example Conditionally including the Customer Id for operations that may require it
+ * ```ts
+ * import { BigCommerceGraphQlClient } from '../../clients/big-commerce-graphql-client';
+ *
+ * const bigCommerce = context.injector.get(BigCommerceGraphQlClient);
+ * const bcCustomerId = getBcCustomerId(context);
+ * const response = await bigCommerce.checkout(variables, { headers: { ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }) }});
+ * ```
  */
 @Injectable({ global: true })
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -66,11 +77,9 @@ export class BigCommerceGraphQlClient {
             try {
                 const customerImpersonationToken =
                     await retrieveCustomerImpersonationTokenFromCache(this.context);
-                const bcCustomerId = getBcCustomerId(this.context);
 
                 const authHeaders = {
                     Authorization: `Bearer ${customerImpersonationToken}`,
-                    ...(bcCustomerId && { 'x-bc-customer-id': bcCustomerId }),
                 };
 
                 const data = {
