@@ -70,15 +70,6 @@ definitions:
         artifacts:
           - '*.tar.gz'
 
-    - step: &publish
-        name: 📦 Publish package to the Aligent Repository
-        script:
-          - VERSION=$(echo $BITBUCKET_TAG | sed 's/^.*[A-Za-z]-//g')
-          - PACKAGE=$(echo $BITBUCKET_TAG | sed "s/-${VERSION}//g")
-          - echo "Publishing $PACKAGE @ $VERSION"
-          - npm config set //npm.corp.aligent.consulting/:_authToken $NPM_PUBLISH_TOKEN
-          - yarn nx publish $PACKAGE --ver=$VERSION --tag=latest
-
     - step: &deploy
         name: 📦 Push to ECR
         services:
@@ -124,20 +115,8 @@ pipelines:
           - step: *build-all-containers
           - step: *code-quality
           - step: *test
-  tags:
-    'bigcommerce-graphql-module-*.*.*':
-      - step: *install
-      - step: *publish
-    'orocommerce-graphql-module-*.*.*':
-      - step: *install
-      - step: *publish
-    'maintenance-mode-plugin-*.*.*':
-      - step: *install
-      - step: *publish
-    'auth-module-*.*.*':
-      - step: *install
-      - step: *publish
 
+  # Customise this depending on requirements
   branches:
     main:
       - step: *install
