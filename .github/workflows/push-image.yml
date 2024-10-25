@@ -1,0 +1,17 @@
+name: Push Image
+
+on:
+  release:
+    types: [published] # Trigger on published release
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 📦 Push to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - run: |
+          docker load --input ${APPLICATION}_latest.tar.gz
+          docker tag ${APPLICATION}:latest ${IMAGE_NAME}:latest
+          docker push ${IMAGE_NAME}:latest

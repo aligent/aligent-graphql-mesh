@@ -66,9 +66,7 @@ jobs:
     name: 👷 Build
     strategy:
       matrix:
-        application: ['bigcommerce-mesh', 'orocommerce-mesh']
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ./.github/workflows/build.yml
-        with:
-          application: ${{ matrix.application }}
+        application: [bigcommerce-mesh, orocommerce-mesh]
+    uses: ./.github/workflows/build.yml
+    with:
+      application: ${{ matrix.application }}
