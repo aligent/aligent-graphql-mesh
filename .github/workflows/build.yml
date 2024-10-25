@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: 🏭 Build all packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install
+        run: yarn install
+
+      - name: Build all packages
+        run: yarn nx run-many -t build
+
+      - name: Build Docker Container
+        run: yarn nx docker-build ${inputs.application}
+
+      - name: Build and export
+        uses: docker/build-push-action@v6
+        with:
+          tags: ${inputs.application}:latest
+          outputs: type=docker,dest=/tmp/${inputs.application}.tar
