@@ -65,8 +65,10 @@ jobs:
   build:
     name: 👷 Build
     strategy:
+      fail-fast: false
       matrix:
         application: [bigcommerce-mesh, orocommerce-mesh]
     uses: ./.github/workflows/build.yml
     with:
       application: ${{ matrix.application }}
+    secrets: inherit
