@@ -51,6 +51,12 @@ jobs:
           ls -la
           unzip dependency-check
 
+      - name: Load database from cache
+        uses: actions/cache@v4
+        with:
+          path: dependency-check/data/oss_cache
+          key: owasp-database-cache
+
       - name: Run OWASP dependency check
         env:
           OSS_INDEX_USERNAME: ${{ secrets.OSS_INDEX_USERNAME }}
@@ -73,6 +79,12 @@ jobs:
           --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }} \
           --nvdApiKey ${{ secrets.NVD_API_KEY }} \
           --disableOssIndex ${{ inputs.disable_oss_index }}
+
+      - name: Upload database to cache
+        uses: actions/cache@v4
+        with:
+          path: dependency-check/data/oss_cache
+          key: owasp-database-cache
 
       - name: Upload OWASP report
         uses: actions/upload-artifact@v4
