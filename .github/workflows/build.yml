@@ -53,10 +53,10 @@ jobs:
           ORO_STORE_URL: ${{ secrets.ORO_STORE_URL }}
           STORE_HASH: ${{ secrets.STORE_HASH }}
           X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
-        run: yarn nx docker-build ${inputs.application}
+        run: yarn nx docker-build ${{ inputs.application }}
 
       - name: Build and export
         uses: docker/build-push-action@v6
         with:
-          tags: ${inputs.application}:latest
-          outputs: type=docker,dest=/tmp/${inputs.application}.tar
+          tags: ${{ inputs.application }}:latest
+          outputs: type=docker,dest=/tmp/${{ inputs.application }}.tar
