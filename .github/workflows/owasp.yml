@@ -6,9 +6,6 @@ on:
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
   workflow_call:
     inputs:
-      project:
-        required: true
-        type: string
       output:
         default: 'owasp-results'
         type: string
@@ -49,7 +46,7 @@ jobs:
           --format JUNIT
           --format HTML
           --prettyPrint
-          --project ${{ inputs.project }}
+          --project ${{ github.event.repository.name }}
           --enableExperimental
           --out ${{ inputs.output }}
           -s ${{ inputs.scan_path }}

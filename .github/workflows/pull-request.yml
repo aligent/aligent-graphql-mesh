@@ -62,6 +62,10 @@ jobs:
           yarn nx format:check --base=$DESTINATION_BRANCH --parallel --max-parallel=3
           yarn nx affected -t check-types --base=$DESTINATION_BRANCH --parallel --max-parallel=3
 
+  owasp:
+    name: 🛡️ OWASP Scan
+    uses: ./.github/workflows/owasp.yml
+
   build:
     name: 👷 Build
     strategy:
