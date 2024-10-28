@@ -57,6 +57,7 @@ jobs:
           OSS_INDEX_PASSWORD: ${{ secrets.OSS_INDEX_PASSWORD }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
+          mkdir ${{ inputs.output }}
           ./dependency-check/bin/dependency-check.sh \
           --format JUNIT \
           --format HTML \
