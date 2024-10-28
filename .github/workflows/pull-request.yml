@@ -65,6 +65,7 @@ jobs:
   owasp:
     name: 🛡️ OWASP Scan
     uses: ./.github/workflows/owasp.yml
+    secrets: inherit
 
   build:
     name: 👷 Build
