@@ -21,6 +21,9 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
 
+      - name: Install
+        run: yarn install
+
       - name: Preparing environment for release
         run: |
           VERSION=$(echo $GITHUB_REF_NAME | sed 's/^.*[A-Za-z]-//g')
@@ -29,7 +32,6 @@ jobs:
 
       - name: Release
         run: |
-          npm ci
           git config --global user.name "Automated NPM Release"
           git config --global user.email "sysadmin+npm-deploy@aligent.com.au"
           echo "Publishing $PACKAGE @ $VERSION"
