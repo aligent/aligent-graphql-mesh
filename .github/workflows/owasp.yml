@@ -17,7 +17,7 @@ on:
       cvss_fail_level:
         default: 1
         type: number
-      supression_path:
+      suppression_path:
         default: './suppression.xml'
         type: string
       disable_oss_index:
@@ -67,7 +67,7 @@ jobs:
           -s ${{ inputs.scan_path }} \
           --junitFailOnCVSS ${{ inputs.cvss_fail_level }} \
           --failOnCVSS ${{ inputs.cvss_fail_level }} \
-          --supression ${{ inputs.supression_path }} \
+          --suppression ${{ inputs.suppression_path }} \
           --ossIndexUsername ${{ secrets.OSS_INDEX_USERNAME }} \
           --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }} \
           --nvdApiKey ${{ secrets.NVD_API_KEY }} \
