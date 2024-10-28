@@ -1,6 +1,9 @@
 name: OWASP Dependency Check
 
 on:
+  pull_request:
+    branches:
+      - '**' # Trigger on all branches
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
