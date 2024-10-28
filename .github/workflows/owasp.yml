@@ -6,6 +6,8 @@ on:
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
   workflow_call:
     inputs:
+      version:
+        type: string
       output:
         default: 'owasp-results'
         type: string
@@ -32,30 +34,43 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Checkout dependency check repository
-        uses: actions/checkout@v4
         with:
-          repository: jeremylong/DependencyCheck
-          ref: refs/tags/v11.0.0
-          path: owasp
+          path: code
 
-      - name: OWASP Dependency Check
+      - name: Fetch dependency check script
         run: |
-          ./owasp/dependency-check.sh
-          --format JUNIT
-          --format HTML
-          --prettyPrint
-          --project ${{ github.event.repository.name }}
-          --enableExperimental
-          --out ${{ inputs.output }}
-          -s ${{ inputs.scan_path }}
-          --junitFailOnCVSS ${{ inputs.cvss_fail_level }}
-          --failOnCVSS ${{ inputs.cvss_fail_level }}
-          --supression ${{ inputs.supression_path }}
-          --ossIndexUsername ${{ secrets.OSS_INDEX_USERNAME }}
-          --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }}
-          --nvdApiKey ${{ secrets.NVD_API_KEY }}
+          if [ -z "${{ inputs.version }}" ]; then
+            VERSION=$(curl -s https://jeremylong.github.io/DependencyCheck/current.txt)
+          else
+            VERSION=${{ inputs.version }}
+          fi
+          curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v$VERSION/dependency-check-$VERSION-release.zip" --output dependency-check.zip
+
+      - name: Unzip dependency check
+        run: |
+          ls -la
+          unzip dependency-check
+
+      - name: Run OWASP dependency check
+        env:
+          OSS_INDEX_USERNAME: ${{ secrets.OSS_INDEX_USERNAME }}
+          OSS_INDEX_PASSWORD: ${{ secrets.OSS_INDEX_PASSWORD }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          ./dependency-check/bin/dependency-check.sh \
+          --format JUNIT \
+          --format HTML \
+          --prettyPrint \
+          --project ${{ github.event.repository.name }} \
+          --enableExperimental \
+          --out ${{ inputs.output }} \
+          -s ${{ inputs.scan_path }} \
+          --junitFailOnCVSS ${{ inputs.cvss_fail_level }} \
+          --failOnCVSS ${{ inputs.cvss_fail_level }} \
+          --supression ${{ inputs.supression_path }} \
+          --ossIndexUsername ${{ secrets.OSS_INDEX_USERNAME }} \
+          --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }} \
+          --nvdApiKey ${{ secrets.NVD_API_KEY }} \
           --disableOssIndex ${{ inputs.disable_oss_index }}
 
       - name: Upload OWASP report
