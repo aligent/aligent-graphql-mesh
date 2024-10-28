@@ -1,29 +1,68 @@
 name: OWASP Dependency Check
 
 on:
-  pull_request:
-    branches:
-      - '**' # Trigger on all branches
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+      output:
+        default: 'owasp-results'
+        type: string
+      scan_path:
+        default: '.'
+        type: string
+      cvss_fail_level:
+        default: 1
+        type: number
+      supression_path:
+        default: './suppression.xml'
+        type: string
+      disable_oss_index:
+        type: boolean
+    secrets:
+      OSS_INDEX_USERNAME:
+      OSS_INDEX_PASSWORD:
+      NVD_API_KEY:
 
 jobs:
   owasp_scan:
+    name: 🛡️ OWASP Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Checkout dependency check repository
+        uses: actions/checkout@v4
+        with:
+          repository: jeremylong/DependencyCheck
+          ref: refs/tags/v11.0.0
+          path: owasp
 
       - name: OWASP Dependency Check
-        uses: jeremylong/gh-dependency-check-action@v4
-        with:
-          scanPath: './yarn.lock'
-          suppressionFile: './suppression.xml'
-          failOnCVSS: 1 # Fail if CVSS score > 1
+        run: |
+          ./owasp/dependency-check.sh
+          --format JUNIT
+          --format HTML
+          --prettyPrint
+          --project ${{ inputs.project }}
+          --enableExperimental
+          --out ${{ inputs.output }}
+          -s ${{ inputs.scan_path }}
+          --junitFailOnCVSS ${{ inputs.cvss_fail_level }}
+          --failOnCVSS ${{ inputs.cvss_fail_level }}
+          --supression ${{ inputs.supression_path }}
+          --ossIndexUsername ${{ secrets.OSS_INDEX_USERNAME }}
+          --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }}
+          --nvdApiKey ${{ secrets.NVD_API_KEY }}
+          --disableOssIndex ${{ inputs.disable_oss_index }}
 
       - name: Upload OWASP report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: owasp-dependency-check-report
-          path: dependency-check-report.html
+          path: ${{ inputs.output }}/dependency-check-report.html
