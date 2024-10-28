@@ -38,6 +38,17 @@ jobs:
           yarn nx publish $PACKAGE --ver=$VERSION --tag=latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          BC_CLIENT_ID: ${{ secrets.BC_CLIENT_ID }}
+          BC_CLIENT_SECRET: ${{ secrets.BC_CLIENT_SECRET }}
+          BC_GRAPHQL_API: ${{ secrets.BC_GRAPHQL_API }}
+          BC_GRAPHQL_TOKEN: ${{ secrets.BC_GRAPHQL_TOKEN }}
+          BC_REST_API: ${{ secrets.BC_REST_API }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+          ORO_CLIENT_ID: ${{ secrets.ORO_CLIENT_ID }}
+          ORO_CLIENT_SECRET: ${{ secrets.ORO_CLIENT_SECRET }}
+          ORO_STORE_URL: ${{ secrets.ORO_STORE_URL }}
+          STORE_HASH: ${{ secrets.STORE_HASH }}
+          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
 
       - name: Update the package version number
         run: git push
