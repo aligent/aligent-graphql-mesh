@@ -55,8 +55,12 @@ jobs:
           X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
         run: yarn nx docker-build ${{ inputs.application }}
 
-      - name: Build and export
-        uses: docker/build-push-action@v6
+      - name: Save Docker image to a tar file
+        run: |
+          docker save ${{ inputs.application }}:latest -o /tmp/${{ inputs.application }}.tar
+
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v4
         with:
-          tags: ${{ inputs.application }}:latest
-          outputs: type=docker,dest=/tmp/${{ inputs.application }}.tar
+          name: ${{ inputs.application }}-docker-image
+          path: /tmp/${{ inputs.application }}.tar
