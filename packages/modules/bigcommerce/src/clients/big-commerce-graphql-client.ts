@@ -49,7 +49,7 @@ export class BigCommerceGraphQlClient {
         @Inject(forwardRef(() => ModuleConfig)) private config: BigCommerceModuleConfig,
         private tokenService: BigCommerceTokenService
     ) {
-        const sdk = buildBigCommerceAxiosSdk(config, this.tokenService);
+        const sdk = buildBigCommerceAxiosSdk(config, tokenService);
         Object.assign(this, sdk);
     }
 }
