@@ -22,11 +22,11 @@ const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
  * const dataFromCache = await getDataFromMeshCache(context, "store-config", uninvokedQuery);
  *
  */
-export const getDataFromMeshCache = async (
+export const getDataFromMeshCache = async <T>(
     context: GraphQLModules.ModuleContext,
     cacheKey: string,
-    query: () => Promise<unknown>
-): Promise<AxiosResponse['data']> => {
+    query: () => Promise<T>
+): Promise<AxiosResponse<T>['data']> => {
     const ns = xray.getNamespace();
 
     // The getSegment function does not know if it's a segment or a subsegment
