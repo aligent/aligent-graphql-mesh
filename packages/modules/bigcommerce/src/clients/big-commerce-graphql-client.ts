@@ -2,11 +2,12 @@ import { DocumentNode, Kind } from 'graphql';
 import * as xray from 'aws-xray-sdk';
 import axios, { AxiosRequestConfig } from 'axios';
 import { print } from 'graphql';
-import { ExecutionContext, Inject, Injectable, forwardRef } from 'graphql-modules';
+import { Inject, Injectable, forwardRef } from 'graphql-modules';
 import { ModuleConfig } from '..';
-import { BigCommerceModuleConfig, retrieveCustomerImpersonationTokenFromCache } from '../';
+import { BigCommerceModuleConfig } from '../';
 import { getSdk } from '@aligent/bigcommerce-operations';
 import { logAndThrowError } from '@aligent/utils';
+import { BigCommerceTokenService } from '../services';
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unsafe-declaration-merging --
  * This interface tells typescript that the class BigCommerceGraphQlClient will have all the methods
@@ -44,10 +45,11 @@ export interface BigCommerceGraphQlClient extends ReturnType<typeof buildBigComm
 @Injectable({ global: true })
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class BigCommerceGraphQlClient {
-    @ExecutionContext() private context: ExecutionContext;
-
-    constructor(@Inject(forwardRef(() => ModuleConfig)) private config: BigCommerceModuleConfig) {
-        const sdk = buildBigCommerceAxiosSdk(config, this.context);
+    constructor(
+        @Inject(forwardRef(() => ModuleConfig)) private config: BigCommerceModuleConfig,
+        private tokenService: BigCommerceTokenService
+    ) {
+        const sdk = buildBigCommerceAxiosSdk(config, this.tokenService);
         Object.assign(this, sdk);
     }
 }
@@ -59,7 +61,10 @@ export class BigCommerceGraphQlClient {
  * @returns Object with fully typed request functions generated from
  * graphql operations defined in this module
  */
-function buildBigCommerceAxiosSdk(config: BigCommerceModuleConfig, context: ExecutionContext) {
+function buildBigCommerceAxiosSdk(
+    config: BigCommerceModuleConfig,
+    tokenService: BigCommerceTokenService
+) {
     const timeout = {
         milliseconds: 10_000,
         message: 'BigCommerce GraphQL request timed out',
@@ -88,8 +93,7 @@ function buildBigCommerceAxiosSdk(config: BigCommerceModuleConfig, context: Exec
             'Unknown Operation';
 
         try {
-            const customerImpersonationToken =
-                await retrieveCustomerImpersonationTokenFromCache(context);
+            const customerImpersonationToken = await tokenService.customerImpersonationToken;
 
             const data = {
                 query: print(doc),
