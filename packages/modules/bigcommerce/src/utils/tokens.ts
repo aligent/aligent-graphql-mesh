@@ -13,6 +13,9 @@ const BC_CLIENT_SECRET = process.env.BC_CLIENT_SECRET as string;
 const STORE_HASH = process.env.STORE_HASH as string;
 
 /* istanbul ignore file */
+/**
+ * @deprecated since version 1.1.0, will be removed in version 2.0.0
+ */
 export const getDecodedCustomerImpersonationToken = (
     customerImpersonationToken: string
 ): DecodedCustomerImpersonationToken => {
@@ -24,6 +27,10 @@ export const getDecodedCustomerImpersonationToken = (
 };
 
 /**
+ * @deprecated since version 1.1.0, will be removed in version 2.0.0
+ *
+ * Use {@link BigCommerceTokenService} via dependency injection instead
+ *
  * Attempts to extract "bc_customer_id" for the mesh token or throws an error
  * @param meshToken
  */
@@ -48,6 +55,11 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
 };
 
 /**
+ * @deprecated since version 1.1.0, will be removed in version 2.0.0
+ *
+ * Use {@link BigCommerceTokenService} via dependency injection instead
+ *
+ * @description
  * Creates a token when a user logs in also stores the bc_customer_id in the payload
  * which can be used for later request to the Mesh.
  * @param {number} entityId - Bc User Id returned from logging in
