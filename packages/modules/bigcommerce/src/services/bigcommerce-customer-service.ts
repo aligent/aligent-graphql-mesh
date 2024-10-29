@@ -81,8 +81,10 @@ export class BigCommerceCustomerService {
      */
     get customerHeaders() {
         const id = this.customerId.valueOrUndefined;
-        return {
-            ...(id && { 'x-bc-customer-id': id }),
-        };
+        if (id === undefined) {
+            return {};
+        }
+
+        return { 'x-bc-customer-id': id };
     }
 }
