@@ -20,6 +20,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install
         run: yarn install
@@ -37,7 +39,6 @@ jobs:
           echo "Publishing $PACKAGE @ $VERSION"
           yarn nx publish $PACKAGE --ver=$VERSION --tag=latest
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           BC_CLIENT_ID: ${{ secrets.BC_CLIENT_ID }}
           BC_CLIENT_SECRET: ${{ secrets.BC_CLIENT_SECRET }}
           BC_GRAPHQL_API: ${{ secrets.BC_GRAPHQL_API }}
