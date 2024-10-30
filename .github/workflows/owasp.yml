@@ -1,8 +1,8 @@
 name: OWASP Dependency Check
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight
+  # schedule:
+  #   - cron: '0 0 * * *' # Runs daily at midnight
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
   workflow_call:
     inputs:
