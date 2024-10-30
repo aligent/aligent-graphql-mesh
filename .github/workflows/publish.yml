@@ -34,11 +34,11 @@ jobs:
       - name: Release
         run: |
           git config --global user.name "Automated NPM Release"
-          git config --global user.email "sysadmin+npm-deploy@aligent.com.au"
+          git config --global user.email "devops+npm-deploy@aligent.com.au"
           echo "Publishing $PACKAGE @ $VERSION"
-          yarn nx publish $PACKAGE --ver=$VERSION --tag=latest
+          yarn nx publish $PACKAGE --ver=$VERSION --tag=latest --verbose
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           BC_CLIENT_ID: ${{ secrets.BC_CLIENT_ID }}
           BC_CLIENT_SECRET: ${{ secrets.BC_CLIENT_SECRET }}
           BC_GRAPHQL_API: ${{ secrets.BC_GRAPHQL_API }}
