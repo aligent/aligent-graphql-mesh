@@ -1,7 +1,6 @@
 {
   "name": "@aligent/graphql-mesh-source",
   "version": "0.1.0",
-  "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
     "@graphql-codegen/add": "^5.0.0",
