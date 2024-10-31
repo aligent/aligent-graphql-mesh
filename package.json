@@ -58,7 +58,7 @@
     "@graphql-tools/load-files": "^7.0.0",
     "@keyv/redis": "^2.8.0",
     "@nx/devkit": "18.0.7",
-    "@nx/plugin": "^18.0.7",
+    "@nx/plugin": "^20.0.6",
     "@sentry/node": "^6",
     "aws-sdk": "^2.1565.0",
     "aws-xray-sdk": "^3.5.4",
