@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.535.0",
-    "@envelop/core": "^4.0.0",
+    "@envelop/core": "^5.0.2",
     "@envelop/graphql-modules": "^5.0.0",
     "@envelop/sentry": "^6.0.0",
     "@escape.tech/graphql-armor": "2.3.2",
