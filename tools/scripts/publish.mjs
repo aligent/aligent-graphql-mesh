@@ -57,6 +57,4 @@ try {
 }
 
 // Execute "npm publish" to publish
-execSync(
-    `npm publish --access restricted --registry https://npm.corp.aligent.consulting/ --tag ${tag}`
-);
+execSync(`npm publish --verbose --access=public --tag ${tag}`);

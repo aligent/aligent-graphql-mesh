@@ -1,0 +1,93 @@
+name: OWASP Dependency Check
+
+on:
+  # schedule:
+  #   - cron: '0 0 * * *' # Runs daily at midnight
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+  workflow_call:
+    inputs:
+      version:
+        type: string
+      output:
+        default: 'owasp-results'
+        type: string
+      scan_path:
+        default: '.'
+        type: string
+      cvss_fail_level:
+        default: 1
+        type: number
+      suppression_path:
+        default: 'suppression.xml'
+        type: string
+      disable_oss_index:
+        type: boolean
+    secrets:
+      OSS_INDEX_USERNAME:
+      OSS_INDEX_PASSWORD:
+      NVD_API_KEY:
+
+jobs:
+  owasp_scan:
+    name: 🛡️ OWASP Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: code
+
+      - name: Fetch dependency check script
+        run: |
+          if [ -z "${{ inputs.version }}" ]; then
+            VERSION=$(curl -s https://jeremylong.github.io/DependencyCheck/current.txt)
+          else
+            VERSION=${{ inputs.version }}
+          fi
+          curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v$VERSION/dependency-check-$VERSION-release.zip" --output dependency-check.zip
+
+      - name: Unzip dependency check
+        run: |
+          ls -la
+          unzip dependency-check
+
+      - name: Load database from cache
+        uses: actions/cache@v4
+        with:
+          path: dependency-check/data/oss_cache
+          key: owasp-database-cache
+
+      - name: Run OWASP dependency check
+        env:
+          OSS_INDEX_USERNAME: ${{ secrets.OSS_INDEX_USERNAME }}
+          OSS_INDEX_PASSWORD: ${{ secrets.OSS_INDEX_PASSWORD }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          mkdir ${{ inputs.output }}
+          ./dependency-check/bin/dependency-check.sh \
+          --format JUNIT \
+          --format HTML \
+          --prettyPrint \
+          --project ${{ github.event.repository.name }} \
+          --enableExperimental \
+          --out ${{ inputs.output }} \
+          -s ${{ inputs.scan_path }} \
+          --junitFailOnCVSS ${{ inputs.cvss_fail_level }} \
+          --failOnCVSS ${{ inputs.cvss_fail_level }} \
+          --suppression code/${{ inputs.suppression_path }} \
+          --ossIndexUsername ${{ secrets.OSS_INDEX_USERNAME }} \
+          --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }} \
+          --nvdApiKey ${{ secrets.NVD_API_KEY }} \
+          --disableOssIndex ${{ inputs.disable_oss_index }}
+
+      - name: Upload database to cache
+        uses: actions/cache@v4
+        with:
+          path: dependency-check/data/oss_cache
+          key: owasp-database-cache
+
+      - name: Upload OWASP report
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-dependency-check-report
+          path: ${{ inputs.output }}/dependency-check-report.html

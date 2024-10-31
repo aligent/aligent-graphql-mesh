@@ -1,0 +1,66 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      application:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: 🏭 Build all packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install
+        run: yarn install
+
+      - name: Build all packages
+        env:
+          BC_CLIENT_ID: ${{ secrets.BC_CLIENT_ID }}
+          BC_CLIENT_SECRET: ${{ secrets.BC_CLIENT_SECRET }}
+          BC_GRAPHQL_API: ${{ secrets.BC_GRAPHQL_API }}
+          BC_GRAPHQL_TOKEN: ${{ secrets.BC_GRAPHQL_TOKEN }}
+          BC_REST_API: ${{ secrets.BC_REST_API }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+          ORO_CLIENT_ID: ${{ secrets.ORO_CLIENT_ID }}
+          ORO_CLIENT_SECRET: ${{ secrets.ORO_CLIENT_SECRET }}
+          ORO_STORE_URL: ${{ secrets.ORO_STORE_URL }}
+          STORE_HASH: ${{ secrets.STORE_HASH }}
+          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
+        run: yarn nx run-many -t build
+
+      - name: Build Docker Container
+        env:
+          BC_CLIENT_ID: ${{ secrets.BC_CLIENT_ID }}
+          BC_CLIENT_SECRET: ${{ secrets.BC_CLIENT_SECRET }}
+          BC_GRAPHQL_API: ${{ secrets.BC_GRAPHQL_API }}
+          BC_GRAPHQL_TOKEN: ${{ secrets.BC_GRAPHQL_TOKEN }}
+          BC_REST_API: ${{ secrets.BC_REST_API }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+          ORO_CLIENT_ID: ${{ secrets.ORO_CLIENT_ID }}
+          ORO_CLIENT_SECRET: ${{ secrets.ORO_CLIENT_SECRET }}
+          ORO_STORE_URL: ${{ secrets.ORO_STORE_URL }}
+          STORE_HASH: ${{ secrets.STORE_HASH }}
+          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
+        run: yarn nx docker-build ${{ inputs.application }}
+
+      - name: Save Docker image to a tar file
+        run: |
+          docker save ${{ inputs.application }}:latest -o /tmp/${{ inputs.application }}.tar
+
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.application }}-docker-image
+          path: /tmp/${{ inputs.application }}.tar
