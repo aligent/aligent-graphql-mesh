@@ -12,7 +12,7 @@
     "@luckycatfactory/esbuild-graphql-loader": "^3.8.1",
     "@nx/esbuild": "18.0.5",
     "@nx/eslint": "18.0.5",
-    "@nx/eslint-plugin": "18.0.5",
+    "@nx/eslint-plugin": "20.1.1",
     "@nx/jest": "18.0.7",
     "@nx/js": "18.0.7",
     "@nx/node": "18.0.5",
