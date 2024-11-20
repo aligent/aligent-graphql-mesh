@@ -9,7 +9,10 @@ import { GraphqlError, createCartItemUid } from '@aligent/utils';
 import { getTransformedPrice } from './transform-price';
 import { getTransformedCartItemErrors } from './transform-cart-item-errors';
 
-export const getTransformCartItems = (cartItems?: Maybe<Cart>, additionalCartItemData?: Array<ProductInterface>): Maybe<Maybe<CartItemInterface>[]> => {
+export const getTransformCartItems = (
+    cartItems?: Maybe<Cart>,
+    additionalCartItemData?: Array<ProductInterface>
+): Maybe<Maybe<CartItemInterface>[]> => {
     if (!cartItems?.lineItems) return null;
 
     return cartItems.lineItems.physicalItems.map((item) => {
