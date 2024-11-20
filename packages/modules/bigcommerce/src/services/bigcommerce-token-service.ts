@@ -10,8 +10,8 @@ import {
 import { getUnixTimeStampInSecondsForMidnightTonight } from '@aligent/utils';
 import { sign } from 'jsonwebtoken';
 
-// The default "customer_impersonation_token" query TTL should one not be stored in "CACHE_ITEMS_TTL"
-const QUERY_DEFAULT_TTL = CACHE_ITEMS_TTL?.[CACHE_KEY__CUSTOMER_IMPERSONATION_TOKEN] || 86400000;
+// The default "customer_impersonation_token" query TTL if one isn't provided by Module Config
+const QUERY_DEFAULT_TTL = CACHE_ITEMS_TTL[CACHE_KEY__CUSTOMER_IMPERSONATION_TOKEN];
 
 // We time we extend the tokens' Time To Live (TTL) beyond the duration it's stored in the cache
 const QUERY_TTL_BUFFER_IN_MILLISECONDS = 10 * 60 * 1000; // minutes x seconds/min x ms/second
