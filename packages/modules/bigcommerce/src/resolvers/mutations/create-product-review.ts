@@ -24,6 +24,7 @@ export const createProductReviewResolver: MutationResolvers['createProductReview
                     review_count: 1,
                     staged: true,
                     uid: '',
+                    redirect_code: 1,
                 },
                 ratings_breakdown: [],
                 summary: '',

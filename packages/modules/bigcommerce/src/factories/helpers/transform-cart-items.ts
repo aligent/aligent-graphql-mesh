@@ -9,10 +9,7 @@ import { GraphqlError, createCartItemUid } from '@aligent/utils';
 import { getTransformedPrice } from './transform-price';
 import { getTransformedCartItemErrors } from './transform-cart-item-errors';
 
-export const getTransformCartItems = (
-    cartItems?: Maybe<Cart>,
-    additionalCartItemData?: Array<ProductInterface>
-): Maybe<Array<Maybe<CartItemInterface>>> => {
+export const getTransformCartItems = (cartItems?: Maybe<Cart>, additionalCartItemData?: Array<ProductInterface>): Maybe<Maybe<CartItemInterface>[]> => {
     if (!cartItems?.lineItems) return null;
 
     return cartItems.lineItems.physicalItems.map((item) => {
@@ -81,6 +78,7 @@ export const getTransformCartItems = (
             : matchingProductData?.small_image;
 
         return {
+            customizable_options: [],
             id: cartItemId, // cart item id
             uid: cartItemUid,
             errors: getTransformedCartItemErrors(

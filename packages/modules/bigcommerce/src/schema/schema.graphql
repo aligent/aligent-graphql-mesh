@@ -2994,6 +2994,7 @@ interface ProductInterface {
     An array of related products.
     """
     related_products: [ProductInterface]
+    redirect_code: Int!
     """
     The total count of all the reviews given to the product.
     """
@@ -4039,6 +4040,7 @@ interface CategoryInterface {
         """
         sort: ProductAttributeSortInput
     ): CategoryProducts
+    redirect_code: Int!
     """
     Indicates whether the category is staged for a future campaign.
     """
@@ -7256,6 +7258,7 @@ type VirtualCartItem implements CartItemInterface {
 An interface for products in a cart.
 """
 interface CartItemInterface {
+    customizable_options: [SelectedCustomizableOption]!
     """
     An array of errors encountered while loading the cart item
     """
