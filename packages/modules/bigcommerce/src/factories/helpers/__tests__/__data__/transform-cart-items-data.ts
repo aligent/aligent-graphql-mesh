@@ -1586,6 +1586,7 @@ export const transformedCartItems = [
     {
         id: 'df21b1d0-6178-454c-a159-699e80c7d8e0',
         uid: 'ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzQ5Mi81MTM=',
+        customizable_options: [],
         errors: null,
         prices: {
             price: {

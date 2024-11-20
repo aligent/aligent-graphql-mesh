@@ -1,0 +1,240 @@
+[
+    {
+        "__typename": "ConfigurableCartItem",
+        "configurable_options": [
+            { "id": 148, "option_label": "Color", "value_id": 182, "value_label": "Green" },
+            { "id": 149, "option_label": "Size", "value_id": 184, "value_label": "S" }
+        ],
+        "customizable_options": [],
+        "errors": null,
+        "id": "df21b1d0-6178-454c-a159-699e80c7d8e0",
+        "prices": {
+            "price": { "currency": "AUD", "value": 30 },
+            "price_including_tax": { "currency": "AUD", "value": 30 },
+            "row_total": { "currency": "AUD", "value": 60 },
+            "row_total_including_tax": { "currency": "AUD", "value": 60 },
+            "total_item_discount": { "currency": "AUD", "value": 0 }
+        },
+        "product": {
+            "__typename": "SimpleProduct",
+            "brand": "Weller",
+            "by_location": [
+                {
+                    "__typename": "ByLocation",
+                    "availableToSell": 1,
+                    "isInStock": true,
+                    "locationDistance": null,
+                    "locationEntityCode": "default",
+                    "locationEntityId": 1,
+                    "locationEntityTypeId": "PHYSICAL",
+                    "warningLevel": 2
+                },
+                {
+                    "__typename": "ByLocation",
+                    "availableToSell": 2,
+                    "isInStock": true,
+                    "locationDistance": null,
+                    "locationEntityCode": "BIGC-2",
+                    "locationEntityId": 2,
+                    "locationEntityTypeId": "PHYSICAL",
+                    "warningLevel": 0
+                },
+                {
+                    "__typename": "ByLocation",
+                    "availableToSell": 2,
+                    "isInStock": true,
+                    "locationDistance": null,
+                    "locationEntityCode": "",
+                    "locationEntityId": 3,
+                    "locationEntityTypeId": "PHYSICAL",
+                    "warningLevel": 0
+                }
+            ],
+            "categories": [
+                {
+                    "__typename": "CategoryTree",
+                    "breadcrumbs": [],
+                    "canonical_url": "shop-all",
+                    "children": [],
+                    "children_count": "0",
+                    "description": "",
+                    "id": 23,
+                    "include_in_menu": 1,
+                    "level": 1,
+                    "meta_description": "",
+                    "meta_title": "",
+                    "name": "Shop All",
+                    "path": "0/23",
+                    "position": 0,
+                    "products": null,
+                    "redirect_code": 0,
+                    "staged": false,
+                    "uid": "MjM=",
+                    "url_path": "shop-all",
+                    "url_suffix": ""
+                },
+                {
+                    "__typename": "CategoryTree",
+                    "breadcrumbs": [],
+                    "canonical_url": "whats-new",
+                    "children": [],
+                    "children_count": "0",
+                    "description": "",
+                    "id": 57,
+                    "include_in_menu": 1,
+                    "level": 1,
+                    "meta_description": "This is the \"What's New\" meta_description",
+                    "meta_title": "What's New",
+                    "name": "What's New",
+                    "path": "0/57",
+                    "position": 0,
+                    "products": null,
+                    "redirect_code": 0,
+                    "staged": false,
+                    "uid": "NTc=",
+                    "url_path": "whats-new",
+                    "url_suffix": ""
+                },
+                {
+                    "__typename": "CategoryTree",
+                    "breadcrumbs": [],
+                    "canonical_url": "women",
+                    "children": [],
+                    "children_count": "0",
+                    "description": "",
+                    "id": 58,
+                    "include_in_menu": 1,
+                    "is_women_category": "true",
+                    "level": 1,
+                    "meta_description": "This is the \"Women\" meta_description",
+                    "meta_title": "Women",
+                    "name": "Women",
+                    "path": "0/58",
+                    "position": 0,
+                    "products": null,
+                    "redirect_code": 0,
+                    "staged": false,
+                    "uid": "NTg=",
+                    "url_path": "women",
+                    "url_suffix": ""
+                },
+                {
+                    "__typename": "CategoryTree",
+                    "breadcrumbs": [
+                        {
+                            "category_id": 58,
+                            "category_level": 1,
+                            "category_name": "Women",
+                            "category_uid": "NTg=",
+                            "category_url_key": "women",
+                            "category_url_path": "women"
+                        }
+                    ],
+                    "canonical_url": "women/tops",
+                    "children": [],
+                    "children_count": "0",
+                    "description": "",
+                    "id": 59,
+                    "include_in_menu": 1,
+                    "level": 2,
+                    "meta_description": "",
+                    "meta_title": "",
+                    "name": "Tops",
+                    "path": "0/59",
+                    "position": 0,
+                    "products": null,
+                    "redirect_code": 0,
+                    "staged": false,
+                    "uid": "NTk=",
+                    "url_path": "women/tops",
+                    "url_suffix": ""
+                },
+                {
+                    "__typename": "CategoryTree",
+                    "breadcrumbs": [
+                        {
+                            "category_id": 58,
+                            "category_level": 1,
+                            "category_name": "Women",
+                            "category_uid": "NTg=",
+                            "category_url_key": "women",
+                            "category_url_path": "women"
+                        },
+                        {
+                            "category_id": 59,
+                            "category_level": 2,
+                            "category_name": "Tops",
+                            "category_uid": "NTk=",
+                            "category_url_key": "women/tops",
+                            "category_url_path": "women/tops"
+                        }
+                    ],
+                    "canonical_url": "women/tops/hoodies-sweatshirts",
+                    "children": [],
+                    "children_count": "0",
+                    "description": "",
+                    "id": 60,
+                    "include_in_menu": 1,
+                    "level": 3,
+                    "meta_description": "",
+                    "meta_title": "",
+                    "name": "Hoodies & Sweatshirts",
+                    "path": "0/60",
+                    "position": 0,
+                    "products": null,
+                    "redirect_code": 0,
+                    "staged": false,
+                    "uid": "NjA=",
+                    "url_path": "women/tops/hoodies-sweatshirts",
+                    "url_suffix": ""
+                }
+            ],
+            "custom_attributes": [],
+            "id": 513,
+            "media_gallery_entries": [
+                {
+                    "disabled": false,
+                    "file": "https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg",
+                    "id": 2888706,
+                    "label": "",
+                    "position": 0,
+                    "uid": ""
+                }
+            ],
+            "name": "Mona Pullover Hoodlie",
+            "only_x_left_in_stock": 5,
+            "price_range": {
+                "maximum_price": {
+                    "discount": { "amount_off": 40, "percent_off": 57.14285714285714 },
+                    "final_price": { "currency": "AUD", "value": 30 },
+                    "regular_price": { "currency": "AUD", "value": 70 }
+                },
+                "minimum_price": {
+                    "discount": { "amount_off": 40, "percent_off": 57.14285714285714 },
+                    "final_price": { "currency": "AUD", "value": 30 },
+                    "regular_price": { "currency": "AUD", "value": 70 }
+                }
+            },
+            "price_tiers": [],
+            "rating_summary": 0,
+            "redirect_code": 0,
+            "review_count": 0,
+            "reviews": {
+                "items": [],
+                "page_info": { "current_page": 0, "page_size": 0, "total_pages": 0 }
+            },
+            "sku": "WH01-S-Green",
+            "small_image": {
+                "label": "",
+                "url": "https://cdn11.bigcommerce.com/s-xxazhvt7gd/images/stencil/500x245/attribute_rule_images/54_source_1690452039.jpg"
+            },
+            "staged": false,
+            "stock_status": "IN_STOCK",
+            "uid": "VmFyaWFudDo1MTM=",
+            "url_key": "mona-pullover-hoodlie",
+            "url_suffix": ""
+        },
+        "quantity": 2,
+        "uid": "ZGYyMWIxZDAtNjE3OC00NTRjLWExNTktNjk5ZTgwYzdkOGUwLzQ5Mi81MTM="
+    }
+]

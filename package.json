@@ -81,5 +81,23 @@
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0"
+  },
+  "scripts": {
+    "watch": "yarn nx serve $npm_package_config_platform-mesh --skip-nx-cache",
+    "serve": "yarn watch --watch=false",
+    "build": "yarn nx build $npm_package_config_platform-mesh",
+    "moduleclear": " yarn nx build -t $npm_package_config_platform-mesh --skipNxCache",
+    "lint": "yarn nx lint $npm_package_config_project-graphql-module",
+    "format": "yarn nx format $npm_package_config_project-graphql-module",
+    "checktypes": "yarn nx check-types $npm_package_config_project-graphql-module",
+    "test": "yarn nx test $npm_package_config_project-graphql-module",
+    "checkall": "yarn lint && yarn format && yarn checktypes && yarn test",
+    "clearcache": "yarn nx run-many -t codegen --skipNxCache && yarn nx run-many -t build --skipNxCache",
+    "run-docker-build": "yarn nx run-many -t docker-build --skipNxCache",
+    "run-docker-check": "docker run -it bigcommerce-mesh"
+  },
+  "config": {
+    "platform": "bigcommerce",
+    "project": "bigcommerce"
   }
 }
