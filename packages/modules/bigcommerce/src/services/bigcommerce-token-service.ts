@@ -28,7 +28,8 @@ export class BigCommerceTokenService {
     constructor(@Inject(forwardRef(() => ModuleConfig)) private config: BigCommerceModuleConfig) {
         /* Gets the ttl from client specific projects context otherwise fallback to the default TLL */
         const cacheTtlInMilliseconds =
-            config.cacheItemsTtl?.[CACHE_KEY__CUSTOMER_IMPERSONATION_TOKEN] || QUERY_DEFAULT_TTL;
+            this.config.cacheItemsTtl?.[CACHE_KEY__CUSTOMER_IMPERSONATION_TOKEN] ||
+            QUERY_DEFAULT_TTL;
 
         /* Not to be confused with the "customer_impersonation_token" cache TTL.
          * This TTL ensures the token itself lasts longer than the time we store it in the cache.
