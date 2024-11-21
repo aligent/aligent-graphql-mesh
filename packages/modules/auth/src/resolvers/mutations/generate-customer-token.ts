@@ -6,7 +6,9 @@ import { LoginService } from '../../services/login-service';
 export const generateCustomerTokenResolver = {
     resolve: async (_root, args, context, _info) => {
         const loginService = context.injector.get(LoginService);
+        console.dir('Auth before login Service');
         const entityId = await loginService.login(args);
+        console.dir('Auth after login Service');
 
         const isExtendedLogin = !!args?.remember_me;
 

@@ -1,5 +1,5 @@
 import { InjectionToken, Provider, Scope } from 'graphql-modules';
-import { BigCommerceModuleConfig } from '../index';
+import { BigCommerceModuleConfig, getServices } from '../index';
 import { Get, Paths } from 'type-fest';
 import { BigCommerceGraphQlClient } from '../clients';
 
@@ -38,5 +38,6 @@ export const getProviders = (config: BigCommerceModuleConfig): Array<Provider> =
             global: true,
         },
         BigCommerceGraphQlClient,
+        ...getServices(),
     ];
 };
