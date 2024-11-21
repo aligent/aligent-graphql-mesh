@@ -24,7 +24,7 @@ export const getDecodedCustomerImpersonationToken = (
 };
 
 /**
- * Attempts to extract "bc_customer_id" for the mesh token or throws an error
+ * Attempts to extract "customer_id" for the mesh token or throws an error
  * @param meshToken
  */
 export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
@@ -32,7 +32,7 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
         if (meshToken?.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
             const decodedMeshToken = verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
-            return decodedMeshToken.bc_customer_id;
+            return decodedMeshToken.customer_id;
         } else {
             throw new Error(`Need to send Bearer token`);
         }
@@ -48,13 +48,13 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
 };
 
 /**
- * Creates a token when a user logs in also stores the bc_customer_id in the payload
+ * Creates a token when a user logs in also stores the customer_id in the payload
  * which can be used for later request to the Mesh.
  * @param {number} entityId - Bc User Id returned from logging in
  */
 export const generateMeshToken = (entityId: number): string => {
     const payload = {
-        bc_customer_id: entityId,
+        customer_id: entityId,
         exp: getUnixTimeStampInSecondsForMidnightTonight(),
     };
 

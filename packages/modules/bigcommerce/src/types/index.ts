@@ -181,7 +181,7 @@ export interface DecodedCustomerImpersonationToken {
 }
 
 export interface MeshToken {
-    bc_customer_id: number;
+    customer_id: number;
     iat: number;
     exp: number;
 }
