@@ -5,9 +5,9 @@
 #### Changes:
 
 - Updates the "generateMeshToken" function to return a "customer_id" property instead of "bc_customer_id".
-Updates the "getBcCustomerIdFromMeshToken" function to look for a "customer_id" property instead of "bc_customer_id".
-This is due to the Auth Module generating a JWT containing a "customer_id" property
-but the BigCommerce Module decodes the JWT and looks for a "bc_customer_id" property.
+  Updates the "getBcCustomerIdFromMeshToken" function to look for a "customer_id" property instead of "bc_customer_id".
+  This is due to the Auth Module generating a JWT containing a "customer_id" property
+  but the BigCommerce Module decodes the JWT and looks for a "bc_customer_id" property.
 
 #### Tickets
 
