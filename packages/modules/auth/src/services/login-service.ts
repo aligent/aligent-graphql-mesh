@@ -1,4 +1,4 @@
-import { Injectable } from 'graphql-modules';
+import { Injectable, Scope } from 'graphql-modules';
 import { CustomerId } from '../types';
 
 /**
