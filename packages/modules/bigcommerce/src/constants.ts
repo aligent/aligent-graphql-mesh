@@ -25,7 +25,7 @@ export type CacheItemTtlTypes = {
 /**
  * TTL's defined the control how long query responses are cached for
  */
-export const CACHE_ITEMS_TTL: CacheItemTtlTypes = {
+export const CACHE_ITEMS_TTL = {
     [CACHE_KEY__BRANDS]: 1800000, // 30 minutes
     [CACHE_KEY__CATEGORIES]: 600000, // 10 minutes
     [CACHE_KEY__CATEGORIES_REST]: 1800000, // 30 minutes
@@ -34,4 +34,4 @@ export const CACHE_ITEMS_TTL: CacheItemTtlTypes = {
     [CACHE_KEY__CUSTOMER_IMPERSONATION_TOKEN]: 86400000, // 24 hours
     [CACHE_KEY__STOREFRONT_FORM_FIELDS]: 1800000, // 30 minutes
     [CACHE_KEY__STORE_CONFIG]: 1800000, // 30 minutes
-};
+} as const satisfies CacheItemTtlTypes;

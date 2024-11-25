@@ -9,6 +9,11 @@ const QUERY_DEFAULT_TTL = CACHE_ITEMS_TTL?.[CACHE_KEY__CUSTOMER_IMPERSONATION_TO
 // We time we extend the tokens' Time To Live (TTL) beyond the duration it's stored in the cache
 const QUERY_TTL_BUFFER_IN_MILLISECONDS = 600000; // 10 minutes
 
+/**
+ * @deprecated since version 1.1.0, will be removed in version 2.0.0
+ *
+ * Use {@link BigCommerceTokenService} via dependency injection instead
+ */
 export const getCustomerImpersonationToken = async (context: GraphQLModules.ModuleContext) => {
     /* Gets the ttl from client specific projects context otherwise fallback to the default TLL */
     const tokenTtlInMilliseconds =
@@ -30,6 +35,11 @@ export const getCustomerImpersonationToken = async (context: GraphQLModules.Modu
     return createCustomerImpersonationToken(expiresAt);
 };
 
+/**
+ * @deprecated since version 1.1.0, will be removed in version 2.0.0
+ *
+ * Use {@link BigCommerceTokenService} via dependency injection instead
+ */
 export const retrieveCustomerImpersonationTokenFromCache = async (
     context: GraphQLModules.ModuleContext
 ): Promise<string> => {

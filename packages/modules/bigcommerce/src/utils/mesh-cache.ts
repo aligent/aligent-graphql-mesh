@@ -22,11 +22,11 @@ const ENABLE_CACHE_LOGGING = !!Number(process.env.DEBUG);
  * const dataFromCache = await getDataFromMeshCache(context, "store-config", uninvokedQuery);
  *
  */
-export const getDataFromMeshCache = async (
+export const getDataFromMeshCache = async <T>(
     context: GraphQLModules.ModuleContext,
     cacheKey: string,
-    query: () => Promise<unknown>
-): Promise<AxiosResponse['data']> => {
+    query: () => Promise<T>
+): Promise<AxiosResponse<T>['data']> => {
     const ns = xray.getNamespace();
 
     // The getSegment function does not know if it's a segment or a subsegment
@@ -107,16 +107,21 @@ export const getCacheItemTtl = (
     // will begin with a hyphen "-". e.g. "categories-58"
     const [cacheKeyPrefix] = cacheKey.split('-');
 
-    // Check for the "cacheKey" corresponding TTL value in the "context" object.
-    const ttlInContext = context.injector.get(ModuleConfig)?.cacheItemsTtl?.[cacheKeyPrefix];
+    // If a valid TTL is in the module's configuration, return it
+    const ttlInContext = context.injector.get(ModuleConfig).cacheItemsTtl?.[cacheKeyPrefix];
+    if (ttlInContext) {
+        return ttlInContext;
+    }
 
-    // Check for the "cacheKey" corresponding TTL value in the "constants.ts" file.
-    const ttlInConstants = CACHE_ITEMS_TTL?.[cacheKeyPrefix];
+    // If a valid TTL is in the hardcoded constants, return it as a fallback
+    if (cacheKeyPrefix in CACHE_ITEMS_TTL) {
+        const ttlInConstants = CACHE_ITEMS_TTL[cacheKeyPrefix as keyof typeof CACHE_ITEMS_TTL];
 
-    const ttl = ttlInContext || ttlInConstants;
+        return ttlInConstants;
+    }
 
-    // Return the TTL or fallback to the global default TTL
-    return Number(ttl) ? Number(ttl) : DEFAULT_TTL_IN_MILLI_SECONDS;
+    // If no valid TTL can be found, fall back to the global default
+    return DEFAULT_TTL_IN_MILLI_SECONDS;
 };
 
 /**

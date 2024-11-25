@@ -1,17 +1,17 @@
 import { MutationResolvers } from '@aligent/bigcommerce-resolvers';
 import { bcLogin } from '../../apis/graphql/login';
-import { generateMeshToken } from '../../utils';
-import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
+import { BigCommerceTokenService } from '../../services/bigcommerce-token-service';
 
 export const generateCustomerTokenResolver: MutationResolvers['generateCustomerToken'] = {
     resolve: async (_root, args, context, _info) => {
-        const customerImpersonationToken =
-            await retrieveCustomerImpersonationTokenFromCache(context);
+        const tokenService = context.injector.get(BigCommerceTokenService);
 
+        const customerImpersonationToken = await tokenService.customerImpersonationToken;
         const entityId = await bcLogin(args.email, args.password, customerImpersonationToken);
+        const token = tokenService.generateMeshToken(entityId);
 
         return {
-            token: generateMeshToken(entityId),
+            token,
         };
     },
 };
