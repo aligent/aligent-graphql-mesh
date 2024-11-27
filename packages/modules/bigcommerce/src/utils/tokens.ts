@@ -32,7 +32,9 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
         if (meshToken?.toLowerCase().startsWith('bearer')) {
             const splitMeshToken = meshToken.split(' ')[1];
             const decodedMeshToken = verify(splitMeshToken, JWT_PRIVATE_KEY) as MeshToken;
-            return decodedMeshToken.customer_id;
+
+            /* @deprecated since v1.0.1. Use "customer_id" instead of "bc_customer_id" */
+            return decodedMeshToken.customer_id || decodedMeshToken.bc_customer_id;
         } else {
             throw new Error(`Need to send Bearer token`);
         }
@@ -54,6 +56,8 @@ export const getBcCustomerIdFromMeshToken = (meshToken: string): number => {
  */
 export const generateMeshToken = (entityId: number): string => {
     const payload = {
+        /* @deprecated since v1.0.1. Use "customer_id" instead */
+        bc_customer_id: entityId,
         customer_id: entityId,
         exp: getUnixTimeStampInSecondsForMidnightTonight(),
     };

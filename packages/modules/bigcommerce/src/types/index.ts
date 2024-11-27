@@ -181,6 +181,8 @@ export interface DecodedCustomerImpersonationToken {
 }
 
 export interface MeshToken {
+    /* @deprecated since v1.0.1. Use "customer_id" instead */
+    bc_customer_id: number;
     customer_id: number;
     iat: number;
     exp: number;
