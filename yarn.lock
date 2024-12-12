@@ -3175,6 +3175,13 @@
   dependencies:
     ioredis "^5.3.2"
 
+"@keyv/serialize@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@keyv/serialize/-/serialize-1.0.1.tgz#8dae240d5fe11c589e38b73a2db238dcf26a33cf"
+  integrity sha512-kKXeynfORDGPUEEl2PvTExM2zs+IldC6ZD8jPcfvI351MDNtfMlw9V9s4XZXuJNDK2qR5gbEKxRyoYx3quHUVQ==
+  dependencies:
+    buffer "^6.0.3"
+
 "@luckycatfactory/esbuild-graphql-loader@^3.8.1":
   version "3.8.1"
   resolved "https://registry.npmjs.org/@luckycatfactory/esbuild-graphql-loader/-/esbuild-graphql-loader-3.8.1.tgz"
@@ -8319,12 +8326,19 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-keyv@^4.0.0, keyv@^4.5.4:
+keyv@^4.0.0:
   version "4.5.4"
   resolved "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz"
   integrity sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==
   dependencies:
     json-buffer "3.0.1"
+
+keyv@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/keyv/-/keyv-5.2.2.tgz#5909eac90c76c4296921d964ab233e5590326bfa"
+  integrity sha512-CRPP4Sq5ofbUE8s4FOirFmDgHeKZFRrH/8+WOUNvLJiMIplRMfnMjxmbaDb+zVd7ex0gGAWqMhZHfcL2u6PrNQ==
+  dependencies:
+    "@keyv/serialize" "^1.0.1"
 
 kleur@^3.0.3:
   version "3.0.3"

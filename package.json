@@ -72,7 +72,7 @@
     "graphql-yoga": "^5.1.1",
     "jest-date-mock": "^1.0.8",
     "jsonwebtoken": "^9.0.0",
-    "keyv": "^4.5.4",
+    "keyv": "^5.2.2",
     "lodash": "^4.17.21",
     "luxon": "^3.4.3",
     "netmask": "^2.0.2",
