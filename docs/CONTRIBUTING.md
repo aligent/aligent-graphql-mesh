@@ -1,7 +1,5 @@
 Thankyou for your interest in contributing the the Aligent Mesh!
 
-SSH PUSH TEST 
-
 For an overview of the Mesh features and usage consult the [README](../README.md) file.
 
 # Contribution Guide
@@ -54,6 +52,6 @@ Make sure the documentation accurately reflects the changes you have made and pr
 
 ## Note for Maintainers
 
-The release process outlined above is primarily applicable to maintainers of this repository. As a maintainer, it is your responsibility to review and merge pull requests, create releases, and manage the versioning of the constructs.
+The release process outlined above is primarily applicable to maintainers of this repository. As a maintainer, it is your responsibility to review and merge pull requests, create releases, and manage versioning.
 
 Additionally, as a maintainer, please ensure that the README files for each construct are kept up-to-date. When introducing changes or new features, update the corresponding README to reflect those changes accurately. This will help users understand the functionality and usage of each construct.

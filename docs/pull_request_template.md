@@ -1,12 +1,12 @@
-Description of the proposed changes
+**Description of the proposed changes**
 
-Screenshots (if applicable)
+**Screenshots (if applicable)**
 
-Other solutions considered (if any)
+**Other solutions considered (if any)**
 
-Notes to PR author
+**Notes to PR author**
 
-⚠️ Please make sure the changes adhere to the guidelines mentioned here
+⚠️ Please make sure the changes adhere to the guidelines mentioned [here](./CONTRIBUTING.md)
 
 Notes to reviewers
 
