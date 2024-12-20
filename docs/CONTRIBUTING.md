@@ -54,4 +54,4 @@ Make sure the documentation accurately reflects the changes you have made and pr
 
 The release process outlined above is primarily applicable to maintainers of this repository. As a maintainer, it is your responsibility to review and merge pull requests, create releases, and manage versioning.
 
-Additionally, as a maintainer, please ensure that the README files for each construct are kept up-to-date. When introducing changes or new features, update the corresponding README to reflect those changes accurately. This will help users understand the functionality and usage of each construct.
+Additionally, as a maintainer, please ensure that the README files for each package/tool are kept up-to-date. When introducing changes or new features, update the corresponding README to reflect those changes accurately. This will help users understand the functionality and usage of each package or tool.
