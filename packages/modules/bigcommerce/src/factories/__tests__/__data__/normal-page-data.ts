@@ -1,7 +1,6 @@
-import { NormalPage } from '@aligent/bigcommerce-operations';
 import { CmsPage } from '@aligent/bigcommerce-resolvers';
 
-export const bcHomePageContent: NormalPage = {
+export const bcHomePageContent = {
     id: 'Tm9ybWFsUGFnZToxNw==',
     path: '/home/',
     htmlBody: '<p>This is the test homepage</p>',
@@ -34,7 +33,7 @@ export const bcHomePageContent: NormalPage = {
     __typename: 'NormalPage',
 };
 
-export const bcHomePageContentWithImages: NormalPage = {
+export const bcHomePageContentWithImages = {
     id: 'Tm9ybWFsUGFnZToyMw==',
     path: '/chamal-image-test/',
     htmlBody:
