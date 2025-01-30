@@ -6,7 +6,7 @@
 
 **Notes to PR author**
 
-⚠️ Please make sure the changes adhere to the guidelines mentioned [here](./CONTRIBUTING.md)
+⚠️ Please make sure the changes adhere to the guidelines mentioned [here](https://github.com/aligent/code-of-conduct/blob/main/CONTRIBUTING.md)
 
 Notes to reviewers
 
