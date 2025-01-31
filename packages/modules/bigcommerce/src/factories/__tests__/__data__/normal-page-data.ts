@@ -1,7 +1,4 @@
-import { NormalPage } from '@aligent/bigcommerce-operations';
-import { CmsPage } from '@aligent/bigcommerce-resolvers';
-
-export const bcHomePageContent: NormalPage = {
+export const bcHomePageContent = {
     id: 'Tm9ybWFsUGFnZToxNw==',
     path: '/home/',
     htmlBody: '<p>This is the test homepage</p>',
@@ -34,7 +31,7 @@ export const bcHomePageContent: NormalPage = {
     __typename: 'NormalPage',
 };
 
-export const bcHomePageContentWithImages: NormalPage = {
+export const bcHomePageContentWithImages = {
     id: 'Tm9ybWFsUGFnZToyMw==',
     path: '/chamal-image-test/',
     htmlBody:
@@ -60,7 +57,7 @@ export const bcHomePageContentWithImages: NormalPage = {
     __typename: 'NormalPage',
 };
 
-export const transformedHomePageContent: CmsPage = {
+export const transformedHomePageContent = {
     __typename: 'CmsPage',
     url_key: 'home',
     content: '<p>This is the test homepage</p>',
@@ -73,7 +70,7 @@ export const transformedHomePageContent: CmsPage = {
     redirect_code: 0,
 };
 
-export const transformedHomePageContentWithImages: CmsPage = {
+export const transformedHomePageContentWithImages = {
     url_key: 'chamal-image-test',
     content:
         '<p><img class="__mce_add_custom__" title="half-banner-2.jpg" src="https://cdn11.bigcommerce.com/s-xxxxxx/product_images/uploaded_images/half-banner-2.jpg" alt="half-banner-2.jpg" width="900" height="376" /></p>',

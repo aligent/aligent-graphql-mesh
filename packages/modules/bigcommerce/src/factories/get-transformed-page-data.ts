@@ -1,9 +1,16 @@
-import { NormalPage, RawHtmlPage } from '@aligent/bigcommerce-operations';
+import { SeoDetailsFragment } from '@aligent/bigcommerce-operations';
 import { CmsPage } from '@aligent/bigcommerce-resolvers';
 
 const CND_MASK = /%%GLOBAL_CdnStorePath%%/g;
 
-export const getTransformedPageData = (data: NormalPage | RawHtmlPage, cdnUrl: string): CmsPage => {
+type PageData = {
+    path: string;
+    htmlBody: string;
+    name: string;
+    seo: SeoDetailsFragment;
+};
+
+export const getTransformedPageData = (data: PageData, cdnUrl: string): CmsPage => {
     const { path, htmlBody, name, seo } = data;
     return {
         url_key: path.replace(/\//g, ''),
