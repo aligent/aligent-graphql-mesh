@@ -44,7 +44,7 @@ All Projects: `yarn nx run-many -t codegen`
 1. Clone the repository
 
 ```shell
-$ git clone git@bitbucket.org:aligent/aligent-graphql-mesh.git
+$ git clone https://github.com/aligent/aligent-graphql-mesh.git
 ```
 
 2. Install yarn

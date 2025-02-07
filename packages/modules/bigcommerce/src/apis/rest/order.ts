@@ -3,7 +3,6 @@ import { bcGet, bcPaginate } from './client';
 
 const ORDERS_API = `/v2/orders`;
 
-//TODO: MICRO-183: add customer id as filter for security, otherwise any order can be fetched by any customer
 /**
  * https://developer.bigcommerce.com/docs/rest-management/orders#get-an-order
  */
