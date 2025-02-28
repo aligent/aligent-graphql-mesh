@@ -9,6 +9,7 @@ jobs:
   test:
     name: ⚙️ Run Tests
     runs-on: ubuntu-latest
+    env: ${{ secrets }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -37,6 +38,7 @@ jobs:
   code-quality:
     name: 🕵️‍♀️ Code Quality
     runs-on: ubuntu-latest
+    env: ${{ secrets }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
