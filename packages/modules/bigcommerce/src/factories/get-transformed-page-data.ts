@@ -8,10 +8,19 @@ type PageData = {
     htmlBody: string;
     name: string;
     seo: SeoDetailsFragment;
+    isVisibleInNavigation: boolean;
 };
 
 export const getTransformedPageData = (data: PageData, cdnUrl: string): CmsPage => {
     const { path, htmlBody, name, seo } = data;
+
+    if (data.isVisibleInNavigation === false) {
+        return {
+            redirect_code: 0,
+            __typename: 'CmsPage',
+        };
+    }
+
     return {
         url_key: path.replace(/\//g, ''),
         content: htmlBody.replace(CND_MASK, cdnUrl),
