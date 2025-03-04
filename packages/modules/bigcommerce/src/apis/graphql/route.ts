@@ -16,7 +16,9 @@ import { getRouteQuery } from './requests';
 export const getRoute = async (
     variables: SiteRouteArgs & { includeTax?: boolean },
     customerImpersonationToken: string
-): Promise<Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product | RawHtmlPage> => {
+): Promise<
+    Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product | RawHtmlPage
+> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
