@@ -22,7 +22,7 @@ export const bcHomePageContent = {
     entityId: 17,
     parentEntityId: null,
     name: 'Big Commerce Homepage',
-    isVisibleInNavigation: false,
+    isVisibleInNavigation: true,
     seo: {
         pageTitle: '',
         metaDescription: '',

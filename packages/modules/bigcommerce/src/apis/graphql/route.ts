@@ -6,6 +6,7 @@ import {
     ContactPage,
     NormalPage,
     Product,
+    RawHtmlPage,
     SiteRouteArgs,
 } from '@aligent/bigcommerce-operations';
 import { logAndThrowError } from '@aligent/utils';
@@ -15,7 +16,9 @@ import { getRouteQuery } from './requests';
 export const getRoute = async (
     variables: SiteRouteArgs & { includeTax?: boolean },
     customerImpersonationToken: string
-): Promise<Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product> => {
+): Promise<
+    Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product | RawHtmlPage
+> => {
     const headers = {
         Authorization: `Bearer ${customerImpersonationToken}`,
     };
