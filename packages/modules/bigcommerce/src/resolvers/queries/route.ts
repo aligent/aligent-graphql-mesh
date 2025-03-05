@@ -22,7 +22,7 @@ import { getBundleItemProducts } from '../../apis/graphql/bundle-item-products';
 import { retrieveCustomerImpersonationTokenFromCache } from '../../apis/rest';
 
 interface TransformedRouteData {
-    data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product;
+    data: Blog | BlogPost | Brand | Category | ContactPage | NormalPage | Product | RawHtmlPage;
     storeConfig: StoreConfig & Settings;
     customerImpersonationToken: string;
     taxSettings?: TaxDisplaySettings | null;
@@ -65,6 +65,7 @@ const getTransformedRouteData = async ({
 
     if (__typename === 'NormalPage' || __typename === 'RawHtmlPage') {
         const cdnUrl = storeConfig.url.cdnUrl;
+
         return {
             ...getTransformedPageData(data as NormalPage | RawHtmlPage, cdnUrl),
             type: 'CMS_PAGE',
