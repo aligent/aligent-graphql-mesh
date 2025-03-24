@@ -62,23 +62,29 @@ jobs:
           OSS_INDEX_USERNAME: ${{ secrets.OSS_INDEX_USERNAME }}
           OSS_INDEX_PASSWORD: ${{ secrets.OSS_INDEX_PASSWORD }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          OUTPUT_DIR: ${{ inputs.output }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          SCAN_PATH: ${{ inputs.scan_path }}
+          CVSS_FAIL_LEVEL: ${{ inputs.cvss_fail_level }}
+          SUPPRESSION_PATH: code/${{ inputs.suppression_path }}
+          DISABLE_OSS_INDEX: ${{ inputs.disable_oss_index }}
         run: |
-          mkdir ${{ inputs.output }}
+          mkdir $OUTPUT_DIR
           ./dependency-check/bin/dependency-check.sh \
           --format JUNIT \
           --format HTML \
           --prettyPrint \
-          --project ${{ github.event.repository.name }} \
+          --project "$REPO_NAME" \
           --enableExperimental \
-          --out ${{ inputs.output }} \
-          -s ${{ inputs.scan_path }} \
-          --junitFailOnCVSS ${{ inputs.cvss_fail_level }} \
-          --failOnCVSS ${{ inputs.cvss_fail_level }} \
-          --suppression code/${{ inputs.suppression_path }} \
-          --ossIndexUsername ${{ secrets.OSS_INDEX_USERNAME }} \
-          --ossIndexPassword ${{ secrets.OSS_INDEX_PASSWORD }} \
-          --nvdApiKey ${{ secrets.NVD_API_KEY }} \
-          --disableOssIndex ${{ inputs.disable_oss_index }}
+          --out "$OUTPUT_DIR" \
+          -s "$SCAN_PATH" \
+          --junitFailOnCVSS "$CVSS_FAIL_LEVEL" \
+          --failOnCVSS "$CVSS_FAIL_LEVEL" \
+          --suppression "$SUPPRESSION_PATH" \
+          --ossIndexUsername "$OSS_INDEX_USERNAME" \
+          --ossIndexPassword "$OSS_INDEX_PASSWORD" \
+          --nvdApiKey "$NVD_API_KEY" \
+          --disableOssIndex "$DISABLE_OSS_INDEX"
 
       - name: Upload database to cache
         uses: actions/cache@v4
