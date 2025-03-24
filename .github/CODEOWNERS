@@ -1,4 +1,4 @@
-* @aligent/mesh-developers
-
 .github/* @aligent/aligent-devops
 bitbucket-pipelines.yml @aligent/aligent-devops
+
+* @aligent/mesh-developers
