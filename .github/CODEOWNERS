@@ -1,4 +1,6 @@
-.github/* @aligent/aligent-devops
-bitbucket-pipelines.yml @aligent/aligent-devops
+# DevOps team owns the .github folder
+.github/ @aligent/devops
 
-* @aligent/mesh-developers
+# Microservice team own everything else
+* @aligent/microservices
+
