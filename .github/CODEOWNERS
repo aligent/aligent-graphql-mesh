@@ -3,5 +3,5 @@
 bitbucket-pipelines.yml @aligent/devops
 
 # Microservice team own everything else
-* @aligent/mesh-developers
+* @aligent/microservices
 
