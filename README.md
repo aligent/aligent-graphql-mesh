@@ -294,3 +294,11 @@ src/utils/encode-decode.ts. This will decode the uid from e.g. atob("Ng==") = "6
 encodes an id to be an uid
 
 // TODO: Generate `BC_GRAPHQL_TOKEN` this at build time \
+
+## Release Process
+
+1. Navigate to [Releases](https://github.com/aligent/aligent-graphql-mesh/releases)
+2. Draft a new release
+3. Create a new tag e.g. `bigcommerce-graphql-module-1.0.9`
+4. Generate release notes
+5. Publish release
