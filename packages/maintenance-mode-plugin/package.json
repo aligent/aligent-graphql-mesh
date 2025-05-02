@@ -2,8 +2,9 @@
   "name": "@aligent/maintenance-mode-plugin",
   "version": "0.0.1",
   "dependencies": {
-    "tslib": "^2.3.0",
-    "netmask": "^2.0.2"
+    "@types/ip6addr": "^0.2.6",
+    "ip6addr": "^0.2.5",
+    "tslib": "^2.3.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",
