@@ -4,6 +4,11 @@ import ip6addr from 'ip6addr';
 
 const DEV_MODE = process.env?.['NODE_ENV'] == 'development';
 
+interface MaintenanceFile {
+  whitelist: Array<string>;
+  sites: Record<string, boolean>;
+}
+
 export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
     return {
         onRequest({ request, fetchAPI, endResponse }) {
@@ -15,26 +20,35 @@ export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
                 return;
             }
 
+            const maintFile = getMaintenanceFile(maintenanceFilePath);
             const requestIp = request.headers.get('x-forwarded-for')?.split(',')[0];
+            const host = request.headers.get('host') || 'default';
 
-            if (requestIp) {
-                const allowedIpAddresses = readFileSync(maintenanceFilePath, {
-                    encoding: 'utf-8',
-                }).split(',');
+            if (inMaintenanceMode(maintFile, host)) {
+              if (requestIp) {
+                  if (isIpInWhiteList(maintFile.whitelist, requestIp)) {
+                      return;
+                  }
+              }
 
-                if (isIpInWhiteList(allowedIpAddresses, requestIp)) {
-                    return;
-                }
+              endResponse(
+                  new fetchAPI.Response('In Maintenance Mode', {
+                      status: 503,
+                  })
+              );
             }
-
-            endResponse(
-                new fetchAPI.Response('In Maintenance Mode', {
-                    status: 503,
-                })
-            );
         },
     };
 }
+
+const getMaintenanceFile = (filePath: string): MaintenanceFile => {
+  const fileContents = readFileSync(filePath, "utf-8");
+  return JSON.parse(fileContents) as MaintenanceFile;
+};
+
+const inMaintenanceMode = (maintFile: MaintenanceFile, host: string): boolean => {
+  return maintFile.sites[host] === true;
+};
 
 function isCIDR(str: string) {
   const cidrRegex = /^(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-fA-F0-9:]+))\/\d+$/;
