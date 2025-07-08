@@ -43,8 +43,9 @@ export const getTransformedWishListItems = (
     if (!wishListItems.edges) return [];
     return wishListItems.edges
         .map((wishlistItem) => {
-            if (!wishlistItem || !wishlistItem.node) return null;
+            if (!wishlistItem || !wishlistItem.node || !wishlistItem.node.product) return null;
             const { entityId, variantEntityId: wishlistItemVariantId } = wishlistItem.node;
+
             const transformedProduct = getTransformedProductData(
                 wishlistItem.node.product,
                 undefined,
