@@ -34,6 +34,9 @@ export function maintenanceModePlugin(maintenanceFilePath: string): Plugin {
               endResponse(
                   new fetchAPI.Response('In Maintenance Mode', {
                       status: 503,
+                      headers: {
+                        'cache-control': 'no-cache, no-store'
+                      }
                   })
               );
             }
