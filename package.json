@@ -82,5 +82,8 @@
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0"
+  },
+  "resolutions": {
+    "form-data": "4.0.4"
   }
 }
