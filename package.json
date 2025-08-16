@@ -74,7 +74,7 @@
     "ip6addr": "^0.2.5",
     "jest-date-mock": "^1.0.8",
     "jsonwebtoken": "^9.0.0",
-    "keyv": "^4.5.4",
+    "keyv": "^5.2.3",
     "lodash": "^4.17.21",
     "luxon": "^3.4.3",
     "netmask": "^2.0.2",
