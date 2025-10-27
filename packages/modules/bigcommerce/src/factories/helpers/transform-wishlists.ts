@@ -1,14 +1,14 @@
+import { WishlistConnection, WishlistItemConnection } from '@aligent/bigcommerce-operations';
 import {
     ConfigurableProduct,
     Maybe,
     ProductInterface,
     Wishlist,
-    WishlistVisibilityEnum,
     WishlistItemInterface,
+    WishlistVisibilityEnum,
 } from '@aligent/bigcommerce-resolvers';
-import { WishlistConnection, WishlistItemConnection } from '@aligent/bigcommerce-operations';
-import { getTransformedProductData } from '../transform-products-data';
 import { isTruthy } from '@aligent/utils';
+import { getTransformedProductData } from '../transform-products-data';
 
 export const getTransformedWishlists = (wishlists: WishlistConnection): Array<Wishlist> => {
     if (!wishlists.edges) return [];
@@ -43,7 +43,7 @@ export const getTransformedWishListItems = (
     if (!wishListItems.edges) return [];
     return wishListItems.edges
         .map((wishlistItem) => {
-            if (!wishlistItem || !wishlistItem.node) return null;
+            if (!wishlistItem || !wishlistItem.node || !wishlistItem.node.product) return null;
             const { entityId, variantEntityId: wishlistItemVariantId } = wishlistItem.node;
             const transformedProduct = getTransformedProductData(
                 wishlistItem.node.product,

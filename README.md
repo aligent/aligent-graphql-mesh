@@ -55,7 +55,7 @@ npm install --global yarn
 
 2. Run `yarn install`
 
-3. Duplicate the `.env.template` file as `.env` for the mesh you are working on, fill in the values and place it in the corrosponding mesh directory.
+3. Duplicate the `.env.template` file as `.env` for the mesh you are working on, fill in the values and place it in the corresponding mesh directory.
 
 BigCommerce:
 
