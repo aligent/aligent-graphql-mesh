@@ -38,11 +38,13 @@ jobs:
           path: code
 
       - name: Fetch dependency check script
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          if [ -z "${{ inputs.version }}" ]; then
+          if [ -z "$INPUT_VERSION" ]; then
             VERSION=$(curl -s https://jeremylong.github.io/DependencyCheck/current.txt)
           else
-            VERSION=${{ inputs.version }}
+            VERSION=$INPUT_VERSION
           fi
           curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v$VERSION/dependency-check-$VERSION-release.zip" --output dependency-check.zip
 

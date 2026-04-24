@@ -53,11 +53,14 @@ jobs:
           ORO_STORE_URL: ${{ secrets.ORO_STORE_URL }}
           STORE_HASH: ${{ secrets.STORE_HASH }}
           X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
-        run: yarn nx docker-build ${{ inputs.application }}
+          APPLICATION: ${{ inputs.application }}
+        run: yarn nx docker-build $APPLICATION
 
       - name: Save Docker image to a tar file
+        env:
+          APPLICATION: ${{ inputs.application }}
         run: |
-          docker save ${{ inputs.application }}:latest -o /tmp/${{ inputs.application }}.tar
+          docker save $APPLICATION:latest -o /tmp/$APPLICATION.tar
 
       - name: Upload Docker image as artifact
         uses: actions/upload-artifact@v4
