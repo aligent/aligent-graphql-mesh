@@ -4,12 +4,13 @@ export const productInventoryLocation: VariantInventory = {
     isInStock: true,
     aggregated: {
         availableToSell: 31,
+        availableOnHand: 31,
         warningLevel: 2,
+        unlimitedBackorder: false,
     },
     byLocation: {
         edges: [
             {
-                // @ts-expect-error: error is due to required but deprecated field locationEntityServiceTypeIds
                 node: {
                     locationEntityId: 1,
                     locationEntityCode: 'BC-LOCATION-1',
@@ -21,7 +22,6 @@ export const productInventoryLocation: VariantInventory = {
                 },
             },
             {
-                // @ts-expect-error: error is due to required but deprecated field locationEntityServiceTypeIds
                 node: {
                     locationEntityId: 2,
                     locationEntityCode: 'BIGC-2',
@@ -33,7 +33,6 @@ export const productInventoryLocation: VariantInventory = {
                 },
             },
             {
-                // @ts-expect-error: error is due to required but deprecated field locationEntityServiceTypeIds
                 node: {
                     locationEntityId: 3,
                     locationEntityCode: '',
