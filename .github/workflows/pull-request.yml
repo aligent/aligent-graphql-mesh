@@ -72,12 +72,6 @@ jobs:
           yarn nx format:check --base=origin/$BASE_REF --parallel --max-parallel=3
           yarn nx affected -t check-types --base=origin/$BASE_REF --parallel --max-parallel=3
 
-  # TODO: fix the owasp pipeline
-  # owasp:
-  #   name: 🛡️ OWASP Scan
-  #   uses: ./.github/workflows/owasp.yml
-  #   secrets: inherit
-
   build:
     name: 👷 Build
     strategy:
