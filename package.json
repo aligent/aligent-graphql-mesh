@@ -75,7 +75,7 @@
     "jest-date-mock": "^1.0.8",
     "jsonwebtoken": "^9.0.0",
     "keyv": "^4.5.4",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "luxon": "^3.4.3",
     "netmask": "^2.0.2",
     "pino": "^8.20.0",
