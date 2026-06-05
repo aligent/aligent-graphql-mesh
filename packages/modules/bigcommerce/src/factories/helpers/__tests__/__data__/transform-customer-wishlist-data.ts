@@ -371,6 +371,12 @@ export const bcWishListItems: WishlistItemConnection = {
                             startCursor: undefined,
                         },
                     },
+                    locales: {
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                        },
+                    },
                     brand: {
                         entityId: 111,
                         id: 'well',
