@@ -371,6 +371,12 @@ export const bcWishListItems: WishlistItemConnection = {
                             startCursor: undefined,
                         },
                     },
+                    locales: {
+                        pageInfo: {
+                            hasNextPage: false,
+                            hasPreviousPage: false,
+                        },
+                    },
                     brand: {
                         entityId: 111,
                         id: 'well',
@@ -387,6 +393,12 @@ export const bcWishListItems: WishlistItemConnection = {
                         pageTitle: 'Weller',
                         path: '/brands/weller',
                         products: {
+                            pageInfo: {
+                                hasNextPage: false,
+                                hasPreviousPage: false,
+                            },
+                        },
+                        locales: {
                             pageInfo: {
                                 hasNextPage: false,
                                 hasPreviousPage: false,
@@ -470,6 +482,14 @@ export const bcWishListItems: WishlistItemConnection = {
                                             endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                         },
                                     },
+                                    locales: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
                                     id: 'Q2F0ZWdvcnk6MjM=',
                                     entityId: 23,
                                     name: 'Shop All',
@@ -532,6 +552,14 @@ export const bcWishListItems: WishlistItemConnection = {
                                             endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
                                         },
                                     },
+                                    locales: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
                                     id: 'Q2F0ZWdvcnk6NTg=',
                                     entityId: 58,
                                     name: 'Women',
@@ -587,6 +615,14 @@ export const bcWishListItems: WishlistItemConnection = {
                                         },
                                     },
                                     shopByPriceRanges: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
+                                    locales: {
                                         pageInfo: {
                                             hasNextPage: false,
                                             hasPreviousPage: false,
@@ -657,6 +693,14 @@ export const bcWishListItems: WishlistItemConnection = {
                                         },
                                     },
                                     shopByPriceRanges: {
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            hasPreviousPage: false,
+                                            startCursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+                                            endCursor: 'YXJyYXljb25uZWN0aW9uOjE=',
+                                        },
+                                    },
+                                    locales: {
                                         pageInfo: {
                                             hasNextPage: false,
                                             hasPreviousPage: false,
@@ -811,6 +855,7 @@ export const bcWishListItems: WishlistItemConnection = {
                     inventory: {
                         isInStock: true,
                         hasVariantInventory: true,
+                        isStockTracked: true,
                     },
                     metafields: {
                         edges: [],
