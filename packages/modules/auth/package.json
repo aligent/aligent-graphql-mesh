@@ -5,7 +5,7 @@
     "aws-xray-sdk": "^3.5.4",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-tools/load-files": "^7.0.0",
-    "axios": "1.6.7",
+    "axios": "^1.15.2",
     "graphql": "^16.7.0",
     "graphql-modules": "2.3.x",
     "jest-date-mock": "^1.0.8",
