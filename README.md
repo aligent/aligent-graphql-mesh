@@ -166,7 +166,13 @@ To generate this token you'll need to login to your [Hive instance](https://app.
 
 #### Customer Impersonation token
 
-`customerImpersonationToken` is being generated in the `useExtendContextPlugin` plugin and being set in `context.cache.set('customerImpersonationToken'),`. The token in then fetched from the cache `context.cache.get('customerImpersonationToken')` inside of the resolvers that require it. The customer impersonation token is used along with a header `x-bc-customer-id` to make customer specific requests to BC Graphql API, the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
+The CustomerImpersonationToken is a mechanism that allows the system to impersonate a customer when making API calls to BigCommerce. This allows the system to perform actions that require customer authentication without requiring the customer to be directly logged in.
+
+The customer impersonation token is used along with the header `x-bc-customer-id: {bcCustomerId}` to make customer specific requests to BC Graphql API. the alternative is to use the `SHOP_TOKEN` cookie that is returned after making the login mutation to BC Graphql.
+
+To create the token the `createCustomerImpersonationToken` function makes a POST request to BigCommerce's API endpoint `/v3/storefront/api-token-customer-impersonation`. The token is cached using the `getDataFromMeshCache` utility function. By default, the token is cached for 24 hours (86400000 milliseconds) as defined in `CACHE_ITEMS_TTL`.
+
+The token is retrieved with the `retrieveCustomerImpersonationTokenFromCache(context)`, which first checks if a valid token exists in the cache. If not found or expired another one is generated and cached.
 
 e.g.
 
